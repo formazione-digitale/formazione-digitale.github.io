@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guida al Prompting con l'IA — ITS</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & TOKENS ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue-dark:   #1F4E79;
+  --blue-mid:    #2E75B6;
+  --blue-light:  #D6E8F7;
+  --blue-pale:   #EBF3FC;
+  --green-dark:  #1E6B3C;
+  --green-light: #E8F5EE;
+  --amber-dark:  #7D4E00;
+  --amber-light: #FFF3CD;
+  --red-dark:    #8B1A1A;
+  --red-light:   #FDECEA;
+  --purple-dark: #4A148C;
+  --purple-light:#F3E5F5;
+  --gray-dark:   #2C2C2C;
+  --gray-mid:    #666;
+  --gray-light:  #F5F5F5;
+  --white:       #FFFFFF;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --nav-w: 260px;
+  --header-h: 56px;
+  --radius: 8px;
+  --shadow: 0 2px 12px rgba(31,78,121,.10);
+  --transition: .22s cubic-bezier(.4,0,.2,1);
+}
+
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FBFF; line-height: 1.7; }
+
+/* ── HEADER ─────────────────────────────────────────────────────── */
+#header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--header-h);
+  background: var(--blue-dark);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.25rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,.18);
+}
+.header-left { display: flex; align-items: center; gap: .75rem; }
+.header-logo { font-family: var(--font-display); font-size: 1.05rem; color: #fff; letter-spacing: .01em; }
+.header-sub { font-size: .72rem; color: var(--blue-light); font-weight: 300; display: none; }
+@media(min-width:600px){ .header-sub { display: block; } }
+.header-right { display: flex; align-items: center; gap: .5rem; }
+
+/* Mode toggle */
+.mode-toggle {
+  display: flex; align-items: center; gap: .4rem;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+  border-radius: 20px; padding: .25rem .75rem;
+  font-size: .78rem; color: #fff; cursor: pointer;
+  transition: background var(--transition);
+  user-select: none;
+}
+.mode-toggle:hover { background: rgba(255,255,255,.22); }
+.mode-toggle .mode-icon { font-size: 1rem; }
+
+/* Hamburger */
+#hamburger {
+  display: flex; flex-direction: column; justify-content: center; gap: 5px;
+  width: 36px; height: 36px; cursor: pointer; padding: 6px;
+  border-radius: 6px; transition: background var(--transition);
+}
+#hamburger:hover { background: rgba(255,255,255,.12); }
+#hamburger span { display: block; height: 2px; background: #fff; border-radius: 2px; transition: all var(--transition); }
+#hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+#hamburger.open span:nth-child(2) { opacity: 0; }
+#hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+@media(min-width:900px){ #hamburger { display: none; } }
+
+/* ── SIDEBAR ─────────────────────────────────────────────────────── */
+#sidebar {
+  position: fixed; top: var(--header-h); left: 0; bottom: 0; z-index: 90;
+  width: var(--nav-w); background: var(--white);
+  border-right: 1px solid var(--blue-light);
+  overflow-y: auto; padding: 1.25rem 0 2rem;
+  transform: translateX(-100%);
+  transition: transform var(--transition);
+  box-shadow: 2px 0 20px rgba(31,78,121,.08);
+}
+#sidebar.open { transform: translateX(0); }
+@media(min-width:900px){ #sidebar { transform: translateX(0); } }
+
+.nav-section-label {
+  font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--blue-mid); padding: .75rem 1.25rem .35rem; opacity: .7;
+}
+.nav-item {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .55rem 1.25rem; font-size: .84rem; color: var(--gray-mid);
+  text-decoration: none; cursor: pointer;
+  transition: all var(--transition); border-left: 3px solid transparent;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.nav-item:hover { color: var(--blue-dark); background: var(--blue-pale); border-left-color: var(--blue-light); }
+.nav-item.active { color: var(--blue-dark); background: var(--blue-pale); border-left-color: var(--blue-mid); font-weight: 500; }
+.nav-num { display: inline-flex; align-items: center; justify-content: center;
+  min-width: 22px; height: 22px; background: var(--blue-dark); color: #fff;
+  border-radius: 4px; font-size: .72rem; font-weight: 600; flex-shrink: 0; }
+.nav-item.active .nav-num { background: var(--blue-mid); }
+.nav-divider { border: none; border-top: 1px solid var(--blue-light); margin: .75rem 1.25rem; }
+
+/* ── MAIN CONTENT ────────────────────────────────────────────────── */
+#main {
+  margin-top: var(--header-h);
+  transition: margin-left var(--transition);
+  padding: 2rem 1.25rem 4rem;
+  max-width: 800px;
+}
+@media(min-width:900px){ #main { margin-left: var(--nav-w); padding: 2.5rem 2.5rem 4rem; } }
+@media(min-width:1200px){ #main { margin-left: var(--nav-w); max-width: 860px; padding: 3rem 3rem 4rem; } }
+
+/* Overlay */
+#overlay {
+  display: none; position: fixed; inset: 0; z-index: 80;
+  background: rgba(0,0,0,.35); backdrop-filter: blur(2px);
+}
+#overlay.open { display: block; }
+@media(min-width:900px){ #overlay { display: none !important; } }
+
+/* ── SECTION STRUCTURE ──────────────────────────────────────────── */
+.guide-section { margin-bottom: 3.5rem; }
+.section-header {
+  display: flex; align-items: stretch; border-radius: var(--radius);
+  overflow: hidden; margin-bottom: 1.75rem;
+  box-shadow: var(--shadow);
+}
+.section-num {
+  display: flex; align-items: center; justify-content: center;
+  min-width: 64px; background: var(--blue-dark);
+  font-family: var(--font-display); font-size: 2rem; color: #fff;
+  padding: .75rem;
+}
+.section-titles {
+  flex: 1; background: var(--blue-pale); padding: .85rem 1.25rem;
+  border-left: 3px solid var(--blue-light);
+}
+.section-title { font-family: var(--font-display); font-size: 1.3rem; color: var(--blue-dark); line-height: 1.2; }
+.section-subtitle { font-size: .82rem; color: var(--blue-mid); font-style: italic; margin-top: .2rem; }
+
+.sub-title { font-size: 1.05rem; font-weight: 600; color: var(--blue-mid); margin: 1.5rem 0 .6rem; }
+p { margin-bottom: .85rem; font-size: .95rem; line-height: 1.75; color: #3a3a3a; }
+
+/* Lists */
+ul.guide-list, ol.guide-list { padding-left: 1.5rem; margin-bottom: .85rem; }
+ul.guide-list li, ol.guide-list li { font-size: .95rem; line-height: 1.75; color: #3a3a3a; margin-bottom: .3rem; }
+
+/* ── BOXES ──────────────────────────────────────────────────────── */
+.box { border-radius: var(--radius); padding: .9rem 1.1rem; margin: 1rem 0; font-size: .9rem; line-height: 1.65; }
+.box-label { font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .35rem; }
+.box-tip   { background: var(--green-light); border-left: 4px solid var(--green-dark); }
+.box-tip .box-label { color: var(--green-dark); }
+.box-tip p { color: var(--green-dark); margin: 0; }
+.box-warn  { background: var(--amber-light); border-left: 4px solid var(--amber-dark); }
+.box-warn .box-label { color: var(--amber-dark); }
+.box-warn p { color: var(--amber-dark); margin: 0; }
+.box-note  { background: var(--gray-light); border-left: 4px solid #bbb; }
+.box-note p { color: var(--gray-mid); margin: 0; font-style: italic; }
+.box-info  { background: var(--blue-pale); border-left: 4px solid var(--blue-mid); }
+.box-info .box-label { color: var(--blue-dark); }
+.box-info p { color: var(--blue-dark); margin: 0; }
+
+/* ── PROMPT BLOCKS ──────────────────────────────────────────────── */
+.prompt-wrap { margin: 1.25rem 0; position: relative; }
+.prompt-label {
+  font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--blue-mid); margin-bottom: .35rem;
+}
+.prompt-block {
+  background: #F0F5FA; border: 1px solid var(--blue-mid);
+  border-radius: var(--radius); padding: 1.1rem 1.1rem 1.1rem 1.25rem;
+  font-family: 'DM Mono', 'Fira Mono', 'Courier New', monospace;
+  font-size: .8rem; line-height: 1.8; position: relative;
+  white-space: pre-wrap; word-break: break-word;
+  color: #1a1a1a;
+}
+.prompt-block .tag  { color: var(--blue-dark); font-weight: 700; }
+.prompt-block .ph   { color: #7030A0; font-style: italic; }
+.prompt-block .cmt  { color: var(--gray-mid); font-style: italic; }
+
+/* Editable placeholder */
+.ph-edit {
+  color: #7030A0; font-style: italic;
+  background: rgba(112,48,160,.08); border-radius: 3px;
+  border-bottom: 1.5px dashed #7030A0;
+  cursor: text; outline: none; display: inline;
+  min-width: 40px;
+}
+.ph-edit:focus { background: rgba(112,48,160,.14); }
+.ph-edit:empty::before { content: attr(data-placeholder); opacity: .6; }
+
+.copy-btn {
+  position: absolute; top: .6rem; right: .6rem;
+  background: var(--blue-dark); color: #fff;
+  border: none; border-radius: 5px;
+  padding: .3rem .75rem; font-size: .72rem; font-family: var(--font-body);
+  cursor: pointer; transition: background var(--transition);
+  display: flex; align-items: center; gap: .3rem;
+}
+.copy-btn:hover { background: var(--blue-mid); }
+.copy-btn.copied { background: var(--green-dark); }
+
+/* ── ANATOMY TABLE ──────────────────────────────────────────────── */
+.anatomy-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .88rem; }
+.anatomy-table th { background: var(--blue-dark); color: #fff; padding: .6rem .85rem; text-align: left; font-weight: 500; }
+.anatomy-table td { padding: .65rem .85rem; border-bottom: 1px solid var(--blue-light); vertical-align: top; }
+.anatomy-table tr:nth-child(even) td { background: #FAFCFF; }
+.anatomy-tag { display: inline-block; font-family: monospace; font-size: .8rem; font-weight: 700; padding: .1rem .45rem; border-radius: 4px; }
+.tag-role   { background: var(--blue-pale); color: var(--blue-dark); }
+.tag-task   { background: var(--green-light); color: var(--green-dark); }
+.tag-ctx    { background: var(--amber-light); color: var(--amber-dark); }
+.tag-fmt    { background: var(--purple-light); color: var(--purple-dark); }
+.anatomy-q  { font-size: .78rem; color: var(--gray-mid); font-style: italic; }
+.anatomy-ex { font-size: .83rem; }
+.anatomy-note { font-size: .78rem; color: var(--gray-mid); font-style: italic; margin-top: .25rem; }
+
+/* ── DO/DON'T TABLE ─────────────────────────────────────────────── */
+.dodont { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin: 1rem 0; }
+@media(max-width:600px){ .dodont { grid-template-columns: 1fr; } }
+.do-col   { background: var(--green-light); border-radius: var(--radius); padding: .9rem 1rem; }
+.dont-col { background: var(--red-light); border-radius: var(--radius); padding: .9rem 1rem; }
+.dodont-title { font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: .6rem; }
+.do-col .dodont-title   { color: var(--green-dark); }
+.dont-col .dodont-title { color: var(--red-dark); }
+.dodont li { font-size: .85rem; line-height: 1.6; margin-bottom: .3rem; list-style: none; padding-left: 1.2rem; position: relative; }
+.do-col li::before   { content: "✓"; position: absolute; left: 0; color: var(--green-dark); font-weight: 700; }
+.dont-col li::before { content: "✗"; position: absolute; left: 0; color: var(--red-dark); font-weight: 700; }
+
+/* ── GLOSSARY ───────────────────────────────────────────────────── */
+.glossary { display: flex; flex-direction: column; gap: .5rem; margin: 1rem 0; }
+.gloss-item { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--blue-light); }
+.gloss-term {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--blue-pale); padding: .65rem 1rem;
+  font-weight: 600; font-size: .9rem; color: var(--blue-dark);
+  cursor: pointer; user-select: none; transition: background var(--transition);
+}
+.gloss-term:hover { background: var(--blue-light); }
+.gloss-arrow { transition: transform var(--transition); font-size: .75rem; }
+.gloss-def { display: none; padding: .75rem 1rem; font-size: .88rem; color: #3a3a3a; background: #fff; border-top: 1px solid var(--blue-light); }
+.gloss-item.open .gloss-arrow { transform: rotate(90deg); }
+.gloss-item.open .gloss-def { display: block; }
+
+/* ── CHECKLIST ──────────────────────────────────────────────────── */
+.checklist { display: flex; flex-direction: column; gap: .45rem; margin: 1rem 0; }
+.check-item {
+  display: flex; align-items: flex-start; gap: .75rem;
+  background: var(--white); border: 1px solid var(--blue-light);
+  border-radius: var(--radius); padding: .7rem .9rem;
+  cursor: pointer; transition: all var(--transition); user-select: none;
+}
+.check-item:hover { background: var(--blue-pale); }
+.check-item.checked { background: var(--green-light); border-color: var(--green-dark); }
+.check-box {
+  width: 20px; height: 20px; flex-shrink: 0;
+  border: 2px solid var(--blue-mid); border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--transition); margin-top: 1px;
+}
+.check-item.checked .check-box { background: var(--green-dark); border-color: var(--green-dark); }
+.check-item.checked .check-box::after { content: "✓"; color: #fff; font-size: .75rem; font-weight: 700; }
+.check-text { font-size: .88rem; line-height: 1.5; color: #3a3a3a; }
+.check-item.checked .check-text { color: var(--green-dark); }
+
+/* ── EXAMPLE HEADER ─────────────────────────────────────────────── */
+.example-header {
+  background: var(--blue-dark); border-radius: var(--radius);
+  padding: 1.1rem 1.4rem; margin-bottom: 1.1rem;
+  box-shadow: var(--shadow);
+}
+.example-tag  { font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--blue-light); margin-bottom: .3rem; }
+.example-disc { font-family: var(--font-display); font-size: 1.2rem; color: #fff; margin-bottom: .2rem; }
+.example-ctx  { font-size: .82rem; color: var(--blue-light); font-style: italic; }
+
+/* ── SCALE CARDS ────────────────────────────────────────────────── */
+.scale-cards { display: flex; flex-direction: column; gap: .75rem; margin: 1rem 0; }
+.scale-card {
+  border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--blue-light); box-shadow: var(--shadow);
+}
+.scale-card-header {
+  display: flex; align-items: center; gap: .75rem;
+  background: var(--blue-pale); padding: .7rem 1rem;
+  cursor: pointer; user-select: none; transition: background var(--transition);
+}
+.scale-card-header:hover { background: var(--blue-light); }
+.scale-lvl { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--blue-mid); min-width: 60px; }
+.scale-name { font-weight: 600; color: var(--blue-dark); font-size: .95rem; }
+.scale-toggle { margin-left: auto; font-size: .75rem; transition: transform var(--transition); color: var(--blue-mid); }
+.scale-card.open .scale-toggle { transform: rotate(180deg); }
+.scale-body { display: none; padding: 1rem 1.1rem; background: #fff; border-top: 1px solid var(--blue-light); }
+.scale-card.open .scale-body { display: block; }
+
+/* ── PROGRESS BAR (aula) ────────────────────────────────────────── */
+#progress-bar {
+  display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+  height: 4px; background: rgba(255,255,255,.2);
+}
+#progress-fill { height: 100%; background: var(--blue-light); transition: width .3s; }
+
+/* ════════════════════════════════════════════════════════════════
+   AULA MODE
+════════════════════════════════════════════════════════════════ */
+body.aula-mode #sidebar { display: none; }
+body.aula-mode #main { margin-left: 0 !important; max-width: 100%; padding: 0; }
+body.aula-mode #header { background: #0D2D4A; }
+body.aula-mode #progress-bar { display: block; }
+
+/* Slide container */
+#slides-container {
+  display: none;
+  width: 100vw; height: calc(100vh - var(--header-h));
+  overflow: hidden; position: relative;
+}
+body.aula-mode #slides-container { display: block; }
+body.aula-mode #guide-content   { display: none; }
+
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+  padding: 4vw 6vw;
+  opacity: 0; transform: translateX(40px);
+  transition: opacity .35s, transform .35s;
+  pointer-events: none;
+  overflow-y: auto;
+}
+.slide.active {
+  opacity: 1; transform: translateX(0);
+  pointer-events: auto;
+}
+.slide.exit {
+  opacity: 0; transform: translateX(-40px);
+}
+
+/* Slide typography */
+.slide-tag   { font-size: clamp(.7rem,1.2vw,.9rem); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--blue-mid); margin-bottom: .6rem; }
+.slide-title { font-family: var(--font-display); font-size: clamp(1.6rem,3.5vw,3rem); color: var(--blue-dark); line-height: 1.15; margin-bottom: 1rem; }
+.slide-body  { font-size: clamp(.9rem,1.5vw,1.15rem); color: #3a3a3a; line-height: 1.75; max-width: 820px; }
+.slide-body ul { padding-left: 1.5rem; }
+.slide-body li { margin-bottom: .4rem; }
+.slide-body .prompt-block { font-size: clamp(.72rem,1.2vw,.9rem); }
+
+/* Slide nav */
+#slide-nav {
+  display: none; position: fixed; bottom: 1rem; right: 1.5rem; z-index: 210;
+  display: none; gap: .5rem; align-items: center;
+}
+body.aula-mode #slide-nav { display: flex; }
+.slide-btn {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--blue-dark); color: #fff; border: none;
+  font-size: 1.1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background var(--transition); box-shadow: 0 2px 10px rgba(0,0,0,.2);
+}
+.slide-btn:hover { background: var(--blue-mid); }
+.slide-btn:disabled { opacity: .35; cursor: default; }
+#slide-counter { font-size: .8rem; color: var(--blue-dark); font-weight: 600; min-width: 50px; text-align: center; background: #fff; border-radius: 20px; padding: .25rem .75rem; box-shadow: 0 1px 6px rgba(0,0,0,.1); }
+
+/* ── COVER ──────────────────────────────────────────────────────── */
+.cover-block {
+  background: linear-gradient(135deg, var(--blue-dark) 0%, #2E5F8C 100%);
+  border-radius: var(--radius); padding: 2rem 1.75rem; margin-bottom: 2rem;
+  box-shadow: 0 4px 24px rgba(31,78,121,.18);
+}
+.cover-title { font-family: var(--font-display); font-size: clamp(1.6rem,4vw,2.6rem); color: #fff; line-height: 1.1; margin-bottom: .5rem; }
+.cover-sub   { font-size: 1rem; color: var(--blue-light); margin-bottom: .3rem; }
+.cover-desc  { font-size: .88rem; color: rgba(255,255,255,.7); font-style: italic; }
+.cover-divider { border: none; border-top: 1px solid rgba(255,255,255,.2); margin: 1.1rem 0; }
+.cover-intro { font-size: .9rem; color: rgba(255,255,255,.85); line-height: 1.7; }
+
+/* ── SECTION DIVIDER ────────────────────────────────────────────── */
+.section-divider { border: none; border-top: 2px solid var(--blue-light); margin: 3rem 0; }
+
+/* ── APPENDIX TITLE ─────────────────────────────────────────────── */
+.appendix-title { font-family: var(--font-display); font-size: 1.6rem; color: var(--blue-dark); margin-bottom: .35rem; }
+.appendix-rule  { border: none; border-top: 3px solid var(--blue-mid); margin-bottom: 1.75rem; }
+
+/* scroll offset for fixed header */
+.scroll-anchor { scroll-margin-top: calc(var(--header-h) + 1rem); }
+
+/* ── PRINT ──────────────────────────────────────────────────────── */
+@media print {
+  #header, #sidebar, #slide-nav, #progress-bar, .copy-btn, .mode-toggle, #hamburger { display: none !important; }
+  #main { margin: 0 !important; padding: 1rem !important; }
+  body.aula-mode #guide-content { display: block !important; }
+  body.aula-mode #slides-container { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ──────────────────────────────────────────────────────── -->
+<header id="header">
+  <div class="header-left">
+    <div id="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <div>
+      <div class="header-logo">Guida al Prompting con l'IA</div>
+      <div class="header-sub">Corso Competenze Didattiche Digitali — ITS</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="mode-toggle" onclick="toggleMode()" id="mode-btn" title="Cambia modalità">
+      <span class="mode-icon" id="mode-icon">🎓</span>
+      <span id="mode-label">Modalità Aula</span>
+    </div>
+  </div>
+</header>
+
+<!-- ── OVERLAY ─────────────────────────────────────────────────────── -->
+<div id="overlay" onclick="closeSidebar()"></div>
+
+<!-- ── SIDEBAR ─────────────────────────────────────────────────────── -->
+<nav id="sidebar">
+  <div class="nav-section-label">Sezioni</div>
+  <a class="nav-item active" href="#intro" onclick="navClick(this)">
+    <span class="nav-num">✦</span> Introduzione
+  </a>
+  <a class="nav-item" href="#sec1" onclick="navClick(this)">
+    <span class="nav-num">1</span> Come 'pensa' l'IA
+  </a>
+  <a class="nav-item" href="#sec2" onclick="navClick(this)">
+    <span class="nav-num">2</span> Anatomia del prompt
+  </a>
+  <a class="nav-item" href="#sec3" onclick="navClick(this)">
+    <span class="nav-num">3</span> La scala del prompt
+  </a>
+  <a class="nav-item" href="#sec4" onclick="navClick(this)">
+    <span class="nav-num">4</span> Prompt per la didattica
+  </a>
+  <a class="nav-item" href="#sec5" onclick="navClick(this)">
+    <span class="nav-num">5</span> Il meta-prompt
+  </a>
+  <a class="nav-item" href="#sec6" onclick="navClick(this)">
+    <span class="nav-num">6</span> Iterare
+  </a>
+  <a class="nav-item" href="#sec7" onclick="navClick(this)">
+    <span class="nav-num">7</span> Limiti e responsabilità
+  </a>
+  <hr class="nav-divider">
+  <div class="nav-section-label">Appendice</div>
+  <a class="nav-item" href="#appA" onclick="navClick(this)">
+    <span class="nav-num">A</span> Checklist
+  </a>
+  <a class="nav-item" href="#appB" onclick="navClick(this)">
+    <span class="nav-num">B</span> Glossario
+  </a>
+  <a class="nav-item" href="#appC" onclick="navClick(this)">
+    <span class="nav-num">C</span> Approfondimenti
+  </a>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════════
+     GUIDE CONTENT
+════════════════════════════════════════════════════════════════ -->
+<main id="main">
+<div id="guide-content">
+
+<!-- INTRO -->
+<section class="guide-section scroll-anchor" id="intro">
+  <div class="cover-block">
+    <div class="cover-title">Guida al Prompting con l'IA</div>
+    <div class="cover-sub">Per docenti di Istituto Tecnico Superiore</div>
+    <div class="cover-desc">Corso di Competenze Didattiche Digitali</div>
+    <hr class="cover-divider">
+    <div class="cover-intro">
+      Questa guida è pensata per docenti ITS di qualsiasi disciplina — da italiano a informatica — che vogliono usare l'IA in modo consapevole e professionale nella didattica. Non richiede competenze tecniche pregresse.<br><br>
+      <strong style="color:#fff;">Modalità disponibili:</strong> <span style="color:var(--blue-light);">usa il pulsante in alto a destra per passare alla <em>Modalità Aula</em> — una presentazione a schermo intero pensata per il proiettore.</span>
+    </div>
+  </div>
+</section>
+
+<!-- SEZIONE 1 -->
+<section class="guide-section scroll-anchor" id="sec1">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div class="section-titles">
+      <div class="section-title">Come 'pensa' un modello IA</div>
+      <div class="section-subtitle">Capire il meccanismo prima di usare lo strumento</div>
+    </div>
+  </div>
+  <p>Prima di imparare a scrivere prompt efficaci, è utile avere un modello mentale di come funziona un'IA linguistica. Non serve entrare nei dettagli tecnici: bastano tre concetti.</p>
+
+  <div class="sub-title">1.1  L'IA non capisce: predice</div>
+  <p>Un modello linguistico non "capisce" il testo nel senso umano. Produce la sequenza di parole statisticamente più probabile dato il testo in input. Per questo:</p>
+  <ul class="guide-list">
+    <li>Risponde sempre con sicurezza, anche quando sbaglia.</li>
+    <li>Non sa cosa non sa: non ha consapevolezza dei propri limiti su un argomento specifico.</li>
+    <li>Output diversi alla stessa domanda non indicano errore, ma variabilità statistica.</li>
+  </ul>
+  <div class="box box-warn">
+    <div class="box-label">⚠ Attenzione</div>
+    <p>Non trattare l'output dell'IA come una fonte verificata. Trattalo come una bozza intelligente che richiede sempre la tua supervisione disciplinare.</p>
+  </div>
+
+  <div class="sub-title">1.2  Il contesto è tutto</div>
+  <p>L'IA lavora solo con ciò che gli fornisci nella conversazione. Non ha accesso al web in tempo reale (salvo strumenti specifici), non ricorda conversazioni precedenti, non conosce i tuoi studenti. Se non glielo dici tu, non lo sa.</p>
+  <p>Questa è la ragione principale per cui prompt vaghi producono output inutili: l'IA riempie le lacune con ipotesi generiche.</p>
+
+  <div class="sub-title">1.3  Le allucinazioni non sono un bug</div>
+  <p>Le allucinazioni — informazioni false presentate con tono sicuro — sono una caratteristica strutturale, non un difetto temporaneo. Sono più frequenti su:</p>
+  <ul class="guide-list">
+    <li>Dati numerici precisi (date, statistiche, citazioni esatte).</li>
+    <li>Argomenti di nicchia o molto specialistici.</li>
+    <li>Norme, leggi, riferimenti burocratici specifici.</li>
+  </ul>
+  <div class="box box-tip">
+    <div class="box-label">💡 Suggerimento</div>
+    <p>Usa l'IA per strutturare, generare bozze e ragionare. Per i dati fattuali precisi, verifica sempre su fonti primarie.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SEZIONE 2 -->
+<section class="guide-section scroll-anchor" id="sec2">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div class="section-titles">
+      <div class="section-title">Anatomia di un prompt efficace</div>
+      <div class="section-subtitle">I quattro elementi che fanno la differenza</div>
+    </div>
+  </div>
+  <p>Un prompt efficace non è necessariamente lungo. È <strong>preciso</strong>. Contiene quattro elementi che, se presenti tutti, riducono drasticamente la varianza dell'output.</p>
+
+  <table class="anatomy-table">
+    <thead><tr>
+      <th>Elemento</th><th>Domanda guida</th><th>Esempio e perché</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="anatomy-tag tag-role">RUOLO</span></td>
+        <td><span class="anatomy-q">Chi deve essere l'IA?</span></td>
+        <td>
+          <span class="anatomy-ex">"Agisci come esperto in valutazione per competenze nella scuola secondaria"</span>
+          <div class="anatomy-note">→ Attiva lessico e criteri disciplinari specifici. Senza ruolo, l'IA risponde in modo generico.</div>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="anatomy-tag tag-task">COMPITO</span></td>
+        <td><span class="anatomy-q">Cosa deve produrre?</span></td>
+        <td>
+          <span class="anatomy-ex">Usa verbi precisi: <em>Progetta, Genera, Analizza, Crea</em></span>
+          <div class="anatomy-note">→ Evita: "aiutami con", "fai qualcosa su". Sii diretto: l'IA non indovina le intenzioni.</div>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="anatomy-tag tag-ctx">CONTESTO</span></td>
+        <td><span class="anatomy-q">Quali informazioni ha bisogno?</span></td>
+        <td>
+          <span class="anatomy-ex">Livello classe, disciplina, obiettivi UDA, vincoli di tempo</span>
+          <div class="anatomy-note">→ Più contesto fornisci, più l'output è calibrato. Non dare nulla per scontato.</div>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="anatomy-tag tag-fmt">FORMATO</span></td>
+        <td><span class="anatomy-q">Come deve presentare l'output?</span></td>
+        <td>
+          <span class="anatomy-ex">Tabella Markdown, elenco numerato, JSON, testo narrativo</span>
+          <div class="anatomy-note">→ Senza indicazioni di formato l'IA sceglie da sola, spesso in modo non utile.</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sub-title">2.1  Prompt vago vs prompt preciso</div>
+  <div class="box box-note"><p>❌ VAGO: "Crea una verifica su Manzoni per la mia classe."</p></div>
+  <div class="box box-info" style="margin-top:.5rem;">
+    <div class="box-label">✓ Preciso</div>
+    <p>"Agisci come docente di italiano per una classe terza ITS (livello B2). Crea una verifica di comprensione su un brano de I Promessi Sposi (cap. VIII). Deve contenere: 3 domande a risposta aperta breve, 2 domande di analisi stilistica, 1 domanda di collegamento storico. Formato: domande numerate con spazio per la risposta."</p>
+  </div>
+  <p style="margin-top:.75rem;">Stesso obiettivo, output completamente diverso. Il secondo prompt non è più difficile da scrivere: richiede solo che tu abbia chiarito a te stesso cosa vuoi ottenere.</p>
+
+  <div class="sub-title">2.2  Quando basta un prompt semplice</div>
+  <ul class="guide-list">
+    <li>Spiegazione di un concetto ("Spiegami la differenza tra deduzione e induzione in modo semplice").</li>
+    <li>Brainstorming iniziale ("Dammi 10 idee per introdurre il concetto di funzione").</li>
+    <li>Riformulazione di un testo già scritto.</li>
+    <li>Domande rapide su sintassi, grammatica, convenzioni di formato.</li>
+  </ul>
+  <div class="box box-tip">
+    <div class="box-label">💡 Regola pratica</div>
+    <p>Se usi l'output una volta sola, un prompt semplice basta. Se vuoi riutilizzarlo, adattarlo o condividerlo con colleghi, vale la pena strutturarlo bene.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SEZIONE 3 -->
+<section class="guide-section scroll-anchor" id="sec3">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div class="section-titles">
+      <div class="section-title">La scala del prompt</div>
+      <div class="section-subtitle">Dal messaggio rapido al sistema riutilizzabile</div>
+    </div>
+  </div>
+  <p>Non esiste un unico tipo di prompt. Esistono livelli di complessità, e scegliere il livello giusto è già metà del lavoro.</p>
+
+  <div class="scale-cards">
+    <div class="scale-card open" onclick="toggleCard(this)">
+      <div class="scale-card-header">
+        <span class="scale-lvl">Livello 1</span>
+        <span class="scale-name">Prompt diretto</span>
+        <span class="scale-toggle">▼</span>
+      </div>
+      <div class="scale-body">
+        <p>Una o due frasi. Adatto per richieste rapide e monouso.</p>
+        <div class="prompt-wrap">
+          <div class="prompt-block" id="p-l1">Scrivi tre possibili titoli per una lezione sull'energia rinnovabile destinata a studenti ITS di secondo anno.<button class="copy-btn" onclick="copyPrompt('p-l1',event)">📋 Copia</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="scale-card" onclick="toggleCard(this)">
+      <div class="scale-card-header">
+        <span class="scale-lvl">Livello 2</span>
+        <span class="scale-name">Prompt strutturato (RUOLO + COMPITO + CONTESTO + FORMATO)</span>
+        <span class="scale-toggle">▼</span>
+      </div>
+      <div class="scale-body">
+        <p>Segue l'anatomia dei quattro elementi. Adatto per materiali didattici da usare in classe.</p>
+        <div class="prompt-wrap">
+          <div class="prompt-block" id="p-l2"><span class="tag"># RUOLO</span>
+Agisci come docente di fisica applicata per un ITS ad indirizzo energetico.
+
+<span class="tag"># COMPITO</span>
+Crea una scheda di lavoro per una lezione laboratoriale sul calcolo
+dell'efficienza di un pannello fotovoltaico.
+
+<span class="tag"># CONTESTO</span>
+Classe seconda, 18 studenti, conoscenze di base di elettrotecnica.
+La lezione dura 2 ore con 45 minuti di attività pratica.
+
+<span class="tag"># FORMATO</span>
+Tabella con: obiettivo, materiali necessari, procedura (step numerati),
+formula da applicare, spazio per annotare i risultati.<button class="copy-btn" onclick="copyPrompt('p-l2',event)">📋 Copia</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="scale-card" onclick="toggleCard(this)">
+      <div class="scale-card-header">
+        <span class="scale-lvl">Livello 3</span>
+        <span class="scale-name">Meta-prompt — costruisce uno strumento riutilizzabile</span>
+        <span class="scale-toggle">▼</span>
+      </div>
+      <div class="scale-body">
+        <p>Chiedi all'IA di costruire uno strumento didattico complesso: una rubrica, una griglia UDA, una sequenza di prompt. Trattato in dettaglio nella Sezione 5.</p>
+        <div class="box box-warn" style="margin-top:.5rem;">
+          <div class="box-label">⚠ Errore frequente</div>
+          <p>Usare il meta-prompt per qualsiasi cosa, anche quando basta un prompt diretto. Ha senso solo quando l'output deve essere riutilizzato molte volte o da persone diverse.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SEZIONE 4 -->
+<section class="guide-section scroll-anchor" id="sec4">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div class="section-titles">
+      <div class="section-title">Prompt per la didattica</div>
+      <div class="section-subtitle">Esempi pratici per scenari reali — personalizza i campi viola</div>
+    </div>
+  </div>
+  <p>I campi in <span style="color:#7030A0;font-style:italic;">viola corsivo</span> sono editabili: clicca direttamente sul testo per personalizzare il prompt prima di copiarlo.</p>
+
+  <div class="sub-title">4.1  Progettare verifiche</div>
+  <div class="prompt-wrap">
+    <div class="prompt-block" id="p-verifica"><span class="tag"># RUOLO</span>
+Agisci come docente di <span class="ph-edit" contenteditable="true" data-placeholder="[DISCIPLINA]">[DISCIPLINA]</span> per un ITS.
+
+<span class="tag"># COMPITO</span>
+Progetta una verifica sommativa sull'argomento: <span class="ph-edit" contenteditable="true" data-placeholder="[ARGOMENTO]">[ARGOMENTO]</span>.
+
+<span class="tag"># CONTESTO</span>
+Classe: <span class="ph-edit" contenteditable="true" data-placeholder="[ANNO]">[ANNO]</span>. Livello: <span class="ph-edit" contenteditable="true" data-placeholder="[BASE/INTERMEDIO/AVANZATO]">[BASE / INTERMEDIO / AVANZATO]</span>.
+Obiettivi di apprendimento: <span class="ph-edit" contenteditable="true" data-placeholder="[ELENCA 2-3 OBIETTIVI]">[ELENCA 2-3 OBIETTIVI SPECIFICI]</span>.
+
+<span class="tag"># FORMATO</span>
+La verifica deve contenere:
+- <span class="ph-edit" contenteditable="true" data-placeholder="[N]">[N]</span> domande a risposta chiusa (vero/falso o scelta multipla)
+- <span class="ph-edit" contenteditable="true" data-placeholder="[N]">[N]</span> domande a risposta aperta breve (max 5 righe)
+- <span class="ph-edit" contenteditable="true" data-placeholder="[N]">[N]</span> esercizio applicativo / problem solving
+Indica il punteggio suggerito per ogni sezione (totale: 10 punti).<button class="copy-btn" onclick="copyPrompt('p-verifica',event)">📋 Copia</button></div>
+  </div>
+
+  <div class="sub-title">4.2  Feedback sulla scrittura degli studenti</div>
+  <div class="prompt-wrap">
+    <div class="prompt-block" id="p-scrittura"><span class="tag"># RUOLO</span>
+Agisci come tutor di scrittura per studenti di scuola secondaria superiore.
+
+<span class="tag"># COMPITO</span>
+Analizza il seguente testo scritto da uno studente e fornisci feedback
+formativo su: coerenza argomentativa, uso del lessico disciplinare,
+struttura del testo.
+
+<span class="tag"># VINCOLO FONDAMENTALE</span>
+Non riscrivere il testo. Non fornire frasi corrette.
+Indica solo cosa migliorare e come, con domande che guidino lo studente
+a trovare la soluzione da solo.
+
+<span class="tag"># TESTO DA ANALIZZARE</span>
+<span class="ph-edit" contenteditable="true" data-placeholder="[INCOLLA QUI IL TESTO DELLO STUDENTE]">[INCOLLA QUI IL TESTO DELLO STUDENTE]</span><button class="copy-btn" onclick="copyPrompt('p-scrittura',event)">📋 Copia</button></div>
+  </div>
+
+  <div class="sub-title">4.3  Preparare spiegazioni e materiali</div>
+  <div class="prompt-wrap">
+    <div class="prompt-block" id="p-spieg"><span class="tag"># RUOLO</span>
+Agisci come docente esperto di <span class="ph-edit" contenteditable="true" data-placeholder="[DISCIPLINA]">[DISCIPLINA]</span> con competenza
+nella didattica per adulti (andragogia).
+
+<span class="tag"># COMPITO</span>
+Spiega il concetto di <span class="ph-edit" contenteditable="true" data-placeholder="[CONCETTO]">[CONCETTO]</span> usando:
+1. Una definizione precisa (max 3 righe)
+2. Un'analogia con la vita quotidiana
+3. Un esempio pratico nel contesto <span class="ph-edit" contenteditable="true" data-placeholder="[SETTORE]">[SETTORE PROFESSIONALE]</span>
+4. Un errore concettuale frequente da evitare
+
+<span class="tag"># FORMATO</span>
+Testo scorrevole, livello linguistico <span class="ph-edit" contenteditable="true" data-placeholder="[B1/B2/C1]">[B2]</span>, senza formule
+matematiche salvo indicazione contraria.<button class="copy-btn" onclick="copyPrompt('p-spieg',event)">📋 Copia</button></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SEZIONE 5 -->
+<section class="guide-section scroll-anchor" id="sec5">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <div class="section-titles">
+      <div class="section-title">Il meta-prompt</div>
+      <div class="section-subtitle">Solo quando serve — ma quando serve, cambia tutto</div>
+    </div>
+  </div>
+  <p>Il meta-prompt chiede all'IA di costruire uno strumento didattico complesso e riutilizzabile. L'output non è una risposta singola, ma un sistema.</p>
+
+  <div class="sub-title">Struttura del meta-prompt</div>
+  <div class="box box-info">
+    <div class="box-label">I 5 blocchi</div>
+    <p><code style="color:var(--blue-dark);font-weight:700;"># RUOLO</code> — Chi deve essere l'IA (disciplina, livello scolastico, specializzazione)<br>
+    <code style="color:var(--blue-dark);font-weight:700;"># TASK</code> — Cosa deve produrre, con un verbo d'azione preciso<br>
+    <code style="color:var(--blue-dark);font-weight:700;"># STRUTTURA OUTPUT</code> — Formato esatto: tabella, elenco, sezioni numerate<br>
+    <code style="color:var(--blue-dark);font-weight:700;"># VINCOLI</code> — Cosa NON fare, limiti di lunghezza, registro, riferimenti normativi<br>
+    <code style="color:var(--blue-dark);font-weight:700;"># AUTODIAGNOSI</code> — Chiedi all'IA di segnalare 2 ambiguità nell'output generato</p>
+  </div>
+  <div class="box box-note" style="margin-top:.5rem;">
+    <p>Nota sull'AUTODIAGNOSI: utile come primo filtro, ma non sostituisce la tua revisione. L'IA tende a critiche generiche. Usala come spunto, non come garanzia.</p>
+  </div>
+
+  <!-- ESEMPIO A -->
+  <div class="example-header" style="margin-top:1.75rem;">
+    <div class="example-tag">Esempio A — Meta-prompt completo</div>
+    <div class="example-disc">Italiano e materie umanistiche</div>
+    <div class="example-ctx">Rubrica di valutazione per il testo argomentativo</div>
+  </div>
+  <p><strong>Contesto d'uso:</strong> vuoi una rubrica riutilizzabile ogni anno, con descrittori oggettivi che riducano la soggettività del giudizio e possano essere condivisi con i colleghi di dipartimento.</p>
+  <div class="prompt-wrap">
+    <div class="prompt-block" id="p-meta-a"><span class="tag"># RUOLO</span>
+Agisci come esperto in Docimologia e Valutazione per Competenze
+nella Scuola Secondaria di Secondo Grado, con specializzazione in
+valutazione della produzione scritta in lingua italiana.
+
+<span class="tag"># TASK</span>
+Progetta una rubrica di valutazione analitica per il testo argomentativo
+scritto, destinata a una classe terza o quarta ITS.
+
+<span class="tag"># STRUTTURA OUTPUT</span>
+Tabella Markdown con queste colonne:
+  1. DIMENSIONE: il macro-ambito valutato
+  2. PESO %: importanza relativa (totale = 100%)
+  3. INIZIALE (voto 4-5): descrittore comportamentale osservabile
+  4. BASE (voto 6): descrittore comportamentale osservabile
+  5. INTERMEDIO (voto 7-8): descrittore comportamentale osservabile
+  6. AVANZATO (voto 9-10): descrittore comportamentale osservabile
+  7. FEEDBACK: suggerimento migliorativo pre-compilato per ogni livello
+
+<span class="tag"># VINCOLI DOCIMOLOGICI</span>
+- Le DIMENSIONI devono coprire: contenuto/argomentazione, coesione
+  testuale, correttezza linguistica, uso del lessico specifico,
+  rispetto delle consegne
+- I descrittori devono basarsi su evidenze MISURABILI:
+  es. 'utilizza almeno 3 connettivi logici diversi', 'cita almeno
+  una fonte', 'non supera 2 errori morfosintattici per pagina'
+- Vietato usare aggettivi vaghi: buono, adeguato, accurato, corretto
+- Il feedback deve essere in seconda persona, tono propositivo
+
+<span class="tag"># AUTOVALUTAZIONE</span>
+Aggiungi 3 domande metacognitive aperte per lo studente, focalizzate
+sul processo (non sul risultato).
+
+<span class="tag"># AUTODIAGNOSI</span>
+Indica 2 possibili ambiguità nella rubrica generata e come risolverle.<button class="copy-btn" onclick="copyPrompt('p-meta-a',event)">📋 Copia</button></div>
+  </div>
+  <div class="box box-tip">
+    <div class="box-label">💡 Cosa personalizzare</div>
+    <p>I nomi delle DIMENSIONI (adattali agli obiettivi della tua UDA), i valori di PESO %, il registro del FEEDBACK in base all'età degli studenti.</p>
+  </div>
+
+  <!-- ESEMPIO B -->
+  <div class="example-header" style="margin-top:1.75rem;">
+    <div class="example-tag">Esempio B — Meta-prompt completo</div>
+    <div class="example-disc">Materie tecniche e informatica</div>
+    <div class="example-ctx">Guida al laboratorio di coding senza dare la soluzione</div>
+  </div>
+  <p><strong>Contesto d'uso:</strong> vuoi un prompt da usare in laboratorio che guidi gli studenti attraverso domande socratiche, senza fornire mai la soluzione completa.</p>
+  <div class="prompt-wrap">
+    <div class="prompt-block" id="p-meta-b"><span class="tag"># RUOLO</span>
+Agisci come Senior Software Engineer con esperienza in didattica della
+programmazione per istituti tecnici superiori ad indirizzo informatico.
+Il tuo approccio è socratico: non dai mai la risposta, guidi lo studente
+a trovarla attraverso domande e micro-obiettivi progressivi.
+
+<span class="tag"># TASK</span>
+Genera un prompt di laboratorio che guidi uno studente a implementare
+il seguente programma Python: <span class="ph-edit" contenteditable="true" data-placeholder="[DESCRIZIONE ESERCIZIO]">[DESCRIZIONE DELL'ESERCIZIO]</span>
+
+<span class="tag"># STRUTTURA OUTPUT</span>
+Il prompt generato deve articolarsi in 5 fasi:
+  FASE 1 - Analisi: domande per far esplicitare i requisiti
+  FASE 2 - Progettazione: pseudocodice PRIMA di scrivere codice
+  FASE 3 - Implementazione: 3 micro-obiettivi con domande socratiche
+  FASE 4 - Test: almeno 3 casi di test, incluso un caso limite
+  FASE 5 - Riflessione: cosa ha funzionato, cosa rifaresti diversamente
+
+<span class="tag"># VINCOLI DIDATTICI</span>
+- Livello target: <span class="ph-edit" contenteditable="true" data-placeholder="[PRINCIPIANTE/INTERMEDIO/AVANZATO]">[PRINCIPIANTE / INTERMEDIO / AVANZATO]</span>
+- Il prompt NON deve mai fornire codice completo, nemmeno come esempio
+- Ogni domanda deve avere un solo focus (no domande multiple)
+- Segnala i concetti prerequisito necessari
+
+<span class="tag"># REQUISITI TECNICI</span>
+Lo studente deve produrre codice con:
+  - Type Hinting e Docstring (Google Style)
+  - Gestione eccezioni (try/except con messaggi significativi)
+  - Almeno 3 unit test con pytest
+
+<span class="tag"># AUTODIAGNOSI</span>
+Indica 2 punti in cui il prompt generato potrebbe risultare troppo
+guidante o troppo vago per il livello indicato.<button class="copy-btn" onclick="copyPrompt('p-meta-b',event)">📋 Copia</button></div>
+  </div>
+
+  <!-- ESEMPIO C -->
+  <div class="example-header" style="margin-top:1.75rem;">
+    <div class="example-tag">Esempio C — Meta-prompt completo</div>
+    <div class="example-disc">Trasversale — qualsiasi disciplina</div>
+    <div class="example-ctx">Verifica sommativa a partire dagli obiettivi di apprendimento dell'UDA</div>
+  </div>
+  <p><strong>Contesto d'uso:</strong> hai una UDA con obiettivi definiti e vuoi generare una verifica sommativa coerente, differenziata per livello. Funziona per qualsiasi disciplina.</p>
+  <div class="prompt-wrap">
+    <div class="prompt-block" id="p-meta-c"><span class="tag"># RUOLO</span>
+Agisci come esperto di progettazione didattica per ITS, con competenza
+nella costruzione di prove di valutazione allineate agli obiettivi
+(approccio backward design).
+
+<span class="tag"># TASK</span>
+Genera una verifica sommativa per la seguente UDA:
+  Titolo UDA: <span class="ph-edit" contenteditable="true" data-placeholder="[TITOLO]">[TITOLO]</span>
+  Disciplina: <span class="ph-edit" contenteditable="true" data-placeholder="[DISCIPLINA]">[DISCIPLINA]</span>
+  Classe: <span class="ph-edit" contenteditable="true" data-placeholder="[ANNO E INDIRIZZO]">[ANNO E INDIRIZZO]</span>
+
+<span class="tag"># OBIETTIVI DI APPRENDIMENTO</span>
+  1. <span class="ph-edit" contenteditable="true" data-placeholder="[OBIETTIVO 1]">[OBIETTIVO 1]</span>
+  2. <span class="ph-edit" contenteditable="true" data-placeholder="[OBIETTIVO 2]">[OBIETTIVO 2]</span>
+  3. <span class="ph-edit" contenteditable="true" data-placeholder="[OBIETTIVO 3]">[OBIETTIVO 3]</span>
+
+<span class="tag"># STRUTTURA OUTPUT</span>
+  SEZIONE A - Conoscenze (livello base)
+    5 domande a scelta multipla (4 opzioni)
+    Indica quale obiettivo testa ogni domanda
+  SEZIONE B - Comprensione e applicazione (livello intermedio)
+    3 domande a risposta aperta breve (max 80 parole)
+    Includi lo schema di risposta attesa per la correzione
+  SEZIONE C - Analisi e problem solving (livello avanzato)
+    1 caso applicativo con criteri di valutazione (mini-rubrica)
+
+<span class="tag"># VINCOLI</span>
+- Ogni domanda deve essere tracciabile a uno degli obiettivi forniti
+- Punteggio: A = 3pt, B = 4pt, C = 3pt (totale 10)
+- Livello linguistico: <span class="ph-edit" contenteditable="true" data-placeholder="[B1/B2/C1]">[B2]</span>
+
+<span class="tag"># DIFFERENZIAZIONE</span>
+Per ogni domanda B e C, aggiungi una versione semplificata per BES/DSA
+(stessa competenza, consegna più esplicita).
+
+<span class="tag"># AUTODIAGNOSI</span>
+Verifica che ogni obiettivo sia coperto da almeno una domanda.
+Segnala eventuali obiettivi non coperti.<button class="copy-btn" onclick="copyPrompt('p-meta-c',event)">📋 Copia</button></div>
+  </div>
+  <div class="box box-tip">
+    <div class="box-label">💡 Cosa personalizzare</div>
+    <p>TITOLO UDA e OBIETTIVI (copia-incolla dalla tua programmazione), LIVELLO LINGUISTICO, pesi del punteggio. Puoi aggiungere nella sezione VINCOLI eventuali argomenti da escludere.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SEZIONE 6 -->
+<section class="guide-section scroll-anchor" id="sec6">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <div class="section-titles">
+      <div class="section-title">Iterare: il prompt non si scrive una volta sola</div>
+      <div class="section-subtitle">Il ciclo revisione – test – miglioramento</div>
+    </div>
+  </div>
+  <p>Il primo output di un prompt è quasi sempre una bozza. Non perché il prompt sia sbagliato, ma perché la comunicazione con l'IA è un processo iterativo. Chi ottiene risultati professionali revisiona di più, non scrive prompt migliori al primo colpo.</p>
+
+  <div class="sub-title">6.1  Come riconoscere un output scadente</div>
+  <p>Ferma l'iterazione e rivedi il prompt se l'output:</p>
+  <ul class="guide-list">
+    <li>È troppo generico — potrebbe applicarsi a qualsiasi classe o disciplina.</li>
+    <li>Usa termini vaghi che hai esplicitamente vietato nei vincoli.</li>
+    <li>Ignora uno o più elementi della struttura richiesta.</li>
+    <li>Ha un tono sbagliato rispetto al destinatario.</li>
+    <li>Contiene informazioni che non riesci a verificare.</li>
+  </ul>
+
+  <div class="sub-title">6.2  Come correggere senza ricominciare da zero</div>
+  <p>Non cancellare tutto. Nella stessa conversazione, invia un messaggio di correzione mirato:</p>
+  <div class="prompt-wrap">
+    <div class="prompt-block" id="p-corr">L'output è buono ma ha questi problemi specifici:
+1. I descrittori nella colonna 'AVANZATO' sono ancora troppo vaghi.
+   Rendili misurabili con evidenze osservabili.
+2. La sezione FEEDBACK usa un tono giudicante. Riformulala in modo
+   propositivo, rivolta direttamente allo studente.
+Modifica solo queste due sezioni, il resto va bene.<button class="copy-btn" onclick="copyPrompt('p-corr',event)">📋 Copia</button></div>
+  </div>
+  <p>Specificare cosa è già buono è importante quanto specificare cosa correggere. Evita di dire solo "miglioralo".</p>
+
+  <div class="sub-title">6.3  Il ciclo in tre passi</div>
+  <ol class="guide-list">
+    <li>Genera l'output con il tuo prompt strutturato.</li>
+    <li>Leggi criticamente: annota cosa manca, cosa è vago, cosa è sbagliato disciplinarmente.</li>
+    <li>Invia una correzione mirata nella stessa conversazione. Ripeti fino a soddisfazione.</li>
+  </ol>
+  <div class="box box-tip">
+    <div class="box-label">💡 Suggerimento</div>
+    <p>Salva sempre il prompt finale che ha prodotto un output soddisfacente. In una cartella condivisa con i colleghi diventa un patrimonio del dipartimento. In tre anni avrai una libreria di strumenti didattici testati.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SEZIONE 7 -->
+<section class="guide-section scroll-anchor" id="sec7">
+  <div class="section-header">
+    <div class="section-num">7</div>
+    <div class="section-titles">
+      <div class="section-title">Limiti, rischi e responsabilità</div>
+      <div class="section-subtitle">Il giudizio disciplinare rimane insostituibile</div>
+    </div>
+  </div>
+
+  <div class="sub-title">7.1  Allucinazioni e verifica dei contenuti</div>
+  <p>L'IA produce errori disciplinari con la stessa sicurezza con cui produce contenuti corretti. I più rischiosi:</p>
+  <ul class="guide-list">
+    <li>Date e fatti storici: verificare sempre su fonti primarie.</li>
+    <li>Citazioni e riferimenti bibliografici: spesso inventati o alterati.</li>
+    <li>Norme, decreti, riferimenti burocratici: altissima frequenza di errori.</li>
+    <li>Formule e calcoli: corretti nella struttura, errati nei dettagli.</li>
+  </ul>
+  <div class="box box-warn">
+    <div class="box-label">⚠ Attenzione</div>
+    <p>Non distribuire mai agli studenti un output IA senza averlo letto integralmente. La responsabilità didattica e disciplinare è sempre del docente, non dello strumento.</p>
+  </div>
+
+  <div class="sub-title">7.2  Il problema del plagio e della valutazione</div>
+  <p>Gli studenti usano l'IA. Non è un'eccezione: è la norma. Le strategie efficaci non sono il divieto (impraticabile) ma:</p>
+  <ul class="guide-list">
+    <li>Progettare verifiche che richiedono applicazione contestuale, non riproduzione di contenuti.</li>
+    <li>Valutare il processo (presentazione orale, diario di bordo, revisioni intermedie) oltre al prodotto finale.</li>
+    <li>Usare l'IA in classe in modo trasparente, mostrando agli studenti come funziona e i suoi limiti.</li>
+  </ul>
+
+  <div class="sub-title">7.3  Bias e rappresentazione</div>
+  <p>I modelli linguistici riproducono i bias presenti nei dati di addestramento:</p>
+  <ul class="guide-list">
+    <li>Esempi e riferimenti culturalmente non neutri.</li>
+    <li>Rappresentazione stereotipata di genere, età, provenienza geografica.</li>
+    <li>Tendenza a produrre contenuti più rappresentativi della cultura anglofona.</li>
+  </ul>
+  <div class="box box-tip">
+    <div class="box-label">💡 Spunto didattico</div>
+    <p>Quando usi output IA in classe, rendilo un'occasione didattica: mostra agli studenti come riconoscere un bias, come verificare un'informazione. È competenza trasversale fondamentale.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- APPENDICE -->
+<section class="guide-section scroll-anchor" id="appA">
+  <div class="appendix-title">Appendice</div>
+  <hr class="appendix-rule">
+
+  <div class="sub-title" style="margin-top:0;">A.  Checklist pre-utilizzo in classe</div>
+  <p>Spunta ogni voce prima di distribuire un output IA agli studenti.</p>
+  <div class="checklist">
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text">Ho letto integralmente l'output prima di distribuirlo.</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text">Ho verificato la correttezza disciplinare di tutti i contenuti fattuali.</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text">Ho controllato che non ci siano informazioni non verificabili.</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text">Ho adattato il livello linguistico alla classe.</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text">Ho comunicato agli studenti che il materiale è stato elaborato con supporto IA.</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text">Ho salvato il prompt usato per documentare la mia pratica didattica.</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text">Ho verificato la coerenza con la programmazione e gli obiettivi dell'UDA.</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text">Non uso questo output per valutazioni sommative senza revisione critica.</div>
+    </div>
+  </div>
+</section>
+
+<section class="guide-section scroll-anchor" id="appB">
+  <div class="sub-title">B.  Glossario essenziale</div>
+  <div class="glossary">
+    <div class="gloss-item">
+      <div class="gloss-term" onclick="toggleGloss(this)"><span>Prompt</span><span class="gloss-arrow">▶</span></div>
+      <div class="gloss-def">L'istruzione che dai all'IA. Può essere breve (una riga) o articolata (una pagina strutturata). La qualità del prompt determina direttamente la qualità dell'output.</div>
+    </div>
+    <div class="gloss-item">
+      <div class="gloss-term" onclick="toggleGloss(this)"><span>Meta-prompt</span><span class="gloss-arrow">▶</span></div>
+      <div class="gloss-def">Un prompt che chiede all'IA di generare un altro prompt o uno strumento riutilizzabile (rubrica, griglia di valutazione, sequenza didattica...). L'output è un sistema, non una risposta singola.</div>
+    </div>
+    <div class="gloss-item">
+      <div class="gloss-term" onclick="toggleGloss(this)"><span>Token</span><span class="gloss-arrow">▶</span></div>
+      <div class="gloss-def">L'unità di misura del testo elaborato dall'IA. Approssimativamente: 1 token = ¾ di parola. Ogni modello ha un limite di token per sessione — quando si esaurisce, l'IA "dimentica" l'inizio della conversazione.</div>
+    </div>
+    <div class="gloss-item">
+      <div class="gloss-term" onclick="toggleGloss(this)"><span>Allucinazione</span><span class="gloss-arrow">▶</span></div>
+      <div class="gloss-def">Quando l'IA produce informazioni false presentate con tono sicuro. Non è un bug: è una caratteristica strutturale di questi modelli. Il controllo del docente è sempre necessario.</div>
+    </div>
+    <div class="gloss-item">
+      <div class="gloss-term" onclick="toggleGloss(this)"><span>Temperatura</span><span class="gloss-arrow">▶</span></div>
+      <div class="gloss-def">Parametro (spesso non visibile all'utente) che regola la creatività dell'IA. Alta temperatura = risposte più creative ma meno precise. Bassa temperatura = risposte più prevedibili e accurate.</div>
+    </div>
+    <div class="gloss-item">
+      <div class="gloss-term" onclick="toggleGloss(this)"><span>Context window (Finestra di contesto)</span><span class="gloss-arrow">▶</span></div>
+      <div class="gloss-def">La "memoria" dell'IA durante una sessione. Quando la conversazione diventa troppo lunga, l'IA perde i dettagli iniziali. Per prompt lunghi e complessi, inizia una nuova conversazione includendo le informazioni essenziali.</div>
+    </div>
+  </div>
+</section>
+
+<section class="guide-section scroll-anchor" id="appC">
+  <div class="sub-title">C.  Per approfondire</div>
+  <ul class="guide-list">
+    <li><a href="https://docs.claude.ai/en/docs/build-with-claude/prompt-engineering/overview" target="_blank" style="color:var(--blue-mid);">Documentazione ufficiale sul prompting — Anthropic (Claude)</a></li>
+    <li><a href="https://platform.openai.com/docs/guides/prompt-engineering" target="_blank" style="color:var(--blue-mid);">Guida al prompting — OpenAI (ChatGPT)</a></li>
+  </ul>
+  <div class="box box-note" style="margin-top:1rem;">
+    <p>Questa guida è un documento vivo. Aggiornala con i tuoi esempi, annota cosa ha funzionato e cosa no, condividila con i colleghi. I prompt migliori nascono dalla pratica condivisa, non dalla teoria.</p>
+  </div>
+</section>
+
+</div><!-- /#guide-content -->
+
+<!-- ════════════════════════════════════════════════════════════════
+     AULA MODE — SLIDES
+════════════════════════════════════════════════════════════════ -->
+<div id="slides-container">
+
+  <div class="slide active" id="slide-0" style="background:linear-gradient(135deg,#1F4E79 0%,#2E5F8C 100%);">
+    <div class="slide-tag" style="color:var(--blue-light);">Corso Competenze Didattiche Digitali</div>
+    <div class="slide-title" style="color:#fff;font-size:clamp(2rem,5vw,3.8rem);">Guida al Prompting<br>con l'IA</div>
+    <div class="slide-body" style="color:rgba(255,255,255,.8);font-size:clamp(.95rem,1.6vw,1.2rem);margin-top:.75rem;">Per docenti di Istituto Tecnico Superiore<br><br>
+    Useremo <strong style="color:#fff;">← →</strong> per navigare, oppure i pulsanti in basso a destra.</div>
+  </div>
+
+  <div class="slide" id="slide-1">
+    <div class="slide-tag">Sezione 1</div>
+    <div class="slide-title">Come 'pensa' un modello IA</div>
+    <div class="slide-body">
+      <p><strong>L'IA non capisce: predice.</strong> Produce la sequenza di parole statisticamente più probabile dato il tuo input.</p>
+      <ul>
+        <li>Risponde con sicurezza <em>anche quando sbaglia</em></li>
+        <li>Non sa cosa non sa</li>
+        <li>Output diversi = variabilità statistica, non errore</li>
+      </ul>
+      <div class="box box-warn" style="margin-top:1rem;">
+        <div class="box-label">⚠ Regola d'oro</div>
+        <p>L'output IA è sempre una <strong>bozza intelligente</strong>. Il controllo disciplinare è sempre del docente.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" id="slide-2">
+    <div class="slide-tag">Sezione 1</div>
+    <div class="slide-title">Le allucinazioni non sono un bug</div>
+    <div class="slide-body">
+      <p>Sono una caratteristica strutturale. Più frequenti su:</p>
+      <ul>
+        <li>Date, statistiche, citazioni esatte</li>
+        <li>Argomenti specialistici di nicchia</li>
+        <li>Norme, leggi, riferimenti burocratici</li>
+      </ul>
+      <div class="box box-tip" style="margin-top:1rem;">
+        <div class="box-label">💡 Suggerimento pratico</div>
+        <p>Usa l'IA per strutturare e generare bozze. Per i dati fattuali precisi, <strong>verifica sempre su fonti primarie</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" id="slide-3">
+    <div class="slide-tag">Sezione 2</div>
+    <div class="slide-title">I 4 elementi di un prompt efficace</div>
+    <div class="slide-body">
+      <table class="anatomy-table" style="font-size:clamp(.78rem,1.3vw,1rem);">
+        <thead><tr><th>Elemento</th><th>Domanda</th><th>Esempio</th></tr></thead>
+        <tbody>
+          <tr><td><span class="anatomy-tag tag-role">RUOLO</span></td><td>Chi è l'IA?</td><td>"Agisci come esperto in docimologia…"</td></tr>
+          <tr><td><span class="anatomy-tag tag-task">COMPITO</span></td><td>Cosa produce?</td><td>Progetta / Genera / Analizza / Crea</td></tr>
+          <tr><td><span class="anatomy-tag tag-ctx">CONTESTO</span></td><td>Cosa sa?</td><td>Livello classe, disciplina, obiettivi UDA</td></tr>
+          <tr><td><span class="anatomy-tag tag-fmt">FORMATO</span></td><td>Come presenta?</td><td>Tabella Markdown, elenco numerato, JSON</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="slide" id="slide-4">
+    <div class="slide-tag">Sezione 3</div>
+    <div class="slide-title">La scala del prompt</div>
+    <div class="slide-body">
+      <div class="box box-info" style="margin-bottom:.75rem;">
+        <div class="box-label">Livello 1 — Prompt diretto</div>
+        <p>Una riga. Per richieste rapide e monouso.</p>
+      </div>
+      <div class="box box-tip" style="margin-bottom:.75rem;">
+        <div class="box-label">Livello 2 — Prompt strutturato</div>
+        <p>RUOLO + COMPITO + CONTESTO + FORMATO. Per materiali da usare in classe.</p>
+      </div>
+      <div class="box box-warn">
+        <div class="box-label">Livello 3 — Meta-prompt</div>
+        <p>Genera uno strumento riutilizzabile: rubriche, griglie UDA, sequenze di prompt. Usalo solo quando l'output serve molte volte o a più colleghi.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" id="slide-5">
+    <div class="slide-tag">Sezione 5 — Meta-prompt</div>
+    <div class="slide-title">I 5 blocchi del meta-prompt</div>
+    <div class="slide-body">
+      <div class="box box-info">
+        <p>
+          <code style="color:var(--blue-dark);font-weight:700;"># RUOLO</code> — Chi deve essere l'IA<br>
+          <code style="color:var(--blue-dark);font-weight:700;"># TASK</code> — Cosa deve produrre<br>
+          <code style="color:var(--blue-dark);font-weight:700;"># STRUTTURA OUTPUT</code> — Formato esatto<br>
+          <code style="color:var(--blue-dark);font-weight:700;"># VINCOLI</code> — Cosa NON fare<br>
+          <code style="color:var(--blue-dark);font-weight:700;"># AUTODIAGNOSI</code> — Chiedi 2 ambiguità dell'output
+        </p>
+      </div>
+      <p style="margin-top:.75rem;">L'AUTODIAGNOSI è utile come primo filtro — non sostituisce la tua revisione disciplinare.</p>
+    </div>
+  </div>
+
+  <div class="slide" id="slide-6">
+    <div class="slide-tag">Sezione 5 — Esempio A</div>
+    <div class="slide-title">Meta-prompt: Rubrica per testo argomentativo</div>
+    <div class="slide-body">
+      <div class="prompt-block" id="ps-meta-a" style="font-size:clamp(.68rem,1.1vw,.82rem);max-height:55vh;overflow-y:auto;"><span class="tag"># RUOLO</span>
+Esperto in Docimologia nella Scuola Secondaria di II Grado.
+
+<span class="tag"># TASK</span>
+Progetta una rubrica analitica per il testo argomentativo, classe ITS.
+
+<span class="tag"># STRUTTURA OUTPUT</span>
+Tabella: DIMENSIONE | PESO% | INIZIALE | BASE | INTERMEDIO | AVANZATO | FEEDBACK
+
+<span class="tag"># VINCOLI</span>
+- Descrittori misurabili: es. "≥3 connettivi logici", "≤2 errori/pagina"
+- Vietato: buono, adeguato, accurato
+- Feedback in 2ª persona, tono propositivo
+
+<span class="tag"># AUTODIAGNOSI</span>
+Indica 2 ambiguità nella rubrica generata.<button class="copy-btn" onclick="copyPrompt('ps-meta-a',event)">📋 Copia</button></div>
+    </div>
+  </div>
+
+  <div class="slide" id="slide-7">
+    <div class="slide-tag">Sezione 5 — Esempio B</div>
+    <div class="slide-title">Meta-prompt: Laboratorio di coding socratico</div>
+    <div class="slide-body">
+      <div class="prompt-block" id="ps-meta-b" style="font-size:clamp(.68rem,1.1vw,.82rem);max-height:55vh;overflow-y:auto;"><span class="tag"># RUOLO</span>
+Senior Software Engineer, approccio socratico: non dai mai la risposta.
+
+<span class="tag"># TASK</span>
+Guida laboratoriale Python in 5 fasi:
+  1-Analisi  2-Progettazione  3-Implementazione  4-Test  5-Riflessione
+
+<span class="tag"># VINCOLI</span>
+- NON fornire codice completo
+- Ogni domanda = un solo focus
+- Segnala concetti prerequisito
+
+<span class="tag"># REQUISITI TECNICI</span>
+Type Hinting, Docstring, try/except, pytest (≥3 test)<button class="copy-btn" onclick="copyPrompt('ps-meta-b',event)">📋 Copia</button></div>
+    </div>
+  </div>
+
+  <div class="slide" id="slide-8">
+    <div class="slide-tag">Sezione 5 — Esempio C</div>
+    <div class="slide-title">Meta-prompt: Verifica sommativa da UDA</div>
+    <div class="slide-body">
+      <div class="prompt-block" id="ps-meta-c" style="font-size:clamp(.68rem,1.1vw,.82rem);max-height:55vh;overflow-y:auto;"><span class="tag"># RUOLO</span>
+Esperto di progettazione didattica ITS, approccio backward design.
+
+<span class="tag"># TASK</span>
+Verifica sommativa per UDA: [TITOLO] — [DISCIPLINA] — [CLASSE]
+Obiettivi: [1] [2] [3]
+
+<span class="tag"># STRUTTURA</span>
+  SEZIONE A: 5 domande scelta multipla (livello base)
+  SEZIONE B: 3 domande aperta breve + schema risposta attesa
+  SEZIONE C: 1 caso applicativo + mini-rubrica
+
+<span class="tag"># VINCOLI</span>
+- Ogni domanda tracciabile a un obiettivo
+- Versione semplificata BES/DSA per B e C
+
+<span class="tag"># AUTODIAGNOSI</span>
+Segnala obiettivi non coperti.<button class="copy-btn" onclick="copyPrompt('ps-meta-c',event)">📋 Copia</button></div>
+    </div>
+  </div>
+
+  <div class="slide" id="slide-9">
+    <div class="slide-tag">Sezione 6</div>
+    <div class="slide-title">Iterare: il ciclo in 3 passi</div>
+    <div class="slide-body">
+      <ol class="guide-list" style="font-size:clamp(.95rem,1.5vw,1.1rem);">
+        <li style="margin-bottom:.75rem;"><strong>Genera</strong> l'output con il prompt strutturato.</li>
+        <li style="margin-bottom:.75rem;"><strong>Leggi criticamente:</strong> annota cosa manca, cosa è vago, cosa è sbagliato disciplinarmente.</li>
+        <li style="margin-bottom:.75rem;"><strong>Correggi in modo mirato</strong> nella stessa conversazione. Non cancellare tutto — specifica solo cosa cambiare e cosa tenere.</li>
+      </ol>
+      <div class="box box-tip" style="margin-top:.5rem;">
+        <div class="box-label">💡 Asset del dipartimento</div>
+        <p>Salva i prompt che funzionano in una cartella condivisa. In tre anni avrai una libreria testata riutilizzabile da tutti i colleghi.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" id="slide-10">
+    <div class="slide-tag">Sezione 7</div>
+    <div class="slide-title">Fare & Non fare</div>
+    <div class="slide-body">
+      <div class="dodont">
+        <div class="do-col">
+          <div class="dodont-title">Fai</div>
+          <ul>
+            <li>Struttura i prompt con blocchi etichettati</li>
+            <li>Specifica il formato output con un esempio</li>
+            <li>Aggiungi sempre AUTODIAGNOSI</li>
+            <li>Testa su 3 input diversi prima della classe</li>
+            <li>Salva i prompt che funzionano</li>
+          </ul>
+        </div>
+        <div class="dont-col">
+          <div class="dodont-title">Evita</div>
+          <ul>
+            <li>Istruzioni vaghe: "fai qualcosa di interessante"</li>
+            <li>Usare stesso prompt su modelli diversi senza adattare</li>
+            <li>Distribuire output senza leggerlo integralmente</li>
+            <li>Valutazioni sommative senza supervisione critica</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" id="slide-11" style="background:linear-gradient(135deg,#1F4E79 0%,#2E5F8C 100%);">
+    <div class="slide-title" style="color:#fff;font-size:clamp(1.6rem,4vw,3rem);">Il giudizio disciplinare<br>è sempre tuo.</div>
+    <div class="slide-body" style="color:rgba(255,255,255,.85);font-size:clamp(.95rem,1.6vw,1.2rem);margin-top:1rem;">
+      L'IA è uno strumento potente — come tutti gli strumenti potenti, richiede consapevolezza dei limiti.<br><br>
+      Usa questa guida come punto di partenza, non come garanzia.<br>
+      Annota cosa funziona. Condividi con i colleghi. Itera.
+    </div>
+  </div>
+
+</div><!-- /#slides-container -->
+
+<!-- Slide nav -->
+<div id="slide-nav">
+  <button class="slide-btn" id="btn-prev" onclick="prevSlide()" disabled>◀</button>
+  <span id="slide-counter">1 / 12</span>
+  <button class="slide-btn" id="btn-next" onclick="nextSlide()">▶</button>
+</div>
+
+<!-- Progress bar -->
+<div id="progress-bar"><div id="progress-fill" style="width:0%"></div></div>
+
+</main><!-- /#main -->
+
+<script>
+// ── STATE ────────────────────────────────────────────────────────
+let aulaMode = false;
+let currentSlide = 0;
+const totalSlides = document.querySelectorAll('.slide').length;
+
+// ── MODE TOGGLE ──────────────────────────────────────────────────
+function toggleMode() {
+  aulaMode = !aulaMode;
+  document.body.classList.toggle('aula-mode', aulaMode);
+  document.getElementById('mode-icon').textContent  = aulaMode ? '📖' : '🎓';
+  document.getElementById('mode-label').textContent = aulaMode ? 'Modalità Guida' : 'Modalità Aula';
+  if (aulaMode) { showSlide(0); }
+}
+
+// ── SIDEBAR ──────────────────────────────────────────────────────
+function toggleSidebar() {
+  const sb = document.getElementById('sidebar');
+  const hb = document.getElementById('hamburger');
+  const ov = document.getElementById('overlay');
+  const open = sb.classList.toggle('open');
+  hb.classList.toggle('open', open);
+  ov.classList.toggle('open', open);
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+function navClick(el) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+  closeSidebar();
+}
+
+// ── ACTIVE NAV on scroll ─────────────────────────────────────────
+const sections = document.querySelectorAll('.scroll-anchor');
+const navItems = document.querySelectorAll('.nav-item');
+window.addEventListener('scroll', () => {
+  if (aulaMode) return;
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 100) current = s.id;
+  });
+  navItems.forEach(n => {
+    n.classList.toggle('active', n.getAttribute('href') === '#' + current);
+  });
+}, { passive: true });
+
+// ── COLLAPSIBLE CARDS ────────────────────────────────────────────
+function toggleCard(card) {
+  const target = event.target;
+  if (target.classList.contains('copy-btn') || target.closest('.copy-btn')) return;
+  if (target.classList.contains('ph-edit') || target.closest('.ph-edit')) return;
+  card.classList.toggle('open');
+}
+
+// ── GLOSSARY ─────────────────────────────────────────────────────
+function toggleGloss(term) {
+  term.closest('.gloss-item').classList.toggle('open');
+}
+
+// ── CHECKLIST ────────────────────────────────────────────────────
+function toggleCheck(item) {
+  item.classList.toggle('checked');
+}
+
+// ── COPY PROMPT ──────────────────────────────────────────────────
+function copyPrompt(id, e) {
+  if (e) { e.stopPropagation(); }
+  const el = document.getElementById(id);
+  // Get text, exclude button text, preserve editable content
+  const clone = el.cloneNode(true);
+  clone.querySelectorAll('.copy-btn').forEach(b => b.remove());
+  // Replace ph-edit spans with their current text content
+  clone.querySelectorAll('.ph-edit').forEach(ph => {
+    const text = document.createTextNode(ph.textContent || ph.getAttribute('data-placeholder'));
+    ph.replaceWith(text);
+  });
+  const text = clone.innerText || clone.textContent;
+  navigator.clipboard.writeText(text.trim()).then(() => {
+    const btn = el.querySelector('.copy-btn');
+    if (!btn) return;
+    btn.textContent = '✓ Copiato!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.innerHTML = '📋 Copia'; btn.classList.remove('copied'); }, 2000);
+  }).catch(() => {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = text.trim();
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  });
+}
+
+// ── SLIDES ──────────────────────────────────────────────────────
+function showSlide(n) {
+  const slides = document.querySelectorAll('.slide');
+  slides.forEach((s, i) => {
+    s.classList.remove('active', 'exit');
+    if (i === n) s.classList.add('active');
+  });
+  currentSlide = n;
+  document.getElementById('slide-counter').textContent = `${n + 1} / ${totalSlides}`;
+  document.getElementById('btn-prev').disabled = n === 0;
+  document.getElementById('btn-next').disabled = n === totalSlides - 1;
+  document.getElementById('progress-fill').style.width = `${((n + 1) / totalSlides) * 100}%`;
+}
+function nextSlide() {
+  if (currentSlide < totalSlides - 1) {
+    document.querySelectorAll('.slide')[currentSlide].classList.add('exit');
+    setTimeout(() => showSlide(currentSlide + 1), 50);
+  }
+}
+function prevSlide() {
+  if (currentSlide > 0) showSlide(currentSlide - 1);
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  if (!aulaMode) return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); prevSlide(); }
+  if (e.key === 'Escape') toggleMode();
+});
+</script>
+</body>
+</html>

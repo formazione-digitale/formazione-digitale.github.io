@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formazione Digitale</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue-dark:   #1F4E79;
+  --blue-mid:    #2E75B6;
+  --blue-light:  #D6E8F7;
+  --blue-pale:   #EBF3FC;
+  --green-dark:  #1E6B3C;
+  --green-light: #E8F5EE;
+  --amber-dark:  #7D4E00;
+  --amber-light: #FFF3CD;
+  --purple-dark: #4A148C;
+  --purple-light:#F3E5F5;
+  --gray-dark:   #2C2C2C;
+  --gray-mid:    #666;
+  --gray-light:  #F5F5F5;
+  --white:       #FFFFFF;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --radius: 10px;
+  --shadow: 0 2px 16px rgba(31,78,121,.10);
+  --shadow-hover: 0 6px 28px rgba(31,78,121,.18);
+  --transition: .22s cubic-bezier(.4,0,.2,1);
+}
+
+html { font-size: 16px; scroll-behavior: smooth; }
+body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FBFF; min-height: 100vh; }
+
+/* ── HEADER ─────────────────────────────────────────────── */
+header {
+  background: var(--blue-dark);
+  height: 58px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 16px rgba(0,0,0,.2);
+}
+.header-brand { display: flex; flex-direction: column; }
+.header-name  { font-family: var(--font-display); font-size: 1.1rem; color: #fff; }
+.header-tag   { font-size: .68rem; color: var(--blue-light); font-weight: 300; letter-spacing: .04em; }
+.header-nav   { display: flex; gap: 1.5rem; }
+.header-nav a {
+  font-size: .82rem; color: rgba(255,255,255,.75);
+  text-decoration: none; transition: color var(--transition);
+}
+.header-nav a:hover { color: #fff; }
+@media(max-width:520px){ .header-nav { display: none; } }
+
+/* ── HERO ───────────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, #1A3F63 0%, var(--blue-dark) 40%, #2A6099 100%);
+  padding: 5rem 2rem 4.5rem;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(46,117,182,.25) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-size: .75rem; font-weight: 600; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--blue-light);
+  margin-bottom: .9rem;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+  color: #fff; line-height: 1.08; margin-bottom: .9rem;
+}
+.hero-title em { font-style: italic; color: var(--blue-light); }
+.hero-sub {
+  font-size: clamp(.92rem, 1.6vw, 1.08rem);
+  color: rgba(255,255,255,.72);
+  max-width: 520px; margin: 0 auto 2rem;
+  line-height: 1.7;
+}
+.hero-search {
+  display: flex; align-items: center; gap: 0;
+  max-width: 420px; margin: 0 auto;
+  background: #fff; border-radius: 50px;
+  overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,.15);
+}
+.hero-search input {
+  flex: 1; border: none; outline: none;
+  padding: .75rem 1.25rem; font-size: .9rem;
+  font-family: var(--font-body); color: var(--gray-dark);
+  background: transparent;
+}
+.hero-search input::placeholder { color: #aaa; }
+.hero-search button {
+  background: var(--blue-mid); color: #fff; border: none;
+  padding: .75rem 1.25rem; font-size: .85rem; font-weight: 500;
+  font-family: var(--font-body); cursor: pointer;
+  transition: background var(--transition);
+  white-space: nowrap;
+}
+.hero-search button:hover { background: var(--blue-dark); }
+
+/* ── STATS BAR ──────────────────────────────────────────── */
+.stats-bar {
+  background: var(--white);
+  border-bottom: 1px solid var(--blue-light);
+  padding: .9rem 2rem;
+  display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+}
+.stat { text-align: center; }
+.stat-num { font-family: var(--font-display); font-size: 1.4rem; color: var(--blue-dark); }
+.stat-label { font-size: .72rem; color: var(--gray-mid); text-transform: uppercase; letter-spacing: .06em; }
+
+/* ── MAIN ───────────────────────────────────────────────── */
+main { max-width: 1040px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+/* ── SECTION HEADER ─────────────────────────────────────── */
+.sec-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+.sec-label {
+  display: flex; align-items: center; gap: .65rem;
+  font-size: .72rem; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--blue-mid);
+}
+.sec-label::before {
+  content: ''; display: block;
+  width: 18px; height: 3px; border-radius: 2px;
+}
+.sec-label.guides::before   { background: var(--blue-mid); }
+.sec-label.tools::before    { background: var(--green-dark); }
+.sec-label.pillole::before  { background: var(--amber-dark); }
+.sec-count {
+  font-size: .78rem; color: var(--gray-mid);
+  background: var(--gray-light); border-radius: 20px;
+  padding: .2rem .65rem;
+}
+
+/* ── CARDS ──────────────────────────────────────────────── */
+.cards { display: grid; gap: 1rem; margin-bottom: 3rem; }
+.cards-2 { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.cards-3 { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: box-shadow var(--transition), transform var(--transition);
+  display: flex; flex-direction: column;
+}
+.card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+.card a { text-decoration: none; color: inherit; display: flex; flex-direction: column; flex: 1; }
+
+.card-badge-strip { height: 5px; }
+.badge-blue   { background: var(--blue-mid); }
+.badge-green  { background: var(--green-dark); }
+.badge-amber  { background: var(--amber-dark); }
+.badge-purple { background: var(--purple-dark); }
+
+.card-body { padding: 1.1rem 1.2rem; flex: 1; display: flex; flex-direction: column; }
+.card-icon { font-size: 1.6rem; margin-bottom: .6rem; }
+.card-category {
+  font-size: .68rem; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; margin-bottom: .4rem;
+}
+.cat-guide  { color: var(--blue-mid); }
+.cat-tool   { color: var(--green-dark); }
+.cat-pill   { color: var(--amber-dark); }
+.cat-coming { color: var(--gray-mid); }
+
+.card-title {
+  font-family: var(--font-display); font-size: 1.08rem;
+  color: var(--blue-dark); line-height: 1.25; margin-bottom: .45rem;
+}
+.card-desc {
+  font-size: .84rem; color: var(--gray-mid); line-height: 1.6;
+  flex: 1; margin-bottom: .9rem;
+}
+.card-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .7rem 1.2rem;
+  border-top: 1px solid var(--blue-light);
+  background: #FAFCFF;
+}
+.card-meta { font-size: .72rem; color: var(--gray-mid); }
+.card-cta {
+  font-size: .78rem; font-weight: 600; color: var(--blue-mid);
+  display: flex; align-items: center; gap: .3rem;
+  transition: gap var(--transition);
+}
+.card:hover .card-cta { gap: .5rem; }
+
+/* Coming soon card */
+.card.coming {
+  opacity: .65; pointer-events: none;
+  border-style: dashed;
+}
+.card.coming .card-badge-strip { background: #ccc; }
+
+/* Featured card — full width */
+.card-featured {
+  background: linear-gradient(135deg, var(--blue-dark) 0%, #2A6099 100%);
+  border: none; color: #fff;
+}
+.card-featured:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(31,78,121,.28); }
+.card-featured a { color: #fff; }
+.card-featured .card-body { padding: 1.5rem 1.75rem; }
+.card-featured .card-category { color: var(--blue-light); }
+.card-featured .card-title { color: #fff; font-size: 1.3rem; }
+.card-featured .card-desc { color: rgba(255,255,255,.75); }
+.card-featured .card-footer { background: rgba(0,0,0,.15); border-color: rgba(255,255,255,.15); }
+.card-featured .card-meta { color: rgba(255,255,255,.6); }
+.card-featured .card-cta { color: var(--blue-light); }
+.card-featured .card-badge-strip { background: rgba(255,255,255,.2); }
+
+/* Tags */
+.card-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .75rem; }
+.tag {
+  font-size: .68rem; padding: .2rem .55rem;
+  border-radius: 20px; font-weight: 500;
+}
+.tag-blue   { background: var(--blue-pale); color: var(--blue-dark); }
+.tag-green  { background: var(--green-light); color: var(--green-dark); }
+.tag-amber  { background: var(--amber-light); color: var(--amber-dark); }
+.tag-purple { background: var(--purple-light); color: var(--purple-dark); }
+
+/* ── DIVIDER ────────────────────────────────────────────── */
+.divider { border: none; border-top: 1px solid var(--blue-light); margin: 2.5rem 0; }
+
+/* ── NEWSLETTER / CTA STRIP ─────────────────────────────── */
+.cta-strip {
+  background: var(--blue-pale);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  padding: 1.75rem 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1.5rem; flex-wrap: wrap;
+  margin-top: 3rem;
+}
+.cta-strip-text h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--blue-dark); margin-bottom: .3rem; }
+.cta-strip-text p  { font-size: .85rem; color: var(--gray-mid); line-height: 1.5; }
+
+/* ── SEARCH FILTER ──────────────────────────────────────── */
+.filter-bar {
+  display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 2rem;
+}
+.filter-btn {
+  padding: .4rem .9rem; border-radius: 20px; font-size: .8rem;
+  border: 1.5px solid var(--blue-light); background: var(--white);
+  color: var(--gray-mid); cursor: pointer; font-family: var(--font-body);
+  transition: all var(--transition);
+}
+.filter-btn:hover { border-color: var(--blue-mid); color: var(--blue-mid); }
+.filter-btn.active { background: var(--blue-dark); color: #fff; border-color: var(--blue-dark); }
+
+/* ── FOOTER ─────────────────────────────────────────────── */
+footer {
+  background: var(--blue-dark);
+  color: rgba(255,255,255,.6);
+  text-align: center;
+  padding: 2rem 1.5rem;
+  font-size: .8rem; line-height: 1.7;
+}
+footer strong { color: rgba(255,255,255,.9); }
+
+/* ── NO RESULTS ─────────────────────────────────────────── */
+#no-results {
+  display: none; text-align: center;
+  padding: 3rem 1.5rem; color: var(--gray-mid); font-size: .95rem;
+}
+
+/* ── ANIMATIONS ─────────────────────────────────────────── */
+.card { animation: fadeUp .4s both; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.card:nth-child(1) { animation-delay: .05s; }
+.card:nth-child(2) { animation-delay: .10s; }
+.card:nth-child(3) { animation-delay: .15s; }
+.card:nth-child(4) { animation-delay: .20s; }
+.card:nth-child(5) { animation-delay: .25s; }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ──────────────────────────────────────────────────── -->
+<header>
+  <div class="header-brand">
+    <div class="header-name">Formazione Digitale</div>
+    <div class="header-tag">Risorse di alfabetizzazione digitale</div>
+  </div>
+  <nav class="header-nav">
+    <a href="#guide">Guide</a>
+    <a href="#strumenti">Strumenti</a>
+    <a href="#pillole">Pillole</a>
+  </nav>
+</header>
+
+<!-- ── HERO ────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-eyebrow">Risorse libere · Aggiornate · Per tutti</div>
+  <h1 class="hero-title">Formazione<br><em>Digitale</em></h1>
+  <p class="hero-sub">Guide pratiche, strumenti e pillole di alfabetizzazione digitale. Nessun prerequisito richiesto.</p>
+  <div class="hero-search">
+    <input type="text" id="search-input" placeholder="Cerca una risorsa..." oninput="filterAll()">
+    <button onclick="filterAll()">Cerca</button>
+  </div>
+</section>
+
+<!-- ── STATS ────────────────────────────────────────────────────── -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num" id="count-guide">1</div><div class="stat-label">Guide</div></div>
+  <div class="stat"><div class="stat-num" id="count-tool">0</div><div class="stat-label">Strumenti</div></div>
+  <div class="stat"><div class="stat-num" id="count-pill">0</div><div class="stat-label">Pillole</div></div>
+</div>
+
+<!-- ── MAIN ─────────────────────────────────────────────────────── -->
+<main>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="setFilter('all', this)">Tutto</button>
+    <button class="filter-btn" onclick="setFilter('guide', this)">📘 Guide</button>
+    <button class="filter-btn" onclick="setFilter('strumento', this)">🛠 Strumenti</button>
+    <button class="filter-btn" onclick="setFilter('pillola', this)">💡 Pillole</button>
+  </div>
+
+  <div id="no-results">Nessuna risorsa trovata per questa ricerca.</div>
+
+  <!-- ── GUIDE ──────────────────────────────────────────────── -->
+  <div id="section-guide">
+    <div class="sec-header" id="guide">
+      <div class="sec-label guides">Guide complete</div>
+      <div class="sec-count" id="label-count-guide">1 risorsa</div>
+    </div>
+    <div class="cards cards-2" id="cards-guide">
+
+      <!-- CARD: Guida al Prompting -->
+      <div class="card card-featured" data-cat="guide" data-tags="ia prompting didattica docenti meta-prompt">
+        <div class="card-badge-strip"></div>
+        <a href="guida_prompting_ITS.html" target="_blank">
+          <div class="card-body">
+            <div class="card-icon">🤖</div>
+            <div class="card-category cat-guide">Guida completa</div>
+            <div class="card-title">Guida al Prompting con l'IA</div>
+            <div class="card-tags">
+              <span class="tag tag-blue">Intelligenza Artificiale</span>
+              <span class="tag tag-blue">Prompting</span>
+              <span class="tag tag-blue">Meta-prompt</span>
+            </div>
+            <div class="card-desc">Dal prompt semplice al meta-prompt. Anatomia di un prompt efficace, tre esempi completi, template editabili e modalità presentazione per l'aula.</div>
+          </div>
+          <div class="card-footer">
+            <div class="card-meta">Aggiornata · Livello base–intermedio</div>
+            <div class="card-cta">Apri la guida →</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- CARD: Coming soon -->
+      <div class="card coming" data-cat="guide" data-tags="">
+        <div class="card-badge-strip"></div>
+        <div class="card-body">
+          <div class="card-icon">🔒</div>
+          <div class="card-category cat-coming">Prossimamente</div>
+          <div class="card-title">Guida alla Cybersicurezza personale</div>
+          <div class="card-desc">Password, phishing, autenticazione a due fattori. Come proteggere i propri account e dati personali.</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-meta">In preparazione</div>
+          <div class="card-cta">Disponibile presto</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── STRUMENTI ──────────────────────────────────────── -->
+  <div id="section-strumento">
+    <div class="sec-header" id="strumenti">
+      <div class="sec-label tools">Strumenti pratici</div>
+      <div class="sec-count" id="label-count-tool">In arrivo</div>
+    </div>
+    <div class="cards cards-3" id="cards-strumento">
+
+      <div class="card coming" data-cat="strumento" data-tags="">
+        <div class="card-badge-strip badge-green"></div>
+        <div class="card-body">
+          <div class="card-icon">📋</div>
+          <div class="card-category cat-coming">Prossimamente</div>
+          <div class="card-title">Generatore di prompt</div>
+          <div class="card-desc">Costruisci il tuo prompt passo per passo compilando un form guidato.</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-meta">In preparazione</div>
+          <div class="card-cta">Disponibile presto</div>
+        </div>
+      </div>
+
+      <div class="card coming" data-cat="strumento" data-tags="">
+        <div class="card-badge-strip badge-green"></div>
+        <div class="card-body">
+          <div class="card-icon">🔍</div>
+          <div class="card-category cat-coming">Prossimamente</div>
+          <div class="card-title">Verifica delle fonti online</div>
+          <div class="card-desc">Checklist interattiva per valutare l'affidabilità di una fonte digitale.</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-meta">In preparazione</div>
+          <div class="card-cta">Disponibile presto</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ── PILLOLE ────────────────────────────────────────── -->
+  <div id="section-pillola">
+    <div class="sec-header" id="pillole">
+      <div class="sec-label pillole">Pillole digitali</div>
+      <div class="sec-count" id="label-count-pill">In arrivo</div>
+    </div>
+    <div class="cards cards-3" id="cards-pillola">
+
+      <div class="card coming" data-cat="pillola" data-tags="">
+        <div class="card-badge-strip badge-amber"></div>
+        <div class="card-body">
+          <div class="card-icon">🔐</div>
+          <div class="card-category cat-coming">Prossimamente</div>
+          <div class="card-title">Come scegliere una password sicura</div>
+          <div class="card-desc">3 minuti per capire cosa rende una password davvero sicura nel 2025.</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-meta">Lettura rapida · 3 min</div>
+          <div class="card-cta">Disponibile presto</div>
+        </div>
+      </div>
+
+      <div class="card coming" data-cat="pillola" data-tags="">
+        <div class="card-badge-strip badge-amber"></div>
+        <div class="card-body">
+          <div class="card-icon">📧</div>
+          <div class="card-category cat-coming">Prossimamente</div>
+          <div class="card-title">Riconoscere una email di phishing</div>
+          <div class="card-desc">I 5 segnali che rivelano un tentativo di truffa nella tua casella di posta.</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-meta">Lettura rapida · 4 min</div>
+          <div class="card-cta">Disponibile presto</div>
+        </div>
+      </div>
+
+      <div class="card coming" data-cat="pillola" data-tags="">
+        <div class="card-badge-strip badge-amber"></div>
+        <div class="card-body">
+          <div class="card-icon">🤔</div>
+          <div class="card-category cat-coming">Prossimamente</div>
+          <div class="card-title">Fact-checking: come verificare una notizia</div>
+          <div class="card-desc">Metodo pratico in 4 passi per distinguere informazione da disinformazione.</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-meta">Lettura rapida · 5 min</div>
+          <div class="card-cta">Disponibile presto</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CTA STRIP -->
+  <div class="cta-strip">
+    <div class="cta-strip-text">
+      <h3>Nuove risorse in arrivo</h3>
+      <p>Il portale è in crescita. Torna a visitarlo o salva il link tra i preferiti per trovare le prossime guide e pillole digitali.</p>
+    </div>
+    <div style="font-size:2rem;">📌</div>
+  </div>
+
+</main>
+
+<!-- ── FOOTER ───────────────────────────────────────────────────── -->
+<footer>
+  <strong>Formazione Digitale</strong><br>
+  Risorse di alfabetizzazione digitale libere e gratuite.<br>
+  Tutti i contenuti sono rilasciati per uso libero e non commerciale.
+</footer>
+
+<script>
+// ── FILTER & SEARCH ──────────────────────────────────────────────
+let activeFilter = 'all';
+
+function setFilter(cat, btn) {
+  activeFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterAll();
+  // Show/hide sections
+  ['guide','strumento','pillola'].forEach(c => {
+    const sec = document.getElementById('section-' + c);
+    if (sec) sec.style.display = (cat === 'all' || cat === c) ? '' : 'none';
+  });
+  document.querySelectorAll('.divider').forEach(d => d.style.display = cat === 'all' ? '' : 'none');
+}
+
+function filterAll() {
+  const q = document.getElementById('search-input').value.toLowerCase().trim();
+  const cards = document.querySelectorAll('.card:not(.coming)');
+  let visible = 0;
+
+  cards.forEach(card => {
+    const cat   = card.dataset.cat || '';
+    const tags  = card.dataset.tags || '';
+    const text  = (card.innerText + ' ' + tags).toLowerCase();
+    const matchCat = activeFilter === 'all' || cat === activeFilter;
+    const matchQ   = !q || text.includes(q);
+    const show = matchCat && matchQ;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  document.getElementById('no-results').style.display = visible === 0 && q ? 'block' : 'none';
+}
+
+// Update stats on load
+function updateStats() {
+  const guides = document.querySelectorAll('#cards-guide .card:not(.coming)').length;
+  const tools  = document.querySelectorAll('#cards-strumento .card:not(.coming)').length;
+  const pills  = document.querySelectorAll('#cards-pillola .card:not(.coming)').length;
+  document.getElementById('count-guide').textContent = guides;
+  document.getElementById('count-tool').textContent  = tools;
+  document.getElementById('count-pill').textContent  = pills;
+  document.getElementById('label-count-guide').textContent = guides + (guides === 1 ? ' risorsa' : ' risorse');
+  document.getElementById('label-count-tool').textContent  = tools  > 0 ? tools + ' risorse' : 'In arrivo';
+  document.getElementById('label-count-pill').textContent  = pills  > 0 ? pills + ' risorse' : 'In arrivo';
+}
+
+updateStats();
+</script>
+</body>
+</html>
