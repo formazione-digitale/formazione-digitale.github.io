@@ -143,31 +143,87 @@ main { max-width: 1040px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
   padding: .2rem .65rem;
 }
 
-/* ── CARDS ──────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   SISTEMA CARD — REGOLA GENERALE
+   ══════════════════════════════════════════════════════════
+
+   Esistono tre tipi di card. Ogni tipo in hover si INTENSIFICA
+   verso il proprio colore dominante — non cambia natura.
+
+   TIPO 1 · card-featured (sfondo scuro blu)
+     — Hover: gradiente più scuro/profondo
+     — Titolo: resta BIANCO (#fff) — mai cambiare colore
+     — Footer: resta scuro semitrasparente rgba(0,0,0,...)
+     — CTA: resta var(--blue-light)
+     — Selettore: .card-featured
+
+   TIPO 2 · card-active (sfondo azzurro chiaro)
+     — Hover: azzurro più saturo, bordo blu-mid
+     — Titolo: diventa var(--blue-mid) (più scuro del normale)
+     — Footer: diventa var(--blue-pale)
+     — CTA: resta var(--blue-mid)
+     — Selettore: .card-active
+
+   TIPO 3 · card.coming (sfondo grigio, tratteggiato)
+     — Nessun hover: pointer-events none
+     — Opacità ridotta per comunicare "non disponibile"
+     — Selettore: .card.coming
+
+   COMPORTAMENTI UNIVERSALI (tutti i tipi attivi):
+     — transform: translateY(-5px) — sollevamento
+     — box-shadow: intensificata
+     — .card-badge-strip: height 5px → 8px
+     — .card-icon: scale(1.12) — ingrandimento contenuto
+     — .card-cta .arrow: translateX(6px) — freccia scorre a destra
+
+   COME AGGIUNGERE UN NUOVO TIPO:
+     1. Assegna una classe (es. card-green, card-amber)
+     2. Definisci sfondo, bordo, colori testo nella regola base
+     3. Aggiungi la regola hover con lo stesso selettore
+        mantenendo il principio: hover = intensifica, non cambia
+     4. Titolo e footer seguono il contrasto del tipo scelto
+   ══════════════════════════════════════════════════════════ */
+
+/* ── CARD GRID ───────────────────────────────────────────── */
 .cards { display: grid; gap: 1rem; margin-bottom: 3rem; }
 .cards-2 { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
 .cards-3 { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
 
+/* ── CARD BASE ───────────────────────────────────────────── */
 .card {
   background: var(--white);
   border: 1px solid var(--blue-light);
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow);
-  transition: box-shadow var(--transition), transform var(--transition);
+  transition: box-shadow .28s ease, transform .28s ease,
+              border-color .28s ease, background .28s ease;
   display: flex; flex-direction: column;
+  position: relative;
 }
-.card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
 .card a { text-decoration: none; color: inherit; display: flex; flex-direction: column; flex: 1; }
 
-.card-badge-strip { height: 5px; }
+/* ── BADGE STRIP (universale) ────────────────────────────── */
+/* Aumenta altezza su hover per tutti i tipi attivi */
+.card-badge-strip { height: 5px; transition: height .28s ease; }
 .badge-blue   { background: var(--blue-mid); }
 .badge-green  { background: var(--green-dark); }
 .badge-amber  { background: var(--amber-dark); }
 .badge-purple { background: var(--purple-dark); }
+.card:not(.coming):hover .card-badge-strip { height: 8px; }
 
+/* ── CARD BODY ───────────────────────────────────────────── */
 .card-body { padding: 1.1rem 1.2rem; flex: 1; display: flex; flex-direction: column; }
-.card-icon { font-size: 1.6rem; margin-bottom: .6rem; }
+
+/* ICONA — universale, scale contenuto, no overflow */
+.card-icon {
+  font-size: 1.6rem; margin-bottom: .6rem;
+  display: inline-block;
+  transition: transform .28s cubic-bezier(.34,1.56,.64,1);
+  transform-origin: left center;
+}
+.card:not(.coming):hover .card-icon { transform: scale(1.12); }
+
 .card-category {
   font-size: .68rem; font-weight: 600; letter-spacing: .1em;
   text-transform: uppercase; margin-bottom: .4rem;
@@ -180,47 +236,88 @@ main { max-width: 1040px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
 .card-title {
   font-family: var(--font-display); font-size: 1.08rem;
   color: var(--blue-dark); line-height: 1.25; margin-bottom: .45rem;
+  transition: color .2s ease;
 }
 .card-desc {
   font-size: .84rem; color: var(--gray-mid); line-height: 1.6;
   flex: 1; margin-bottom: .9rem;
 }
+
+/* ── CARD FOOTER ─────────────────────────────────────────── */
 .card-footer {
   display: flex; align-items: center; justify-content: space-between;
   padding: .7rem 1.2rem;
   border-top: 1px solid var(--blue-light);
   background: #FAFCFF;
+  transition: background .25s ease;
 }
 .card-meta { font-size: .72rem; color: var(--gray-mid); }
+
+/* CTA ARROW — universale, scorre a destra */
 .card-cta {
   font-size: .78rem; font-weight: 600; color: var(--blue-mid);
   display: flex; align-items: center; gap: .3rem;
-  transition: gap var(--transition);
+  white-space: nowrap; flex-shrink: 0;
 }
-.card:hover .card-cta { gap: .5rem; }
+.card-cta .arrow {
+  display: inline-block;
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1);
+}
+.card:not(.coming):hover .card-cta .arrow { transform: translateX(6px); }
 
-/* Coming soon card */
+/* ════════════════════════════════════════════════════════
+   TIPO 3 · COMING — nessun hover, comunicazione visiva
+════════════════════════════════════════════════════════ */
 .card.coming {
-  opacity: .65; pointer-events: none;
-  border-style: dashed;
+  opacity: .55; pointer-events: none;
+  border-style: dashed; border-color: #ccc;
+  background: #FAFAFA;
 }
-.card.coming .card-badge-strip { background: #ccc; }
+.card.coming .card-badge-strip { background: #ddd; }
+.card.coming .card-title { color: #999; }
 
-/* Featured card — full width */
+/* ════════════════════════════════════════════════════════
+   TIPO 2 · CARD-ACTIVE — sfondo chiaro azzurro
+   Hover: si intensifica verso blu, titolo → blue-mid
+════════════════════════════════════════════════════════ */
+.card-active {
+  background: linear-gradient(160deg, #FAFCFF 0%, var(--blue-pale) 100%);
+  border-color: var(--blue-light);
+}
+.card-active:hover {
+  box-shadow: 0 10px 36px rgba(31,78,121,.20);
+  transform: translateY(-5px);
+  border-color: var(--blue-mid);
+}
+.card-active:hover .card-title  { color: var(--blue-mid); }
+.card-active:hover .card-footer { background: var(--blue-pale); }
+
+/* ════════════════════════════════════════════════════════
+   TIPO 1 · CARD-FEATURED — sfondo scuro blu
+   Hover: più scuro e profondo, testo resta sempre bianco
+════════════════════════════════════════════════════════ */
 .card-featured {
   background: linear-gradient(135deg, var(--blue-dark) 0%, #2A6099 100%);
-  border: none; color: #fff;
+  border: none;
 }
-.card-featured:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(31,78,121,.28); }
-.card-featured a { color: #fff; }
-.card-featured .card-body { padding: 1.5rem 1.75rem; }
-.card-featured .card-category { color: var(--blue-light); }
-.card-featured .card-title { color: #fff; font-size: 1.3rem; }
-.card-featured .card-desc { color: rgba(255,255,255,.75); }
-.card-featured .card-footer { background: rgba(0,0,0,.15); border-color: rgba(255,255,255,.15); }
-.card-featured .card-meta { color: rgba(255,255,255,.6); }
-.card-featured .card-cta { color: var(--blue-light); }
-.card-featured .card-badge-strip { background: rgba(255,255,255,.2); }
+.card-featured:hover {
+  box-shadow: 0 12px 40px rgba(31,78,121,.45);
+  transform: translateY(-5px);
+  border-color: transparent;
+  background: linear-gradient(135deg, #183D5F 0%, #1F5580 100%);
+}
+/* Testo — sempre bianco, mai modificare in hover */
+.card-featured a                  { color: #fff; }
+.card-featured .card-body         { padding: 1.5rem 1.75rem; }
+.card-featured .card-category     { color: var(--blue-light); }
+.card-featured .card-title        { color: #fff; font-size: 1.3rem; }
+.card-featured:hover .card-title  { color: #fff; } /* esplicito: non ereditare regole active */
+.card-featured .card-desc         { color: rgba(255,255,255,.75); }
+.card-featured .card-footer       { background: rgba(0,0,0,.18); border-color: rgba(255,255,255,.15); }
+.card-featured:hover .card-footer { background: rgba(0,0,0,.30); }
+.card-featured .card-meta         { color: rgba(255,255,255,.6); }
+.card-featured .card-cta          { color: var(--blue-light); }
+.card-featured .card-badge-strip  { background: rgba(255,255,255,.2); }
 
 /* Tags */
 .card-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .75rem; }
@@ -345,7 +442,7 @@ footer strong { color: rgba(255,255,255,.9); }
     </div>
     <div class="cards cards-2" id="cards-guide">
 
-      <!-- CARD: Guida al Prompting -->
+      <!-- CARD: Guida al Prompting — FEATURED -->
       <div class="card card-featured" data-cat="guide" data-tags="ia prompting didattica docenti meta-prompt">
         <div class="card-badge-strip"></div>
         <a href="intelligenza-artificiale/Guida_Prompting.html" target="_blank">
@@ -362,13 +459,13 @@ footer strong { color: rgba(255,255,255,.9); }
           </div>
           <div class="card-footer">
             <div class="card-meta">Aggiornata · Livello base–intermedio</div>
-            <div class="card-cta">Apri la guida →</div>
+            <div class="card-cta">Apri la guida <span class="arrow">→</span></div>
           </div>
         </a>
       </div>
 
-      <!-- CARD: LibreOffice Base Query -->
-      <div class="card" data-cat="guide" data-tags="libreoffice base query database sql odb">
+      <!-- CARD: LibreOffice Base Query — ACTIVE -->
+      <div class="card card-active" data-cat="guide" data-tags="libreoffice base query database sql odb">
         <div class="card-badge-strip badge-blue"></div>
         <a href="LibreOfficeBase_Query/Guida_LibreOfficeBase_Query.html" target="_blank">
           <div class="card-body">
@@ -384,7 +481,7 @@ footer strong { color: rgba(255,255,255,.9); }
           </div>
           <div class="card-footer">
             <div class="card-meta">Con DB di esempio · Livello base–intermedio</div>
-            <div class="card-cta">Apri la guida →</div>
+            <div class="card-cta">Apri la guida <span class="arrow">→</span></div>
           </div>
         </a>
       </div>
