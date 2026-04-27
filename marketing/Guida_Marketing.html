@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing e Digital Marketing — Formazione Digitale</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue-dark:   #1F4E79;
+  --blue-mid:    #2E75B6;
+  --blue-light:  #D6E8F7;
+  --blue-pale:   #EBF3FC;
+  --green-dark:  #1E6B3C;
+  --green-light: #E8F5EE;
+  --amber-dark:  #7D4E00;
+  --amber-light: #FFF3CD;
+  --red-dark:    #8B1A1A;
+  --red-light:   #FDECEA;
+  --purple-dark: #4A148C;
+  --purple-light:#F3E5F5;
+  --gray-dark:   #2C2C2C;
+  --gray-mid:    #666;
+  --gray-light:  #F5F5F5;
+  --white:       #FFFFFF;
+  --font-display:'DM Serif Display', Georgia, serif;
+  --font-body:   'DM Sans', system-ui, sans-serif;
+  --nav-w: 260px;
+  --header-h: 56px;
+  --radius: 8px;
+  --shadow: 0 2px 12px rgba(31,78,121,.10);
+  --transition: .22s cubic-bezier(.4,0,.2,1);
+}
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FBFF; line-height: 1.7; }
+
+/* ── HEADER ── */
+#header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--header-h);
+  background: var(--blue-dark);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.25rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,.18);
+}
+.header-left { display: flex; align-items: center; gap: .75rem; }
+.header-back { font-size: .78rem; color: rgba(255,255,255,.65); text-decoration: none; display: flex; align-items: center; gap: .3rem; transition: color .2s; }
+.header-back:hover { color: #fff; }
+.header-sep { width: 1px; height: 20px; background: rgba(255,255,255,.2); }
+.header-logo { font-family: var(--font-display); font-size: 1.05rem; color: #fff; }
+.header-sub { font-size: .72rem; color: var(--blue-light); font-weight: 300; display: none; }
+@media(min-width:600px){ .header-sub { display: block; } }
+.header-right { display: flex; align-items: center; gap: .5rem; }
+.mode-toggle {
+  display: flex; align-items: center; gap: .4rem;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+  border-radius: 20px; padding: .25rem .75rem;
+  font-size: .78rem; color: #fff; cursor: pointer;
+  transition: background var(--transition); user-select: none;
+  font-family: var(--font-body);
+}
+.mode-toggle:hover { background: rgba(255,255,255,.22); }
+#hamburger {
+  display: flex; flex-direction: column; justify-content: center; gap: 5px;
+  width: 36px; height: 36px; cursor: pointer; padding: 6px;
+  border-radius: 6px; transition: background var(--transition);
+  background: none; border: none;
+}
+#hamburger:hover { background: rgba(255,255,255,.12); }
+#hamburger span { display: block; height: 2px; background: #fff; border-radius: 2px; transition: all var(--transition); }
+#hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+#hamburger.open span:nth-child(2) { opacity: 0; }
+#hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+@media(min-width:900px){ #hamburger { display: none; } }
+
+/* ── READING BAR ── */
+#reading-bar { position: fixed; top: var(--header-h); left: 0; right: 0; height: 3px; background: var(--blue-light); z-index: 99; }
+#reading-fill { height: 100%; background: var(--blue-mid); width: 0%; transition: width .1s; }
+
+/* ── SIDEBAR ── */
+#sidebar {
+  position: fixed; top: var(--header-h); left: 0; bottom: 0; z-index: 90;
+  width: var(--nav-w); background: var(--white);
+  border-right: 1px solid var(--blue-light);
+  overflow-y: auto; padding: 1.25rem 0 2rem;
+  transform: translateX(-100%);
+  transition: transform var(--transition);
+  box-shadow: 2px 0 20px rgba(31,78,121,.08);
+  scrollbar-width: thin; scrollbar-color: var(--blue-light) transparent;
+}
+#sidebar.open { transform: translateX(0); }
+@media(min-width:900px){ #sidebar { transform: translateX(0); } }
+.nav-part-label {
+  font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--gray-mid); padding: .9rem 1.25rem .3rem; margin-top: .5rem;
+}
+.nav-part-label:first-child { margin-top: 0; }
+.nav-divider { border: none; border-top: 1px solid var(--blue-light); margin: .5rem 1.25rem; }
+.nav-item {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .5rem 1.25rem; font-size: .82rem; color: var(--gray-mid);
+  text-decoration: none; cursor: pointer;
+  transition: all var(--transition); border-left: 3px solid transparent;
+}
+.nav-item:hover { color: var(--blue-dark); background: var(--blue-pale); border-left-color: var(--blue-light); }
+.nav-item.active { color: var(--blue-dark); background: var(--blue-pale); border-left-color: var(--blue-mid); font-weight: 500; }
+.nav-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 26px; height: 20px; background: var(--blue-dark); color: #fff;
+  border-radius: 4px; font-size: .68rem; font-weight: 600; flex-shrink: 0;
+}
+.nav-item.active .nav-num { background: var(--blue-mid); }
+
+/* ── OVERLAY ── */
+#overlay {
+  display: none; position: fixed; inset: 0; z-index: 80;
+  background: rgba(0,0,0,.35); backdrop-filter: blur(2px);
+}
+#overlay.open { display: block; }
+@media(min-width:900px){ #overlay { display: none !important; } }
+
+/* ── MAIN ── */
+#main {
+  margin-top: var(--header-h);
+  transition: margin-left var(--transition);
+  padding: 0 1.25rem 4rem;
+  max-width: 100%;
+}
+@media(min-width:900px){
+  #main {
+    margin-left: var(--nav-w);
+    padding: 0 2.5rem 4rem;
+    max-width: calc(var(--nav-w) + 860px);
+  }
+}
+@media(min-width:1200px){
+  #main { padding: 0 3rem 4rem; }
+}
+
+/* ── COVER ── */
+.cover-block {
+  background: linear-gradient(135deg, #1A3F63 0%, var(--blue-dark) 45%, #2A6099 100%);
+  border-radius: 0 0 var(--radius) var(--radius);
+  padding: 3rem 2rem 2.5rem;
+  margin-bottom: 3rem;
+  position: relative; overflow: hidden;
+}
+.cover-block::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 80% 30%, rgba(46,117,182,.3) 0%, transparent 60%);
+  pointer-events: none;
+}
+.cover-eyebrow { font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blue-light); margin-bottom: .75rem; }
+.cover-title { font-family: var(--font-display); font-size: clamp(1.9rem, 4vw, 2.9rem); color: #fff; line-height: 1.1; margin-bottom: .5rem; }
+.cover-title em { font-style: italic; color: var(--blue-light); }
+.cover-desc { font-size: .95rem; color: rgba(255,255,255,.75); line-height: 1.65; max-width: 520px; margin-bottom: 1.5rem; }
+.cover-badges { display: flex; gap: .65rem; flex-wrap: wrap; }
+.cover-badge {
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22);
+  border-radius: 20px; padding: .3rem .85rem;
+  font-size: .78rem; color: rgba(255,255,255,.9);
+}
+
+/* ── PART HEADER ── */
+.part-header {
+  display: flex; align-items: stretch; border-radius: var(--radius);
+  overflow: hidden; margin: 2.5rem 0 2rem;
+  box-shadow: var(--shadow);
+}
+.part-num {
+  display: flex; align-items: center; justify-content: center;
+  min-width: 72px; background: var(--blue-dark);
+  font-family: var(--font-display); font-size: 2.4rem; color: rgba(255,255,255,.25);
+  padding: 1rem;
+}
+.part-titles { flex: 1; background: var(--blue-pale); padding: .9rem 1.35rem; border-left: 3px solid var(--blue-light); }
+.part-title { font-family: var(--font-display); font-size: 1.35rem; color: var(--blue-dark); line-height: 1.2; }
+.part-subtitle { font-size: .83rem; color: var(--blue-mid); font-style: italic; margin-top: .2rem; }
+
+/* ── SECTION STRUCTURE ── */
+.guide-section { margin-bottom: 3.5rem; scroll-margin-top: calc(var(--header-h) + 12px); }
+.section-header {
+  display: flex; align-items: stretch; border-radius: var(--radius);
+  overflow: hidden; margin-bottom: 1.75rem; box-shadow: var(--shadow);
+}
+.section-num {
+  display: flex; align-items: center; justify-content: center;
+  min-width: 64px; background: var(--blue-dark);
+  font-family: var(--font-display); font-size: 1.6rem; color: #fff;
+  padding: .75rem; flex-shrink: 0;
+}
+.section-titles { flex: 1; background: var(--blue-pale); padding: .85rem 1.25rem; border-left: 3px solid var(--blue-light); }
+.section-title { font-family: var(--font-display); font-size: 1.25rem; color: var(--blue-dark); line-height: 1.2; }
+.section-subtitle { font-size: .82rem; color: var(--blue-mid); font-style: italic; margin-top: .2rem; }
+.section-divider { border: none; border-top: 1px solid var(--blue-light); margin: 3rem 0; }
+.sub-title { font-size: 1.05rem; font-weight: 600; color: var(--blue-mid); margin: 1.5rem 0 .6rem; }
+p { margin-bottom: .85rem; font-size: .95rem; line-height: 1.75; color: #3a3a3a; }
+ul.guide-list, ol.guide-list { padding-left: 1.5rem; margin-bottom: .85rem; }
+ul.guide-list li, ol.guide-list li { font-size: .95rem; line-height: 1.75; color: #3a3a3a; margin-bottom: .3rem; }
+
+/* ── BOXES ── */
+.box { border-radius: var(--radius); padding: .9rem 1.1rem; margin: 1rem 0; font-size: .9rem; line-height: 1.65; }
+.box-label { font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .35rem; }
+.box-tip  { background: var(--green-light); border-left: 4px solid var(--green-dark); }
+.box-tip .box-label { color: var(--green-dark); }
+.box-tip p { color: #1a4a2a; margin: 0; }
+.box-warn { background: var(--amber-light); border-left: 4px solid var(--amber-dark); }
+.box-warn .box-label { color: var(--amber-dark); }
+.box-warn p { color: #5a3800; margin: 0; }
+.box-note { background: var(--gray-light); border-left: 4px solid #bbb; }
+.box-note p { color: var(--gray-mid); margin: 0; font-style: italic; }
+.box-info { background: var(--blue-pale); border-left: 4px solid var(--blue-mid); }
+.box-info .box-label { color: var(--blue-dark); }
+.box-info p { color: var(--blue-dark); margin: 0; }
+
+/* ── TABELLE ── */
+.table-wrap { overflow-x: auto; margin: 1.25rem 0; border-radius: var(--radius); box-shadow: var(--shadow); }
+table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+thead th { background: var(--blue-dark); color: #fff; padding: .65rem 1rem; text-align: left; font-weight: 500; font-size: .82rem; }
+tbody td { padding: .6rem 1rem; border-bottom: 1px solid var(--blue-light); vertical-align: top; }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:nth-child(even) td { background: var(--blue-pale); }
+tbody tr:hover td { background: #DFF0FF; }
+td strong { color: var(--blue-dark); }
+
+/* ── DO/DON'T ── */
+.dodont { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin: 1.25rem 0; }
+@media(max-width:600px){ .dodont { grid-template-columns: 1fr; } }
+.do-col   { background: var(--green-light); border-radius: var(--radius); padding: .9rem 1rem; border: 1px solid #b2dfc3; }
+.dont-col { background: var(--red-light);   border-radius: var(--radius); padding: .9rem 1rem; border: 1px solid #f0b8b8; }
+.dodont-title { font-size: .78rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; margin-bottom: .6rem; }
+.do-col   .dodont-title { color: var(--green-dark); }
+.dont-col .dodont-title { color: var(--red-dark); }
+.dodont li { font-size: .85rem; line-height: 1.6; margin-bottom: .3rem; list-style: none; padding-left: 1.3rem; position: relative; }
+.do-col   li::before { content: "✓"; position: absolute; left: 0; color: var(--green-dark); font-weight: 700; }
+.dont-col li::before { content: "✗"; position: absolute; left: 0; color: var(--red-dark); font-weight: 700; }
+
+/* ── HIGHLIGHT GRID ── */
+.highlight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px,1fr)); gap: .85rem; margin: 1.25rem 0; }
+.highlight-card { background: var(--white); border: 1px solid var(--blue-light); border-radius: var(--radius); padding: 1rem 1.1rem; box-shadow: var(--shadow); }
+.hc-emoji { font-size: 1.5rem; margin-bottom: .4rem; }
+.hc-title { font-size: .82rem; font-weight: 600; color: var(--blue-dark); margin-bottom: .2rem; }
+.hc-body  { font-size: .8rem; color: var(--gray-mid); line-height: 1.5; }
+
+/* ── HOVER SUI BLOCCHI ── */
+.highlight-card {
+  transition: box-shadow .25s ease, transform .25s ease, border-color .25s ease;
+  cursor: default;
+}
+.highlight-card:hover {
+  box-shadow: 0 6px 24px rgba(31,78,121,.16);
+  transform: translateY(-4px);
+  border-color: var(--blue-mid);
+}
+.highlight-card:hover .hc-title { color: var(--blue-mid); }
+.step-item {
+  transition: background .2s ease, transform .2s ease;
+  border-radius: var(--radius);
+  padding: .4rem .5rem;
+}
+.step-item:hover { background: var(--blue-pale); transform: translateX(4px); }
+.swot-cell { transition: filter .2s ease; }
+.swot-cell:hover { filter: brightness(.94); }
+
+
+/* ── ACCORDION ── */
+.accordion { display: flex; flex-direction: column; gap: .45rem; margin: 1rem 0; }
+.acc-item { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--blue-light); }
+.acc-head {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--blue-pale); padding: .7rem 1rem;
+  font-weight: 600; font-size: .9rem; color: var(--blue-dark);
+  cursor: pointer; user-select: none; transition: background var(--transition);
+}
+.acc-head:hover { background: var(--blue-light); }
+.acc-arrow { transition: transform var(--transition); font-size: .75rem; color: var(--blue-mid); }
+.acc-body { display: none; padding: .85rem 1rem; font-size: .9rem; background: #fff; border-top: 1px solid var(--blue-light); line-height: 1.65; color: #3a3a3a; }
+.acc-item.open .acc-arrow { transform: rotate(90deg); }
+.acc-item.open .acc-body  { display: block; }
+
+/* ── STEP LIST ── */
+.step-list { margin: 1rem 0; }
+.step-item { display: flex; gap: .9rem; margin-bottom: .85rem; align-items: flex-start; }
+.step-dot { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; background: var(--blue-dark); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 700; margin-top: .1rem; }
+.step-body strong { display: block; font-size: .88rem; color: var(--blue-dark); margin-bottom: .1rem; }
+.step-body span { font-size: .84rem; color: var(--gray-mid); line-height: 1.55; }
+
+/* ── SVG DIAGRAM ── */
+.diagram-wrap { margin: 1.5rem 0; }
+.diagram-wrap svg { width: 100%; height: auto; display: block; }
+
+/* ── SWOT ── */
+.swot-grid { display: grid; grid-template-columns: 1fr 1fr; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--blue-light); margin: 1.25rem 0; box-shadow: var(--shadow); }
+.swot-axis { grid-column: 1/-1; background: var(--blue-dark); display: flex; }
+.swot-axis div { flex: 1; padding: .35rem 1.25rem; font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+.swot-axis div:first-child { border-right: 1px solid rgba(255,255,255,.15); }
+.swot-cell { padding: 1.1rem 1.25rem; }
+.swot-cell .sw-label { font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .5rem; }
+.swot-cell ul { font-size: .83rem; line-height: 1.6; padding-left: 1.1rem; }
+.swot-s { background: #E8F5EE; border-right: 1px solid #b2dfc3; border-bottom: 1px solid #b2dfc3; }
+.swot-s .sw-label { color: var(--green-dark); }
+.swot-w { background: #FFF3CD; border-bottom: 1px solid #f0d080; }
+.swot-w .sw-label { color: var(--amber-dark); }
+.swot-o { background: var(--blue-pale); border-right: 1px solid var(--blue-light); }
+.swot-o .sw-label { color: var(--blue-mid); }
+.swot-t { background: var(--purple-light); }
+.swot-t .sw-label { color: var(--purple-dark); }
+@media(max-width:520px){ .swot-grid { grid-template-columns: 1fr; } .swot-axis { display: none; } }
+
+/* ── MATERIALI ── */
+.materiali-section { background: var(--gray-light); border: 1px dashed #bbb; border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-top: 2rem; }
+.materiali-section h3 { font-size: 1rem; font-weight: 600; margin-bottom: .35rem; color: var(--blue-dark); }
+.materiali-section p  { font-size: .85rem; color: var(--gray-mid); margin: 0; }
+
+/* ── BACK TO TOP ── */
+#back-top {
+  position: fixed; bottom: 2rem; right: 2rem;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--blue-dark); color: #fff; border: none;
+  font-size: 1rem; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,.2);
+  display: none; align-items: center; justify-content: center;
+  transition: background .2s, transform .2s; z-index: 50;
+}
+#back-top.visible { display: flex; }
+#back-top:hover { background: var(--blue-mid); transform: translateY(-3px); }
+
+/* ════════════════════════════════════════════
+   MODALITÀ AULA — body.aula-mode
+════════════════════════════════════════════ */
+body.aula-mode #sidebar  { display: none; }
+body.aula-mode #main     { margin-left: 0 !important; max-width: 100%; padding: 0; }
+body.aula-mode #header   { background: #0D2137; }
+body.aula-mode #reading-bar { display: none; }
+body.aula-mode #back-top { display: none !important; }
+
+#slides-container {
+  display: none;
+  width: 100vw; height: calc(100vh - var(--header-h));
+  overflow: hidden; position: relative;
+  background: #0D2137;
+}
+body.aula-mode #slides-container { display: block; }
+body.aula-mode #guide-content   { display: none; }
+
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+  padding: 4vw 7vw;
+  opacity: 0; transform: translateX(30px);
+  transition: opacity .32s ease, transform .32s ease;
+  pointer-events: none; overflow-y: auto;
+}
+.slide.active { opacity: 1; transform: translateX(0); pointer-events: auto; }
+.slide.exit   { opacity: 0; transform: translateX(-30px); }
+.slide-tag { font-size: .68rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--blue-light); margin-bottom: .65rem; }
+.slide-title { font-family: var(--font-display); font-size: clamp(1.7rem, 4vw, 2.8rem); color: #fff; line-height: 1.15; margin-bottom: 1.25rem; }
+.slide-title em { color: var(--blue-light); font-style: italic; }
+.slide-body { font-size: clamp(.88rem, 1.4vw, 1.05rem); color: rgba(255,255,255,.82); line-height: 1.65; max-width: 760px; }
+.slide-points { list-style: none; }
+.slide-points li { display: flex; gap: .75rem; align-items: flex-start; padding: .55rem 0; border-bottom: 1px solid rgba(255,255,255,.07); font-size: clamp(.85rem,1.3vw,1rem); color: rgba(255,255,255,.85); line-height: 1.5; }
+.slide-points li:last-child { border-bottom: none; }
+.slide-points li::before { content: '→'; color: var(--blue-light); flex-shrink: 0; font-weight: 700; }
+
+#slide-nav {
+  display: none; position: fixed; bottom: 0; left: 0; right: 0;
+  padding: .85rem 2rem; background: rgba(0,0,0,.4);
+  align-items: center; justify-content: center; gap: 1.5rem;
+}
+
+body.aula-mode #slide-nav { display: flex; }
+.slide-btn {
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+  color: #fff; padding: .45rem 1.25rem; border-radius: 20px;
+  cursor: pointer; font-size: .85rem; font-family: var(--font-body);
+  transition: background .2s;
+}
+.slide-btn:hover { background: rgba(255,255,255,.22); }
+.slide-btn:disabled { opacity: .3; cursor: default; }
+#slide-counter { font-size: .8rem; color: rgba(255,255,255,.5); min-width: 60px; text-align: center; }
+#progress-bar  { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 200; height: 3px; background: rgba(255,255,255,.1); }
+#progress-fill { height: 100%; background: var(--blue-mid); transition: width .3s; }
+body.aula-mode #progress-bar { display: block; }
+
+/* ── FOOTER ── */
+footer { background: var(--blue-dark); color: rgba(255,255,255,.6); text-align: center; padding: 2rem 1.5rem; font-size: .8rem; line-height: 1.7; }
+footer strong { color: rgba(255,255,255,.9); }
+@media(min-width:900px){ footer { margin-left: var(--nav-w); } }
+body.aula-mode footer { display: none; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header">
+  <div class="header-left">
+    <button id="hamburger"><span></span><span></span><span></span></button>
+    <a href="../index.html" class="header-back">← Portale</a>
+    <div class="header-sep"></div>
+    <span class="header-logo">Marketing e Digital Marketing</span>
+    <span class="header-sub">Formazione Digitale</span>
+  </div>
+  <div class="header-right">
+    <button class="mode-toggle" onclick="toggleMode()">
+      <span id="mode-icon">🎓</span>
+      <span id="mode-label">Modalità Aula</span>
+    </button>
+  </div>
+</div>
+
+<div id="reading-bar"><div id="reading-fill"></div></div>
+<div id="overlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="nav-part-label">Parte 1 — Marketing</div>
+  <a class="nav-item" href="#s11"><span class="nav-num">1.1</span>Cos'è il Marketing</a>
+  <a class="nav-item" href="#s12"><span class="nav-num">1.2</span>Tipologie di Marketing</a>
+  <a class="nav-item" href="#s13"><span class="nav-num">1.3</span>Marketing Management</a>
+  <a class="nav-item" href="#s14"><span class="nav-num">1.4</span>Fase Analitica e SWOT</a>
+  <a class="nav-item" href="#s15"><span class="nav-num">1.5</span>Fase Strategica — STP</a>
+  <a class="nav-item" href="#s16"><span class="nav-num">1.6</span>Fase Operativa — 4P e 7P</a>
+  <a class="nav-item" href="#s17"><span class="nav-num">1.7</span>Le 4C: dal prodotto al cliente</a>
+  <a class="nav-item" href="#s18"><span class="nav-num">1.8</span>Business Plan e Piano</a>
+  <a class="nav-item" href="#s19"><span class="nav-num">1.9</span>Piramide di Maslow</a>
+  <a class="nav-item" href="#s110"><span class="nav-num">1.10</span>Buyer Personas</a>
+  <hr class="nav-divider">
+  <div class="nav-part-label">Parte 2 — Digital Marketing</div>
+  <a class="nav-item" href="#s21"><span class="nav-num">2.1</span>Quanto siamo connessi?</a>
+  <a class="nav-item" href="#s22"><span class="nav-num">2.2</span>SEO</a>
+  <a class="nav-item" href="#s23"><span class="nav-num">2.3</span>SEA — Pubblicità a pagamento</a>
+  <a class="nav-item" href="#s24"><span class="nav-num">2.4</span>SEM — Strategia integrata</a>
+  <a class="nav-item" href="#s24b"><span class="nav-num">2.4b</span>Schema Web Marketing</a>
+  <a class="nav-item" href="#s25"><span class="nav-num">2.5</span>Brand, Marchio, Logo</a>
+  <a class="nav-item" href="#s26"><span class="nav-num">2.6</span>Registrazione del Marchio</a>
+  <a class="nav-item" href="#s27"><span class="nav-num">2.7</span>Content Marketing</a>
+  <a class="nav-item" href="#s28"><span class="nav-num">2.8</span>Social Media Marketing</a>
+  <a class="nav-item" href="#s29"><span class="nav-num">2.9</span>Affiliate Marketing</a>
+  <a class="nav-item" href="#s210"><span class="nav-num">2.10</span>Guerrilla Marketing</a>
+  <a class="nav-item" href="#s211"><span class="nav-num">2.11</span>Nudging</a>
+  <a class="nav-item" href="#s212"><span class="nav-num">2.12</span>Email Marketing</a>
+  <a class="nav-item" href="#s213"><span class="nav-num">2.13</span>Digital PR</a>
+  <a class="nav-item" href="#s214"><span class="nav-num">2.14</span>Comunicazione d'Impresa</a>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+<div id="guide-content">
+
+<!-- COVER -->
+<div class="cover-block">
+  <div class="cover-eyebrow">Formazione Digitale · Guida completa · AFM e RIM</div>
+  <div class="cover-title">Marketing e<br><em>Digital Marketing</em></div>
+  <p class="cover-desc">Dalla definizione di marketing agli strumenti del mondo digitale. Una guida per chi studia gli indirizzi AFM e RIM — e per chiunque voglia capire come funziona il mercato oggi.</p>
+  <div class="cover-badges">
+    <span class="cover-badge">📘 Parte 1 — Il Marketing · 10 sezioni</span>
+    <span class="cover-badge">💻 Parte 2 — Digital Marketing · 14 sezioni</span>
+  </div>
+</div>
+
+<!-- ════════ PARTE 1 ════════ -->
+<div class="part-header">
+  <div class="part-num">1</div>
+  <div class="part-titles">
+    <div class="part-title">Il Marketing</div>
+    <div class="part-subtitle">Fondamentali, processo strategico e psicologia del consumatore</div>
+  </div>
+</div>
+
+<!-- 1.1 -->
+<section class="guide-section" id="s11">
+  <div class="section-header">
+    <div class="section-num">1.1</div>
+    <div class="section-titles">
+      <div class="section-title">Cos'è il Marketing</div>
+      <div class="section-subtitle">Non è pubblicità — è molto di più</div>
+    </div>
+  </div>
+
+  <p>Il marketing è spesso confuso con la pubblicità, ma i due concetti non sono la stessa cosa. La pubblicità è solo uno degli strumenti che il marketing usa per far sapere che un prodotto esiste. Il marketing, invece, è qualcosa di molto più ampio.</p>
+
+  <div class="box box-info">
+    <div class="box-label">Definizione</div>
+    <p>Il marketing è la funzione che decide <strong>a chi</strong> vendere, <strong>cosa</strong> vendere e <strong>come</strong> vendere — pianificando le azioni necessarie per raggiungere il profitto attraverso la soddisfazione dei bisogni del consumatore.</p>
+  </div>
+
+  <p>In altre parole, il marketing risponde a cinque domande fondamentali: cosa vendere (il prodotto), a chi (il target), quando (la tempistica), dove (i canali di distribuzione), come (le strategie di comunicazione) e a quanto (il prezzo).</p>
+
+  <div class="sub-title">Da centrato sul prodotto a centrato sul cliente</div>
+  <p>Per decenni il modello dominante era <strong>product driven</strong>: l'azienda produceva un bene standard e il mercato lo comprava (approccio fordista). Oggi il modello è <strong>customer driven</strong>: le aziende di eccellenza costruiscono relazioni con i clienti, li ascoltano e si impegnano a mantenerli soddisfatti nel tempo.</p>
+
+  <div class="dodont">
+    <div class="do-col">
+      <div class="dodont-title">✓ Customer driven (oggi)</div>
+      <ul>
+        <li>Ascolta attivamente il cliente</li>
+        <li>Personalizza prodotti e comunicazione</li>
+        <li>Costruisce relazioni durature</li>
+        <li>Misura la soddisfazione continuamente</li>
+      </ul>
+    </div>
+    <div class="dont-col">
+      <div class="dodont-title">✗ Product driven (ieri)</div>
+      <ul>
+        <li>Produce un bene standard per tutti</li>
+        <li>Comunica in modo uguale a tutti</li>
+        <li>Si concentra sul prodotto, non sul cliente</li>
+        <li>Henry Ford: "qualsiasi colore, purché nero"</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 1.2 -->
+<section class="guide-section" id="s12">
+  <div class="section-header">
+    <div class="section-num">1.2</div>
+    <div class="section-titles">
+      <div class="section-title">Le tipologie di Marketing</div>
+      <div class="section-subtitle">B2B, B2C, C2C, C2B e B2B2C</div>
+    </div>
+  </div>
+
+  <p>Non tutto il marketing funziona allo stesso modo. A seconda di chi vende e di chi compra, cambiano le strategie, i messaggi e il ruolo della tecnologia.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Modello</th><th>Chi vende</th><th>Chi compra</th><th>Caratteristica principale</th></tr></thead>
+      <tbody>
+        <tr><td><strong>B2B</strong></td><td>Azienda</td><td>Azienda</td><td>Volumi elevati, processi decisionali complessi, IT integrato</td></tr>
+        <tr><td><strong>B2C</strong></td><td>Azienda</td><td>Consumatore</td><td>Leva emozionale, UX, omnicanalità, acquisti frequenti</td></tr>
+        <tr><td><strong>C2C</strong></td><td>Privato</td><td>Privato</td><td>Piattaforme abilitanti, fiducia digitale, economia circolare</td></tr>
+        <tr><td><strong>C2B</strong></td><td>Consumatore</td><td>Azienda</td><td>Recensioni, contenuti, crowdsourcing, influenza sul prodotto</td></tr>
+        <tr><td><strong>B2B2C</strong></td><td>Azienda A → B</td><td>Consumatore</td><td>Intermediario che vende al cliente finale mantenendo il contatto con A</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub-title">Approfondimento per modello</div>
+  <div class="accordion">
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)">
+        <span>🏭 B2B — Business to Business</span><span class="acc-arrow">▶</span>
+      </div>
+      <div class="acc-body">
+        Nel B2B le trattative sono più lunghe, i volumi maggiori, le decisioni prese da più persone. Il marketing è relazionale e l'informatica serve per l'efficienza: integrazione sistemi, ordini automatici, ERP. Pensate a un produttore di componenti che vende a un costruttore di smartphone: niente spot televisivi, ma contratti e specifiche tecniche.
+      </div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)">
+        <span>🛒 B2C — Business to Consumer</span><span class="acc-arrow">▶</span>
+      </div>
+      <div class="acc-body">
+        Nel B2C il marketing deve convincere una persona — spesso in pochi secondi — che quel prodotto fa per lei. Conta la leva emotiva, il design dell'interfaccia (UX) e la presenza su tutti i canali dove il cliente si trova: negozio fisico, sito, app, social. Questa integrazione si chiama <strong>omnicanalità</strong>.
+      </div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)">
+        <span>🔄 C2C — Consumer to Consumer</span><span class="acc-arrow">▶</span>
+      </div>
+      <div class="acc-body">
+        Piattaforme come Vinted, eBay o Subito.it permettono ai privati di vendere ad altri privati. L'azienda non è il venditore: fornisce l'infrastruttura (pagamenti, recensioni, chat). Il marketing è sociale e l'informatica serve per la fiducia. È la base dell'economia circolare digitale.
+      </div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)">
+        <span>💡 C2B e B2B2C</span><span class="acc-arrow">▶</span>
+      </div>
+      <div class="acc-body">
+        Nel <strong>C2B</strong> il consumatore propone valore all'azienda: un influencer che offre visibilità in cambio di prodotti, o un utente che partecipa a un sondaggio retribuito. Il <strong>B2B2C</strong> è un modello ibrido in cui l'azienda originale conserva una relazione con il cliente finale pur passando per un intermediario — come in molti marketplace online.
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 1.3 -->
+<section class="guide-section" id="s13">
+  <div class="section-header">
+    <div class="section-num">1.3</div>
+    <div class="section-titles">
+      <div class="section-title">Il Marketing Management</div>
+      <div class="section-subtitle">Le tre fasi del processo</div>
+    </div>
+  </div>
+
+  <p>Il marketing non si improvvisa: segue un processo strutturato chiamato <strong>Marketing Management</strong>, che comprende la pianificazione, l'esecuzione e il controllo delle strategie. Si articola in tre fasi correlate e interdipendenti.</p>
+
+  <div class="highlight-grid">
+    <div class="highlight-card">
+      <div class="hc-emoji">🔍</div>
+      <div class="hc-title">1 — Fase Analitica</div>
+      <div class="hc-body">Capire il mercato, i concorrenti e il consumatore. Raccogliere dati per decidere bene.</div>
+    </div>
+    <div class="highlight-card">
+      <div class="hc-emoji">🎯</div>
+      <div class="hc-title">2 — Fase Strategica</div>
+      <div class="hc-body">Decidere cosa fare e come distinguersi. Segmentare, scegliere il target, posizionarsi.</div>
+    </div>
+    <div class="highlight-card">
+      <div class="hc-emoji">⚙️</div>
+      <div class="hc-title">3 — Fase Operativa</div>
+      <div class="hc-body">Mettere in pratica con le leve del marketing mix: prodotto, prezzo, distribuzione, comunicazione.</div>
+    </div>
+  </div>
+
+  <div class="box box-warn">
+    <div class="box-label">⚠ Attenzione</div>
+    <p>Senza una fase strategica chiara, l'informatica rischia di essere un costo inutile. Non serve un'app bellissima se non si è capito a quale bisogno del consumatore si vuole rispondere.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 1.4 -->
+<section class="guide-section" id="s14">
+  <div class="section-header">
+    <div class="section-num">1.4</div>
+    <div class="section-titles">
+      <div class="section-title">Fase Analitica e Analisi SWOT</div>
+      <div class="section-subtitle">Capire dove si è prima di decidere dove andare</div>
+    </div>
+  </div>
+
+  <p>La fase analitica serve a raccogliere informazioni sull'ambiente esterno, sul proprio settore e sul consumatore-tipo. I dati raccolti vengono integrati in sistemi di supporto alle decisioni (DSS).</p>
+
+  <div class="step-list">
+    <div class="step-item"><div class="step-dot">1</div><div class="step-body"><strong>Studio dell'ambiente esterno</strong><span>Identificare stakeholder: fornitori, distributori, partner, istituzioni.</span></div></div>
+    <div class="step-item"><div class="step-dot">2</div><div class="step-body"><strong>Studio del settore specifico</strong><span>Analizzare domanda e offerta nel segmento in cui l'azienda compete.</span></div></div>
+    <div class="step-item"><div class="step-dot">3</div><div class="step-body"><strong>Studio del consumatore-tipo</strong><span>Costruire il profilo del cliente ideale (buyer persona).</span></div></div>
+  </div>
+
+  <div class="sub-title">L'analisi SWOT</div>
+  <p>Lo strumento principale della fase analitica è la <strong>matrice SWOT</strong> (Humphrey, anni '60-'70): fotografa la situazione su due dimensioni — interno/esterno, positivo/negativo.</p>
+
+  <div class="swot-grid">
+    <div class="swot-axis">
+      <div>✅ Fattori positivi</div>
+      <div>❌ Fattori negativi</div>
+    </div>
+    <div class="swot-cell swot-s">
+      <div class="sw-label">🟢 Strengths — Forze (interne)</div>
+      <ul><li>Impianti moderni, tecnologie avanzate</li><li>Competenze di marketing consolidate</li><li>Brevetti e proprietà intellettuale</li><li>Risorse umane qualificate</li></ul>
+    </div>
+    <div class="swot-cell swot-w">
+      <div class="sw-label">🟡 Weaknesses — Debolezze (interne)</div>
+      <ul><li>Impianti obsoleti, costi di produzione alti</li><li>Scarsa propensione all'innovazione</li><li>Prodotti in declino (bassa quota mercato)</li></ul>
+    </div>
+    <div class="swot-cell swot-o">
+      <div class="sw-label">🔵 Opportunities — Opportunità (esterne)</div>
+      <ul><li>Nuovi mercati da esplorare</li><li>Domanda crescente nel settore</li><li>Innovazioni tecnologiche sfruttabili</li></ul>
+    </div>
+    <div class="swot-cell swot-t">
+      <div class="sw-label">🟣 Threats — Minacce (esterne)</div>
+      <ul><li>Nuovi concorrenti nel mercato</li><li>Cambiamenti nei gusti dei consumatori</li><li>Normative fiscali sfavorevoli</li></ul>
+    </div>
+  </div>
+
+  <div class="box box-warn">
+    <div class="box-label">⚠ Attenzione</div>
+    <p>La SWOT non è un dato oggettivo. La stessa realtà — una nuova normativa — può essere minaccia per un'azienda e opportunità per un'altra. Dipende dalla prospettiva e dalla strategia.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 1.5 -->
+<section class="guide-section" id="s15">
+  <div class="section-header">
+    <div class="section-num">1.5</div>
+    <div class="section-titles">
+      <div class="section-title">Fase Strategica — Il modello STP</div>
+      <div class="section-subtitle">Segmentazione, Targeting, Posizionamento</div>
+    </div>
+  </div>
+
+  <p>La fase strategica risponde a "cosa fare" e "come farlo" per distinguersi dalla concorrenza, attraverso il modello <strong>STP</strong>.</p>
+
+  <div class="highlight-grid">
+    <div class="highlight-card">
+      <div class="hc-emoji">✂️</div>
+      <div class="hc-title">Segmentazione</div>
+      <div class="hc-body">Dividere il mercato in gruppi con caratteristiche simili: età, reddito, interessi, comportamenti d'acquisto.</div>
+    </div>
+    <div class="highlight-card">
+      <div class="hc-emoji">🎯</div>
+      <div class="hc-title">Targeting</div>
+      <div class="hc-body">Scegliere a quali segmenti rivolgersi. Non si può parlare a tutti allo stesso modo: bisogna scegliere il bersaglio.</div>
+    </div>
+    <div class="highlight-card">
+      <div class="hc-emoji">🗺️</div>
+      <div class="hc-title">Posizionamento</div>
+      <div class="hc-body">Definire come si vuole essere percepiti nella mente del cliente rispetto ai concorrenti.</div>
+    </div>
+  </div>
+
+  <div class="box box-tip">
+    <div class="box-label">💡 Esempio pratico</div>
+    <p>Un'azienda di abbigliamento sportivo di fascia alta (target: 25-45 anni urbani, reddito medio-alto) sceglierà Instagram e YouTube per i contenuti, Google Ads per chi cerca attivamente, e LinkedIn per partnership B2B con palestre.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 1.6 -->
+<section class="guide-section" id="s16">
+  <div class="section-header">
+    <div class="section-num">1.6</div>
+    <div class="section-titles">
+      <div class="section-title">Fase Operativa — Dal Marketing Mix alle 7P</div>
+      <div class="section-subtitle">Le leve decisionali per mettere in pratica la strategia</div>
+    </div>
+  </div>
+
+  <p>La fase operativa è dove la strategia diventa azione. Il modello classico di E.J. McCarthy identifica <strong>4P</strong> come leve del marketing mix.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>La P</th><th>Cosa significa</th><th>Decisioni tipiche</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Product</strong></td><td>Beni, servizi e idee offerti al mercato</td><td>Caratteristiche, qualità, design, packaging, garanzia</td></tr>
+        <tr><td><strong>Price</strong></td><td>Quanto costa il prodotto al cliente</td><td>Listino, sconti, politiche promozionali, margini</td></tr>
+        <tr><td><strong>Placement</strong></td><td>Come e dove il prodotto arriva al cliente</td><td>Canali di vendita, logistica, e-commerce, negozi</td></tr>
+        <tr><td><strong>Promotion</strong></td><td>Come si informa il cliente del prodotto</td><td>Pubblicità, PR, social media, influencer, promozioni</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub-title">L'evoluzione verso le 7P</div>
+  <p>Con la crescente importanza dei servizi e dell'esperienza cliente, le 4P si sono ampliate a <strong>7P</strong>.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>P aggiuntiva</th><th>Cosa significa</th><th>Perché è importante</th></tr></thead>
+      <tbody>
+        <tr><td><strong>People</strong></td><td>Clienti e dipendenti come parte del prodotto</td><td>Chi interagisce con il pubblico rappresenta il brand</td></tr>
+        <tr><td><strong>Process</strong></td><td>Efficienza dei processi organizzativi</td><td>Assistenza post-vendita, tempi di risposta influenzano la percezione</td></tr>
+        <tr><td><strong>Physical Evidence</strong></td><td>Prove tangibili del brand</td><td>Recensioni, presenza online, packaging costruiscono fiducia</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 1.7 -->
+<section class="guide-section" id="s17">
+  <div class="section-header">
+    <div class="section-num">1.7</div>
+    <div class="section-titles">
+      <div class="section-title">Le 4C: dal prodotto al cliente</div>
+      <div class="section-subtitle">Il modello di Lauterborn degli anni '90</div>
+    </div>
+  </div>
+
+  <p>Negli anni '90 Robert F. Lauterborn propose di ribaltare il punto di vista delle 4P, partendo dal <strong>cliente</strong> invece che dal prodotto.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>4P (azienda)</th><th>4C (cliente)</th><th>Il cambio di domanda</th></tr></thead>
+      <tbody>
+        <tr><td>Product</td><td><strong>Consumer needs</strong></td><td>Da "cosa produciamo?" a "di cosa ha bisogno il cliente?"</td></tr>
+        <tr><td>Price</td><td><strong>Cost</strong></td><td>Da "quanto costa?" a "quanto costa davvero acquistarlo e usarlo?"</td></tr>
+        <tr><td>Placement</td><td><strong>Convenience</strong></td><td>Da "dove vendiamo?" a "dove è più comodo per il cliente?"</td></tr>
+        <tr><td>Promotion</td><td><strong>Communication</strong></td><td>Da "come pubblicizziamo?" a "come dialoghiamo con il cliente?"</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box box-note">
+    <p>Le 4C non sostituiscono le 4P — le completano. Nel digital marketing le 4C sono diventate lo standard: i social permettono dialogo bidirezionale, i dati permettono di capire i bisogni reali, la consegna a domicilio massimizza la convenienza.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 1.8 -->
+<section class="guide-section" id="s18">
+  <div class="section-header">
+    <div class="section-num">1.8</div>
+    <div class="section-titles">
+      <div class="section-title">Business Plan e Piano di Marketing</div>
+      <div class="section-subtitle">Due documenti diversi, spesso confusi</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th></th><th>Business Plan</th><th>Piano di Marketing</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Scopo</strong></td><td>Guida strategica complessiva</td><td>Definisce le azioni di marketing</td></tr>
+        <tr><td><strong>Orizzonte</strong></td><td>Medio-lungo termine</td><td>Breve-medio termine</td></tr>
+        <tr><td><strong>Contenuto</strong></td><td>Analisi, strategia, rischi, previsioni finanziarie</td><td>Strategie e azioni per raggiungere gli obiettivi del BP</td></tr>
+        <tr><td><strong>A chi serve</strong></td><td>Anche agli investitori esterni</td><td>Ai responsabili marketing interni</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub-title">Struttura del Piano di Marketing</div>
+  <div class="step-list">
+    <div class="step-item"><div class="step-dot">1</div><div class="step-body"><strong>Premessa generale</strong><span>Contesto e motivo per cui si redige il piano.</span></div></div>
+    <div class="step-item"><div class="step-dot">2</div><div class="step-body"><strong>Situazione attuale di marketing</strong><span>Dove siamo ora, analisi della posizione competitiva.</span></div></div>
+    <div class="step-item"><div class="step-dot">3</div><div class="step-body"><strong>Analisi di opportunità e minacce</strong><span>Elementi esterni favorevoli e rischiosi (cfr. SWOT).</span></div></div>
+    <div class="step-item"><div class="step-dot">4</div><div class="step-body"><strong>Obiettivi di marketing</strong><span>Traguardi quantificabili da raggiungere.</span></div></div>
+    <div class="step-item"><div class="step-dot">5</div><div class="step-body"><strong>Strategie di marketing</strong><span>Come si intendono raggiungere gli obiettivi.</span></div></div>
+    <div class="step-item"><div class="step-dot">6</div><div class="step-body"><strong>Piani d'azione</strong><span>Attività concrete, responsabilità, scadenze, budget.</span></div></div>
+  </div>
+
+  <div class="materiali-section">
+    <h3>📎 Materiali — Parte 1</h3>
+    <p>I materiali scaricabili saranno disponibili a breve.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 1.9 -->
+<section class="guide-section" id="s19">
+  <div class="section-header">
+    <div class="section-num">1.9</div>
+    <div class="section-titles">
+      <div class="section-title">La Piramide di Maslow e il Marketing</div>
+      <div class="section-subtitle">Capire perché le persone comprano quello che comprano</div>
+    </div>
+  </div>
+
+  <p>La <strong>Piramide di Maslow</strong> (1954) descrive una gerarchia di bisogni umani: prima di aspirare a soddisfare bisogni superiori, una persona deve aver soddisfatto quelli inferiori. Il marketing la usa per capire cosa muove ogni segmento di consumatori.</p>
+
+<!-- SVG Piramide di Maslow — cima piatta, separatori corretti -->
+<div class="diagram-wrap">
+  <svg viewBox="0 0 820 490" xmlns="http://www.w3.org/2000/svg" aria-label="Piramide di Maslow" style="max-width:100%;height:auto;">
+    <defs>
+      <!-- Trapezio: cima piatta larga 120px centrata su x=370
+           base larga 560px centrata su x=370
+           cima: x=310,y=20 → x=430,y=20
+           base: x=90,y=450 → x=650,y=450 -->
+      <clipPath id="triangle-clip">
+        <polygon points="310,20 430,20 650,450 90,450"/>
+      </clipPath>
+    </defs>
+
+    <!-- Fasce da 86px ciascuna: y=20→106→192→278→364→450 -->
+    <rect x="80" y="364" width="600" height="86" fill="#1E6B3C" clip-path="url(#triangle-clip)"/>
+    <rect x="80" y="278" width="600" height="86" fill="#2E75B6" clip-path="url(#triangle-clip)"/>
+    <rect x="80" y="192" width="600" height="86" fill="#B08000" clip-path="url(#triangle-clip)"/>
+    <rect x="80" y="106" width="600" height="86" fill="#6A1B9A" clip-path="url(#triangle-clip)"/>
+    <rect x="80" y="20"  width="600" height="86" fill="#C0392B" clip-path="url(#triangle-clip)"/>
+
+    <!-- Bordo sagoma -->
+    <polygon points="310,20 430,20 650,450 90,450" fill="none" stroke="white" stroke-width="2"/>
+
+    <!-- Separatori orizzontali
+         Trapezio: cima y=20 larga 120 (x=310..430), base y=450 larga 560 (x=90..650)
+         Δy totale=430, Δx per lato=(280-60)/430*Δy per lato
+         Lato sinistro: x_left = 310 - (y-20)/430 * 220
+         Lato destro:   x_right= 430 + (y-20)/430 * 220
+         y=106: x_left=310-86/430*220=310-44=266, x_right=430+44=474
+         y=192: x_left=310-172/430*220=310-88=222, x_right=430+88=518
+         y=278: x_left=310-258/430*220=310-132=178, x_right=430+132=562
+         y=364: x_left=310-344/430*220=310-176=134, x_right=430+176=606 -->
+    <line x1="266" y1="106" x2="474" y2="106" stroke="white" stroke-width="1.5"/>
+    <line x1="222" y1="192" x2="518" y2="192" stroke="white" stroke-width="1.5"/>
+    <line x1="178" y1="278" x2="562" y2="278" stroke="white" stroke-width="1.5"/>
+    <line x1="134" y1="364" x2="606" y2="364" stroke="white" stroke-width="1.5"/>
+
+    <!-- Testi: centri fascia
+         L5: (20+106)/2=63, L4: (106+192)/2=149, L3: (192+278)/2=235
+         L2: (278+364)/2=321, L1: (364+450)/2=407 -->
+    <text text-anchor="middle" font-family="'DM Sans',sans-serif" font-weight="700" fill="white">
+      <tspan x="370" y="57"  font-size="10">5 · Autorealizzazione</tspan>
+      <tspan x="370" y="71"  font-size="8.5" font-weight="400">Realizzazione del proprio potenziale</tspan>
+
+      <tspan x="370" y="143" font-size="10">4 · Stima e riconoscimento</tspan>
+      <tspan x="370" y="157" font-size="8.5" font-weight="400">Status, autostima, successo</tspan>
+
+      <tspan x="370" y="229" font-size="10">3 · Appartenenza e bisogni sociali</tspan>
+      <tspan x="370" y="243" font-size="8.5" font-weight="400">Amicizie, famiglia, community</tspan>
+
+      <tspan x="370" y="315" font-size="10">2 · Sicurezza, garanzie e protezione</tspan>
+      <tspan x="370" y="329" font-size="8.5" font-weight="400">Stabilità, salute, lavoro sicuro</tspan>
+
+      <tspan x="370" y="401" font-size="10">1 · Bisogni fisiologici di base</tspan>
+      <tspan x="370" y="415" font-size="8.5" font-weight="400">Cibo, acqua, riparo, sonno</tspan>
+    </text>
+
+    <!-- Etichette laterali destra — attaccate al bordo destro di ogni fascia -->
+    <line x1="432" y1="63"  x2="660" y2="57"  stroke="#aaa" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="664" y="55"  font-family="'DM Sans',sans-serif" font-size="8.5" fill="#555">Esperienze,</text>
+    <text x="664" y="67"  font-family="'DM Sans',sans-serif" font-size="8.5" fill="#555">valori, impatto</text>
+
+    <line x1="476" y1="149" x2="660" y2="143" stroke="#aaa" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="664" y="141" font-family="'DM Sans',sans-serif" font-size="8.5" fill="#555">Lusso, status,</text>
+    <text x="664" y="153" font-family="'DM Sans',sans-serif" font-size="8.5" fill="#555">esclusività</text>
+
+    <line x1="520" y1="235" x2="660" y2="235" stroke="#aaa" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="664" y="233" font-family="'DM Sans',sans-serif" font-size="8.5" fill="#555">Social, community,</text>
+    <text x="664" y="245" font-family="'DM Sans',sans-serif" font-size="8.5" fill="#555">lifestyle</text>
+
+    <line x1="564" y1="321" x2="660" y2="321" stroke="#aaa" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="664" y="319" font-family="'DM Sans',sans-serif" font-size="8.5" fill="#555">Garanzie,</text>
+    <text x="664" y="331" font-family="'DM Sans',sans-serif" font-size="8.5" fill="#555">affidabilità</text>
+
+    <line x1="608" y1="407" x2="660" y2="407" stroke="#aaa" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="664" y="405" font-family="'DM Sans',sans-serif" font-size="8.5" fill="#555">Prodotti essenziali</text>
+    <text x="664" y="417" font-family="'DM Sans',sans-serif" font-size="8.5" fill="#555">o premium</text>
+
+  </svg>
+</div>
+
+  <div class="box box-warn">
+    <div class="box-label">⚠ Marketing etico vs predatorio</div>
+    <p>Rivolgersi a persone ai livelli inferiori — dove la vulnerabilità è alta — richiede responsabilità etica. Il marketing predatorio sfrutta queste vulnerabilità (es. schemi Ponzi). Un marketing onesto costruisce fiducia attraverso la trasparenza.</p>
+  </div>
+
+  <div class="box box-tip">
+    <div class="box-label">💡 I bisogni cambiano nel tempo</div>
+    <p>Un evento come la perdita del lavoro può cambiare radicalmente i bisogni prioritari di una persona: ciò che ieri era desiderio di status oggi diventa bisogno di sicurezza. Il marketing deve essere flessibile e monitorare continuamente i bisogni reali del proprio target — non dare per scontato che rimangano stabili.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 1.10 -->
+<section class="guide-section" id="s110">
+  <div class="section-header">
+    <div class="section-num">1.10</div>
+    <div class="section-titles">
+      <div class="section-title">Le Buyer Personas</div>
+      <div class="section-subtitle">Modelli archetipici del cliente ideale</div>
+    </div>
+  </div>
+
+  <div class="box box-info">
+    <div class="box-label">Definizione</div>
+    <p>Una Buyer Persona è una rappresentazione semi-fittizia del cliente ideale, costruita su dati reali e proiezioni ragionate. Non è un singolo individuo — è un archetipo che rappresenta un gruppo con caratteristiche, bisogni e comportamenti simili.</p>
+  </div>
+
+  <p>Un'azienda raramente ha un solo tipo di cliente. Per questo si definiscono molteplici Buyer Personas — ognuna con canali e messaggi diversi.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Uso</th><th>Esempio</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Segmentazione per prodotto</strong></td><td>Scarpe sportive: "Runner professionista" vs "Appassionato di sneakers". Messaggi opposti per lo stesso brand.</td></tr>
+        <tr><td><strong>Segmentazione per obiettivo</strong></td><td>Acquisizione nuovi clienti → una persona. Fidelizzazione (loyalty) → un'altra persona.</td></tr>
+        <tr><td><strong>Strategia omnicanale</strong></td><td>Chi usa TikTok è diverso da chi legge newsletter di settore, anche se comprano lo stesso prodotto.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ════════ PARTE 2 ════════ -->
+<div class="part-header">
+  <div class="part-num">2</div>
+  <div class="part-titles">
+    <div class="part-title">Il Digital Marketing</div>
+    <div class="part-subtitle">Strumenti, strategie e concetti fondamentali nell'era digitale</div>
+  </div>
+</div>
+
+<!-- 2.1 -->
+<section class="guide-section" id="s21">
+  <div class="section-header">
+    <div class="section-num">2.1</div>
+    <div class="section-titles">
+      <div class="section-title">Quanto siamo connessi?</div>
+      <div class="section-subtitle">Il contesto globale del digital marketing</div>
+    </div>
+  </div>
+
+<a href="https://datareportal.com/reports/digital-2025-global-overview-report" target="_blank" style="display:block;text-decoration:none;margin-bottom:1.25rem;">
+    <div style="display:flex;align-items:center;gap:1rem;background:#fff;border:1px solid var(--blue-light);border-left:4px solid var(--blue-mid);border-radius:var(--radius);padding:.85rem 1.1rem;transition:box-shadow .2s,transform .2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(31,78,121,.14)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+      <div style="flex-shrink:0;text-align:center;">
+        <div style="font-family:'DM Serif Display',Georgia,serif;font-size:1rem;font-weight:700;color:#1a1a1a;letter-spacing:-.02em;line-height:1;">We Are Social</div>
+        <div style="font-size:.65rem;color:var(--gray-mid);letter-spacing:.08em;text-transform:uppercase;margin-top:2px;">× DataReportal</div>
+      </div>
+      <div style="width:1px;height:36px;background:var(--blue-light);flex-shrink:0;"></div>
+      <div>
+        <div style="font-size:.82rem;font-weight:600;color:var(--blue-dark);">Digital 2025 — Global Overview Report</div>
+        <div style="font-size:.75rem;color:var(--gray-mid);margin-top:2px;">Dati aggiornati a gennaio 2025 · datareportal.com →</div>
+      </div>
+    </div>
+  </a>
+
+  <div class="highlight-grid">
+    <div class="highlight-card">
+      <div class="hc-emoji">🌍</div>
+      <div class="hc-title">66,2%</div>
+      <div class="hc-body">Della popolazione mondiale ha accesso a internet. Nord Europa 97,6% · Africa orientale 26,7%.</div>
+    </div>
+    <div class="highlight-card">
+      <div class="hc-emoji">⏱️</div>
+      <div class="hc-title">6h 40min/giorno</div>
+      <div class="hc-body">Tempo medio online per utente, di cui 2h 23min sui social media.</div>
+    </div>
+    <div class="highlight-card">
+      <div class="hc-emoji">💰</div>
+      <div class="hc-title">720 miliardi $</div>
+      <div class="hc-body">Spesi in pubblicità digitale nel 2025 (+10% anno su anno). Social advertising: 207 miliardi.</div>
+    </div>
+  </div>
+
+  <div class="box box-note">
+    <p>2,7 miliardi di persone sono ancora completamente disconnesse da internet. Il digital marketing non raggiunge (ancora) tutti — questo è sia un limite che un'opportunità futura enorme.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 2.2 -->
+<section class="guide-section" id="s22">
+  <div class="section-header">
+    <div class="section-num">2.2</div>
+    <div class="section-titles">
+      <div class="section-title">SEO — Ottimizzazione per i motori di ricerca</div>
+      <div class="section-subtitle">Visibilità organica: guadagnata col lavoro, non comprata</div>
+    </div>
+  </div>
+
+  <div class="box box-info">
+    <div class="box-label">Definizione</div>
+    <p>La SEO (Search Engine Optimization) comprende tutte le tecniche per migliorare la visibilità di un sito nei risultati <strong>organici</strong> dei motori di ricerca — senza pagare per ogni clic.</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Area SEO</th><th>In cosa consiste</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Struttura del sito</strong></td><td>Navigabilità e accessibilità affinché Google possa leggere facilmente i contenuti</td></tr>
+        <tr><td><strong>HTML e meta-dati</strong></td><td>Tag del titolo, meta-descrizioni, intestazioni: le "etichette" che i motori leggono</td></tr>
+        <tr><td><strong>Parole chiave</strong></td><td>Identificare i termini usati dal proprio pubblico e integrarli nei contenuti</td></tr>
+        <tr><td><strong>Contenuti di qualità</strong></td><td>Articoli, video, guide che rispondono concretamente alle domande degli utenti</td></tr>
+        <tr><td><strong>Link building</strong></td><td>Ottenere link da altri siti autorevoli: più link di qualità, più il sito è considerato affidabile</td></tr>
+        <tr><td><strong>Analisi dei dati</strong></td><td>Monitorare posizioni, traffico e comportamento per affinare continuamente la strategia</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box box-tip">
+    <div class="box-label">💡 SEO in parole semplici</div>
+    <p>Immaginate che Google sia un bibliotecario che deve consigliare un libro. La SEO è il lavoro che fate perché il vostro libro sia ben organizzato, chiaro nel titolo, citato da fonti autorevoli e realmente utile. Il bibliotecario lo consiglierà più volentieri.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 2.3 -->
+<section class="guide-section" id="s23">
+  <div class="section-header">
+    <div class="section-num">2.3</div>
+    <div class="section-titles">
+      <div class="section-title">SEA — Pubblicità a pagamento</div>
+      <div class="section-subtitle">Pay-Per-Click: si paga solo quando l'utente clicca</div>
+    </div>
+  </div>
+
+  <div class="box box-info">
+    <div class="box-label">Definizione</div>
+    <p>Il SEA (Search Engine Advertising) è la strategia di acquistare spazi pubblicitari sui motori di ricerca e sui social media. Si basa sul modello <strong>PPC (Pay-Per-Click)</strong>: si paga solo quando un utente clicca sull'annuncio.</p>
+  </div>
+
+  <div class="highlight-grid">
+    <div class="highlight-card">
+      <div class="hc-emoji">🔍</div>
+      <div class="hc-title">Search Engine Ads</div>
+      <div class="hc-body">Annunci in cima ai risultati di Google o Bing. Etichettati "Sponsorizzato". Visibilità immediata.</div>
+    </div>
+    <div class="highlight-card">
+      <div class="hc-emoji">📱</div>
+      <div class="hc-title">Social Media Ads</div>
+      <div class="hc-body">Annunci su Instagram, TikTok, Meta. Sfruttano i dati demografici per raggiungere il target preciso.</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Metrica</th><th>Cosa misura</th></tr></thead>
+      <tbody>
+        <tr><td><strong>CTR — Click-Through Rate</strong></td><td>% di persone che hanno visto l'annuncio e cliccato. CTR alto = annuncio rilevante.</td></tr>
+        <tr><td><strong>CPC — Cost Per Click</strong></td><td>Costo medio per ogni clic. Dipende dalla competitività delle parole chiave.</td></tr>
+        <tr><td><strong>CPA — Cost Per Action</strong></td><td>Costo per ottenere un'azione desiderata (acquisto, registrazione). La metrica finale.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 2.4 -->
+<section class="guide-section" id="s24">
+  <div class="section-header">
+    <div class="section-num">2.4</div>
+    <div class="section-titles">
+      <div class="section-title">SEM — La strategia integrata</div>
+      <div class="section-subtitle">SEO + SEA: massima visibilità su entrambi i fronti</div>
+    </div>
+  </div>
+
+  <p>Il <strong>SEM</strong> (Search Engine Marketing) non è un terzo strumento: è la disciplina che coordina SEO e SEA in una strategia integrata per massimizzare la visibilità totale.</p>
+
+   <!-- SVG schema SEM -->
+<div class="diagram-wrap" style="border:none;">
+  <svg viewBox="0 0 700 310" xmlns="http://www.w3.org/2000/svg" aria-label="Schema SEM = SEO + SEA" style="max-width:100%;height:auto;">
+    <defs>
+      <clipPath id="clip-seo4"><circle cx="265" cy="145" r="135"/></clipPath>
+    </defs>
+
+    <!-- Cerchio SEO: cx=265, r=135 → bord.sin=130, bord.dx=400 -->
+    <circle cx="265" cy="145" r="135" fill="#BDD9F2" stroke="#2E75B6" stroke-width="1.5"/>
+
+    <!-- Cerchio SEA: cx=435, r=135 → bord.sin=300, bord.dx=570
+         Distanza centri=170 → sovrapposizione=135+135-170=100px -->
+    <circle cx="435" cy="145" r="135" fill="#F0D98A" stroke="#B08000" stroke-width="1.5"/>
+
+    <!-- Intersezione verde -->
+    <circle cx="435" cy="145" r="135" fill="#2E7D52" clip-path="url(#clip-seo4)"/>
+
+    <!-- SEO: centro ottico parte esclusiva sinistra
+         bord.sin cerchio=130, inizio intersezione≈300 → centro=(130+300)/2=215 -->
+    <text text-anchor="middle" font-family="'DM Sans',sans-serif" fill="#1F4E79">
+      <tspan x="200" y="130" font-size="28" font-weight="700">SEO</tspan>
+      <tspan x="200" y="153" font-size="11" font-weight="400">Organico</tspan>
+      <tspan x="200" y="169" font-size="11" font-weight="400">Lungo termine</tspan>
+      <tspan x="200" y="185" font-size="11" font-weight="400">Costo: lavoro</tspan>
+    </text>
+
+    <!-- SEA: centro ottico parte esclusiva destra
+         fine intersezione≈400, bord.dx=570 → centro=(400+570)/2=485 -->
+    <text text-anchor="middle" font-family="'DM Sans',sans-serif" fill="#5a3500">
+      <tspan x="490" y="130" font-size="28" font-weight="700">SEA</tspan>
+      <tspan x="490" y="153" font-size="11" font-weight="400">A pagamento</tspan>
+      <tspan x="490" y="169" font-size="11" font-weight="400">Immediato</tspan>
+      <tspan x="490" y="185" font-size="11" font-weight="400">Costo: budget</tspan>
+    </text>
+
+    <!-- SEM: centro intersezione=(265+435)/2=350 -->
+    <text text-anchor="middle" font-family="'DM Sans',sans-serif" fill="white">
+      <tspan x="350" y="130" font-size="22" font-weight="700">SEM</tspan>
+      <tspan x="350" y="152" font-size="11" font-weight="400">Massima</tspan>
+      <tspan x="350" y="168" font-size="11" font-weight="400">visibilità</tspan>
+    </text>
+
+    <!-- Didascalia -->
+    <text x="350" y="296" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" fill="#888">SEM = strategia integrata che combina SEO e SEA</text>
+  </svg>
+</div>
+
+</section>
+
+<hr class="section-divider">
+
+<!-- 2.4b — Schema Web Marketing -->
+<section class="guide-section" id="s24b">
+  <div class="section-header">
+    <div class="section-num">2.4b</div>
+    <div class="section-titles">
+      <div class="section-title">La mappa del Web Marketing</div>
+      <div class="section-subtitle">Come si organizzano tutti gli strumenti del marketing digitale</div>
+    </div>
+  </div>
+
+  <p>Il <strong>Web Marketing</strong> è l'insieme di tutte le attività di marketing che si svolgono online. Non è un unico strumento — è una famiglia di discipline coordinate. Lo schema seguente mostra come si articola e come ogni strumento si colloca al suo interno.</p>
+
+  <div class="diagram-wrap">
+ <svg viewBox="0 0 680 440" xmlns="http://www.w3.org/2000/svg" aria-label="Schema Web Marketing" style="max-width:100%;height:auto;">
+    <defs>
+      <!-- Freccia blu -->
+      <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#2E75B6"/>
+      </marker>
+      <!-- Freccia verde -->
+      <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#1E6B3C"/>
+      </marker>
+    </defs>
+
+    <!-- ── Nodo radice: WEB MARKETING ── -->
+    <rect x="200" y="10" width="280" height="56" rx="10" fill="#2E75B6"/>
+    <text text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="14" font-weight="700" fill="white">
+      <tspan x="340" y="34">WEB MARKETING</tspan>
+      <tspan x="340" dy="17" font-size="10" font-weight="400">Tutte le attività di marketing online</tspan>
+    </text>
+
+    <!-- Freccia giù dal radice → giunzione -->
+    <line x1="340" y1="66" x2="340" y2="96" stroke="#2E75B6" stroke-width="2" marker-end="url(#arrow-blue)"/>
+    <!-- Linea orizzontale -->
+    <line x1="170" y1="96" x2="510" y2="96" stroke="#2E75B6" stroke-width="2"/>
+    <!-- Frecce verso SEM e SMM -->
+    <line x1="170" y1="96" x2="170" y2="126" stroke="#2E75B6" stroke-width="2" marker-end="url(#arrow-blue)"/>
+    <line x1="510" y1="96" x2="510" y2="126" stroke="#1E6B3C" stroke-width="2" marker-end="url(#arrow-green)"/>
+
+    <!-- ── Nodo SEM ── -->
+    <rect x="60" y="126" width="220" height="54" rx="10" fill="#1F4E79"/>
+    <text text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="13" font-weight="700" fill="white">
+      <tspan x="170" y="148">SEM</tspan>
+      <tspan x="170" dy="15" font-size="10" font-weight="400">Search Engine Marketing</tspan>
+    </text>
+
+    <!-- ── Nodo SMM ── -->
+    <rect x="400" y="126" width="220" height="54" rx="10" fill="#1E6B3C"/>
+    <text text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="13" font-weight="700" fill="white">
+      <tspan x="510" y="148">SMM</tspan>
+      <tspan x="510" dy="15" font-size="10" font-weight="400">Social Media Marketing</tspan>
+    </text>
+
+    <!-- Frecce da SEM verso figli -->
+    <line x1="170" y1="180" x2="170" y2="206" stroke="#2E75B6" stroke-width="1.5"/>
+    <line x1="110" y1="206" x2="230" y2="206" stroke="#2E75B6" stroke-width="1.5"/>
+    <line x1="110" y1="206" x2="110" y2="226" stroke="#2E75B6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+    <line x1="230" y1="206" x2="230" y2="226" stroke="#2E75B6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+
+    <!-- Frecce da SMM verso figli -->
+    <line x1="510" y1="180" x2="510" y2="206" stroke="#1E6B3C" stroke-width="1.5"/>
+    <line x1="455" y1="206" x2="565" y2="206" stroke="#1E6B3C" stroke-width="1.5"/>
+    <line x1="455" y1="206" x2="455" y2="226" stroke="#1E6B3C" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+    <line x1="565" y1="206" x2="565" y2="226" stroke="#1E6B3C" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+    <!-- ── Figli SEM: SEA e SEO ── -->
+    <rect x="44"  y="226" width="132" height="58" rx="8" fill="#EBF3FC" stroke="#2E75B6" stroke-width="1.5"/>
+    <text text-anchor="middle" font-family="'DM Sans',sans-serif" font-weight="700" fill="#1F4E79">
+      <tspan x="110" y="247" font-size="12">SEA</tspan>
+      <tspan x="110" dy="14" font-size="9" font-weight="400" fill="#2E75B6">Search Engine</tspan>
+      <tspan x="110" dy="12" font-size="9" font-weight="400" fill="#2E75B6">Advertising</tspan>
+    </text>
+
+    <rect x="164" y="226" width="132" height="58" rx="8" fill="#EBF3FC" stroke="#2E75B6" stroke-width="1.5"/>
+    <text text-anchor="middle" font-family="'DM Sans',sans-serif" font-weight="700" fill="#1F4E79">
+      <tspan x="230" y="247" font-size="12">SEO</tspan>
+      <tspan x="230" dy="14" font-size="9" font-weight="400" fill="#2E75B6">Search Engine</tspan>
+      <tspan x="230" dy="12" font-size="9" font-weight="400" fill="#2E75B6">Optimization</tspan>
+    </text>
+
+    <!-- ── Figli SMM: SMA e SMO ── -->
+    <rect x="389" y="226" width="132" height="58" rx="8" fill="#E8F5EE" stroke="#1E6B3C" stroke-width="1.5"/>
+    <text text-anchor="middle" font-family="'DM Sans',sans-serif" font-weight="700" fill="#1E6B3C">
+      <tspan x="455" y="247" font-size="12">SMA</tspan>
+      <tspan x="455" dy="14" font-size="9" font-weight="400">Social Media</tspan>
+      <tspan x="455" dy="12" font-size="9" font-weight="400">Advertising</tspan>
+    </text>
+
+    <rect x="499" y="226" width="132" height="58" rx="8" fill="#E8F5EE" stroke="#1E6B3C" stroke-width="1.5"/>
+    <text text-anchor="middle" font-family="'DM Sans',sans-serif" font-weight="700" fill="#1E6B3C">
+      <tspan x="565" y="247" font-size="12">SMO</tspan>
+      <tspan x="565" dy="14" font-size="9" font-weight="400">Social Media</tspan>
+      <tspan x="565" dy="12" font-size="9" font-weight="400">Optimization</tspan>
+    </text>
+
+    <!-- ── Legenda descrittiva — gap aumentato a 36px ── -->
+    <rect x="44"  y="320" width="132" height="48" rx="6" fill="#F8FBFF" stroke="#D6E8F7" stroke-width="1"/>
+    <text text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="8.5" fill="#555">
+      <tspan x="110" y="337">Annunci a pagamento</tspan>
+      <tspan x="110" dy="12">Google, Bing, YouTube</tspan>
+      <tspan x="110" dy="12">Modello Pay-Per-Click</tspan>
+    </text>
+
+    <rect x="164" y="320" width="132" height="48" rx="6" fill="#F8FBFF" stroke="#D6E8F7" stroke-width="1"/>
+    <text text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="8.5" fill="#555">
+      <tspan x="230" y="337">Visibilità organica</tspan>
+      <tspan x="230" dy="12">Contenuti, link, struttura</tspan>
+      <tspan x="230" dy="12">Risultato lungo periodo</tspan>
+    </text>
+
+    <rect x="389" y="320" width="132" height="48" rx="6" fill="#F8FBFF" stroke="#D6E8F7" stroke-width="1"/>
+    <text text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="8.5" fill="#555">
+      <tspan x="455" y="337">Ads su social media</tspan>
+      <tspan x="455" dy="12">Instagram, TikTok, Meta</tspan>
+      <tspan x="455" dy="12">Target demografico</tspan>
+    </text>
+
+    <rect x="499" y="320" width="132" height="48" rx="6" fill="#F8FBFF" stroke="#D6E8F7" stroke-width="1"/>
+    <text text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="8.5" fill="#555">
+      <tspan x="565" y="337">Ottimizzazione profili</tspan>
+      <tspan x="565" dy="12">Contenuti, community</tspan>
+      <tspan x="565" dy="12">Crescita organica social</tspan>
+    </text>
+
+  </svg>
+  
+  
+  </div>
+
+  <div class="box box-note">
+    <p>Lo schema mostra che SEM e SMM sono le due grandi famiglie del Web Marketing — la prima agisce sui motori di ricerca, la seconda sui social media. Entrambe si dividono poi in una componente organica (gratuita, di lungo periodo) e una a pagamento (immediata, legata al budget).</p>
+  </div>
+</section>
+
+<!-- 2.5 -->
+<section class="guide-section" id="s25">
+  <div class="section-header">
+    <div class="section-num">2.5</div>
+    <div class="section-titles">
+      <div class="section-title">Brand, Marchio, Logo, Emblema</div>
+      <div class="section-subtitle">Termini diversi, concetti diversi</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Termine</th><th>Cos'è</th><th>Caratteristica principale</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Brand</strong></td><td>Identità complessiva</td><td>Elementi tangibili + intangibili (reputazione, storia, promessa, valori). È la personalità dell'azienda.</td></tr>
+        <tr><td><strong>Marchio</strong></td><td>Segno distintivo registrabile</td><td>Grafica, parole o simboli. Può essere protetto legalmente. È l'elemento tangibile del brand.</td></tr>
+        <tr><td><strong>Logo / Logotipo</strong></td><td>Rappresentazione grafica del nome</td><td>Si basa sul lettering. È il marchio in versione "testo".</td></tr>
+        <tr><td><strong>Emblema</strong></td><td>Rappresentazione pittografica</td><td>Solo immagine, senza scritte. Es: la mela di Apple, il coccodrillo di Lacoste.</td></tr>
+        <tr><td><strong>Payoff / Tagline</strong></td><td>Frase breve che accompagna il marchio</td><td>Sintetizza i valori in modo memorabile. Es: "Just Do It" di Nike.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box box-tip">
+    <div class="box-label">💡 Tutto in un esempio</div>
+    <p><strong>Coca-Cola</strong> è il brand. La scritta in rosso corsivo è il logo. La bottiglia dalla forma riconoscibile è l'emblema. "Open Happiness" è stato il payoff. L'insieme — più la storia, le campagne, il gusto, i ricordi — è il brand complessivo, che vale miliardi.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 2.6 -->
+<section class="guide-section" id="s26">
+  <div class="section-header">
+    <div class="section-num">2.6</div>
+    <div class="section-titles">
+      <div class="section-title">Registrazione del Marchio</div>
+      <div class="section-subtitle">UIBM, Classificazione di Nizza, procedura e durata</div>
+    </div>
+  </div>
+
+  <div class="highlight-grid">
+    <div class="highlight-card"><div class="hc-emoji">🛡️</div><div class="hc-title">Tutela esclusiva</div><div class="hc-body">Monopolio sull'uso del segno per i prodotti registrati. Nessun concorrente può imitarlo.</div></div>
+    <div class="highlight-card"><div class="hc-emoji">⚖️</div><div class="hc-title">Protezione legale</div><div class="hc-body">Tutela da contraffazioni e da chi copia l'identità visiva dell'azienda.</div></div>
+    <div class="highlight-card"><div class="hc-emoji">💼</div><div class="hc-title">Asset commerciale</div><div class="hc-body">Può essere venduto, concesso in licenza o usato come garanzia. Ha valore economico.</div></div>
+  </div>
+
+  <div class="step-list">
+    <div class="step-item"><div class="step-dot">1</div><div class="step-body"><strong>Verifica preliminare</strong><span>Consultare la banca dati UIBM per verificare che non esista già un marchio simile nel proprio settore.</span></div></div>
+    <div class="step-item"><div class="step-dot">2</div><div class="step-body"><strong>Classificazione di Nizza</strong><span>45 categorie internazionali: scegliere le classi pertinenti (es. classe 25 = abbigliamento, classe 9 = software).</span></div></div>
+    <div class="step-item"><div class="step-dot">3</div><div class="step-body"><strong>Presentazione della domanda</strong><span>All'UIBM via deposito telematico con firma digitale, oppure in forma cartacea presso la CCIAA.</span></div></div>
+    <div class="step-item"><div class="step-dot">4</div><div class="step-body"><strong>Durata e rinnovo</strong><span>La registrazione dura <strong>10 anni</strong> ed è rinnovabile indefinitamente.</span></div></div>
+  </div>
+
+  <div class="box box-warn">
+    <div class="box-label">⚠ La tutela non è automatica né universale</div>
+    <p>Un marchio registrato in Italia vale in Italia (e in Europa tramite EUIPO). Non vale automaticamente nel resto del mondo. Non tutto è registrabile: verificare sempre su <strong>uibm.mise.gov.it</strong>.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 2.7 -->
+<section class="guide-section" id="s27">
+  <div class="section-header">
+    <div class="section-num">2.7</div>
+    <div class="section-titles">
+      <div class="section-title">Content Marketing</div>
+      <div class="section-subtitle">"Content is King" — Bill Gates, 1996</div>
+    </div>
+  </div>
+
+  <div class="box box-info">
+    <div class="box-label">Definizione</div>
+    <p>Il content marketing crea e distribuisce contenuti di valore per attrarre, acquisire e coinvolgere un pubblico specifico — guidandolo verso azioni redditizie per l'azienda.</p>
+  </div>
+
+  <div class="dodont">
+    <div class="do-col">
+      <div class="dodont-title">✓ Cosa fa il Content Marketing</div>
+      <ul>
+        <li>Aumenta la brand awareness</li>
+        <li>Crea engagement con i clienti</li>
+        <li>Genera lead (nuovi contatti qualificati)</li>
+        <li>Posiziona l'azienda come esperta del settore</li>
+        <li>Incrementa le vendite nel tempo</li>
+      </ul>
+    </div>
+    <div class="dont-col">
+      <div class="dodont-title">✗ Non è Content Marketing se…</div>
+      <ul>
+        <li>Il contenuto è solo promozionale</li>
+        <li>Non risponde a domande reali del pubblico</li>
+        <li>Non si misura e non si ottimizza</li>
+        <li>Non ha una strategia di distribuzione</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box box-note">
+    <p>Nel 1996 Bill Gates scrisse "Content is King": il vero valore economico di internet sarebbe stato generato dai contenuti. Quasi trent'anni dopo, quella previsione si è rivelata esatta.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 2.8 -->
+<section class="guide-section" id="s28">
+  <div class="section-header">
+    <div class="section-num">2.8</div>
+    <div class="section-titles">
+      <div class="section-title">Social Media Marketing (SMM)</div>
+      <div class="section-subtitle">Essere dove il proprio target trascorre il tempo</div>
+    </div>
+  </div>
+
+  <p>Il SMM è l'insieme delle tecniche per promuovere un brand attraverso i canali social. L'idea è semplice: farsi trovare esattamente dove il potenziale cliente è abituato a passare il tempo.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Piattaforma</th><th>Pubblico principale</th><th>Formato ideale</th></tr></thead>
+      <tbody>
+        <tr><td><strong>LinkedIn</strong></td><td>Professionisti, decision maker B2B</td><td>Articoli, case study, aggiornamenti aziendali</td></tr>
+        <tr><td><strong>Instagram</strong></td><td>25-45 anni, prodotti visivi e lifestyle</td><td>Foto, Reels, Stories</td></tr>
+        <tr><td><strong>TikTok</strong></td><td>Under 30, alta propensione virale</td><td>Video brevi, creativi, autentici</td></tr>
+        <tr><td><strong>YouTube</strong></td><td>Tutti, ricerche approfondite</td><td>Tutorial, guide, video long-form</td></tr>
+        <tr><td><strong>Facebook</strong></td><td>35+ anni, community locali</td><td>Post, eventi, gruppi, advertising</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box box-tip">
+    <div class="box-label">💡 Non bisogna essere ovunque</div>
+    <p>Meglio presidiare 2-3 canali molto bene che essere presenti su tutti in modo mediocre. La scelta dipende da dove si trova il proprio target specifico.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 2.9 -->
+<section class="guide-section" id="s29">
+  <div class="section-header">
+    <div class="section-num">2.9</div>
+    <div class="section-titles">
+      <div class="section-title">Affiliate Marketing</div>
+      <div class="section-subtitle">Si paga solo sui risultati, non sulla visibilità</div>
+    </div>
+  </div>
+
+  <div class="step-list">
+    <div class="step-item"><div class="step-dot">1</div><div class="step-body"><strong>L'advertiser</strong><span>L'azienda che vuole vendere. Definisce commissioni e fornisce materiali tramite una piattaforma di affiliazione.</span></div></div>
+    <div class="step-item"><div class="step-dot">2</div><div class="step-body"><strong>L'affiliato</strong><span>Chi promuove i prodotti (blogger, influencer, siti comparatori). Usa link tracciati per portare visitatori verso l'advertiser.</span></div></div>
+    <div class="step-item"><div class="step-dot">3</div><div class="step-body"><strong>Il tracciamento</strong><span>Ogni clic e acquisto viene attribuito all'affiliato tramite cookie o codici univoci.</span></div></div>
+    <div class="step-item"><div class="step-dot">4</div><div class="step-body"><strong>La commissione</strong><span>Si paga con CPA (Cost per Action) o CPO (Cost per Order): solo quando l'utente compie un'azione specifica.</span></div></div>
+  </div>
+
+  <div class="box box-tip">
+    <div class="box-label">💡 Esempio reale</div>
+    <p>Un blogger tech inserisce link ai prodotti su Amazon. Ogni volta che un lettore acquista tramite quel link, il blogger riceve una percentuale. Amazon gestisce tutto tramite Amazon Associates.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 2.10 -->
+<section class="guide-section" id="s210">
+  <div class="section-header">
+    <div class="section-num">2.10</div>
+    <div class="section-titles">
+      <div class="section-title">Guerrilla Marketing</div>
+      <div class="section-subtitle">Creatività e sorpresa al posto del budget</div>
+    </div>
+  </div>
+
+  <div class="box box-info">
+    <div class="box-label">Definizione</div>
+    <p>Strategia non convenzionale che usa creatività e sorpresa — più che budget — per lasciare un'impressione duratura. Flash mob, installazioni artistiche, marketing virale.</p>
+  </div>
+
+  <div class="dodont">
+    <div class="do-col">
+      <div class="dodont-title">✓ Vantaggi</div>
+      <ul>
+        <li>Alto impatto a basso costo</li>
+        <li>Alta viralità se ben eseguito</li>
+        <li>Crea legame emotivo forte</li>
+        <li>Differenzia dalla concorrenza</li>
+      </ul>
+    </div>
+    <div class="dont-col">
+      <div class="dodont-title">✗ Rischi</div>
+      <ul>
+        <li>Difficile da misurare (ROI)</li>
+        <li>Può essere percepito come invadente</li>
+        <li>Se fallisce, può danneggiare il brand</li>
+        <li>Portata limitata senza altri canali</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 2.11 -->
+<section class="guide-section" id="s211">
+  <div class="section-header">
+    <div class="section-num">2.11</div>
+    <div class="section-titles">
+      <div class="section-title">Nudging</div>
+      <div class="section-subtitle">Spingere verso una scelta senza imporre nulla</div>
+    </div>
+  </div>
+
+  <div class="box box-info">
+    <div class="box-label">Definizione</div>
+    <p>Tecnica dall'economia comportamentale che guida il comportamento dei consumatori verso scelte desiderate, senza obbligarli e senza togliere opzioni. Piccoli cambiamenti nel contesto decisionale producono grandi effetti.</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Tecnica</th><th>Come funziona</th><th>Esempio</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Urgenza e scarsità</strong></td><td>Comunica che tempo o disponibilità sono limitati</td><td>"Solo 3 pezzi rimasti!" · "Offerta fino a mezzanotte"</td></tr>
+        <tr><td><strong>Social proof</strong></td><td>Mostra che altri hanno già scelto</td><td>"50 persone hanno acquistato oggi" · Stelle e recensioni</td></tr>
+        <tr><td><strong>Default options</strong></td><td>L'opzione desiderata è già preselezionata</td><td>Iscrizione automatica alla newsletter</td></tr>
+        <tr><td><strong>Ancoraggio</strong></td><td>Prezzo di riferimento alto per valorizzare l'offerta</td><td>Prezzo barrato accanto al prezzo scontato</td></tr>
+        <tr><td><strong>Gamification</strong></td><td>Incentivi progressivi che motivano l'azione</td><td>Badge, punti fedeltà, barre di completamento</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 2.12 -->
+<section class="guide-section" id="s212">
+  <div class="section-header">
+    <div class="section-num">2.12</div>
+    <div class="section-titles">
+      <div class="section-title">Email Marketing e Automazioni</div>
+      <div class="section-subtitle">Lo strumento più vecchio, ancora tra i più efficaci</div>
+    </div>
+  </div>
+
+  <div class="highlight-grid">
+    <div class="highlight-card"><div class="hc-emoji">👋</div><div class="hc-title">Email di benvenuto</div><div class="hc-body">Prima impressione quando un utente si iscrive. Fondamentale per tono e aspettative.</div></div>
+    <div class="highlight-card"><div class="hc-emoji">📰</div><div class="hc-title">Newsletter</div><div class="hc-body">Invio periodico di contenuti e aggiornamenti. Mantiene viva la relazione nel tempo.</div></div>
+    <div class="highlight-card"><div class="hc-emoji">🎁</div><div class="hc-title">Email promozionali</div><div class="hc-body">Offerte, sconti, lanci di prodotto. Mirate a generare acquisti nel breve periodo.</div></div>
+    <div class="highlight-card"><div class="hc-emoji">💡</div><div class="hc-title">Email di valore</div><div class="hc-body">Consigli, guide, contenuti utili. Non vendono direttamente — costruiscono fiducia.</div></div>
+  </div>
+
+  <div class="sub-title">Marketing Automation</div>
+  <p>Software che gestiscono automaticamente azioni ripetitive tramite <em>workflow</em>: regole del tipo "se il cliente fa X, inviagli automaticamente Y". Si automatizzano newsletter, autoresponder, sequenze di onboarding, post programmati sui social, SMS promozionali.</p>
+</section>
+
+<hr class="section-divider">
+
+<!-- 2.13 -->
+<section class="guide-section" id="s213">
+  <div class="section-header">
+    <div class="section-num">2.13</div>
+    <div class="section-titles">
+      <div class="section-title">Digital PR</div>
+      <div class="section-subtitle">Costruire reputazione, non solo vendere</div>
+    </div>
+  </div>
+
+  <div class="box box-info">
+    <div class="box-label">Definizione</div>
+    <p>Insieme di tecniche online per promuovere prodotti o l'immagine di un brand, costruendo relazioni digitali con media, blogger, influencer e community per migliorare visibilità, reputazione e autorevolezza.</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Aspetto</th><th>Digital PR</th><th>Influencer Marketing</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Ruolo</strong></td><td>Stratega dietro le quinte</td><td>Creatore di contenuti, volto del messaggio</td></tr>
+        <tr><td><strong>Canali</strong></td><td>Blog, media online, siti web, social</td><td>Social media (Instagram, TikTok, YouTube)</td></tr>
+        <tr><td><strong>Obiettivo</strong></td><td>Visibilità, autorevolezza, backlink SEO</td><td>Engagement e vendite dirette</td></tr>
+        <tr><td><strong>Si misura con</strong></td><td>Link, citazioni, copertura media</td><td>Like, commenti, conversioni</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 2.14 -->
+<section class="guide-section" id="s214">
+  <div class="section-header">
+    <div class="section-num">2.14</div>
+    <div class="section-titles">
+      <div class="section-title">La Comunicazione d'Impresa</div>
+      <div class="section-subtitle">Le quattro aree della comunicazione aziendale</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Area</th><th>Direzione</th><th>Con chi</th><th>Di cosa si occupa</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Commerciale</strong></td><td>Esterna</td><td>Consumatori</td><td>Promuove prodotti e servizi, gestisce la relazione con il cliente</td></tr>
+        <tr><td><strong>Organizzativa</strong></td><td>Interna + esterna</td><td>Dipendenti, fornitori, partner</td><td>Coordinamento interno e relazioni esterne operative</td></tr>
+        <tr><td><strong>Economico-finanziaria</strong></td><td>Interna + esterna</td><td>Management, azionisti, banche</td><td>Risultati per decisioni interne e rendicontazione verso investitori</td></tr>
+        <tr><td><strong>Istituzionale</strong></td><td>Esterna</td><td>Pubblico, media, istituzioni</td><td>Rafforza identità, mission e valori. Consolida la reputazione del brand</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box box-tip">
+    <div class="box-label">💡 Il quadro d'insieme</div>
+    <p>Tecnologia + Creatività = Successo. Ogni strumento digitale potenzia la comunicazione — ma tutto parte da una strategia chiara. Senza capire chi è il cliente e di cosa ha bisogno, nessuno strumento porterà risultati.</p>
+  </div>
+
+  <div class="materiali-section">
+    <h3>📎 Materiali — Parte 2</h3>
+    <p>I materiali scaricabili saranno disponibili a breve.</p>
+  </div>
+</section>
+
+</div><!-- /#guide-content -->
+
+<!-- ════════ MODALITÀ AULA — SLIDE ════════ -->
+<div id="slides-container">
+
+  <div class="slide active">
+    <div class="slide-tag">Parte 1 · 1.1</div>
+    <div class="slide-title">Cos'è il <em>Marketing?</em></div>
+    <ul class="slide-points">
+      <li>Non è sinonimo di pubblicità: la pubblicità è solo uno strumento</li>
+      <li>Risponde a 5 domande: cosa, a chi, quando, dove e come vendere</li>
+      <li>Da product driven (Ford: "qualsiasi colore, purché nero") a customer driven</li>
+      <li>Le aziende di eccellenza costruiscono relazioni, non solo prodotti</li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <div class="slide-tag">Parte 1 · 1.2</div>
+    <div class="slide-title">Le <em>Tipologie</em> di Marketing</div>
+    <ul class="slide-points">
+      <li><strong>B2B:</strong> Azienda → Azienda. Volumi alti, decisioni complesse, IT integrato</li>
+      <li><strong>B2C:</strong> Azienda → Consumatore. Leva emotiva, UX, omnicanalità</li>
+      <li><strong>C2C:</strong> Privato → Privato. Piattaforme abilitanti, fiducia digitale (Vinted, eBay)</li>
+      <li><strong>C2B:</strong> Consumatore → Azienda. Influencer, recensioni, crowdsourcing</li>
+      <li><strong>B2B2C:</strong> Modello ibrido con intermediario e contatto col cliente finale</li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <div class="slide-tag">Parte 1 · 1.3</div>
+    <div class="slide-title">Il <em>Marketing Management</em></div>
+    <ul class="slide-points">
+      <li><strong>Fase Analitica:</strong> capire il mercato, i concorrenti e il consumatore</li>
+      <li><strong>Fase Strategica:</strong> decidere cosa fare e come distinguersi</li>
+      <li><strong>Fase Operativa:</strong> mettere in pratica con le leve del marketing mix</li>
+      <li>Le tre fasi si alimentano in un ciclo continuo</li>
+      <li>Senza strategia chiara, la tecnologia è un costo, non un investimento</li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <div class="slide-tag">Parte 1 · 1.4</div>
+    <div class="slide-title">L'Analisi <em>SWOT</em></div>
+    <ul class="slide-points">
+      <li><strong>Strengths:</strong> forze interne — brevetti, competenze, immagine solida</li>
+      <li><strong>Weaknesses:</strong> debolezze interne — costi alti, innovazione scarsa</li>
+      <li><strong>Opportunities:</strong> fattori esterni favorevoli — nuovi mercati, tecnologie</li>
+      <li><strong>Threats:</strong> fattori esterni rischiosi — nuovi concorrenti, normative</li>
+      <li>Non è oggettiva: dipende da chi la compila e dalla strategia scelta</li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <div class="slide-tag">Parte 1 · 1.5 / 1.6</div>
+    <div class="slide-title">STP e le <em>7P</em></div>
+    <ul class="slide-points">
+      <li><strong>Segmentazione → Targeting → Posizionamento:</strong> i tre pilastri strategici</li>
+      <li><strong>4P classiche:</strong> Product · Price · Placement · Promotion</li>
+      <li><strong>+3P moderne:</strong> People · Process · Physical Evidence</li>
+      <li>Le 4C (Lauterborn): ribaltano il punto di vista — dal prodotto al cliente</li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <div class="slide-tag">Parte 1 · 1.9</div>
+    <div class="slide-title">La Piramide di <em>Maslow</em></div>
+    <ul class="slide-points">
+      <li><strong>Livello 1 — Fisiologici:</strong> cibo, acqua. Marketing: accessibilità o premium</li>
+      <li><strong>Livello 2 — Sicurezza:</strong> stabilità, salute. Marketing: garanzie, affidabilità</li>
+      <li><strong>Livello 3 — Appartenenza:</strong> community. Marketing: social, lifestyle</li>
+      <li><strong>Livello 4 — Stima:</strong> status. Marketing: lusso, esclusività</li>
+      <li><strong>Livello 5 — Autorealizzazione:</strong> Marketing: esperienze, valori, impatto</li>
+      <li>La posizione cambia nel tempo: il targeting deve essere flessibile</li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <div class="slide-tag">Parte 2 · 2.1</div>
+    <div class="slide-title"><em>Quanto siamo</em> connessi?</div>
+    <ul class="slide-points">
+      <li>66,2% della popolazione mondiale ha accesso a internet</li>
+      <li>L'utente medio trascorre 6h 40min online ogni giorno (2h 23min sui social)</li>
+      <li>Spesa pubblicitaria digitale: 720 miliardi di dollari nel 2023 (+10%)</li>
+      <li>2,7 miliardi di persone ancora disconnesse: limite e opportunità futura</li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <div class="slide-tag">Parte 2 · 2.2 / 2.3 / 2.4</div>
+    <div class="slide-title"><em>SEO · SEA · SEM</em></div>
+    <ul class="slide-points">
+      <li><strong>SEO:</strong> visibilità organica, guadagnata col lavoro, duratura nel tempo</li>
+      <li><strong>SEA (PPC):</strong> visibilità a pagamento, immediata, finisce col budget</li>
+      <li><strong>SEM = SEO + SEA:</strong> strategia integrata per massima visibilità</li>
+      <li>Metriche SEA: CTR (clic/visualizzazioni) · CPC (costo per clic) · CPA (costo per azione)</li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <div class="slide-tag">Parte 2 · 2.5 / 2.6</div>
+    <div class="slide-title"><em>Brand</em>, Marchio, Logo e Registrazione</div>
+    <ul class="slide-points">
+      <li><strong>Brand:</strong> identità completa — tangibile + intangibile (reputazione, valori)</li>
+      <li><strong>Marchio:</strong> segno distintivo registrabile legalmente</li>
+      <li><strong>Logo:</strong> marchio in versione testo · <strong>Emblema:</strong> solo immagine</li>
+      <li>Registrazione: UIBM · Classificazione di Nizza (45 classi) · Durata: 10 anni</li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <div class="slide-tag">Parte 2 · 2.7 / 2.8</div>
+    <div class="slide-title"><em>Content Marketing</em> e Social Media</div>
+    <ul class="slide-points">
+      <li>Content Marketing: contenuti così utili che le persone li cercano attivamente</li>
+      <li>"Content is King" — Bill Gates, 1996. Ancora vero, anzi di più.</li>
+      <li>SMM: essere presenti dove il target trascorre il tempo</li>
+      <li>Non bisogna essere ovunque: meglio 2-3 canali presidiati bene</li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <div class="slide-tag">Parte 2 · 2.10 / 2.11</div>
+    <div class="slide-title"><em>Guerrilla</em> e Nudging</div>
+    <ul class="slide-points">
+      <li><strong>Guerrilla:</strong> creatività e sorpresa al posto del budget. Flash mob, installazioni, virale.</li>
+      <li><strong>Nudging:</strong> guida le scelte senza imporre. Deriva dall'economia comportamentale.</li>
+      <li>Urgenza/scarsità · Social proof · Default options · Ancoraggio · Gamification</li>
+      <li>Etico se non inganna: orientare ≠ manipolare</li>
+    </ul>
+  </div>
+
+  <div class="slide" style="background: linear-gradient(135deg, #1F4E79 0%, #2A6099 100%);">
+    <div class="slide-title" style="font-size:clamp(1.5rem,3.5vw,2.6rem);">Tecnologia + Creatività<br>= <em>Successo</em></div>
+    <div class="slide-body" style="margin-top:1.25rem;">
+      Il cliente non è al centro della strategia: è il punto di partenza.<br><br>
+      Ogni strumento digitale potenzia la comunicazione — ma tutto parte da una strategia chiara.<br><br>
+      <em style="color:var(--blue-light); font-style:italic;">"Se il prodotto è il cuore, il cliente è l'anima. La tecnologia? È il battito che li tiene insieme."</em>
+    </div>
+  </div>
+
+</div><!-- /#slides-container -->
+
+<!-- SLIDE NAV -->
+<div id="slide-nav">
+  <button class="slide-btn" id="btn-prev" onclick="prevSlide()" disabled>◀ Precedente</button>
+  <span id="slide-counter">1 / 12</span>
+  <button class="slide-btn" id="btn-next" onclick="nextSlide()">Successiva ▶</button>
+</div>
+<div id="progress-bar"><div id="progress-fill"></div></div>
+
+</div><!-- /#main -->
+
+<footer>
+  <strong>Formazione Digitale</strong><br>
+  Risorse di alfabetizzazione digitale libere e gratuite.<br>
+  Tutti i contenuti sono rilasciati per uso libero e non commerciale.
+</footer>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// ── STATE ──────────────────────────────────────────────────
+let aulaMode = false;
+let currentSlide = 0;
+const totalSlides = document.querySelectorAll('.slide').length;
+
+// ── MODE TOGGLE ────────────────────────────────────────────
+function toggleMode() {
+  aulaMode = !aulaMode;
+  document.body.classList.toggle('aula-mode', aulaMode);
+  document.getElementById('mode-icon').textContent  = aulaMode ? '📖' : '🎓';
+  document.getElementById('mode-label').textContent = aulaMode ? 'Modalità Guida' : 'Modalità Aula';
+  if (aulaMode) showSlide(0);
+}
+
+// ── SIDEBAR ────────────────────────────────────────────────
+function toggleSidebar() {
+  const sb = document.getElementById('sidebar');
+  const hb = document.getElementById('hamburger');
+  const ov = document.getElementById('overlay');
+  const open = sb.classList.toggle('open');
+  hb.classList.toggle('open', open);
+  ov.classList.toggle('open', open);
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+document.getElementById('hamburger').addEventListener('click', toggleSidebar);
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    item.classList.add('active');
+    closeSidebar();
+  });
+});
+
+// ── SCROLL SPY ─────────────────────────────────────────────
+const sections = document.querySelectorAll('.guide-section');
+const navItems = document.querySelectorAll('.nav-item');
+window.addEventListener('scroll', () => {
+  if (aulaMode) return;
+  // Reading bar
+  const scrolled = window.scrollY;
+  const total = document.body.scrollHeight - window.innerHeight;
+  document.getElementById('reading-fill').style.width = Math.min(100,(scrolled/total)*100) + '%';
+  // Back to top
+  document.getElementById('back-top').classList.toggle('visible', scrolled > 400);
+  // Active nav
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) current = s.id; });
+  navItems.forEach(n => n.classList.toggle('active', n.getAttribute('href') === '#' + current));
+}, { passive: true });
+
+// ── ACCORDION ──────────────────────────────────────────────
+function toggleAcc(head) {
+  head.closest('.acc-item').classList.toggle('open');
+}
+
+// ── SLIDES ─────────────────────────────────────────────────
+function showSlide(n) {
+  const slides = document.querySelectorAll('.slide');
+  slides.forEach((s,i) => { s.classList.remove('active','exit'); if(i===n) s.classList.add('active'); });
+  currentSlide = n;
+  document.getElementById('slide-counter').textContent = `${n+1} / ${totalSlides}`;
+  document.getElementById('btn-prev').disabled = n === 0;
+  document.getElementById('btn-next').disabled = n === totalSlides-1;
+  document.getElementById('progress-fill').style.width = `${((n+1)/totalSlides)*100}%`;
+}
+function nextSlide() {
+  if (currentSlide < totalSlides-1) {
+    document.querySelectorAll('.slide')[currentSlide].classList.add('exit');
+    setTimeout(() => showSlide(currentSlide+1), 50);
+  }
+}
+function prevSlide() { if (currentSlide > 0) showSlide(currentSlide-1); }
+
+document.addEventListener('keydown', e => {
+  if (!aulaMode) return;
+  if (e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' ') { e.preventDefault(); nextSlide(); }
+  if (e.key==='ArrowLeft' ||e.key==='ArrowUp')                 { e.preventDefault(); prevSlide(); }
+  if (e.key==='Escape') toggleMode();
+});
+</script>
+</body>
+</html>
