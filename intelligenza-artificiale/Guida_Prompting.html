@@ -48,6 +48,9 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
   box-shadow: 0 2px 16px rgba(0,0,0,.18);
 }
 .header-left { display: flex; align-items: center; gap: .75rem; }
+.header-back { font-size: .78rem; color: rgba(255,255,255,.65); text-decoration: none; display: flex; align-items: center; gap: .3rem; transition: color .2s; }
+.header-back:hover { color: #fff; }
+.header-sep { width: 1px; height: 20px; background: rgba(255,255,255,.2); }
 .header-logo { font-family: var(--font-display); font-size: 1.05rem; color: #fff; letter-spacing: .01em; }
 .header-sub { font-size: .72rem; color: var(--blue-light); font-weight: 300; display: none; }
 @media(min-width:600px){ .header-sub { display: block; } }
@@ -406,6 +409,8 @@ body.aula-mode #slide-nav { display: flex; }
     <div id="hamburger" onclick="toggleSidebar()" aria-label="Menu">
       <span></span><span></span><span></span>
     </div>
+    <a href="../index.html" class="header-back">← Portale</a>
+    <div class="header-sep"></div>
     <div>
       <div class="header-logo">Guida al Prompting con l'IA</div>
       <div class="header-sub">Corso Competenze Didattiche Digitali — ITS</div>
