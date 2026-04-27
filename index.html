@@ -1019,20 +1019,6 @@ function updateStats() {
   document.getElementById('label-count-tool').textContent  = tools  > 0 ? tools + ' risorse' : 'In arrivo';
   document.getElementById('label-count-pill').textContent  = pills  > 0 ? pills + ' risorse' : 'In arrivo';
 
-  // GoatCounter stats
-  fetch('https://formazionedigitale.goatcounter.com/api/v0/stats/total', {
-    headers: { 'Content-Type': 'application/json' }
-  })
-  .then(r => r.json())
-  .then(data => {
-    const fmt = n => n >= 1000 ? (n/1000).toFixed(1) + 'k' : n;
-    if (data.total !== undefined)     document.getElementById('gc-visits').textContent    = fmt(data.total);
-    if (data.total_unique !== undefined) document.getElementById('gc-pageviews').textContent = fmt(data.total_unique);
-  })
-  .catch(() => {
-    document.getElementById('gc-visits').textContent    = '—';
-    document.getElementById('gc-pageviews').textContent = '—';
-  });
 }
 updateStats();
 
