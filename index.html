@@ -367,6 +367,26 @@ footer {
   font-size: .8rem; line-height: 1.7;
 }
 footer strong { color: rgba(255,255,255,.9); }
+.gc-section {
+  background: #0a1f3d;
+  padding: 1.5rem;
+  margin-bottom: 0;
+}
+.gc-section h4 {
+  color: rgba(255,255,255,0.5);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+  font-weight: 400;
+}
+.gc-iframe {
+  width: 100%;
+  height: 300px;
+  border: none;
+  border-radius: 8px;
+  opacity: 0.9;
+}
 
 /* ── NO RESULTS ─────────────────────────────────────────── */
 #no-results {
@@ -674,9 +694,7 @@ body.modal-open { overflow: hidden; }
   <div class="stat"><div class="stat-num" id="count-guide">1</div><div class="stat-label">Guide</div></div>
   <div class="stat"><div class="stat-num" id="count-tool">0</div><div class="stat-label">Strumenti</div></div>
   <div class="stat"><div class="stat-num" id="count-pill">0</div><div class="stat-label">Pillole</div></div>
-  <div style="width:1px; height:40px; background:var(--blue-light); align-self:center; flex-shrink:0;"></div>
-  <div class="stat"><div class="stat-num" id="gc-visits">—</div><div class="stat-label">Visite totali</div></div>
-  <div class="stat"><div class="stat-num" id="gc-pageviews">—</div><div class="stat-label">Pagine viste</div></div>
+
 </div>
 
 <!-- ── MAIN ─────────────────────────────────────────────────────── -->
@@ -887,6 +905,15 @@ body.modal-open { overflow: hidden; }
 </main>
 
 <!-- ── FOOTER ───────────────────────────────────────────────────── -->
+<div class="gc-section">
+  <h4>📊 Statistiche del sito</h4>
+  <iframe class="gc-iframe"
+    src="https://formazionedigitale.goatcounter.com/"
+    referrerpolicy="origin"
+    title="Statistiche visite">
+  </iframe>
+</div>
+
 <footer>
   <div style="margin-bottom:1rem;">
     <button class="about-trigger" style="font-size:0.85rem;" onclick="openAbout()">👤 Chi sono — Cristiano De Pasquale</button>
