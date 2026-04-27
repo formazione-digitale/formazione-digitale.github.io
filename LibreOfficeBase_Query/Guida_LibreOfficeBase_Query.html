@@ -713,6 +713,7 @@ section { animation: fadeIn 0.4s ease both; }
   <a href="#s9">Aggregazione</a>
   <span>·</span>
   <a href="#s10">Più tabelle</a>
+  <a href="#s11">Relazioni cascata</a>
 </nav>
 
 <!-- ══════════════════ MAIN ══════════════════ -->
@@ -1082,7 +1083,7 @@ section { animation: fadeIn 0.4s ease both; }
       <tr><td><code>&lt;&gt;</code></td><td>Diverso da</td><td><code>&lt;&gt; 'CASA'</code></td></tr>
       <tr><td><code>&gt;</code> <code>&lt;</code></td><td>Maggiore / Minore</td><td><code>&gt; 10</code></td></tr>
       <tr><td><code>&gt;=</code> <code>&lt;=</code></td><td>Maggiore o uguale / Minore o uguale</td><td><code>&lt;= 5.00</code></td></tr>
-      <tr><td><code>LIKE</code></td><td>Contiene (usa % come jolly)</td><td><code>LIKE 'Articoli%'</code></td></tr>
+      <tr><td><code>COME</code> (o <code>LIKE</code>)</td><td>Contiene (usa % come jolly)</td><td><code>COME 'Articoli%'</code></td></tr>
     </tbody>
   </table>
 
@@ -1124,6 +1125,28 @@ section { animation: fadeIn 0.4s ease both; }
     </div>
   </div>
 </section>
+
+  <h3>Il carattere jolly % (con COME)</h3>
+  <p>L'operatore <code>COME</code> (in inglese <code>LIKE</code>) permette di cercare testi che <em>assomigliano</em> a un modello, usando <strong><code>%</code></strong> come carattere jolly — cioè "qualsiasi cosa, di qualsiasi lunghezza".</p>
+
+  <table class="compare-table">
+    <thead><tr><th>Criterio</th><th>Significato</th><th>Trova, ad esempio</th></tr></thead>
+    <tbody>
+      <tr><td><code>COME 'Art%'</code></td><td>Inizia per "Art"</td><td>Articoli Casalinghi, Articoli da Regalo</td></tr>
+      <tr><td><code>COME '%Pulizia'</code></td><td>Finisce per "Pulizia"</td><td>Igiene e Pulizia</td></tr>
+      <tr><td><code>COME '%Casa%'</code></td><td>Contiene "Casa" in qualsiasi posizione</td><td>Articoli Casalinghi</td></tr>
+      <tr><td><code>COME 'B_llitore'</code></td><td><code>_</code> = esattamente un carattere</td><td>Bollitore</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body"><strong>% vs _</strong> — Il <code>%</code> sostituisce zero o più caratteri qualsiasi. Il trattino basso <code>_</code> sostituisce esattamente un carattere. Nella pratica userai quasi sempre <code>%</code>.</div>
+  </div>
+
+
+</section>
+
 
 <!-- ─── 6. FILTRI DINAMICI ─── -->
 <section id="s6">
@@ -1204,6 +1227,31 @@ section { animation: fadeIn 0.4s ease both; }
     <div class="callout-icon">💡</div>
     <div class="callout-body"><strong>Range di valori:</strong> Per filtrare tra un minimo e un massimo, scrivi: <code>&gt; :PMIN E &lt; :PMAX</code> nella stessa cella Criterio. La parola <strong>E</strong> (in italiano) unisce le due condizioni sulla stessa colonna.</div>
   </div>
+
+  <h3>COME con parametro dinamico — ricerca per parola chiave</h3>
+  <p>Combinando <code>COME</code> con un parametro ottieni una ricerca flessibile: l'utente digita una parola e la query trova tutti i record che la <em>contengono</em>, senza sapere in anticipo cosa cercherà.</p>
+
+  <figure class="screenshot">
+    <img src="img/1777277868548_image.png" alt="Griglia con COME dinamico">
+    <figcaption>Schermata reale — <code>COME '%' || :inserisci_parte_nome || '%'</code> nella riga Criterio: il <code>%</code> prima e dopo garantisce che la parola venga trovata ovunque nella stringa</figcaption>
+  </figure>
+
+  <div style="display:flex; gap:1rem; align-items:flex-start; flex-wrap:wrap; margin:1.5rem 0;">
+    <figure class="screenshot" style="flex:1; min-width:220px; margin:0;">
+      <img src="img/1777277893140_image.png" alt="Dialog parametro con valore Carta" style="max-width:280px; display:block; margin:0 auto;">
+      <figcaption>Schermata reale — L'utente inserisce <code>Carta</code> come valore del parametro</figcaption>
+    </figure>
+    <figure class="screenshot" style="flex:1; min-width:220px; margin:0;">
+      <img src="img/1777277912522_image.png" alt="Risultato ricerca Carta">
+      <figcaption>Schermata reale — Tutti i prodotti che contengono "Carta" nella descrizione</figcaption>
+    </figure>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body"><strong>Il simbolo <code>||</code></strong> concatena testo. <code>'%' || :inserisci_parte_nome || '%'</code> costruisce il pattern <em>%Carta%</em> in modo dinamico — il valore inserito dall'utente viene "avvolto" dai due <code>%</code> automaticamente.</div>
+  </div>
+
 </section>
 
 <!-- ─── 7. AND e OR ─── -->
@@ -1492,6 +1540,70 @@ section { animation: fadeIn 0.4s ease both; }
   <div class="callout tip">
     <div class="callout-icon">💡</div>
     <div class="callout-body"><strong>Salva sempre con un nome parlante!</strong> Usa prefisso <code>Q_</code> seguito da una descrizione: <code>Q_CatalogoFornitori</code>, <code>Q_VenditeMensili</code>. Così nella lista delle ricerche capisci subito a cosa serve ogni query.</div>
+  </div>
+</section>
+
+
+<!-- ─── 11. RELAZIONI CON CASCATA ─── -->
+<section id="s11">
+  <div class="section-label">Integrità referenziale</div>
+  <span class="section-num">11</span>
+  <h2>Relazioni con cascata</h2>
+
+  <p>Le relazioni tra tabelle non servono solo a collegare i dati nelle query — definiscono anche <strong>cosa succede quando si modifica o si cancella un record padre</strong>. Questo si gestisce dalla finestra <em>Struttura relazioni</em>, facendo doppio clic sulla linea di join tra due tabelle.</p>
+
+  <h3>Aprire il dialog della relazione</h3>
+  <div class="steps">
+    <div class="step"><div class="step-body">Dal menu principale di LibreOffice Base, vai su <strong>Strumenti → Relazioni</strong>.</div></div>
+    <div class="step"><div class="step-body">Nella finestra che si apre, fai <strong>doppio clic sulla linea</strong> che collega due tabelle.</div></div>
+    <div class="step"><div class="step-body">Si apre il dialog <em>Relazioni</em> con le opzioni di aggiornamento ed eliminazione.</div></div>
+  </div>
+
+  <figure class="screenshot">
+    <img src="img/1777277786031_image.png" alt="Dialog Relazioni con opzioni cascata" style="max-width:380px; display:block; margin:0 auto;">
+    <figcaption>Schermata reale — Dialog Relazioni tra PRODOTTO e TIPOLOGIA: opzioni di aggiornamento ed eliminazione</figcaption>
+  </figure>
+
+  <h3>Le opzioni disponibili</h3>
+  <table class="compare-table">
+    <thead><tr><th>Opzione</th><th>Cosa succede al record figlio quando il padre cambia</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Nessuna operazione</strong></td><td>Non succede nulla — ma se il padre viene modificato/cancellato, il database può bloccare l'operazione per mantenere l'integrità</td></tr>
+      <tr><td><strong>Aggiorna/Elimina cascata</strong></td><td>La modifica o cancellazione si propaga automaticamente a tutti i record figli collegati</td></tr>
+      <tr><td><strong>Imposta NULL</strong></td><td>Il campo chiave esterna nei record figli viene impostato a NULL (campo vuoto)</td></tr>
+      <tr><td><strong>Imposta predefinito</strong></td><td>Il campo chiave esterna viene impostato al valore predefinito della colonna</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Esempio pratico — Aggiorna cascata</h3>
+  <p><strong>Scenario:</strong> nella tabella TIPOLOGIA cambiamo il codice <code>CASA</code> in <code>CASA2</code>. Con <em>Aggiorna cascata</em> attivo, tutti i prodotti che avevano <code>FK_COD_Tipo = 'CASA'</code> vengono aggiornati automaticamente a <code>'CASA2'</code> — senza dover toccare manualmente la tabella PRODOTTO.</p>
+
+  <div class="highlight-box">
+    <h4>// Senza cascata vs Con cascata:</h4>
+    <ul>
+      <li><strong>Senza cascata:</strong> modificare o cancellare un record padre con figli collegati → errore di integrità referenziale, operazione bloccata</li>
+      <li><strong>Con Aggiorna cascata:</strong> modifichi il padre → i figli si aggiornano automaticamente</li>
+      <li><strong>Con Elimina cascata:</strong> cancelli il padre → tutti i figli vengono cancellati automaticamente</li>
+    </ul>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body"><strong>Elimina cascata — usare con cautela!</strong> Se cancelli una TIPOLOGIA con Elimina cascata attivo, vengono cancellati automaticamente tutti i PRODOTTI collegati. L'operazione non è reversibile. Assicurati sempre di sapere quanti record figlio verranno eliminati prima di procedere.</div>
+  </div>
+
+  <h3>Modificare i dati direttamente da tabella</h3>
+  <p>Per modificare o cancellare record senza SQL, LibreOffice Base permette di lavorare direttamente nella <strong>vista tabella</strong>:</p>
+  <div class="steps">
+    <div class="step"><div class="step-body">Nel pannello sinistro, clicca su <strong>Tabelle</strong>.</div></div>
+    <div class="step"><div class="step-body">Fai doppio clic sul nome della tabella che vuoi modificare.</div></div>
+    <div class="step"><div class="step-body">Clicca sulla cella che vuoi modificare, digita il nuovo valore e premi <strong>Invio</strong> o spostati su un'altra riga per confermare.</div></div>
+    <div class="step"><div class="step-body">Per cancellare una riga: selezionala cliccando sul quadratino a sinistra → tasto <strong>Canc</strong> → conferma.</div></div>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body"><strong>La cascata fa il lavoro sporco.</strong> Se le relazioni sono configurate correttamente con Aggiorna/Elimina cascata, puoi modificare o cancellare record padre direttamente dalla vista tabella — il database propagherà le modifiche ai figli in automatico.</div>
   </div>
 </section>
 
