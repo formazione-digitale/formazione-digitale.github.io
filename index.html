@@ -511,6 +511,131 @@ body.modal-open { overflow: hidden; }
   .modal-panel  { padding: 1.75rem 1.25rem 1.5rem; }
   .modal-title  { font-size: 1.3rem; }
 }
+
+/* ── ABOUT MODAL ── */
+.about-trigger {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.2s;
+  background: none;
+  border: none;
+  font-family: inherit;
+  padding: 0;
+}
+.about-trigger:hover { color: white; }
+
+.about-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  backdrop-filter: blur(4px);
+  pointer-events: all;
+}
+
+.modal-box {
+  background: #ffffff;
+  border-radius: 16px;
+  max-width: 480px;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+  animation: modalIn 0.25s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+.modal-header {
+  background: linear-gradient(135deg, #0d2d5e, #1a4a8a);
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+.modal-logo {
+  width: 72px;
+  height: 72px;
+  border-radius: 14px;
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.2);
+  flex-shrink: 0;
+}
+.modal-name {
+  color: white;
+}
+.modal-name h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+.modal-name p {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.4;
+}
+.modal-body {
+  padding: 1.5rem 2rem;
+}
+.modal-body p {
+  font-size: 0.9rem;
+  color: #333;
+  line-height: 1.7;
+  margin-bottom: 0.8rem;
+}
+.modal-body p:last-of-type { margin-bottom: 0; }
+.modal-tag {
+  display: inline-block;
+  background: #e8f0fe;
+  color: #1a4a8a;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin: 0.6rem 0.3rem 0 0;
+}
+.modal-footer {
+  padding: 1rem 2rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #eee;
+}
+.modal-contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #0d2d5e;
+  color: white;
+  text-decoration: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.modal-contact-btn:hover { background: #1a4a8a; }
+.modal-close {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 7px 14px;
+  font-size: 0.82rem;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.modal-close:hover { background: #f5f5f5; }
+
 </style>
 </head>
 <body>
@@ -521,13 +646,15 @@ body.modal-open { overflow: hidden; }
     <div class="header-name">Formazione Digitale</div>
     <div class="header-tag">Risorse di alfabetizzazione digitale</div>
   </div>
+  <div style="flex:1;"></div>
   <div class="header-right">
     <nav class="header-nav">
       <a href="#guide">Guide</a>
       <a href="#strumenti">Strumenti</a>
       <a href="#pillole">Pillole</a>
     </nav>
-    <button class="btn-contact" onclick="openModal()">✉ Scrivici</button>
+    <button onclick="openAbout()" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); color:rgba(255,255,255,0.85); border-radius:20px; padding:5px 14px; font-size:0.8rem; cursor:pointer; font-family:inherit; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">👤 Chi sono</button>
+    <button class="btn-contact" onclick="openModal()">✉ Contatti</button>
   </div>
 </header>
 
@@ -547,6 +674,9 @@ body.modal-open { overflow: hidden; }
   <div class="stat"><div class="stat-num" id="count-guide">1</div><div class="stat-label">Guide</div></div>
   <div class="stat"><div class="stat-num" id="count-tool">0</div><div class="stat-label">Strumenti</div></div>
   <div class="stat"><div class="stat-num" id="count-pill">0</div><div class="stat-label">Pillole</div></div>
+  <div style="width:1px; height:40px; background:var(--blue-light); align-self:center; flex-shrink:0;"></div>
+  <div class="stat"><div class="stat-num" id="gc-visits">—</div><div class="stat-label">Visite totali</div></div>
+  <div class="stat"><div class="stat-num" id="gc-pageviews">—</div><div class="stat-label">Pagine viste</div></div>
 </div>
 
 <!-- ── MAIN ─────────────────────────────────────────────────────── -->
@@ -758,6 +888,9 @@ body.modal-open { overflow: hidden; }
 
 <!-- ── FOOTER ───────────────────────────────────────────────────── -->
 <footer>
+  <div style="margin-bottom:1rem;">
+    <button class="about-trigger" style="font-size:0.85rem;" onclick="openAbout()">👤 Chi sono — Cristiano De Pasquale</button>
+  </div>
   <strong>Formazione Digitale</strong><br>
   Risorse di alfabetizzazione digitale libere e gratuite.<br>
   Tutti i contenuti sono rilasciati per uso libero e non commerciale.
@@ -883,6 +1016,21 @@ function updateStats() {
   document.getElementById('label-count-guide').textContent = guides + (guides === 1 ? ' risorsa' : ' risorse');
   document.getElementById('label-count-tool').textContent  = tools  > 0 ? tools + ' risorse' : 'In arrivo';
   document.getElementById('label-count-pill').textContent  = pills  > 0 ? pills + ' risorse' : 'In arrivo';
+
+  // GoatCounter stats
+  fetch('https://formazionedigitale.goatcounter.com/api/v0/stats/total', {
+    headers: { 'Content-Type': 'application/json' }
+  })
+  .then(r => r.json())
+  .then(data => {
+    const fmt = n => n >= 1000 ? (n/1000).toFixed(1) + 'k' : n;
+    if (data.total !== undefined)     document.getElementById('gc-visits').textContent    = fmt(data.total);
+    if (data.total_unique !== undefined) document.getElementById('gc-pageviews').textContent = fmt(data.total_unique);
+  })
+  .catch(() => {
+    document.getElementById('gc-visits').textContent    = '—';
+    document.getElementById('gc-pageviews').textContent = '—';
+  });
 }
 updateStats();
 
@@ -938,5 +1086,54 @@ if (contactForm) {
   });
 }
 </script>
+
+<!-- ── ABOUT MODAL ── -->
+<div class="about-overlay" id="aboutModal" onclick="closeAboutOutside(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <img src="img/formazione-digitale-logo.png" alt="Logo" class="modal-logo">
+      <div class="modal-name">
+        <h3>Cristiano De Pasquale</h3>
+        <p>Docente di Informatica<br>IIS "Luigi Einaudi" — Chiari (BS)<br>Funzione Strumentale Innovazione Digitale</p>
+      </div>
+    </div>
+    <div class="modal-body">
+      <p>Appassionato di tecnologie digitali a tutto tondo: dall'informatica al marketing, dalla didattica innovativa agli strumenti che rendono l'apprendimento più efficace e coinvolgente.</p>
+      <p>Quando non sono in aula o davanti a uno schermo, mi trovi a caccia di Trading Card Games rari e di memorabilia vintage — robot in particolare. Collezionare oggetti con una storia è il mio modo di staccare dalla velocità del digitale.</p>
+      <div>
+        <span class="modal-tag">🖥 Informatica</span>
+        <span class="modal-tag">📈 Marketing digitale</span>
+        <span class="modal-tag">🗄 Database</span>
+        <span class="modal-tag">🃏 TCG</span>
+        <span class="modal-tag">🤖 Vintage & Memorabilia</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-contact-btn" onclick="closeAbout(); openModal();">✉ Scrivimi</button>
+      <button class="modal-contact-btn" onclick="closeAbout()" style="background:transparent; border:2px solid #0d2d5e; color:#0d2d5e;">✕ Chiudi</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+function openAbout() {
+  const m = document.getElementById('aboutModal');
+  m.style.display = 'flex';
+  requestAnimationFrame(() => m.classList.add('open'));
+  document.body.style.overflow = 'hidden';
+}
+function closeAbout() {
+  const m = document.getElementById('aboutModal');
+  m.classList.remove('open');
+  m.style.display = 'none';
+  document.body.style.overflow = '';
+}
+function closeAboutOutside(e) {
+  if (e.target === document.getElementById('aboutModal')) closeAbout();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAbout(); });
+</script>
+
 </body>
 </html>
