@@ -1054,17 +1054,14 @@ async function loadGoatStats() {
   const today   = new Date().toISOString().slice(0,10);
   const origin  = '2020-01-01';
   try {
-    const [rTotal, rPages] = await Promise.all([
-      fetch(base + '/stats/total?start=' + origin + '&end=' + today, { headers }),
-      fetch(base + '/pages?limit=1&start=' + origin + '&end=' + today, { headers })
-    ]);
-    const [dTotal, dPages] = await Promise.all([rTotal.json(), rPages.json()]);
-    // Visite totali (unique visitors)
+    const rTotal = await fetch(base + '/stats/total?start=' + origin + '&end=' + today, { headers });
+    const dTotal = await rTotal.json();
+    // Visite totali
     const el1 = document.getElementById('gc-visits');
     if (el1) el1.textContent = (dTotal.total || 0).toLocaleString('it-IT');
-    // Pageviews totali
+    // Pageviews (stesso campo — GoatCounter free non distingue)
     const el2 = document.getElementById('gc-pageviews');
-    if (el2) el2.textContent = (dTotal.total_events || dTotal.total || 0).toLocaleString('it-IT');
+    if (el2) el2.textContent = (dTotal.total || 0).toLocaleString('it-IT');
   } catch(e) {
     // Silenzioso — i trattini restano se l'API non risponde
   }
