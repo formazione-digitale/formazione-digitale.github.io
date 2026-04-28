@@ -196,13 +196,25 @@ ul.guide-list li, ol.guide-list li { font-size: .95rem; line-height: 1.75; color
 .copy-btn.copied { background: var(--green-dark); }
 
 /* ── COMPARISON TABLE ───────────────────────────────────────────── */
-.comparison-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .88rem; }
-.comparison-table th { background: var(--blue-dark); color: #fff; padding: .6rem .85rem; text-align: left; font-weight: 500; }
-.comparison-table td { padding: .65rem .85rem; border-bottom: 1px solid var(--blue-light); vertical-align: top; line-height: 1.55; }
+.comparison-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .88rem; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+.comparison-table th { background: var(--blue-dark); color: #fff; padding: .75rem 1rem; text-align: left; font-weight: 500; font-size: .82rem; letter-spacing: .03em; }
+.comparison-table td { padding: .85rem 1rem; border-bottom: 1px solid var(--blue-light); vertical-align: middle; line-height: 1.55; }
+.comparison-table tr:last-child td { border-bottom: none; }
 .comparison-table tr:nth-child(even) td { background: #FAFCFF; }
-.comparison-table .col-what { font-weight: 500; color: var(--blue-dark); }
-.comparison-table .col-combo { font-family: 'DM Mono','Courier New',monospace; font-size: .8rem; color: var(--gray-dark); }
-.comparison-table .col-why  { font-size: .84rem; color: var(--gray-mid); }
+.comparison-table tr:hover td { background: var(--blue-pale); }
+.comparison-table .col-what { font-weight: 500; color: var(--blue-dark); font-size: .88rem; }
+.comparison-table .col-why  { font-size: .83rem; color: var(--gray-mid); }
+/* Badge combinazione */
+.combo-badge {
+  display: inline-flex; align-items: center; gap: .35rem;
+  font-size: .78rem; font-weight: 600; padding: .28rem .7rem;
+  border-radius: 20px; white-space: nowrap;
+}
+.combo-same   { background: var(--blue-pale);   color: var(--blue-dark);   border: 1px solid var(--blue-light); }
+.combo-gemini { background: var(--green-light);  color: var(--green-dark);  border: 1px solid #b2d8c0; }
+.combo-gpt    { background: var(--purple-light); color: var(--purple-dark); border: 1px solid #d4b8e8; }
+.combo-istanza{ background: var(--amber-light);  color: var(--amber-dark);  border: 1px solid #f0d990; }
+.combo-div    { background: var(--green-light);  color: var(--green-dark);  border: 1px solid #b2d8c0; }
 
 /* ── DO/DON'T ───────────────────────────────────────────────────── */
 .dodont { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin: 1rem 0; }
@@ -386,7 +398,12 @@ ul.guide-list li, ol.guide-list li { font-size: .95rem; line-height: 1.75; color
 
   <div class="box box-info">
     <div class="box-label">Regola pratica</div>
-    <p><strong>Usa lo stesso modello quando vuoi essere efficiente.</strong> Usa un modello diverso quando vuoi essere sorpreso.<br>Se hai già un'ipotesi sul problema → stesso modello. Se vuoi scoprire problemi che non hai ancora immaginato → cambia modello.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem;">
+      <div style="background:rgba(46,117,182,.1);border-radius:6px;padding:.6rem .85rem;font-size:.9rem;color:var(--blue-dark);font-weight:500;">Usa lo stesso modello quando vuoi essere <strong>efficiente</strong></div>
+      <div style="background:rgba(46,117,182,.1);border-radius:6px;padding:.6rem .85rem;font-size:.9rem;color:var(--blue-dark);font-weight:500;">Usa un modello diverso quando vuoi essere <strong>sorpreso</strong></div>
+    </div>
+    <p style="margin-bottom:.3rem;">→ Hai già un'ipotesi sul problema: <strong>stesso modello</strong></p>
+    <p style="margin:0;">→ Vuoi scoprire problemi che non hai ancora immaginato: <strong>cambia modello</strong></p>
   </div>
 
   <p>La tabella seguente ti aiuta a scegliere caso per caso:</p>
@@ -398,27 +415,27 @@ ul.guide-list li, ol.guide-list li { font-size: .95rem; line-height: 1.75; color
     <tbody>
       <tr>
         <td class="col-what">Errori di contenuto disciplinare</td>
-        <td class="col-combo">Stesso modello, nuova conversazione</td>
+        <td><span class="combo-badge combo-same">🔁 Stesso modello, nuova conv.</span></td>
         <td class="col-why">Risposta rapida, stesso lessico. Funziona quando sai già dove guardare.</td>
       </tr>
       <tr>
         <td class="col-what">Chiarezza del testo per gli studenti</td>
-        <td class="col-combo">Claude + Gemini</td>
+        <td><span class="combo-badge combo-gemini">Claude + Gemini</span></td>
         <td class="col-why">Gemini è più attento alla leggibilità e alla struttura logica espositiva.</td>
       </tr>
       <tr>
         <td class="col-what">Casi limite e situazioni inattese (BES, domanda fuori traccia, caso ambiguo)</td>
-        <td class="col-combo">Claude + GPT-4</td>
+        <td><span class="combo-badge combo-gpt">Claude + GPT-4</span></td>
         <td class="col-why">GPT-4 esplora scenari al bordo che il primo modello non ha considerato.</td>
       </tr>
       <tr>
         <td class="col-what">Coerenza interna su un progetto lungo (UDA intera, percorso multi-settimana)</td>
-        <td class="col-combo">Stessa istanza con tutto il contesto</td>
+        <td><span class="combo-badge combo-istanza">⚡ Stessa istanza con contesto</span></td>
         <td class="col-why">Portare il contesto a un secondo modello introduce dispersione.</td>
       </tr>
       <tr>
         <td class="col-what">Scelte pedagogiche discutibili</td>
-        <td class="col-combo">Modello diverso da quello che ha generato</td>
+        <td><span class="combo-badge combo-div">🔀 Modello diverso</span></td>
         <td class="col-why">Il modello che ha prodotto l'output tende a difenderlo. Un altro lo valuta senza attaccamento.</td>
       </tr>
     </tbody>
@@ -445,6 +462,7 @@ ul.guide-list li, ol.guide-list li { font-size: .95rem; line-height: 1.75; color
   <p>Il problema principale non è quale modello usare per la review — è <strong>come trasferisci il contesto</strong> da una conversazione all'altra. Un secondo modello valuta quello che gli dai: se il briefing è vago, la review sarà inutile.</p>
 
   <div class="sub-title">2.1  Struttura del prompt di handoff</div>
+  <p>Il prompt di handoff è il messaggio con cui apri la conversazione con il secondo modello. Non è una richiesta generica: deve contenere tutto il contesto necessario perché il revisore possa lavorare senza fare domande. Più è preciso, più la review sarà utile. Il template qui sotto copre tutti i campi essenziali — adattalo al tuo caso prima di usarlo.</p>
   <div class="prompt-wrap">
     <div class="prompt-label">Template — copia e personalizza</div>
     <div class="prompt-block" id="p-handoff"><span class="tag"># RUOLO</span>
@@ -672,6 +690,7 @@ Non riscrivere i descrittori. Solo diagnosi degli elementi ambigui.<button class
     </div>
   </div>
 
+  <p>Prima di aprire la seconda conversazione, spunta ogni voce. Se non riesci a spuntarle tutte, la review probabilmente non ti darà risultati utili — è meglio fermarsi e chiarire prima cosa stai cercando.</p>
   <div class="checklist">
     <div class="check-item" onclick="toggleCheck(this)">
       <div class="check-box"></div>
@@ -718,20 +737,16 @@ Non riscrivere i descrittori. Solo diagnosi degli elementi ambigui.<button class
 
   <div class="glossary">
     <div class="gloss-item" onclick="toggleGloss(this)">
-      <div class="gloss-term">Peer-review AI <span class="gloss-arrow">▶</span></div>
-      <div class="gloss-def">La pratica di usare un secondo modello linguistico per revisionare l'output prodotto da un primo modello. Il termine prende in prestito il concetto di revisione tra pari dalla ricerca accademica.</div>
+      <div class="gloss-term">Allucinazione <span class="gloss-arrow">▶</span></div>
+      <div class="gloss-def">Informazione falsa o inventata presentata da un modello AI con tono sicuro e convincente. Non è un malfunzionamento occasionale, ma una caratteristica strutturale: il modello genera la sequenza di parole statisticamente più probabile, anche quando non ha dati affidabili su cui basarsi. Per questo l'output di una peer-review AI va sempre verificato dal docente prima dell'uso.</div>
     </div>
     <div class="gloss-item" onclick="toggleGloss(this)">
       <div class="gloss-term">Bias di conferma <span class="gloss-arrow">▶</span></div>
       <div class="gloss-def">La tendenza a notare e valorizzare le informazioni che confermano ciò che si crede già, ignorando quelle contrarie. I modelli AI mostrano questo comportamento nei confronti del proprio output: tendono a difenderlo e a non notarne i difetti.</div>
     </div>
     <div class="gloss-item" onclick="toggleGloss(this)">
-      <div class="gloss-term">Prompt di handoff <span class="gloss-arrow">▶</span></div>
-      <div class="gloss-def">Il prompt strutturato che si usa per trasferire il contesto da una conversazione all'altra quando si chiede a un secondo modello di revisionare un output. Un handoff ben fatto include: ruolo del revisore, contesto disciplinare, materiale completo, criteri di revisione, vincoli.</div>
-    </div>
-    <div class="gloss-item" onclick="toggleGloss(this)">
-      <div class="gloss-term">Test del docente supplente <span class="gloss-arrow">▶</span></div>
-      <div class="gloss-def">Tecnica per valutare l'oggettività di una rubrica: si chiede al modello di verificare se un docente che non conosce la classe potrebbe applicare ogni descrittore in modo univoco. Se no, il criterio non è sufficientemente oggettivo.</div>
+      <div class="gloss-term">Finestra di contesto <span class="gloss-arrow">▶</span></div>
+      <div class="gloss-def">La quantità massima di testo che un modello AI può "vedere" e processare in una singola conversazione. Tutto ciò che supera questo limite viene ignorato. È rilevante nella peer-review quando il materiale da revisionare è molto lungo: se supera la finestra di contesto del modello, parti del testo potrebbero non essere analizzate. In quel caso conviene spezzare la review in più sessioni tematiche.</div>
     </div>
     <div class="gloss-item" onclick="toggleGloss(this)">
       <div class="gloss-term">Istanza <span class="gloss-arrow">▶</span></div>
@@ -740,6 +755,18 @@ Non riscrivere i descrittori. Solo diagnosi degli elementi ambigui.<button class
     <div class="gloss-item" onclick="toggleGloss(this)">
       <div class="gloss-term">Loop di perfezionismo <span class="gloss-arrow">▶</span></div>
       <div class="gloss-def">Il ciclo non produttivo di peer-review → revisione → nuova peer-review → nuova revisione. Si innesca quando non si stabilisce in anticipo un limite al numero di iterazioni. Una iterazione è quasi sempre sufficiente.</div>
+    </div>
+    <div class="gloss-item" onclick="toggleGloss(this)">
+      <div class="gloss-term">Peer-review AI <span class="gloss-arrow">▶</span></div>
+      <div class="gloss-def">La pratica di usare un secondo modello linguistico per revisionare l'output prodotto da un primo modello. Il termine prende in prestito il concetto di revisione tra pari dalla ricerca accademica.</div>
+    </div>
+    <div class="gloss-item" onclick="toggleGloss(this)">
+      <div class="gloss-term">Prompt di handoff <span class="gloss-arrow">▶</span></div>
+      <div class="gloss-def">Il prompt strutturato che si usa per trasferire il contesto da una conversazione all'altra quando si chiede a un secondo modello di revisionare un output. Un handoff ben fatto include: ruolo del revisore, contesto disciplinare, materiale completo, criteri di revisione, vincoli.</div>
+    </div>
+    <div class="gloss-item" onclick="toggleGloss(this)">
+      <div class="gloss-term">Test del docente supplente <span class="gloss-arrow">▶</span></div>
+      <div class="gloss-def">Tecnica per valutare l'oggettività di una rubrica: si chiede al modello di verificare se un docente che non conosce la classe potrebbe applicare ogni descrittore in modo univoco. Se no, il criterio non è sufficientemente oggettivo.</div>
     </div>
   </div>
 </section>
