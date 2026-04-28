@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Builder — Formazione Digitale</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- GoatCounter tracking -->
+<script src="/gc.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue-dark:   #1F4E79;
+  --blue-mid:    #2E75B6;
+  --blue-light:  #D6E8F7;
+  --blue-pale:   #EBF3FC;
+  --blue-xpale:  #F4F9FE;
+  --green-dark:  #1E6B3C;
+  --green-light: #E8F5EE;
+  --amber-dark:  #7D4E00;
+  --amber-light: #FFF3CD;
+  --red-dark:    #8B1A1A;
+  --gray-dark:   #2C2C2C;
+  --gray-mid:    #666;
+  --gray-light:  #F5F5F5;
+  --white:       #FFFFFF;
+  --font-display:'DM Serif Display', Georgia, serif;
+  --font-body:   'DM Sans', system-ui, sans-serif;
+  --font-mono:   'DM Mono', 'Fira Mono', monospace;
+  --header-h:    56px;
+  --radius:      8px;
+  --shadow:      0 2px 12px rgba(31,78,121,.10);
+  --trans:       .2s cubic-bezier(.4,0,.2,1);
+}
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FBFF; line-height: 1.7; min-height: 100vh; }
+
+/* HEADER */
+#header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: var(--header-h); background: var(--blue-dark);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.5rem; box-shadow: 0 2px 16px rgba(0,0,0,.18);
+}
+.header-left { display: flex; align-items: center; gap: .75rem; }
+.header-back { font-size: .78rem; color: rgba(255,255,255,.65); text-decoration: none; display: flex; align-items: center; gap: .3rem; transition: color .2s; }
+.header-back:hover { color: #fff; }
+.header-sep  { width: 1px; height: 20px; background: rgba(255,255,255,.2); }
+.header-logo { font-family: var(--font-display); font-size: 1.05rem; color: #fff; }
+.header-sub  { font-size: .72rem; color: var(--blue-light); font-weight: 300; }
+.header-right { display: flex; align-items: center; gap: .6rem; }
+.btn-libreria { font-family: var(--font-body); font-size: .78rem; font-weight: 500; background: rgba(255,255,255,.12); color: rgba(255,255,255,.9); border: 1px solid rgba(255,255,255,.25); border-radius: 20px; padding: .28rem .85rem; cursor: pointer; display: flex; align-items: center; gap: .4rem; transition: background var(--trans); }
+.btn-libreria:hover { background: rgba(255,255,255,.22); }
+.lib-count { background: var(--blue-mid); color: #fff; border-radius: 10px; font-size: .68rem; font-weight: 700; padding: .05rem .42rem; min-width: 18px; text-align: center; display: none; }
+.lib-count.show { display: inline-block; }
+
+/* LAYOUT */
+#app { margin-top: var(--header-h); display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr; min-height: calc(100vh - var(--header-h)); }
+@media (max-width: 860px) { #app { grid-template-columns: 1fr; } }
+
+/* HERO */
+#hero { grid-column: 1 / -1; background: linear-gradient(135deg, var(--blue-dark) 0%, #2E5F8C 100%); padding: 1.25rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+.hero-text h1 { font-family: var(--font-display); font-size: clamp(1.1rem, 2.5vw, 1.6rem); color: #fff; line-height: 1.2; margin-bottom: .2rem; }
+.hero-text p  { font-size: .82rem; color: rgba(255,255,255,.72); max-width: 460px; }
+
+/* FORM PANEL */
+#form-panel { padding: 2rem; overflow-y: auto; border-right: 1px solid var(--blue-light); background: var(--white); }
+@media (max-width: 860px) { #form-panel { border-right: none; border-bottom: 1px solid var(--blue-light); } }
+
+/* PREVIEW PANEL */
+#preview-panel { padding: 2rem; background: var(--blue-xpale); display: flex; flex-direction: column; gap: 1rem; position: sticky; top: var(--header-h); height: calc(100vh - var(--header-h)); overflow-y: auto; }
+@media (max-width: 860px) { #preview-panel { position: static; height: auto; border-top: 2px solid var(--blue-light); } }
+
+/* PRESET SECTION nel form */
+.preset-section { background: var(--blue-pale); border: 1px solid var(--blue-light); border-radius: var(--radius); padding: .85rem 1rem; margin-bottom: 1.75rem; }
+.preset-section-label { font-size: .7rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--blue-mid); margin-bottom: .6rem; }
+.preset-bar { display: flex; gap: .4rem; flex-wrap: wrap; }
+.preset-btn { font-family: var(--font-body); font-size: .76rem; background: var(--white); color: var(--blue-dark); border: 1.5px solid var(--blue-light); border-radius: 20px; padding: .28rem .8rem; cursor: pointer; transition: all var(--trans); }
+.preset-btn:hover { background: var(--blue-light); border-color: var(--blue-mid); }
+
+/* SECTION LABELS */
+.section-group { margin-bottom: 1.75rem; }
+.section-group:last-child { margin-bottom: 0; }
+.section-label { display: flex; align-items: center; gap: .6rem; margin-bottom: 1rem; }
+.section-num { width: 26px; height: 26px; background: var(--blue-dark); color: #fff; border-radius: 5px; font-size: .8rem; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.section-title-text { font-size: .82rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--blue-dark); }
+.section-subtitle { font-size: .75rem; color: var(--gray-mid); font-style: italic; margin-left: auto; }
+.divider { border: none; border-top: 1px solid var(--blue-light); margin: 1.75rem 0; }
+
+/* FORM FIELDS */
+.field { margin-bottom: 1.1rem; }
+.field label { display: block; font-size: .82rem; font-weight: 500; color: var(--blue-dark); margin-bottom: .35rem; }
+.field .hint  { font-size: .75rem; color: var(--gray-mid); font-style: italic; margin-bottom: .4rem; display: block; }
+.field .required { color: #C0392B; margin-left: .15rem; }
+.field input[type="text"], .field textarea, .field select { width: 100%; font-family: var(--font-body); font-size: .88rem; color: var(--gray-dark); background: var(--white); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .6rem .85rem; transition: border-color var(--trans), box-shadow var(--trans); outline: none; resize: vertical; }
+.field input[type="text"]:focus, .field textarea:focus, .field select:focus { border-color: var(--blue-mid); box-shadow: 0 0 0 3px rgba(46,117,182,.12); }
+.field textarea { min-height: 80px; line-height: 1.6; }
+.field select   { cursor: pointer; }
+.field.error input, .field.error textarea, .field.error select { border-color: #C0392B; box-shadow: 0 0 0 3px rgba(192,57,43,.1); }
+.field .error-msg { display: none; font-size: .75rem; color: #C0392B; margin-top: .3rem; font-weight: 500; }
+.field.error .error-msg { display: block; }
+.char-counter { font-size: .72rem; color: var(--gray-mid); text-align: right; margin-top: .25rem; }
+
+/* RUOLO GUIDATO */
+.ruolo-helper { background: var(--blue-pale); border: 1px solid var(--blue-light); border-radius: var(--radius); padding: .75rem .9rem; margin-bottom: .75rem; }
+.ruolo-helper-label { font-size: .72rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--blue-mid); margin-bottom: .5rem; }
+.ruolo-selects { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.ruolo-selects select { width: 100%; font-family: var(--font-body); font-size: .82rem; color: var(--gray-dark); background: var(--white); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .45rem .7rem; outline: none; cursor: pointer; transition: border-color var(--trans); }
+.ruolo-selects select:focus { border-color: var(--blue-mid); }
+.btn-genera-ruolo { margin-top: .5rem; width: 100%; font-family: var(--font-body); font-size: .8rem; font-weight: 500; background: var(--blue-dark); color: #fff; border: none; border-radius: var(--radius); padding: .45rem .9rem; cursor: pointer; transition: background var(--trans); display: flex; align-items: center; justify-content: center; gap: .4rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.btn-genera-ruolo:hover:not(:disabled) { background: var(--blue-mid); }
+.btn-genera-ruolo:disabled { opacity: .45; cursor: default; }
+
+/* CHIP VERBI */
+.verbi-bar { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .6rem; }
+.chip-verbo { font-family: var(--font-body); font-size: .76rem; font-weight: 500; background: var(--blue-pale); color: var(--blue-dark); border: 1px solid var(--blue-light); border-radius: 20px; padding: .22rem .7rem; cursor: pointer; transition: background var(--trans), border-color var(--trans); user-select: none; }
+.chip-verbo:hover { background: var(--blue-light); border-color: var(--blue-mid); }
+
+/* CONTESTO */
+.contesto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin-bottom: .6rem; }
+.micro-field label { font-size: .78rem; font-weight: 500; color: var(--blue-dark); margin-bottom: .3rem; display: block; }
+.micro-field select { width: 100%; font-family: var(--font-body); font-size: .82rem; color: var(--gray-dark); background: var(--white); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .5rem .7rem; outline: none; cursor: pointer; transition: border-color var(--trans); }
+.micro-field select:focus { border-color: var(--blue-mid); }
+.contesto-note textarea { width: 100%; font-family: var(--font-body); font-size: .84rem; color: var(--gray-dark); background: var(--white); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .55rem .8rem; outline: none; resize: vertical; min-height: 58px; transition: border-color var(--trans); line-height: 1.55; }
+.contesto-note textarea:focus { border-color: var(--blue-mid); }
+.contesto-preview { font-size: .78rem; color: var(--blue-dark); font-style: italic; background: var(--blue-pale); border-radius: var(--radius); padding: .5rem .75rem; margin-top: .5rem; border-left: 3px solid var(--blue-mid); display: none; }
+.contesto-preview.show { display: block; }
+
+/* OTTIMIZZA PER */
+.ottimizza-row { display: flex; align-items: center; gap: .75rem; margin-bottom: 1rem; }
+.ottimizza-row label { font-size: .82rem; font-weight: 500; color: var(--blue-dark); white-space: nowrap; }
+.ottimizza-row select { font-family: var(--font-body); font-size: .84rem; color: var(--gray-dark); background: var(--white); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .5rem .8rem; outline: none; cursor: pointer; flex: 1; transition: border-color var(--trans); }
+.ottimizza-row select:focus { border-color: var(--blue-mid); }
+.ottimizza-hint { font-size: .74rem; color: var(--gray-mid); font-style: italic; margin-top: -.5rem; margin-bottom: .75rem; }
+
+/* ADVANCED */
+#advanced-toggle { display: flex; align-items: center; gap: .6rem; background: none; border: 1.5px dashed var(--blue-light); border-radius: var(--radius); width: 100%; padding: .65rem 1rem; cursor: pointer; font-family: var(--font-body); font-size: .84rem; color: var(--blue-mid); font-weight: 500; transition: all var(--trans); margin-bottom: 1rem; }
+#advanced-toggle:hover { background: var(--blue-pale); border-color: var(--blue-mid); }
+#advanced-toggle .adv-arrow { margin-left: auto; transition: transform var(--trans); font-size: .8rem; }
+#advanced-toggle.open .adv-arrow { transform: rotate(180deg); }
+#advanced-section { display: none; }
+#advanced-section.open { display: block; }
+
+/* TOGGLE SWITCH */
+.toggle-row { display: flex; align-items: center; gap: .75rem; background: var(--blue-pale); border-radius: var(--radius); padding: .7rem .9rem; margin-bottom: .9rem; cursor: pointer; border: 1.5px solid var(--blue-light); transition: background var(--trans); user-select: none; }
+.toggle-row:hover { background: var(--blue-light); }
+.toggle-switch { width: 36px; height: 20px; border-radius: 10px; background: #ccc; position: relative; flex-shrink: 0; transition: background var(--trans); }
+.toggle-switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: #fff; transition: transform var(--trans); }
+.toggle-row.on .toggle-switch { background: var(--blue-mid); }
+.toggle-row.on .toggle-switch::after { transform: translateX(16px); }
+.toggle-label { font-size: .84rem; color: var(--gray-dark); line-height: 1.3; }
+.toggle-label small { display: block; font-size: .74rem; color: var(--gray-mid); margin-top: .1rem; }
+
+/* ACTIONS */
+.actions-row { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; margin-top: 1.5rem; }
+.btn-save-inline { font-family: var(--font-body); font-size: .82rem; font-weight: 500; background: var(--blue-pale); color: var(--blue-dark); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .5rem 1rem; cursor: pointer; display: flex; align-items: center; gap: .4rem; transition: all var(--trans); }
+.btn-save-inline:hover:not(:disabled) { background: var(--blue-light); border-color: var(--blue-mid); }
+.btn-save-inline:disabled { opacity: .4; cursor: default; }
+.btn-reset { background: none; border: none; font-family: var(--font-body); font-size: .82rem; color: var(--gray-mid); cursor: pointer; text-decoration: underline; padding: 0; transition: color var(--trans); margin-left: auto; }
+.btn-reset:hover { color: var(--gray-dark); }
+
+/* SAVE POPUP */
+.save-popup { display: none; background: var(--white); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .85rem 1rem; margin-top: .75rem; box-shadow: var(--shadow); }
+.save-popup.show { display: block; }
+.save-popup input { width: 100%; font-family: var(--font-body); font-size: .85rem; border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .5rem .75rem; outline: none; margin-bottom: .5rem; }
+.save-popup input:focus { border-color: var(--blue-mid); }
+.save-popup-row { display: flex; gap: .4rem; }
+.save-popup-row select { flex: 1; font-family: var(--font-body); font-size: .8rem; border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .4rem .6rem; outline: none; cursor: pointer; }
+.btn-salva-ok { font-family: var(--font-body); font-size: .8rem; font-weight: 600; background: var(--blue-dark); color: #fff; border: none; border-radius: var(--radius); padding: .42rem .9rem; cursor: pointer; white-space: nowrap; transition: background var(--trans); }
+.btn-salva-ok:hover { background: var(--blue-mid); }
+.save-feedback { font-size: .78rem; color: var(--green-dark); font-weight: 500; margin-top: .4rem; display: none; }
+.save-feedback.show { display: block; }
+
+/* PREVIEW */
+.preview-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.preview-title  { font-family: var(--font-display); font-size: 1.1rem; color: var(--blue-dark); }
+.preview-status { font-size: .74rem; color: var(--gray-mid); font-style: italic; }
+#prompt-output { flex: 1; font-family: var(--font-mono); font-size: .8rem; line-height: 1.85; background: var(--white); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: 1.25rem; white-space: pre-wrap; word-break: break-word; color: #1a1a1a; min-height: 200px; }
+.prompt-tag   { color: var(--blue-dark); font-weight: 700; }
+.prompt-empty { color: var(--gray-mid); font-style: italic; font-family: var(--font-body); font-size: .88rem; display: flex; align-items: center; justify-content: center; min-height: 160px; text-align: center; }
+
+/* QUALITY FEEDBACK */
+.quality-bar { background: var(--white); border: 1px solid var(--blue-light); border-radius: var(--radius); padding: .65rem .9rem; display: flex; align-items: center; gap: .75rem; }
+.level-dots { display: flex; gap: 4px; }
+.level-dot  { width: 10px; height: 10px; border-radius: 50%; background: var(--blue-light); transition: background var(--trans); }
+.level-dot.active   { background: var(--blue-mid); }
+.level-dot.active-3 { background: var(--blue-dark); }
+.quality-info { flex: 1; }
+.level-text { font-size: .78rem; color: var(--blue-mid); font-weight: 500; }
+.quality-tip { font-size: .72rem; color: var(--gray-mid); font-style: italic; margin-top: .1rem; }
+
+/* PREVIEW ACTIONS */
+.preview-actions { display: flex; gap: .6rem; flex-wrap: wrap; }
+.btn-copy { font-family: var(--font-body); font-size: .84rem; font-weight: 500; background: var(--blue-dark); color: #fff; border: none; border-radius: var(--radius); padding: .6rem 1.25rem; cursor: pointer; display: flex; align-items: center; gap: .4rem; transition: background var(--trans); white-space: nowrap; }
+.btn-copy:hover { background: var(--blue-mid); }
+.btn-copy:disabled { opacity: .4; cursor: default; }
+.btn-copy.copied { background: var(--green-dark); }
+.btn-clean { font-family: var(--font-body); font-size: .82rem; font-weight: 500; background: var(--white); color: var(--blue-mid); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .55rem 1rem; cursor: pointer; display: flex; align-items: center; gap: .4rem; transition: all var(--trans); white-space: nowrap; }
+.btn-clean:hover:not(:disabled) { border-color: var(--blue-mid); background: var(--blue-pale); }
+.btn-clean:disabled { opacity: .4; cursor: default; }
+
+.preview-meta { font-size: .74rem; color: var(--gray-mid); display: flex; gap: 1rem; flex-wrap: wrap; }
+.meta-chip { background: var(--blue-pale); color: var(--blue-dark); border-radius: 20px; padding: .2rem .65rem; font-size: .72rem; font-weight: 500; }
+
+/* CRONOLOGIA */
+.cronologia-section { margin-top: .5rem; }
+.cronologia-label { font-size: .7rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--gray-mid); margin-bottom: .4rem; }
+.cronologia-list { display: flex; flex-direction: column; gap: .3rem; }
+.crono-item { font-size: .74rem; background: var(--white); border: 1px solid var(--blue-light); border-radius: 6px; padding: .4rem .7rem; cursor: pointer; color: var(--blue-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: background var(--trans); }
+.crono-item:hover { background: var(--blue-pale); }
+
+/* DRAWER */
+#drawer-overlay { display: none; position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,.35); backdrop-filter: blur(2px); }
+#drawer-overlay.open { display: block; }
+#drawer { position: fixed; top: 0; left: 0; bottom: 0; z-index: 400; width: min(440px, 94vw); background: var(--white); box-shadow: 4px 0 32px rgba(31,78,121,.18); display: flex; flex-direction: column; transform: translateX(-100%); transition: transform .28s cubic-bezier(.4,0,.2,1); }
+#drawer.open { transform: translateX(0); }
+.drawer-header { background: var(--blue-dark); color: #fff; padding: 1rem 1.25rem; display: flex; align-items: center; gap: .75rem; flex-shrink: 0; }
+.drawer-title  { font-family: var(--font-display); font-size: 1.1rem; flex: 1; }
+.drawer-close  { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,.15); border: none; color: #fff; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background var(--trans); }
+.drawer-close:hover { background: rgba(255,255,255,.25); }
+.drawer-body   { flex: 1; overflow-y: auto; padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; }
+.drawer-actions { display: flex; gap: .5rem; flex-shrink: 0; padding: 1rem 1.25rem; border-top: 1px solid var(--blue-light); }
+.btn-export { font-family: var(--font-body); font-size: .8rem; font-weight: 500; background: var(--blue-pale); color: var(--blue-dark); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .42rem .85rem; cursor: pointer; flex: 1; transition: all var(--trans); }
+.btn-export:hover { background: var(--blue-light); border-color: var(--blue-mid); }
+.btn-import-label { font-family: var(--font-body); font-size: .8rem; font-weight: 500; background: var(--white); color: var(--gray-mid); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .42rem .85rem; cursor: pointer; flex: 1; text-align: center; transition: all var(--trans); }
+.btn-import-label:hover { border-color: var(--blue-mid); color: var(--blue-dark); }
+
+.lib-section-title { font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--gray-mid); margin-bottom: .6rem; }
+.lib-empty { font-size: .84rem; color: var(--gray-mid); font-style: italic; text-align: center; padding: 1.5rem 0; }
+.lib-item { border: 1px solid var(--blue-light); border-radius: var(--radius); overflow: hidden; background: var(--white); }
+.lib-item:hover { box-shadow: var(--shadow); }
+.lib-item-header { padding: .7rem .9rem; display: flex; align-items: flex-start; gap: .75rem; cursor: pointer; transition: background var(--trans); }
+.lib-item-header:hover { background: var(--blue-pale); }
+.lib-item-info { flex: 1; min-width: 0; }
+.lib-item-name { font-size: .88rem; font-weight: 500; color: var(--gray-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lib-item-meta { font-size: .74rem; color: var(--gray-mid); margin-top: .1rem; display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
+.lib-tag { background: var(--blue-pale); color: var(--blue-dark); border-radius: 10px; padding: .1rem .5rem; font-size: .7rem; font-weight: 500; }
+.lib-item-actions { display: flex; gap: .4rem; flex-shrink: 0; }
+.lib-btn { font-family: var(--font-body); font-size: .74rem; font-weight: 500; border-radius: 5px; padding: .3rem .65rem; cursor: pointer; transition: all var(--trans); border: 1px solid; }
+.lib-btn-load   { background: var(--blue-pale); color: var(--blue-dark); border-color: var(--blue-light); }
+.lib-btn-load:hover   { background: var(--blue-light); border-color: var(--blue-mid); }
+.lib-btn-delete { background: #FEF2F2; color: var(--red-dark); border-color: #FECACA; }
+.lib-btn-delete:hover { background: #FEE2E2; }
+.lib-item-preview { display: none; padding: .6rem .9rem; font-family: var(--font-mono); font-size: .74rem; line-height: 1.7; background: var(--blue-xpale); border-top: 1px solid var(--blue-light); color: #1a1a1a; white-space: pre-wrap; max-height: 180px; overflow-y: auto; }
+.lib-item-preview.show { display: block; }
+
+/* MODAL PROMPT PULITO */
+.modal-overlay { position: fixed; inset: 0; z-index: 500; background: rgba(15,35,60,.6); backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; padding: 1rem; opacity: 0; pointer-events: none; transition: opacity .25s ease; }
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal-panel { background: var(--white); border-radius: 14px; box-shadow: 0 24px 60px rgba(15,35,60,.3); width: 100%; max-width: 600px; max-height: 85vh; display: flex; flex-direction: column; transform: translateY(20px); transition: transform .3s cubic-bezier(.34,1.56,.64,1); }
+.modal-overlay.open .modal-panel { transform: translateY(0); }
+.modal-head { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--blue-light); }
+.modal-head-title { font-family: var(--font-display); font-size: 1.2rem; color: var(--blue-dark); }
+.modal-head-sub { font-size: .78rem; color: var(--gray-mid); margin-top: .1rem; }
+.modal-close-btn { width: 32px; height: 32px; border-radius: 50%; background: var(--gray-light); border: none; cursor: pointer; font-size: 1rem; color: var(--gray-mid); display: flex; align-items: center; justify-content: center; transition: background var(--trans); }
+.modal-close-btn:hover { background: var(--blue-light); color: var(--blue-dark); }
+.modal-body { flex: 1; overflow-y: auto; padding: 1.25rem 1.5rem; font-family: var(--font-mono); font-size: .82rem; line-height: 1.9; white-space: pre-wrap; word-break: break-word; color: #1a1a1a; }
+.modal-foot { padding: 1rem 1.5rem; border-top: 1px solid var(--blue-light); display: flex; gap: .6rem; justify-content: flex-end; }
+.btn-modal-copy { font-family: var(--font-body); font-size: .84rem; font-weight: 600; background: var(--blue-dark); color: #fff; border: none; border-radius: var(--radius); padding: .6rem 1.4rem; cursor: pointer; transition: background var(--trans); }
+.btn-modal-copy:hover { background: var(--blue-mid); }
+.btn-modal-copy.copied { background: var(--green-dark); }
+.btn-modal-close { font-family: var(--font-body); font-size: .84rem; background: var(--white); color: var(--gray-mid); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .55rem 1.1rem; cursor: pointer; transition: all var(--trans); }
+.btn-modal-close:hover { border-color: var(--blue-mid); color: var(--blue-dark); }
+
+@media (max-width: 540px) {
+  #form-panel, #preview-panel { padding: 1.25rem; }
+  .ruolo-selects, .contesto-grid { grid-template-columns: 1fr; }
+  .ottimizza-row { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<header id="header">
+  <div class="header-left">
+    <a href="/index.html" class="header-back">← Portale</a>
+    <div class="header-sep"></div>
+    <div>
+      <div class="header-logo">Prompt Builder</div>
+      <div class="header-sub">Costruisci prompt strutturati</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <button class="btn-libreria" onclick="openDrawer()">
+      📚 Libreria <span class="lib-count" id="lib-count">0</span>
+    </button>
+  </div>
+</header>
+
+<div id="drawer-overlay" onclick="closeDrawer()"></div>
+<div id="drawer">
+  <div class="drawer-header">
+    <div class="drawer-title">I miei prompt</div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-body">
+    <div>
+      <div class="lib-section-title">Prompt salvati</div>
+      <div id="lib-list"></div>
+    </div>
+  </div>
+  <div class="drawer-actions">
+    <button class="btn-export" onclick="exportLibrary()">⬇ Esporta JSON</button>
+    <label class="btn-import-label">⬆ Importa JSON<input type="file" accept=".json" style="display:none" onchange="importLibrary(event)"></label>
+  </div>
+</div>
+
+<!-- Modal prompt pulito -->
+<div class="modal-overlay" id="clean-modal">
+  <div class="modal-panel">
+    <div class="modal-head">
+      <div>
+        <div class="modal-head-title">Prompt pronto all'uso</div>
+        <div class="modal-head-sub">Versione senza tag — pronta da incollare direttamente nell'IA</div>
+      </div>
+      <button class="modal-close-btn" onclick="closeCleanModal()">✕</button>
+    </div>
+    <div class="modal-body" id="clean-output"></div>
+    <div class="modal-foot">
+      <button class="btn-modal-close" onclick="closeCleanModal()">Chiudi</button>
+      <button class="btn-modal-copy" id="btn-modal-copy" onclick="copyClean()">📋 Copia</button>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+
+  <div id="hero">
+    <div class="hero-text">
+      <h1>Costruisci il tuo prompt</h1>
+      <p>Compila i campi — il prompt si aggiorna in tempo reale. Solo Ruolo e Compito sono obbligatori.</p>
+    </div>
+  </div>
+
+  <!-- FORM PANEL -->
+  <div id="form-panel">
+
+    <!-- PRESET -->
+    <div class="preset-section">
+      <div class="preset-section-label">Parti da un template</div>
+      <div class="preset-bar">
+        <button class="preset-btn" onclick="loadPreset('verifica')">📝 Progettare una verifica</button>
+        <button class="preset-btn" onclick="loadPreset('feedback')">💬 Feedback su un testo</button>
+        <button class="preset-btn" onclick="loadPreset('spiegazione')">💡 Preparare una spiegazione</button>
+      </div>
+    </div>
+
+    <!-- SEZIONE 1: NUCLEO -->
+    <div class="section-group">
+      <div class="section-label">
+        <div class="section-num">1</div>
+        <div class="section-title-text">Il nucleo</div>
+        <div class="section-subtitle">Obbligatorio</div>
+      </div>
+
+      <div class="ruolo-helper">
+        <div class="ruolo-helper-label">Genera il ruolo automaticamente</div>
+        <div class="ruolo-selects">
+          <select id="helper-disciplina" onchange="aggiornaRuoloHelper()">
+            <option value="">— Disciplina —</option>
+            <option value="italiano">Italiano e materie umanistiche</option>
+            <option value="matematica">Matematica</option>
+            <option value="informatica">Informatica e programmazione</option>
+            <option value="fisica">Fisica applicata</option>
+            <option value="inglese">Inglese / Lingua straniera</option>
+            <option value="economia">Economia e gestione aziendale</option>
+            <option value="elettrotecnica">Elettrotecnica ed elettronica</option>
+            <option value="meccanica">Meccanica e meccatronica</option>
+            <option value="trasversale">Competenze trasversali</option>
+          </select>
+          <select id="helper-specializzazione" onchange="aggiornaRuoloHelper()">
+            <option value="">— Specializzazione —</option>
+            <option value="docimologia">Valutazione e docimologia</option>
+            <option value="laboratorio">Didattica laboratoriale</option>
+            <option value="progettazione">Progettazione didattica (UDA)</option>
+            <option value="inclusione">Inclusione e BES/DSA</option>
+            <option value="competenze">Valutazione per competenze</option>
+            <option value="nessuna">Nessuna specializzazione</option>
+          </select>
+        </div>
+        <button class="btn-genera-ruolo" id="btn-genera-ruolo" onclick="applicaRuoloHelper()" disabled>↳ Seleziona disciplina e specializzazione</button>
+      </div>
+
+      <div class="field" id="field-ruolo">
+        <label>Ruolo <span class="required">*</span></label>
+        <span class="hint">Usa il generatore sopra oppure scrivi direttamente.</span>
+        <input type="text" id="ruolo" placeholder="es. Esperto in valutazione scolastica" oninput="update()" maxlength="200">
+        <div class="char-counter"><span id="cnt-ruolo">0</span>/200</div>
+        <div class="error-msg">Il Ruolo è obbligatorio.</div>
+      </div>
+
+      <div class="field" id="field-compito">
+        <label>Compito <span class="required">*</span></label>
+        <span class="hint">Clicca un verbo per inserirlo, poi completa la frase:</span>
+        <div class="verbi-bar">
+          <span class="chip-verbo" onclick="inserisciVerbo('Progetta')">Progetta</span>
+          <span class="chip-verbo" onclick="inserisciVerbo('Genera')">Genera</span>
+          <span class="chip-verbo" onclick="inserisciVerbo('Analizza')">Analizza</span>
+          <span class="chip-verbo" onclick="inserisciVerbo('Crea')">Crea</span>
+          <span class="chip-verbo" onclick="inserisciVerbo('Valuta')">Valuta</span>
+          <span class="chip-verbo" onclick="inserisciVerbo('Scrivi')">Scrivi</span>
+          <span class="chip-verbo" onclick="inserisciVerbo('Spiega')">Spiega</span>
+          <span class="chip-verbo" onclick="inserisciVerbo('Confronta')">Confronta</span>
+          <span class="chip-verbo" onclick="inserisciVerbo('Struttura')">Struttura</span>
+          <span class="chip-verbo" onclick="inserisciVerbo('Elenca')">Elenca</span>
+        </div>
+        <textarea id="compito" rows="3" placeholder="es. Crea una rubrica di valutazione analitica per il testo argomentativo." oninput="update()" maxlength="600"></textarea>
+        <div class="char-counter"><span id="cnt-compito">0</span>/600</div>
+        <div class="error-msg">Il Compito è obbligatorio.</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- SEZIONE 2: CONTESTO -->
+    <div class="section-group">
+      <div class="section-label">
+        <div class="section-num">2</div>
+        <div class="section-title-text">Contesto</div>
+        <div class="section-subtitle">Opzionale ma consigliato</div>
+      </div>
+
+      <div class="contesto-grid">
+        <div class="micro-field">
+          <label>Che classe?</label>
+          <select id="ctx-classe" onchange="updateContestoComposito()">
+            <option value="">— Non specificata —</option>
+            <option value="Prima ITS">Prima ITS</option>
+            <option value="Seconda ITS">Seconda ITS</option>
+            <option value="Terza ITS">Terza ITS</option>
+            <option value="Classe mista">Classe mista</option>
+          </select>
+        </div>
+        <div class="micro-field">
+          <label>Livello studenti?</label>
+          <select id="ctx-livello" onchange="updateContestoComposito()">
+            <option value="">— Non specificato —</option>
+            <option value="livello base">Base</option>
+            <option value="livello intermedio">Intermedio</option>
+            <option value="livello avanzato">Avanzato</option>
+            <option value="livello eterogeneo">Eterogeneo</option>
+          </select>
+        </div>
+        <div class="micro-field">
+          <label>Durata disponibile?</label>
+          <select id="ctx-durata" onchange="updateContestoComposito()">
+            <option value="">— Non specificata —</option>
+            <option value="30 minuti disponibili">30 minuti</option>
+            <option value="1 ora disponibile">1 ora</option>
+            <option value="2 ore disponibili">2 ore</option>
+            <option value="più di 2 ore disponibili">Più di 2 ore</option>
+          </select>
+        </div>
+        <div class="micro-field">
+          <label>Numero studenti?</label>
+          <select id="ctx-studenti" onchange="updateContestoComposito()">
+            <option value="">— Non specificato —</option>
+            <option value="classe piccola (fino a 12 studenti)">Fino a 12</option>
+            <option value="classe media (13–20 studenti)">13–20</option>
+            <option value="classe grande (oltre 20 studenti)">Oltre 20</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="contesto-note" style="margin-bottom:.5rem;">
+        <label style="font-size:.78rem;font-weight:500;color:var(--blue-dark);margin-bottom:.3rem;display:block;">Note aggiuntive</label>
+        <textarea id="ctx-note" rows="2" placeholder="es. Presenza di 2 studenti con DSA. Nessun prerequisito su questo argomento." oninput="updateContestoComposito()"></textarea>
+      </div>
+      <div class="contesto-preview" id="contesto-preview"></div>
+
+      <div class="divider" style="margin:1rem 0;"></div>
+
+      <div class="field">
+        <label>Formato output</label>
+        <span class="hint">Come deve presentare la risposta?</span>
+        <select id="formato-tipo" onchange="toggleFormatoCustom(); update()">
+          <option value="">— Nessuna indicazione (il modello sceglie) —</option>
+          <option value="Tabella Markdown">Tabella Markdown</option>
+          <option value="Elenco numerato">Elenco numerato</option>
+          <option value="Elenco puntato">Elenco puntato</option>
+          <option value="Testo narrativo (paragrafi)">Testo narrativo (paragrafi)</option>
+          <option value="JSON">JSON</option>
+          <option value="custom">Personalizzato…</option>
+        </select>
+      </div>
+      <div class="field" id="formato-custom-wrap" style="display:none;">
+        <label>Descrivi il formato</label>
+        <textarea id="formato-custom" rows="2" placeholder="es. Tabella con colonne: Dimensione, Peso%, Iniziale, Base, Avanzato, Feedback." oninput="update()" maxlength="300"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Vincoli</label>
+        <span class="hint">Cosa NON fare, limiti di lunghezza, tono, registro.</span>
+        <textarea id="vincoli" rows="3" placeholder="es. Non usare aggettivi vaghi (buono, adeguato). Il feedback deve essere in seconda persona, tono propositivo." oninput="update()" maxlength="500"></textarea>
+        <div class="char-counter"><span id="cnt-vincoli">0</span>/500</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- OTTIMIZZA PER -->
+    <div class="section-group">
+      <div class="section-label">
+        <div class="section-num">3</div>
+        <div class="section-title-text">Ottimizza per</div>
+        <div class="section-subtitle">Opzionale</div>
+      </div>
+      <div class="ottimizza-row">
+        <label for="ottimizza-modello">Modello IA:</label>
+        <select id="ottimizza-modello" onchange="update()">
+          <option value="">— Nessuna ottimizzazione —</option>
+          <option value="chatgpt">ChatGPT (GPT-4o)</option>
+          <option value="claude">Claude (Anthropic)</option>
+          <option value="gemini">Gemini (Google)</option>
+          <option value="copilot">Copilot (Microsoft)</option>
+          <option value="perplexity">Perplexity</option>
+          <option value="mistral">Mistral</option>
+        </select>
+      </div>
+      <div class="ottimizza-hint" id="ottimizza-hint"></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- AVANZATO -->
+    <button id="advanced-toggle" onclick="toggleAdvanced()" type="button">
+      <span>⚙</span><span>Opzioni avanzate</span>
+      <span class="adv-arrow">▼</span>
+    </button>
+    <div id="advanced-section">
+      <div class="section-label" style="margin-bottom:.75rem;">
+        <div class="section-num">4</div>
+        <div class="section-title-text">Avanzato</div>
+      </div>
+      <div class="toggle-row" id="toggle-esempi" onclick="toggleOpt('esempi')">
+        <div class="toggle-switch"></div>
+        <div class="toggle-label">Aggiungi esempi (few-shot)<small>Mostra al modello un esempio di input → output atteso.</small></div>
+      </div>
+      <div id="field-esempi-wrap" style="display:none;" class="field">
+        <textarea id="esempi" rows="4" placeholder="es. INPUT: testo studente / OUTPUT: il feedback dovrebbe essere strutturato così…" oninput="update()" maxlength="800"></textarea>
+      </div>
+      <div class="toggle-row" id="toggle-autodiagnosi" onclick="toggleOpt('autodiagnosi')">
+        <div class="toggle-switch"></div>
+        <div class="toggle-label">Autodiagnosi<small>Chiede al modello di segnalare 2 possibili ambiguità nell'output generato.</small></div>
+      </div>
+    </div>
+
+    <!-- AZIONI -->
+    <div class="actions-row">
+      <button class="btn-save-inline" id="btn-save-prompt" onclick="toggleSavePopup()" disabled>💾 Salva</button>
+      <button class="btn-reset" onclick="resetForm()">Ricomincia da zero</button>
+    </div>
+    <div class="save-popup" id="save-popup">
+      <input type="text" id="save-name" placeholder="Nome del prompt (es. Rubrica argomentativo)" maxlength="80">
+      <div class="save-popup-row">
+        <select id="save-disciplina">
+          <option value="">— Disciplina (opz.) —</option>
+          <option>Italiano</option><option>Matematica</option><option>Informatica</option>
+          <option>Fisica</option><option>Inglese</option><option>Economia</option>
+          <option>Elettrotecnica</option><option>Meccanica</option>
+          <option>Trasversale</option><option>Altro</option>
+        </select>
+        <select id="save-tipo">
+          <option value="">— Tipo (opz.) —</option>
+          <option>Verifica</option><option>Rubrica</option><option>Spiegazione</option>
+          <option>Feedback</option><option>Laboratorio</option><option>Materiale</option><option>Altro</option>
+        </select>
+        <button class="btn-salva-ok" onclick="savePrompt()">Salva</button>
+      </div>
+      <div class="save-feedback" id="save-feedback">✓ Prompt salvato nella libreria!</div>
+    </div>
+
+  </div>
+
+  <!-- PREVIEW PANEL -->
+  <div id="preview-panel">
+    <div class="preview-header">
+      <div class="preview-title">Prompt generato</div>
+      <div class="preview-status" id="preview-status">Inizia a compilare →</div>
+    </div>
+
+    <div class="quality-bar">
+      <div class="level-dots">
+        <div class="level-dot" id="dot-1"></div>
+        <div class="level-dot" id="dot-2"></div>
+        <div class="level-dot" id="dot-3"></div>
+      </div>
+      <div class="quality-info">
+        <div class="level-text" id="level-text">Nessun campo compilato</div>
+        <div class="quality-tip" id="quality-tip"></div>
+      </div>
+    </div>
+
+    <div id="prompt-output">
+      <div class="prompt-empty">Il prompt apparirà qui mentre compili i campi a sinistra.</div>
+    </div>
+
+    <div class="preview-meta" id="preview-meta" style="display:none;">
+      <span id="chip-blocchi" class="meta-chip"></span>
+      <span id="chip-chars"   class="meta-chip"></span>
+      <span id="chip-level"   class="meta-chip"></span>
+    </div>
+
+    <div class="preview-actions">
+      <button class="btn-copy" id="btn-copy" onclick="copyPrompt()" disabled>
+        <span id="copy-icon">📋</span><span id="copy-label">Copia prompt</span>
+      </button>
+      <button class="btn-clean" id="btn-clean" onclick="openCleanModal()" disabled>
+        ✨ Versione pulita
+      </button>
+    </div>
+
+    <!-- CRONOLOGIA -->
+    <div class="cronologia-section" id="crono-section" style="display:none;">
+      <div class="cronologia-label">Recenti (ultimi 5)</div>
+      <div class="cronologia-list" id="crono-list"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+const state = { esempiOn: false, autodiagnosiOn: false, advOpen: false };
+
+// Ottimizzazioni per modello
+const OTTIMIZZA = {
+  chatgpt:    { hint: 'ChatGPT risponde meglio con ruoli espliciti, istruzioni numerate e richieste di output in Markdown.', suffix: '\n\nFormatta la risposta in Markdown. Usa intestazioni, elenchi e tabelle dove appropriato.' },
+  claude:     { hint: 'Claude preferisce istruzioni dirette e contestualizzate. Usa tag XML per separare le sezioni se il prompt è complesso.', suffix: '\n\nSii diretto e preciso. Evita formule di apertura ridondanti.' },
+  gemini:     { hint: "Gemini gestisce bene il contesto lungo. Preferisce istruzioni in prosa naturale con esempi concreti.", suffix: '\n\nFornisci una risposta completa e ben strutturata, con esempi pratici dove possibile.' },
+  copilot:    { hint: 'Copilot è ottimizzato per task pratici e operativi. Preferisce richieste concrete con output direttamente utilizzabili.', suffix: '\n\nFornisci un output pronto all\'uso, concreto e immediatamente applicabile.' },
+  perplexity: { hint: 'Perplexity è orientato alla ricerca. Utile per prompt che richiedono fonti, confronti o analisi aggiornate.', suffix: '\n\nCita le fonti principali dove disponibili. Struttura la risposta in modo chiaro e verificabile.' },
+  mistral:    { hint: 'Mistral funziona bene con istruzioni sintetiche e precise. Evita ridondanze nel prompt.', suffix: '\n\nRispondi in modo conciso e strutturato, senza introduzioni superflue.' },
+};
+
+function v(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+/* ── RUOLO GUIDATO ── */
+const RUOLI = {
+  italiano:'Docente di italiano e materie umanistiche', matematica:'Docente di matematica',
+  informatica:'Docente di informatica e programmazione', fisica:'Docente di fisica applicata',
+  inglese:'Docente di lingua inglese', economia:'Docente di economia e gestione aziendale',
+  elettrotecnica:'Docente di elettrotecnica ed elettronica', meccanica:'Docente di meccanica e meccatronica',
+  trasversale:'Formatore di competenze trasversali',
+};
+const SPEC = {
+  docimologia:', con specializzazione in valutazione e docimologia', laboratorio:', esperto di didattica laboratoriale',
+  progettazione:', esperto di progettazione didattica per competenze (UDA)', inclusione:', con competenza in inclusione scolastica e gestione BES/DSA',
+  competenze:', specializzato nella valutazione per competenze', nessuna:'',
+};
+
+function aggiornaRuoloHelper() {
+  const disc = v('helper-disciplina'), spec = v('helper-specializzazione');
+  const btn  = document.getElementById('btn-genera-ruolo');
+  btn.disabled = !(disc && spec);
+  btn.textContent = (disc && spec) ? '↳ ' + (RUOLI[disc]||'') + (SPEC[spec]||'') : '↳ Seleziona disciplina e specializzazione';
+}
+
+function applicaRuoloHelper() {
+  const disc = v('helper-disciplina'), spec = v('helper-specializzazione');
+  if (!disc || !spec) return;
+  const el = document.getElementById('ruolo');
+  el.value = (RUOLI[disc]||'') + (SPEC[spec]||'');
+  el.focus(); update();
+}
+
+/* ── CHIP VERBI ── */
+function inserisciVerbo(verbo) {
+  const ta = document.getElementById('compito');
+  const KNOWN = ['Progetta','Genera','Analizza','Crea','Valuta','Scrivi','Spiega','Confronta','Struttura','Elenca'];
+  const cur = ta.value;
+  if (!cur.trim()) { ta.value = verbo + ' '; }
+  else {
+    const first = cur.trim().split(/\s+/)[0];
+    ta.value = KNOWN.includes(first) ? verbo + ' ' + cur.trim().slice(first.length).trimStart() : verbo + ' ' + cur;
+  }
+  ta.focus(); update();
+}
+
+/* ── CONTESTO COMPOSITO ── */
+function updateContestoComposito() {
+  const parti = [v('ctx-classe'), v('ctx-livello'), v('ctx-studenti'), v('ctx-durata'), v('ctx-note')].filter(Boolean);
+  const prev  = document.getElementById('contesto-preview');
+  if (parti.length) { prev.textContent = parti.join(', ') + '.'; prev.classList.add('show'); }
+  else              { prev.classList.remove('show'); prev.textContent = ''; }
+  update();
+}
+
+function getContestoComposito() {
+  const parti = [v('ctx-classe'), v('ctx-livello'), v('ctx-studenti'), v('ctx-durata'), v('ctx-note')].filter(Boolean);
+  return parti.length ? parti.join(', ') + '.' : '';
+}
+
+/* ── OTTIMIZZA PER ── */
+function getOttimizzaHint() {
+  const mod = v('ottimizza-modello');
+  const hint = document.getElementById('ottimizza-hint');
+  hint.textContent = mod && OTTIMIZZA[mod] ? OTTIMIZZA[mod].hint : '';
+}
+
+/* ── BUILD PROMPT ── */
+function getFormato() { const t = v('formato-tipo'); if (!t) return ''; return t === 'custom' ? v('formato-custom') : t; }
+
+function buildPrompt() {
+  const B = [];
+  if (v('ruolo'))   B.push({ tag: '# RUOLO',   body: v('ruolo') });
+  if (v('compito')) B.push({ tag: '# COMPITO',  body: v('compito') });
+  const ctx = getContestoComposito();
+  if (ctx) B.push({ tag: '# CONTESTO', body: ctx });
+  const fmt = getFormato();
+  if (fmt) B.push({ tag: '# FORMATO',  body: "Presenta l'output come: " + fmt + '.' });
+  if (v('vincoli')) B.push({ tag: '# VINCOLI', body: v('vincoli') });
+  if (state.esempiOn && v('esempi')) B.push({ tag: '# ESEMPI', body: v('esempi') });
+  if (state.autodiagnosiOn) B.push({ tag: '# AUTODIAGNOSI', body: "Indica 2 possibili ambiguità nell'output che hai generato e come risolverle." });
+  // Ottimizzazione modello
+  const mod = v('ottimizza-modello');
+  if (mod && OTTIMIZZA[mod]) B.push({ tag: '# NOTE PER IL MODELLO', body: OTTIMIZZA[mod].suffix.trim() });
+  return B;
+}
+
+function renderPrompt(blocks) {
+  if (!blocks.length) return null;
+  return blocks.map(b => b.tag + '\n' + b.body).join('\n\n');
+}
+
+// Versione pulita senza tag
+function renderClean(blocks) {
+  if (!blocks.length) return null;
+  return blocks.map(b => b.body).join('\n\n');
+}
+
+/* ── QUALITY TIPS ── */
+const TIPS = [
+  null,
+  'Aggiungi contesto (classe, livello, durata) per un prompt più preciso.',
+  'Specifica un formato output o aggiungi vincoli per affinare il risultato.',
+  null
+];
+
+/* ── UPDATE ── */
+function update() {
+  [['ruolo',200],['compito',600],['vincoli',500]].forEach(([id]) => {
+    const el = document.getElementById(id), cnt = document.getElementById('cnt-' + id);
+    if (el && cnt) cnt.textContent = el.value.length;
+  });
+  getOttimizzaHint();
+  const blocks = buildPrompt(), rawText = renderPrompt(blocks);
+  const out = document.getElementById('prompt-output');
+  const copyBtn = document.getElementById('btn-copy'), cleanBtn = document.getElementById('btn-clean');
+  const saveBtn = document.getElementById('btn-save-prompt'), meta = document.getElementById('preview-meta');
+  const status  = document.getElementById('preview-status');
+  if (!rawText) {
+    out.innerHTML = '<div class="prompt-empty">Il prompt apparirà qui mentre compili i campi a sinistra.</div>';
+    copyBtn.disabled = cleanBtn.disabled = saveBtn.disabled = true;
+    meta.style.display = 'none'; status.textContent = 'Inizia a compilare →'; updateLevel(0); return;
+  }
+  out.innerHTML = rawText.replace(/(# [A-ZÀÈÌÒÙ ]+)/g, '<span class="prompt-tag">$1</span>');
+  copyBtn.disabled = cleanBtn.disabled = saveBtn.disabled = false;
+  meta.style.display = 'flex';
+  document.getElementById('chip-blocchi').textContent = blocks.length + (blocks.length === 1 ? ' blocco' : ' blocchi');
+  document.getElementById('chip-chars').textContent   = rawText.length + ' caratteri';
+  const hr = v('ruolo') && v('compito');
+  const hc = getContestoComposito() || getFormato();
+  const ha = v('vincoli') || state.esempiOn || state.autodiagnosiOn || v('ottimizza-modello');
+  const lvl = !hr ? 0 : !hc ? 1 : !ha ? 2 : 3;
+  updateLevel(lvl);
+  status.textContent = 'Pronto • aggiornato ora';
+  // Salva in cronologia automatica
+  addToCronologia(rawText);
+}
+
+function updateLevel(l) {
+  const T = ['Nessun campo compilato','Prompt diretto (livello 1)','Prompt strutturato (livello 2)','Prompt avanzato (livello 3)'];
+  const lt = document.getElementById('level-text'), chip = document.getElementById('chip-level');
+  const tip = document.getElementById('quality-tip');
+  if (lt) lt.textContent = T[l] || T[0];
+  if (chip) chip.textContent = 'Livello ' + (l || '—');
+  if (tip) tip.textContent = TIPS[l] || '';
+  [1,2,3].forEach(i => {
+    const d = document.getElementById('dot-' + i); if (!d) return;
+    d.classList.remove('active','active-3');
+    if (i <= l) d.classList.add(l === 3 ? 'active-3' : 'active');
+  });
+}
+
+/* ── CRONOLOGIA AUTOMATICA ── */
+const CRONO_KEY = 'pb_cronologia_v1';
+let cronoDebounce = null;
+
+function addToCronologia(text) {
+  clearTimeout(cronoDebounce);
+  cronoDebounce = setTimeout(() => {
+    let crono = getCronologia();
+    // Evita duplicati consecutivi
+    if (crono.length && crono[0].text === text) return;
+    const compito = v('compito').slice(0, 45) || 'Prompt senza titolo';
+    crono.unshift({ text, label: compito, ts: Date.now() });
+    crono = crono.slice(0, 5);
+    localStorage.setItem(CRONO_KEY, JSON.stringify(crono));
+    renderCronologia();
+  }, 1200);
+}
+
+function getCronologia() {
+  try { return JSON.parse(localStorage.getItem(CRONO_KEY)) || []; } catch { return []; }
+}
+
+function renderCronologia() {
+  const crono = getCronologia();
+  const sec   = document.getElementById('crono-section');
+  const list  = document.getElementById('crono-list');
+  if (!crono.length) { sec.style.display = 'none'; return; }
+  sec.style.display = 'block';
+  list.innerHTML = crono.map((item, i) => `<div class="crono-item" onclick="loadFromCronologia(${i})" title="${esc(item.text.slice(0,120))}">${esc(item.label)}…</div>`).join('');
+}
+
+function loadFromCronologia(i) {
+  const crono = getCronologia(); if (!crono[i]) return;
+  const out = document.getElementById('prompt-output');
+  const text = crono[i].text;
+  out.innerHTML = text.replace(/(# [A-ZÀÈÌÒÙ ]+)/g, '<span class="prompt-tag">$1</span>');
+  document.getElementById('btn-copy').disabled = false;
+  document.getElementById('btn-clean').disabled = false;
+}
+
+/* ── COPY ── */
+function copyPrompt() {
+  const text = renderPrompt(buildPrompt()); if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('btn-copy'); btn.classList.add('copied');
+    document.getElementById('copy-icon').textContent = '✓'; document.getElementById('copy-label').textContent = 'Copiato!';
+    setTimeout(() => { btn.classList.remove('copied'); document.getElementById('copy-icon').textContent = '📋'; document.getElementById('copy-label').textContent = 'Copia prompt'; }, 2200);
+  }).catch(() => { const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); });
+}
+
+/* ── MODAL PROMPT PULITO ── */
+function openCleanModal() {
+  const blocks = buildPrompt(); if (!blocks.length) return;
+  const clean = renderClean(blocks);
+  document.getElementById('clean-output').textContent = clean;
+  document.getElementById('clean-modal').classList.add('open');
+}
+function closeCleanModal() { document.getElementById('clean-modal').classList.remove('open'); }
+function copyClean() {
+  const text = document.getElementById('clean-output').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('btn-modal-copy');
+    btn.classList.add('copied'); btn.textContent = '✓ Copiato!';
+    setTimeout(() => { btn.classList.remove('copied'); btn.textContent = '📋 Copia'; }, 2200);
+  });
+}
+document.getElementById('clean-modal').addEventListener('click', function(e) { if (e.target === this) closeCleanModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCleanModal(); });
+
+/* ── TOGGLES ── */
+function toggleAdvanced() {
+  state.advOpen = !state.advOpen;
+  document.getElementById('advanced-section').classList.toggle('open', state.advOpen);
+  document.getElementById('advanced-toggle').classList.toggle('open', state.advOpen);
+}
+function toggleOpt(key) {
+  state[key + 'On'] = !state[key + 'On'];
+  document.getElementById('toggle-' + key).classList.toggle('on', state[key + 'On']);
+  if (key === 'esempi') document.getElementById('field-esempi-wrap').style.display = state.esempiOn ? 'block' : 'none';
+  update();
+}
+function toggleFormatoCustom() {
+  document.getElementById('formato-custom-wrap').style.display = document.getElementById('formato-tipo').value === 'custom' ? 'block' : 'none';
+}
+
+/* ── SAVE POPUP ── */
+function toggleSavePopup() {
+  const popup = document.getElementById('save-popup');
+  const show  = !popup.classList.contains('show');
+  popup.classList.toggle('show', show);
+  if (show) {
+    const nameEl = document.getElementById('save-name');
+    if (!nameEl.value) nameEl.value = v('compito').slice(0, 50).trim();
+    nameEl.focus();
+  }
+}
+
+/* ── PRESETS ── */
+function setField(id, val) { const el = document.getElementById(id); if (el) el.value = val; }
+
+function loadPreset(name) {
+  resetForm(true);
+  const P = {
+    verifica:    { disc:'trasversale', spec:'docimologia', compito:"Progetta una verifica sommativa sull'argomento: [ARGOMENTO].\nLa verifica deve contenere: 3 domande a risposta chiusa, 3 domande a risposta aperta breve, 1 esercizio applicativo.", classe:'Terza ITS', livello:'livello intermedio', durata:'1 ora disponibile', studenti:'', note:'Obiettivi di apprendimento: [ELENCA 2-3 OBIETTIVI].', formato:'Elenco numerato', vincoli:'Indica il punteggio suggerito per ogni sezione (totale: 10 punti). Livello linguistico B2.' },
+    feedback:    { disc:'italiano',    spec:'nessuna',     compito:"Analizza il seguente testo scritto da uno studente e fornisci feedback formativo su: coerenza argomentativa, uso del lessico disciplinare, struttura del testo.\n\n[INCOLLA QUI IL TESTO DELLO STUDENTE]", classe:'', livello:'', durata:'', studenti:'', note:'', formato:'Testo narrativo (paragrafi)', vincoli:'Non riscrivere il testo. Non fornire frasi corrette. Indica solo cosa migliorare e come, con domande che guidino lo studente a trovare la soluzione da solo.' },
+    spiegazione: { disc:'trasversale', spec:'nessuna',     compito:"Spiega il concetto di [CONCETTO] usando:\n1. Una definizione precisa (max 3 righe)\n2. Un'analogia con la vita quotidiana\n3. Un esempio pratico nel contesto [SETTORE PROFESSIONALE]\n4. Un errore concettuale frequente da evitare", classe:'Prima ITS', livello:'livello base', durata:'1 ora disponibile', studenti:'classe media (13–20 studenti)', note:'Nessun prerequisito tecnico.', formato:'Testo narrativo (paragrafi)', vincoli:'Livello linguistico B2. Niente formule matematiche salvo indicazione contraria.' },
+  };
+  const p = P[name]; if (!p) return;
+  setField('helper-disciplina', p.disc); setField('helper-specializzazione', p.spec);
+  aggiornaRuoloHelper(); applicaRuoloHelper();
+  setField('compito', p.compito);
+  setField('ctx-classe', p.classe); setField('ctx-livello', p.livello); setField('ctx-durata', p.durata); setField('ctx-studenti', p.studenti); setField('ctx-note', p.note);
+  updateContestoComposito();
+  setField('formato-tipo', p.formato || ''); toggleFormatoCustom();
+  setField('vincoli', p.vincoli); update();
+}
+
+/* ── RESET ── */
+function resetForm(silent) {
+  ['ruolo','compito','formato-custom','vincoli','esempi','ctx-note','helper-disciplina','helper-specializzazione','ottimizza-modello'].forEach(id => setField(id, ''));
+  ['ctx-classe','ctx-livello','ctx-durata','ctx-studenti','formato-tipo'].forEach(id => setField(id, ''));
+  toggleFormatoCustom(); updateContestoComposito(); aggiornaRuoloHelper();
+  document.getElementById('ottimizza-hint').textContent = '';
+  if (state.esempiOn) toggleOpt('esempi');
+  if (state.autodiagnosiOn) toggleOpt('autodiagnosi');
+  if (state.advOpen) toggleAdvanced();
+  ['field-ruolo','field-compito'].forEach(id => document.getElementById(id)?.classList.remove('error'));
+  document.getElementById('save-popup').classList.remove('show');
+  if (!silent) update();
+}
+
+/* ── LIBRERIA ── */
+const LS_KEY = 'its_prompt_library_v1';
+function loadLibrary()      { try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch { return []; } }
+function saveLibrary(items) { localStorage.setItem(LS_KEY, JSON.stringify(items)); }
+function updateLibCount() {
+  const n = loadLibrary().length, el = document.getElementById('lib-count');
+  el.textContent = n; el.classList.toggle('show', n > 0);
+}
+
+function openDrawer() {
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('open');
+  renderLibList();
+}
+function closeDrawer() {
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawer-overlay').classList.remove('open');
+}
+
+function savePrompt() {
+  const name = document.getElementById('save-name').value.trim();
+  if (!name) { document.getElementById('save-name').focus(); return; }
+  const text = renderPrompt(buildPrompt()); if (!text) return;
+  const item = {
+    id: Date.now(), name,
+    disciplina: document.getElementById('save-disciplina').value,
+    tipo:       document.getElementById('save-tipo').value,
+    date: new Date().toLocaleDateString('it-IT', { day:'2-digit', month:'short', year:'numeric' }),
+    prompt: text,
+    formData: {
+      ruolo: v('ruolo'), compito: v('compito'),
+      ctx_classe: v('ctx-classe'), ctx_livello: v('ctx-livello'),
+      ctx_durata: v('ctx-durata'), ctx_studenti: v('ctx-studenti'), ctx_note: v('ctx-note'),
+      formato: v('formato-tipo'), formato_custom: v('formato-custom'), vincoli: v('vincoli'),
+      esempi: v('esempi'), esempiOn: state.esempiOn, autodiagnosiOn: state.autodiagnosiOn,
+      ottimizza: v('ottimizza-modello')
+    }
+  };
+  const lib = loadLibrary(); lib.unshift(item); saveLibrary(lib); updateLibCount();
+  const fb = document.getElementById('save-feedback'); fb.classList.add('show');
+  document.getElementById('save-name').value = '';
+  setTimeout(() => { fb.classList.remove('show'); document.getElementById('save-popup').classList.remove('show'); }, 2000);
+}
+
+function renderLibList() {
+  const lib = loadLibrary(), container = document.getElementById('lib-list');
+  if (!lib.length) { container.innerHTML = '<div class="lib-empty">Nessun prompt salvato ancora.<br>Compila il form e clicca 💾 Salva.</div>'; return; }
+  container.innerHTML = lib.map(item => `
+    <div class="lib-item" id="libitem-${item.id}">
+      <div class="lib-item-header" onclick="toggleLibPreview(${item.id})">
+        <div class="lib-item-info">
+          <div class="lib-item-name">${esc(item.name)}</div>
+          <div class="lib-item-meta">
+            <span>${item.date}</span>
+            ${item.disciplina ? `<span class="lib-tag">${esc(item.disciplina)}</span>` : ''}
+            ${item.tipo       ? `<span class="lib-tag">${esc(item.tipo)}</span>`       : ''}
+          </div>
+        </div>
+        <div class="lib-item-actions" onclick="event.stopPropagation()">
+          <button class="lib-btn lib-btn-load"   onclick="loadFromLibrary(${item.id})">Carica</button>
+          <button class="lib-btn lib-btn-delete" onclick="deleteFromLibrary(${item.id})">Elimina</button>
+        </div>
+      </div>
+      <div class="lib-item-preview" id="libpreview-${item.id}">${esc(item.prompt)}</div>
+    </div>`).join('');
+}
+
+function toggleLibPreview(id) { document.getElementById('libpreview-' + id)?.classList.toggle('show'); }
+
+function loadFromLibrary(id) {
+  const item = loadLibrary().find(x => x.id === id); if (!item) return;
+  const fd = item.formData; resetForm(true);
+  setField('ruolo', fd.ruolo); setField('compito', fd.compito);
+  setField('ctx-classe', fd.ctx_classe); setField('ctx-livello', fd.ctx_livello);
+  setField('ctx-durata', fd.ctx_durata); setField('ctx-studenti', fd.ctx_studenti); setField('ctx-note', fd.ctx_note);
+  setField('formato-tipo', fd.formato); setField('formato-custom', fd.formato_custom); setField('vincoli', fd.vincoli);
+  setField('esempi', fd.esempi || '');
+  setField('ottimizza-modello', fd.ottimizza || '');
+  if (fd.esempiOn && !state.esempiOn) toggleOpt('esempi');
+  if (fd.autodiagnosiOn && !state.autodiagnosiOn) toggleOpt('autodiagnosi');
+  toggleFormatoCustom(); updateContestoComposito(); aggiornaRuoloHelper(); update(); closeDrawer();
+}
+
+function deleteFromLibrary(id) {
+  if (!confirm('Eliminare questo prompt dalla libreria?')) return;
+  saveLibrary(loadLibrary().filter(x => x.id !== id)); updateLibCount(); renderLibList();
+}
+
+/* ── EXPORT / IMPORT JSON ── */
+function exportLibrary() {
+  const lib = loadLibrary();
+  if (!lib.length) { alert('Nessun prompt da esportare.'); return; }
+  const blob = new Blob([JSON.stringify(lib, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'prompt-library-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click(); URL.revokeObjectURL(a.href);
+}
+
+function importLibrary(event) {
+  const file = event.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!Array.isArray(data)) throw new Error('Formato non valido');
+      const existing = loadLibrary();
+      const existingIds = new Set(existing.map(x => x.id));
+      const newItems = data.filter(x => !existingIds.has(x.id));
+      saveLibrary([...newItems, ...existing]);
+      updateLibCount(); renderLibList();
+      alert(newItems.length + ' prompt importati.');
+    } catch { alert('File non valido. Assicurati di importare un JSON esportato da questo strumento.'); }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+/* ── VALIDATION ── */
+document.getElementById('btn-copy').addEventListener('click', function(e) {
+  let ok = true;
+  ['ruolo','compito'].forEach(k => {
+    const f = document.getElementById('field-'+k);
+    if (!v(k)) { f?.classList.add('error'); ok = false; } else f?.classList.remove('error');
+  });
+  if (!ok) e.stopImmediatePropagation();
+}, true);
+['ruolo','compito'].forEach(k => {
+  document.getElementById(k)?.addEventListener('input', () => {
+    if (v(k)) document.getElementById('field-'+k)?.classList.remove('error');
+  });
+});
+
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+/* ── INIT ── */
+updateLibCount();
+renderCronologia();
+update();
+</script>
+</body>
+</html>
