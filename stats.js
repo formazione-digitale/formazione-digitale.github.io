@@ -3,8 +3,8 @@
 // 'label' è il nome breve mostrato in homepage.
 
 const gcPagine = [
-  { path: '/',                                                                    label: 'Home' },
-  { path: '/index.html',                                                          label: 'Home' },
+  { path: '/',                                                                    label: 'Home',  exclude: true },
+  { path: '/index.html',                                                          label: 'Home',  exclude: true },
   { path: '/intelligenza-artificiale/Guida_Prompting.html',                      label: 'Guida Prompting' },
   { path: '/intelligenza-artificiale/prompt-builder.html',                        label: 'Prompt Builder' },
   { path: '/intelligenza-artificiale/Guida_PeerReview_IA.html',                  label: 'Peer Review IA' },
@@ -49,7 +49,8 @@ async function loadGoatStats() {
 
     // Top 3 pagine per pageview
     const top3 = [...aggregated]
-      .sort((a, b) => b.count - a.count)
+      .filter(p => !p.exclude)
+	  .sort((a, b) => b.count - a.count)
       .slice(0, 3);
 
     const elTop = document.getElementById('gc-top');
