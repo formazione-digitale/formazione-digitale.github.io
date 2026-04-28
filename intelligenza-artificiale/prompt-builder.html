@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Prompt Builder — Formazione Digitale</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<!-- GoatCounter tracking -->
 <script src="/gc.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -19,6 +18,8 @@
   --green-light: #E8F5EE;
   --amber-dark:  #7D4E00;
   --amber-light: #FFF3CD;
+  --purple-dark: #4A148C;
+  --purple-light:#F3E5F5;
   --red-dark:    #8B1A1A;
   --gray-dark:   #2C2C2C;
   --gray-mid:    #666;
@@ -36,12 +37,7 @@ html { scroll-behavior: smooth; }
 body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FBFF; line-height: 1.7; min-height: 100vh; }
 
 /* HEADER */
-#header {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  height: var(--header-h); background: var(--blue-dark);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 1.5rem; box-shadow: 0 2px 16px rgba(0,0,0,.18);
-}
+#header { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: var(--header-h); background: var(--blue-dark); display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; box-shadow: 0 2px 16px rgba(0,0,0,.18); }
 .header-left { display: flex; align-items: center; gap: .75rem; }
 .header-back { font-size: .78rem; color: rgba(255,255,255,.65); text-decoration: none; display: flex; align-items: center; gap: .3rem; transition: color .2s; }
 .header-back:hover { color: #fff; }
@@ -51,6 +47,8 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 .header-right { display: flex; align-items: center; gap: .6rem; }
 .btn-libreria { font-family: var(--font-body); font-size: .78rem; font-weight: 500; background: rgba(255,255,255,.12); color: rgba(255,255,255,.9); border: 1px solid rgba(255,255,255,.25); border-radius: 20px; padding: .28rem .85rem; cursor: pointer; display: flex; align-items: center; gap: .4rem; transition: background var(--trans); }
 .btn-libreria:hover { background: rgba(255,255,255,.22); }
+.btn-share-header { font-family: var(--font-body); font-size: .78rem; font-weight: 500; background: rgba(255,255,255,.08); color: rgba(255,255,255,.8); border: 1px solid rgba(255,255,255,.2); border-radius: 20px; padding: .28rem .75rem; cursor: pointer; display: flex; align-items: center; gap: .35rem; transition: background var(--trans); }
+.btn-share-header:hover { background: rgba(255,255,255,.18); }
 .lib-count { background: var(--blue-mid); color: #fff; border-radius: 10px; font-size: .68rem; font-weight: 700; padding: .05rem .42rem; min-width: 18px; text-align: center; display: none; }
 .lib-count.show { display: inline-block; }
 
@@ -71,14 +69,14 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 #preview-panel { padding: 2rem; background: var(--blue-xpale); display: flex; flex-direction: column; gap: 1rem; position: sticky; top: var(--header-h); height: calc(100vh - var(--header-h)); overflow-y: hidden; }
 @media (max-width: 860px) { #preview-panel { position: static; height: auto; border-top: 2px solid var(--blue-light); } }
 
-/* PRESET SECTION nel form */
+/* PRESET */
 .preset-section { background: var(--blue-pale); border: 1px solid var(--blue-light); border-radius: var(--radius); padding: .85rem 1rem; margin-bottom: 1.75rem; }
 .preset-section-label { font-size: .7rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--blue-mid); margin-bottom: .6rem; }
 .preset-bar { display: flex; gap: .4rem; flex-wrap: wrap; }
 .preset-btn { font-family: var(--font-body); font-size: .76rem; background: var(--white); color: var(--blue-dark); border: 1.5px solid var(--blue-light); border-radius: 20px; padding: .28rem .8rem; cursor: pointer; transition: all var(--trans); }
 .preset-btn:hover { background: var(--blue-light); border-color: var(--blue-mid); }
 
-/* SECTION LABELS */
+/* SECTIONS */
 .section-group { margin-bottom: 1.75rem; }
 .section-group:last-child { margin-bottom: 0; }
 .section-label { display: flex; align-items: center; gap: .6rem; margin-bottom: 1rem; }
@@ -87,7 +85,7 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 .section-subtitle { font-size: .75rem; color: var(--gray-mid); font-style: italic; margin-left: auto; }
 .divider { border: none; border-top: 1px solid var(--blue-light); margin: 1.75rem 0; }
 
-/* FORM FIELDS */
+/* FIELDS */
 .field { margin-bottom: 1.1rem; }
 .field label { display: block; font-size: .82rem; font-weight: 500; color: var(--blue-dark); margin-bottom: .35rem; }
 .field .hint  { font-size: .75rem; color: var(--gray-mid); font-style: italic; margin-bottom: .4rem; display: block; }
@@ -95,14 +93,27 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 .field input[type="text"], .field textarea, .field select { width: 100%; font-family: var(--font-body); font-size: .88rem; color: var(--gray-dark); background: var(--white); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .6rem .85rem; transition: border-color var(--trans), box-shadow var(--trans); outline: none; resize: vertical; }
 .field input[type="text"]:focus, .field textarea:focus, .field select:focus { border-color: var(--blue-mid); box-shadow: 0 0 0 3px rgba(46,117,182,.12); }
 .field textarea { min-height: 80px; line-height: 1.6; }
-.field select   { cursor: pointer; }
-.field.error input, .field.error textarea, .field.error select { border-color: #C0392B; box-shadow: 0 0 0 3px rgba(192,57,43,.1); }
+.field select   { cursor: pointer; resize: none; }
+.field.error input, .field.error textarea { border-color: #C0392B; box-shadow: 0 0 0 3px rgba(192,57,43,.1); }
 .field .error-msg { display: none; font-size: .75rem; color: #C0392B; margin-top: .3rem; font-weight: 500; }
 .field.error .error-msg { display: block; }
 .char-counter { font-size: .72rem; color: var(--gray-mid); text-align: right; margin-top: .25rem; }
 
 /* RUOLO GUIDATO */
 .ruolo-helper { background: var(--blue-pale); border: 1px solid var(--blue-light); border-radius: var(--radius); padding: .75rem .9rem; margin-bottom: .75rem; }
+.ruolo-helper-select {
+  width: 100%; font-family: var(--font-body); font-size: .9rem; font-weight: 500;
+  color: var(--blue-dark); background: var(--white);
+  border: 2px solid var(--blue-mid); border-radius: var(--radius);
+  padding: .65rem 2.5rem .65rem 1rem; outline: none; cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%232E75B6' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 1rem center;
+  transition: border-color var(--trans), box-shadow var(--trans);
+  box-shadow: 0 1px 4px rgba(31,78,121,.08);
+}
+.ruolo-helper-select:focus { border-color: var(--blue-dark); box-shadow: 0 0 0 3px rgba(31,78,121,.15); }
+.ruolo-helper-select:hover { border-color: var(--blue-dark); }
 .ruolo-helper-label { font-size: .72rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--blue-mid); margin-bottom: .5rem; }
 .ruolo-selects { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
 .ruolo-selects select { width: 100%; font-family: var(--font-body); font-size: .82rem; color: var(--gray-dark); background: var(--white); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .45rem .7rem; outline: none; cursor: pointer; transition: border-color var(--trans); }
@@ -111,24 +122,50 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 .btn-genera-ruolo:hover:not(:disabled) { background: var(--blue-mid); }
 .btn-genera-ruolo:disabled { opacity: .45; cursor: default; }
 
-/* CHIP VERBI */
+/* CHIP VERBI — accessibili */
 .verbi-bar { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .6rem; }
 .chip-verbo { font-family: var(--font-body); font-size: .76rem; font-weight: 500; background: var(--blue-pale); color: var(--blue-dark); border: 1px solid var(--blue-light); border-radius: 20px; padding: .22rem .7rem; cursor: pointer; transition: background var(--trans), border-color var(--trans); user-select: none; }
-.chip-verbo:hover { background: var(--blue-light); border-color: var(--blue-mid); }
+.chip-verbo:hover, .chip-verbo:focus { background: var(--blue-light); border-color: var(--blue-mid); outline: none; }
 
-/* CONTESTO */
+/* USA ESEMPIO */
+.placeholder-hint { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .4rem; }
+.btn-usa-esempio { font-family: var(--font-body); font-size: .72rem; font-weight: 500; background: var(--amber-light); color: var(--amber-dark); border: 1px solid #f0d990; border-radius: 20px; padding: .18rem .65rem; cursor: pointer; white-space: nowrap; transition: background var(--trans); }
+.btn-usa-esempio:hover { background: #ffe099; }
 
-.contesto-note textarea { width: 100%; font-family: var(--font-body); font-size: .84rem; color: var(--gray-dark); background: var(--white); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .55rem .8rem; outline: none; resize: vertical; min-height: 58px; transition: border-color var(--trans); line-height: 1.55; }
-.contesto-note textarea:focus { border-color: var(--blue-mid); }
-.contesto-preview { font-size: .78rem; color: var(--blue-dark); font-style: italic; background: var(--blue-pale); border-radius: var(--radius); padding: .5rem .75rem; margin-top: .5rem; border-left: 3px solid var(--blue-mid); display: none; }
-.contesto-preview.show { display: block; }
+/* SEZIONE SCUOLA — collassabile */
+.scuola-toggle { display: flex; align-items: center; gap: .6rem; background: none; border: 1.5px dashed var(--purple-dark); border-radius: var(--radius); width: 100%; padding: .65rem 1rem; cursor: pointer; font-family: var(--font-body); font-size: .84rem; color: var(--purple-dark); font-weight: 500; transition: all var(--trans); margin-bottom: 1rem; }
+.scuola-toggle:hover { background: var(--purple-light); }
+.scuola-toggle .adv-arrow { margin-left: auto; transition: transform var(--trans); font-size: .8rem; }
+.scuola-toggle.open .adv-arrow { transform: rotate(180deg); }
+.scuola-section { display: none; background: var(--purple-light); border: 1px solid #d4b8e8; border-radius: var(--radius); padding: 1rem 1.1rem; margin-bottom: 1rem; }
+.scuola-section.open { display: block; }
+.scuola-field { margin-bottom: .85rem; }
+.scuola-field:last-child { margin-bottom: 0; }
+.scuola-field label { display: block; font-size: .8rem; font-weight: 500; color: var(--purple-dark); margin-bottom: .3rem; }
+.scuola-field select, .scuola-field textarea { width: 100%; font-family: var(--font-body); font-size: .84rem; color: var(--gray-dark); background: var(--white); border: 1.5px solid #d4b8e8; border-radius: var(--radius); padding: .5rem .75rem; outline: none; cursor: pointer; transition: border-color var(--trans); resize: vertical; }
+.scuola-field select:focus, .scuola-field textarea:focus { border-color: var(--purple-dark); box-shadow: 0 0 0 3px rgba(74,20,140,.1); }
+/* BES toggle */
+.bes-toggle-row { display: flex; align-items: center; gap: .75rem; background: var(--white); border: 1.5px solid #d4b8e8; border-radius: var(--radius); padding: .65rem .85rem; margin-bottom: .75rem; cursor: pointer; user-select: none; transition: background var(--trans); }
+.bes-toggle-row:hover { background: #ede0f8; }
+.bes-toggle-switch { width: 34px; height: 18px; border-radius: 9px; background: #ccc; position: relative; flex-shrink: 0; transition: background var(--trans); }
+.bes-toggle-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; transition: transform var(--trans); }
+.bes-toggle-row.on .bes-toggle-switch { background: var(--purple-dark); }
+.bes-toggle-row.on .bes-toggle-switch::after { transform: translateX(16px); }
+.bes-label { font-size: .82rem; color: var(--gray-dark); }
+.bes-label small { display: block; font-size: .73rem; color: var(--gray-mid); }
+.bes-detail { display: none; }
+.bes-detail.open { display: block; }
+.bes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-bottom: .6rem; }
+.bes-chip { display: flex; align-items: center; gap: .4rem; font-size: .78rem; padding: .3rem .6rem; background: var(--white); border: 1.5px solid #d4b8e8; border-radius: var(--radius); cursor: pointer; transition: all var(--trans); user-select: none; }
+.bes-chip input[type="checkbox"] { accent-color: var(--purple-dark); width: 14px; height: 14px; flex-shrink: 0; }
+.bes-chip:has(input:checked) { background: var(--purple-light); border-color: var(--purple-dark); font-weight: 500; }
 
 /* OTTIMIZZA PER */
-.ottimizza-row { display: flex; align-items: center; gap: .75rem; margin-bottom: 1rem; }
+.ottimizza-row { display: flex; align-items: center; gap: .75rem; margin-bottom: .5rem; }
 .ottimizza-row label { font-size: .82rem; font-weight: 500; color: var(--blue-dark); white-space: nowrap; }
 .ottimizza-row select { font-family: var(--font-body); font-size: .84rem; color: var(--gray-dark); background: var(--white); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .5rem .8rem; outline: none; cursor: pointer; flex: 1; transition: border-color var(--trans); }
 .ottimizza-row select:focus { border-color: var(--blue-mid); }
-.ottimizza-hint { font-size: .74rem; color: var(--gray-mid); font-style: italic; margin-top: -.5rem; margin-bottom: .75rem; }
+.ottimizza-hint { font-size: .74rem; color: var(--gray-mid); font-style: italic; margin-bottom: .75rem; min-height: 1.2em; }
 
 /* ADVANCED */
 #advanced-toggle { display: flex; align-items: center; gap: .6rem; background: none; border: 1.5px dashed var(--blue-light); border-radius: var(--radius); width: 100%; padding: .65rem 1rem; cursor: pointer; font-family: var(--font-body); font-size: .84rem; color: var(--blue-mid); font-weight: 500; transition: all var(--trans); margin-bottom: 1rem; }
@@ -138,7 +175,7 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 #advanced-section { display: none; }
 #advanced-section.open { display: block; }
 
-/* TOGGLE SWITCH */
+/* TOGGLE SWITCH generico */
 .toggle-row { display: flex; align-items: center; gap: .75rem; background: var(--blue-pale); border-radius: var(--radius); padding: .7rem .9rem; margin-bottom: .9rem; cursor: pointer; border: 1.5px solid var(--blue-light); transition: background var(--trans); user-select: none; }
 .toggle-row:hover { background: var(--blue-light); }
 .toggle-switch { width: 36px; height: 20px; border-radius: 10px; background: #ccc; position: relative; flex-shrink: 0; transition: background var(--trans); }
@@ -148,7 +185,7 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 .toggle-label { font-size: .84rem; color: var(--gray-dark); line-height: 1.3; }
 .toggle-label small { display: block; font-size: .74rem; color: var(--gray-mid); margin-top: .1rem; }
 
-/* ACTIONS */
+/* AZIONI */
 .actions-row { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; margin-top: 1.5rem; }
 .btn-save-inline { font-family: var(--font-body); font-size: .82rem; font-weight: 500; background: var(--blue-pale); color: var(--blue-dark); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .5rem 1rem; cursor: pointer; display: flex; align-items: center; gap: .4rem; transition: all var(--trans); }
 .btn-save-inline:hover:not(:disabled) { background: var(--blue-light); border-color: var(--blue-mid); }
@@ -169,15 +206,15 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 .save-feedback.show { display: block; }
 
 /* PREVIEW */
-.preview-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.preview-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; flex-shrink: 0; }
 .preview-title  { font-family: var(--font-display); font-size: 1.1rem; color: var(--blue-dark); }
 .preview-status { font-size: .74rem; color: var(--gray-mid); font-style: italic; }
 #prompt-output { flex: 1; font-family: var(--font-mono); font-size: .8rem; line-height: 1.85; background: var(--white); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: 1.25rem; white-space: pre-wrap; word-break: break-word; color: #1a1a1a; min-height: 0; overflow-y: auto; }
 .prompt-tag   { color: var(--blue-dark); font-weight: 700; }
 .prompt-empty { color: var(--gray-mid); font-style: italic; font-family: var(--font-body); font-size: .88rem; display: flex; align-items: center; justify-content: center; min-height: 160px; text-align: center; }
 
-/* QUALITY FEEDBACK */
-.quality-bar { background: var(--white); border: 1px solid var(--blue-light); border-radius: var(--radius); padding: .65rem .9rem; display: flex; align-items: center; gap: .75rem; }
+/* QUALITY BAR */
+.quality-bar { background: var(--white); border: 1px solid var(--blue-light); border-radius: var(--radius); padding: .65rem .9rem; display: flex; align-items: center; gap: .75rem; flex-shrink: 0; }
 .level-dots { display: flex; gap: 4px; }
 .level-dot  { width: 10px; height: 10px; border-radius: 50%; background: var(--blue-light); transition: background var(--trans); }
 .level-dot.active   { background: var(--blue-mid); }
@@ -187,7 +224,7 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 .quality-tip { font-size: .72rem; color: var(--gray-mid); font-style: italic; margin-top: .1rem; }
 
 /* PREVIEW ACTIONS */
-.preview-actions { display: flex; gap: .6rem; flex-wrap: wrap; }
+.preview-actions { display: flex; gap: .6rem; flex-wrap: wrap; flex-shrink: 0; }
 .btn-copy { font-family: var(--font-body); font-size: .84rem; font-weight: 500; background: var(--blue-dark); color: #fff; border: none; border-radius: var(--radius); padding: .6rem 1.25rem; cursor: pointer; display: flex; align-items: center; gap: .4rem; transition: background var(--trans); white-space: nowrap; }
 .btn-copy:hover { background: var(--blue-mid); }
 .btn-copy:disabled { opacity: .4; cursor: default; }
@@ -196,15 +233,8 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 .btn-clean:hover:not(:disabled) { border-color: var(--blue-mid); background: var(--blue-pale); }
 .btn-clean:disabled { opacity: .4; cursor: default; }
 
-.preview-meta { font-size: .74rem; color: var(--gray-mid); display: flex; gap: 1rem; flex-wrap: wrap; }
+.preview-meta { font-size: .74rem; color: var(--gray-mid); display: flex; gap: 1rem; flex-wrap: wrap; flex-shrink: 0; }
 .meta-chip { background: var(--blue-pale); color: var(--blue-dark); border-radius: 20px; padding: .2rem .65rem; font-size: .72rem; font-weight: 500; }
-
-/* CRONOLOGIA */
-.cronologia-section { margin-top: .5rem; }
-.cronologia-label { font-size: .7rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--gray-mid); margin-bottom: .4rem; }
-.cronologia-list { display: flex; flex-direction: column; gap: .3rem; max-height: 130px; overflow-y: auto; }
-.crono-item { font-size: .74rem; background: var(--white); border: 1px solid var(--blue-light); border-radius: 6px; padding: .4rem .7rem; cursor: pointer; color: var(--blue-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: background var(--trans); }
-.crono-item:hover { background: var(--blue-pale); }
 
 /* DRAWER */
 #drawer-overlay { display: none; position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,.35); backdrop-filter: blur(2px); }
@@ -215,17 +245,23 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 .drawer-title  { font-family: var(--font-display); font-size: 1.1rem; flex: 1; }
 .drawer-close  { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,.15); border: none; color: #fff; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background var(--trans); }
 .drawer-close:hover { background: rgba(255,255,255,.25); }
+.drawer-tabs { display: flex; border-bottom: 1px solid var(--blue-light); flex-shrink: 0; }
+.drawer-tab { flex: 1; font-family: var(--font-body); font-size: .8rem; font-weight: 500; background: none; border: none; border-bottom: 3px solid transparent; padding: .65rem .5rem; cursor: pointer; color: var(--gray-mid); transition: all var(--trans); }
+.drawer-tab.active { color: var(--blue-dark); border-bottom-color: var(--blue-mid); }
 .drawer-body   { flex: 1; overflow-y: auto; padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; }
+.drawer-tab-content { display: none; }
+.drawer-tab-content.active { display: block; }
 .drawer-actions { display: flex; gap: .5rem; flex-shrink: 0; padding: 1rem 1.25rem; border-top: 1px solid var(--blue-light); }
 .btn-export { font-family: var(--font-body); font-size: .8rem; font-weight: 500; background: var(--blue-pale); color: var(--blue-dark); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .42rem .85rem; cursor: pointer; flex: 1; transition: all var(--trans); }
 .btn-export:hover { background: var(--blue-light); border-color: var(--blue-mid); }
 .btn-import-label { font-family: var(--font-body); font-size: .8rem; font-weight: 500; background: var(--white); color: var(--gray-mid); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .42rem .85rem; cursor: pointer; flex: 1; text-align: center; transition: all var(--trans); }
 .btn-import-label:hover { border-color: var(--blue-mid); color: var(--blue-dark); }
+.export-feedback { font-size: .76rem; color: var(--red-dark); font-weight: 500; padding: .4rem .85rem; display: none; }
+.export-feedback.show { display: block; }
 
 .lib-section-title { font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--gray-mid); margin-bottom: .6rem; }
 .lib-empty { font-size: .84rem; color: var(--gray-mid); font-style: italic; text-align: center; padding: 1.5rem 0; }
-.lib-item { border: 1px solid var(--blue-light); border-radius: var(--radius); overflow: hidden; background: var(--white); }
-.lib-item:hover { box-shadow: var(--shadow); }
+.lib-item { border: 1px solid var(--blue-light); border-radius: var(--radius); overflow: hidden; background: var(--white); margin-bottom: .5rem; }
 .lib-item-header { padding: .7rem .9rem; display: flex; align-items: flex-start; gap: .75rem; cursor: pointer; transition: background var(--trans); }
 .lib-item-header:hover { background: var(--blue-pale); }
 .lib-item-info { flex: 1; min-width: 0; }
@@ -240,6 +276,14 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 .lib-btn-delete:hover { background: #FEE2E2; }
 .lib-item-preview { display: none; padding: .6rem .9rem; font-family: var(--font-mono); font-size: .74rem; line-height: 1.7; background: var(--blue-xpale); border-top: 1px solid var(--blue-light); color: #1a1a1a; white-space: pre-wrap; max-height: 180px; overflow-y: auto; }
 .lib-item-preview.show { display: block; }
+
+/* CRONOLOGIA nel drawer */
+.crono-item-drawer { font-size: .78rem; background: var(--white); border: 1px solid var(--blue-light); border-radius: 6px; padding: .55rem .8rem; cursor: pointer; color: var(--blue-dark); display: flex; align-items: center; gap: .5rem; margin-bottom: .35rem; transition: background var(--trans); }
+.crono-item-drawer:hover { background: var(--blue-pale); }
+.crono-item-label { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.crono-item-time  { font-size: .7rem; color: var(--gray-mid); flex-shrink: 0; }
+.crono-load-btn   { font-size: .72rem; font-weight: 500; background: var(--blue-pale); color: var(--blue-dark); border: 1px solid var(--blue-light); border-radius: 4px; padding: .18rem .5rem; cursor: pointer; flex-shrink: 0; transition: all var(--trans); }
+.crono-load-btn:hover { background: var(--blue-light); border-color: var(--blue-mid); }
 
 /* MODAL PROMPT PULITO */
 .modal-overlay { position: fixed; inset: 0; z-index: 500; background: rgba(15,35,60,.6); backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; padding: 1rem; opacity: 0; pointer-events: none; transition: opacity .25s ease; }
@@ -259,10 +303,15 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 .btn-modal-close { font-family: var(--font-body); font-size: .84rem; background: var(--white); color: var(--gray-mid); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .55rem 1.1rem; cursor: pointer; transition: all var(--trans); }
 .btn-modal-close:hover { border-color: var(--blue-mid); color: var(--blue-dark); }
 
+/* SHARE TOAST */
+.share-toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--blue-dark); color: #fff; font-size: .84rem; padding: .65rem 1.4rem; border-radius: 50px; box-shadow: 0 4px 20px rgba(0,0,0,.2); z-index: 600; opacity: 0; transition: all .3s ease; pointer-events: none; white-space: nowrap; }
+.share-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
 @media (max-width: 540px) {
   #form-panel, #preview-panel { padding: 1.25rem; }
   .ruolo-selects { grid-template-columns: 1fr; }
   .ottimizza-row { flex-direction: column; align-items: flex-start; }
+  .bes-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -278,31 +327,42 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
     </div>
   </div>
   <div class="header-right">
+    <button class="btn-share-header" onclick="shareURL()" title="Condividi questo prompt via link">🔗 Condividi</button>
     <button class="btn-libreria" onclick="openDrawer()">
       📚 Libreria <span class="lib-count" id="lib-count">0</span>
     </button>
   </div>
 </header>
 
+<!-- DRAWER -->
 <div id="drawer-overlay" onclick="closeDrawer()"></div>
 <div id="drawer">
   <div class="drawer-header">
-    <div class="drawer-title">I miei prompt</div>
+    <div class="drawer-title">Libreria & Bozze</div>
     <button class="drawer-close" onclick="closeDrawer()">✕</button>
   </div>
+  <div class="drawer-tabs">
+    <button class="drawer-tab active" onclick="switchDrawerTab('libreria', this)">💾 Salvati</button>
+    <button class="drawer-tab" onclick="switchDrawerTab('bozze', this)">🕒 Bozze recenti</button>
+  </div>
   <div class="drawer-body">
-    <div>
+    <div id="drawer-libreria" class="drawer-tab-content active">
       <div class="lib-section-title">Prompt salvati</div>
       <div id="lib-list"></div>
+    </div>
+    <div id="drawer-bozze" class="drawer-tab-content">
+      <div class="lib-section-title">Ultimi 5 prompt generati</div>
+      <div id="crono-list-drawer"></div>
     </div>
   </div>
   <div class="drawer-actions">
     <button class="btn-export" onclick="exportLibrary()">⬇ Esporta JSON</button>
     <label class="btn-import-label">⬆ Importa JSON<input type="file" accept=".json" style="display:none" onchange="importLibrary(event)"></label>
   </div>
+  <div class="export-feedback" id="export-feedback">Nessun prompt salvato da esportare.</div>
 </div>
 
-<!-- Modal prompt pulito -->
+<!-- MODAL PROMPT PULITO -->
 <div class="modal-overlay" id="clean-modal">
   <div class="modal-panel">
     <div class="modal-head">
@@ -320,8 +380,10 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
   </div>
 </div>
 
-<div id="app">
+<!-- SHARE TOAST -->
+<div class="share-toast" id="share-toast">🔗 Link copiato negli appunti!</div>
 
+<div id="app">
   <div id="hero">
     <div class="hero-text">
       <h1>Costruisci il tuo prompt</h1>
@@ -351,57 +413,55 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
       </div>
 
       <div class="ruolo-helper">
-        <div class="ruolo-helper-label">Genera il ruolo automaticamente</div>
-        <div class="ruolo-selects">
-          <select id="helper-disciplina" onchange="aggiornaRuoloHelper()">
-            <option value="">— Disciplina —</option>
-            <option value="italiano">Italiano e materie umanistiche</option>
-            <option value="matematica">Matematica</option>
-            <option value="informatica">Informatica e programmazione</option>
-            <option value="fisica">Fisica applicata</option>
-            <option value="inglese">Inglese / Lingua straniera</option>
-            <option value="economia">Economia e gestione aziendale</option>
-            <option value="elettrotecnica">Elettrotecnica ed elettronica</option>
-            <option value="meccanica">Meccanica e meccatronica</option>
-            <option value="trasversale">Competenze trasversali</option>
-          </select>
-          <select id="helper-specializzazione" onchange="aggiornaRuoloHelper()">
-            <option value="">— Specializzazione —</option>
-            <option value="docimologia">Valutazione e docimologia</option>
-            <option value="laboratorio">Didattica laboratoriale</option>
-            <option value="progettazione">Progettazione didattica (UDA)</option>
-            <option value="inclusione">Inclusione e BES/DSA</option>
-            <option value="competenze">Valutazione per competenze</option>
-            <option value="nessuna">Nessuna specializzazione</option>
-          </select>
-        </div>
-        <button class="btn-genera-ruolo" id="btn-genera-ruolo" onclick="applicaRuoloHelper()" disabled>↳ Seleziona disciplina e specializzazione</button>
+        <div class="ruolo-helper-label">Seleziona un ruolo predefinito</div>
+        <select id="helper-ruolo-generico" class="ruolo-helper-select" onchange="applicaRuoloGenerico()">
+          <option value="">— Scegli un ruolo… —</option>
+          <option value="Consulente aziendale">💼 Consulente aziendale</option>
+          <option value="Content Strategist">✍️ Content Strategist</option>
+          <option value="Copywriter">🖊️ Copywriter</option>
+          <option value="Data Analyst">📊 Data Analyst</option>
+          <option value="Formatore / Trainer">🎓 Formatore / Trainer</option>
+          <option value="Giornalista">📰 Giornalista</option>
+          <option value="Product Manager">📦 Product Manager</option>
+          <option value="Project Manager">📋 Project Manager</option>
+          <option value="Prompt Engineer">🤖 Prompt Engineer</option>
+          <option value="Ricercatore">🔬 Ricercatore</option>
+          <option value="SEO Specialist">🔍 SEO Specialist</option>
+          <option value="Social Media Manager">📱 Social Media Manager</option>
+          <option value="Software Developer">💻 Software Developer</option>
+          <option value="UX/UI Designer">🎨 UX/UI Designer</option>
+        </select>
+        <span class="hint" style="margin-top:.4rem;">Oppure scrivi il ruolo direttamente nel campo sotto.</span>
       </div>
 
       <div class="field" id="field-ruolo">
         <label>Ruolo <span class="required">*</span></label>
         <span class="hint">Usa il generatore sopra oppure scrivi direttamente.</span>
-        <input type="text" id="ruolo" placeholder="es. Esperto in valutazione scolastica" oninput="update()" maxlength="200">
+        <button class="btn-usa-esempio" id="btn-usa-esempio-ruolo" onclick="usaEsempio('ruolo')" style="margin-bottom:.4rem;">✦ Usa l'esempio come base</button>
+        <input type="text" id="ruolo" placeholder="es. Esperto in valutazione scolastica" oninput="onFieldInput('ruolo')" maxlength="200">
         <div class="char-counter"><span id="cnt-ruolo">0</span>/200</div>
         <div class="error-msg">Il Ruolo è obbligatorio.</div>
       </div>
 
       <div class="field" id="field-compito">
         <label>Compito <span class="required">*</span></label>
-        <span class="hint">Clicca un verbo per inserirlo, poi completa la frase:</span>
-        <div class="verbi-bar">
-          <span class="chip-verbo" onclick="inserisciVerbo('Progetta')">Progetta</span>
-          <span class="chip-verbo" onclick="inserisciVerbo('Genera')">Genera</span>
-          <span class="chip-verbo" onclick="inserisciVerbo('Analizza')">Analizza</span>
-          <span class="chip-verbo" onclick="inserisciVerbo('Crea')">Crea</span>
-          <span class="chip-verbo" onclick="inserisciVerbo('Valuta')">Valuta</span>
-          <span class="chip-verbo" onclick="inserisciVerbo('Scrivi')">Scrivi</span>
-          <span class="chip-verbo" onclick="inserisciVerbo('Spiega')">Spiega</span>
-          <span class="chip-verbo" onclick="inserisciVerbo('Confronta')">Confronta</span>
-          <span class="chip-verbo" onclick="inserisciVerbo('Struttura')">Struttura</span>
-          <span class="chip-verbo" onclick="inserisciVerbo('Elenca')">Elenca</span>
+        <div class="placeholder-hint">
+          <span class="hint" style="margin-bottom:0;">Clicca un verbo per inserirlo, poi completa la frase:</span>
+          <button class="btn-usa-esempio" onclick="usaEsempio('compito')" id="btn-usa-esempio-compito" style="display:none;">✦ Usa l'esempio come base</button>
         </div>
-        <textarea id="compito" rows="3" placeholder="es. Crea una rubrica di valutazione analitica per il testo argomentativo." oninput="update()" maxlength="600"></textarea>
+        <div class="verbi-bar">
+          <span class="chip-verbo" role="button" tabindex="0" onclick="inserisciVerbo('Progetta')" onkeydown="if(event.key==='Enter'||event.key===' ')inserisciVerbo('Progetta')">Progetta</span>
+          <span class="chip-verbo" role="button" tabindex="0" onclick="inserisciVerbo('Genera')" onkeydown="if(event.key==='Enter'||event.key===' ')inserisciVerbo('Genera')">Genera</span>
+          <span class="chip-verbo" role="button" tabindex="0" onclick="inserisciVerbo('Analizza')" onkeydown="if(event.key==='Enter'||event.key===' ')inserisciVerbo('Analizza')">Analizza</span>
+          <span class="chip-verbo" role="button" tabindex="0" onclick="inserisciVerbo('Crea')" onkeydown="if(event.key==='Enter'||event.key===' ')inserisciVerbo('Crea')">Crea</span>
+          <span class="chip-verbo" role="button" tabindex="0" onclick="inserisciVerbo('Valuta')" onkeydown="if(event.key==='Enter'||event.key===' ')inserisciVerbo('Valuta')">Valuta</span>
+          <span class="chip-verbo" role="button" tabindex="0" onclick="inserisciVerbo('Scrivi')" onkeydown="if(event.key==='Enter'||event.key===' ')inserisciVerbo('Scrivi')">Scrivi</span>
+          <span class="chip-verbo" role="button" tabindex="0" onclick="inserisciVerbo('Spiega')" onkeydown="if(event.key==='Enter'||event.key===' ')inserisciVerbo('Spiega')">Spiega</span>
+          <span class="chip-verbo" role="button" tabindex="0" onclick="inserisciVerbo('Confronta')" onkeydown="if(event.key==='Enter'||event.key===' ')inserisciVerbo('Confronta')">Confronta</span>
+          <span class="chip-verbo" role="button" tabindex="0" onclick="inserisciVerbo('Struttura')" onkeydown="if(event.key==='Enter'||event.key===' ')inserisciVerbo('Struttura')">Struttura</span>
+          <span class="chip-verbo" role="button" tabindex="0" onclick="inserisciVerbo('Elenca')" onkeydown="if(event.key==='Enter'||event.key===' ')inserisciVerbo('Elenca')">Elenca</span>
+        </div>
+        <textarea id="compito" rows="3" placeholder="es. Crea una rubrica di valutazione analitica per il testo argomentativo." oninput="onCompitoInput()" maxlength="600"></textarea>
         <div class="char-counter"><span id="cnt-compito">0</span>/600</div>
         <div class="error-msg">Il Compito è obbligatorio.</div>
       </div>
@@ -419,11 +479,84 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 
       <div class="field">
         <label>Descrivi il contesto</label>
-        <span class="hint">Chi sono i tuoi studenti? Che livello hanno? Quali vincoli hai? Scrivi liberamente.</span>
-        <textarea id="ctx-note" rows="3" placeholder="es. Classe di 18 studenti, livello eterogeneo, 1 ora disponibile. Presenza di 2 studenti con DSA. Nessun prerequisito su questo argomento." oninput="updateContestoComposito()" maxlength="600"></textarea>
+        <span class="hint">Chi sono i destinatari? Che livello hanno? Quali vincoli hai? Scrivi liberamente.</span>
+        <button class="btn-usa-esempio" id="btn-usa-esempio-ctx-note" onclick="usaEsempio('ctx-note')" style="margin-bottom:.4rem;">✦ Usa l'esempio come base</button>
+        <textarea id="ctx-note" rows="3" placeholder="es. Classe di 18 studenti, livello eterogeneo, 1 ora disponibile. Nessun prerequisito su questo argomento." oninput="onFieldInput('ctx-note'); updateCtx()" maxlength="600"></textarea>
         <div class="char-counter"><span id="cnt-ctx">0</span>/600</div>
       </div>
-      <div class="contesto-preview" id="contesto-preview"></div>
+
+      <!-- SEZIONE SCUOLA COLLASSABILE -->
+      <button class="scuola-toggle" id="scuola-toggle" onclick="toggleScuola()" type="button">
+        <span>🏫</span><span>Contesto scolastico</span>
+        <span style="font-size:.74rem;color:var(--purple-dark);font-weight:400;margin-left:.3rem;">(opzionale)</span>
+        <span class="adv-arrow">▼</span>
+      </button>
+      <div class="scuola-section" id="scuola-section">
+
+        <div class="scuola-field">
+          <label>Contesto istituzionale</label>
+          <select id="scuola-tipo" onchange="aggiornaRuoloHelper(); update()">
+            <option value="">— Non specificato —</option>
+            <option value="Scuola secondaria di primo grado">Scuola secondaria di primo grado</option>
+            <option value="Istituto tecnico">Istituto tecnico</option>
+            <option value="Istituto professionale">Istituto professionale</option>
+            <option value="Liceo">Liceo</option>
+            <option value="Università">Università</option>
+            <option value="Formazione aziendale">Formazione aziendale</option>
+          </select>
+        </div>
+
+        <div class="scuola-field">
+          <label>Genera ruolo docente automaticamente</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.5rem;">
+            <select id="helper-disciplina" onchange="aggiornaRuoloHelper()">
+              <option value="">— Disciplina —</option>
+              <option value="italiano">Italiano e materie umanistiche</option>
+              <option value="matematica">Matematica</option>
+              <option value="informatica">Informatica e programmazione</option>
+              <option value="fisica">Fisica applicata</option>
+              <option value="inglese">Inglese / Lingua straniera</option>
+              <option value="economia">Economia e gestione aziendale</option>
+              <option value="elettrotecnica">Elettrotecnica ed elettronica</option>
+              <option value="meccanica">Meccanica e meccatronica</option>
+              <option value="trasversale">Competenze trasversali</option>
+            </select>
+            <select id="helper-specializzazione" onchange="aggiornaRuoloHelper()">
+              <option value="">— Specializzazione —</option>
+              <option value="docimologia">Valutazione e docimologia</option>
+              <option value="laboratorio">Didattica laboratoriale</option>
+              <option value="progettazione">Progettazione didattica (UDA)</option>
+              <option value="inclusione">Inclusione e BES/DSA</option>
+              <option value="competenze">Valutazione per competenze</option>
+              <option value="nessuna">Nessuna specializzazione</option>
+            </select>
+          </div>
+          <button class="btn-genera-ruolo" id="btn-genera-ruolo" onclick="applicaRuoloHelper()" disabled>↳ Seleziona disciplina e specializzazione</button>
+        </div>
+
+        <!-- BES/DSA TOGGLE -->
+        <div class="bes-toggle-row" id="bes-toggle-row" onclick="toggleBes()">
+          <div class="bes-toggle-switch"></div>
+          <div class="bes-label">Classe con BES/DSA<small>Aggiunge al prompt istruzioni per l'inclusione</small></div>
+        </div>
+        <div class="bes-detail" id="bes-detail">
+          <div style="font-size:.78rem;font-weight:500;color:var(--purple-dark);margin-bottom:.4rem;">Tipologie presenti:</div>
+          <div class="bes-grid">
+            <label class="bes-chip"><input type="checkbox" id="bes-dsa" onchange="update()"> Disturbi specifici dell'apprendimento (DSA)</label>
+            <label class="bes-chip"><input type="checkbox" id="bes-adhd" onchange="update()"> ADHD / difficoltà attentive</label>
+            <label class="bes-chip"><input type="checkbox" id="bes-disabilita" onchange="update()"> Disabilità certificata (L.104)</label>
+            <label class="bes-chip"><input type="checkbox" id="bes-stranieri" onchange="update()"> Studenti stranieri / L2</label>
+            <label class="bes-chip"><input type="checkbox" id="bes-svantaggio" onchange="update()"> Svantaggio socioeconomico</label>
+            <label class="bes-chip"><input type="checkbox" id="bes-gifted" onchange="update()"> Plusdotazione / gifted</label>
+          </div>
+          <div class="scuola-field" style="margin-top:.5rem;">
+            <label>Note aggiuntive BES</label>
+            <button class="btn-usa-esempio" id="btn-usa-esempio-bes-note" onclick="usaEsempio('bes-note')" style="margin-bottom:.4rem;">✦ Usa l'esempio come base</button>
+            <textarea id="bes-note" rows="2" placeholder="es. 2 studenti con DSA: prevedere tempi aggiuntivi e supporti visivi." oninput="onFieldInput('bes-note'); update()" maxlength="300"></textarea>
+          </div>
+        </div>
+
+      </div>
 
       <div class="divider" style="margin:1rem 0;"></div>
 
@@ -442,20 +575,22 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
       </div>
       <div class="field" id="formato-custom-wrap" style="display:none;">
         <label>Descrivi il formato</label>
-        <textarea id="formato-custom" rows="2" placeholder="es. Tabella con colonne: Dimensione, Peso%, Iniziale, Base, Avanzato, Feedback." oninput="update()" maxlength="300"></textarea>
+        <button class="btn-usa-esempio" id="btn-usa-esempio-formato-custom" onclick="usaEsempio('formato-custom')" style="margin-bottom:.4rem;">✦ Usa l'esempio come base</button>
+        <textarea id="formato-custom" rows="2" placeholder="es. Tabella con colonne: Dimensione, Peso%, Iniziale, Base, Avanzato, Feedback." oninput="onFieldInput('formato-custom'); update()" maxlength="300"></textarea>
       </div>
 
       <div class="field">
         <label>Vincoli</label>
         <span class="hint">Cosa NON fare, limiti di lunghezza, tono, registro.</span>
-        <textarea id="vincoli" rows="3" placeholder="es. Non usare aggettivi vaghi (buono, adeguato). Il feedback deve essere in seconda persona, tono propositivo." oninput="update()" maxlength="500"></textarea>
+        <button class="btn-usa-esempio" id="btn-usa-esempio-vincoli" onclick="usaEsempio('vincoli')" style="margin-bottom:.4rem;">✦ Usa l'esempio come base</button>
+        <textarea id="vincoli" rows="3" placeholder="es. Non usare aggettivi vaghi. Il feedback deve essere in seconda persona, tono propositivo." oninput="onFieldInput('vincoli'); update()" maxlength="500"></textarea>
         <div class="char-counter"><span id="cnt-vincoli">0</span>/500</div>
       </div>
     </div>
 
     <div class="divider"></div>
 
-    <!-- OTTIMIZZA PER -->
+    <!-- SEZIONE 3: OTTIMIZZA -->
     <div class="section-group">
       <div class="section-label">
         <div class="section-num">3</div>
@@ -479,7 +614,7 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 
     <div class="divider"></div>
 
-    <!-- AVANZATO -->
+    <!-- SEZIONE 4: AVANZATO -->
     <button id="advanced-toggle" onclick="toggleAdvanced()" type="button">
       <span>⚙</span><span>Opzioni avanzate</span>
       <span class="adv-arrow">▼</span>
@@ -494,7 +629,8 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
         <div class="toggle-label">Aggiungi esempi (few-shot)<small>Mostra al modello un esempio di input → output atteso.</small></div>
       </div>
       <div id="field-esempi-wrap" style="display:none;" class="field">
-        <textarea id="esempi" rows="4" placeholder="es. INPUT: testo studente / OUTPUT: il feedback dovrebbe essere strutturato così…" oninput="update()" maxlength="800"></textarea>
+        <button class="btn-usa-esempio" id="btn-usa-esempio-esempi" onclick="usaEsempio('esempi')" style="margin-bottom:.4rem;">✦ Usa l'esempio come base</button>
+        <textarea id="esempi" rows="4" placeholder="es. INPUT: testo studente / OUTPUT: il feedback dovrebbe essere strutturato così…" oninput="onFieldInput('esempi'); update()" maxlength="800"></textarea>
       </div>
       <div class="toggle-row" id="toggle-autodiagnosi" onclick="toggleOpt('autodiagnosi')">
         <div class="toggle-switch"></div>
@@ -566,33 +702,25 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
         ✨ Versione pulita
       </button>
     </div>
-
-    <!-- CRONOLOGIA -->
-    <div class="cronologia-section" id="crono-section" style="display:none;">
-      <div class="cronologia-label">Recenti (ultimi 5)</div>
-      <div class="cronologia-list" id="crono-list"></div>
-    </div>
-
   </div>
 
 </div>
 
 <script>
-const state = { esempiOn: false, autodiagnosiOn: false, advOpen: false };
+// ── STATE ──────────────────────────────────────────────────────
+const state = { esempiOn: false, autodiagnosiOn: false, advOpen: false, scuolaOpen: false, besOn: false };
 
-// Ottimizzazioni per modello
+// ── OTTIMIZZAZIONI ─────────────────────────────────────────────
 const OTTIMIZZA = {
-  chatgpt:    { hint: 'ChatGPT risponde meglio con ruoli espliciti, istruzioni numerate e richieste di output in Markdown.', suffix: '\n\nFormatta la risposta in Markdown. Usa intestazioni, elenchi e tabelle dove appropriato.' },
-  claude:     { hint: 'Claude preferisce istruzioni dirette e contestualizzate. Usa tag XML per separare le sezioni se il prompt è complesso.', suffix: '\n\nSii diretto e preciso. Evita formule di apertura ridondanti.' },
-  gemini:     { hint: "Gemini gestisce bene il contesto lungo. Preferisce istruzioni in prosa naturale con esempi concreti.", suffix: '\n\nFornisci una risposta completa e ben strutturata, con esempi pratici dove possibile.' },
-  copilot:    { hint: 'Copilot è ottimizzato per task pratici e operativi. Preferisce richieste concrete con output direttamente utilizzabili.', suffix: '\n\nFornisci un output pronto all\'uso, concreto e immediatamente applicabile.' },
-  perplexity: { hint: 'Perplexity è orientato alla ricerca. Utile per prompt che richiedono fonti, confronti o analisi aggiornate.', suffix: '\n\nCita le fonti principali dove disponibili. Struttura la risposta in modo chiaro e verificabile.' },
-  mistral:    { hint: 'Mistral funziona bene con istruzioni sintetiche e precise. Evita ridondanze nel prompt.', suffix: '\n\nRispondi in modo conciso e strutturato, senza introduzioni superflue.' },
+  chatgpt:    { hint: 'ChatGPT risponde meglio con ruoli espliciti, istruzioni numerate e output in Markdown.', suffix: '\n\nFormatta la risposta in Markdown. Usa intestazioni, elenchi e tabelle dove appropriato.' },
+  claude:     { hint: 'Claude preferisce istruzioni dirette e contestualizzate. Evita formule di apertura ridondanti.', suffix: '\n\nSii diretto e preciso. Evita formule di apertura ridondanti.' },
+  gemini:     { hint: 'Gemini gestisce bene il contesto lungo. Preferisce istruzioni in prosa naturale con esempi concreti.', suffix: '\n\nFornisci una risposta completa e ben strutturata, con esempi pratici dove possibile.' },
+  copilot:    { hint: 'Copilot è ottimizzato per task pratici. Preferisce richieste concrete con output direttamente utilizzabili.', suffix: "\n\nFornisci un output pronto all'uso, concreto e immediatamente applicabile." },
+  perplexity: { hint: 'Perplexity è orientato alla ricerca. Utile per prompt che richiedono fonti o analisi aggiornate.', suffix: '\n\nCita le fonti principali dove disponibili. Struttura la risposta in modo chiaro e verificabile.' },
+  mistral:    { hint: 'Mistral funziona bene con istruzioni sintetiche e precise. Evita ridondanze.', suffix: '\n\nRispondi in modo conciso e strutturato, senza introduzioni superflue.' },
 };
 
-function v(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
-
-/* ── RUOLO GUIDATO ── */
+// ── RUOLO GUIDATO ──────────────────────────────────────────────
 const RUOLI = {
   italiano:'Docente di italiano e materie umanistiche', matematica:'Docente di matematica',
   informatica:'Docente di informatica e programmazione', fisica:'Docente di fisica applicata',
@@ -601,27 +729,52 @@ const RUOLI = {
   trasversale:'Formatore di competenze trasversali',
 };
 const SPEC = {
-  docimologia:', con specializzazione in valutazione e docimologia', laboratorio:', esperto di didattica laboratoriale',
+  docimologia:', esperto in valutazione e docimologia', laboratorio:', esperto di didattica laboratoriale',
   progettazione:', esperto di progettazione didattica per competenze (UDA)', inclusione:', con competenza in inclusione scolastica e gestione BES/DSA',
   competenze:', specializzato nella valutazione per competenze', nessuna:'',
 };
+const CTX_IST = {
+  'Scuola secondaria di primo grado': ' in una scuola secondaria di primo grado',
+  'Istituto tecnico': ' in un istituto tecnico',
+  'Istituto professionale': ' in un istituto professionale',
+  'Liceo': ' in un liceo',
+  'Università': ' in ambito universitario',
+  'Formazione aziendale': ' nella formazione aziendale',
+};
+
+function v(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+function applicaRuoloGenerico() {
+  const val = v('helper-ruolo-generico'); if (!val) return;
+  document.getElementById('ruolo').value = val;
+  document.getElementById('ruolo').focus();
+  aggiornaBtnEsempio('ruolo');
+  update();
+}
 
 function aggiornaRuoloHelper() {
   const disc = v('helper-disciplina'), spec = v('helper-specializzazione');
+  const ctx  = v('scuola-tipo'); // legge dalla sezione scuola
   const btn  = document.getElementById('btn-genera-ruolo');
   btn.disabled = !(disc && spec);
-  btn.textContent = (disc && spec) ? '↳ ' + (RUOLI[disc]||'') + (SPEC[spec]||'') : '↳ Seleziona disciplina e specializzazione';
+  if (disc && spec) {
+    const testo = (RUOLI[disc]||'') + (SPEC[spec]||'') + (ctx && CTX_IST[ctx] ? CTX_IST[ctx] : '');
+    btn.textContent = '↳ ' + testo;
+  } else {
+    btn.textContent = '↳ Seleziona disciplina e specializzazione';
+  }
 }
 
 function applicaRuoloHelper() {
   const disc = v('helper-disciplina'), spec = v('helper-specializzazione');
+  const ctx  = v('scuola-tipo'); // legge dalla sezione scuola
   if (!disc || !spec) return;
-  const el = document.getElementById('ruolo');
-  el.value = (RUOLI[disc]||'') + (SPEC[spec]||'');
-  el.focus(); update();
+  const testo = (RUOLI[disc]||'') + (SPEC[spec]||'') + (ctx && CTX_IST[ctx] ? CTX_IST[ctx] : '');
+  document.getElementById('ruolo').value = testo;
+  document.getElementById('ruolo').focus(); update();
 }
 
-/* ── CHIP VERBI ── */
+// ── CHIP VERBI ─────────────────────────────────────────────────
 function inserisciVerbo(verbo) {
   const ta = document.getElementById('compito');
   const KNOWN = ['Progetta','Genera','Analizza','Crea','Valuta','Scrivi','Spiega','Confronta','Struttura','Elenca'];
@@ -631,67 +784,138 @@ function inserisciVerbo(verbo) {
     const first = cur.trim().split(/\s+/)[0];
     ta.value = KNOWN.includes(first) ? verbo + ' ' + cur.trim().slice(first.length).trimStart() : verbo + ' ' + cur;
   }
-  ta.focus(); update();
+  ta.focus(); onCompitoInput();
 }
 
-/* ── CONTESTO COMPOSITO ── */
-function updateContestoComposito() {
+// ── USA ESEMPIO COME BASE — generico per tutti i campi ─────────
+const ESEMPI_TESTO = {
+  'ruolo':          'Esperto in valutazione scolastica',
+  'compito':        'Crea una rubrica di valutazione analitica per il testo argomentativo.',
+  'ctx-note':       'Classe di 18 studenti, livello eterogeneo, 1 ora disponibile. Nessun prerequisito su questo argomento.',
+  'bes-note':       '2 studenti con DSA: prevedere tempi aggiuntivi e supporti visivi.',
+  'formato-custom': 'Tabella con colonne: Dimensione, Peso%, Iniziale, Base, Avanzato, Feedback.',
+  'vincoli':        'Non usare aggettivi vaghi. Il feedback deve essere in seconda persona, tono propositivo.',
+  'esempi':         'INPUT: testo studente / OUTPUT: il feedback dovrebbe essere strutturato così…',
+};
+
+function usaEsempio(id) {
+  const el = document.getElementById(id); if (!el) return;
+  el.value = ESEMPI_TESTO[id] || '';
+  aggiornaBtnEsempio(id);
+  el.focus();
+  // Triggera l'update corretto per ogni campo
+  if (id === 'ctx-note') updateCtx();
+  else update();
+}
+
+function onFieldInput(id) {
+  aggiornaBtnEsempio(id);
+}
+
+function aggiornaBtnEsempio(id) {
+  const el  = document.getElementById(id); if (!el) return;
+  const btn = document.getElementById('btn-usa-esempio-' + id); if (!btn) return;
+  btn.style.display = el.value.trim() === '' ? 'inline-block' : 'none';
+}
+
+// Alias per compatibilità con compito (usa il suo btn specifico)
+function onCompitoInput() {
+  const ta = document.getElementById('compito');
+  document.getElementById('cnt-compito').textContent = ta.value.length;
+  aggiornaBtnEsempio('compito');
+  update();
+}
+
+// ── CONTESTO ───────────────────────────────────────────────────
+function updateCtx() {
   const el = document.getElementById('cnt-ctx');
   if (el) el.textContent = document.getElementById('ctx-note')?.value.length || 0;
   update();
 }
 
-function getContestoComposito() {
-  return v('ctx-note');
+function getContesto() { return v('ctx-note'); }
+
+// ── BES ────────────────────────────────────────────────────────
+function toggleBes() {
+  state.besOn = !state.besOn;
+  document.getElementById('bes-toggle-row').classList.toggle('on', state.besOn);
+  document.getElementById('bes-detail').classList.toggle('open', state.besOn);
+  update();
 }
 
-/* ── OTTIMIZZA PER ── */
+function getBesBlock() {
+  if (!state.besOn) return '';
+  const checks = [
+    ['bes-dsa', 'Disturbi Specifici dell\'Apprendimento (DSA)'],
+    ['bes-adhd', 'ADHD / difficoltà attentive'],
+    ['bes-disabilita', 'Disabilità certificata (L.104)'],
+    ['bes-stranieri', 'Studenti stranieri / apprendenti L2'],
+    ['bes-svantaggio', 'Svantaggio socioeconomico'],
+    ['bes-gifted', 'Plusdotazione / gifted'],
+  ];
+  const attivi = checks.filter(([id]) => document.getElementById(id)?.checked).map(([,label]) => label);
+  let block = 'Nella classe sono presenti studenti con bisogni educativi speciali.';
+  if (attivi.length) block += '\nTipologie: ' + attivi.join(', ') + '.';
+  const note = v('bes-note');
+  if (note) block += '\n' + note;
+  block += '\nAdatta le attività, il linguaggio e i tempi per garantire l\'inclusione di tutti gli studenti.';
+  return block;
+}
+
+// ── SEZIONE SCUOLA ─────────────────────────────────────────────
+function toggleScuola() {
+  state.scuolaOpen = !state.scuolaOpen;
+  document.getElementById('scuola-section').classList.toggle('open', state.scuolaOpen);
+  document.getElementById('scuola-toggle').classList.toggle('open', state.scuolaOpen);
+}
+
+// ── OTTIMIZZA ──────────────────────────────────────────────────
 function getOttimizzaHint() {
   const mod = v('ottimizza-modello');
-  const hint = document.getElementById('ottimizza-hint');
-  hint.textContent = mod && OTTIMIZZA[mod] ? OTTIMIZZA[mod].hint : '';
+  document.getElementById('ottimizza-hint').textContent = mod && OTTIMIZZA[mod] ? OTTIMIZZA[mod].hint : '';
 }
 
-/* ── BUILD PROMPT ── */
+// ── BUILD PROMPT ───────────────────────────────────────────────
 function getFormato() { const t = v('formato-tipo'); if (!t) return ''; return t === 'custom' ? v('formato-custom') : t; }
 
 function buildPrompt() {
   const B = [];
   if (v('ruolo'))   B.push({ tag: '# RUOLO',   body: v('ruolo') });
   if (v('compito')) B.push({ tag: '# COMPITO',  body: v('compito') });
-  const ctx = getContestoComposito();
-  if (ctx) B.push({ tag: '# CONTESTO', body: ctx });
+
+  // Contesto: combina testo libero + contesto scolastico
+  let ctxParts = [];
+  if (getContesto()) ctxParts.push(getContesto());
+  const scuolaTipo = v('scuola-tipo');
+  if (state.scuolaOpen && scuolaTipo) ctxParts.push('Contesto istituzionale: ' + scuolaTipo + '.');
+  if (ctxParts.length) B.push({ tag: '# CONTESTO', body: ctxParts.join('\n') });
+
+  // BES
+  const bes = getBesBlock();
+  if (bes) B.push({ tag: '# INCLUSIONE', body: bes });
+
   const fmt = getFormato();
-  if (fmt) B.push({ tag: '# FORMATO',  body: "Presenta l'output come: " + fmt + '.' });
+  if (fmt) B.push({ tag: '# FORMATO', body: "Presenta l'output come: " + fmt + '.' });
   if (v('vincoli')) B.push({ tag: '# VINCOLI', body: v('vincoli') });
   if (state.esempiOn && v('esempi')) B.push({ tag: '# ESEMPI', body: v('esempi') });
   if (state.autodiagnosiOn) B.push({ tag: '# AUTODIAGNOSI', body: "Indica 2 possibili ambiguità nell'output che hai generato e come risolverle." });
-  // Ottimizzazione modello
   const mod = v('ottimizza-modello');
   if (mod && OTTIMIZZA[mod]) B.push({ tag: '# NOTE PER IL MODELLO', body: OTTIMIZZA[mod].suffix.trim() });
   return B;
 }
 
-function renderPrompt(blocks) {
-  if (!blocks.length) return null;
-  return blocks.map(b => b.tag + '\n' + b.body).join('\n\n');
-}
+function renderPrompt(blocks) { if (!blocks.length) return null; return blocks.map(b => b.tag + '\n' + b.body).join('\n\n'); }
+function renderClean(blocks)  { if (!blocks.length) return null; return blocks.map(b => b.body).join('\n\n'); }
 
-// Versione pulita senza tag
-function renderClean(blocks) {
-  if (!blocks.length) return null;
-  return blocks.map(b => b.body).join('\n\n');
-}
-
-/* ── QUALITY TIPS ── */
+// ── QUALITY ────────────────────────────────────────────────────
 const TIPS = [
   null,
-  'Aggiungi contesto (classe, livello, durata) per un prompt più preciso.',
+  'Aggiungi contesto per un prompt più preciso.',
   'Specifica un formato output o aggiungi vincoli per affinare il risultato.',
   null
 ];
 
-/* ── UPDATE ── */
+// ── UPDATE ─────────────────────────────────────────────────────
 function update() {
   [['ruolo',200],['compito',600],['vincoli',500]].forEach(([id]) => {
     const el = document.getElementById(id), cnt = document.getElementById('cnt-' + id);
@@ -714,13 +938,12 @@ function update() {
   document.getElementById('chip-blocchi').textContent = blocks.length + (blocks.length === 1 ? ' blocco' : ' blocchi');
   document.getElementById('chip-chars').textContent   = rawText.length + ' caratteri';
   const hr = v('ruolo') && v('compito');
-  const hc = getContestoComposito() || getFormato();
-  const ha = v('vincoli') || state.esempiOn || state.autodiagnosiOn || v('ottimizza-modello');
+  const hc = getContesto() || getFormato() || (state.scuolaOpen && v('scuola-tipo'));
+  const ha = v('vincoli') || state.esempiOn || state.autodiagnosiOn || v('ottimizza-modello') || state.besOn;
   const lvl = !hr ? 0 : !hc ? 1 : !ha ? 2 : 3;
   updateLevel(lvl);
   status.textContent = 'Pronto • aggiornato ora';
-  // Salva in cronologia automatica
-  addToCronologia(rawText);
+  addToCronologia(blocks);
 }
 
 function updateLevel(l) {
@@ -737,47 +960,57 @@ function updateLevel(l) {
   });
 }
 
-/* ── CRONOLOGIA AUTOMATICA ── */
-const CRONO_KEY = 'pb_cronologia_v1';
+// ── CRONOLOGIA (nel drawer, con formData) ──────────────────────
+const CRONO_KEY = 'pb_cronologia_v2';
 let cronoDebounce = null;
 
-function addToCronologia(text) {
+function addToCronologia(blocks) {
   clearTimeout(cronoDebounce);
   cronoDebounce = setTimeout(() => {
+    const rawText = renderPrompt(blocks); if (!rawText) return;
     let crono = getCronologia();
-    // Evita duplicati consecutivi
-    if (crono.length && crono[0].text === text) return;
-    const compito = v('compito').slice(0, 45) || 'Prompt senza titolo';
-    crono.unshift({ text, label: compito, ts: Date.now() });
+    if (crono.length && crono[0].prompt === rawText) return;
+    const label = v('compito').slice(0, 50) || 'Prompt senza titolo';
+    crono.unshift({
+      label, prompt: rawText,
+      ts: Date.now(),
+      formData: buildFormData()
+    });
     crono = crono.slice(0, 5);
     localStorage.setItem(CRONO_KEY, JSON.stringify(crono));
-    renderCronologia();
-  }, 1200);
+  }, 1400);
 }
 
-function getCronologia() {
-  try { return JSON.parse(localStorage.getItem(CRONO_KEY)) || []; } catch { return []; }
-}
+function getCronologia() { try { return JSON.parse(localStorage.getItem(CRONO_KEY)) || []; } catch { return []; } }
 
-function renderCronologia() {
+function renderCronoDrawer() {
   const crono = getCronologia();
-  const sec   = document.getElementById('crono-section');
-  const list  = document.getElementById('crono-list');
-  if (!crono.length) { sec.style.display = 'none'; return; }
-  sec.style.display = 'block';
-  list.innerHTML = crono.map((item, i) => `<div class="crono-item" onclick="loadFromCronologia(${i})" title="${esc(item.text.slice(0,120))}">${esc(item.label)}…</div>`).join('');
+  const list  = document.getElementById('crono-list-drawer');
+  if (!crono.length) { list.innerHTML = '<div class="lib-empty">Nessuna bozza ancora.<br>Inizia a compilare il form.</div>'; return; }
+  list.innerHTML = crono.map((item, i) => {
+    const ago = tempoFa(item.ts);
+    return `<div class="crono-item-drawer">
+      <div class="crono-item-label" title="${esc(item.prompt.slice(0,120))}">${esc(item.label)}…</div>
+      <div class="crono-item-time">${ago}</div>
+      <button class="crono-load-btn" onclick="loadFromCronologia(${i})">Carica</button>
+    </div>`;
+  }).join('');
 }
 
 function loadFromCronologia(i) {
   const crono = getCronologia(); if (!crono[i]) return;
-  const out = document.getElementById('prompt-output');
-  const text = crono[i].text;
-  out.innerHTML = text.replace(/(# [A-ZÀÈÌÒÙ ]+)/g, '<span class="prompt-tag">$1</span>');
-  document.getElementById('btn-copy').disabled = false;
-  document.getElementById('btn-clean').disabled = false;
+  applyFormData(crono[i].formData);
+  closeDrawer();
 }
 
-/* ── COPY ── */
+function tempoFa(ts) {
+  const diff = Math.floor((Date.now() - ts) / 60000);
+  if (diff < 1) return 'adesso';
+  if (diff < 60) return diff + ' min fa';
+  return Math.floor(diff/60) + ' h fa';
+}
+
+// ── COPY ───────────────────────────────────────────────────────
 function copyPrompt() {
   const text = renderPrompt(buildPrompt()); if (!text) return;
   navigator.clipboard.writeText(text).then(() => {
@@ -787,11 +1020,10 @@ function copyPrompt() {
   }).catch(() => { const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); });
 }
 
-/* ── MODAL PROMPT PULITO ── */
+// ── MODAL PROMPT PULITO ────────────────────────────────────────
 function openCleanModal() {
   const blocks = buildPrompt(); if (!blocks.length) return;
-  const clean = renderClean(blocks);
-  document.getElementById('clean-output').textContent = clean;
+  document.getElementById('clean-output').textContent = renderClean(blocks);
   document.getElementById('clean-modal').classList.add('open');
 }
 function closeCleanModal() { document.getElementById('clean-modal').classList.remove('open'); }
@@ -804,9 +1036,82 @@ function copyClean() {
   });
 }
 document.getElementById('clean-modal').addEventListener('click', function(e) { if (e.target === this) closeCleanModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCleanModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeCleanModal(); closeDrawer(); } });
 
-/* ── TOGGLES ── */
+// ── CONDIVISIONE VIA URL ───────────────────────────────────────
+function shareURL() {
+  const fd = buildFormData();
+  const blocks = buildPrompt();
+  if (!blocks.length) { showToast('Compila almeno Ruolo e Compito prima di condividere.'); return; }
+  try {
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(fd))));
+    const url = location.origin + location.pathname + '?p=' + encoded;
+    navigator.clipboard.writeText(url).then(() => showToast('🔗 Link copiato negli appunti!'));
+  } catch(e) { showToast('Errore nella generazione del link.'); }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('share-toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function loadFromURL() {
+  const params = new URLSearchParams(location.search);
+  const p = params.get('p'); if (!p) return;
+  try {
+    const fd = JSON.parse(decodeURIComponent(escape(atob(p))));
+    applyFormData(fd);
+    // Rimuovi il parametro dall'URL senza ricaricare
+    history.replaceState(null, '', location.pathname);
+  } catch(e) { console.warn('Parametro URL non valido'); }
+}
+
+// ── FORMDATA HELPERS ───────────────────────────────────────────
+function buildFormData() {
+  return {
+    ruolo: v('ruolo'), compito: v('compito'), ctx_note: v('ctx-note'),
+    scuola_tipo: v('scuola-tipo'), scuolaOpen: state.scuolaOpen,
+    besOn: state.besOn,
+    bes_dsa: document.getElementById('bes-dsa')?.checked,
+    bes_adhd: document.getElementById('bes-adhd')?.checked,
+    bes_disabilita: document.getElementById('bes-disabilita')?.checked,
+    bes_stranieri: document.getElementById('bes-stranieri')?.checked,
+    bes_svantaggio: document.getElementById('bes-svantaggio')?.checked,
+    bes_gifted: document.getElementById('bes-gifted')?.checked,
+    bes_note: v('bes-note'),
+    formato: v('formato-tipo'), formato_custom: v('formato-custom'), vincoli: v('vincoli'),
+    esempi: v('esempi'), esempiOn: state.esempiOn, autodiagnosiOn: state.autodiagnosiOn,
+    ottimizza: v('ottimizza-modello'),
+    helper_ruolo_generico: v('helper-ruolo-generico'),
+    helper_disciplina: v('helper-disciplina'), helper_spec: v('helper-specializzazione'),
+  };
+}
+
+function applyFormData(fd) {
+  if (!fd) return;
+  resetForm(true);
+  setField('ruolo', fd.ruolo); setField('compito', fd.compito); setField('ctx-note', fd.ctx_note || '');
+  setField('formato-tipo', fd.formato); setField('formato-custom', fd.formato_custom || ''); setField('vincoli', fd.vincoli);
+  setField('esempi', fd.esempi || ''); setField('ottimizza-modello', fd.ottimizza || '');
+  setField('helper-ruolo-generico', fd.helper_ruolo_generico || '');
+  setField('helper-disciplina', fd.helper_disciplina || ''); setField('helper-specializzazione', fd.helper_spec || '');
+  // Scuola
+  if (fd.scuolaOpen && !state.scuolaOpen) toggleScuola();
+  setField('scuola-tipo', fd.scuola_tipo || '');
+  // BES
+  if (fd.besOn && !state.besOn) toggleBes();
+  ['dsa','adhd','disabilita','stranieri','svantaggio','gifted'].forEach(k => {
+    const el = document.getElementById('bes-' + k); if (el) el.checked = !!fd['bes_' + k];
+  });
+  setField('bes-note', fd.bes_note || '');
+  // Toggle avanzati
+  if (fd.esempiOn && !state.esempiOn) toggleOpt('esempi');
+  if (fd.autodiagnosiOn && !state.autodiagnosiOn) toggleOpt('autodiagnosi');
+  aggiornaRuoloHelper(); toggleFormatoCustom(); updateCtx(); update();
+}
+
+// ── TOGGLES ────────────────────────────────────────────────────
 function toggleAdvanced() {
   state.advOpen = !state.advOpen;
   document.getElementById('advanced-section').classList.toggle('open', state.advOpen);
@@ -822,7 +1127,7 @@ function toggleFormatoCustom() {
   document.getElementById('formato-custom-wrap').style.display = document.getElementById('formato-tipo').value === 'custom' ? 'block' : 'none';
 }
 
-/* ── SAVE POPUP ── */
+// ── SAVE POPUP ─────────────────────────────────────────────────
 function toggleSavePopup() {
   const popup = document.getElementById('save-popup');
   const show  = !popup.classList.contains('show');
@@ -834,42 +1139,48 @@ function toggleSavePopup() {
   }
 }
 
-/* ── PRESETS ── */
-function setField(id, val) { const el = document.getElementById(id); if (el) el.value = val; }
+// ── PRESETS ────────────────────────────────────────────────────
+function setField(id, val) { const el = document.getElementById(id); if (el) el.value = val || ''; }
 
 function loadPreset(name) {
   resetForm(true);
   const P = {
-    verifica:    { disc:'trasversale', spec:'docimologia', compito:"Progetta una verifica sommativa sull'argomento: [ARGOMENTO].\nLa verifica deve contenere: 3 domande a risposta chiusa, 3 domande a risposta aperta breve, 1 esercizio applicativo.", note:'Obiettivi di apprendimento: [ELENCA 2-3 OBIETTIVI]. Classe terza, livello intermedio, 1 ora disponibile.', formato:'Elenco numerato', vincoli:'Indica il punteggio suggerito per ogni sezione (totale: 10 punti). Livello linguistico B2.' },
+    verifica:    { disc:'trasversale', spec:'docimologia', compito:"Progetta una verifica sommativa sull'argomento: [ARGOMENTO].\nLa verifica deve contenere: 3 domande a risposta chiusa, 3 domande a risposta aperta breve, 1 esercizio applicativo.", note:'Obiettivi di apprendimento: [ELENCA 2-3 OBIETTIVI]. 1 ora disponibile.', formato:'Elenco numerato', vincoli:'Indica il punteggio suggerito per ogni sezione (totale: 10 punti). Livello linguistico B2.' },
     feedback:    { disc:'italiano',    spec:'nessuna',     compito:"Analizza il seguente testo scritto da uno studente e fornisci feedback formativo su: coerenza argomentativa, uso del lessico disciplinare, struttura del testo.\n\n[INCOLLA QUI IL TESTO DELLO STUDENTE]", note:'', formato:'Testo narrativo (paragrafi)', vincoli:'Non riscrivere il testo. Non fornire frasi corrette. Indica solo cosa migliorare e come, con domande che guidino lo studente a trovare la soluzione da solo.' },
-    spiegazione: { disc:'trasversale', spec:'nessuna',     compito:"Spiega il concetto di [CONCETTO] usando:\n1. Una definizione precisa (max 3 righe)\n2. Un'analogia con la vita quotidiana\n3. Un esempio pratico nel contesto [SETTORE PROFESSIONALE]\n4. Un errore concettuale frequente da evitare", note:'Classe prima, livello base, 13-20 studenti, 1 ora disponibile. Nessun prerequisito tecnico.', formato:'Testo narrativo (paragrafi)', vincoli:'Livello linguistico B2. Niente formule matematiche salvo indicazione contraria.' },
+    spiegazione: { disc:'trasversale', spec:'nessuna',     compito:"Spiega il concetto di [CONCETTO] usando:\n1. Una definizione precisa (max 3 righe)\n2. Un'analogia con la vita quotidiana\n3. Un esempio pratico nel contesto [SETTORE]\n4. Un errore concettuale frequente da evitare", note:'Nessun prerequisito tecnico richiesto.', formato:'Testo narrativo (paragrafi)', vincoli:'Livello linguistico B2. Niente formule matematiche salvo indicazione contraria.' },
   };
   const p = P[name]; if (!p) return;
   setField('helper-disciplina', p.disc); setField('helper-specializzazione', p.spec);
   aggiornaRuoloHelper(); applicaRuoloHelper();
-  setField('compito', p.compito);
-  setField('ctx-note', p.note);
-  updateContestoComposito();
-  setField('formato-tipo', p.formato || ''); toggleFormatoCustom();
-  setField('vincoli', p.vincoli); update();
+  setField('compito', p.compito); setField('ctx-note', p.note);
+  setField('formato-tipo', p.formato); toggleFormatoCustom();
+  setField('vincoli', p.vincoli); updateCtx(); update();
 }
 
-/* ── RESET ── */
+// ── RESET ──────────────────────────────────────────────────────
 function resetForm(silent) {
-  ['ruolo','compito','formato-custom','vincoli','esempi','ctx-note','helper-disciplina','helper-specializzazione','ottimizza-modello'].forEach(id => setField(id, ''));
-  ['formato-tipo'].forEach(id => setField(id, ''));
-  toggleFormatoCustom(); updateContestoComposito(); aggiornaRuoloHelper();
+  ['ruolo','compito','formato-custom','vincoli','esempi','ctx-note','helper-ruolo-generico',
+   'helper-disciplina','helper-specializzazione','ottimizza-modello','scuola-tipo','bes-note'].forEach(id => setField(id, ''));
+  setField('formato-tipo', '');
+  ['bes-dsa','bes-adhd','bes-disabilita','bes-stranieri','bes-svantaggio','bes-gifted'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.checked = false;
+  });
+  toggleFormatoCustom(); aggiornaRuoloHelper();
   document.getElementById('ottimizza-hint').textContent = '';
+  Object.keys(ESEMPI_TESTO).forEach(id => aggiornaBtnEsempio(id));
   if (state.esempiOn) toggleOpt('esempi');
   if (state.autodiagnosiOn) toggleOpt('autodiagnosi');
   if (state.advOpen) toggleAdvanced();
+  if (state.scuolaOpen) toggleScuola();
+  if (state.besOn) toggleBes();
   ['field-ruolo','field-compito'].forEach(id => document.getElementById(id)?.classList.remove('error'));
   document.getElementById('save-popup').classList.remove('show');
+  const cnt = document.getElementById('cnt-ctx'); if (cnt) cnt.textContent = 0;
   if (!silent) update();
 }
 
-/* ── LIBRERIA ── */
-const LS_KEY = 'its_prompt_library_v1';
+// ── LIBRERIA ───────────────────────────────────────────────────
+const LS_KEY = 'its_prompt_library_v2';
 function loadLibrary()      { try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch { return []; } }
 function saveLibrary(items) { localStorage.setItem(LS_KEY, JSON.stringify(items)); }
 function updateLibCount() {
@@ -877,14 +1188,23 @@ function updateLibCount() {
   el.textContent = n; el.classList.toggle('show', n > 0);
 }
 
-function openDrawer() {
+function openDrawer(tab) {
   document.getElementById('drawer').classList.add('open');
   document.getElementById('drawer-overlay').classList.add('open');
   renderLibList();
+  renderCronoDrawer();
+  if (tab) switchDrawerTab(tab, document.querySelector(`.drawer-tab[onclick*="${tab}"]`));
 }
 function closeDrawer() {
   document.getElementById('drawer').classList.remove('open');
   document.getElementById('drawer-overlay').classList.remove('open');
+}
+function switchDrawerTab(name, btn) {
+  document.querySelectorAll('.drawer-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.drawer-tab-content').forEach(t => t.classList.remove('active'));
+  btn?.classList.add('active');
+  document.getElementById('drawer-' + name)?.classList.add('active');
+  if (name === 'bozze') renderCronoDrawer();
 }
 
 function savePrompt() {
@@ -896,14 +1216,7 @@ function savePrompt() {
     disciplina: document.getElementById('save-disciplina').value,
     tipo:       document.getElementById('save-tipo').value,
     date: new Date().toLocaleDateString('it-IT', { day:'2-digit', month:'short', year:'numeric' }),
-    prompt: text,
-    formData: {
-      ruolo: v('ruolo'), compito: v('compito'),
-      ctx_note: v('ctx-note'),
-      formato: v('formato-tipo'), formato_custom: v('formato-custom'), vincoli: v('vincoli'),
-      esempi: v('esempi'), esempiOn: state.esempiOn, autodiagnosiOn: state.autodiagnosiOn,
-      ottimizza: v('ottimizza-modello')
-    }
+    prompt: text, formData: buildFormData()
   };
   const lib = loadLibrary(); lib.unshift(item); saveLibrary(lib); updateLibCount();
   const fb = document.getElementById('save-feedback'); fb.classList.add('show');
@@ -922,7 +1235,7 @@ function renderLibList() {
           <div class="lib-item-meta">
             <span>${item.date}</span>
             ${item.disciplina ? `<span class="lib-tag">${esc(item.disciplina)}</span>` : ''}
-            ${item.tipo       ? `<span class="lib-tag">${esc(item.tipo)}</span>`       : ''}
+            ${item.tipo ? `<span class="lib-tag">${esc(item.tipo)}</span>` : ''}
           </div>
         </div>
         <div class="lib-item-actions" onclick="event.stopPropagation()">
@@ -938,15 +1251,8 @@ function toggleLibPreview(id) { document.getElementById('libpreview-' + id)?.cla
 
 function loadFromLibrary(id) {
   const item = loadLibrary().find(x => x.id === id); if (!item) return;
-  const fd = item.formData; resetForm(true);
-  setField('ruolo', fd.ruolo); setField('compito', fd.compito);
-  setField('ctx-note', fd.ctx_note || '');
-  setField('formato-tipo', fd.formato); setField('formato-custom', fd.formato_custom); setField('vincoli', fd.vincoli);
-  setField('esempi', fd.esempi || '');
-  setField('ottimizza-modello', fd.ottimizza || '');
-  if (fd.esempiOn && !state.esempiOn) toggleOpt('esempi');
-  if (fd.autodiagnosiOn && !state.autodiagnosiOn) toggleOpt('autodiagnosi');
-  toggleFormatoCustom(); updateContestoComposito(); aggiornaRuoloHelper(); update(); closeDrawer();
+  applyFormData(item.formData);
+  closeDrawer();
 }
 
 function deleteFromLibrary(id) {
@@ -954,10 +1260,13 @@ function deleteFromLibrary(id) {
   saveLibrary(loadLibrary().filter(x => x.id !== id)); updateLibCount(); renderLibList();
 }
 
-/* ── EXPORT / IMPORT JSON ── */
+// ── EXPORT / IMPORT ────────────────────────────────────────────
 function exportLibrary() {
   const lib = loadLibrary();
-  if (!lib.length) { alert('Nessun prompt da esportare.'); return; }
+  if (!lib.length) {
+    const fb = document.getElementById('export-feedback');
+    fb.classList.add('show'); setTimeout(() => fb.classList.remove('show'), 2500); return;
+  }
   const blob = new Blob([JSON.stringify(lib, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -971,20 +1280,20 @@ function importLibrary(event) {
   reader.onload = function(e) {
     try {
       const data = JSON.parse(e.target.result);
-      if (!Array.isArray(data)) throw new Error('Formato non valido');
+      if (!Array.isArray(data)) throw new Error();
       const existing = loadLibrary();
       const existingIds = new Set(existing.map(x => x.id));
       const newItems = data.filter(x => !existingIds.has(x.id));
       saveLibrary([...newItems, ...existing]);
       updateLibCount(); renderLibList();
-      alert(newItems.length + ' prompt importati.');
-    } catch { alert('File non valido. Assicurati di importare un JSON esportato da questo strumento.'); }
+      showToast('✓ ' + newItems.length + ' prompt importati.');
+    } catch { showToast('File non valido.'); }
   };
   reader.readAsText(file);
   event.target.value = '';
 }
 
-/* ── VALIDATION ── */
+// ── VALIDATION ─────────────────────────────────────────────────
 document.getElementById('btn-copy').addEventListener('click', function(e) {
   let ok = true;
   ['ruolo','compito'].forEach(k => {
@@ -1001,10 +1310,11 @@ document.getElementById('btn-copy').addEventListener('click', function(e) {
 
 function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-/* ── INIT ── */
+// ── INIT ───────────────────────────────────────────────────────
 updateLibCount();
-renderCronologia();
-update();
+loadFromURL();
+Object.keys(ESEMPI_TESTO).forEach(id => aggiornaBtnEsempio(id)); // mostra bottoni esempio sui campi vuoti
+if (!v('ruolo') && !v('compito')) update();
 </script>
 </body>
 </html>
