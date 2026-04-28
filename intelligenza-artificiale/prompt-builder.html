@@ -553,7 +553,7 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
           <div class="scuola-field" style="margin-top:.5rem;">
             <label>Note aggiuntive BES</label>
             <button class="btn-usa-esempio" id="btn-usa-esempio-bes-note" onclick="usaEsempio('bes-note')" style="margin-bottom:.4rem;">✦ Usa l'esempio come base</button>
-            <textarea id="bes-note" rows="2" placeholder="es. 2 studenti con DSA: prevedere tempi aggiuntivi e supporti visivi." oninput="onFieldInput('bes-note'); update()" maxlength="300"></textarea>
+            <textarea id="bes-note" rows="2" placeholder="es. 2 studenti con DSA: prevedere tempi aggiuntivi e supporti visivi." oninput="onFieldInput('bes-note')" maxlength="300"></textarea>
           </div>
         </div>
 
@@ -577,14 +577,14 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
       <div class="field" id="formato-custom-wrap" style="display:none;">
         <label>Descrivi il formato</label>
         <button class="btn-usa-esempio" id="btn-usa-esempio-formato-custom" onclick="usaEsempio('formato-custom')" style="margin-bottom:.4rem;">✦ Usa l'esempio come base</button>
-        <textarea id="formato-custom" rows="2" placeholder="es. Tabella con colonne: Dimensione, Peso%, Iniziale, Base, Avanzato, Feedback." oninput="onFieldInput('formato-custom'); update()" maxlength="300"></textarea>
+        <textarea id="formato-custom" rows="2" placeholder="es. Tabella con colonne: Dimensione, Peso%, Iniziale, Base, Avanzato, Feedback." oninput="onFieldInput('formato-custom')" maxlength="300"></textarea>
       </div>
 
       <div class="field">
         <label>Vincoli</label>
         <span class="hint">Cosa NON fare, limiti di lunghezza, tono, registro.</span>
         <button class="btn-usa-esempio" id="btn-usa-esempio-vincoli" onclick="usaEsempio('vincoli')" style="margin-bottom:.4rem;">✦ Usa l'esempio come base</button>
-        <textarea id="vincoli" rows="3" placeholder="es. Non usare aggettivi vaghi. Il feedback deve essere in seconda persona, tono propositivo." oninput="onFieldInput('vincoli'); update()" maxlength="1000"></textarea>
+        <textarea id="vincoli" rows="3" placeholder="es. Non usare aggettivi vaghi. Il feedback deve essere in seconda persona, tono propositivo." oninput="onFieldInput('vincoli')" maxlength="1000"></textarea>
         <div class="char-counter"><span id="cnt-vincoli">0</span>/1000</div>
       </div>
     </div>
@@ -631,7 +631,7 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
       </div>
       <div id="field-esempi-wrap" style="display:none;" class="field">
         <button class="btn-usa-esempio" id="btn-usa-esempio-esempi" onclick="usaEsempio('esempi')" style="margin-bottom:.4rem;">✦ Usa l'esempio come base</button>
-        <textarea id="esempi" rows="4" placeholder="es. INPUT: testo studente / OUTPUT: il feedback dovrebbe essere strutturato così…" oninput="onFieldInput('esempi'); update()" maxlength="800"></textarea>
+        <textarea id="esempi" rows="4" placeholder="es. INPUT: testo studente / OUTPUT: il feedback dovrebbe essere strutturato così…" oninput="onFieldInput('esempi')" maxlength="800"></textarea>
       </div>
       <div class="toggle-row" id="toggle-autodiagnosi" onclick="toggleOpt('autodiagnosi')">
         <div class="toggle-switch"></div>
