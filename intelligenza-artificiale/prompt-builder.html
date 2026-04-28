@@ -401,6 +401,7 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
         <button class="preset-btn" onclick="loadPreset('verifica')">📝 Progettare una verifica</button>
         <button class="preset-btn" onclick="loadPreset('feedback')">💬 Feedback su un testo</button>
         <button class="preset-btn" onclick="loadPreset('spiegazione')">💡 Preparare una spiegazione</button>
+        <button class="preset-btn" onclick="loadPreset('griglia_orale')">📋 Griglia prova orale</button>
       </div>
     </div>
 
@@ -583,8 +584,8 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
         <label>Vincoli</label>
         <span class="hint">Cosa NON fare, limiti di lunghezza, tono, registro.</span>
         <button class="btn-usa-esempio" id="btn-usa-esempio-vincoli" onclick="usaEsempio('vincoli')" style="margin-bottom:.4rem;">✦ Usa l'esempio come base</button>
-        <textarea id="vincoli" rows="3" placeholder="es. Non usare aggettivi vaghi. Il feedback deve essere in seconda persona, tono propositivo." oninput="onFieldInput('vincoli'); update()" maxlength="500"></textarea>
-        <div class="char-counter"><span id="cnt-vincoli">0</span>/500</div>
+        <textarea id="vincoli" rows="3" placeholder="es. Non usare aggettivi vaghi. Il feedback deve essere in seconda persona, tono propositivo." oninput="onFieldInput('vincoli'); update()" maxlength="1000"></textarea>
+        <div class="char-counter"><span id="cnt-vincoli">0</span>/1000</div>
       </div>
     </div>
 
@@ -810,6 +811,7 @@ function usaEsempio(id) {
 
 function onFieldInput(id) {
   aggiornaBtnEsempio(id);
+  update();
 }
 
 function aggiornaBtnEsempio(id) {
@@ -830,7 +832,7 @@ function onCompitoInput() {
 function updateCtx() {
   const el = document.getElementById('cnt-ctx');
   if (el) el.textContent = document.getElementById('ctx-note')?.value.length || 0;
-  update();
+  // update() non chiamato qui — già chiamato da onFieldInput
 }
 
 function getContesto() { return v('ctx-note'); }
@@ -932,11 +934,11 @@ function update() {
     copyBtn.disabled = cleanBtn.disabled = saveBtn.disabled = true;
     meta.style.display = 'none'; status.textContent = 'Inizia a compilare →'; updateLevel(0); return;
   }
-  out.innerHTML = rawText.replace(/(# [A-ZÀÈÌÒÙ ]+)/g, '<span class="prompt-tag">$1</span>');
+  out.innerHTML = rawText.replace(/^(# [A-ZÀÈÌÒÙ ]+)$/gm, '<span class="prompt-tag">$1</span>');
   copyBtn.disabled = cleanBtn.disabled = saveBtn.disabled = false;
   meta.style.display = 'flex';
   document.getElementById('chip-blocchi').textContent = blocks.length + (blocks.length === 1 ? ' blocco' : ' blocchi');
-  document.getElementById('chip-chars').textContent   = rawText.length + ' caratteri';
+  document.getElementById('chip-chars').textContent   = rawText.length + ' car · ~' + Math.round(rawText.trim().split(/\s+/).length) + ' parole';
   const hr = v('ruolo') && v('compito');
   const hc = getContesto() || getFormato() || (state.scuolaOpen && v('scuola-tipo'));
   const ha = v('vincoli') || state.esempiOn || state.autodiagnosiOn || v('ottimizza-modello') || state.besOn;
@@ -1005,9 +1007,11 @@ function loadFromCronologia(i) {
 
 function tempoFa(ts) {
   const diff = Math.floor((Date.now() - ts) / 60000);
-  if (diff < 1) return 'adesso';
-  if (diff < 60) return diff + ' min fa';
-  return Math.floor(diff/60) + ' h fa';
+  if (diff < 1)    return 'adesso';
+  if (diff < 60)   return diff + ' min fa';
+  if (diff < 1440) return Math.floor(diff/60) + ' h fa';
+  if (diff < 2880) return 'ieri';
+  return Math.floor(diff/1440) + ' giorni fa';
 }
 
 // ── COPY ───────────────────────────────────────────────────────
@@ -1037,6 +1041,29 @@ function copyClean() {
 }
 document.getElementById('clean-modal').addEventListener('click', function(e) { if (e.target === this) closeCleanModal(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeCleanModal(); closeDrawer(); } });
+
+// ── FOCUS TRAP modal ─────────────────────────────────────────────
+document.getElementById('clean-modal').addEventListener('keydown', function(e) {
+  if (e.key !== 'Tab') return;
+  const focusable = Array.from(this.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'));
+  if (!focusable.length) return;
+  const first = focusable[0], last = focusable[focusable.length - 1];
+  if (e.shiftKey) {
+    if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+  } else {
+    if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
+  }
+});
+
+// Focus sul primo elemento all'apertura modal
+const _origOpenClean = openCleanModal;
+openCleanModal = function() {
+  _origOpenClean();
+  setTimeout(() => {
+    const btn = document.getElementById('btn-modal-copy');
+    if (btn) btn.focus();
+  }, 50);
+};
 
 // ── CONDIVISIONE VIA URL ───────────────────────────────────────
 function shareURL() {
@@ -1145,13 +1172,16 @@ function setField(id, val) { const el = document.getElementById(id); if (el) el.
 function loadPreset(name) {
   resetForm(true);
   const P = {
-    verifica:    { disc:'trasversale', spec:'docimologia', compito:"Progetta una verifica sommativa sull'argomento: [ARGOMENTO].\nLa verifica deve contenere: 3 domande a risposta chiusa, 3 domande a risposta aperta breve, 1 esercizio applicativo.", note:'Obiettivi di apprendimento: [ELENCA 2-3 OBIETTIVI]. 1 ora disponibile.', formato:'Elenco numerato', vincoli:'Indica il punteggio suggerito per ogni sezione (totale: 10 punti). Livello linguistico B2.' },
-    feedback:    { disc:'italiano',    spec:'nessuna',     compito:"Analizza il seguente testo scritto da uno studente e fornisci feedback formativo su: coerenza argomentativa, uso del lessico disciplinare, struttura del testo.\n\n[INCOLLA QUI IL TESTO DELLO STUDENTE]", note:'', formato:'Testo narrativo (paragrafi)', vincoli:'Non riscrivere il testo. Non fornire frasi corrette. Indica solo cosa migliorare e come, con domande che guidino lo studente a trovare la soluzione da solo.' },
-    spiegazione: { disc:'trasversale', spec:'nessuna',     compito:"Spiega il concetto di [CONCETTO] usando:\n1. Una definizione precisa (max 3 righe)\n2. Un'analogia con la vita quotidiana\n3. Un esempio pratico nel contesto [SETTORE]\n4. Un errore concettuale frequente da evitare", note:'Nessun prerequisito tecnico richiesto.', formato:'Testo narrativo (paragrafi)', vincoli:'Livello linguistico B2. Niente formule matematiche salvo indicazione contraria.' },
+    verifica:    { disc:'trasversale', spec:'docimologia', openScuola:true, compito:"Progetta una verifica sommativa sull'argomento: [ARGOMENTO].\nLa verifica deve contenere: 3 domande a risposta chiusa, 3 domande a risposta aperta breve, 1 esercizio applicativo.", note:'Obiettivi di apprendimento: [ELENCA 2-3 OBIETTIVI]. 1 ora disponibile.', formato:'Elenco numerato', vincoli:'Indica il punteggio suggerito per ogni sezione (totale: 10 punti). Livello linguistico B2.' },
+    feedback:    { disc:'italiano',    spec:'nessuna', openScuola:false,     compito:"Analizza il seguente testo scritto da uno studente e fornisci feedback formativo su: coerenza argomentativa, uso del lessico disciplinare, struttura del testo.\n\n[INCOLLA QUI IL TESTO DELLO STUDENTE]", note:'', formato:'Testo narrativo (paragrafi)', vincoli:'Non riscrivere il testo. Non fornire frasi corrette. Indica solo cosa migliorare e come, con domande che guidino lo studente a trovare la soluzione da solo.' },
+    spiegazione: { disc:'trasversale', spec:'nessuna', openScuola:false,     compito:"Spiega il concetto di [CONCETTO] usando:\n1. Una definizione precisa (max 3 righe)\n2. Un'analogia con la vita quotidiana\n3. Un esempio pratico nel contesto [SETTORE]\n4. Un errore concettuale frequente da evitare", note:'Nessun prerequisito tecnico richiesto.', formato:'Testo narrativo (paragrafi)', vincoli:'Livello linguistico B2. Niente formule matematiche salvo indicazione contraria.' },
+    griglia_orale: { disc:'trasversale', spec:'docimologia', openScuola:true, compito:"Progetta una griglia di osservazione per la valutazione di una prova orale su [ARGOMENTO O UNITÀ DI APPRENDIMENTO].\nLa griglia deve permettere al docente di rilevare comportamenti osservabili durante l'esposizione, non impressioni soggettive.", note:"Disciplina: [INSERISCI DISCIPLINA]. Classe: [ANNO E INDIRIZZO]. Durata della prova orale: [es. 10–15 minuti]. La griglia sarà usata dal docente in tempo reale durante l'interrogazione, quindi deve essere compilabile rapidamente.", formato:'Tabella Markdown', vincoli:"La tabella deve avere queste colonne esatte: DIMENSIONE | INDICATORI OSSERVABILI | INSUFFICIENTE (≤5) | SUFFICIENTE (6) | BUONO (7-8) | ECCELLENTE (9-10) | NOTE.\nLe DIMENSIONI devono coprire obbligatoriamente: padronanza dei contenuti, uso del lessico disciplinare, coerenza argomentativa, capacità di collegamento, gestione delle domande del docente.\nGli INDICATORI devono descrivere comportamenti concreti e rilevabili durante l'esposizione orale (es. 'utilizza almeno 3 termini tecnici specifici', 'risponde alle domande senza pause superiori a 10 secondi').\nVietato usare aggettivi valutativi vaghi: buono, adeguato, soddisfacente, corretto.\nAggiungi sotto la tabella: una riga per il punteggio totale ponderato e uno spazio 'Osservazioni libere' per annotazioni del docente.\nNon includere criteri non osservabili durante una prova orale (es. cura della grafia, presentazione scritta)." },
   };
   const p = P[name]; if (!p) return;
   setField('helper-disciplina', p.disc); setField('helper-specializzazione', p.spec);
   aggiornaRuoloHelper(); applicaRuoloHelper();
+  // Apri sezione scuola se il preset usa disciplina o specializzazione
+  if (p.openScuola && !state.scuolaOpen) toggleScuola();
   setField('compito', p.compito); setField('ctx-note', p.note);
   setField('formato-tipo', p.formato); toggleFormatoCustom();
   setField('vincoli', p.vincoli); updateCtx(); update();
@@ -1194,11 +1224,30 @@ function openDrawer(tab) {
   renderLibList();
   renderCronoDrawer();
   if (tab) switchDrawerTab(tab, document.querySelector(`.drawer-tab[onclick*="${tab}"]`));
+  // Sposta focus al primo elemento focusabile del drawer (coerente con modal)
+  setTimeout(() => {
+    const drawer = document.getElementById('drawer');
+    const first = drawer.querySelector('button:not([disabled]), [tabindex]:not([tabindex="-1"])');
+    if (first) first.focus();
+  }, 50);
 }
 function closeDrawer() {
   document.getElementById('drawer').classList.remove('open');
   document.getElementById('drawer-overlay').classList.remove('open');
 }
+
+// ── FOCUS TRAP drawer ─────────────────────────────────────────────
+document.getElementById('drawer').addEventListener('keydown', function(e) {
+  if (!this.classList.contains('open') || e.key !== 'Tab') return;
+  const focusable = Array.from(this.querySelectorAll('button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'));
+  if (!focusable.length) return;
+  const first = focusable[0], last = focusable[focusable.length - 1];
+  if (e.shiftKey) {
+    if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+  } else {
+    if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
+  }
+});
 function switchDrawerTab(name, btn) {
   document.querySelectorAll('.drawer-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.drawer-tab-content').forEach(t => t.classList.remove('active'));
