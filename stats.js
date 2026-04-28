@@ -3,8 +3,8 @@
 // 'label' è il nome breve mostrato in homepage.
 
 const gcPagine = [
-  { path: '/',                                                                    label: 'Home',  exclude: true },
-  { path: '/index.html',                                                          label: 'Home',  exclude: true },
+  { path: '/',                                                                    label: 'Home' },
+  { path: '/index.html',                                                          label: 'Home' },
   { path: '/intelligenza-artificiale/Guida_Prompting.html',                      label: 'Guida Prompting' },
   { path: '/intelligenza-artificiale/prompt-builder.html',                        label: 'Prompt Builder' },
   { path: '/intelligenza-artificiale/Guida_PeerReview_IA.html',                  label: 'Peer Review IA' },
@@ -38,7 +38,8 @@ async function loadGoatStats() {
         aggregated.push({ label: gcPagine[i].label, count: pv });
       }
     });
-    aggregated.unshift({ label: 'Home', count: homeCount });
+    // ESCLUDO LA HOME DALLE TOP VIEWS
+	// aggregated.unshift({ label: 'Home', count: homeCount });
 
     // Totale pageview
     const totale = aggregated.reduce((s, p) => s + p.count, 0);
@@ -49,8 +50,7 @@ async function loadGoatStats() {
 
     // Top 3 pagine per pageview
     const top3 = [...aggregated]
-      .filter(p => !p.exclude)
-	  .sort((a, b) => b.count - a.count)
+       .sort((a, b) => b.count - a.count)
       .slice(0, 3);
 
     const elTop = document.getElementById('gc-top');
