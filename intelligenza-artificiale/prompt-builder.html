@@ -1365,5 +1365,16 @@ loadFromURL();
 Object.keys(ESEMPI_TESTO).forEach(id => aggiornaBtnEsempio(id)); // mostra bottoni esempio sui campi vuoti
 if (!v('ruolo') && !v('compito')) update();
 </script>
+
+<!-- ── LINK RISORSE CORRELATE ─────────────────────────────────── -->
+<div style="padding: 1.5rem 2rem; background: var(--blue-xpale); border-top: 1px solid var(--blue-light);">
+  <div style="max-width:1040px; margin:0 auto;">
+    <div style="font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-mid);margin-bottom:.6rem;">Risorse correlate</div>
+    <div style="display:flex;gap:.6rem;flex-wrap:wrap;">
+      <a href="/intelligenza-artificiale/Guida_Prompting.html" target="_blank" style="display:flex;align-items:center;gap:.6rem;background:#fff;border:1px solid var(--blue-light);border-radius:8px;padding:.6rem 1rem;text-decoration:none;font-size:.82rem;color:var(--blue-dark);font-weight:500;transition:all .2s;" onmouseover="this.style.borderColor='var(--blue-mid)';this.style.background='var(--blue-pale)'" onmouseout="this.style.borderColor='var(--blue-light)';this.style.background='#fff'">🤖 Guida al Prompting →</a>
+      <a href="/intelligenza-artificiale/Guida_PeerReview_IA.html" target="_blank" style="display:flex;align-items:center;gap:.6rem;background:#fff;border:1px solid var(--blue-light);border-radius:8px;padding:.6rem 1rem;text-decoration:none;font-size:.82rem;color:var(--blue-dark);font-weight:500;transition:all .2s;" onmouseover="this.style.borderColor='var(--blue-mid)';this.style.background='var(--blue-pale)'" onmouseout="this.style.borderColor='var(--blue-light)';this.style.background='#fff'">🔍 Peer-review tra IA →</a>
+    </div>
+  </div>
+</div>
 </body>
 </html>

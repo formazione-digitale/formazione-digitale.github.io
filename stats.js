@@ -7,6 +7,7 @@ const gcPagine = [
   '/index.html',
   '/intelligenza-artificiale/Guida_Prompting.html',
   '/intelligenza-artificiale/prompt-builder.html',
+  '/intelligenza-artificiale/Guida_PeerReview_IA.html',
   '/database/LibreOfficeBase_Query/Guida_LibreOfficeBase_Query.html',
   '/marketing/Guida_Marketing.html'
 ];

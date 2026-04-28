@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peer-review tra IA — Formazione Digitale</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<script src="/gc.js"></script>
+<style>
+/* ── RESET & TOKENS ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue-dark:   #1F4E79;
+  --blue-mid:    #2E75B6;
+  --blue-light:  #D6E8F7;
+  --blue-pale:   #EBF3FC;
+  --green-dark:  #1E6B3C;
+  --green-light: #E8F5EE;
+  --amber-dark:  #7D4E00;
+  --amber-light: #FFF3CD;
+  --red-dark:    #8B1A1A;
+  --red-light:   #FDECEA;
+  --purple-dark: #4A148C;
+  --purple-light:#F3E5F5;
+  --gray-dark:   #2C2C2C;
+  --gray-mid:    #666;
+  --gray-light:  #F5F5F5;
+  --white:       #FFFFFF;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --nav-w: 260px;
+  --header-h: 56px;
+  --radius: 8px;
+  --shadow: 0 2px 12px rgba(31,78,121,.10);
+  --transition: .22s cubic-bezier(.4,0,.2,1);
+}
+
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FBFF; line-height: 1.7; }
+
+/* ── HEADER ─────────────────────────────────────────────────────── */
+#header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--header-h);
+  background: var(--blue-dark);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.25rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,.18);
+}
+.header-left { display: flex; align-items: center; gap: .75rem; }
+.header-back { font-size: .78rem; color: rgba(255,255,255,.65); text-decoration: none; display: flex; align-items: center; gap: .3rem; transition: color .2s; }
+.header-back:hover { color: #fff; }
+.header-sep { width: 1px; height: 20px; background: rgba(255,255,255,.2); }
+.header-logo { font-family: var(--font-display); font-size: 1.05rem; color: #fff; letter-spacing: .01em; }
+.header-sub { font-size: .72rem; color: var(--blue-light); font-weight: 300; display: none; }
+@media(min-width:600px){ .header-sub { display: block; } }
+.header-right { display: flex; align-items: center; gap: .5rem; }
+
+/* Hamburger */
+#hamburger {
+  display: flex; flex-direction: column; justify-content: center; gap: 5px;
+  width: 36px; height: 36px; cursor: pointer; padding: 6px;
+  border-radius: 6px; transition: background var(--transition);
+}
+#hamburger:hover { background: rgba(255,255,255,.12); }
+#hamburger span { display: block; height: 2px; background: #fff; border-radius: 2px; transition: all var(--transition); }
+#hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+#hamburger.open span:nth-child(2) { opacity: 0; }
+#hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+@media(min-width:900px){ #hamburger { display: none; } }
+
+/* ── SIDEBAR ─────────────────────────────────────────────────────── */
+#sidebar {
+  position: fixed; top: var(--header-h); left: 0; bottom: 0; z-index: 90;
+  width: var(--nav-w); background: var(--white);
+  border-right: 1px solid var(--blue-light);
+  overflow-y: auto; padding: 1.25rem 0 2rem;
+  transform: translateX(-100%);
+  transition: transform var(--transition);
+  box-shadow: 2px 0 20px rgba(31,78,121,.08);
+}
+#sidebar.open { transform: translateX(0); }
+@media(min-width:900px){ #sidebar { transform: translateX(0); } }
+
+.nav-section-label {
+  font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--blue-mid); padding: .75rem 1.25rem .35rem; opacity: .7;
+}
+.nav-item {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .55rem 1.25rem; font-size: .84rem; color: var(--gray-mid);
+  text-decoration: none; cursor: pointer;
+  transition: all var(--transition); border-left: 3px solid transparent;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.nav-item:hover { color: var(--blue-dark); background: var(--blue-pale); border-left-color: var(--blue-light); }
+.nav-item.active { color: var(--blue-dark); background: var(--blue-pale); border-left-color: var(--blue-mid); font-weight: 500; }
+.nav-num { display: inline-flex; align-items: center; justify-content: center;
+  min-width: 22px; height: 22px; background: var(--blue-dark); color: #fff;
+  border-radius: 4px; font-size: .72rem; font-weight: 600; flex-shrink: 0; }
+.nav-item.active .nav-num { background: var(--blue-mid); }
+.nav-divider { border: none; border-top: 1px solid var(--blue-light); margin: .75rem 1.25rem; }
+
+/* ── MAIN CONTENT ────────────────────────────────────────────────── */
+#main {
+  margin-top: var(--header-h);
+  transition: margin-left var(--transition);
+  padding: 2rem 1.25rem 4rem;
+  max-width: 800px;
+}
+@media(min-width:900px){ #main { margin-left: var(--nav-w); padding: 2.5rem 2.5rem 4rem; } }
+@media(min-width:1200px){ #main { margin-left: var(--nav-w); max-width: 860px; padding: 3rem 3rem 4rem; } }
+
+#overlay {
+  display: none; position: fixed; inset: 0; z-index: 80;
+  background: rgba(0,0,0,.35); backdrop-filter: blur(2px);
+}
+#overlay.open { display: block; }
+@media(min-width:900px){ #overlay { display: none !important; } }
+
+/* ── SECTION STRUCTURE ──────────────────────────────────────────── */
+.guide-section { margin-bottom: 3.5rem; }
+.section-header {
+  display: flex; align-items: stretch; border-radius: var(--radius);
+  overflow: hidden; margin-bottom: 1.75rem; box-shadow: var(--shadow);
+}
+.section-num {
+  display: flex; align-items: center; justify-content: center;
+  min-width: 64px; background: var(--blue-dark);
+  font-family: var(--font-display); font-size: 2rem; color: #fff; padding: .75rem;
+}
+.section-titles {
+  flex: 1; background: var(--blue-pale); padding: .85rem 1.25rem;
+  border-left: 3px solid var(--blue-light);
+}
+.section-title { font-family: var(--font-display); font-size: 1.3rem; color: var(--blue-dark); line-height: 1.2; }
+.section-subtitle { font-size: .82rem; color: var(--blue-mid); font-style: italic; margin-top: .2rem; }
+.sub-title { font-size: 1.05rem; font-weight: 600; color: var(--blue-mid); margin: 1.5rem 0 .6rem; }
+p { margin-bottom: .85rem; font-size: .95rem; line-height: 1.75; color: #3a3a3a; }
+hr.section-divider { border: none; border-top: 2px solid var(--blue-light); margin: 3rem 0; }
+
+ul.guide-list, ol.guide-list { padding-left: 1.5rem; margin-bottom: .85rem; }
+ul.guide-list li, ol.guide-list li { font-size: .95rem; line-height: 1.75; color: #3a3a3a; margin-bottom: .3rem; }
+
+/* ── COVER ──────────────────────────────────────────────────────── */
+.cover-block {
+  background: linear-gradient(135deg, var(--blue-dark) 0%, #2A6099 100%);
+  border-radius: var(--radius); padding: 2.5rem 2rem 2rem;
+  box-shadow: 0 4px 24px rgba(31,78,121,.22); margin-bottom: .5rem;
+}
+.cover-title { font-family: var(--font-display); font-size: clamp(1.6rem,4vw,2.4rem); color: #fff; line-height: 1.15; margin-bottom: .4rem; }
+.cover-sub   { font-size: 1rem; color: var(--blue-light); font-style: italic; margin-bottom: .3rem; }
+.cover-desc  { font-size: .82rem; color: rgba(255,255,255,.6); margin-bottom: 1rem; }
+.cover-divider { border: none; border-top: 1px solid rgba(255,255,255,.2); margin: 1rem 0; }
+.cover-intro { font-size: .9rem; color: rgba(255,255,255,.82); line-height: 1.7; }
+
+/* ── BOXES ──────────────────────────────────────────────────────── */
+.box { border-radius: var(--radius); padding: .9rem 1.1rem; margin: 1rem 0; font-size: .9rem; line-height: 1.65; }
+.box-label { font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .35rem; }
+.box-tip   { background: var(--green-light); border-left: 4px solid var(--green-dark); }
+.box-tip .box-label { color: var(--green-dark); }
+.box-tip p { color: var(--green-dark); margin: 0; }
+.box-warn  { background: var(--amber-light); border-left: 4px solid var(--amber-dark); }
+.box-warn .box-label { color: var(--amber-dark); }
+.box-warn p { color: var(--amber-dark); margin: 0; }
+.box-note  { background: var(--gray-light); border-left: 4px solid #bbb; }
+.box-note p { color: var(--gray-mid); margin: 0; font-style: italic; }
+.box-info  { background: var(--blue-pale); border-left: 4px solid var(--blue-mid); }
+.box-info .box-label { color: var(--blue-dark); }
+.box-info p { color: var(--blue-dark); margin: 0; }
+.box-red   { background: var(--red-light); border-left: 4px solid var(--red-dark); }
+.box-red .box-label { color: var(--red-dark); }
+.box-red p { color: var(--red-dark); margin: 0; }
+
+/* ── PROMPT BLOCKS ──────────────────────────────────────────────── */
+.prompt-wrap { margin: 1.25rem 0; position: relative; }
+.prompt-label { font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--blue-mid); margin-bottom: .35rem; }
+.prompt-block {
+  background: #F0F5FA; border: 1px solid var(--blue-mid);
+  border-radius: var(--radius); padding: 1.1rem 3.5rem 1.1rem 1.25rem;
+  font-family: 'DM Mono', 'Fira Mono', 'Courier New', monospace;
+  font-size: .8rem; line-height: 1.8; position: relative;
+  white-space: pre-wrap; word-break: break-word; color: #1a1a1a;
+}
+.prompt-block .tag { color: var(--blue-dark); font-weight: 700; }
+.prompt-block .ph  { color: #7030A0; font-style: italic; }
+.copy-btn {
+  position: absolute; top: .6rem; right: .6rem;
+  background: var(--blue-dark); color: #fff; border: none; border-radius: 5px;
+  padding: .3rem .75rem; font-size: .72rem; font-family: var(--font-body);
+  cursor: pointer; transition: background var(--transition);
+  display: flex; align-items: center; gap: .3rem;
+}
+.copy-btn:hover { background: var(--blue-mid); }
+.copy-btn.copied { background: var(--green-dark); }
+
+/* ── COMPARISON TABLE ───────────────────────────────────────────── */
+.comparison-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .88rem; }
+.comparison-table th { background: var(--blue-dark); color: #fff; padding: .6rem .85rem; text-align: left; font-weight: 500; }
+.comparison-table td { padding: .65rem .85rem; border-bottom: 1px solid var(--blue-light); vertical-align: top; line-height: 1.55; }
+.comparison-table tr:nth-child(even) td { background: #FAFCFF; }
+.comparison-table .col-what { font-weight: 500; color: var(--blue-dark); }
+.comparison-table .col-combo { font-family: 'DM Mono','Courier New',monospace; font-size: .8rem; color: var(--gray-dark); }
+.comparison-table .col-why  { font-size: .84rem; color: var(--gray-mid); }
+
+/* ── DO/DON'T ───────────────────────────────────────────────────── */
+.dodont { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin: 1rem 0; }
+@media(max-width:600px){ .dodont { grid-template-columns: 1fr; } }
+.do-col   { background: var(--green-light); border-radius: var(--radius); padding: .9rem 1rem; }
+.dont-col { background: var(--red-light);   border-radius: var(--radius); padding: .9rem 1rem; }
+.dodont-title { font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: .6rem; }
+.do-col .dodont-title   { color: var(--green-dark); }
+.dont-col .dodont-title { color: var(--red-dark); }
+.dodont li { font-size: .85rem; line-height: 1.6; margin-bottom: .3rem; list-style: none; padding-left: 1.2rem; position: relative; }
+.do-col li::before   { content: "✓"; position: absolute; left: 0; color: var(--green-dark); font-weight: 700; }
+.dont-col li::before { content: "✗"; position: absolute; left: 0; color: var(--red-dark); font-weight: 700; }
+
+/* ── SCENARIO CARDS ─────────────────────────────────────────────── */
+.scenario-cards { display: flex; flex-direction: column; gap: .75rem; margin: 1rem 0; }
+.scenario-card { border-radius: var(--radius); border: 1px solid var(--blue-light); box-shadow: var(--shadow); overflow: hidden; }
+.scenario-card-header {
+  display: flex; align-items: center; gap: .75rem;
+  background: var(--blue-pale); padding: .7rem 1rem;
+  cursor: pointer; user-select: none; transition: background var(--transition);
+}
+.scenario-card-header:hover { background: var(--blue-light); }
+.scenario-letter { font-family: var(--font-display); font-size: 1.2rem; color: var(--blue-dark); min-width: 28px; }
+.scenario-name   { font-weight: 600; color: var(--blue-dark); font-size: .95rem; }
+.scenario-toggle { margin-left: auto; font-size: .75rem; transition: transform var(--transition); color: var(--blue-mid); }
+.scenario-card.open .scenario-toggle { transform: rotate(180deg); }
+.scenario-body { display: none; padding: 1rem 1.1rem; background: #fff; border-top: 1px solid var(--blue-light); }
+.scenario-card.open .scenario-body { display: block; }
+
+/* ── CHECKLIST ──────────────────────────────────────────────────── */
+.checklist { display: flex; flex-direction: column; gap: .45rem; margin: 1rem 0; }
+.check-item {
+  display: flex; align-items: flex-start; gap: .75rem;
+  background: var(--white); border: 1px solid var(--blue-light);
+  border-radius: var(--radius); padding: .7rem .9rem;
+  cursor: pointer; transition: all var(--transition); user-select: none;
+}
+.check-item:hover { background: var(--blue-pale); }
+.check-item.checked { background: var(--green-light); border-color: var(--green-dark); }
+.check-box {
+  width: 20px; height: 20px; flex-shrink: 0;
+  border: 2px solid var(--blue-mid); border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--transition); margin-top: 1px;
+}
+.check-item.checked .check-box { background: var(--green-dark); border-color: var(--green-dark); }
+.check-item.checked .check-box::after { content: "✓"; color: #fff; font-size: .75rem; font-weight: 700; }
+.check-text { font-size: .88rem; line-height: 1.5; color: #3a3a3a; }
+.check-item.checked .check-text { color: var(--green-dark); }
+
+/* ── GLOSSARY ───────────────────────────────────────────────────── */
+.glossary { display: flex; flex-direction: column; gap: .5rem; margin: 1rem 0; }
+.gloss-item { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--blue-light); }
+.gloss-term {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--blue-pale); padding: .65rem 1rem;
+  font-weight: 600; font-size: .9rem; color: var(--blue-dark);
+  cursor: pointer; user-select: none; transition: background var(--transition);
+}
+.gloss-term:hover { background: var(--blue-light); }
+.gloss-arrow { transition: transform var(--transition); font-size: .75rem; }
+.gloss-def { display: none; padding: .75rem 1rem; font-size: .88rem; color: #3a3a3a; background: #fff; border-top: 1px solid var(--blue-light); }
+.gloss-item.open .gloss-arrow { transform: rotate(90deg); }
+.gloss-item.open .gloss-def { display: block; }
+
+/* ── LINK GUIDA PROMPTING ───────────────────────────────────────── */
+.related-link {
+  display: flex; align-items: center; gap: 1rem;
+  background: var(--blue-pale); border: 1px solid var(--blue-light);
+  border-radius: var(--radius); padding: 1rem 1.25rem; margin: 1.5rem 0;
+  text-decoration: none; transition: all var(--transition);
+}
+.related-link:hover { background: var(--blue-light); border-color: var(--blue-mid); }
+.related-link-icon { font-size: 1.8rem; flex-shrink: 0; }
+.related-link-text strong { display: block; font-size: .9rem; color: var(--blue-dark); margin-bottom: .15rem; }
+.related-link-text span   { font-size: .8rem; color: var(--gray-mid); }
+.related-link-arrow { margin-left: auto; color: var(--blue-mid); font-size: 1.1rem; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ──────────────────────────────────────────────────────── -->
+<header id="header">
+  <div class="header-left">
+    <a href="/index.html" class="header-back">← Portale</a>
+    <div class="header-sep"></div>
+    <div>
+      <div class="header-logo">Peer-review tra IA</div>
+      <div class="header-sub">Far valutare l'output di un modello da un altro</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div id="hamburger" onclick="toggleSidebar()" role="button" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+
+<!-- ── SIDEBAR ──────────────────────────────────────────────────────── -->
+<nav id="sidebar">
+  <div class="nav-section-label">Sezioni</div>
+  <a class="nav-item active" href="#intro" onclick="navClick(this)">
+    <span class="nav-num">⊙</span> Introduzione
+  </a>
+  <a class="nav-item" href="#sec1" onclick="navClick(this)">
+    <span class="nav-num">1</span> Stesso modello o diverso?
+  </a>
+  <a class="nav-item" href="#sec2" onclick="navClick(this)">
+    <span class="nav-num">2</span> Il prompt di handoff
+  </a>
+  <a class="nav-item" href="#sec3" onclick="navClick(this)">
+    <span class="nav-num">3</span> Tre scenari pratici
+  </a>
+  <a class="nav-item" href="#sec4" onclick="navClick(this)">
+    <span class="nav-num">4</span> Quando NON farlo
+  </a>
+  <hr class="nav-divider">
+  <div class="nav-section-label">Appendice</div>
+  <a class="nav-item" href="#appA" onclick="navClick(this)">
+    <span class="nav-num">A</span> Checklist
+  </a>
+  <a class="nav-item" href="#appB" onclick="navClick(this)">
+    <span class="nav-num">B</span> Glossario
+  </a>
+</nav>
+
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<!-- ── MAIN ──────────────────────────────────────────────────────────── -->
+<main id="main">
+
+<!-- INTRO -->
+<section class="guide-section scroll-anchor" id="intro">
+  <div class="cover-block">
+    <div class="cover-title">Peer-review tra intelligenze artificiali</div>
+    <div class="cover-sub">Far valutare l'output di un'IA da un'altra IA — e quando ha senso farlo</div>
+    <div class="cover-desc">Guida pratica · Formazione Digitale</div>
+    <hr class="cover-divider">
+    <div class="cover-intro">
+      Hai generato un materiale didattico con l'IA. Sembra buono. Ma come fai a sapere se ha punti deboli che non riesci a vedere proprio perché l'hai appena creato?<br><br>
+      Questa guida descrive la pratica della <strong style="color:#fff;">peer-review tra modelli</strong>: usare una seconda istanza — dello stesso modello o di uno diverso — per revisionare l'output della prima. Non per sostituire il tuo giudizio, ma per alzare la qualità della bozza prima che arrivi a te.
+    </div>
+  </div>
+
+  <div class="box box-info" style="margin-top:1.5rem;">
+    <div class="box-label">💡 Il principio di fondo</div>
+    <p>Ogni modello ha punti ciechi — argomenti o errori che tende a non notare nei propri output. Un secondo modello legge senza il <strong>bias di conferma</strong> del primo, e trova quello che il primo si era perso.</p>
+  </div>
+
+  <a class="related-link" href="/intelligenza-artificiale/Guida_Prompting.html">
+    <div class="related-link-icon">🤖</div>
+    <div class="related-link-text">
+      <strong>Non hai ancora letto la Guida al Prompting?</strong>
+      <span>La peer-review presuppone di saper scrivere prompt strutturati. Parti da lì.</span>
+    </div>
+    <div class="related-link-arrow">→</div>
+  </a>
+  <a class="related-link" href="/intelligenza-artificiale/prompt-builder.html">
+    <div class="related-link-icon">📋</div>
+    <div class="related-link-text">
+      <strong>Prompt Builder</strong>
+      <span>Costruisci il prompt di handoff in modo guidato — preset, libreria, condivisione via link.</span>
+    </div>
+    <div class="related-link-arrow">→</div>
+  </a>
+</section>
+
+<hr class="section-divider">
+
+<!-- SEZIONE 1 -->
+<section class="guide-section scroll-anchor" id="sec1">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div class="section-titles">
+      <div class="section-title">Stesso modello o modello diverso?</div>
+      <div class="section-subtitle">La scelta dipende da cosa vuoi ottenere</div>
+    </div>
+  </div>
+
+  <p>La regola pratica è semplice:</p>
+
+  <div class="box box-info">
+    <div class="box-label">Regola pratica</div>
+    <p><strong>Usa lo stesso modello quando vuoi essere efficiente.</strong> Usa un modello diverso quando vuoi essere sorpreso.<br>Se hai già un'ipotesi sul problema → stesso modello. Se vuoi scoprire problemi che non hai ancora immaginato → cambia modello.</p>
+  </div>
+
+  <p>La tabella seguente ti aiuta a scegliere caso per caso:</p>
+
+  <table class="comparison-table">
+    <thead>
+      <tr><th>Cosa vuoi controllare</th><th>Combinazione consigliata</th><th>Perché funziona</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="col-what">Errori di contenuto disciplinare</td>
+        <td class="col-combo">Stesso modello, nuova conversazione</td>
+        <td class="col-why">Risposta rapida, stesso lessico. Funziona quando sai già dove guardare.</td>
+      </tr>
+      <tr>
+        <td class="col-what">Chiarezza del testo per gli studenti</td>
+        <td class="col-combo">Claude + Gemini</td>
+        <td class="col-why">Gemini è più attento alla leggibilità e alla struttura logica espositiva.</td>
+      </tr>
+      <tr>
+        <td class="col-what">Casi limite e situazioni inattese (BES, domanda fuori traccia, caso ambiguo)</td>
+        <td class="col-combo">Claude + GPT-4</td>
+        <td class="col-why">GPT-4 esplora scenari al bordo che il primo modello non ha considerato.</td>
+      </tr>
+      <tr>
+        <td class="col-what">Coerenza interna su un progetto lungo (UDA intera, percorso multi-settimana)</td>
+        <td class="col-combo">Stessa istanza con tutto il contesto</td>
+        <td class="col-why">Portare il contesto a un secondo modello introduce dispersione.</td>
+      </tr>
+      <tr>
+        <td class="col-what">Scelte pedagogiche discutibili</td>
+        <td class="col-combo">Modello diverso da quello che ha generato</td>
+        <td class="col-why">Il modello che ha prodotto l'output tende a difenderlo. Un altro lo valuta senza attaccamento.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box box-warn">
+    <div class="box-label">⚠ Limite strutturale</div>
+    <p>La peer-review AI non sa come reagisce una classe reale a un materiale. <strong>Il test sul campo è insostituibile.</strong> Nessun modello sostituisce la verifica con gli studenti reali.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SEZIONE 2 -->
+<section class="guide-section scroll-anchor" id="sec2">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div class="section-titles">
+      <div class="section-title">Il prompt di handoff</div>
+      <div class="section-subtitle">Il vero collo di bottiglia non è quale modello scegliere</div>
+    </div>
+  </div>
+
+  <p>Il problema principale non è quale modello usare per la review — è <strong>come trasferisci il contesto</strong> da una conversazione all'altra. Un secondo modello valuta quello che gli dai: se il briefing è vago, la review sarà inutile.</p>
+
+  <div class="sub-title">2.1  Struttura del prompt di handoff</div>
+  <div class="prompt-wrap">
+    <div class="prompt-label">Template — copia e personalizza</div>
+    <div class="prompt-block" id="p-handoff"><span class="tag"># RUOLO</span>
+Agisci come revisore esperto di materiali didattici.
+Il tuo compito è identificare debolezze, non complimentarti.
+
+<span class="tag"># CONTESTO</span>
+Disciplina: <span class="ph">[DISCIPLINA]</span>
+Classe e livello: <span class="ph">[es. Terza, livello intermedio]</span>
+Obiettivo del materiale: <span class="ph">[es. verifica sommativa, scheda laboratorio, rubrica]</span>
+
+<span class="tag"># MATERIALE DA REVISIONARE</span>
+<span class="ph">[INCOLLA QUI L'OUTPUT DA REVISIONARE]</span>
+
+<span class="tag"># COSA CONTROLLARE</span>
+Fornisci una review in tre parti:
+1. PROBLEMI CERTI — errori, imprecisioni, contraddizioni interne
+2. RISCHI POTENZIALI — punti che potrebbero creare difficoltà in classe
+3. MIGLIORAMENTI SUGGERITI — massimo 3, in ordine di priorità
+
+<span class="tag"># VINCOLO</span>
+Non riscrivere il materiale.
+Segnala solo dove e perché intervenire.<button class="copy-btn" onclick="copyPrompt('p-handoff',event)">📋 Copia</button></div>
+  </div>
+
+  <div class="box box-tip">
+    <div class="box-label">💡 Il vincolo finale è il più importante</div>
+    <p>Se non dici "non riscrivere", il secondo modello tenderà a produrre una versione alternativa. Tu vuoi una <strong>diagnosi</strong>, non una sostituzione.</p>
+  </div>
+
+  <div class="sub-title">2.2  Cosa non dimenticare nel handoff</div>
+  <div class="dodont">
+    <div class="do-col">
+      <div class="dodont-title">✓ Includi sempre</div>
+      <ul>
+        <li>Disciplina e classe di riferimento</li>
+        <li>Obiettivo specifico del materiale</li>
+        <li>Cosa vuoi che il revisore controlli</li>
+        <li>Il vincolo "non riscrivere"</li>
+        <li>Il materiale completo, non un estratto</li>
+      </ul>
+    </div>
+    <div class="dont-col">
+      <div class="dodont-title">✗ Evita</div>
+      <ul>
+        <li>Dare il materiale senza contesto</li>
+        <li>Chiedere "cosa ne pensi?" senza criteri</li>
+        <li>Spiegare che è stato generato da un'IA</li>
+        <li>Chiedere una revisione e una riscrittura insieme</li>
+        <li>Incollare solo una parte del materiale</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box box-note">
+    <p>Perché non dire che è stato generato da un'IA? Perché vuoi uno sguardo neutro, non una difesa dell'output precedente. Il secondo modello non deve sapere da dove viene il materiale — questo è intenzionale.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SEZIONE 3 -->
+<section class="guide-section scroll-anchor" id="sec3">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div class="section-titles">
+      <div class="section-title">Tre scenari pratici</div>
+      <div class="section-subtitle">Casi d'uso con varianti avanzate del prompt di handoff</div>
+    </div>
+  </div>
+
+  <div class="scenario-cards">
+
+    <div class="scenario-card open" onclick="toggleScenario(this)">
+      <div class="scenario-card-header">
+        <span class="scenario-letter">A</span>
+        <span class="scenario-name">Verificare la gradazione tra livelli di una verifica</span>
+        <span class="scenario-toggle">▼</span>
+      </div>
+      <div class="scenario-body">
+        <p>Hai generato una verifica e vuoi controllare che le domande siano davvero di livelli diversi.</p>
+        <p>Apri una nuova conversazione con lo stesso modello. Non incollare la verifica subito: prima dai il contesto (disciplina, classe, obiettivi della UDA), poi chiedi di valutare <em>solo</em> la gradazione tra livelli.</p>
+        <div class="prompt-wrap">
+          <div class="prompt-block" id="p-verifica-rev"><span class="tag"># RUOLO</span>
+Agisci come esperto di docimologia scolastica.
+
+<span class="tag"># COMPITO</span>
+Analizza la seguente verifica e valuta esclusivamente
+se le domande rispettano una gradazione crescente di difficoltà
+(conoscenza → comprensione → applicazione → analisi).
+
+<span class="tag"># COSA FORNIRE</span>
+Per ogni domanda: livello cognitivo rilevato, motivazione,
+eventuale disallineamento rispetto alla posizione nella verifica.
+
+<span class="tag"># VERIFICA DA ANALIZZARE</span>
+<span class="ph">[INCOLLA LA VERIFICA]</span>
+
+<span class="tag"># VINCOLO</span>
+Non suggerire domande alternative. Solo diagnosi.<button class="copy-btn" onclick="copyPrompt('p-verifica-rev',event)">📋 Copia</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scenario-card" onclick="toggleScenario(this)">
+      <div class="scenario-card-header">
+        <span class="scenario-letter">B</span>
+        <span class="scenario-name">Individuare istruzioni ambigue in una scheda laboratorio</span>
+        <span class="scenario-toggle">▼</span>
+      </div>
+      <div class="scenario-body">
+        <p>Usa un modello diverso da quello che ha generato la scheda. Nel prompt aggiungi la simulazione del punto di vista dello studente:</p>
+        <div class="prompt-wrap">
+          <div class="prompt-block" id="p-lab-rev"><span class="tag"># RUOLO</span>
+Agisci come studente di terza che non ha mai
+svolto questa attività di laboratorio.
+
+<span class="tag"># COMPITO</span>
+Leggi le istruzioni seguenti e segnala:
+1. Ogni punto in cui potresti bloccarti
+2. Quale domanda faresti al docente al passo in cui ti fermi
+3. Quali termini tecnici non comprenderesti senza spiegazione
+
+<span class="tag"># SCHEDA DA ANALIZZARE</span>
+<span class="ph">[INCOLLA LA SCHEDA]</span>
+
+<span class="tag"># VINCOLO</span>
+Non riscrivere le istruzioni. Solo segnala i punti critici.<button class="copy-btn" onclick="copyPrompt('p-lab-rev',event)">📋 Copia</button></div>
+        </div>
+        <div class="box box-tip" style="margin-top:.75rem;">
+          <div class="box-label">💡 Tecnica avanzata</div>
+          <p>Chiedi al secondo modello di simulare uno studente <em>in difficoltà</em> — non solo dove le istruzioni sono ambigue, ma quale domanda farebbe un ragazzo che si blocca al passo 3.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scenario-card" onclick="toggleScenario(this)">
+      <div class="scenario-card-header">
+        <span class="scenario-letter">C</span>
+        <span class="scenario-name">Verificare l'oggettività dei descrittori di una rubrica</span>
+        <span class="scenario-toggle">▼</span>
+      </div>
+      <div class="scenario-body">
+        <p>Vuoi sapere se i descrittori della rubrica sono davvero applicabili in modo univoco. Usa il <strong>test del docente supplente</strong>:</p>
+        <div class="prompt-wrap">
+          <div class="prompt-block" id="p-rubrica-rev"><span class="tag"># RUOLO</span>
+Agisci come esperto di valutazione scolastica.
+
+<span class="tag"># COMPITO</span>
+Per ogni descrittore della rubrica seguente, valuta se
+un docente supplente — che non conosce la classe —
+potrebbe applicarlo in modo univoco senza ambiguità.
+Se no, segnala quale parola o criterio è ambiguo
+e perché due docenti potrebbero valutarlo diversamente.
+
+<span class="tag"># RUBRICA DA ANALIZZARE</span>
+<span class="ph">[INCOLLA LA RUBRICA]</span>
+
+<span class="tag"># VINCOLO</span>
+Non riscrivere i descrittori. Solo diagnosi degli elementi ambigui.<button class="copy-btn" onclick="copyPrompt('p-rubrica-rev',event)">📋 Copia</button></div>
+        </div>
+        <div class="box box-info" style="margin-top:.75rem;">
+          <div class="box-label">🔍 Il test del docente supplente</div>
+          <p>È uno degli strumenti più utili per smascherare descrittori apparentemente precisi che in realtà non lo sono. Se un supplente non può applicare il criterio senza conoscere il docente titolare, il criterio non è oggettivo.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SEZIONE 4 -->
+<section class="guide-section scroll-anchor" id="sec4">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div class="section-titles">
+      <div class="section-title">Quando NON fare peer-review AI</div>
+      <div class="section-subtitle">Evitare il loop del perfezionismo assistito</div>
+    </div>
+  </div>
+
+  <div class="box box-red" style="margin-bottom:1.5rem;">
+    <div class="box-label">⚠ Il rischio più sottile</div>
+    <p><strong>Stai cercando una conferma, non una critica reale.</strong> Se hai già deciso che il materiale è buono e vuoi solo sentirti dire di sì, la peer-review AI ti darà quello che vuoi — e non ti sarà utile. La peer-review ha senso solo quando sei genuinamente disposto a ricevere feedback negativi e ad agire su di essi.</p>
+  </div>
+
+  <div class="dodont">
+    <div class="do-col">
+      <div class="dodont-title">✓ Fai la peer-review quando…</div>
+      <ul>
+        <li>Il materiale sarà usato con molti studenti e un errore ha alto impatto</li>
+        <li>Hai dubbi specifici che sai già articolare nel prompt di handoff</li>
+        <li>Stai progettando qualcosa di nuovo che non hai mai testato in classe</li>
+        <li>Il materiale riguarda argomenti valutativi o sensibili</li>
+      </ul>
+    </div>
+    <div class="dont-col">
+      <div class="dodont-title">✗ Evita quando…</div>
+      <ul>
+        <li>Non hai tempo per leggere e integrare il feedback ricevuto</li>
+        <li>Il materiale è una bozza esplorativa che modificherai comunque</li>
+        <li>Il contesto è così lungo da non poterlo trasferire senza perdere informazioni cruciali</li>
+        <li>Stai cercando una conferma, non una critica reale</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box box-warn">
+    <div class="box-label">⚠ Il rischio del loop</div>
+    <p>Peer-review → revisione → nuova peer-review → nuova revisione. Il perfezionismo assistito dall'IA può diventare una trappola. <strong>Stabilisci in anticipo quante iterazioni fare</strong> — di solito una è sufficiente.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- APPENDICE A — CHECKLIST -->
+<section class="guide-section scroll-anchor" id="appA">
+  <div class="section-header">
+    <div class="section-num">A</div>
+    <div class="section-titles">
+      <div class="section-title">Checklist prima di avviare una peer-review</div>
+      <div class="section-subtitle">Spunta ogni voce — poi procedi</div>
+    </div>
+  </div>
+
+  <div class="checklist">
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text">Ho un obiettivo chiaro per la review — so cosa voglio controllare</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text">Ho scelto il modello giusto in base a cosa voglio trovare</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text">Il prompt di handoff include: ruolo, contesto, materiale completo, cosa controllare, vincolo "non riscrivere"</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text">Non ho detto al secondo modello che il materiale è stato generato da un'IA</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text">Ho tempo per leggere e integrare il feedback prima di usare il materiale</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text">Ho stabilito che farò al massimo una iterazione di review</div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text">Sono genuinamente disposto a ricevere feedback negativi — non sto cercando conferme</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- APPENDICE B — GLOSSARIO -->
+<section class="guide-section scroll-anchor" id="appB">
+  <div class="section-header">
+    <div class="section-num">B</div>
+    <div class="section-titles">
+      <div class="section-title">Glossario</div>
+      <div class="section-subtitle">I termini usati in questa guida</div>
+    </div>
+  </div>
+
+  <div class="glossary">
+    <div class="gloss-item" onclick="toggleGloss(this)">
+      <div class="gloss-term">Peer-review AI <span class="gloss-arrow">▶</span></div>
+      <div class="gloss-def">La pratica di usare un secondo modello linguistico per revisionare l'output prodotto da un primo modello. Il termine prende in prestito il concetto di revisione tra pari dalla ricerca accademica.</div>
+    </div>
+    <div class="gloss-item" onclick="toggleGloss(this)">
+      <div class="gloss-term">Bias di conferma <span class="gloss-arrow">▶</span></div>
+      <div class="gloss-def">La tendenza a notare e valorizzare le informazioni che confermano ciò che si crede già, ignorando quelle contrarie. I modelli AI mostrano questo comportamento nei confronti del proprio output: tendono a difenderlo e a non notarne i difetti.</div>
+    </div>
+    <div class="gloss-item" onclick="toggleGloss(this)">
+      <div class="gloss-term">Prompt di handoff <span class="gloss-arrow">▶</span></div>
+      <div class="gloss-def">Il prompt strutturato che si usa per trasferire il contesto da una conversazione all'altra quando si chiede a un secondo modello di revisionare un output. Un handoff ben fatto include: ruolo del revisore, contesto disciplinare, materiale completo, criteri di revisione, vincoli.</div>
+    </div>
+    <div class="gloss-item" onclick="toggleGloss(this)">
+      <div class="gloss-term">Test del docente supplente <span class="gloss-arrow">▶</span></div>
+      <div class="gloss-def">Tecnica per valutare l'oggettività di una rubrica: si chiede al modello di verificare se un docente che non conosce la classe potrebbe applicare ogni descrittore in modo univoco. Se no, il criterio non è sufficientemente oggettivo.</div>
+    </div>
+    <div class="gloss-item" onclick="toggleGloss(this)">
+      <div class="gloss-term">Istanza <span class="gloss-arrow">▶</span></div>
+      <div class="gloss-def">Una singola conversazione aperta con un modello AI. Due istanze dello stesso modello sono completamente indipendenti: non condividono memoria, contesto o preferenze. Questo le rende adatte alla peer-review proprio perché la seconda "non sa" nulla di ciò che ha prodotto la prima.</div>
+    </div>
+    <div class="gloss-item" onclick="toggleGloss(this)">
+      <div class="gloss-term">Loop di perfezionismo <span class="gloss-arrow">▶</span></div>
+      <div class="gloss-def">Il ciclo non produttivo di peer-review → revisione → nuova peer-review → nuova revisione. Si innesca quando non si stabilisce in anticipo un limite al numero di iterazioni. Una iterazione è quasi sempre sufficiente.</div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+// ── SIDEBAR ──────────────────────────────────────────────────────
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('open');
+}
+function navClick(el) {
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  if (window.innerWidth < 900) toggleSidebar();
+}
+
+// ── COPY ─────────────────────────────────────────────────────────
+function copyPrompt(id, e) {
+  e.stopPropagation();
+  const block = document.getElementById(id);
+  const text = block.innerText.replace(/📋\s*Copia$/,'').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = block.querySelector('.copy-btn');
+    btn.classList.add('copied'); btn.textContent = '✓ Copiato!';
+    setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '📋 Copia'; }, 2200);
+  });
+}
+
+// ── ACCORDION SCENARI ─────────────────────────────────────────────
+function toggleScenario(card) {
+  card.classList.toggle('open');
+}
+
+// ── GLOSSARIO ─────────────────────────────────────────────────────
+function toggleGloss(item) { item.classList.toggle('open'); }
+
+// ── CHECKLIST ─────────────────────────────────────────────────────
+function toggleCheck(item) { item.classList.toggle('checked'); }
+
+// ── SCROLL SPY ───────────────────────────────────────────────────
+const anchors = document.querySelectorAll('.scroll-anchor');
+const navItems = document.querySelectorAll('.nav-item');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navItems.forEach(n => n.classList.remove('active'));
+      const active = document.querySelector(`.nav-item[href="#${e.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+anchors.forEach(a => obs.observe(a));
+</script>
+</body>
+</html>
