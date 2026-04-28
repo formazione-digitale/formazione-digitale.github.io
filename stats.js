@@ -42,7 +42,7 @@ async function loadGoatStats() {
 	// aggregated.unshift({ label: 'Home', count: homeCount });
 
     // Totale pageview
-    const totale = aggregated.reduce((s, p) => s + p.count, 0);
+    const totale = aggregated.reduce((s, p) => s + p.count, 0) + homeCount;
     const elTot  = document.getElementById('gc-total');
     if (elTot) elTot.textContent = totale >= 1000
       ? (totale / 1000).toFixed(1) + 'k'
