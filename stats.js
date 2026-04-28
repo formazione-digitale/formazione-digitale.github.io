@@ -10,6 +10,7 @@ const gcPagine = [
   { path: '/intelligenza-artificiale/Guida_PeerReview_IA.html',                  label: 'Peer Review IA' },
   { path: '/database/LibreOfficeBase_Query/Guida_LibreOfficeBase_Query.html',    label: 'LibreOffice Base' },
   { path: '/marketing/Guida_Marketing.html',                                      label: 'Marketing' },
+  { path: '/word/Guida_Word.html',                                                label: 'Guida Word' },
 ];
 
 // ── Non modificare da qui in poi ────────────────────────────────

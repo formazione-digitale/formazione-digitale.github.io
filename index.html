@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
 <meta charset="UTF-8">
@@ -306,6 +306,22 @@ main { max-width: 1040px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
 .card-active.card-purple:hover .card-title  { color: var(--purple-dark); }
 .card-active.card-purple:hover .card-footer { background: var(--purple-light); }
 .card-active.card-purple .card-footer { border-color: #d4b8e8; }
+
+/* Variante Word / Microsoft 365 */
+.card-active.card-word {
+  background: linear-gradient(160deg, #F0F7FF 0%, #DEECF9 100%);
+  border-color: #9DC3E6;
+}
+.card-active.card-word:hover {
+  box-shadow: 0 10px 36px rgba(0,120,212,.18);
+  transform: translateY(-5px);
+  border-color: #0078D4;
+}
+.card-active.card-word:hover .card-title  { color: #0078D4; }
+.card-active.card-word:hover .card-footer { background: #DEECF9; }
+.card-active.card-word .card-footer       { border-color: #9DC3E6; }
+.tag-word   { background: #DEECF9; color: #0078D4; }
+.badge-word { background: #0078D4; }
 
 /* ── TIPO 1 · CARD-FEATURED ─────────────────────────────── */
 .card-featured {
@@ -716,27 +732,31 @@ body.modal-open { overflow: hidden; }
     </div>
     <div class="cards cards-2" id="cards-guide">
 
-      <div class="card card-featured" data-cat="guide" data-tags="ia prompting didattica docenti meta-prompt">
-        <div class="card-badge-strip"></div>
-        <a href="intelligenza-artificiale/Guida_Prompting.html">
+      <!-- RIGA 1: strumenti "tradizionali" -->
+
+      <!-- CARD: Guida Word -->
+      <div class="card card-active card-word" data-cat="guide" data-tags="word microsoft office 365 documento testo formattazione stili tabelle indice stampa unione">
+        <div class="card-badge-strip badge-word"></div>
+        <a href="word/Guida_Word.html" target="_blank">
           <div class="card-body">
-            <div class="card-icon">🤖</div>
+            <div class="card-icon">📝</div>
             <div class="card-category cat-guide">Guida completa</div>
-            <div class="card-title">Guida al Prompting con l'IA</div>
+            <div class="card-title">Microsoft Word — Guida pratica</div>
             <div class="card-tags">
-              <span class="tag tag-blue">Intelligenza Artificiale</span>
-              <span class="tag tag-blue">Prompting</span>
-              <span class="tag tag-blue">Meta-prompt</span>
+              <span class="tag tag-word">Word</span>
+              <span class="tag tag-word">Microsoft 365</span>
+              <span class="tag tag-word">Office</span>
             </div>
-            <div class="card-desc">Dal prompt semplice al meta-prompt. Anatomia di un prompt efficace, tre esempi completi, template editabili e modalità presentazione per l'aula.</div>
+            <div class="card-desc">Stili, tabelle, indice automatico, stampa unione e molto altro. Con 61 screenshot e PDF scaricabile.</div>
           </div>
           <div class="card-footer">
-            <div class="card-meta">Aggiornata · Livello base–intermedio</div>
+            <div class="card-meta">Con PDF · 61 screenshot · Livello base–avanzato</div>
             <div class="card-cta">Apri la guida <span class="arrow">→</span></div>
           </div>
         </a>
       </div>
 
+      <!-- CARD: LibreOffice Base -->
       <div class="card card-active card-blue" data-cat="guide" data-tags="libreoffice base query database sql odb">
         <div class="card-badge-strip badge-blue"></div>
         <a href="database/LibreOfficeBase_Query/Guida_LibreOfficeBase_Query.html">
@@ -758,6 +778,7 @@ body.modal-open { overflow: hidden; }
         </a>
       </div>
 
+      <!-- CARD: Marketing -->
       <div class="card card-active card-purple" data-cat="guide" data-tags="marketing e-commerce digital marketing leva comunicazione mix commerciale">
         <div class="card-badge-strip badge-purple"></div>
         <a href="marketing/Guida_Marketing.html">
@@ -779,7 +800,31 @@ body.modal-open { overflow: hidden; }
         </a>
       </div>
 
-      <!-- CARD: Peer-review tra IA — ACTIVE -->
+      <!-- RIGA 2: Intelligenza Artificiale -->
+
+      <!-- CARD: Guida Prompting — FEATURED -->
+      <div class="card card-featured" data-cat="guide" data-tags="ia prompting didattica docenti meta-prompt">
+        <div class="card-badge-strip"></div>
+        <a href="intelligenza-artificiale/Guida_Prompting.html">
+          <div class="card-body">
+            <div class="card-icon">🤖</div>
+            <div class="card-category cat-guide">Guida completa</div>
+            <div class="card-title">Guida al Prompting con l'IA</div>
+            <div class="card-tags">
+              <span class="tag tag-blue">Intelligenza Artificiale</span>
+              <span class="tag tag-blue">Prompting</span>
+              <span class="tag tag-blue">Meta-prompt</span>
+            </div>
+            <div class="card-desc">Dal prompt semplice al meta-prompt. Anatomia di un prompt efficace, tre esempi completi, template editabili e modalità presentazione per l'aula.</div>
+          </div>
+          <div class="card-footer">
+            <div class="card-meta">Aggiornata · Livello base–intermedio</div>
+            <div class="card-cta">Apri la guida <span class="arrow">→</span></div>
+          </div>
+        </a>
+      </div>
+
+      <!-- CARD: Peer-review tra IA -->
       <div class="card card-active card-blue" data-cat="guide" data-tags="peer review ia intelligenza artificiale valutazione prompt handoff modelli claude gemini gpt">
         <div class="card-badge-strip badge-blue"></div>
         <a href="intelligenza-artificiale/Guida_PeerReview_IA.html" target="_blank">
@@ -801,6 +846,7 @@ body.modal-open { overflow: hidden; }
         </a>
       </div>
 
+      <!-- COMING -->
       <div class="card coming" data-cat="guide" data-tags="">
         <div class="card-badge-strip"></div>
         <div class="card-body">

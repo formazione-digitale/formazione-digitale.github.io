@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guida sintetica a Microsoft Word — Formazione Digitale</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<script src="/gc.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ms-blue:      #0078D4;
+  --ms-blue-dark: #005A9E;
+  --ms-blue-light:#C7E0F4;
+  --ms-blue-pale: #EFF6FC;
+  --ms-orange:    #C55A11;
+  --ms-orange-lt: #FCE4D6;
+  --ms-green:     #107C10;
+  --ms-green-lt:  #DFF6DD;
+  --ms-gray:      #323130;
+  --ms-gray-mid:  #605E5C;
+  --ms-gray-light:#F3F2F1;
+  --ms-gray-xlt:  #FAF9F8;
+  --ms-red:       #A4262C;
+  --ms-red-lt:    #FDE7E9;
+  --white:        #FFFFFF;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --nav-w:        260px;
+  --header-h:     56px;
+  --topnav-h:     40px;
+  --radius:       6px;
+  --shadow:       0 2px 8px rgba(0,0,0,.10);
+  --trans:        .2s cubic-bezier(.4,0,.2,1);
+}
+html { font-size: 16px; scroll-behavior: smooth; }
+body { font-family: var(--font-body); color: var(--ms-gray); background: var(--ms-gray-xlt); line-height: 1.7; }
+
+/* HEADER */
+#header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--header-h); background: var(--ms-blue);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+.header-left { display: flex; align-items: center; gap: .75rem; }
+.header-back { font-size: .78rem; color: rgba(255,255,255,.75); text-decoration: none; transition: color .2s; }
+.header-back:hover { color: #fff; }
+.header-sep { width: 1px; height: 20px; background: rgba(255,255,255,.25); }
+.header-title { font-family: var(--font-display); font-size: 1.05rem; color: #fff; }
+.header-sub   { font-size: .7rem; color: rgba(255,255,255,.7); display: none; }
+@media(min-width:600px){ .header-sub { display: block; } }
+#hamburger { display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 36px; height: 36px; cursor: pointer; padding: 6px; border-radius: 4px; transition: background var(--trans); }
+#hamburger:hover { background: rgba(255,255,255,.15); }
+#hamburger span { display: block; height: 2px; background: #fff; border-radius: 2px; transition: all var(--trans); }
+#hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+#hamburger.open span:nth-child(2) { opacity: 0; }
+#hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+@media(min-width:900px){ #hamburger { display: none; } }
+
+/* TOPNAV */
+#topnav {
+  position: fixed; top: var(--header-h); left: 0; right: 0; z-index: 95;
+  background: #1a1a1a;
+  display: flex; align-items: center; flex-wrap: wrap;
+  padding: 0 1.25rem; min-height: var(--topnav-h);
+  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+}
+.topnav-label { font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #888; margin-right: .75rem; white-space: nowrap; padding: .5rem 0; }
+.topnav-item { font-size: .78rem; color: rgba(255,255,255,.6); padding: .38rem .65rem; cursor: pointer; white-space: nowrap; border-radius: 20px; margin: .2rem .1rem; transition: all var(--trans); text-decoration: none; border: 1px solid transparent; }
+.topnav-item:hover { color: #fff; background: rgba(255,255,255,.1); }
+.topnav-item.active { color: #fff; background: var(--ms-blue); border-color: var(--ms-blue); font-weight: 600; }
+
+/* SIDEBAR */
+#sidebar {
+  position: fixed; top: calc(var(--header-h) + var(--topnav-h)); left: 0; bottom: 0; z-index: 90;
+  width: var(--nav-w); background: var(--white); border-right: 1px solid #E1DFDD;
+  overflow-y: auto; padding: 1rem 0 2rem;
+  transform: translateX(-100%); transition: transform var(--trans);
+  box-shadow: 2px 0 12px rgba(0,0,0,.07);
+}
+#sidebar.open { transform: translateX(0); }
+@media(min-width:900px){ #sidebar { transform: translateX(0); } }
+.nav-label { font-size: .68rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ms-blue); padding: .75rem 1.25rem .3rem; }
+.nav-item { display: flex; align-items: center; gap: .6rem; padding: .5rem 1.25rem; font-size: .83rem; color: var(--ms-gray-mid); text-decoration: none; cursor: pointer; transition: all var(--trans); border-left: 3px solid transparent; }
+.nav-item:hover { color: var(--ms-blue); background: var(--ms-blue-pale); border-left-color: var(--ms-blue-light); }
+.nav-item.active { color: var(--ms-blue); background: var(--ms-blue-pale); border-left-color: var(--ms-blue); font-weight: 500; }
+.nav-num { display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; background: var(--ms-blue); color: #fff; border-radius: 4px; font-size: .72rem; font-weight: 600; flex-shrink: 0; }
+.nav-item.active .nav-num { background: var(--ms-blue-dark); }
+.nav-divider { border: none; border-top: 1px solid #E1DFDD; margin: .6rem 1rem; }
+
+/* MAIN */
+#main { margin-top: calc(var(--header-h) + var(--topnav-h)); padding: 2rem 1.25rem 4rem; max-width: 820px; }
+@media(min-width:900px){ #main { margin-left: var(--nav-w); padding: 2.5rem 2.5rem 4rem; } }
+@media(min-width:1200px){ #main { padding: 3rem 3rem 4rem; } }
+#overlay { display: none; position: fixed; inset: 0; z-index: 80; background: rgba(0,0,0,.3); backdrop-filter: blur(2px); }
+#overlay.open { display: block; }
+@media(min-width:900px){ #overlay { display: none !important; } }
+
+/* TYPOGRAPHY */
+.guide-section { margin-bottom: 3.5rem; }
+.section-header { display: flex; align-items: stretch; border-radius: var(--radius); overflow: hidden; margin-bottom: 1.75rem; box-shadow: var(--shadow); }
+.section-num { display: flex; align-items: center; justify-content: center; min-width: 64px; background: var(--ms-blue); font-family: var(--font-display); font-size: 2rem; color: #fff; padding: .75rem; }
+.section-titles { flex: 1; background: var(--ms-blue-pale); padding: .85rem 1.25rem; border-left: 3px solid var(--ms-blue-light); }
+.section-title { font-family: var(--font-display); font-size: 1.3rem; color: var(--ms-blue-dark); line-height: 1.2; }
+.section-subtitle { font-size: .82rem; color: var(--ms-blue); font-style: italic; margin-top: .2rem; }
+.sub-title { font-size: 1rem; font-weight: 600; color: var(--ms-blue-dark); margin: 1.5rem 0 .6rem; display: flex; align-items: center; gap: .5rem; }
+.sub-title::before { content: ''; display: block; width: 4px; height: 18px; background: var(--ms-blue); border-radius: 2px; flex-shrink: 0; }
+p { margin-bottom: .85rem; font-size: .95rem; line-height: 1.75; color: #3a3a3a; }
+hr.section-divider { border: none; border-top: 2px solid #E1DFDD; margin: 3rem 0; }
+ul.guide-list { padding-left: 1.5rem; margin-bottom: .85rem; }
+ul.guide-list li { font-size: .95rem; line-height: 1.75; margin-bottom: .3rem; color: #3a3a3a; }
+
+/* COVER */
+.cover-block { background: linear-gradient(135deg, var(--ms-blue-dark) 0%, var(--ms-blue) 100%); border-radius: var(--radius); padding: 2.5rem 2rem 2rem; box-shadow: 0 4px 24px rgba(0,0,0,.15); margin-bottom: .5rem; position: relative; overflow: hidden; }
+.cover-block::before { content: 'W'; position: absolute; right: -20px; bottom: -40px; font-family: var(--font-display); font-size: 14rem; color: rgba(255,255,255,.06); line-height: 1; pointer-events: none; }
+.cover-tag   { font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ms-blue-light); margin-bottom: .5rem; }
+.cover-title { font-family: var(--font-display); font-size: clamp(1.6rem,4vw,2.4rem); color: #fff; line-height: 1.15; margin-bottom: .3rem; }
+.cover-sub   { font-size: .95rem; color: rgba(255,255,255,.75); margin-bottom: 1.25rem; }
+.cover-chips { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.cover-chip  { background: rgba(255,255,255,.15); color: #fff; font-size: .75rem; font-weight: 500; border-radius: 20px; padding: .2rem .7rem; border: 1px solid rgba(255,255,255,.25); }
+.cover-divider { border: none; border-top: 1px solid rgba(255,255,255,.2); margin: 1rem 0; }
+.cover-intro { font-size: .9rem; color: rgba(255,255,255,.82); line-height: 1.7; }
+
+/* SCREENSHOTS */
+.screenshot-wrap { margin: 1rem 0 1.25rem; }
+.screenshot-label { font-size: .72rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--ms-gray-mid); margin-bottom: .35rem; display: flex; align-items: center; gap: .4rem; }
+.screenshot-label::before { content: ''; display: block; width: 3px; height: 12px; background: var(--ms-blue); border-radius: 2px; }
+.screenshot-img { width: 100%; border-radius: var(--radius); border: 1px solid #E1DFDD; box-shadow: var(--shadow); display: block; }
+.screenshot-caption { font-size: .78rem; color: var(--ms-gray-mid); font-style: italic; margin-top: .35rem; text-align: center; }
+.screenshots-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin: 1rem 0 1.25rem; }
+@media(max-width:600px){ .screenshots-grid { grid-template-columns: 1fr; } }
+
+/* BOXES */
+.box { border-radius: var(--radius); padding: .9rem 1.1rem; margin: 1rem 0; font-size: .9rem; line-height: 1.65; }
+.box-label { font-size: .72rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; margin-bottom: .35rem; }
+.box-tip  { background: var(--ms-green-lt, #DFF6DD); border-left: 4px solid var(--ms-green); }
+.box-tip .box-label, .box-tip p { color: #0a4a0a; }
+.box-tip p { margin: 0; }
+.box-warn { background: var(--ms-orange-lt, #FCE4D6); border-left: 4px solid var(--ms-orange); }
+.box-warn .box-label, .box-warn p { color: #6d2e00; }
+.box-warn p { margin: 0; }
+.box-note { background: var(--ms-blue-pale); border-left: 4px solid var(--ms-blue); }
+.box-note .box-label { color: var(--ms-blue-dark); }
+.box-note p { color: var(--ms-blue-dark); margin: 0; }
+.box-err  { background: var(--ms-red-lt, #FDE7E9); border-left: 4px solid var(--ms-red); }
+.box-err .box-label, .box-err p { color: #5a0a0d; }
+.box-err p { margin: 0; }
+
+/* STEP LIST */
+.step-list { display: flex; flex-direction: column; gap: .6rem; margin: 1rem 0; }
+.step-item { display: flex; align-items: flex-start; gap: .85rem; background: var(--white); border: 1px solid #E1DFDD; border-radius: var(--radius); padding: .75rem 1rem; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+.step-num { min-width: 28px; height: 28px; background: var(--ms-blue); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.step-text { font-size: .9rem; line-height: 1.55; color: #3a3a3a; }
+.step-text strong { color: var(--ms-blue-dark); }
+
+/* BADGES */
+.menu-badge { display: inline-flex; align-items: center; background: var(--ms-blue); color: #fff; font-size: .78rem; font-weight: 600; border-radius: 4px; padding: .18rem .6rem; vertical-align: middle; }
+
+/* BOTTONE PDF */
+.btn-pdf {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: #fff; color: var(--ms-blue);
+  border: 2px solid rgba(255,255,255,.35);
+  border-radius: 6px; padding: .35rem .9rem;
+  font-family: var(--font-body); font-size: .78rem; font-weight: 600;
+  cursor: pointer; text-decoration: none; white-space: nowrap;
+  transition: all var(--trans);
+}
+.btn-pdf:hover { background: var(--ms-blue-pale); border-color: #fff; }
+
+/* SHORTCUT TABLE */
+.shortcut-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .88rem; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+.shortcut-table th { background: var(--ms-blue); color: #fff; padding: .65rem 1rem; text-align: left; font-weight: 500; font-size: .82rem; }
+.shortcut-table td { padding: .6rem 1rem; border-bottom: 1px solid #E1DFDD; vertical-align: middle; }
+.shortcut-table tr:last-child td { border-bottom: none; }
+.shortcut-table tr:nth-child(even) td { background: var(--ms-gray-xlt); }
+.shortcut-table tr:hover td { background: var(--ms-blue-pale); }
+.kbd { display: inline-flex; align-items: center; font-family: 'DM Mono','Courier New',monospace; font-size: .8rem; background: #fff; color: var(--ms-gray); border: 1px solid #C8C6C4; border-bottom: 3px solid #C8C6C4; border-radius: 4px; padding: .15rem .5rem; white-space: nowrap; }
+.kbd-plus { font-size: .75rem; color: var(--ms-gray-mid); margin: 0 .15rem; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+  <div class="header-left">
+    <a href="/index.html" class="header-back">← Portale</a>
+    <div class="header-sep"></div>
+    <div>
+      <div class="header-title">Guida a Microsoft Word</div>
+      <div class="header-sub">Guida sintetica all'uso</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:.75rem;">
+    <a class="btn-pdf" href="Guida_Word.pdf" download title="Scarica la versione PDF">
+      ⬇ PDF
+    </a>
+    <div id="hamburger" onclick="toggleSidebar()" role="button" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+
+<!-- TOPNAV -->
+<nav id="topnav">
+  <span class="topnav-label">SEZIONI →</span>
+  <a class="topnav-item active" href="#intro"     onclick="topnavClick(this)">Introduzione</a>
+  <a class="topnav-item"        href="#sec1"      onclick="topnavClick(this)">Paragrafi e pagine</a>
+  <a class="topnav-item"        href="#sec2"      onclick="topnavClick(this)">Formattazione</a>
+  <a class="topnav-item"        href="#sec3"      onclick="topnavClick(this)">Intestazione e piè</a>
+  <a class="topnav-item"        href="#sec4"      onclick="topnavClick(this)">Layout</a>
+  <a class="topnav-item"        href="#sec5"      onclick="topnavClick(this)">Grafica</a>
+  <a class="topnav-item"        href="#sec6"      onclick="topnavClick(this)">Tabelle</a>
+  <a class="topnav-item"        href="#sec7"      onclick="topnavClick(this)">Sommario</a>
+  <a class="topnav-item"        href="#shortcuts" onclick="topnavClick(this)">⌨ Shortcut</a>
+</nav>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="nav-label">Sezioni</div>
+  <a class="nav-item active" href="#intro"     onclick="navClick(this)"><span class="nav-num">⊙</span> Introduzione</a>
+  <a class="nav-item"        href="#sec1"      onclick="navClick(this)"><span class="nav-num">1</span> Paragrafi e pagine</a>
+  <a class="nav-item"        href="#sec2"      onclick="navClick(this)"><span class="nav-num">2</span> Formattazione</a>
+  <a class="nav-item"        href="#sec3"      onclick="navClick(this)"><span class="nav-num">3</span> Intestazione e piè</a>
+  <a class="nav-item"        href="#sec4"      onclick="navClick(this)"><span class="nav-num">4</span> Layout</a>
+  <a class="nav-item"        href="#sec5"      onclick="navClick(this)"><span class="nav-num">5</span> Grafica</a>
+  <a class="nav-item"        href="#sec6"      onclick="navClick(this)"><span class="nav-num">6</span> Tabelle</a>
+  <a class="nav-item"        href="#sec7"      onclick="navClick(this)"><span class="nav-num">7</span> Sommario</a>
+  <hr class="nav-divider">
+  <a class="nav-item"        href="#shortcuts" onclick="navClick(this)"><span class="nav-num">⌨</span> Shortcut</a>
+</nav>
+
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<main id="main">
+
+<!-- INTRODUZIONE -->
+<section class="guide-section scroll-anchor" id="intro">
+  <div class="cover-block">
+    <div class="cover-tag">Formazione Digitale · Strumenti Office</div>
+    <div class="cover-title">Guida sintetica a Microsoft Word</div>
+    <div class="cover-sub">Dalla formattazione base alle tabelle e al sommario automatico</div>
+    <div class="cover-chips">
+      <span class="cover-chip">Microsoft 365</span>
+      <span class="cover-chip">Word</span>
+      <span class="cover-chip">Livello base–intermedio</span>
+    </div>
+    <hr class="cover-divider">
+    <div class="cover-intro">Questa guida copre le funzioni essenziali di Microsoft Word: dalla gestione dei paragrafi alla formattazione, dalle tabelle al sommario automatico. Ogni sezione è accompagnata da screenshot e indicazioni pratiche per un uso corretto e efficiente.</div>
+  </div>
+
+  <div style="margin-top:1.5rem;">
+    <div class="sub-title">Il menu principale</div>
+    <p>Il menu principale di Word è rappresentato dalla barra contenente i nomi delle principali sezioni:</p>
+    <div class="screenshot-wrap">
+      <div class="screenshot-label">Barra del menu principale</div>
+      <img class="screenshot-img" src="img/image_001.png" alt="Menu principale di Word">
+    </div>
+    <p>Ogni menu utilizza un sottomenu specifico. Ad esempio, entrando nel menu <span class="menu-badge">Layout</span> la sottosezione è la seguente:</p>
+    <div class="screenshot-wrap">
+      <img class="screenshot-img" src="img/image_002.png" alt="Sottomenu Layout">
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SEZIONE 1: PARAGRAFI E PAGINE -->
+<section class="guide-section scroll-anchor" id="sec1">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div class="section-titles">
+      <div class="section-title">I principali elementi di Word</div>
+      <div class="section-subtitle">Paragrafi, caratteri speciali e nuove pagine</div>
+    </div>
+  </div>
+
+  <p>Il testo è suddiviso in <strong>paragrafi</strong>. Ogni paragrafo termina con il "return" (ritorno a capo) che separa il documento in blocchi distinti.</p>
+
+  <div class="box box-note">
+    <div class="box-label">💡 Visualizzare i caratteri speciali</div>
+    <p>Per visualizzare i paragrafi e altri caratteri speciali (spazi, tabulazioni…) usa il bottone <strong>"Mostra tutto"</strong> presente nel menu <span class="menu-badge">Home</span>.</p>
+  </div>
+
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Tasto "Mostra tutto" con tooltip</div>
+    <img class="screenshot-img" src="img/image_003.png" alt="Tasto Mostra tutto">
+  </div>
+
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Testo con paragrafi evidenziati (¶)</div>
+    <img class="screenshot-img" src="img/image_004.png" alt="Paragrafi evidenziati">
+  </div>
+
+  <div class="sub-title">Aggiunta di nuove pagine</div>
+  <p>Anche se appare logico "andare in una nuova pagina" premendo più volte il tasto Invio, <strong>questa pratica non è corretta</strong>. Si creano paragrafi vuoti che, in caso di successive modifiche, farebbero "scivolare" tutto il documento.</p>
+
+  <div class="box box-err">
+    <div class="box-label">✗ Metodo sbagliato</div>
+    <p>Premere ripetutamente <span class="kbd">Invio</span> crea paragrafi vuoti (visibili come ¶¶¶) che rendono il documento instabile alle modifiche.</p>
+  </div>
+
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Pagina con paragrafi vuoti — metodo ERRATO</div>
+    <img class="screenshot-img" src="img/image_005.png" alt="Paragrafi vuoti metodo errato">
+  </div>
+
+  <div class="box box-tip">
+    <div class="box-label">✓ Metodo corretto</div>
+    <p>Inserire una <strong>interruzione di pagina</strong> con <span class="kbd">Ctrl</span><span class="kbd-plus">+</span><span class="kbd">Invio</span>. Questo elemento può essere reso visibile attivando "Mostra tutto".</p>
+  </div>
+
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Interruzione di pagina — metodo CORRETTO</div>
+    <img class="screenshot-img" src="img/image_006.png" alt="Interruzione di pagina corretta">
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SEZIONE 2: FORMATTAZIONE -->
+<section class="guide-section scroll-anchor" id="sec2">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div class="section-titles">
+      <div class="section-title">Menu di formattazione</div>
+      <div class="section-subtitle">Caratteri, paragrafi, interlinea, righello e copia formato</div>
+    </div>
+  </div>
+
+  <p>La prima parte del menu <span class="menu-badge">Home</span> è dedicata alla formattazione dei caratteri: font, dimensione, enfasi (grassetto, corsivo, sottolineato), colore, ecc.</p>
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Sezione Carattere del menu Home</div>
+    <img class="screenshot-img" src="img/image_007.png" alt="Sezione Carattere">
+  </div>
+
+  <p>La seconda parte contiene i principali comandi di gestione dei paragrafi:</p>
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Sezione Paragrafo del menu Home</div>
+    <img class="screenshot-img" src="img/image_008.png" alt="Sezione Paragrafo">
+  </div>
+
+  <div class="sub-title">Liste, allineamento e interlinea</div>
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Comandi liste evidenziati</div>
+    <img class="screenshot-img" src="img/image_009.png" alt="Comandi liste">
+  </div>
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Comandi allineamento evidenziati</div>
+    <img class="screenshot-img" src="img/image_010.png" alt="Comandi allineamento">
+  </div>
+
+  <p>Il menu <strong>Interlinea</strong> permette di impostare la spaziatura tra le righe dello stesso paragrafo. Il valore consigliato per una leggibilità ottimale è <strong>1,5</strong>:</p>
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Menu interlinea con 1,5 selezionato</div>
+    <img class="screenshot-img" src="img/image_011.png" alt="Menu interlinea">
+  </div>
+
+  <p>Esempio di testo con interlinea e spaziatura tra paragrafi applicata:</p>
+  <div class="screenshot-wrap">
+    <img class="screenshot-img" src="img/image_012.png" alt="Testo formattato risultante">
+  </div>
+
+  <div class="sub-title">Il sottomenu Paragrafo</div>
+  <p>Il sottomenu "Paragrafo" offre una visione estesa delle opzioni. Ci si accede usando il pulsante indicato:</p>
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Pulsante di apertura del sottomenu Paragrafo</div>
+    <img class="screenshot-img" src="img/image_013.png" alt="Pulsante sottomenu paragrafo">
+  </div>
+
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Finestra Paragrafo con le 5 aree principali numerate</div>
+    <img class="screenshot-img" src="img/image_014.png" alt="Finestra Paragrafo annotata">
+  </div>
+
+  <ul class="guide-list">
+    <li><strong>① Rientro</strong> — spostamento del testo rispetto ai margini (sinistro/destro), espresso in cm</li>
+    <li><strong>② Rientro speciale</strong> — es. solo la prima riga, per dare maggior risalto al paragrafo</li>
+    <li><strong>③ Spaziatura</strong> — spazio Prima e Dopo ogni paragrafo (in punti tipografici)</li>
+    <li><strong>④ Interlinea</strong> — spaziatura tra le righe dello stesso paragrafo</li>
+    <li><strong>⑤ Anteprima</strong> — visualizza in tempo reale l'effetto delle impostazioni</li>
+  </ul>
+
+  <div class="box box-note">
+    <div class="box-label">📌 Nota</div>
+    <p>La spaziatura tra i paragrafi (③) permette di distanziare uniformemente i blocchi di testo senza usare "Invio" aggiuntivi che creerebbero paragrafi vuoti.</p>
+  </div>
+
+  <p>Esempio di impostazioni per un documento con rientro prima riga e relativo risultato:</p>
+  <div class="screenshots-grid">
+    <div class="screenshot-wrap" style="margin:0">
+      <div class="screenshot-label">Impostazioni nel dialogo</div>
+      <img class="screenshot-img" src="img/image_015.png" alt="Impostazioni paragrafo">
+    </div>
+    <div class="screenshot-wrap" style="margin:0">
+      <div class="screenshot-label">Risultato nel documento</div>
+      <img class="screenshot-img" src="img/image_016.png" alt="Risultato formattazione">
+    </div>
+  </div>
+
+  <div class="sub-title">Attivazione del righello</div>
+  <p>Per gestire la disposizione del testo nella pagina è utile visualizzare il righello. Se non presente, si attiva dal menu <span class="menu-badge">Visualizza</span> spuntando la checkbox "Righello":</p>
+  <div class="screenshot-wrap">
+    <img class="screenshot-img" src="img/image_017.png" alt="Menu Visualizza - Righello">
+  </div>
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Righello orizzontale con i margini evidenziati</div>
+    <img class="screenshot-img" src="img/image_018.png" alt="Righello">
+  </div>
+
+  <div class="sub-title">Copia formato</div>
+  <p>La funzione "Copia formato" permette di replicare le impostazioni di formattazione di una porzione di testo in altre parti del documento.</p>
+
+  <div class="step-list">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-text">Selezionare il testo da cui si vuole <strong>prendere</strong> la formattazione. Il tasto "Copia formato" appare NON attivo:</div>
+    </div>
+  </div>
+  <div class="screenshot-wrap">
+    <img class="screenshot-img" src="img/image_019.png" alt="Tasto copia formato non attivo">
+  </div>
+
+  <div class="step-list">
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-text">Cliccare sul tasto "Copia formato": il tasto risulterà <strong>attivo/schiacciato</strong>:</div>
+    </div>
+  </div>
+  <div class="screenshot-wrap">
+    <img class="screenshot-img" src="img/image_020.png" alt="Tasto copia formato attivo">
+  </div>
+
+  <div class="step-list">
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-text">Selezionare il testo di <strong>destinazione</strong> tenendo premuto il tasto sinistro del mouse:</div>
+    </div>
+  </div>
+  <div class="screenshot-wrap">
+    <img class="screenshot-img" src="img/image_021.png" alt="Selezione testo destinazione">
+  </div>
+
+  <div class="box box-warn">
+    <div class="box-label">⚠ Attenzione</div>
+    <p>Elementi specifici del paragrafo origine (es. singole parole in grassetto o sottolineate) <strong>si perdono</strong> nel processo di duplicazione formato.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SEZIONE 3: INTESTAZIONE E PIE' DI PAGINA -->
+<section class="guide-section scroll-anchor" id="sec3">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div class="section-titles">
+      <div class="section-title">Intestazione e piè di pagina</div>
+      <div class="section-subtitle">Elementi comuni a tutte le pagine del documento</div>
+    </div>
+  </div>
+
+  <p>Queste sezioni speciali vengono utilizzate per creare elementi comuni a tutte le pagine: un titolo in cima, informazioni aggiuntive (autore, data, numero di pagina) in fondo.</p>
+
+  <div class="box box-note">
+    <div class="box-label">💡 Come accedere</div>
+    <p>Fare <strong>doppio click</strong> nell'area superiore (intestazione) o inferiore (piè di pagina) della pagina. Per uscire, fare doppio click nell'area di testo normale.</p>
+  </div>
+
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Righello e intestazione attiva — il titolo è visibile in alto</div>
+    <img class="screenshot-img" src="img/image_022.png" alt="Intestazione attiva">
+  </div>
+
+  <p>In ogni pagina verrà replicato automaticamente tutto quanto presente nell'intestazione:</p>
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">L'intestazione si replica su tutte le pagine</div>
+    <img class="screenshot-img" src="img/image_023.png" alt="Intestazione replicata">
+  </div>
+
+  <p>Quando si è nell'intestazione o nel piè di pagina si apre il menu specifico che permette di inserire:</p>
+  <ul class="guide-list">
+    <li><strong>①</strong> Numero di pagina (solitamente nel piè di pagina)</li>
+    <li><strong>②</strong> Data, ora, informazioni sul documento</li>
+    <li><strong>③</strong> Immagini (es. logo aziendale)</li>
+    <li><strong>④</strong> Passaggio rapido tra intestazione e piè di pagina</li>
+  </ul>
+
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Menu Intestazione e piè di pagina con le 4 aree evidenziate</div>
+    <img class="screenshot-img" src="img/image_024.png" alt="Menu intestazione completo">
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SEZIONE 4: LAYOUT -->
+<section class="guide-section scroll-anchor" id="sec4">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div class="section-titles">
+      <div class="section-title">Gestione Layout</div>
+      <div class="section-subtitle">Margini, orientamento e disposizione su colonne</div>
+    </div>
+  </div>
+
+  <p>Il menu <span class="menu-badge">Layout</span> permette di modificare l'impostazione della pagina (margini, orientamento, dimensioni) e di gestire il contenuto su più colonne in stile "giornale".</p>
+
+  <div class="sub-title">Disposizione su colonne</div>
+  <div class="box box-tip">
+    <div class="box-label">✓ Suggerimento</div>
+    <p>Completare prima tutto il contenuto con una sola colonna (il default), poi modificare le impostazioni solo sulle parti che si vogliono ridisporre.</p>
+  </div>
+
+  <div class="step-list">
+    <div class="step-item"><div class="step-num">1</div><div class="step-text">Selezionare il contenuto da strutturare su più colonne</div></div>
+    <div class="step-item"><div class="step-num">2</div><div class="step-text">Menu <span class="menu-badge">Layout</span> → <strong>Colonne</strong> → scegliere la disposizione desiderata (o "Altre colonne" per opzioni avanzate)</div></div>
+    <div class="step-item"><div class="step-num">3</div><div class="step-text">Applicare la modifica</div></div>
+  </div>
+
+  <div class="screenshots-grid">
+    <div class="screenshot-wrap" style="margin:0">
+      <div class="screenshot-label">Menu Layout → Colonne</div>
+      <img class="screenshot-img" src="img/image_026.png" alt="Menu colonne">
+    </div>
+    <div class="screenshot-wrap" style="margin:0">
+      <div class="screenshot-label">Testo selezionato su due colonne</div>
+      <img class="screenshot-img" src="img/image_025.png" alt="Selezione per colonne">
+    </div>
+  </div>
+
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Risultato: testo disposto su due colonne</div>
+    <img class="screenshot-img" src="img/image_027.png" alt="Testo su due colonne">
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SEZIONE 5: GRAFICA -->
+<section class="guide-section scroll-anchor" id="sec5">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <div class="section-titles">
+      <div class="section-title">La grafica: immagini e altri elementi</div>
+      <div class="section-subtitle">Inserimento, forme, collegamenti e posizionamento</div>
+    </div>
+  </div>
+
+  <p>La parte grafica è gestita dal menu <span class="menu-badge">Inserisci</span>. In evidenza gli elementi più utilizzati:</p>
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Menu Inserisci — elementi grafici principali evidenziati</div>
+    <img class="screenshot-img" src="img/image_028.png" alt="Menu Inserisci">
+  </div>
+
+  <div class="sub-title">Inserimento immagini</div>
+  <p>Per inserire un'immagine: <span class="menu-badge">Inserisci</span> → <strong>Immagini</strong> → "Questo dispositivo…"</p>
+  <div class="screenshot-wrap">
+    <img class="screenshot-img" src="img/image_029.png" alt="Inserisci immagine dal dispositivo">
+  </div>
+
+  <div class="sub-title">Forme e caselle di testo</div>
+  <p>Dal menu <span class="menu-badge">Inserisci</span> è possibile inserire anche forme geometriche, caselle di testo e altri elementi grafici:</p>
+  <div class="screenshots-grid">
+    <div class="screenshot-wrap" style="margin:0">
+      <div class="screenshot-label">Inserisci → Forme</div>
+      <img class="screenshot-img" src="img/image_030.png" alt="Menu Forme">
+    </div>
+    <div class="screenshot-wrap" style="margin:0">
+      <div class="screenshot-label">Stili forma disponibili</div>
+      <img class="screenshot-img" src="img/image_031.png" alt="Stili forma">
+    </div>
+  </div>
+
+  <div class="sub-title">Gestione delle immagini — ridimensionamento</div>
+  <p>Selezionando un'immagine appaiono i punti di controllo per ridimensionarla e ruotarla:</p>
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Punti di ridimensionamento immagine annotati</div>
+    <img class="screenshot-img" src="img/image_035.png" alt="Punti ridimensionamento">
+  </div>
+  <ul class="guide-list">
+    <li><strong>Angoli (cerchi rossi):</strong> ridimensionamento uniforme mantenendo le proporzioni</li>
+    <li><strong>Lati centrali (quadrati verdi):</strong> ridimensionamento non proporzionale (schiaccia/allarga)</li>
+    <li><strong>In alto (rotazione):</strong> ruota l'immagine in senso orario/antiorario</li>
+  </ul>
+
+  <p>Selezionando l'immagine si apre il menu <strong>"Formato immagine"</strong> con opzioni di personalizzazione avanzate:</p>
+  <div class="screenshot-wrap">
+    <img class="screenshot-img" src="img/image_036.png" alt="Menu Formato immagine">
+  </div>
+
+  <div class="sub-title">Posizionamento — disposizione testo</div>
+  <p>Il comando di disposizione dell'immagine rispetto al testo è l'icona evidenziata:</p>
+  <div class="screenshot-wrap">
+    <img class="screenshot-img" src="img/image_037.png" alt="Icona disposizione testo">
+  </div>
+
+  <p>Cliccandola si apre il pannello "Opzioni layout":</p>
+  <div class="screenshot-wrap">
+    <img class="screenshot-img" src="img/image_038.png" alt="Opzioni layout disposizione">
+  </div>
+
+  <p>Esempi di disposizione: immagine con testo ravvicinato, dietro al testo (filigrana), sopra e sotto:</p>
+  <div class="screenshots-grid">
+    <div class="screenshot-wrap" style="margin:0">
+      <div class="screenshot-label">Testo ravvicinato</div>
+      <img class="screenshot-img" src="img/image_039.png" alt="Disposizione ravvicinato">
+    </div>
+    <div class="screenshot-wrap" style="margin:0">
+      <div class="screenshot-label">Immagine dietro al testo</div>
+      <img class="screenshot-img" src="img/image_040.png" alt="Dietro al testo">
+    </div>
+  </div>
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Immagine sopra e sotto (in linea con il testo)</div>
+    <img class="screenshot-img" src="img/image_041.png" alt="Sopra e sotto">
+  </div>
+
+  <div class="sub-title">Collegamenti ipertestuali</div>
+  <p>Dal menu <span class="menu-badge">Inserisci</span> è possibile inserire anche collegamenti ipertestuali a pagine web o ad altri documenti:</p>
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Dialogo "Inserisci collegamento ipertestuale"</div>
+    <img class="screenshot-img" src="img/image_033.png" alt="Inserisci collegamento">
+  </div>
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Risultato: testo con collegamento ipertestuale</div>
+    <img class="screenshot-img" src="img/image_034.png" alt="Collegamento risultante">
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SEZIONE 6: TABELLE -->
+<section class="guide-section scroll-anchor" id="sec6">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <div class="section-titles">
+      <div class="section-title">Le tabelle</div>
+      <div class="section-subtitle">Creazione, gestione e personalizzazione avanzata</div>
+    </div>
+  </div>
+
+  <p>Le tabelle sono accessibili dal menu <span class="menu-badge">Inserisci</span> → <strong>Tabella</strong>. La griglia permette di preimpostare le dimensioni:</p>
+  <div class="screenshots-grid">
+    <div class="screenshot-wrap" style="margin:0">
+      <div class="screenshot-label">Menu Inserisci → Tabella</div>
+      <img class="screenshot-img" src="img/image_042.png" alt="Menu Inserisci Tabella">
+    </div>
+    <div class="screenshot-wrap" style="margin:0">
+      <div class="screenshot-label">Selezione tabella 4×5</div>
+      <img class="screenshot-img" src="img/image_043.png" alt="Tabella 4x5">
+    </div>
+  </div>
+
+  <p>Ogni cella è un "microdocumento" personalizzabile — può contenere testo, immagini e altri elementi:</p>
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Tabella con testo e immagini nelle celle</div>
+    <img class="screenshot-img" src="img/image_044.png" alt="Contenuto celle">
+  </div>
+
+  <div class="sub-title">Gestione delle tabelle</div>
+
+  <p><strong>Fusione di celle</strong> — selezionare le celle → tasto destro → "Unisci celle":</p>
+  <div class="screenshot-wrap">
+    <img class="screenshot-img" src="img/image_046.png" alt="Menu contestuale Unisci celle">
+  </div>
+
+  <p>Risultato con celle unite, testo verticale e ridimensionamento personalizzato:</p>
+  <div class="screenshots-grid">
+    <div class="screenshot-wrap" style="margin:0">
+      <img class="screenshot-img" src="img/image_045.png" alt="Celle unite con testo verticale">
+    </div>
+    <div class="screenshot-wrap" style="margin:0">
+      <img class="screenshot-img" src="img/image_047.png" alt="Tabella ridimensionata">
+    </div>
+  </div>
+
+  <p><strong>Aggiunta/rimozione di righe e colonne</strong> — tasto destro → Inserisci:</p>
+  <div class="screenshot-wrap">
+    <img class="screenshot-img" src="img/image_048.png" alt="Menu inserisci righe colonne">
+  </div>
+
+  <div class="sub-title">Gestione avanzata — Strumenti Tabella</div>
+  <p>Quando il cursore è all'interno di una tabella, appare il menu <strong>"Strumenti Tabella"</strong> con due sezioni:</p>
+  <div class="screenshots-grid">
+    <div class="screenshot-wrap" style="margin:0">
+      <div class="screenshot-label">Sezione PROGETTAZIONE — stili e bordi</div>
+      <img class="screenshot-img" src="img/image_049.png" alt="Strumenti Tabella Progettazione">
+    </div>
+    <div class="screenshot-wrap" style="margin:0">
+      <div class="screenshot-label">Tabella base prima della formattazione</div>
+      <img class="screenshot-img" src="img/image_050.png" alt="Tabella base">
+    </div>
+  </div>
+
+  <p>Applicando uno stile predefinito la tabella cambia aspetto radicalmente:</p>
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Selezione stile e anteprima tabella formattata</div>
+    <img class="screenshot-img" src="img/image_051.png" alt="Stile tabella applicato">
+  </div>
+
+  <div class="sub-title">Gestione dei bordi</div>
+  <p>Il menu Bordi permette di lavorare su ogni singolo bordo della tabella:</p>
+  <div class="screenshot-wrap">
+    <img class="screenshot-img" src="img/image_052.png" alt="Menu bordi tabella">
+  </div>
+
+  <div class="screenshots-grid">
+    <div class="screenshot-wrap" style="margin:0">
+      <div class="screenshot-label">Tabella con bordi e sfondi personalizzati</div>
+      <img class="screenshot-img" src="img/image_053.png" alt="Tabella con bordi personalizzati">
+    </div>
+    <div class="screenshot-wrap" style="margin:0">
+      <div class="screenshot-label">Stessa tabella con "Visualizza griglia"</div>
+      <img class="screenshot-img" src="img/image_054.png" alt="Visualizza griglia">
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SEZIONE 7: SOMMARIO -->
+<section class="guide-section scroll-anchor" id="sec7">
+  <div class="section-header">
+    <div class="section-num">7</div>
+    <div class="section-titles">
+      <div class="section-title">Il sommario del documento</div>
+      <div class="section-subtitle">Generazione automatica, navigazione e aggiornamento</div>
+    </div>
+  </div>
+
+  <p>Word può generare automaticamente un sommario con i titoli delle sezioni e i numeri di pagina corrispondenti.</p>
+
+  <div class="box box-note">
+    <div class="box-label">📌 Prerequisito fondamentale</div>
+    <p>Il sommario automatico funziona <strong>solo se i titoli sono formattati con gli stili Word</strong> (Titolo 1, Titolo 2, ecc.), non con formattazione manuale.</p>
+  </div>
+
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Stili Titolo 1 e Titolo 2 nella barra Stili</div>
+    <img class="screenshot-img" src="img/image_055.png" alt="Stili titolo">
+  </div>
+
+  <div class="sub-title">Creazione del sommario automatico</div>
+  <div class="step-list">
+    <div class="step-item"><div class="step-num">1</div><div class="step-text">Applicare gli stili "Titolo 1", "Titolo 2", ecc. ai paragrafi da includere nel sommario</div></div>
+    <div class="step-item"><div class="step-num">2</div><div class="step-text">Posizionarsi nel punto del documento in cui inserire il sommario (di solito all'inizio)</div></div>
+    <div class="step-item"><div class="step-num">3</div><div class="step-text">Menu <span class="menu-badge">Riferimenti</span> → <strong>Sommario</strong></div></div>
+    <div class="step-item"><div class="step-num">4</div><div class="step-text">Scegliere uno dei sommari automatici proposti</div></div>
+  </div>
+
+  <div class="screenshots-grid">
+    <div class="screenshot-wrap" style="margin:0">
+      <div class="screenshot-label">Menu Riferimenti → Sommario</div>
+      <img class="screenshot-img" src="img/image_056.png" alt="Menu Riferimenti Sommario">
+    </div>
+    <div class="screenshot-wrap" style="margin:0">
+      <div class="screenshot-label">Scelta del sommario automatico</div>
+      <img class="screenshot-img" src="img/image_057.png" alt="Scelta sommario automatico">
+    </div>
+  </div>
+
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Sommario generato automaticamente</div>
+    <img class="screenshot-img" src="img/image_058.png" alt="Sommario generato">
+  </div>
+
+  <div class="box box-tip">
+    <div class="box-label">💡 Navigazione rapida</div>
+    <p>Il sommario è navigabile: <span class="kbd">Ctrl</span><span class="kbd-plus">+</span>click su qualsiasi voce porta direttamente alla sezione corrispondente!</p>
+  </div>
+
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Sommario navigabile — tooltip CTRL+clic visibile</div>
+    <img class="screenshot-img" src="img/image_059.png" alt="Sommario navigabile">
+  </div>
+
+  <div class="sub-title">Aggiornamento del sommario</div>
+  <p>Quando si modifica la struttura del documento (nuove sezioni, pagine spostate, titoli modificati) il sommario va aggiornato:</p>
+
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Sommario con nuova voce aggiunta — da aggiornare</div>
+    <img class="screenshot-img" src="img/image_060.png" alt="Sommario da aggiornare">
+  </div>
+
+  <div class="step-list">
+    <div class="step-item"><div class="step-num">1</div><div class="step-text">Cliccare sul sommario</div></div>
+    <div class="step-item"><div class="step-num">2</div><div class="step-text">Selezionare "Aggiorna sommario"</div></div>
+    <div class="step-item"><div class="step-num">3</div><div class="step-text">Scegliere <strong>"Aggiorna intero sommario"</strong></div></div>
+  </div>
+
+  <div class="screenshot-wrap">
+    <div class="screenshot-label">Dialogo di aggiornamento sommario</div>
+    <img class="screenshot-img" src="img/image_061.png" alt="Aggiorna sommario">
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SHORTCUTS -->
+<section class="guide-section scroll-anchor" id="shortcuts">
+  <div class="section-header">
+    <div class="section-num">⌨</div>
+    <div class="section-titles">
+      <div class="section-title">Shortcut — Scorciatoie da tastiera</div>
+      <div class="section-subtitle">Le combinazioni più utili per lavorare più velocemente</div>
+    </div>
+  </div>
+
+  <table class="shortcut-table">
+    <thead><tr><th>Funzione</th><th>Scorciatoia</th></tr></thead>
+    <tbody>
+      <tr><td>Copia</td><td><span class="kbd">Ctrl</span><span class="kbd-plus">+</span><span class="kbd">C</span></td></tr>
+      <tr><td>Taglia</td><td><span class="kbd">Ctrl</span><span class="kbd-plus">+</span><span class="kbd">X</span></td></tr>
+      <tr><td>Incolla</td><td><span class="kbd">Ctrl</span><span class="kbd-plus">+</span><span class="kbd">V</span></td></tr>
+      <tr><td>Annulla</td><td><span class="kbd">Ctrl</span><span class="kbd-plus">+</span><span class="kbd">Z</span></td></tr>
+      <tr><td>Ripristina</td><td><span class="kbd">Ctrl</span><span class="kbd-plus">+</span><span class="kbd">Y</span></td></tr>
+      <tr><td>Seleziona tutto</td><td><span class="kbd">Ctrl</span><span class="kbd-plus">+</span><span class="kbd">A</span></td></tr>
+      <tr><td>Grassetto</td><td><span class="kbd">Ctrl</span><span class="kbd-plus">+</span><span class="kbd">G</span></td></tr>
+      <tr><td>Corsivo</td><td><span class="kbd">Ctrl</span><span class="kbd-plus">+</span><span class="kbd">I</span></td></tr>
+      <tr><td>Sottolineato</td><td><span class="kbd">Ctrl</span><span class="kbd-plus">+</span><span class="kbd">S</span></td></tr>
+      <tr><td>Salva</td><td><span class="kbd">Ctrl</span><span class="kbd-plus">+</span><span class="kbd">S</span></td></tr>
+      <tr><td>Salva con nome</td><td><span class="kbd">F12</span></td></tr>
+      <tr><td>Stampa</td><td><span class="kbd">Ctrl</span><span class="kbd-plus">+</span><span class="kbd">P</span></td></tr>
+      <tr><td>Trova e sostituisci</td><td><span class="kbd">Ctrl</span><span class="kbd-plus">+</span><span class="kbd">H</span></td></tr>
+      <tr><td>Interruzione di pagina</td><td><span class="kbd">Ctrl</span><span class="kbd-plus">+</span><span class="kbd">Invio</span></td></tr>
+      <tr><td>Naviga il sommario</td><td><span class="kbd">Ctrl</span><span class="kbd-plus">+</span>click</td></tr>
+      <tr><td>Mostra/nascondi caratteri speciali</td><td><span class="kbd">Ctrl</span><span class="kbd-plus">+</span><span class="kbd">*</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+</main>
+
+<script>
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('open');
+}
+function navClick(el) {
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  if (window.innerWidth < 900) toggleSidebar();
+}
+function topnavClick(el) { el.blur(); }
+
+const anchors  = document.querySelectorAll('.scroll-anchor');
+const navItems = document.querySelectorAll('.nav-item');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navItems.forEach(n => n.classList.remove('active'));
+      const sNav = document.querySelector(`.nav-item[href="#${e.target.id}"]`);
+      if (sNav) sNav.classList.add('active');
+      document.querySelectorAll('.topnav-item').forEach(n => n.classList.remove('active'));
+      const tNav = document.querySelector(`.topnav-item[href="#${e.target.id}"]`);
+      if (tNav) tNav.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+anchors.forEach(a => obs.observe(a));
+</script>
+</body>
+</html>
