@@ -68,7 +68,7 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 @media (max-width: 860px) { #form-panel { border-right: none; border-bottom: 1px solid var(--blue-light); } }
 
 /* PREVIEW PANEL */
-#preview-panel { padding: 2rem; background: var(--blue-xpale); display: flex; flex-direction: column; gap: 1rem; position: sticky; top: var(--header-h); height: calc(100vh - var(--header-h)); overflow-y: auto; }
+#preview-panel { padding: 2rem; background: var(--blue-xpale); display: flex; flex-direction: column; gap: 1rem; position: sticky; top: var(--header-h); height: calc(100vh - var(--header-h)); overflow-y: hidden; }
 @media (max-width: 860px) { #preview-panel { position: static; height: auto; border-top: 2px solid var(--blue-light); } }
 
 /* PRESET SECTION nel form */
@@ -117,10 +117,7 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 .chip-verbo:hover { background: var(--blue-light); border-color: var(--blue-mid); }
 
 /* CONTESTO */
-.contesto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin-bottom: .6rem; }
-.micro-field label { font-size: .78rem; font-weight: 500; color: var(--blue-dark); margin-bottom: .3rem; display: block; }
-.micro-field select { width: 100%; font-family: var(--font-body); font-size: .82rem; color: var(--gray-dark); background: var(--white); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .5rem .7rem; outline: none; cursor: pointer; transition: border-color var(--trans); }
-.micro-field select:focus { border-color: var(--blue-mid); }
+
 .contesto-note textarea { width: 100%; font-family: var(--font-body); font-size: .84rem; color: var(--gray-dark); background: var(--white); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: .55rem .8rem; outline: none; resize: vertical; min-height: 58px; transition: border-color var(--trans); line-height: 1.55; }
 .contesto-note textarea:focus { border-color: var(--blue-mid); }
 .contesto-preview { font-size: .78rem; color: var(--blue-dark); font-style: italic; background: var(--blue-pale); border-radius: var(--radius); padding: .5rem .75rem; margin-top: .5rem; border-left: 3px solid var(--blue-mid); display: none; }
@@ -175,7 +172,7 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 .preview-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 .preview-title  { font-family: var(--font-display); font-size: 1.1rem; color: var(--blue-dark); }
 .preview-status { font-size: .74rem; color: var(--gray-mid); font-style: italic; }
-#prompt-output { flex: 1; font-family: var(--font-mono); font-size: .8rem; line-height: 1.85; background: var(--white); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: 1.25rem; white-space: pre-wrap; word-break: break-word; color: #1a1a1a; min-height: 200px; }
+#prompt-output { flex: 1; font-family: var(--font-mono); font-size: .8rem; line-height: 1.85; background: var(--white); border: 1.5px solid var(--blue-light); border-radius: var(--radius); padding: 1.25rem; white-space: pre-wrap; word-break: break-word; color: #1a1a1a; min-height: 0; overflow-y: auto; }
 .prompt-tag   { color: var(--blue-dark); font-weight: 700; }
 .prompt-empty { color: var(--gray-mid); font-style: italic; font-family: var(--font-body); font-size: .88rem; display: flex; align-items: center; justify-content: center; min-height: 160px; text-align: center; }
 
@@ -205,7 +202,7 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 /* CRONOLOGIA */
 .cronologia-section { margin-top: .5rem; }
 .cronologia-label { font-size: .7rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--gray-mid); margin-bottom: .4rem; }
-.cronologia-list { display: flex; flex-direction: column; gap: .3rem; }
+.cronologia-list { display: flex; flex-direction: column; gap: .3rem; max-height: 130px; overflow-y: auto; }
 .crono-item { font-size: .74rem; background: var(--white); border: 1px solid var(--blue-light); border-radius: 6px; padding: .4rem .7rem; cursor: pointer; color: var(--blue-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: background var(--trans); }
 .crono-item:hover { background: var(--blue-pale); }
 
@@ -264,7 +261,7 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 
 @media (max-width: 540px) {
   #form-panel, #preview-panel { padding: 1.25rem; }
-  .ruolo-selects, .contesto-grid { grid-template-columns: 1fr; }
+  .ruolo-selects { grid-template-columns: 1fr; }
   .ottimizza-row { flex-direction: column; align-items: flex-start; }
 }
 </style>
@@ -420,51 +417,11 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
         <div class="section-subtitle">Opzionale ma consigliato</div>
       </div>
 
-      <div class="contesto-grid">
-        <div class="micro-field">
-          <label>Che classe?</label>
-          <select id="ctx-classe" onchange="updateContestoComposito()">
-            <option value="">— Non specificata —</option>
-            <option value="Prima ITS">Prima ITS</option>
-            <option value="Seconda ITS">Seconda ITS</option>
-            <option value="Terza ITS">Terza ITS</option>
-            <option value="Classe mista">Classe mista</option>
-          </select>
-        </div>
-        <div class="micro-field">
-          <label>Livello studenti?</label>
-          <select id="ctx-livello" onchange="updateContestoComposito()">
-            <option value="">— Non specificato —</option>
-            <option value="livello base">Base</option>
-            <option value="livello intermedio">Intermedio</option>
-            <option value="livello avanzato">Avanzato</option>
-            <option value="livello eterogeneo">Eterogeneo</option>
-          </select>
-        </div>
-        <div class="micro-field">
-          <label>Durata disponibile?</label>
-          <select id="ctx-durata" onchange="updateContestoComposito()">
-            <option value="">— Non specificata —</option>
-            <option value="30 minuti disponibili">30 minuti</option>
-            <option value="1 ora disponibile">1 ora</option>
-            <option value="2 ore disponibili">2 ore</option>
-            <option value="più di 2 ore disponibili">Più di 2 ore</option>
-          </select>
-        </div>
-        <div class="micro-field">
-          <label>Numero studenti?</label>
-          <select id="ctx-studenti" onchange="updateContestoComposito()">
-            <option value="">— Non specificato —</option>
-            <option value="classe piccola (fino a 12 studenti)">Fino a 12</option>
-            <option value="classe media (13–20 studenti)">13–20</option>
-            <option value="classe grande (oltre 20 studenti)">Oltre 20</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="contesto-note" style="margin-bottom:.5rem;">
-        <label style="font-size:.78rem;font-weight:500;color:var(--blue-dark);margin-bottom:.3rem;display:block;">Note aggiuntive</label>
-        <textarea id="ctx-note" rows="2" placeholder="es. Presenza di 2 studenti con DSA. Nessun prerequisito su questo argomento." oninput="updateContestoComposito()"></textarea>
+      <div class="field">
+        <label>Descrivi il contesto</label>
+        <span class="hint">Chi sono i tuoi studenti? Che livello hanno? Quali vincoli hai? Scrivi liberamente.</span>
+        <textarea id="ctx-note" rows="3" placeholder="es. Classe di 18 studenti, livello eterogeneo, 1 ora disponibile. Presenza di 2 studenti con DSA. Nessun prerequisito su questo argomento." oninput="updateContestoComposito()" maxlength="600"></textarea>
+        <div class="char-counter"><span id="cnt-ctx">0</span>/600</div>
       </div>
       <div class="contesto-preview" id="contesto-preview"></div>
 
@@ -679,16 +636,13 @@ function inserisciVerbo(verbo) {
 
 /* ── CONTESTO COMPOSITO ── */
 function updateContestoComposito() {
-  const parti = [v('ctx-classe'), v('ctx-livello'), v('ctx-studenti'), v('ctx-durata'), v('ctx-note')].filter(Boolean);
-  const prev  = document.getElementById('contesto-preview');
-  if (parti.length) { prev.textContent = parti.join(', ') + '.'; prev.classList.add('show'); }
-  else              { prev.classList.remove('show'); prev.textContent = ''; }
+  const el = document.getElementById('cnt-ctx');
+  if (el) el.textContent = document.getElementById('ctx-note')?.value.length || 0;
   update();
 }
 
 function getContestoComposito() {
-  const parti = [v('ctx-classe'), v('ctx-livello'), v('ctx-studenti'), v('ctx-durata'), v('ctx-note')].filter(Boolean);
-  return parti.length ? parti.join(', ') + '.' : '';
+  return v('ctx-note');
 }
 
 /* ── OTTIMIZZA PER ── */
@@ -886,15 +840,15 @@ function setField(id, val) { const el = document.getElementById(id); if (el) el.
 function loadPreset(name) {
   resetForm(true);
   const P = {
-    verifica:    { disc:'trasversale', spec:'docimologia', compito:"Progetta una verifica sommativa sull'argomento: [ARGOMENTO].\nLa verifica deve contenere: 3 domande a risposta chiusa, 3 domande a risposta aperta breve, 1 esercizio applicativo.", classe:'Terza ITS', livello:'livello intermedio', durata:'1 ora disponibile', studenti:'', note:'Obiettivi di apprendimento: [ELENCA 2-3 OBIETTIVI].', formato:'Elenco numerato', vincoli:'Indica il punteggio suggerito per ogni sezione (totale: 10 punti). Livello linguistico B2.' },
-    feedback:    { disc:'italiano',    spec:'nessuna',     compito:"Analizza il seguente testo scritto da uno studente e fornisci feedback formativo su: coerenza argomentativa, uso del lessico disciplinare, struttura del testo.\n\n[INCOLLA QUI IL TESTO DELLO STUDENTE]", classe:'', livello:'', durata:'', studenti:'', note:'', formato:'Testo narrativo (paragrafi)', vincoli:'Non riscrivere il testo. Non fornire frasi corrette. Indica solo cosa migliorare e come, con domande che guidino lo studente a trovare la soluzione da solo.' },
-    spiegazione: { disc:'trasversale', spec:'nessuna',     compito:"Spiega il concetto di [CONCETTO] usando:\n1. Una definizione precisa (max 3 righe)\n2. Un'analogia con la vita quotidiana\n3. Un esempio pratico nel contesto [SETTORE PROFESSIONALE]\n4. Un errore concettuale frequente da evitare", classe:'Prima ITS', livello:'livello base', durata:'1 ora disponibile', studenti:'classe media (13–20 studenti)', note:'Nessun prerequisito tecnico.', formato:'Testo narrativo (paragrafi)', vincoli:'Livello linguistico B2. Niente formule matematiche salvo indicazione contraria.' },
+    verifica:    { disc:'trasversale', spec:'docimologia', compito:"Progetta una verifica sommativa sull'argomento: [ARGOMENTO].\nLa verifica deve contenere: 3 domande a risposta chiusa, 3 domande a risposta aperta breve, 1 esercizio applicativo.", note:'Obiettivi di apprendimento: [ELENCA 2-3 OBIETTIVI]. Classe terza, livello intermedio, 1 ora disponibile.', formato:'Elenco numerato', vincoli:'Indica il punteggio suggerito per ogni sezione (totale: 10 punti). Livello linguistico B2.' },
+    feedback:    { disc:'italiano',    spec:'nessuna',     compito:"Analizza il seguente testo scritto da uno studente e fornisci feedback formativo su: coerenza argomentativa, uso del lessico disciplinare, struttura del testo.\n\n[INCOLLA QUI IL TESTO DELLO STUDENTE]", note:'', formato:'Testo narrativo (paragrafi)', vincoli:'Non riscrivere il testo. Non fornire frasi corrette. Indica solo cosa migliorare e come, con domande che guidino lo studente a trovare la soluzione da solo.' },
+    spiegazione: { disc:'trasversale', spec:'nessuna',     compito:"Spiega il concetto di [CONCETTO] usando:\n1. Una definizione precisa (max 3 righe)\n2. Un'analogia con la vita quotidiana\n3. Un esempio pratico nel contesto [SETTORE PROFESSIONALE]\n4. Un errore concettuale frequente da evitare", note:'Classe prima, livello base, 13-20 studenti, 1 ora disponibile. Nessun prerequisito tecnico.', formato:'Testo narrativo (paragrafi)', vincoli:'Livello linguistico B2. Niente formule matematiche salvo indicazione contraria.' },
   };
   const p = P[name]; if (!p) return;
   setField('helper-disciplina', p.disc); setField('helper-specializzazione', p.spec);
   aggiornaRuoloHelper(); applicaRuoloHelper();
   setField('compito', p.compito);
-  setField('ctx-classe', p.classe); setField('ctx-livello', p.livello); setField('ctx-durata', p.durata); setField('ctx-studenti', p.studenti); setField('ctx-note', p.note);
+  setField('ctx-note', p.note);
   updateContestoComposito();
   setField('formato-tipo', p.formato || ''); toggleFormatoCustom();
   setField('vincoli', p.vincoli); update();
@@ -903,7 +857,7 @@ function loadPreset(name) {
 /* ── RESET ── */
 function resetForm(silent) {
   ['ruolo','compito','formato-custom','vincoli','esempi','ctx-note','helper-disciplina','helper-specializzazione','ottimizza-modello'].forEach(id => setField(id, ''));
-  ['ctx-classe','ctx-livello','ctx-durata','ctx-studenti','formato-tipo'].forEach(id => setField(id, ''));
+  ['formato-tipo'].forEach(id => setField(id, ''));
   toggleFormatoCustom(); updateContestoComposito(); aggiornaRuoloHelper();
   document.getElementById('ottimizza-hint').textContent = '';
   if (state.esempiOn) toggleOpt('esempi');
@@ -945,8 +899,7 @@ function savePrompt() {
     prompt: text,
     formData: {
       ruolo: v('ruolo'), compito: v('compito'),
-      ctx_classe: v('ctx-classe'), ctx_livello: v('ctx-livello'),
-      ctx_durata: v('ctx-durata'), ctx_studenti: v('ctx-studenti'), ctx_note: v('ctx-note'),
+      ctx_note: v('ctx-note'),
       formato: v('formato-tipo'), formato_custom: v('formato-custom'), vincoli: v('vincoli'),
       esempi: v('esempi'), esempiOn: state.esempiOn, autodiagnosiOn: state.autodiagnosiOn,
       ottimizza: v('ottimizza-modello')
@@ -987,8 +940,7 @@ function loadFromLibrary(id) {
   const item = loadLibrary().find(x => x.id === id); if (!item) return;
   const fd = item.formData; resetForm(true);
   setField('ruolo', fd.ruolo); setField('compito', fd.compito);
-  setField('ctx-classe', fd.ctx_classe); setField('ctx-livello', fd.ctx_livello);
-  setField('ctx-durata', fd.ctx_durata); setField('ctx-studenti', fd.ctx_studenti); setField('ctx-note', fd.ctx_note);
+  setField('ctx-note', fd.ctx_note || '');
   setField('formato-tipo', fd.formato); setField('formato-custom', fd.formato_custom); setField('vincoli', fd.vincoli);
   setField('esempi', fd.esempi || '');
   setField('ottimizza-modello', fd.ottimizza || '');
