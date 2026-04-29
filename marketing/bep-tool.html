@@ -8,904 +8,782 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --blue-dark:   #1F4E79;
-  --blue-mid:    #2E75B6;
-  --blue-light:  #D6E8F7;
-  --blue-pale:   #EBF3FC;
-  --green-dark:  #1E6B3C;
-  --green-light: #E8F5EE;
-  --amber-dark:  #7D4E00;
-  --amber-light: #FFF3CD;
-  --red-dark:    #922B21;
-  --red-light:   #FADBD8;
-  --gray-dark:   #2C2C2C;
-  --gray-mid:    #666;
-  --gray-light:  #F5F5F5;
-  --white:       #FFFFFF;
-  --font-display: 'DM Serif Display', Georgia, serif;
-  --font-body:    'DM Sans', system-ui, sans-serif;
-  --radius: 10px;
-  --shadow: 0 2px 16px rgba(31,78,121,.10);
-  --transition: .22s cubic-bezier(.4,0,.2,1);
+  --blue-dark:#1F4E79; --blue-mid:#2E75B6; --blue-light:#D6E8F7; --blue-pale:#EBF3FC;
+  --green-dark:#1E6B3C; --green-light:#E8F5EE;
+  --amber-dark:#7D4E00; --amber-light:#FFF3CD;
+  --red-dark:#922B21; --red-light:#FADBD8;
+  --orange-dark:#A04000; --orange-light:#FDEBD0;
+  --gray-dark:#2C2C2C; --gray-mid:#666; --gray-light:#F5F5F5; --white:#FFFFFF;
+  --font-display:'DM Serif Display',Georgia,serif;
+  --font-body:'DM Sans',system-ui,sans-serif;
+  --radius:10px; --shadow:0 2px 16px rgba(31,78,121,.10);
+  --transition:.22s cubic-bezier(.4,0,.2,1);
 }
-
-html { font-size: 16px; scroll-behavior: smooth; }
-body { font-family: var(--font-body); color: var(--gray-dark); background: #F0F6FF; min-height: 100vh; }
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:var(--font-body);color:var(--gray-dark);background:#F0F6FF;min-height:100vh;}
 
 /* ── HEADER ── */
-header {
-  background: var(--blue-dark);
-  padding: 0 2rem;
-  height: 58px;
-  display: flex; align-items: center; justify-content: space-between;
-  box-shadow: 0 2px 16px rgba(0,0,0,.2);
-  position: sticky; top: 0; z-index: 100;
-}
-.header-brand { display: flex; flex-direction: column; }
-.header-name  { font-family: var(--font-display); font-size: 1.05rem; color: #fff; }
-.header-tag   { font-size: .68rem; color: var(--blue-light); font-weight: 300; letter-spacing: .04em; }
-.back-link {
-  font-size: .8rem; color: rgba(255,255,255,.75); text-decoration: none;
-  display: flex; align-items: center; gap: .4rem;
-  transition: color var(--transition);
-}
-.back-link:hover { color: #fff; }
+header{background:var(--blue-dark);padding:0 2rem;height:58px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 16px rgba(0,0,0,.2);position:sticky;top:0;z-index:200;}
+.header-name{font-family:var(--font-display);font-size:1.05rem;color:#fff;}
+.header-tag{font-size:.68rem;color:var(--blue-light);font-weight:300;letter-spacing:.04em;}
+.back-link{font-size:.8rem;color:rgba(255,255,255,.75);text-decoration:none;transition:color var(--transition);}
+.back-link:hover{color:#fff;}
 
-/* ── HERO ── */
-.hero {
-  background: linear-gradient(135deg, #1A3F63 0%, var(--blue-dark) 40%, #2A6099 100%);
-  padding: 3rem 2rem 2.5rem;
-  text-align: center;
-}
-.hero-eyebrow { font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--blue-light); margin-bottom: .6rem; }
-.hero-title { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.8rem); color: #fff; line-height: 1.1; margin-bottom: .6rem; }
-.hero-title em { font-style: italic; color: var(--blue-light); }
-.hero-sub { font-size: .92rem; color: rgba(255,255,255,.72); max-width: 560px; margin: 0 auto; line-height: 1.6; }
+/* ── HERO — compatto, una riga ── */
+.hero{background:linear-gradient(135deg,#1A3F63 0%,var(--blue-dark) 40%,#2A6099 100%);padding:1.5rem 2.5rem;}
+.hero-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;}
+.hero-left{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;}
+.hero-eyebrow{font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-light);margin-bottom:.25rem;}
+.hero-title{font-family:var(--font-display);font-size:clamp(1.3rem,2.5vw,1.9rem);color:#fff;line-height:1.1;white-space:nowrap;}
+.hero-title em{font-style:italic;color:var(--blue-light);}
+.hero-divider{width:1px;height:48px;background:rgba(255,255,255,.2);flex-shrink:0;}
+.hero-sub{font-size:.82rem;color:rgba(255,255,255,.72);max-width:360px;line-height:1.55;}
+.hero-right{display:flex;align-items:center;gap:.75rem;flex-shrink:0;}
+
+/* Bottone Excel */
+.btn-excel{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--font-body);font-size:.78rem;font-weight:600;color:#1E6B3C;background:#E8F5EE;border:1.5px solid #b2d8c0;border-radius:50px;padding:.4rem 1rem;text-decoration:none;cursor:pointer;transition:background var(--transition),transform .15s;position:relative;}
+.btn-excel:hover{background:#d0edda;transform:translateY(-1px);}
+.xl-tip{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);white-space:nowrap;background:var(--blue-dark);color:#fff;font-size:.7rem;font-weight:400;padding:.35rem .65rem;border-radius:6px;pointer-events:none;z-index:99;}
+.xl-tip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--blue-dark);}
+
+/* Bottone formule */
+.btn-formule{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--font-body);font-size:.78rem;font-weight:600;color:var(--blue-dark);background:#fff;border:none;border-radius:50px;padding:.4rem 1rem;cursor:pointer;transition:background var(--transition),transform .15s;position:relative;}
+.btn-formule:hover{background:var(--blue-light);transform:translateY(-1px);}
+
+/* Popup formule */
+.formule-popup{display:none;position:absolute;top:calc(100% + 10px);right:0;background:var(--blue-dark);border:1px solid rgba(255,255,255,.15);border-radius:var(--radius);padding:1.1rem 1.4rem;min-width:280px;z-index:300;box-shadow:0 8px 32px rgba(0,0,0,.3);}
+.formule-popup.open{display:block;}
+.formule-popup::before{content:'';position:absolute;bottom:100%;right:20px;border:7px solid transparent;border-bottom-color:rgba(255,255,255,.15);}
+.formule-popup::after{content:'';position:absolute;bottom:100%;right:21px;border:6px solid transparent;border-bottom-color:var(--blue-dark);}
+.fp-item{display:flex;flex-direction:column;gap:.15rem;}
+.fp-item+.fp-item{margin-top:.75rem;padding-top:.75rem;border-top:1px solid rgba(255,255,255,.12);}
+.fp-label{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-light);}
+.fp-eq{font-family:var(--font-display);font-size:.88rem;color:#fff;line-height:1.35;}
+
+/* ── STICKY TAB BAR ── */
+.tab-sticky{position:sticky;top:58px;z-index:150;background:#E8F2FC;border-bottom:1px solid var(--blue-light);padding:.6rem 1.5rem;}
+.tab-sticky-inner{max-width:1100px;margin:0 auto;display:flex;gap:.5rem;flex-wrap:wrap;}
+.tab-btn{font-family:var(--font-body);font-size:.8rem;font-weight:500;padding:.38rem .9rem;border-radius:20px;border:1.5px solid var(--blue-light);background:var(--white);color:var(--gray-mid);cursor:pointer;transition:all var(--transition);}
+.tab-btn:hover{border-color:var(--blue-mid);color:var(--blue-mid);}
+.tab-btn.active{background:var(--blue-dark);color:#fff;border-color:var(--blue-dark);}
+
+/* ── ALERT MC — globale, sempre visibile ── */
+.alert-mc-global{display:none;background:var(--red-light);border-bottom:2px solid #f5b7b1;padding:.75rem 1.5rem;font-size:.85rem;color:var(--red-dark);}
+.alert-mc-global.visible{display:block;}
+.alert-mc-global-inner{max-width:1100px;margin:0 auto;}
 
 /* ── LAYOUT ── */
-.page-wrap { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
+.page-wrap{max-width:1100px;margin:0 auto;padding:1.5rem 1.5rem 5rem;}
+.main-layout{display:grid;grid-template-columns:1fr 200px;gap:1.5rem;align-items:start;}
+@media(max-width:860px){.main-layout{grid-template-columns:1fr;}.kpi-sidebar{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;position:static;}}
+@media(max-width:520px){.kpi-sidebar{grid-template-columns:repeat(2,1fr);}}
 
-/* ── SECTION LABELS ── */
-.sec-head {
-  display: flex; align-items: center; gap: .65rem;
-  font-size: .72rem; font-weight: 600; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--blue-mid);
-  margin-bottom: 1rem;
-}
-.sec-head::before {
-  content: ''; display: block; width: 18px; height: 3px;
-  border-radius: 2px; background: currentColor;
-}
-.sec-head.green { color: var(--green-dark); }
-.sec-head.amber { color: var(--amber-dark); }
+/* ── KPI SIDEBAR (destra) ── */
+.kpi-sidebar{display:flex;flex-direction:column;gap:.75rem;position:sticky;top:120px;}
+.kpi{background:var(--blue-pale);border:1px solid var(--blue-light);border-radius:var(--radius);padding:.9rem 1rem;text-align:center;position:relative;}
+.kpi.green{background:var(--green-light);border-color:#b2d8c0;}
+.kpi.amber{background:var(--amber-light);border-color:#f0d990;}
+.kpi-label{font-size:.63rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-mid);margin-bottom:.25rem;display:flex;align-items:center;justify-content:center;gap:.3rem;}
+.kpi-value{font-family:var(--font-display);font-size:1.35rem;color:var(--blue-dark);line-height:1;}
+.kpi.green .kpi-value{color:var(--green-dark);}
+.kpi.amber .kpi-value{color:var(--amber-dark);}
+.kpi-sub{font-size:.62rem;color:var(--gray-mid);margin-top:.2rem;line-height:1.3;}
 
 /* ── PANELS ── */
-.panel {
-  background: var(--white); border: 1px solid var(--blue-light);
-  border-radius: var(--radius); box-shadow: var(--shadow);
-  padding: 1.5rem 1.75rem; margin-bottom: 1.5rem;
-}
+.panel{background:var(--white);border:1px solid var(--blue-light);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.4rem 1.6rem;margin-bottom:1.25rem;}
+.sec-head{display:flex;align-items:center;gap:.65rem;font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-mid);margin-bottom:1rem;}
+.sec-head::before{content:'';display:block;width:18px;height:3px;border-radius:2px;background:currentColor;}
+.sec-head.amber{color:var(--amber-dark);}
 
-/* ── KPI ROW ── */
-.kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
-.kpi {
-  background: var(--blue-pale); border: 1px solid var(--blue-light);
-  border-radius: var(--radius); padding: 1rem 1.25rem;
-  text-align: center; position: relative;
-}
-.kpi.green { background: var(--green-light); border-color: #b2d8c0; }
-.kpi.amber { background: var(--amber-light); border-color: #f0d990; }
-.kpi.red   { background: var(--red-light);   border-color: #f5b7b1; }
-.kpi-label { font-size: .7rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--gray-mid); margin-bottom: .3rem; display: flex; align-items: center; justify-content: center; gap: .3rem; }
-.kpi-value { font-family: var(--font-display); font-size: 1.7rem; color: var(--blue-dark); line-height: 1; }
-.kpi.green .kpi-value { color: var(--green-dark); }
-.kpi.amber .kpi-value { color: var(--amber-dark); }
-.kpi.red   .kpi-value { color: var(--red-dark); }
-.kpi-sub   { font-size: .72rem; color: var(--gray-mid); margin-top: .25rem; }
+/* ── TOOLTIP ── */
+.info-icon{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--blue-light);color:var(--blue-dark);font-size:.6rem;font-weight:700;font-style:normal;cursor:help;flex-shrink:0;position:relative;}
+.info-icon:hover .tooltip{display:block;}
+.tooltip{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);width:220px;background:var(--blue-dark);color:#fff;font-size:.72rem;line-height:1.5;padding:.5rem .75rem;border-radius:6px;z-index:50;pointer-events:none;}
+.tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--blue-dark);}
 
-/* ── INPUT GRID ── */
-.input-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
-.input-group { display: flex; flex-direction: column; gap: .3rem; }
-.input-label {
-  font-size: .78rem; font-weight: 600; color: var(--gray-dark);
-  display: flex; align-items: center; gap: .35rem; cursor: help;
-}
-.info-icon {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 15px; height: 15px; border-radius: 50%;
-  background: var(--blue-light); color: var(--blue-dark);
-  font-size: .6rem; font-weight: 700; font-style: normal;
-  cursor: help; flex-shrink: 0; position: relative;
-}
-.info-icon:hover .tooltip { display: block; }
-.tooltip {
-  display: none; position: absolute; bottom: calc(100% + 6px); left: 50%;
-  transform: translateX(-50%); width: 220px;
-  background: var(--blue-dark); color: #fff;
-  font-size: .72rem; font-weight: 400; line-height: 1.5;
-  padding: .5rem .75rem; border-radius: 6px;
-  z-index: 50; pointer-events: none;
-  font-family: var(--font-body);
-}
-.tooltip::after {
-  content: ''; position: absolute; top: 100%; left: 50%;
-  transform: translateX(-50%); border: 5px solid transparent;
-  border-top-color: var(--blue-dark);
-}
-.num-input {
-  font-family: var(--font-body); font-size: .92rem; color: var(--gray-dark);
-  border: 1.5px solid var(--blue-light); border-radius: 8px;
-  padding: .55rem .85rem; background: #FAFCFF; width: 100%; outline: none;
-  transition: border-color .2s ease, box-shadow .2s ease;
-}
-.num-input:focus { border-color: var(--blue-mid); box-shadow: 0 0 0 3px rgba(46,117,182,.12); }
+/* ── CV ROW ── */
+.cv-row{display:grid;grid-template-columns:repeat(5,1fr) auto;gap:.75rem;align-items:end;}
+@media(max-width:900px){.cv-row{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:520px){.cv-row{grid-template-columns:repeat(2,1fr);}}
+.cv-cell{display:flex;flex-direction:column;gap:.3rem;}
+.cv-label-wrap{display:flex;align-items:center;gap:.3rem;}
+.cv-label-editable{font-size:.74rem;font-weight:600;color:var(--gray-dark);border:none;border-bottom:1.5px dashed var(--blue-light);background:transparent;outline:none;width:100%;font-family:var(--font-body);padding:1px 0;transition:border-color .2s;}
+.cv-label-editable:focus{border-bottom-color:var(--blue-mid);}
+.cv-total-cell{display:flex;flex-direction:column;gap:.3rem;border-left:2px solid var(--blue-light);padding-left:.75rem;}
+.cv-total-label{font-size:.7rem;font-weight:700;color:var(--blue-mid);text-transform:uppercase;letter-spacing:.06em;}
+.cv-total-val{font-family:var(--font-display);font-size:1.4rem;color:var(--blue-dark);background:var(--blue-pale);border:1px solid var(--blue-light);border-radius:8px;padding:.45rem .75rem;line-height:1;}
 
-/* ── SLIDER ── */
-.slider-wrap { display: flex; flex-direction: column; gap: .3rem; }
-.slider-row { display: flex; align-items: center; gap: .6rem; }
-.slider {
-  flex: 1; -webkit-appearance: none; appearance: none;
-  height: 5px; border-radius: 3px;
-  background: var(--blue-light); outline: none; cursor: pointer;
-}
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none; appearance: none;
-  width: 18px; height: 18px; border-radius: 50%;
-  background: var(--blue-mid); cursor: pointer;
-  border: 2px solid #fff; box-shadow: 0 1px 4px rgba(31,78,121,.25);
-  transition: transform .15s ease;
-}
-.slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
-.slider::-moz-range-thumb {
-  width: 18px; height: 18px; border-radius: 50%;
-  background: var(--blue-mid); cursor: pointer;
-  border: 2px solid #fff; box-shadow: 0 1px 4px rgba(31,78,121,.25);
-}
-.slider-val {
-  font-family: var(--font-display); font-size: 1rem; color: var(--blue-dark);
-  min-width: 3.5rem; text-align: right;
-}
+/* ── INPUTS ── */
+.num-input{font-family:var(--font-body);font-size:.92rem;color:var(--gray-dark);border:1.5px solid var(--blue-light);border-radius:8px;padding:.5rem .75rem;background:#FAFCFF;width:100%;outline:none;transition:border-color .2s,box-shadow .2s;}
+.num-input:focus{border-color:var(--blue-mid);box-shadow:0 0 0 3px rgba(46,117,182,.12);}
+.slider-section{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem;}
+.slider-group{display:flex;flex-direction:column;gap:.3rem;}
+.slider-label{font-size:.78rem;font-weight:600;color:var(--gray-dark);display:flex;align-items:center;gap:.35rem;}
+.slider-row{display:flex;align-items:center;gap:.6rem;}
+.slider{flex:1;-webkit-appearance:none;appearance:none;height:5px;border-radius:3px;background:var(--blue-light);outline:none;cursor:pointer;}
+.slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--blue-mid);cursor:pointer;border:2px solid #fff;box-shadow:0 1px 4px rgba(31,78,121,.25);transition:transform .15s;}
+.slider::-webkit-slider-thumb:hover{transform:scale(1.15);}
+.slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--blue-mid);cursor:pointer;border:2px solid #fff;}
+.slider-val{font-family:var(--font-display);font-size:.95rem;color:var(--blue-dark);min-width:4.5rem;text-align:right;white-space:nowrap;}
 
-/* ── RESET BUTTON ── */
-.reset-btn {
-  display: inline-flex; align-items: center; gap: .4rem;
-  font-family: var(--font-body); font-size: .8rem; font-weight: 500;
-  color: var(--gray-mid); background: var(--gray-light);
-  border: 1.5px solid #ddd; border-radius: 20px;
-  padding: .38rem .9rem; cursor: pointer;
-  transition: all var(--transition); margin-top: .5rem;
-}
-.reset-btn:hover { background: var(--blue-pale); color: var(--blue-dark); border-color: var(--blue-light); }
+/* ── RESET ── */
+.reset-btn{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--font-body);font-size:.82rem;font-weight:600;color:var(--red-dark);background:var(--red-light);border:1.5px solid #f5b7b1;border-radius:8px;padding:.55rem 1.25rem;cursor:pointer;transition:all var(--transition);}
+.reset-btn:hover{background:#f5b7b1;border-color:var(--red-dark);}
 
 /* ── CHART ── */
-.chart-wrap { position: relative; width: 100%; height: 340px; }
+.chart-wrap{position:relative;width:100%;height:340px;}
 
 /* ── TABLE ── */
-.table-wrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
-thead th {
-  background: var(--blue-dark); color: #fff;
-  padding: .6rem .9rem; text-align: right; font-weight: 500; font-size: .75rem;
-  letter-spacing: .04em;
-}
-thead th:first-child { text-align: left; border-radius: 6px 0 0 0; }
-thead th:last-child { border-radius: 0 6px 0 0; }
-tbody tr { border-bottom: 1px solid var(--blue-light); transition: background .15s; }
-tbody tr:hover { background: var(--blue-pale); }
-tbody tr.bep-row { background: var(--amber-light); font-weight: 600; }
-tbody tr.bep-row td { color: var(--amber-dark); }
-tbody td { padding: .55rem .9rem; text-align: right; }
-tbody td:first-child { text-align: left; color: var(--gray-mid); }
-.loss { color: var(--red-dark); }
-.profit { color: var(--green-dark); }
-.zero { color: var(--amber-dark); font-weight: 700; }
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:.82rem;}
+thead th{background:var(--blue-dark);color:#fff;padding:.6rem .9rem;text-align:right;font-weight:500;font-size:.75rem;letter-spacing:.04em;}
+thead th:first-child{text-align:left;border-radius:6px 0 0 0;}
+thead th:last-child{border-radius:0 6px 0 0;}
+tbody tr{border-bottom:1px solid var(--blue-light);transition:background .15s;}
+tbody tr:hover{background:var(--blue-pale);}
+tbody tr.bep-row{background:var(--amber-light);font-weight:600;}
+tbody tr.bep-row td{color:var(--amber-dark);}
+tbody td{padding:.55rem .9rem;text-align:right;}
+tbody td:first-child{text-align:left;}
+.loss{color:var(--red-dark);}.profit{color:var(--green-dark);}.zero{color:var(--amber-dark);font-weight:700;}
+.pct-badge{display:inline-block;font-size:.68rem;font-weight:700;padding:2px 6px;border-radius:4px;margin-right:.3rem;}
+.pct-loss{background:var(--red-light);color:var(--red-dark);}
+.pct-bep{background:var(--amber-light);color:var(--amber-dark);}
+.pct-profit{background:var(--green-light);color:var(--green-dark);}
 
-/* ── PAYBACK SECTION ── */
-.payback-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-.payback-card {
-  border-radius: var(--radius); padding: 1.2rem 1rem; text-align: center;
-  border: 1px solid;
-}
-.payback-card.worst  { background: var(--red-light);   border-color: #f5b7b1; }
-.payback-card.base   { background: var(--blue-pale);   border-color: var(--blue-light); }
-.payback-card.best   { background: var(--green-light); border-color: #b2d8c0; }
-.payback-scenario { font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .4rem; }
-.payback-card.worst  .payback-scenario { color: var(--red-dark); }
-.payback-card.base   .payback-scenario { color: var(--blue-dark); }
-.payback-card.best   .payback-scenario { color: var(--green-dark); }
-.payback-months { font-family: var(--font-display); font-size: 2.2rem; line-height: 1; }
-.payback-card.worst  .payback-months { color: var(--red-dark); }
-.payback-card.base   .payback-months { color: var(--blue-dark); }
-.payback-card.best   .payback-months { color: var(--green-dark); }
-.payback-unit { font-size: .75rem; color: var(--gray-mid); margin-top: .25rem; }
-.payback-sales { font-size: .78rem; color: var(--gray-mid); margin-top: .4rem; padding-top: .4rem; border-top: 1px solid rgba(0,0,0,.08); }
-.payback-bar { margin-top: 1.5rem; }
-.payback-bar-label { font-size: .75rem; color: var(--gray-mid); margin-bottom: .4rem; display: flex; justify-content: space-between; }
-.bar-track { background: var(--blue-light); border-radius: 4px; height: 8px; position: relative; overflow: hidden; }
-.bar-fill { height: 100%; border-radius: 4px; transition: width .5s ease; }
-.bar-fill.worst { background: var(--red-dark); }
-.bar-fill.base  { background: var(--blue-mid); }
-.bar-fill.best  { background: var(--green-dark); }
+/* ── PAYBACK ── */
+.payback-controls{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap;}
+.payback-controls label{font-size:.8rem;font-weight:600;color:var(--gray-dark);}
+.scarto-row{display:flex;align-items:center;gap:.6rem;}
+.scarto-slider{width:160px;-webkit-appearance:none;appearance:none;height:5px;border-radius:3px;background:var(--blue-light);outline:none;cursor:pointer;}
+.scarto-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--blue-mid);cursor:pointer;border:2px solid #fff;box-shadow:0 1px 4px rgba(31,78,121,.25);}
+.scarto-val{font-family:var(--font-display);font-size:1rem;color:var(--blue-dark);min-width:2.5rem;}
 
-/* ── GLOSSARIO ── */
-.glossary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
-.glossary-item {
-  border-left: 4px solid var(--blue-mid); padding: .8rem 1rem;
-  background: var(--blue-pale); border-radius: 0 var(--radius) var(--radius) 0;
-}
-.glossary-term { font-family: var(--font-display); font-size: 1rem; color: var(--blue-dark); margin-bottom: .3rem; }
-.glossary-formula { font-size: .75rem; font-weight: 600; color: var(--blue-mid); margin-bottom: .35rem; font-family: monospace; background: rgba(46,117,182,.1); display: inline-block; padding: 2px 6px; border-radius: 4px; }
-.glossary-def { font-size: .82rem; color: var(--gray-dark); line-height: 1.6; }
+.payback-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.25rem;}
+.payback-card{border-radius:var(--radius);padding:1.1rem 1rem;text-align:center;border:1px solid;position:relative;}
+.payback-card.worst{background:var(--red-light);border-color:#f5b7b1;}
+.payback-card.base{background:var(--blue-pale);border-color:var(--blue-light);}
+.payback-card.best{background:var(--green-light);border-color:#b2d8c0;}
+.payback-scenario{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.35rem;}
+.payback-card.worst .payback-scenario{color:var(--red-dark);}
+.payback-card.base  .payback-scenario{color:var(--blue-dark);}
+.payback-card.best  .payback-scenario{color:var(--green-dark);}
+.payback-months{font-family:var(--font-display);font-size:2rem;line-height:1;}
+.payback-card.worst .payback-months{color:var(--red-dark);}
+.payback-card.base  .payback-months{color:var(--blue-dark);}
+.payback-card.best  .payback-months{color:var(--green-dark);}
+.payback-unit{font-size:.72rem;color:var(--gray-mid);margin-top:.2rem;}
+.payback-sales{font-size:.75rem;color:var(--gray-mid);margin-top:.35rem;padding-top:.35rem;border-top:1px solid rgba(0,0,0,.08);}
+.payback-unsustainable{font-size:.72rem;font-weight:700;color:var(--red-dark);margin-top:.25rem;}
 
-/* ── FORMULA STRIP ── */
-.formula-strip {
-  background: linear-gradient(135deg, var(--blue-dark), #2A6099);
-  border-radius: var(--radius); padding: 1.25rem 1.5rem;
-  display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
-  margin-bottom: 1.5rem; color: #fff;
-}
-.formula-strip .f-label { font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--blue-light); }
-.formula-strip .f-eq { font-family: var(--font-display); font-size: 1.1rem; color: #fff; }
-.formula-sep { color: rgba(255,255,255,.3); }
+/* Alert ragionevolezza */
+.pb-alert{border-radius:6px;padding:.5rem .7rem;font-size:.71rem;font-weight:500;margin-top:.5rem;line-height:1.4;text-align:left;}
+.pb-alert.aggressive{background:#FEF3C7;color:#92400E;border:1px solid #FCD34D;}
+.pb-alert.risky{background:var(--red-light);color:var(--red-dark);border:1px solid #f5b7b1;}
+.pb-alert.obsolescence{background:var(--orange-light);color:var(--orange-dark);border:1px solid #F5CBA7;}
 
-/* ── TABS ── */
-.tab-bar { display: flex; gap: .5rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
-.tab-btn {
-  font-family: var(--font-body); font-size: .8rem; font-weight: 500;
-  padding: .42rem 1rem; border-radius: 20px;
-  border: 1.5px solid var(--blue-light); background: var(--white);
-  color: var(--gray-mid); cursor: pointer; transition: all var(--transition);
-}
-.tab-btn:hover { border-color: var(--blue-mid); color: var(--blue-mid); }
-.tab-btn.active { background: var(--blue-dark); color: #fff; border-color: var(--blue-dark); }
-.tab-content { display: none; }
-.tab-content.active { display: block; }
+.payback-bar{margin-top:.75rem;}
+.payback-bar-label{font-size:.75rem;color:var(--gray-mid);margin-bottom:.3rem;display:flex;justify-content:space-between;}
+.bar-track{background:var(--blue-light);border-radius:4px;height:8px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:4px;transition:width .5s ease;}
+.bar-fill.worst{background:var(--red-dark);}
+.bar-fill.base{background:var(--blue-mid);}
+.bar-fill.best{background:var(--green-dark);}
 
-/* ── DIVIDER ── */
-hr { border: none; border-top: 1px solid var(--blue-light); margin: 2rem 0; }
+/* ── GLOSSARY ── */
+.glossary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;}
+.glossary-item{border-left:4px solid var(--blue-mid);padding:.8rem 1rem;background:var(--blue-pale);border-radius:0 var(--radius) var(--radius) 0;}
+.glossary-term{font-family:var(--font-display);font-size:1rem;color:var(--blue-dark);margin-bottom:.3rem;}
+.glossary-formula{font-size:.75rem;font-weight:600;color:var(--blue-mid);margin-bottom:.35rem;font-family:monospace;background:rgba(46,117,182,.1);display:inline-block;padding:2px 6px;border-radius:4px;}
+.glossary-def{font-size:.82rem;color:var(--gray-dark);line-height:1.6;}
 
-/* ── FOOTER ── */
-footer {
-  background: var(--blue-dark); color: rgba(255,255,255,.6);
-  text-align: center; padding: 1.75rem 1.5rem; font-size: .8rem; line-height: 1.7;
-}
-footer strong { color: rgba(255,255,255,.9); }
-footer a { color: var(--blue-light); text-decoration: none; }
+/* ── TAB CONTENT ── */
+.tab-content{display:none;}
+.tab-content.active{display:block;}
 
-/* ── RESPONSIVE ── */
-@media (max-width: 600px) {
-  .payback-grid { grid-template-columns: 1fr; }
-  .kpi-row { grid-template-columns: repeat(2, 1fr); }
-  .formula-strip { flex-direction: column; gap: .4rem; }
-}
+hr{border:none;border-top:1px solid var(--blue-light);margin:1.1rem 0;}
+
+footer{background:var(--blue-dark);color:rgba(255,255,255,.6);text-align:center;padding:1.75rem 1.5rem;font-size:.8rem;line-height:1.7;}
+footer strong{color:rgba(255,255,255,.9);}
+footer a{color:var(--blue-light);text-decoration:none;}
+
+/* ── CONFIRM DIALOG ── */
+.confirm-overlay{display:none;position:fixed;inset:0;background:rgba(15,35,60,.55);backdrop-filter:blur(3px);z-index:500;align-items:center;justify-content:center;}
+.confirm-overlay.open{display:flex;}
+.confirm-box{background:#fff;border-radius:14px;padding:2rem;max-width:380px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.25);text-align:center;}
+.confirm-icon{font-size:2rem;margin-bottom:.6rem;}
+.confirm-title{font-family:var(--font-display);font-size:1.2rem;color:var(--blue-dark);margin-bottom:.4rem;}
+.confirm-text{font-size:.85rem;color:var(--gray-mid);line-height:1.5;margin-bottom:1.4rem;}
+.confirm-actions{display:flex;gap:.75rem;justify-content:center;}
+.btn-cancel{font-family:var(--font-body);font-size:.85rem;padding:.55rem 1.25rem;border-radius:8px;border:1.5px solid #ddd;background:#fff;color:var(--gray-mid);cursor:pointer;transition:all var(--transition);}
+.btn-cancel:hover{background:var(--gray-light);}
+.btn-confirm-reset{font-family:var(--font-body);font-size:.85rem;font-weight:600;padding:.55rem 1.25rem;border-radius:8px;border:none;background:var(--red-dark);color:#fff;cursor:pointer;transition:background var(--transition);}
+.btn-confirm-reset:hover{background:#7B241C;}
+
+@media(max-width:600px){.payback-grid{grid-template-columns:1fr;}.hero-divider{display:none;}.hero-sub{max-width:100%;}}
 </style>
 </head>
 <body>
 
 <!-- HEADER -->
 <header>
-  <div class="header-brand">
+  <div>
     <div class="header-name">Formazione Digitale</div>
     <div class="header-tag">Strumenti didattici</div>
   </div>
   <a class="back-link" href="../index.html">← Torna alla home</a>
 </header>
 
-<!-- HERO -->
+<!-- HERO compatto -->
 <section class="hero">
-  <div class="hero-eyebrow">Strumento interattivo · Marketing &amp; Economia</div>
-  <h1 class="hero-title">Calcolatore<br><em>Break-Even Point</em></h1>
-  <p class="hero-sub">Modifica i parametri e osserva in tempo reale come cambia il punto di pareggio, il grafico e il tempo di rientro dell'investimento.</p>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div>
+        <div class="hero-eyebrow">Strumento interattivo · Marketing &amp; Economia</div>
+        <h1 class="hero-title">Calcolatore <em>Break-Even Point</em></h1>
+      </div>
+      <div class="hero-divider"></div>
+      <p class="hero-sub">Modifica i parametri e osserva in tempo reale come cambia il punto di pareggio, il grafico e il tempo di rientro dell'investimento.</p>
+    </div>
+    <div class="hero-right">
+      <div style="position:relative;">
+        <a href="calcolo-break-even-point.xlsx" download
+           class="btn-excel"
+           onmouseover="document.getElementById('xl-tip').style.display='block'"
+           onmouseout="document.getElementById('xl-tip').style.display='none'">
+          📥 Scarica Excel
+          <span id="xl-tip" class="xl-tip">Scarica la versione Excel del tool!</span>
+        </a>
+      </div>
+      <div style="position:relative;">
+        <button class="btn-formule" id="btn-formule" onclick="toggleFormule(event)">📐 Formule</button>
+        <div class="formule-popup" id="formule-popup">
+          <div class="fp-item">
+            <div class="fp-label">Formula BEP</div>
+            <div class="fp-eq">BEP = CF Iniziali ÷ MC Effettivo</div>
+          </div>
+          <div class="fp-item">
+            <div class="fp-label">Margine di Contribuzione</div>
+            <div class="fp-eq">MC = Prezzo − CV unitari</div>
+          </div>
+          <div class="fp-item">
+            <div class="fp-label">MC Effettivo</div>
+            <div class="fp-eq">MC_eff = MC − (CF mens. / V mens.)</div>
+          </div>
+          <div class="fp-item">
+            <div class="fp-label">Tempo di rientro</div>
+            <div class="fp-eq">T = CF iniziali ÷ (V mens. × MC_eff)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
+
+<!-- ALERT MC GLOBALE -->
+<div class="alert-mc-global" id="alert-mc-global">
+  <div class="alert-mc-global-inner">
+    ⚠️ <strong>Margine di contribuzione negativo o zero.</strong> Il prezzo di vendita deve essere superiore ai costi variabili unitari per raggiungere il pareggio.
+  </div>
+</div>
+
+<!-- TAB BAR STICKY -->
+<div class="tab-sticky">
+  <div class="tab-sticky-inner">
+    <button class="tab-btn active" onclick="switchTab('parametri',this)">⚙️ Parametri</button>
+    <button class="tab-btn" onclick="switchTab('grafico',this)">📈 Grafico</button>
+    <button class="tab-btn" onclick="switchTab('tabella',this)">📊 Tabella</button>
+    <button class="tab-btn" onclick="switchTab('payback',this)">⏱ Rientro</button>
+    <button class="tab-btn" onclick="switchTab('glossario',this)">📖 Glossario</button>
+  </div>
+</div>
 
 <!-- MAIN -->
 <div class="page-wrap">
+  <div class="main-layout">
 
-  <!-- ── FORMULA STRIP ── -->
-  <div class="formula-strip">
+    <!-- CONTENT (sinistra) -->
     <div>
-      <div class="f-label">Formula BEP</div>
-      <div class="f-eq">BEP = Costi Fissi Totali ÷ Margine di Contribuzione Effettivo</div>
-    </div>
-    <span class="formula-sep">|</span>
-    <div>
-      <div class="f-label">Margine di Contribuzione</div>
-      <div class="f-eq">MC = Prezzo Vendita − Costi Variabili Unitari</div>
-    </div>
-  </div>
 
-  <!-- ── KPI ROW ── -->
-  <div class="kpi-row">
-    <div class="kpi">
-      <div class="kpi-label">
-        BEP (unità)
-        <span class="info-icon">i<span class="tooltip">Numero minimo di unità da vendere per coprire tutti i costi. Sotto questo valore l'impresa è in perdita.</span></span>
-      </div>
-      <div class="kpi-value" id="kpi-bep-q">—</div>
-      <div class="kpi-sub">unità</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">
-        BEP (valore)
-        <span class="info-icon">i<span class="tooltip">Ricavi totali necessari per raggiungere il pareggio. BEP(€) = BEP(Q) × Prezzo Vendita.</span></span>
-      </div>
-      <div class="kpi-value" id="kpi-bep-eur">—</div>
-      <div class="kpi-sub">€ di ricavi</div>
-    </div>
-    <div class="kpi green">
-      <div class="kpi-label">
-        Margine di Contribuzione
-        <span class="info-icon">i<span class="tooltip">Quanto "contribuisce" ogni unità venduta alla copertura dei costi fissi. MC = Prezzo − CV unitari.</span></span>
-      </div>
-      <div class="kpi-value" id="kpi-mc">—</div>
-      <div class="kpi-sub">€ per unità</div>
-    </div>
-    <div class="kpi amber">
-      <div class="kpi-label">
-        MC Effettivo
-        <span class="info-icon">i<span class="tooltip">Margine di contribuzione ridotto della quota mensile dei costi fissi continuativi (stipendi, canoni). MC_eff = MC − (Costi mensili / Vendite medie mensili).</span></span>
-      </div>
-      <div class="kpi-value" id="kpi-mc-eff">—</div>
-      <div class="kpi-sub">€ per unità (netto costi mensili)</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">
-        Costi Fissi Totali
-        <span class="info-icon">i<span class="tooltip">Somma dei costi fissi iniziali (una tantum) e dei costi mensili fissi capitalizzati sul volume medio di vendita.</span></span>
-      </div>
-      <div class="kpi-value" id="kpi-cf">—</div>
-      <div class="kpi-sub">€</div>
-    </div>
-  </div>
-
-  <!-- ── TABS PRINCIPALI ── -->
-  <div class="tab-bar">
-    <button class="tab-btn active" onclick="switchTab('parametri', this)">⚙️ Parametri</button>
-    <button class="tab-btn" onclick="switchTab('grafico', this)">📈 Grafico</button>
-    <button class="tab-btn" onclick="switchTab('tabella', this)">📊 Tabella scenari</button>
-    <button class="tab-btn" onclick="switchTab('payback', this)">⏱ Tempo di rientro</button>
-    <button class="tab-btn" onclick="switchTab('glossario', this)">📖 Glossario</button>
-  </div>
-
-  <!-- ═══ TAB: PARAMETRI ═══ -->
-  <div id="tab-parametri" class="tab-content active">
-    <div class="panel">
-      <div class="sec-head">Costi variabili unitari</div>
-      <div class="input-grid">
-        <div class="input-group">
-          <label class="input-label">
-            Materia prima
-            <span class="info-icon">i<span class="tooltip">Costo dei materiali diretti per produrre una singola unità.</span></span>
-          </label>
-          <input class="num-input" type="number" id="cv-materia" value="5" min="0" step="0.1" oninput="calc()">
-        </div>
-        <div class="input-group">
-          <label class="input-label">
-            Confezione / Imballaggio
-            <span class="info-icon">i<span class="tooltip">Costo del packaging per ogni unità prodotta.</span></span>
-          </label>
-          <input class="num-input" type="number" id="cv-conf" value="0.5" min="0" step="0.1" oninput="calc()">
-        </div>
-        <div class="input-group">
-          <label class="input-label">
-            Manodopera diretta
-            <span class="info-icon">i<span class="tooltip">Costo del lavoro direttamente imputabile alla produzione di una singola unità.</span></span>
-          </label>
-          <input class="num-input" type="number" id="cv-mano" value="1" min="0" step="0.1" oninput="calc()">
-        </div>
-        <div class="input-group">
-          <label class="input-label">
-            Etichette / Marketing unitario
-            <span class="info-icon">i<span class="tooltip">Quota di costi di marketing variabile attribuita a ogni unità (es. promozioni, etichettatura).</span></span>
-          </label>
-          <input class="num-input" type="number" id="cv-mkt" value="0.5" min="0" step="0.1" oninput="calc()">
-        </div>
-        <div class="input-group">
-          <label class="input-label">
-            Altro (costo variabile)
-            <span class="info-icon">i<span class="tooltip">Eventuali altri costi variabili unitari non classificati sopra.</span></span>
-          </label>
-          <input class="num-input" type="number" id="cv-altro" value="0" min="0" step="0.1" oninput="calc()">
-        </div>
-      </div>
-
-      <hr>
-
-      <div class="sec-head">Ricavi e costi fissi</div>
-      <div class="input-grid">
-        <div class="input-group slider-wrap">
-          <label class="input-label">
-            Prezzo di vendita unitario (€)
-            <span class="info-icon">i<span class="tooltip">Prezzo a cui viene venduta ogni unità. Deve essere superiore ai costi variabili unitari per generare un margine positivo.</span></span>
-          </label>
-          <div class="slider-row">
-            <input class="slider" type="range" id="sl-prezzo" min="1" max="50" step="0.5" value="13.5" oninput="syncSlider('prezzo')">
-            <span class="slider-val" id="sv-prezzo">13,50</span>
+      <!-- TAB PARAMETRI -->
+      <div id="tab-parametri" class="tab-content active">
+        <div class="panel">
+          <div class="sec-head">Costi variabili unitari</div>
+          <div class="cv-row">
+            <div class="cv-cell">
+              <div class="cv-label-wrap"><input class="cv-label-editable" type="text" id="lbl-cv1" value="Materia prima"><span class="info-icon">i<span class="tooltip">Costo dei materiali diretti per unità.</span></span></div>
+              <input class="num-input" type="number" id="cv-1" value="0" min="0" step="0.1" oninput="calc()">
+            </div>
+            <div class="cv-cell">
+              <div class="cv-label-wrap"><input class="cv-label-editable" type="text" id="lbl-cv2" value="Confezione"><span class="info-icon">i<span class="tooltip">Costo del packaging per unità.</span></span></div>
+              <input class="num-input" type="number" id="cv-2" value="0" min="0" step="0.1" oninput="calc()">
+            </div>
+            <div class="cv-cell">
+              <div class="cv-label-wrap"><input class="cv-label-editable" type="text" id="lbl-cv3" value="Manodopera"><span class="info-icon">i<span class="tooltip">Costo del lavoro diretto per unità.</span></span></div>
+              <input class="num-input" type="number" id="cv-3" value="0" min="0" step="0.1" oninput="calc()">
+            </div>
+            <div class="cv-cell">
+              <div class="cv-label-wrap"><input class="cv-label-editable" type="text" id="lbl-cv4" value="Etichette/Mkt"><span class="info-icon">i<span class="tooltip">Quota variabile di marketing per unità.</span></span></div>
+              <input class="num-input" type="number" id="cv-4" value="0" min="0" step="0.1" oninput="calc()">
+            </div>
+            <div class="cv-cell">
+              <div class="cv-label-wrap"><input class="cv-label-editable" type="text" id="lbl-cv5" value="Altro"><span class="info-icon">i<span class="tooltip">Altri costi variabili unitari.</span></span></div>
+              <input class="num-input" type="number" id="cv-5" value="0" min="0" step="0.1" oninput="calc()">
+            </div>
+            <div class="cv-total-cell">
+              <div class="cv-total-label">Totale CV</div>
+              <div class="cv-total-val" id="cv-totale">0,00</div>
+            </div>
           </div>
-          <input class="num-input" type="number" id="in-prezzo" value="13.5" min="0.1" step="0.1" oninput="syncInput('prezzo')">
         </div>
-        <div class="input-group slider-wrap">
-          <label class="input-label">
-            Costi fissi iniziali (€)
-            <span class="info-icon">i<span class="tooltip">Investimento iniziale una tantum (macchinari, licenze, allestimento). Non varia al variare delle quantità prodotte.</span></span>
-          </label>
-          <div class="slider-row">
-            <input class="slider" type="range" id="sl-cfiniziali" min="0" max="200000" step="1000" value="85000" oninput="syncSlider('cfiniziali')">
-            <span class="slider-val" id="sv-cfiniziali">85.000</span>
+
+        <div class="panel">
+          <div class="sec-head">Ricavi e costi fissi</div>
+          <div class="slider-section">
+            <div class="slider-group">
+              <div class="slider-label">Prezzo vendita unitario (€) <span class="info-icon">i<span class="tooltip">Deve superare i CV unitari per generare margine positivo.</span></span></div>
+              <div class="slider-row"><input class="slider" type="range" id="sl-prezzo" min="0" max="1000" step="1" value="0" oninput="syncSlider('prezzo')"><span class="slider-val" id="sv-prezzo">0</span></div>
+              <input class="num-input" type="number" id="in-prezzo" value="0" min="0" step="0.1" oninput="syncInput('prezzo')">
+            </div>
+            <div class="slider-group">
+              <div class="slider-label">Costi fissi iniziali (€) <span class="info-icon">i<span class="tooltip">Investimento iniziale una tantum da recuperare.</span></span></div>
+              <div class="slider-row"><input class="slider" type="range" id="sl-cfiniziali" min="0" max="1000000" step="1000" value="0" oninput="syncSlider('cfiniziali')"><span class="slider-val" id="sv-cfiniziali">0</span></div>
+              <input class="num-input" type="number" id="in-cfiniziali" value="0" min="0" step="100" oninput="syncInput('cfiniziali')">
+            </div>
+            <div class="slider-group">
+              <div class="slider-label">Costi fissi mensili (€) <span class="info-icon">i<span class="tooltip">Costi ricorrenti mensili: stipendi, affitti, canoni.</span></span></div>
+              <div class="slider-row"><input class="slider" type="range" id="sl-cfmens" min="0" max="30000" step="100" value="0" oninput="syncSlider('cfmens')"><span class="slider-val" id="sv-cfmens">0</span></div>
+              <input class="num-input" type="number" id="in-cfmens" value="0" min="0" step="100" oninput="syncInput('cfmens')">
+            </div>
+            <div class="slider-group">
+              <div class="slider-label">Vendite medie mensili (unità) <span class="info-icon">i<span class="tooltip">Stima unità vendute al mese. Usata per MC effettivo e rientro.</span></span></div>
+              <div class="slider-row"><input class="slider" type="range" id="sl-vmens" min="0" max="5000" step="10" value="0" oninput="syncSlider('vmens')"><span class="slider-val" id="sv-vmens">0</span></div>
+              <input class="num-input" type="number" id="in-vmens" value="0" min="0" step="10" oninput="syncInput('vmens')">
+            </div>
           </div>
-          <input class="num-input" type="number" id="in-cfiniziali" value="85000" min="0" step="100" oninput="syncInput('cfiniziali')">
-        </div>
-        <div class="input-group slider-wrap">
-          <label class="input-label">
-            Costi fissi mensili (€)
-            <span class="info-icon">i<span class="tooltip">Costi fissi ricorrenti ogni mese (stipendi, affitti, canoni). Vengono redistribuiti sulle unità vendute per calcolare il margine effettivo.</span></span>
-          </label>
-          <div class="slider-row">
-            <input class="slider" type="range" id="sl-cfmens" min="0" max="20000" step="100" value="3000" oninput="syncSlider('cfmens')">
-            <span class="slider-val" id="sv-cfmens">3.000</span>
+          <div style="margin-top:1.4rem;padding-top:1.1rem;border-top:1px solid var(--blue-light);">
+            <button class="reset-btn" onclick="askReset()">↺ Reset totale — azzera tutti i valori e ripristina le etichette</button>
           </div>
-          <input class="num-input" type="number" id="in-cfmens" value="3000" min="0" step="100" oninput="syncInput('cfmens')">
         </div>
-        <div class="input-group slider-wrap">
-          <label class="input-label">
-            Vendite medie mensili (unità)
-            <span class="info-icon">i<span class="tooltip">Previsione di quante unità si vendono in un mese in media. Usato per calcolare il margine effettivo e il tempo di rientro.</span></span>
-          </label>
-          <div class="slider-row">
-            <input class="slider" type="range" id="sl-vmens" min="100" max="5000" step="25" value="750" oninput="syncSlider('vmens')">
-            <span class="slider-val" id="sv-vmens">750</span>
+      </div>
+
+      <!-- TAB GRAFICO -->
+      <div id="tab-grafico" class="tab-content">
+        <div class="panel">
+          <div class="sec-head">Grafico Break-Even Point</div>
+          <p style="font-size:.83rem;color:var(--gray-mid);margin-bottom:1rem;">L'incrocio tra <strong>Ricavi Totali</strong> e <strong>Costi Totali</strong> è il BEP. A sinistra perdita, a destra profitto.</p>
+          <div class="chart-wrap"><canvas id="bepChart"></canvas></div>
+          <div style="display:flex;gap:1.25rem;flex-wrap:wrap;margin-top:1rem;font-size:.78rem;color:var(--gray-mid);">
+            <span style="display:flex;align-items:center;gap:5px;"><span style="width:18px;height:3px;background:#2E75B6;display:inline-block;border-radius:2px;"></span> Ricavi Totali</span>
+            <span style="display:flex;align-items:center;gap:5px;"><span style="width:18px;height:3px;background:#922B21;display:inline-block;border-radius:2px;"></span> Costi Totali</span>
+            <span style="display:flex;align-items:center;gap:5px;"><span style="width:22px;height:0;border-top:2.5px dashed #7D4E00;display:inline-block;"></span> Costi Fissi Iniziali</span>
+            <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;background:#1E6B3C;border-radius:50%;display:inline-block;"></span> Break-Even Point</span>
           </div>
-          <input class="num-input" type="number" id="in-vmens" value="750" min="1" step="10" oninput="syncInput('vmens')">
         </div>
       </div>
 
-      <div style="margin-top:1.25rem;">
-        <button class="reset-btn" onclick="resetDefaults()">↺ Ripristina valori originali</button>
+      <!-- TAB TABELLA -->
+      <div id="tab-tabella" class="tab-content">
+        <div class="panel">
+          <div class="sec-head">Progressione verso il Break-Even Point</div>
+          <p style="font-size:.83rem;color:var(--gray-mid);margin-bottom:1rem;">Ogni riga mostra risultato economico al variare della percentuale dell'obiettivo BEP raggiunto. La riga al 100% è il punto di pareggio esatto.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr>
+                <th>% Obiettivo</th>
+                <th>Quantità (Q)</th>
+                <th>Ricavi Totali (€)</th>
+                <th>CV Totali (€)</th>
+                <th>Costi Fissi (€)</th>
+                <th>Costi Totali (€)</th>
+                <th>Profitto/Perdita (€)</th>
+              </tr></thead>
+              <tbody id="scenario-tbody"></tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- Avviso MC negativo -->
-    <div id="alert-mc" style="display:none; background:var(--red-light); border:1px solid #f5b7b1; border-radius:var(--radius); padding:1rem 1.25rem; color:var(--red-dark); font-size:.88rem; margin-bottom:1rem;">
-      ⚠️ <strong>Attenzione:</strong> il margine di contribuzione è negativo o zero. Il prezzo di vendita deve essere superiore ai costi variabili unitari per poter raggiungere il pareggio.
-    </div>
+      <!-- TAB PAYBACK -->
+      <div id="tab-payback" class="tab-content">
+        <div class="panel">
+          <div class="sec-head amber">Tempo di rientro dell'investimento</div>
+          <div class="payback-controls">
+            <label>Scarto scenari:</label>
+            <div class="scarto-row">
+              <input class="scarto-slider" type="range" id="sl-scarto" min="1" max="50" step="1" value="10" oninput="updateScarto()">
+              <span class="scarto-val" id="sv-scarto">±10%</span>
+            </div>
+            <span style="font-size:.75rem;color:var(--gray-mid);">rispetto alle vendite medie mensili</span>
+          </div>
+          <div class="payback-grid" id="payback-grid"></div>
+          <div class="payback-bar">
+            <div class="payback-bar-label"><span>Caso peggiore</span><span id="pb-worst-label">—</span></div>
+            <div class="bar-track"><div class="bar-fill worst" id="pb-bar-worst" style="width:100%"></div></div>
+          </div>
+          <div class="payback-bar" style="margin-top:.6rem;">
+            <div class="payback-bar-label"><span>Caso medio</span><span id="pb-base-label">—</span></div>
+            <div class="bar-track"><div class="bar-fill base" id="pb-bar-base" style="width:75%"></div></div>
+          </div>
+          <div class="payback-bar" style="margin-top:.6rem;">
+            <div class="payback-bar-label"><span>Caso migliore</span><span id="pb-best-label">—</span></div>
+            <div class="bar-track"><div class="bar-fill best" id="pb-bar-best" style="width:55%"></div></div>
+          </div>
+          <p style="font-size:.75rem;color:var(--gray-mid);margin-top:1.1rem;"><strong>Formula:</strong> T (mesi) = CF iniziali ÷ (Vendite mens. × MC effettivo)</p>
+        </div>
+      </div>
+
+      <!-- TAB GLOSSARIO -->
+      <div id="tab-glossario" class="tab-content">
+        <div class="panel">
+          <div class="sec-head">Concetti chiave</div>
+          <div class="glossary-grid">
+            <div class="glossary-item"><div class="glossary-term">Break-Even Point (BEP)</div><div class="glossary-formula">BEP(Q) = CF_iniziali / MC_eff</div><div class="glossary-def">Quantità alla quale ricavi e costi si equivalgono. Né profitto né perdita.</div></div>
+            <div class="glossary-item"><div class="glossary-term">Costi Fissi (CF)</div><div class="glossary-formula">CF = non variano con Q</div><div class="glossary-def">Indipendenti dal volume: affitto, stipendi, ammortamenti. Distinguiamo CF iniziali (una tantum) e mensili (ricorrenti).</div></div>
+            <div class="glossary-item"><div class="glossary-term">Costi Variabili (CV)</div><div class="glossary-formula">CV_tot = cv_unit × Q</div><div class="glossary-def">Proporzionali al volume: materie prime, imballaggi, manodopera diretta.</div></div>
+            <div class="glossary-item"><div class="glossary-term">Margine di Contribuzione</div><div class="glossary-formula">MC = P − cv_unit</div><div class="glossary-def">Quanto rimane del prezzo dopo i CV unitari. Ogni unità "contribuisce" a coprire i costi fissi.</div></div>
+            <div class="glossary-item"><div class="glossary-term">MC Effettivo</div><div class="glossary-formula">MC_eff = MC − (CF_mens / V_mens)</div><div class="glossary-def">Margine reale dopo aver imputato la quota di costi mensili per unità venduta.</div></div>
+            <div class="glossary-item"><div class="glossary-term">Ricavi Totali (RT)</div><div class="glossary-formula">RT = P × Q</div><div class="glossary-def">Entrate dalla vendita di Q unità. Sul grafico è una retta dall'origine.</div></div>
+            <div class="glossary-item"><div class="glossary-term">Costi Totali (CT)</div><div class="glossary-formula">CT = CF + CV_tot</div><div class="glossary-def">Sul grafico parte dall'asse Y al valore dei CF (esistono anche a Q=0).</div></div>
+            <div class="glossary-item"><div class="glossary-term">Tempo di rientro</div><div class="glossary-formula">T = CF_iniz / (V_mens × MC_eff)</div><div class="glossary-def">Mesi per recuperare l'investimento iniziale tramite i margini mensili. Payback semplice.</div></div>
+            <div class="glossary-item"><div class="glossary-term">Area profitto / perdita</div><div class="glossary-formula">π = RT − CT</div><div class="glossary-def">Sinistra del BEP: perdita (CT > RT). Destra del BEP: profitto (RT > CT).</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+
+    <!-- KPI SIDEBAR (destra) -->
+    <aside class="kpi-sidebar">
+      <div class="kpi">
+        <div class="kpi-label">BEP (unità) <span class="info-icon">i<span class="tooltip">Numero minimo di unità da vendere per coprire tutti i costi.</span></span></div>
+        <div class="kpi-value" id="kpi-bep-q">—</div>
+        <div class="kpi-sub">unità</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">BEP (valore) <span class="info-icon">i<span class="tooltip">Ricavi totali al punto di pareggio. BEP(€) = BEP(Q) × Prezzo.</span></span></div>
+        <div class="kpi-value" id="kpi-bep-eur">—</div>
+        <div class="kpi-sub">€ di ricavi</div>
+      </div>
+      <div class="kpi green">
+        <div class="kpi-label">Marg. Contribuzione <span class="info-icon">i<span class="tooltip">MC = Prezzo − CV unitari.</span></span></div>
+        <div class="kpi-value" id="kpi-mc">—</div>
+        <div class="kpi-sub">€ per unità</div>
+      </div>
+      <div class="kpi amber">
+        <div class="kpi-label">MC Effettivo <span class="info-icon">i<span class="tooltip">MC_eff = MC − (CF mensili / Vendite mens.).</span></span></div>
+        <div class="kpi-value" id="kpi-mc-eff">—</div>
+        <div class="kpi-sub">€/unità netto mensili</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">CF Iniziali <span class="info-icon">i<span class="tooltip">Investimento iniziale una tantum da recuperare.</span></span></div>
+        <div class="kpi-value" id="kpi-cf">—</div>
+        <div class="kpi-sub">€</div>
+      </div>
+    </aside>
+
   </div>
+</div>
 
-  <!-- ═══ TAB: GRAFICO ═══ -->
-  <div id="tab-grafico" class="tab-content">
-    <div class="panel">
-      <div class="sec-head">Grafico Break-Even Point</div>
-      <p style="font-size:.83rem;color:var(--gray-mid);margin-bottom:1rem;">Il punto di incrocio tra la retta dei <strong>Ricavi Totali</strong> e quella dei <strong>Costi Totali</strong> è il Break-Even Point. A sinistra del BEP l'impresa è in perdita, a destra realizza profitto.</p>
-      <div class="chart-wrap">
-        <canvas id="bepChart" role="img" aria-label="Grafico Break-Even Point: ricavi totali, costi totali e costi fissi in funzione delle quantità prodotte"></canvas>
-      </div>
-      <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:1rem;font-size:.78rem;color:var(--gray-mid);">
-        <span style="display:flex;align-items:center;gap:5px;"><span style="width:18px;height:3px;background:#2E75B6;display:inline-block;border-radius:2px;"></span> Ricavi Totali</span>
-        <span style="display:flex;align-items:center;gap:5px;"><span style="width:18px;height:3px;background:#922B21;display:inline-block;border-radius:2px;"></span> Costi Totali</span>
-        <span style="display:flex;align-items:center;gap:5px;"><span style="width:18px;height:3px;background:#7D4E00;display:inline-block;border-radius:2px;border-style:dashed;"></span> Costi Fissi</span>
-        <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;background:#1E6B3C;border-radius:50%;display:inline-block;"></span> Break-Even Point</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ TAB: TABELLA ═══ -->
-  <div id="tab-tabella" class="tab-content">
-    <div class="panel">
-      <div class="sec-head">Tabella scenari</div>
-      <p style="font-size:.83rem;color:var(--gray-mid);margin-bottom:1rem;">La riga evidenziata corrisponde al Break-Even Point. Le righe rosse indicano perdita, le verdi profitto.</p>
-      <div class="table-wrap">
-        <table id="scenario-table">
-          <thead>
-            <tr>
-              <th>Scenario</th>
-              <th>Quantità (Q)</th>
-              <th>Ricavi Totali (€)</th>
-              <th>CV Totali (€)</th>
-              <th>Costi Fissi (€)</th>
-              <th>Costi Totali (€)</th>
-              <th>Profitto / Perdita (€)</th>
-            </tr>
-          </thead>
-          <tbody id="scenario-tbody"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ TAB: PAYBACK ═══ -->
-  <div id="tab-payback" class="tab-content">
-    <div class="panel">
-      <div class="sec-head amber">Tempo di rientro dell'investimento</div>
-      <p style="font-size:.83rem;color:var(--gray-mid);margin-bottom:1.25rem;">
-        Quanti mesi servono per recuperare i costi fissi iniziali, ipotizzando tre livelli di vendita mensile.
-        Il coefficiente di variazione applicato è ±10% rispetto al valore medio.
-      </p>
-      <div class="payback-grid" id="payback-grid"></div>
-
-      <div class="payback-bar" style="margin-top:1.5rem;">
-        <div class="payback-bar-label">
-          <span>Caso peggiore</span><span id="pb-worst-label">— mesi</span>
-        </div>
-        <div class="bar-track"><div class="bar-fill worst" id="pb-bar-worst" style="width:100%"></div></div>
-      </div>
-      <div class="payback-bar" style="margin-top:.75rem;">
-        <div class="payback-bar-label">
-          <span>Caso medio</span><span id="pb-base-label">— mesi</span>
-        </div>
-        <div class="bar-track"><div class="bar-fill base" id="pb-bar-base" style="width:75%"></div></div>
-      </div>
-      <div class="payback-bar" style="margin-top:.75rem;">
-        <div class="payback-bar-label">
-          <span>Caso migliore</span><span id="pb-best-label">— mesi</span>
-        </div>
-        <div class="bar-track"><div class="bar-fill best" id="pb-bar-best" style="width:55%"></div></div>
-      </div>
-
-      <p style="font-size:.75rem;color:var(--gray-mid);margin-top:1.25rem;">
-        <strong>Come si calcola:</strong> Tempo (mesi) = Costi fissi iniziali ÷ (Vendite mensili × Margine di contribuzione effettivo)
-      </p>
-    </div>
-  </div>
-
-  <!-- ═══ TAB: GLOSSARIO ═══ -->
-  <div id="tab-glossario" class="tab-content">
-    <div class="panel">
-      <div class="sec-head">Concetti chiave</div>
-      <div class="glossary-grid">
-
-        <div class="glossary-item">
-          <div class="glossary-term">Break-Even Point (BEP)</div>
-          <div class="glossary-formula">BEP(Q) = CF_totali / MC_effettivo</div>
-          <div class="glossary-def">Il punto di pareggio è la quantità di produzione/vendita alla quale i ricavi totali eguagliano esattamente i costi totali. Né profitto né perdita.</div>
-        </div>
-
-        <div class="glossary-item">
-          <div class="glossary-term">Costi Fissi (CF)</div>
-          <div class="glossary-formula">CF = non variano con Q</div>
-          <div class="glossary-def">Costi che l'impresa sostiene indipendentemente dal volume prodotto: affitto, stipendi dei dirigenti, ammortamenti, canoni. Nel modello distinguiamo CF iniziali (una tantum) e CF mensili (ricorrenti).</div>
-        </div>
-
-        <div class="glossary-item">
-          <div class="glossary-term">Costi Variabili (CV)</div>
-          <div class="glossary-formula">CV_totali = cv_unit × Q</div>
-          <div class="glossary-def">Costi che aumentano proporzionalmente al volume prodotto: materie prime, imballaggi, manodopera diretta. Più si produce, più crescono.</div>
-        </div>
-
-        <div class="glossary-item">
-          <div class="glossary-term">Margine di Contribuzione</div>
-          <div class="glossary-formula">MC = P - cv_unit</div>
-          <div class="glossary-def">Quanto rimane del prezzo di vendita dopo aver coperto i costi variabili unitari. Ogni unità venduta "contribuisce" di questa cifra a coprire i costi fissi.</div>
-        </div>
-
-        <div class="glossary-item">
-          <div class="glossary-term">Margine di Contribuzione Effettivo</div>
-          <div class="glossary-formula">MC_eff = MC - (CF_mens / V_mens)</div>
-          <div class="glossary-def">Margine di contribuzione ridotto della quota di costi fissi mensili imputata a ogni unità venduta in media. È il valore reale disponibile per coprire l'investimento iniziale.</div>
-        </div>
-
-        <div class="glossary-item">
-          <div class="glossary-term">Ricavi Totali (RT)</div>
-          <div class="glossary-formula">RT = P × Q</div>
-          <div class="glossary-def">Entrate generate dalla vendita di Q unità al prezzo P. Sul grafico è una retta che parte dall'origine: se non si vende nulla, non si incassa nulla.</div>
-        </div>
-
-        <div class="glossary-item">
-          <div class="glossary-term">Costi Totali (CT)</div>
-          <div class="glossary-formula">CT = CF + CV_totali</div>
-          <div class="glossary-def">Somma di tutti i costi. Sul grafico è una retta che parte dall'asse Y al valore dei costi fissi (anche a Q=0 esistono dei costi).</div>
-        </div>
-
-        <div class="glossary-item">
-          <div class="glossary-term">Tempo di rientro</div>
-          <div class="glossary-formula">T = CF_iniziali / (V_mens × MC_eff)</div>
-          <div class="glossary-def">Numero di mesi necessari per recuperare i costi fissi iniziali attraverso i margini generati dalle vendite mensili. Non considera il valore temporale del denaro (payback semplice).</div>
-        </div>
-
-        <div class="glossary-item">
-          <div class="glossary-term">Area di profitto / perdita</div>
-          <div class="glossary-formula">π = RT − CT</div>
-          <div class="glossary-def">A sinistra del BEP i costi totali superano i ricavi: l'impresa è in perdita (area rossa). A destra del BEP i ricavi superano i costi: l'impresa è in utile (area verde).</div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-</div><!-- /page-wrap -->
-
-<!-- FOOTER -->
 <footer>
   <strong>Formazione Digitale</strong> · <a href="../index.html">Torna alla home</a><br>
   Strumento didattico libero e gratuito. I dati inseriti non vengono salvati né trasmessi.
 </footer>
 
+<!-- CONFIRM DIALOG -->
+<div class="confirm-overlay" id="confirm-overlay">
+  <div class="confirm-box">
+    <div class="confirm-icon">⚠️</div>
+    <div class="confirm-title">Conferma reset totale</div>
+    <div class="confirm-text">Tutti i valori inseriti verranno azzerati e le etichette dei costi variabili torneranno ai valori predefiniti.<br><strong>L'operazione non è reversibile.</strong></div>
+    <div class="confirm-actions">
+      <button class="btn-cancel" onclick="closeConfirm()">Annulla</button>
+      <button class="btn-confirm-reset" onclick="doReset()">↺ Sì, azzera tutto</button>
+    </div>
+  </div>
+</div>
+
 <script>
-// ── DEFAULTS (dall'Excel originale) ──────────────────────────────
-const DEFAULTS = {
-  cvMateria: 5, cvConf: 0.5, cvMano: 1, cvMkt: 0.5, cvAltro: 0,
-  prezzo: 13.5, cfIniziali: 85000, cfMens: 3000, vMens: 750
-};
-
-// ── STATO ────────────────────────────────────────────────────────
+const DEF_LABELS = ['Materia prima','Confezione','Manodopera','Etichette/Mkt','Altro'];
 let bepChart = null;
+let scartoPercent = 10;
 
-// ── SYNC SLIDER ↔ INPUT ──────────────────────────────────────────
+// ── FORMULE POPUP ─────────────────────────────────────────────────
+function toggleFormule(e) {
+  e.stopPropagation();
+  document.getElementById('formule-popup').classList.toggle('open');
+}
+document.addEventListener('click', () => document.getElementById('formule-popup').classList.remove('open'));
+
+// ── SLIDER SYNC ───────────────────────────────────────────────────
 function syncSlider(key) {
-  const sl = document.getElementById('sl-' + key);
-  const sv = document.getElementById('sv-' + key);
-  const inp = document.getElementById('in-' + key);
-  const v = parseFloat(sl.value);
-  inp.value = v;
-  sv.textContent = fmt(v, key);
+  const v = parseFloat(document.getElementById('sl-'+key).value);
+  document.getElementById('in-'+key).value = v;
+  document.getElementById('sv-'+key).textContent = fmtSlider(v, key);
   calc();
 }
 function syncInput(key) {
-  const inp = document.getElementById('in-' + key);
-  const sl  = document.getElementById('sl-' + key);
-  const sv  = document.getElementById('sv-' + key);
-  const v   = parseFloat(inp.value) || 0;
-  sl.value  = Math.min(Math.max(v, parseFloat(sl.min)), parseFloat(sl.max));
-  sv.textContent = fmt(v, key);
+  const v = parseFloat(document.getElementById('in-'+key).value) || 0;
+  const sl = document.getElementById('sl-'+key);
+  sl.value = Math.min(Math.max(v, parseFloat(sl.min)), parseFloat(sl.max));
+  document.getElementById('sv-'+key).textContent = fmtSlider(v, key);
   calc();
 }
-function fmt(v, key) {
+function fmtSlider(v, key) {
   if (key === 'prezzo') return v.toFixed(2).replace('.', ',');
   return Math.round(v).toLocaleString('it-IT');
 }
-
-// ── RESET ────────────────────────────────────────────────────────
-function resetDefaults() {
-  document.getElementById('cv-materia').value = DEFAULTS.cvMateria;
-  document.getElementById('cv-conf').value    = DEFAULTS.cvConf;
-  document.getElementById('cv-mano').value    = DEFAULTS.cvMano;
-  document.getElementById('cv-mkt').value     = DEFAULTS.cvMkt;
-  document.getElementById('cv-altro').value   = DEFAULTS.cvAltro;
-  setSlider('prezzo',     DEFAULTS.prezzo);
-  setSlider('cfiniziali', DEFAULTS.cfIniziali);
-  setSlider('cfmens',     DEFAULTS.cfMens);
-  setSlider('vmens',      DEFAULTS.vMens);
-  calc();
-}
-function setSlider(key, val) {
-  document.getElementById('sl-' + key).value  = val;
-  document.getElementById('in-' + key).value  = val;
-  document.getElementById('sv-' + key).textContent = fmt(val, key);
-}
-
-// ── LEGGI VALORI ─────────────────────────────────────────────────
-function getVals() {
-  const cvUnit = (parseFloat(document.getElementById('cv-materia').value) || 0)
-               + (parseFloat(document.getElementById('cv-conf').value)    || 0)
-               + (parseFloat(document.getElementById('cv-mano').value)    || 0)
-               + (parseFloat(document.getElementById('cv-mkt').value)     || 0)
-               + (parseFloat(document.getElementById('cv-altro').value)   || 0);
-  const prezzo     = parseFloat(document.getElementById('in-prezzo').value)     || 0;
-  const cfIniziali = parseFloat(document.getElementById('in-cfiniziali').value) || 0;
-  const cfMens     = parseFloat(document.getElementById('in-cfmens').value)     || 0;
-  const vMens      = parseFloat(document.getElementById('in-vmens').value)      || 1;
-  const mc         = prezzo - cvUnit;
-  const mcEff      = mc - (cfMens / vMens);
-  const cfTotali   = cfIniziali + (cfMens / vMens) * (cfIniziali / (mc > 0 ? mc : 1));
-  const bepQ       = mcEff > 0 ? cfIniziali / mcEff : Infinity;
-  const bepEur     = bepQ * prezzo;
-  return { cvUnit, prezzo, cfIniziali, cfMens, vMens, mc, mcEff, bepQ, bepEur };
-}
-
-// ── CALCOLO PRINCIPALE ───────────────────────────────────────────
-function calc() {
+function updateScarto() {
+  scartoPercent = parseInt(document.getElementById('sl-scarto').value);
+  document.getElementById('sv-scarto').textContent = '±' + scartoPercent + '%';
   const v = getVals();
-  const alert = document.getElementById('alert-mc');
-
-  if (v.mc <= 0) {
-    alert.style.display = 'block';
-    document.getElementById('kpi-bep-q').textContent   = '∞';
-    document.getElementById('kpi-bep-eur').textContent = '∞';
-    document.getElementById('kpi-mc').textContent      = v.mc.toFixed(2).replace('.', ',');
-    document.getElementById('kpi-mc-eff').textContent  = '—';
-    document.getElementById('kpi-cf').textContent      = fmtEur(v.cfIniziali);
-    return;
-  }
-  alert.style.display = 'none';
-
-  // KPI
-  document.getElementById('kpi-bep-q').textContent   = Math.round(v.bepQ).toLocaleString('it-IT');
-  document.getElementById('kpi-bep-eur').textContent = fmtEur(v.bepEur);
-  document.getElementById('kpi-mc').textContent      = '€ ' + v.mc.toFixed(2).replace('.', ',');
-  document.getElementById('kpi-mc-eff').textContent  = '€ ' + v.mcEff.toFixed(2).replace('.', ',');
-  document.getElementById('kpi-cf').textContent      = fmtEur(v.cfIniziali);
-
-  updateChart(v);
-  updateTable(v);
   updatePayback(v);
 }
 
-function fmtEur(n) {
-  return '€ ' + Math.round(n).toLocaleString('it-IT');
+// ── RESET ─────────────────────────────────────────────────────────
+function askReset() { document.getElementById('confirm-overlay').classList.add('open'); }
+function closeConfirm() { document.getElementById('confirm-overlay').classList.remove('open'); }
+function doReset() {
+  closeConfirm();
+  [1,2,3,4,5].forEach(i => {
+    document.getElementById('cv-'+i).value = 0;
+    document.getElementById('lbl-cv'+i).value = DEF_LABELS[i-1];
+  });
+  ['prezzo','cfiniziali','cfmens','vmens'].forEach(key => {
+    document.getElementById('sl-'+key).value = 0;
+    document.getElementById('in-'+key).value = 0;
+    document.getElementById('sv-'+key).textContent = fmtSlider(0, key);
+  });
+  calc();
 }
 
-// ── GRAFICO ──────────────────────────────────────────────────────
-function updateChart(v) {
-  const steps = 10;
-  const maxQ  = v.bepQ * 2;
-  const labels = [], rt = [], ct = [], cf = [];
-  for (let i = 0; i <= steps; i++) {
-    const q = (maxQ / steps) * i;
-    labels.push(Math.round(q).toLocaleString('it-IT'));
-    rt.push(Math.round(q * v.prezzo));
-    ct.push(Math.round(v.cfIniziali + q * v.cvUnit));
-    cf.push(Math.round(v.cfIniziali));
-  }
+// ── VALORI ────────────────────────────────────────────────────────
+function getVals() {
+  const cvUnit = [1,2,3,4,5].reduce((s,i) => s+(parseFloat(document.getElementById('cv-'+i).value)||0), 0);
+  const prezzo     = parseFloat(document.getElementById('in-prezzo').value)     || 0;
+  const cfIniziali = parseFloat(document.getElementById('in-cfiniziali').value) || 0;
+  const cfMens     = parseFloat(document.getElementById('in-cfmens').value)     || 0;
+  const vMens      = parseFloat(document.getElementById('in-vmens').value)      || 0;
+  const mc    = prezzo - cvUnit;
+  const mcEff = vMens > 0 ? mc - (cfMens / vMens) : mc;
+  const bepQ  = mcEff > 0 ? cfIniziali / mcEff : Infinity;
+  const bepEur = bepQ * prezzo;
+  return { cvUnit, prezzo, cfIniziali, cfMens, vMens, mc, mcEff, bepQ, bepEur };
+}
 
-  const bepIdx = v.bepQ / (maxQ / steps);
+// ── MAIN CALC ─────────────────────────────────────────────────────
+function calc() {
+  const v = getVals();
+  document.getElementById('cv-totale').textContent = v.cvUnit.toFixed(2).replace('.', ',');
 
-  if (bepChart) {
-    bepChart.data.labels = labels;
-    bepChart.data.datasets[0].data = rt;
-    bepChart.data.datasets[1].data = ct;
-    bepChart.data.datasets[2].data = cf;
-    bepChart.data.datasets[3].data = [{ x: Math.round(v.bepQ), y: Math.round(v.bepEur) }];
-    bepChart.update();
+  const alertGlobal = document.getElementById('alert-mc-global');
+
+  if (v.prezzo === 0 && v.cfIniziali === 0 && v.cvUnit === 0) {
+    alertGlobal.classList.remove('visible');
+    ['kpi-bep-q','kpi-bep-eur','kpi-mc','kpi-mc-eff','kpi-cf'].forEach(id => document.getElementById(id).textContent = '—');
+    updatePayback(v);
     return;
   }
+  if (v.mc <= 0 && v.prezzo > 0) {
+    alertGlobal.classList.add('visible');
+    document.getElementById('kpi-bep-q').textContent   = '∞';
+    document.getElementById('kpi-bep-eur').textContent = '∞';
+    document.getElementById('kpi-mc').textContent      = '€ '+v.mc.toFixed(2).replace('.',',');
+    document.getElementById('kpi-mc-eff').textContent  = '—';
+    document.getElementById('kpi-cf').textContent      = fmtEur(v.cfIniziali);
+    updatePayback(v);
+    return;
+  }
+  alertGlobal.classList.remove('visible');
 
-  const ctx = document.getElementById('bepChart').getContext('2d');
-  bepChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels,
-      datasets: [
-        {
-          label: 'Ricavi Totali',
-          data: rt, borderColor: '#2E75B6', backgroundColor: 'rgba(46,117,182,.08)',
-          borderWidth: 2.5, fill: false, tension: 0, pointRadius: 3, pointHoverRadius: 6,
-          pointBackgroundColor: '#2E75B6'
-        },
-        {
-          label: 'Costi Totali',
-          data: ct, borderColor: '#922B21', backgroundColor: 'rgba(146,43,33,.06)',
-          borderWidth: 2.5, fill: false, tension: 0, pointRadius: 3, pointHoverRadius: 6,
-          pointBackgroundColor: '#922B21'
-        },
-        {
-          label: 'Costi Fissi',
-          data: cf, borderColor: '#7D4E00', backgroundColor: 'transparent',
-          borderWidth: 1.5, borderDash: [6, 4], fill: false, pointRadius: 0
-        },
-        {
-          label: 'Break-Even Point',
-          data: [{ x: Math.round(v.bepQ), y: Math.round(v.bepEur) }],
-          type: 'scatter',
-          backgroundColor: '#1E6B3C', borderColor: '#fff', borderWidth: 2,
-          pointRadius: 10, pointHoverRadius: 13
-        }
-      ]
-    },
+  document.getElementById('kpi-bep-q').textContent   = isFinite(v.bepQ)   ? Math.round(v.bepQ).toLocaleString('it-IT')  : '—';
+  document.getElementById('kpi-bep-eur').textContent = isFinite(v.bepEur) ? fmtEur(v.bepEur) : '—';
+  document.getElementById('kpi-mc').textContent      = '€ '+v.mc.toFixed(2).replace('.',',');
+  document.getElementById('kpi-mc-eff').textContent  = '€ '+v.mcEff.toFixed(2).replace('.',',');
+  document.getElementById('kpi-cf').textContent      = fmtEur(v.cfIniziali);
+
+  if (isFinite(v.bepQ) && v.bepQ > 0) { updateChart(v); updateTable(v); }
+  updatePayback(v);
+}
+
+function fmtEur(n) { return '€ '+Math.round(n).toLocaleString('it-IT'); }
+
+// ── GRAFICO ───────────────────────────────────────────────────────
+function updateChart(v) {
+  // cvEff = costo variabile effettivo per unità, inclusa quota mensile
+  // RT(q) = q * prezzo
+  // CT(q) = cfIniziali + q * cvEff   dove cvEff = cvUnit + cfMens/vMens
+  // Intersezione: q*(prezzo - cvEff) = cfIniziali  → q = cfIniziali/mcEff = bepQ ✓
+  const cvEff = v.cvUnit + (v.vMens > 0 ? v.cfMens / v.vMens : 0);
+
+  const steps = 40, maxQ = v.bepQ * 2;
+  const rt=[], ct=[], cf=[];
+  for (let i=0; i<=steps; i++) {
+    const q = (maxQ/steps)*i;
+    rt.push({ x: q, y: q * v.prezzo });
+    ct.push({ x: q, y: v.cfIniziali + q * cvEff });
+    cf.push({ x: q, y: v.cfIniziali });
+  }
+  // BEP esatto all'incrocio RT=CT
+  const bepY = v.bepQ * v.prezzo;
+  const bepPoint = { x: v.bepQ, y: bepY };
+
+  // Distruggi e ricrea sempre per evitare asse X stantio
+  if (bepChart) { bepChart.destroy(); bepChart = null; }
+
+  bepChart = new Chart(document.getElementById('bepChart').getContext('2d'), {
+    type: 'scatter',
+    data: { datasets: [
+      { label:'Ricavi Totali',        data:rt, borderColor:'#2E75B6', backgroundColor:'rgba(46,117,182,.07)', borderWidth:2.5, showLine:true, fill:false, tension:0, pointRadius:0, pointHoverRadius:4 },
+      { label:'Costi Totali',         data:ct, borderColor:'#922B21', backgroundColor:'rgba(146,43,33,.05)', borderWidth:2.5, showLine:true, fill:false, tension:0, pointRadius:0, pointHoverRadius:4 },
+      { label:'Costi Fissi Iniziali', data:cf, borderColor:'#7D4E00', backgroundColor:'transparent', borderWidth:1.5, borderDash:[7,4], showLine:true, fill:false, pointRadius:0 },
+      { label:'Break-Even Point',     data:[bepPoint], backgroundColor:'#1E6B3C', borderColor:'#fff', borderWidth:2, pointRadius:7, pointHoverRadius:9 }
+    ]},
     options: {
-      responsive: true, maintainAspectRatio: false,
+      responsive:true, maintainAspectRatio:false,
+      animation: { duration: 200 },
       plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: ctx => {
-              if (ctx.dataset.label === 'Break-Even Point') {
-                return `BEP: Q=${Math.round(v.bepQ).toLocaleString('it-IT')} unità | €${Math.round(v.bepEur).toLocaleString('it-IT')}`;
-              }
-              return `${ctx.dataset.label}: €${ctx.parsed.y.toLocaleString('it-IT')}`;
-            }
-          }
-        }
+        legend: { display:false },
+        tooltip: { callbacks: { label: ctx => {
+          if (ctx.dataset.label === 'Break-Even Point')
+            return `BEP: Q=${Math.round(v.bepQ).toLocaleString('it-IT')} unità | €${Math.round(bepY).toLocaleString('it-IT')}`;
+          return `${ctx.dataset.label}: €${Math.round(ctx.parsed.y).toLocaleString('it-IT')}`;
+        }}}
       },
       scales: {
-        x: { title: { display: true, text: 'Quantità (unità)', font: { size: 11 } }, ticks: { maxTicksLimit: 6 } },
-        y: { title: { display: true, text: 'Valore (€)', font: { size: 11 } },
-             ticks: { callback: v => '€' + v.toLocaleString('it-IT') } }
+        x: {
+          type:'linear', min:0, max:maxQ,
+          title:{ display:true, text:'Quantità (unità)', font:{size:11} },
+          ticks:{ maxTicksLimit:7, callback: val => Math.round(val).toLocaleString('it-IT') }
+        },
+        y: {
+          min: 0,
+          title:{ display:true, text:'Valore (€)', font:{size:11} },
+          ticks:{ callback: val => '€'+Math.round(val).toLocaleString('it-IT') }
+        }
       }
     }
   });
 }
 
-// ── TABELLA SCENARI ──────────────────────────────────────────────
+// ── TABELLA % OBIETTIVO ───────────────────────────────────────────
 function updateTable(v) {
-  const steps = 8;
-  const maxQ  = v.bepQ * 2;
+  const pcts = [0, 25, 50, 75, 100, 125, 150, 175, 200];
   const tbody = document.getElementById('scenario-tbody');
   tbody.innerHTML = '';
-
-  const scenarios = [];
-  for (let i = 0; i <= steps; i++) {
-    scenarios.push({ q: (maxQ / steps) * i, isBep: false });
-  }
-  // Inserisci riga BEP esatta
-  let inserted = false;
-  for (let i = 0; i < scenarios.length - 1; i++) {
-    if (scenarios[i].q <= v.bepQ && scenarios[i+1].q >= v.bepQ) {
-      scenarios.splice(i + 1, 0, { q: v.bepQ, isBep: true });
-      inserted = true; break;
-    }
-  }
-  if (!inserted) scenarios.push({ q: v.bepQ, isBep: true });
-
-  scenarios.forEach((s, idx) => {
-    const q   = s.q;
+  pcts.forEach(pct => {
+    const q   = v.bepQ * pct / 100;
     const rt  = q * v.prezzo;
     const cvt = q * v.cvUnit;
     const cf  = v.cfIniziali;
     const ct  = cf + cvt;
     const pro = rt - ct;
-    const tr  = document.createElement('tr');
-    if (s.isBep) tr.className = 'bep-row';
+    const isBep = pct === 100;
+    const tr = document.createElement('tr');
+    if (isBep) tr.className = 'bep-row';
 
-    const label = s.isBep ? '⭐ Break-Even Point' : (idx === 0 ? 'Avvio (Q=0)' : `Scenario ${idx}`);
-    const proClass = s.isBep ? 'zero' : (pro < 0 ? 'loss' : 'profit');
-    const proSign  = s.isBep ? '' : (pro < 0 ? '−' : '+');
-    const proVal   = s.isBep ? '0' : Math.abs(Math.round(pro)).toLocaleString('it-IT');
+    let pctLabel, pctCls;
+    if (pct < 100)  { pctLabel = pct+'%';  pctCls = 'pct-loss'; }
+    if (pct === 100){ pctLabel = '100%';   pctCls = 'pct-bep'; }
+    if (pct > 100)  { pctLabel = pct+'%';  pctCls = 'pct-profit'; }
+
+    const badge = `<span class="pct-badge ${pctCls}">${pctLabel}</span>`;
+    let descr;
+    if (pct === 0)   descr = 'Avvio — nessuna vendita';
+    else if (pct === 100) descr = '⭐ Break-Even Point';
+    else if (pct === 200) descr = 'Doppio obiettivo';
+    else descr = pct < 100 ? `${pct}% del BEP` : `${pct}% del BEP`;
+
+    const proSign = isBep ? '' : (pro < 0 ? '−' : '+');
+    const proVal  = isBep ? '0' : Math.abs(Math.round(pro)).toLocaleString('it-IT');
+    const proCls  = isBep ? 'zero' : (pro < 0 ? 'loss' : 'profit');
 
     tr.innerHTML = `
-      <td>${label}</td>
+      <td>${badge}${descr}</td>
       <td>${Math.round(q).toLocaleString('it-IT')}</td>
       <td>${Math.round(rt).toLocaleString('it-IT')}</td>
       <td>${Math.round(cvt).toLocaleString('it-IT')}</td>
       <td>${Math.round(cf).toLocaleString('it-IT')}</td>
       <td>${Math.round(ct).toLocaleString('it-IT')}</td>
-      <td class="${proClass}">${proSign}${proVal}</td>
-    `;
+      <td class="${proCls}">${proSign}${proVal}</td>`;
     tbody.appendChild(tr);
   });
 }
 
-// ── PAYBACK ──────────────────────────────────────────────────────
-function updatePayback(v) {
-  const coeff = 0.10;
-  const cases = [
-    { key: 'worst', label: 'Caso peggiore',  mult: 1 - coeff, cls: 'worst' },
-    { key: 'base',  label: 'Caso medio',     mult: 1,         cls: 'base'  },
-    { key: 'best',  label: 'Caso migliore',  mult: 1 + coeff, cls: 'best'  },
-  ];
-
-  const mesi = cases.map(c => {
-    const vend = v.vMens * c.mult;
-    return v.mcEff > 0 ? Math.ceil(v.cfIniziali / (vend * v.mcEff)) : Infinity;
-  });
-
-  const maxM = Math.max(...mesi.filter(m => isFinite(m)), 1);
-
-  const grid = document.getElementById('payback-grid');
-  grid.innerHTML = cases.map((c, i) => `
-    <div class="payback-card ${c.cls}">
-      <div class="payback-scenario">${c.label}</div>
-      <div class="payback-months">${isFinite(mesi[i]) ? mesi[i] : '∞'}</div>
-      <div class="payback-unit">mesi</div>
-      <div class="payback-sales">${Math.round(v.vMens * c.mult).toLocaleString('it-IT')} unità/mese</div>
-    </div>
-  `).join('');
-
-  cases.forEach((c, i) => {
-    const lbl = document.getElementById('pb-' + c.key + '-label');
-    const bar = document.getElementById('pb-bar-' + c.key);
-    if (!lbl || !bar) return;
-    lbl.textContent = isFinite(mesi[i]) ? mesi[i] + ' mesi' : '∞';
-    bar.style.width = isFinite(mesi[i]) ? Math.round((mesi[i] / maxM) * 100) + '%' : '100%';
-  });
-
-  document.getElementById('pb-worst-label').textContent = isFinite(mesi[0]) ? mesi[0] + ' mesi' : '∞';
-  document.getElementById('pb-base-label').textContent  = isFinite(mesi[1]) ? mesi[1] + ' mesi' : '∞';
-  document.getElementById('pb-best-label').textContent  = isFinite(mesi[2]) ? mesi[2] + ' mesi' : '∞';
-  document.getElementById('pb-bar-worst').style.width   = isFinite(mesi[0]) ? Math.round((mesi[0]/maxM)*100)+'%' : '100%';
-  document.getElementById('pb-bar-base').style.width    = isFinite(mesi[1]) ? Math.round((mesi[1]/maxM)*100)+'%' : '100%';
-  document.getElementById('pb-bar-best').style.width    = isFinite(mesi[2]) ? Math.round((mesi[2]/maxM)*100)+'%' : '100%';
+// ── MATRICE RAGIONEVOLEZZA PAYBACK ────────────────────────────────
+function pbAlert(cfIniziali, mesi) {
+  if (!isFinite(mesi)) return null;
+  let minM, maxM, msgMin, msgMax;
+  if (cfIniziali <= 100000) {
+    minM=12; maxM=48;
+    msgMin='⚡ PBP Aggressivo: verificare sottostima costi operativi o sovrastima vendite.';
+    msgMax='🕐 Rischio Obsolescenza: rientro troppo lento per un micro-investimento.';
+  } else if (cfIniziali <= 300000) {
+    minM=18; maxM=72;
+    msgMin='⚡ PBP Ottimistico: verificare la capacità produttiva reale.';
+    msgMax='⚠️ Sostenibilità Debole: il rientro eccede la durata standard dei finanziamenti.';
+  } else if (cfIniziali <= 1000000) {
+    minM=24; maxM=96;
+    msgMin='⚡ PBP Irrealistico: richiede volumi/margini fuori mercato per questa scala.';
+    msgMax='🔴 Investimento ad alto rischio: rientro oltre gli 8 anni.';
+  } else {
+    minM=48; maxM=144;
+    msgMin='⚡ Anomalia di scala: verificare la veridicità dei margini inseriti.';
+    msgMax='🔴 Non Sostenibile: rientro oltre i 12 anni.';
+  }
+  if (mesi < minM) return { msg: msgMin, cls: 'aggressive' };
+  if (mesi > maxM) return { msg: msgMax, cls: mesi > maxM * 1.5 ? 'risky' : 'obsolescence' };
+  return null;
 }
 
-// ── TABS ─────────────────────────────────────────────────────────
+// ── PAYBACK ───────────────────────────────────────────────────────
+function updatePayback(v) {
+  const s = scartoPercent / 100;
+  const cases = [
+    { key:'worst', label:'Caso peggiore', mult: 1 - s, cls:'worst' },
+    { key:'base',  label:'Caso medio',    mult: 1,     cls:'base'  },
+    { key:'best',  label:'Caso migliore', mult: 1 + s, cls:'best'  },
+  ];
+  const mesi = cases.map(c => {
+    const vend = v.vMens * c.mult;
+    return (v.mcEff > 0 && vend > 0) ? Math.ceil(v.cfIniziali / (vend * v.mcEff)) : Infinity;
+  });
+  const maxM = Math.max(...mesi.filter(m => isFinite(m)), 1);
+
+  document.getElementById('payback-grid').innerHTML = cases.map((c, i) => {
+    const m = mesi[i];
+    const unsustainable = !isFinite(m);
+    const alert = !unsustainable ? pbAlert(v.cfIniziali, m) : null;
+    const ventite = Math.round(v.vMens * c.mult);
+    return `
+      <div class="payback-card ${c.cls}">
+        <div class="payback-scenario">${c.label} (${c.mult===1 ? '=' : (c.mult<1?'−':'+') }${c.mult===1?'':scartoPercent+'%'})</div>
+        <div class="payback-months">${unsustainable ? '∞' : m}</div>
+        <div class="payback-unit">${unsustainable ? '' : 'mesi'}</div>
+        ${unsustainable ? '<div class="payback-unsustainable">NON SOSTENIBILE</div>' : ''}
+        <div class="payback-sales">${ventite.toLocaleString('it-IT')} unità/mese</div>
+        ${alert ? `<div class="pb-alert ${alert.cls}">${alert.msg}</div>` : ''}
+      </div>`;
+  }).join('');
+
+  [['worst',0],['base',1],['best',2]].forEach(([key,i]) => {
+    const m = mesi[i];
+    document.getElementById('pb-'+key+'-label').textContent = isFinite(m) ? m+' mesi' : 'NON SOSTENIBILE';
+    document.getElementById('pb-bar-'+key).style.width = isFinite(m) ? Math.round((m/maxM)*100)+'%' : '100%';
+  });
+}
+
+// ── TABS ──────────────────────────────────────────────────────────
 function switchTab(id, btn) {
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
   btn.classList.add('active');
   if (id === 'grafico' && bepChart) bepChart.resize();
 }
 
-// ── INIT ─────────────────────────────────────────────────────────
+// ── INIT ──────────────────────────────────────────────────────────
 calc();
 </script>
 </body>
