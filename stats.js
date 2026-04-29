@@ -12,6 +12,7 @@ const gcPagine = [
   { path: '/marketing/Guida_Marketing.html',                                     label: 'Marketing' },
   { path: '/marketing/bep-tool.html',         									 label: 'BEP Tool' },
   { path: '/networking/hfs-server.html', 										 label: 'Pillola HFS' },
+  { path: '/networking/subnet-calculator.html', 								 label: 'Subnet Calculator' },
   { path: '/word/Guida_Word.html',                                               label: 'Guida Word' },
 ];
 
