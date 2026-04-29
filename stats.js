@@ -3,14 +3,15 @@
 // 'label' è il nome breve mostrato in homepage.
 
 const gcPagine = [
-  { path: '/',                                                                    label: 'Home' },
-  { path: '/index.html',                                                          label: 'Home' },
+  { path: '/',                                                                   label: 'Home' },
+  { path: '/index.html',                                                         label: 'Home' },
   { path: '/intelligenza-artificiale/Guida_Prompting.html',                      label: 'Guida Prompting' },
-  { path: '/intelligenza-artificiale/prompt-builder.html',                        label: 'Prompt Builder' },
+  { path: '/intelligenza-artificiale/prompt-builder.html',                       label: 'Prompt Builder' },
   { path: '/intelligenza-artificiale/Guida_PeerReview_IA.html',                  label: 'Peer Review IA' },
   { path: '/database/LibreOfficeBase_Query/Guida_LibreOfficeBase_Query.html',    label: 'LibreOffice Base' },
-  { path: '/marketing/Guida_Marketing.html',                                      label: 'Marketing' },
-  { path: '/word/Guida_Word.html',                                                label: 'Guida Word' },
+  { path: '/marketing/Guida_Marketing.html',                                     label: 'Marketing' },
+  { path: '/marketing/bep-tool.html',         									 label: 'BEP Tool' },
+  { path: '/word/Guida_Word.html',                                               label: 'Guida Word' },
 ];
 
 // ── Non modificare da qui in poi ────────────────────────────────
