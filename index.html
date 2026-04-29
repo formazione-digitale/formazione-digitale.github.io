@@ -897,7 +897,7 @@ body.modal-open { overflow: hidden; }
       </div>
 
       <!-- CARD: Break-Even Point Tool -->
-      <div class="card card-active card-amber" data-cat="strumento" data-tags="break even point bep calcolo costi fissi variabili ricavi margine contribuzione marketing economia aziendale">
+      <div class="card card-active card-amber" data-cat="strumento" data-tags="break even point bep calcolo costi ricavi marketing economia aziendale excel">
         <div class="card-badge-strip badge-amber"></div>
         <a href="marketing/bep-tool.html" target="_blank">
           <div class="card-body">
@@ -908,6 +908,7 @@ body.modal-open { overflow: hidden; }
               <span class="tag tag-amber">Marketing</span>
               <span class="tag tag-amber">Economia</span>
               <span class="tag tag-amber">Interattivo</span>
+              <span class="tag tag-amber">Excel</span>
             </div>
             <div class="card-desc">Calcola il punto di pareggio inserendo costi fissi, costi variabili e prezzo di vendita. Grafico interattivo e analisi immediata.</div>
           </div>
@@ -1110,7 +1111,7 @@ function setFilter(cat, btn) {
 
 function filterAll() {
   const q = document.getElementById('search-input').value.toLowerCase().trim();
-  const cards = document.querySelectorAll('.card:not(.coming)');
+  const cards = document.querySelectorAll('.card');
   let visible = 0;
   cards.forEach(card => {
     const cat  = card.dataset.cat || '';
@@ -1118,9 +1119,10 @@ function filterAll() {
     const text = (card.innerText + ' ' + tags).toLowerCase();
     const matchCat = activeFilter === 'all' || cat === activeFilter;
     const matchQ   = !q || text.includes(q);
-    const show = matchCat && matchQ;
-    card.style.display = show ? '' : 'none';
-    if (show) visible++;
+	const isComing = card.classList.contains('coming');
+	const show = matchCat && matchQ;
+	card.style.display = (isComing && !matchQ) ? 'none' : (show ? '' : 'none');
+	if (show && !isComing) visible++;
   });
   document.getElementById('no-results').style.display = visible === 0 && q ? 'block' : 'none';
 }
