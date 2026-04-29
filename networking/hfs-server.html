@@ -1,0 +1,237 @@
+<!-- PATH: networking/hfs-server.html -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HFS 3: Modern File Server — Formazione Digitale</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue-dark: #1F4E79;
+            --blue-mid: #2E75B6;
+            --blue-pale: #EBF3FC;
+            --amber-dark: #7D4E00;
+            --gray-dark: #2C2C2C;
+            --white: #FFFFFF;
+            --font-display: 'DM Serif Display', serif;
+            --font-body: 'DM Sans', sans-serif;
+            --nav-height: 58px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: var(--font-body); background: #fdfdfd; color: var(--gray-dark); padding-top: var(--nav-height); line-height: 1.7; }
+
+        /* ── STICKY NAV BAR ────────────────────────────────────── */
+        nav.sticky-bar {
+            position: fixed; top: 0; left: 0; right: 0;
+            height: var(--nav-height); background: var(--blue-dark);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 1.5rem; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+        .nav-left { display: flex; align-items: center; gap: 1rem; }
+        .nav-back { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 5px; }
+        .nav-back:hover { color: white; }
+        .nav-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.2); }
+        .nav-title { font-family: var(--font-display); color: white; font-size: 1.1rem; }
+
+        .btn-download {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3);
+            color: white; padding: 0.45rem 1.2rem; border-radius: 50px;
+            font-size: 0.8rem; font-weight: 600; text-decoration: none;
+            display: flex; align-items: center; gap: 8px; transition: all var(--transition);
+        }
+        .btn-download:hover { background: white; color: var(--blue-dark); }
+
+        /* ── CONTENT ─────────────────────────────────────────── */
+        article { max-width: 820px; margin: 3rem auto; padding: 0 1.5rem; }
+        
+        .hero-pill { 
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid)); 
+            color: white; padding: 3rem; border-radius: 16px; margin-bottom: 2.5rem; 
+        }
+        .badge { background: var(--amber-dark); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        h1 { font-family: var(--font-display); font-size: 2.8rem; margin: 1rem 0; line-height: 1.1; }
+
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .feature-item { background: var(--blue-pale); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--blue-mid); }
+        .feature-item h3 { font-size: 1rem; color: var(--blue-dark); margin-bottom: 0.5rem; }
+        .feature-item p { font-size: 0.85rem; color: var(--gray-dark); }
+
+        .persist-box { 
+            background: #e8f5ee; border-left: 5px solid #1e6b3c; 
+            padding: 1.5rem; border-radius: 0 12px 12px 0; margin: 2rem 0; 
+        }
+        .persist-box h3 { color: #1e6b3c; margin-bottom: 0.5rem; font-size: 1.1rem; }
+
+        /* ── ADDRESS SECTION ────────────────────────────────── */
+        .address-callout {
+            background: var(--blue-pale);
+            border: 2px dashed var(--blue-mid);
+            padding: 1.5rem; border-radius: 12px;
+            margin: 2rem 0; text-align: center;
+        }
+        .address-callout code {
+            display: block; font-size: 1.5rem; color: var(--blue-dark);
+            margin: 10px 0; font-weight: 700;
+        }
+
+        .case-study { background: #FFF9E6; border: 1px solid #FFE69C; padding: 1.5rem; border-radius: 12px; margin: 2rem 0; }
+
+        /* ── GALLERY ───────────────────────────────────────── */
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem; margin: 3rem 0;
+        }
+        .screenshot-box {
+            position: relative; border: 1px solid #ddd;
+            border-radius: 8px; overflow: hidden;
+            background: #000; cursor: pointer;
+            transition: transform var(--transition);
+        }
+        .screenshot-box:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .screenshot-box img {
+            width: 100%; height: 200px; object-fit: cover;
+            display: block; transition: opacity var(--transition);
+        }
+        .screenshot-box:hover img { opacity: 0.8; }
+        .screenshot-label {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: rgba(0,0,0,0.7); color: white;
+            font-size: 0.75rem; padding: 8px; text-align: center;
+        }
+
+        /* ── MODAL ─────────────────────────────────────────── */
+        #imgModal {
+            position: fixed; inset: 0; background: rgba(15, 35, 60, 0.95);
+            display: none; align-items: center; justify-content: center;
+            z-index: 2000; padding: 40px; cursor: pointer;
+            backdrop-filter: blur(5px);
+        }
+        #imgModal.active { display: flex; animation: fadeIn 0.3s ease; }
+        #imgModal img { 
+            max-width: 100%; max-height: 90vh; border-radius: 4px; 
+            box-shadow: 0 0 40px rgba(0,0,0,0.5); transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        #imgModal.active img { transform: scale(1); }
+        .modal-close-hint { position: absolute; top: 20px; right: 20px; color: white; font-size: 0.8rem; background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 20px; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        h2 { font-family: var(--font-display); color: var(--blue-dark); margin: 2rem 0 1rem; }
+        footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid #eee; text-align: center; font-size: 0.85rem; color: #666; }
+
+        @media (max-width: 600px) { .hero-pill { padding: 2rem 1.2rem; } h1 { font-size: 2rem; } .nav-title, .nav-divider { display: none; } }
+    </style>
+</head>
+<body>
+
+<nav class="sticky-bar">
+    <div class="nav-left">
+        <a href="../index.html" class="nav-back">← Portale</a>
+        <div class="nav-divider"></div>
+        <div class="nav-title">HFS 3 Modern Server</div>
+    </div>
+    <a href="hfs-windows-x64-3.0.8.zip" class="btn-download" download>
+        <span>↓</span> Scarica HFS per Windows
+    </a>
+</nav>
+
+<article>
+    <div class="hero-pill">
+        <span class="badge">Pillola Digitale</span>
+        <h1>Web Server istantaneo e persistente.</h1>
+        <p>HFS 3 trasforma il tuo PC in un nodo di distribuzione file potente, sicuro e cross-platform.</p>
+    </div>
+
+    <div class="feature-grid">
+        <div class="feature-item">
+            <h3>Zero Installazione</h3>
+            <p>Esegui il software senza permessi admin, direttamente da cartella.</p>
+        </div>
+        <div class="feature-item">
+            <h3>Open Source</h3>
+            <p>Licenza GNU GPL v2. Software libero per uso scolastico e privato.</p>
+        </div>
+        <div class="feature-item">
+            <h3>LAN Ready</h3>
+            <p>Perfetto per laboratori senza accesso a internet o reti isolate[cite: 1].</p>
+        </div>
+    </div>
+
+
+    <h2>Accesso alle risorse</h2>
+    <p>Una volta configurato il Virtual File System, l'accesso avviene inserendo nel browser l'indirizzo IP locale del server (root o sottocartella):</p>
+    
+    <div class="address-callout">
+        <p>Indirizzo di esempio:</p>
+        <code>http://192.168.1.8/</code>
+    </div>
+
+    <div class="case-study">
+        <strong>💡 Caso d'uso reale: Deploy Mobile Legacy</strong>
+        <p>Utilizzato per trasferire APK su tablet Android 2.2 via Wi-Fi locale, superando l'assenza di store ufficiali.</p>
+    </div>
+
+    <h2>Schermate e Funzionalità</h2>
+    <p>Visualizza i dettagli della configurazione. Clicca per ingrandire.</p>
+
+    <div class="gallery-grid">
+        <div class="screenshot-box" onclick="openModal('img/hfs-admin.png')">
+            <img src="img/hfs-admin.png" alt="Gestione VFS">
+            <div class="screenshot-label">Gestione FS Virtuale (Admin)</div>
+        </div>
+        <div class="screenshot-box" onclick="openModal('img/hfs-view.png')">
+            <img src="img/hfs-view.png" alt="Visione Utente">
+            <div class="screenshot-label">Visione del FS (Lato Utente)</div>
+        </div>
+        <div class="screenshot-box" onclick="openModal('img/hfs-file.png')">
+            <img src="img/hfs-file.png" alt="Gestione File">
+            <div class="screenshot-label">Gestione del singolo file</div>
+        </div>
+    </div>
+
+    <h2>Specifiche Tecniche</h2>
+    <p>Monitoraggio dei log in tempo reale, gestione account granulare e interfaccia web basata su template HTML.</p>
+
+    <div class="persist-box">
+        <h3>🚀 Persistenza nativa</h3>
+        <p>A differenza della versione 2, HFS 3 salva ogni modifica (VFS, utenti, permessi) istantaneamente in file JSON/YAML.</p>
+    </div>
+
+
+    <footer>Risorsa parte del portale <strong>Formazione Digitale</strong> — 2026</footer>
+</article>
+
+<!-- Modal Structure -->
+<div id="imgModal" onclick="closeModal()">
+    <span class="modal-close-hint">Clicca ovunque o premi ESC per uscire</span>
+    <img id="modalImg" src="" alt="Zoomed View" onclick="event.stopPropagation()">
+</div>
+
+<script>
+    const modal = document.getElementById('imgModal');
+    const modalImg = document.getElementById('modalImg');
+
+    function openModal(src) {
+        modalImg.src = src;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+    });
+</script>
+
+</body>
+</html>

@@ -11,6 +11,7 @@ const gcPagine = [
   { path: '/database/LibreOfficeBase_Query/Guida_LibreOfficeBase_Query.html',    label: 'LibreOffice Base' },
   { path: '/marketing/Guida_Marketing.html',                                     label: 'Marketing' },
   { path: '/marketing/bep-tool.html',         									 label: 'BEP Tool' },
+  { path: '/networking/hfs-server.html', 										 label: 'Pillola HFS' },
   { path: '/word/Guida_Word.html',                                               label: 'Guida Word' },
 ];
 

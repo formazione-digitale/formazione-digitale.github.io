@@ -49,6 +49,8 @@ C:.
 |               
 +---docs
 |       Formazione_Digitale_Guida_Collaboratori.docx
+|       MAPPA_DigComp_metodo.md
+|       MAPPA_DigComp_metodo_v1.3.md
 |       META-PROMPT_Formazione_Digitale.md
 |       PROGETTO_istruzioni-fisse.md
 |       SESSIONE_template-chat.md
@@ -62,10 +64,22 @@ C:.
 |       prompt-builder.html
 |       
 +---marketing
+|       bep-tool.html
+|       calcolo-break-even-point-old.xlsx
+|       calcolo-break-even-point.xlsx
 |       Guida_Marketing.html
 |       Introduzione_emarketing_2026_parte1.pptx
 |       Introduzione_emarketing_2026_parte2.pptx
 |       
++---networking
+|   |   hfs-server.html
+|   |   hfs-windows-x64-3.0.8.zip
+|   |   
+|   \---img
+|           hfs-admin.png
+|           hfs-file.png
+|           hfs-view.png
+|           
 \---word
     |   Guida_Word.html
     |   Guida_Word.pdf
