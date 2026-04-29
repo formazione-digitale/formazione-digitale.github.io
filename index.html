@@ -1027,7 +1027,10 @@ body.modal-open { overflow: hidden; }
       <button class="modal-close" onclick="closeModal()" aria-label="Chiudi">✕</button>
     </div>
 
-    <form class="contact-form" id="contact-form" action="https://formspree.io/f/mjgjdllb" method="POST">
+	<form class="contact-form" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+	  <input type="hidden" name="access_key" value="d6f13ff7-11e1-487b-aa97-34e68375aeb9">
+	  <input type="hidden" name="subject" value="Nuovo messaggio da Formazione Digitale">
+	  <input type="hidden" name="from_name" value="Formazione Digitale">
 
       <div class="cf-group">
         <label class="cf-label" for="cf-nome">Nome <span class="cf-req">*</span></label>
