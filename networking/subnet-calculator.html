@@ -380,6 +380,69 @@
     ipIn.addEventListener('input', update);
     cidrSlider.addEventListener('input', update);
     update();
+	
+	
+	// PATH: networking/subnet-calculator.html
+
+	function copyResults() {
+		// Recupero dinamico dei valori calcolati dal DOM
+		const ip = document.getElementById('ip-input').value;
+		const cidr = document.getElementById('cidr-slider').value;
+		const net = document.getElementById('res-net').textContent;
+		const mask = document.getElementById('res-mask').textContent;
+		const broad = document.getElementById('res-broad').textContent;
+		const range = document.getElementById('res-range').textContent;
+		const count = document.getElementById('res-count').textContent;
+
+		// Generazione del template testuale del report
+		const reportTemplate = `--- REPORT TECNICO NETWORKING ---
+	Indirizzo Host:  ${ip}/${cidr}
+	Indirizzo Rete:  ${net}
+	Subnet Mask:     ${mask}
+	Broadcast:       ${broad}
+	Range Host:      ${range}
+	Host Utilizzabili: ${count}
+	---------------------------------
+	Generato via Portale Formazione Digitale`;
+
+		// API Clipboard con fallback per compatibilità browser
+		if (navigator.clipboard && navigator.clipboard.writeText) {
+			navigator.clipboard.writeText(reportTemplate).then(() => {
+				handleCopyFeedback();
+			}).catch(err => {
+				console.error('Errore durante la copia:', err);
+			});
+		} else {
+			// Fallback per browser datati o contesti non-secure
+			const textArea = document.createElement("textarea");
+			textArea.value = reportTemplate;
+			document.body.appendChild(textArea);
+			textArea.select();
+			try {
+				document.execCommand('copy');
+				handleCopyFeedback();
+			} catch (err) {
+				alert("Errore durante la copia manuale.");
+			}
+			document.body.removeChild(textArea);
+		}
+	}
+
+	// Gestione feedback visivo sul pulsante
+	function handleCopyFeedback() {
+		const btn = document.querySelector('.btn-copy');
+		const originalText = btn.innerHTML;
+		
+		btn.innerHTML = "✅ Report Copiato!";
+		btn.style.background = "var(--green-dark, #1E6B3C)";
+		
+		setTimeout(() => {
+			btn.innerHTML = originalText;
+			btn.style.background = "var(--blue-dark)";
+		}, 2000);
+	}
+
+
 </script>
 </body>
 </html>
