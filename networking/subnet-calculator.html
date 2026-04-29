@@ -43,7 +43,13 @@
         .nav-title { font-family: var(--font-display); color: white; font-size: 1.1rem; }
 
         /* ── LAYOUT ───────────────────────────────────────────── */
-        .page-container { display: flex; max-width: 1200px; margin: 0 auto; gap: 3rem; padding: 3rem 1.5rem; }
+        .page-container {
+			display: flex;
+			max-width: 1320px; /* Allargato per monitor desktop */
+			margin: 0 auto;
+			gap: 3rem;
+			padding: 3rem 1.5rem;
+		}
         
         aside.sidebar { width: 240px; position: sticky; top: calc(var(--nav-height) + 2rem); height: fit-content; flex-shrink: 0; }
         .sidebar-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--blue-mid); margin-bottom: 1rem; }
@@ -67,7 +73,11 @@
             box-shadow: 0 10px 30px rgba(31, 78, 121, 0.08);
             margin-bottom: 4rem; scroll-margin-top: 100px;
         }
-        .tool-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 2.5rem; }
+        .tool-grid {
+			display: grid;
+			grid-template-columns: 1.25fr 0.75fr; /* Più spazio ai bit, meno ai testi a destra */
+			gap: 2.5rem;
+		}
 
         .input-group label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--blue-mid); text-transform: uppercase; margin-bottom: 0.5rem; }
         input[type=text] { width: 100%; padding: 0.8rem; border: 1.5px solid var(--accent-border); border-radius: 8px; font-family: monospace; font-size: 1.1rem; outline: none; }
@@ -82,11 +92,14 @@
         .cidr-display { font-size: 2.4rem; font-weight: 700; color: var(--blue-dark); text-align: center; margin: 0.5rem 0; }
         input[type=range] { width: 100%; accent-color: var(--blue-mid); cursor: pointer; }
 
-        .logic-box { 
-            background: #212121; color: #eceff1; padding: 1.5rem; border-radius: 12px; 
-            font-family: monospace; font-size: 0.82rem; margin-top: 1.5rem; line-height: 1.6;
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); overflow-x: auto;
-        }
+		.logic-box { 
+			background: #212121; color: #eceff1; padding: 1.2rem; border-radius: 12px; 
+			font-family: monospace; font-size: 0.82rem; margin-top: 1.5rem; line-height: 1.6;
+			box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); 
+			overflow-x: auto; 
+			white-space: nowrap; /* Impedisce il wrapping */
+			letter-spacing: -0.01em; /* Ottimizzazione spazio */
+		}
         .logic-line { display: flex; justify-content: space-between; border-bottom: 1px solid #444; padding: 4px 0; gap: 10px; }
         .logic-line:last-child { border-bottom: none; font-weight: 700; }
         .bit-net { color: var(--bit-net); }
@@ -96,8 +109,44 @@
         .legend span { display: flex; align-items: center; gap: 6px; }
         .dot { width: 10px; height: 10px; border-radius: 2px; }
 
-        .res-item { display: flex; align-items: center; justify-content: space-between; padding: 0.8rem 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
-        .res-val { font-weight: 700; color: var(--blue-dark); font-family: monospace; font-size: 1.15rem; }
+		/* PATH: networking/subnet-calculator.html */
+
+		/* 1. RIMPIAZZA LE VECCHIE RIGHE CON QUESTO BLOCCO AGGIORNATO */
+		.res-item {
+			display: flex;
+			justify-content: space-between; /* Spinge il valore tutto a destra */
+			align-items: center;
+			padding: 0.85rem 0;
+			border-bottom: 1px solid rgba(0,0,0,0.05);
+			gap: 12px; /* Spazio di sicurezza tra etichetta e valore */
+		}
+
+		.res-label-group {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			flex-shrink: 0; /* Impedisce all'etichetta di rimpicciolirsi */
+			font-size: 0.88rem;
+			color: var(--gray-mid);
+			white-space: nowrap;
+		}
+
+		.res-val {
+			font-weight: 700;
+			color: var(--blue-dark);
+			font-family: 'JetBrains Mono', 'Roboto Mono', monospace; /* Font compatti */
+			font-size: 1.1rem;
+			text-align: right;
+			white-space: nowrap; /* Fondamentale: impedisce agli IP di andare a capo */
+		}
+
+		/* 2. AGGIUNGI QUESTA REGOLA SPECIFICA PER IL RANGE HOST */
+		#res-range {
+			font-size: 0.98rem; /* Leggera riduzione mirata per il testo più lungo del tool */
+			letter-spacing: -0.02em;
+		}
+
+
         .btn-copy { background: var(--blue-dark); color: white; border: none; padding: 1rem; width: 100%; border-radius: 50px; font-weight: 600; cursor: pointer; margin-top: 1.5rem; transition: transform 0.1s; }
 
         /* ── TEORIA UI ──────────────────────────────────────── */
@@ -175,14 +224,50 @@
                         </div>
                     </div>
                     
-                    <div class="tool-results">
-                        <div class="res-item"><span>Indirizzo di Rete <span class="help-icon">?<span class="help-popup">Il primo indirizzo della rete. Identifica la sottorete stessa.</span></span></span><span class="res-val" id="res-net">-</span></div>
-                        <div class="res-item"><span>Subnet Mask <span class="help-icon">?<span class="help-popup">Filtro binario che separa la parte rete dalla parte host.</span></span></span><span class="res-val" id="res-mask">-</span></div>
-                        <div class="res-item"><span>Broadcast <span class="help-icon">?<span class="help-popup">Indirizzo per parlare con tutti gli host della rete.</span></span></span><span class="res-val" id="res-broad">-</span></div>
-                        <div class="res-item"><span>Range Host <span class="help-icon">?<span class="help-popup">Intervallo di IP assegnabili ai dispositivi (esclude rete e broadcast).</span></span></span><span class="res-val" id="res-range">-</span></div>
-                        <div class="res-item"><span>Host Totali <span class="help-icon">?<span class="help-popup">Indirizzi utilizzabili (2^n - 2).</span></span></span><span class="res-val" id="res-count">-</span></div>
-                        <button class="btn-copy" onclick="copyResults()">📋 Copia Report Tecnico</button>
-                    </div>
+					<!-- PATH: networking/subnet-calculator.html -->
+					<div class="tool-results">
+						<div class="res-item">
+							<div class="res-label-group">
+								<span>Indirizzo di Rete</span>
+								<span class="help-icon">?<span class="help-popup">Il primo indirizzo della rete. Identifica la sottorete stessa.</span></span>
+							</div>
+							<span class="res-val" id="res-net">-</span>
+						</div>
+
+						<div class="res-item">
+							<div class="res-label-group">
+								<span>Subnet Mask</span>
+								<span class="help-icon">?<span class="help-popup">Filtro binario che separa la parte rete dalla parte host.</span></span>
+							</div>
+							<span class="res-val" id="res-mask">-</span>
+						</div>
+
+						<div class="res-item">
+							<div class="res-label-group">
+								<span>Broadcast</span>
+								<span class="help-icon">?<span class="help-popup">Indirizzo per parlare con tutti gli host della rete.</span></span>
+							</div>
+							<span class="res-val" id="res-broad">-</span>
+						</div>
+
+						<div class="res-item">
+							<div class="res-label-group">
+								<span>Range Host</span>
+								<span class="help-icon">?<span class="help-popup">Intervallo di IP assegnabili ai dispositivi (esclude rete e broadcast).</span></span>
+							</div>
+							<span class="res-val" id="res-range">-</span>
+						</div>
+
+						<div class="res-item">
+							<div class="res-label-group">
+								<span>Host Totali</span>
+								<span class="help-icon">?<span class="help-popup">Indirizzi utilizzabili (2^n - 2).</span></span>
+							</div>
+							<span class="res-val" id="res-count">-</span>
+						</div>
+
+						<button class="btn-copy" onclick="copyResults()">📋 Copia Report Tecnico</button>
+					</div>
                 </div>
             </div>
         </section>
