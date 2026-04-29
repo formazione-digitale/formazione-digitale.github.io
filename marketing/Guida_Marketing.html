@@ -61,6 +61,19 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
   font-family: var(--font-body);
 }
 .mode-toggle:hover { background: rgba(255,255,255,.22); }
+.btn-download {
+  display: flex; align-items: center; gap: .35rem;
+  background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.22);
+  border-radius: 20px; padding: .25rem .85rem;
+  font-size: .75rem; font-weight: 500; color: rgba(255,255,255,.88);
+  text-decoration: none; white-space: nowrap;
+  transition: background var(--transition), color var(--transition);
+  font-family: var(--font-body);
+}
+.btn-download:hover { background: rgba(255,255,255,.22); color: #fff; }
+.btn-download svg { flex-shrink: 0; }
+@media(max-width:700px){ .btn-download .btn-dl-label { display: none; } }
+@media(max-width:480px){ .btn-download { padding: .25rem .55rem; } }
 #hamburger {
   display: flex; flex-direction: column; justify-content: center; gap: 5px;
   width: 36px; height: 36px; cursor: pointer; padding: 6px;
@@ -405,6 +418,16 @@ body.aula-mode footer { display: none; }
     <span class="header-sub">Formazione Digitale</span>
   </div>
   <div class="header-right">
+    <a class="btn-download" href="Introduzione_emarketing_2026_parte1.pptx" download>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 1v8M7 9L4.5 6.5M7 9l2.5-2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <span class="btn-dl-label">Slides Parte 1</span>
+      <span style="font-size:.68rem;opacity:.65;">.pptx</span>
+    </a>
+    <a class="btn-download" href="Introduzione_emarketing_2026_parte2.pptx" download>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 1v8M7 9L4.5 6.5M7 9l2.5-2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <span class="btn-dl-label">Slides Parte 2</span>
+      <span style="font-size:.68rem;opacity:.65;">.pptx</span>
+    </a>
     <button class="mode-toggle" onclick="toggleMode()">
       <span id="mode-icon">🎓</span>
       <span id="mode-label">Modalità Aula</span>

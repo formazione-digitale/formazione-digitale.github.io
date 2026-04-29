@@ -1,0 +1,135 @@
+Elenco del percorso delle cartelle per il volume Acer
+Numero di serie del volume: 544D-3F7C
+C:.
+|   Formazione_Digitale_Guida_Collaboratori.docx
+|   index.html
+|   stats.js
+|   struttura.bat
+|   struttura.txt
+|   
++---database
+|   \---LibreOfficeBase_Query
+|       |   Guida_LibreOfficeBase_Query.html
+|       |   NERD-HERD.odb
+|       |   
+|       \---img
+|               1777056578375_image.png
+|               1777056637968_image.png
+|               1777056679705_image.png
+|               1777056774067_image.png
+|               1777056887201_image.png
+|               1777057018152_image.png
+|               1777057037640_image.png
+|               1777057170045_image.png
+|               1777057180615_image.png
+|               1777057214520_image.png
+|               1777057222282_image.png
+|               1777057341164_image.png
+|               1777057354021_image.png
+|               1777057367527_image.png
+|               1777057399791_image.png
+|               1777057438613_image.png
+|               1777057604164_image.png
+|               1777057744488_image.png
+|               1777058464659_image.png
+|               1777058623433_image.png
+|               1777058677103_image.png
+|               1777058903166_image.png
+|               1777059003240_image.png
+|               1777059031404_image.png
+|               1777277786031_image.png
+|               1777277868548_image.png
+|               1777277893140_image.png
+|               1777277912522_image.png
+|               2026-04-27_10h15_57.png
+|               2026-04-27_10h17_15.png
+|               2026-04-27_10h17_43.png
+|               2026-04-27_10h18_10.png
+|               2026-04-27_10h18_29.png
+|               
++---docs
+|       Formazione_Digitale_Guida_Collaboratori.docx
+|       META-PROMPT_Formazione_Digitale.md
+|       PROGETTO_istruzioni-fisse.md
+|       SESSIONE_template-chat.md
+|       
++---img
+|       formazione-digitale-logo.png
+|       
++---intelligenza-artificiale
+|       Guida_PeerReview_IA.html
+|       Guida_Prompting.html
+|       prompt-builder.html
+|       
++---marketing
+|       Guida_Marketing.html
+|       Introduzione_emarketing_2026_parte1.pptx
+|       Introduzione_emarketing_2026_parte2.pptx
+|       
+\---word
+    |   Guida_Word.html
+    |   Guida_Word.pdf
+    |   
+    \---img
+            image_001.png
+            image_002.png
+            image_003.png
+            image_004.png
+            image_005.png
+            image_006.png
+            image_007.png
+            image_008.png
+            image_009.png
+            image_010.png
+            image_011.png
+            image_012.png
+            image_013.png
+            image_014.png
+            image_015.png
+            image_016.png
+            image_017.png
+            image_018.png
+            image_019.png
+            image_020.png
+            image_021.png
+            image_022.png
+            image_023.png
+            image_024.png
+            image_025.png
+            image_026.png
+            image_027.png
+            image_028.png
+            image_029.png
+            image_030.png
+            image_031.png
+            image_032.png
+            image_033.png
+            image_034.png
+            image_035.png
+            image_036.png
+            image_037.png
+            image_038.png
+            image_039.png
+            image_040.png
+            image_041.png
+            image_042.png
+            image_043.png
+            image_044.png
+            image_045.png
+            image_046.png
+            image_047.png
+            image_048.png
+            image_049.png
+            image_050.png
+            image_051.png
+            image_052.png
+            image_053.png
+            image_054.png
+            image_055.png
+            image_056.png
+            image_057.png
+            image_058.png
+            image_059.png
+            image_060.png
+            image_061.png
+            
