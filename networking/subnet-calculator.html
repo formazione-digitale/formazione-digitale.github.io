@@ -8,166 +8,218 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --blue-dark: #1F4E79;
-            --blue-mid: #2E75B6;
-            --blue-pale: #EBF3FC;
-            --amber-dark: #7D4E00;
-            --gray-dark: #2C2C2C;
-            --gray-mid: #666;
-            --white: #FFFFFF;
-            --font-display: 'DM Serif Display', Georgia, serif;
-            --font-body: 'DM Sans', system-ui, sans-serif;
-            --nav-height: 58px;
-            --accent-border: #90CAF9;
-            --accent-light: #E3F2FD;
-            --bit-net: #64FFDA;
-            --bit-host: #FF5252;
-        }
+<style>
+    :root {
+        --blue-dark: #1F4E79;
+        --blue-mid: #2E75B6;
+        --blue-pale: #EBF3FC;
+        --amber-dark: #7D4E00;
+        --gray-dark: #2C2C2C;
+        --gray-mid: #666;
+        --white: #FFFFFF;
+        --font-display: 'DM Serif Display', Georgia, serif;
+        --font-body: 'DM Sans', system-ui, sans-serif;
+        --nav-height: 58px;
+        --accent-border: #90CAF9;
+        --accent-light: #E3F2FD;
+        --bit-net: #64FFDA;
+        --bit-host: #FF5252;
+    }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: var(--font-body); background: #fdfdfd; color: var(--gray-dark); padding-top: var(--nav-height); scroll-behavior: smooth; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-body); background: #fdfdfd; color: var(--gray-dark); padding-top: var(--nav-height); scroll-behavior: smooth; }
 
-        /* ── STICKY NAV BAR ────────────────────────────────────── */
-        nav.sticky-bar {
-            position: fixed; top: 0; left: 0; right: 0; height: var(--nav-height);
-            background: var(--blue-dark); display: flex; align-items: center; 
-            justify-content: space-between; padding: 0 1.5rem; z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-        }
-        .nav-left { display: flex; align-items: center; gap: 1rem; }
-        .nav-back { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 5px; }
-        .nav-back:hover { color: white; }
-        .nav-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.2); }
-        .nav-title { font-family: var(--font-display); color: white; font-size: 1.1rem; }
+    /* ── STICKY NAV BAR ────────────────────────────────────── */
+    nav.sticky-bar {
+        position: fixed; top: 0; left: 0; right: 0; height: var(--nav-height);
+        background: var(--blue-dark); display: flex; align-items: center; 
+        justify-content: space-between; padding: 0 1.5rem; z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+    .nav-left { display: flex; align-items: center; gap: 1rem; }
+    .nav-back { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 5px; }
+    .nav-back:hover { color: white; }
+    .nav-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.2); }
+    .nav-title { font-family: var(--font-display); color: white; font-size: 1.1rem; }
 
-        /* ── LAYOUT ───────────────────────────────────────────── */
-        .page-container {
-			display: flex;
-			max-width: 1320px; /* Allargato per monitor desktop */
-			margin: 0 auto;
-			gap: 3rem;
-			padding: 3rem 1.5rem;
-		}
-        
-        aside.sidebar { width: 240px; position: sticky; top: calc(var(--nav-height) + 2rem); height: fit-content; flex-shrink: 0; }
-        .sidebar-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--blue-mid); margin-bottom: 1rem; }
-        .sidebar-nav { display: flex; flex-direction: column; gap: 0.5rem; }
-        .sidebar-nav a { 
-            text-decoration: none; color: var(--gray-mid); font-size: 0.9rem; padding: 0.5rem 0.8rem; 
-            border-radius: 6px; transition: all 0.2s; border-left: 3px solid transparent;
-        }
-        .sidebar-nav a.active { border-left-color: var(--blue-mid); background: var(--blue-pale); color: var(--blue-dark); font-weight: 600; }
+    /* ── LAYOUT ───────────────────────────────────────────── */
+    .page-container {
+        display: flex;
+        max-width: 1350px; /* Incrementato per evitare il wrapping degli ottetti */
+        margin: 0 auto;
+        gap: 3rem;
+        padding: 3rem 1.5rem;
+    }
+    
+    aside.sidebar { width: 240px; position: sticky; top: calc(var(--nav-height) + 2rem); height: fit-content; flex-shrink: 0; }
+    .sidebar-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--blue-mid); margin-bottom: 1rem; }
+    .sidebar-nav { display: flex; flex-direction: column; gap: 0.5rem; }
+    .sidebar-nav a { 
+        text-decoration: none; color: var(--gray-mid); font-size: 0.9rem; padding: 0.5rem 0.8rem; 
+        border-radius: 6px; transition: all 0.2s; border-left: 3px solid transparent;
+    }
+    .sidebar-nav a.active { border-left-color: var(--blue-mid); background: var(--blue-pale); color: var(--blue-dark); font-weight: 600; }
 
-        .content { flex: 1; min-width: 0; }
-        .content-header { margin-bottom: 3rem; }
-        .content-header .eyebrow { color: var(--amber-dark); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; display: block; }
-        .content-header h1 { font-family: var(--font-display); font-size: 3rem; color: var(--blue-dark); line-height: 1.1; }
+    .content { flex: 1; min-width: 0; }
+    .content-header { margin-bottom: 3rem; }
+    .content-header .eyebrow { color: var(--amber-dark); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; display: block; }
+    .content-header h1 { font-family: var(--font-display); font-size: 3rem; color: var(--blue-dark); line-height: 1.1; }
 
-        /* ── TOOL CARD ───────────────────────────────────────── */
-        .tool-card { 
-            background: linear-gradient(180deg, var(--white) 0%, var(--accent-light) 100%);
-            border: 2px solid var(--accent-border);
-            border-radius: 20px; padding: 2.5rem;
-            box-shadow: 0 10px 30px rgba(31, 78, 121, 0.08);
-            margin-bottom: 4rem; scroll-margin-top: 100px;
-        }
-        .tool-grid {
-			display: grid;
-			grid-template-columns: 1.25fr 0.75fr; /* Più spazio ai bit, meno ai testi a destra */
-			gap: 2.5rem;
-		}
+    /* ── TOOL CARD ───────────────────────────────────────── */
+    .tool-card { 
+        background: linear-gradient(180deg, var(--white) 0%, var(--accent-light) 100%);
+        border: 2px solid var(--accent-border);
+        border-radius: 20px; padding: 2.5rem;
+        box-shadow: 0 10px 30px rgba(31, 78, 121, 0.08);
+        margin-bottom: 4rem; scroll-margin-top: 100px;
+        overflow: visible; /* Necessario per i popup */
+    }
+    .tool-grid {
+        display: grid;
+        grid-template-columns: 1.3fr 0.7fr; /* Bilanciamento ottimale per bit e risultati */
+        gap: 2.5rem;
+    }
 
-        .input-group label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--blue-mid); text-transform: uppercase; margin-bottom: 0.5rem; }
-        input[type=text] { width: 100%; padding: 0.8rem; border: 1.5px solid var(--accent-border); border-radius: 8px; font-family: monospace; font-size: 1.1rem; outline: none; }
-        
-        .presets { display: flex; gap: 0.5rem; margin-top: 0.8rem; flex-wrap: wrap; }
-        .btn-preset { 
-            background: var(--white); border: 1px solid var(--blue-mid); color: var(--blue-mid);
-            padding: 4px 12px; border-radius: 15px; font-size: 0.72rem; cursor: pointer; transition: all 0.2s;
-        }
-        .btn-preset:hover { background: var(--blue-mid); color: white; }
+    .input-group label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--blue-mid); text-transform: uppercase; margin-bottom: 0.5rem; }
+    input[type=text] { width: 100%; padding: 0.8rem; border: 1.5px solid var(--accent-border); border-radius: 8px; font-family: monospace; font-size: 1.1rem; outline: none; }
+    
+    .presets { display: flex; gap: 0.5rem; margin-top: 0.8rem; flex-wrap: wrap; }
+    .btn-preset { 
+        background: var(--white); border: 1px solid var(--blue-mid); color: var(--blue-mid);
+        padding: 4px 12px; border-radius: 15px; font-size: 0.72rem; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-preset:hover { background: var(--blue-mid); color: white; }
 
-        .cidr-display { font-size: 2.4rem; font-weight: 700; color: var(--blue-dark); text-align: center; margin: 0.5rem 0; }
-        input[type=range] { width: 100%; accent-color: var(--blue-mid); cursor: pointer; }
+    .cidr-display { font-size: 2.4rem; font-weight: 700; color: var(--blue-dark); text-align: center; margin: 0.5rem 0; }
+    input[type=range] { width: 100%; accent-color: var(--blue-mid); cursor: pointer; }
 
-		.logic-box { 
-			background: #212121; color: #eceff1; padding: 1.2rem; border-radius: 12px; 
-			font-family: monospace; font-size: 0.82rem; margin-top: 1.5rem; line-height: 1.6;
-			box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); 
-			overflow-x: auto; 
-			white-space: nowrap; /* Impedisce il wrapping */
-			letter-spacing: -0.01em; /* Ottimizzazione spazio */
-		}
-        .logic-line { display: flex; justify-content: space-between; border-bottom: 1px solid #444; padding: 4px 0; gap: 10px; }
-        .logic-line:last-child { border-bottom: none; font-weight: 700; }
-        .bit-net { color: var(--bit-net); }
-        .bit-host { color: var(--bit-host); }
+    .logic-box { 
+        background: #212121; color: #eceff1; padding: 1.2rem; border-radius: 12px; 
+        font-family: monospace; font-size: 0.82rem; margin-top: 1.5rem; line-height: 1.6;
+        box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); 
+        overflow-x: auto; 
+        white-space: nowrap; /* Impedisce il wrapping dei bit */
+        letter-spacing: -0.01em; 
+    }
+    .logic-line { display: flex; justify-content: space-between; border-bottom: 1px solid #444; padding: 4px 0; gap: 10px; }
+    .logic-line:last-child { border-bottom: none; font-weight: 700; }
+    .bit-net { color: var(--bit-net); }
+    .bit-host { color: var(--bit-host); }
 
-        .legend { display: flex; gap: 1.5rem; margin-top: 1rem; font-size: 0.75rem; justify-content: center; font-weight: 600; }
-        .legend span { display: flex; align-items: center; gap: 6px; }
-        .dot { width: 10px; height: 10px; border-radius: 2px; }
+    .legend { display: flex; gap: 1.5rem; margin-top: 1rem; font-size: 0.75rem; justify-content: center; font-weight: 600; }
+    .legend span { display: flex; align-items: center; gap: 6px; }
+    .dot { width: 10px; height: 10px; border-radius: 2px; }
 
-		/* PATH: networking/subnet-calculator.html */
+    /* ── RISULTATI E POPUP ───────────────────────────────── */
+    .tool-results {
+        margin-top: 2rem; /* Spazio extra per il popup della riga 1 */
+    }
 
-		/* 1. RIMPIAZZA LE VECCHIE RIGHE CON QUESTO BLOCCO AGGIORNATO */
-		.res-item {
-			display: flex;
-			justify-content: space-between; /* Spinge il valore tutto a destra */
-			align-items: center;
-			padding: 0.85rem 0;
-			border-bottom: 1px solid rgba(0,0,0,0.05);
-			gap: 12px; /* Spazio di sicurezza tra etichetta e valore */
-		}
+    .res-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.85rem 0;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        gap: 12px;
+        position: relative;
+        overflow: visible; 
+        z-index: 1;
+        transition: z-index 0s;
+    }
 
-		.res-label-group {
-			display: flex;
-			align-items: center;
-			gap: 6px;
-			flex-shrink: 0; /* Impedisce all'etichetta di rimpicciolirsi */
-			font-size: 0.88rem;
-			color: var(--gray-mid);
-			white-space: nowrap;
-		}
+    .res-item:hover {
+        z-index: 999; /* Porta la riga attiva sopra le altre */
+    }
 
-		.res-val {
-			font-weight: 700;
-			color: var(--blue-dark);
-			font-family: 'JetBrains Mono', 'Roboto Mono', monospace; /* Font compatti */
-			font-size: 1.1rem;
-			text-align: right;
-			white-space: nowrap; /* Fondamentale: impedisce agli IP di andare a capo */
-		}
+    .res-label-group {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-shrink: 0;
+        font-size: 0.88rem;
+        color: var(--gray-mid);
+        white-space: nowrap;
+    }
 
-		/* 2. AGGIUNGI QUESTA REGOLA SPECIFICA PER IL RANGE HOST */
-		#res-range {
-			font-size: 0.98rem; /* Leggera riduzione mirata per il testo più lungo del tool */
-			letter-spacing: -0.02em;
-		}
+    .res-val {
+        font-weight: 700;
+        color: var(--blue-dark);
+        font-family: 'JetBrains Mono', 'Roboto Mono', monospace;
+        font-size: 1.1rem;
+        text-align: right;
+        white-space: nowrap;
+    }
 
+    #res-range {
+        font-size: 0.98rem;
+        letter-spacing: -0.02em;
+    }
 
-        .btn-copy { background: var(--blue-dark); color: white; border: none; padding: 1rem; width: 100%; border-radius: 50px; font-weight: 600; cursor: pointer; margin-top: 1.5rem; transition: transform 0.1s; }
+    .btn-copy { background: var(--blue-dark); color: white; border: none; padding: 1rem; width: 100%; border-radius: 50px; font-weight: 600; cursor: pointer; margin-top: 1.5rem; transition: transform 0.1s; }
 
-        /* ── TEORIA UI ──────────────────────────────────────── */
-        section { margin-bottom: 4rem; scroll-margin-top: 100px; }
-        .section-title { display: flex; align-items: center; margin-bottom: 1.5rem; }
-        .section-num { background: var(--blue-dark); color: white; width: 42px; height: 42px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.4rem; margin-right: 1rem; }
-        .section-title h2 { font-family: var(--font-display); font-size: 1.8rem; color: var(--blue-dark); }
-        
-        .theory-step { background: var(--blue-pale); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--blue-mid); margin: 1.5rem 0; }
-        .callout-dark { background: #1a1a1a; color: white; padding: 2rem; border-radius: 12px; margin: 2rem 0; }
-        .callout-dark ul { list-style: none; margin-top: 1rem; }
-        .callout-dark li { margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative; font-size: 0.95rem; }
-        .callout-dark li::before { content: '•'; color: var(--bit-net); position: absolute; left: 0; font-weight: 800; }
+    /* ── TEORIA UI ──────────────────────────────────────── */
+    section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+    .section-title { display: flex; align-items: center; margin-bottom: 1.5rem; }
+    .section-num { background: var(--blue-dark); color: white; width: 42px; height: 42px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.4rem; margin-right: 1rem; }
+    .section-title h2 { font-family: var(--font-display); font-size: 1.8rem; color: var(--blue-dark); }
+    
+    .theory-step { background: var(--blue-pale); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--blue-mid); margin: 1.5rem 0; }
+    .callout-dark { background: #1a1a1a; color: white; padding: 2rem; border-radius: 12px; margin: 2rem 0; }
+    .callout-dark ul { list-style: none; margin-top: 1rem; }
+    .callout-dark li { margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative; font-size: 0.95rem; }
+    .callout-dark li::before { content: '•'; color: var(--bit-net); position: absolute; left: 0; font-weight: 800; }
 
-        /* Help Popup */
-        .help-icon { width: 18px; height: 18px; background: var(--blue-mid); color: white; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; cursor: help; position: relative; margin-left: 5px; }
-        .help-popup { visibility: hidden; width: 220px; background: var(--gray-dark); color: #fff; text-align: left; border-radius: 8px; padding: 12px; position: absolute; z-index: 10; bottom: 125%; left: 0; opacity: 0; transition: opacity 0.3s; font-size: 0.8rem; font-weight: 400; pointer-events: none; }
-        .help-icon:hover .help-popup { visibility: visible; opacity: 1; }
+    /* Help Popup Corretto */
+    .help-icon { width: 18px; height: 18px; background: var(--blue-mid); color: white; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; cursor: help; position: relative; margin-left: 5px; }
+    
+    .help-popup {
+        visibility: hidden;
+        width: 250px;
+        background: #212121;
+        color: #fff;
+        text-align: left;
+        border-radius: 8px;
+        padding: 12px;
+        position: absolute;
+        z-index: 1000;
+        bottom: 160%; 
+        left: 50%;
+        transform: translateX(-50%) translateY(10px);
+        opacity: 0;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        font-size: 0.82rem;
+        line-height: 1.4;
+        pointer-events: none;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        border: 1px solid rgba(255,255,255,0.1);
+        white-space: normal; /* Permette il wrap del testo interno */
+    }
 
-        @media (max-width: 950px) { .page-container { flex-direction: column; } aside.sidebar { display: none; } .tool-grid { grid-template-columns: 1fr; } }
-    </style>
+    .help-popup::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -6px;
+        border-width: 6px;
+        border-style: solid;
+        border-color: #212121 transparent transparent transparent;
+    }
+
+    .help-icon:hover .help-popup {
+        visibility: visible;
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 1100px) { 
+        .page-container { flex-direction: column; } 
+        aside.sidebar { display: none; } 
+        .tool-grid { grid-template-columns: 1fr; } 
+        .logic-box { font-size: 0.75rem; }
+    }
+</style>
 </head>
 <body>
 
@@ -282,7 +334,7 @@
                 <ul>
                     <li><strong>Riduzione congestione</strong>: limita i domini di broadcast.</li>
                     <li><strong>Ottimizzazione IP</strong>: evita sprechi di indirizzi in reti troppo ampie.</li>
-                    <li><strong>Sicurezza granulare</strong>: permette di isolare i segmenti critici (es. server vs guest)[cite: 1].</li>
+                    <li><strong>Sicurezza granulare</strong>: permette di isolare i segmenti critici (es. server vs guest).</li>
                 </ul>
             </div>
         </section>
@@ -290,28 +342,28 @@
         <!-- 02 AND LOGICO -->
         <section id="and-logico">
             <div class="section-title"><div class="section-num">2</div><h2>L'operazione di AND Logico</h2></div>
-            <p>Il computer determina l'appartenenza di un IP a una rete eseguendo un <strong>AND binario</strong> tra l'IP host e la Subnet Mask. È l'operazione booleana fondamentale per il routing[cite: 1].</p>
+            <p>Il computer determina l'appartenenza di un IP a una rete eseguendo un <strong>AND binario</strong> tra l'IP host e la Subnet Mask. È l'operazione booleana fondamentale per il routing.</p>
             
             
 
             <div class="theory-step">
-                <strong>La regola:</strong> Il bit risultante è 1 solo se entrambi i bit di input sono 1. Se la maschera presenta uno 0, il bit host dell'indirizzo IP viene "azzerato" nel calcolo della rete[cite: 1].
+                <strong>La regola:</strong> Il bit risultante è 1 solo se entrambi i bit di input sono 1. Se la maschera presenta uno 0, il bit host dell'indirizzo IP viene "azzerato" nel calcolo della rete.
             </div>
         </section>
 
         <!-- 03 INDIRIZZI SPECIALI -->
         <section id="indirizzi">
             <div class="section-title"><div class="section-num">3</div><h2>Indirizzi riservati</h2></div>
-            <p>In ogni sottorete, due indirizzi sono riservati e non possono essere assegnati a PC, server o altri terminali host[cite: 1]:</p>
+            <p>In ogni sottorete, due indirizzi sono riservati e non possono essere assegnati a PC, server o altri terminali host:</p>
             
             <ul>
-                <li><strong>Network ID:</strong> Identifica la rete. Tutti i bit host (rossi) sono a 0[cite: 1].</li>
-                <li><strong>Broadcast Address:</strong> Usato per comunicazioni "uno-a-tutti". Tutti i bit host (rossi) sono a 1[cite: 1].</li>
+                <li><strong>Network ID:</strong> Identifica la rete. Tutti i bit host (rossi) sono a 0.</li>
+                <li><strong>Broadcast Address:</strong> Usato per comunicazioni "uno-a-tutti". Tutti i bit host (rossi) sono a 1.</li>
             </ul>
 
-            <div class="theory-step">
-                <strong>Formula Host:</strong> Il numero di host utilizzabili è sempre $2^{n} - 2$, dove $n$ è il numero di bit host (rossi)[cite: 1].
-            </div>
+			<div class="theory-step">
+				<strong>Formula Host:</strong> Il numero di host utilizzabili è calcolato come <code style="background: rgba(0,0,0,0.05); padding: 2px 6px; border-radius: 4px; font-family: monospace; font-weight: 700;">2<sup>n</sup> - 2</code>, dove <span style="color: var(--bit-host); font-weight: 700;">n</span> è il numero di bit host (rossi).
+			</div>
         </section>
 
         <footer style="margin-top: 5rem; padding-top: 2rem; border-top: 1px solid #eee; color: #999; font-size: 0.8rem; text-align: center;">
