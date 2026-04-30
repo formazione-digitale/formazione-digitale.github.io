@@ -74,7 +74,7 @@ nav {
 .pill-time   { font-size:.75rem; color:rgba(255,255,255,.55); }
 .hero-title  { font-family:var(--font-display); font-size:clamp(2rem,5vw,3rem); color:#fff; line-height:1.08; margin-bottom:.55rem; }
 .hero-title em { font-style:italic; color:var(--blue-light); }
-.hero-tagline { font-size:1.05rem; color:rgba(255,255,255,.78); max-width:560px; line-height:1.6; margin-bottom:1.4rem; }
+.hero-tagline { font-size:1.05rem; color:rgba(255,255,255,.78); max-width:720px; line-height:1.6; margin-bottom:1.4rem; }
 .hero-chips { display:flex; gap:.5rem; flex-wrap:wrap; }
 .chip { font-size:.75rem; font-weight:500; padding:.3rem .85rem; border-radius:20px; border:1px solid rgba(255,255,255,.22); color:rgba(255,255,255,.82); background:rgba(255,255,255,.08); }
 
@@ -234,7 +234,7 @@ footer a { color:var(--blue-light); text-decoration:none; }
       <span class="pill-badge badge-amber">💡 Pillola digitale</span>
       <span class="pill-badge badge-green">🆓 Free &amp; Open Source</span>
       <span class="pill-badge badge-blue">🖥 Windows · Linux · macOS</span>
-      <span class="pill-time">⏱ Lettura: 5 minuti</span>
+      <span class="pill-time">⏱ Lettura: 15 minuti</span>
     </div>
     <h1 class="hero-title">Server HTTP istantaneo —<br><em>dalla versione classica alla moderna.</em></h1>
     <p class="hero-tagline">HFS trasforma il tuo PC in un server web in pochi secondi — senza installazione, senza cloud, senza costi. Due versioni, una storia: dal singolo .exe da 1 MB all'interfaccia web moderna.</p>
@@ -439,7 +439,7 @@ footer a { color:var(--blue-light); text-decoration:none; }
         <div class="step-num">5</div>
         <div class="step-body">
           <div class="step-title">Monitora i log in tempo reale</div>
-          <div class="step-desc">Nel pannello admin vedi in diretta chi si è connesso, quale file ha scaricato e quando. Utile anche per <strong>raccogliere elaborati</strong> abilitando la funzione di upload.</div>
+          <div class="step-desc">Nel pannello admin vedi in diretta chi si è connesso, quale file ha scaricato e quando. Utile anche per <strong>raccogliere file dagli altri dispositivi</strong> abilitando la funzione di upload.</div>
         </div>
       </div>
     </div>
@@ -499,6 +499,11 @@ footer a { color:var(--blue-light); text-decoration:none; }
     <div class="box box-blue">
       <strong>Nota sul firewall.</strong> Al primo avvio Windows chiede se consentire ad HFS di comunicare in rete. È sufficiente cliccare <strong>"Consenti accesso"</strong>. In ambienti scolastici con policy restrittive potrebbe servire l'intervento del tecnico di laboratorio.
     </div>
+	<!-- AGGIUNTA: consapevolezza sicurezza — neutro per qualsiasi pubblico -->
+	<div class="box box-amber" style="margin-top:1rem;margin-bottom:0;">
+	  <strong>Traffico in chiaro — usalo consapevolmente.</strong>
+	  HFS non cifra le comunicazioni: chiunque sulla stessa rete può in teoria intercettare i dati trasferiti. Va benissimo per condividere materiale non sensibile in una rete locale fidata. Per file riservati o reti pubbliche, valuta soluzioni con HTTPS nativo.
+	</div>
   </div>
 
   <!-- CONCETTI CHIAVE -->
@@ -537,9 +542,9 @@ footer a { color:var(--blue-light); text-decoration:none; }
   </div>
 
   <!-- CTA -->
-  <div class="cta-strip">
+  <div class="cta-strip" style="justify-content:center;text-align:center;">>
     <div class="cta-text">
-      <h3>Pronto a provarlo in laboratorio?</h3>
+      <h3>Pronto a provarlo?</h3>
       <p>Scarica HFS 3, avvialo e in meno di un minuto il tuo PC è un server web.</p>
     </div>
     <div style="display:flex;gap:.75rem;flex-wrap:wrap;">

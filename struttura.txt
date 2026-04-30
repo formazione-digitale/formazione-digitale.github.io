@@ -74,12 +74,14 @@ C:.
 +---networking
 |   |   hfs-server.html
 |   |   hfs-windows-x64-3.0.8.zip
+|   |   hfs2.0.zip
 |   |   subnet-calculator.html
 |   |   
 |   \---img
 |           hfs-admin.png
 |           hfs-file.png
 |           hfs-view.png
+|           hfs2-admin.png
 |           
 \---word
     |   Guida_Word.html
