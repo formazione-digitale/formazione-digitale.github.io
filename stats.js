@@ -14,6 +14,7 @@ const gcPagine = [
   { path: '/networking/hfs-server.html', 										 label: 'Pillola HFS' },
   { path: '/networking/subnet-calculator.html', 								 label: 'Subnet Calculator' },
   { path: '/word/Guida_Word.html',                                               label: 'Guida Word' },
+  { path: '/sistemi/codifica-binaria/', 										 label: 'Bin-Digit Decoder' },
 ];
 
 // ── Non modificare da qui in poi ────────────────────────────────

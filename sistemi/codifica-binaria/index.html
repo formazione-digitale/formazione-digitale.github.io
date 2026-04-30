@@ -1,0 +1,286 @@
+<!-- /strumenti/bin-decoder/index.html -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bin-Digit Decoder Pro - Formazione Digitale</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display:ital@0;1&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue-dark:   #1F4E79;
+            --blue-mid:    #2E75B6;
+            --blue-light:  #D6E8F7;
+            --blue-pale:   #F1F7FD;
+            --green-dark:  #1E6B3C;
+            --amber-dark:  #7D4E00;
+            --white:       #FFFFFF;
+            --font-body:    'DM Sans', sans-serif;
+            --font-display: 'DM Serif Display', serif;
+            --font-mono:    'Fira Code', monospace;
+            --radius: 10px;
+            --transition: all 0.2s ease-in-out;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: var(--font-body); background: #e9eff5; color: var(--blue-dark); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+        header {
+            background: var(--blue-dark);
+            height: 60px;
+            display: flex; align-items: center;
+            padding: 0 1.5rem; color: white;
+            flex-shrink: 0;
+            z-index: 100;
+        }
+        .header-back { text-decoration: none; color: rgba(255,255,255,0.7); font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
+        .header-back:hover { color: white; }
+        .header-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.2); margin: 0 1.2rem; }
+        .header-title h1 { font-family: var(--font-display); font-size: 1.4rem; }
+
+        main { display: flex; flex: 1; overflow: hidden; gap: 1px; background: var(--blue-light); }
+        .panel { flex: 1; overflow-y: auto; padding: 1.25rem 1.5rem; display: flex; flex-direction: column; }
+        
+        .panel-left { background: var(--white); border-right: 1px solid var(--blue-light); }
+        .content-container { width: 100%; max-width: 520px; margin: 0 auto; }
+
+        .theory-box { margin-bottom: 0.75rem; }
+        .theory-box h3 { font-family: var(--font-display); font-size: 1.3rem; margin-bottom: 0.4rem; color: var(--blue-dark); }
+        .theory-box p { font-size: 0.88rem; line-height: 1.45; color: #444; margin-bottom: 0.5rem; }
+        .theory-box strong { color: var(--blue-dark); }
+
+        .hint-scroll { 
+            font-size: 0.75rem; font-weight: 600; color: var(--amber-dark); 
+            background: #FFF9E6; padding: 0.5rem 0.8rem; border-radius: 6px;
+            display: inline-flex; align-items: center; gap: 6px; border: 1px solid #FFE69C;
+            margin-bottom: 1rem;
+        }
+
+        .calc-box { 
+            background: var(--blue-pale); border: 1px solid var(--blue-light); 
+            border-radius: var(--radius); padding: 1.25rem; width: 100%;
+            box-shadow: 0 2px 8px rgba(31,78,121,0.04);
+        }
+
+        .field { margin-bottom: 0.75rem; }
+        .field label { display: block; font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue-mid); margin-bottom: 0.3rem; }
+        
+        input {
+            width: 100%; padding: 0.5rem; border: 2px solid var(--blue-light); border-radius: 8px;
+            font-family: var(--font-mono); font-size: 1.4rem; text-align: center;
+            transition: var(--transition); outline: none; background: white;
+            color: var(--blue-dark);
+        }
+        input:focus { border-color: var(--blue-mid); box-shadow: 0 0 0 3px rgba(46,117,182,0.1); }
+
+        .bit-container { margin-top: 1rem; display: flex; flex-direction: column; align-items: center; }
+        .bit-strips { display: flex; gap: 6px; }
+        .bit-column { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        
+        .bit-box {
+            width: 44px; height: 50px; background: #eef2f6; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-mono); font-weight: 700; font-size: 1.25rem;
+            cursor: pointer; transition: var(--transition); border-bottom: 4px solid #cbd5e0;
+        }
+        .bit-box.active { background: var(--green-dark); color: white; border-bottom-color: #144a29; transform: translateY(-1px); }
+        .power-label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--blue-mid); font-weight: 600; margin-top: 2px; }
+
+        .panel-right { background: #f8fafc; flex: 0.85; position: relative; }
+        .algo-container { width: 100%; max-width: 480px; margin: 0 auto; position: relative; }
+        .algo-title { font-family: var(--font-display); font-size: 1.3rem; margin-bottom: 0.75rem; color: var(--blue-dark); border-bottom: 2px solid var(--blue-light); padding-bottom: 0.4rem; }
+        
+        .div-table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 0.95rem; }
+        .div-header { font-size: 0.6rem; color: var(--blue-mid); text-transform: uppercase; padding: 0.5rem; text-align: center; }
+        .div-cell { padding: 0.5rem; text-align: center; border-bottom: 1px solid #e2e8f0; }
+        .resto-highlight { color: var(--amber-dark); font-weight: 800; background: #fff3cd; padding: 2px 6px; border-radius: 4px; border: 1px solid #ffe69c; }
+
+        .read-direction {
+            position: absolute; right: -30px; top: 120px; bottom: 40px;
+            width: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: var(--amber-dark); font-weight: 700; font-size: 0.75rem;
+        }
+        .arrow-up { font-size: 1.5rem; line-height: 1; }
+        .vertical-text { writing-mode: vertical-rl; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; }
+
+        @media (max-width: 1100px) { .read-direction { display: none; } }
+        @media (max-width: 1000px) {
+            main { flex-direction: column; overflow-y: auto; }
+            body { height: auto; overflow: auto; }
+            .panel { flex: none; padding: 1rem; }
+            .panel-left { border-right: none; border-bottom: 1px solid var(--blue-light); }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="../../index.html" class="header-back">← Portale</a>
+    <div class="header-divider"></div>
+    <div class="header-title"><h1>Bin-Digit Decoder</h1></div>
+</header>
+
+<main>
+    <section class="panel panel-left">
+        <div class="content-container">
+            <div class="theory-box">
+                <h3>Come funziona?</h3>
+                <p>La conversione da decimale a binario avviene tramite <strong>divisioni successive per 2</strong>. I resti (0 o 1) formano il numero binario se letti dal basso verso l'alto.</p>
+                <p>Al contrario, per passare da binario a decimale, si sommano le <strong>potenze di 2</strong> corrispondenti ai bit impostati a 1.</p>
+            </div>
+
+            <div class="hint-scroll">
+                <span>🖱️</span> <strong>Pro-Tip:</strong> Usa la rotella del mouse sopra i campi per scorrere i valori.
+            </div>
+
+            <div class="calc-box">
+                <div class="field">
+                    <label>Valore Decimale (0-255)</label>
+                    <input type="number" id="in-dec" min="0" max="255" value="147">
+                </div>
+                <div class="field">
+                    <label>Rappresentazione Binaria</label>
+                    <input type="text" id="in-bin" maxlength="8" value="10010011" placeholder="es. 10101010">
+                </div>
+
+                <div class="bit-container">
+                    <div class="bit-strips" id="bit-grid"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel panel-right">
+        <div class="algo-container">
+            <h3 class="algo-title">Algoritmo delle divisioni</h3>
+            <div class="read-direction">
+                <span class="arrow-up">↑</span>
+                <span class="vertical-text">Leggi dal basso</span>
+            </div>
+            <table class="div-table">
+                <thead>
+                    <tr>
+                        <th class="div-header">Dividendo</th>
+                        <th class="div-header">Divisore</th>
+                        <th class="div-header">Quoziente</th>
+                        <th class="div-header">Resto (Bit)</th>
+                    </tr>
+                </thead>
+                <tbody id="div-body"></tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<script>
+    const inDec = document.getElementById('in-dec');
+    const inBin = document.getElementById('in-bin');
+    const divBody = document.getElementById('div-body');
+    const bitGrid = document.getElementById('bit-grid');
+
+    function initUI() {
+        bitGrid.innerHTML = '';
+        for(let i=7; i>=0; i--) {
+            const col = document.createElement('div');
+            col.className = 'bit-column';
+            const box = document.createElement('div');
+            box.className = 'bit-box';
+            box.dataset.index = i;
+            box.onclick = () => {
+                const val = (parseInt(inDec.value) || 0) ^ (1 << i);
+                sync(val, true); // Forza aggiornamento input binario
+            };
+            const label = document.createElement('span');
+            label.className = 'power-label';
+            label.innerHTML = `2<sup>${i}</sup>`;
+            col.appendChild(box);
+            col.appendChild(label);
+            bitGrid.appendChild(col);
+        }
+    }
+
+    /**
+     * Sincronizza l'interfaccia.
+     * @param {number} val - Il valore decimale.
+     * @param {boolean} updateBinField - Se vero, sovrascrive il campo di testo binario (usato per scroll/click).
+     */
+    function sync(val, updateBinField = false) {
+        val = Math.max(0, Math.min(255, val));
+        inDec.value = val;
+        
+        const binStr = val.toString(2).padStart(8, '0');
+        if (updateBinField) {
+            inBin.value = binStr;
+        }
+        
+        updateDisplay(val, binStr);
+    }
+
+    function updateDisplay(dec, binStr) {
+        const bits = binStr.split('');
+        const bitBoxes = document.querySelectorAll('.bit-box');
+        bitBoxes.forEach((box, i) => {
+            box.textContent = bits[i];
+            box.className = `bit-box ${bits[i] === '1' ? 'active' : ''}`;
+        });
+
+        divBody.innerHTML = '';
+        let temp = dec;
+        if (temp === 0) appendRow(0, 0, 0);
+        while (temp > 0) {
+            let q = Math.floor(temp / 2);
+            let r = temp % 2;
+            appendRow(temp, q, r);
+            temp = q;
+        }
+    }
+
+    function appendRow(d, q, r) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td class="div-cell">${d}</td><td class="div-cell">/ 2</td><td class="div-cell">= ${q}</td><td class="div-cell"><span class="resto-highlight">${r}</span></td>`;
+        divBody.appendChild(tr);
+    }
+
+    // SCROLL HANDLER: Forza aggiornamento campo binario perché l'utente non sta digitando
+    const onWheel = (e) => {
+        e.preventDefault();
+        const current = parseInt(inDec.value) || 0;
+        sync(e.deltaY < 0 ? current + 1 : current - 1, true);
+    };
+
+    inDec.addEventListener('wheel', onWheel, { passive: false });
+    inBin.addEventListener('wheel', onWheel, { passive: false });
+
+    // INPUT DECIMALE
+    inDec.addEventListener('input', e => sync(parseInt(e.target.value) || 0, true));
+
+    // INPUT BINARIO: Gestione digitazione libera per permettere zeri iniziali
+    inBin.addEventListener('input', e => {
+        let raw = e.target.value.replace(/[^01]/g, ''); // Accetta solo 0 e 1
+        e.target.value = raw; // Mantiene la digitazione dell'utente (inclusi zeri iniziali)
+        
+        if (raw === "") return;
+        
+        const decVal = parseInt(raw, 2);
+        if (!isNaN(decVal)) {
+            const safeVal = Math.min(255, decVal);
+            inDec.value = safeVal;
+            // Genera la stringa 8-bit per i blocchi grafici e la tabella, 
+            // ma NON sovrascrive inBin.value per non "mangiare" gli zeri dell'utente
+            updateDisplay(safeVal, safeVal.toString(2).padStart(8, '0'));
+        }
+    });
+
+    // Quando l'utente esce dal campo binario, normalizza a 8 cifre
+    inBin.addEventListener('blur', e => {
+        const val = parseInt(e.target.value, 2) || 0;
+        sync(val, true);
+    });
+
+    initUI();
+    sync(147, true);
+</script>
+</body>
+</html>
