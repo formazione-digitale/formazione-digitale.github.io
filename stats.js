@@ -5,16 +5,17 @@
 const gcPagine = [
   { path: '/',                                                                   label: 'Home' },
   { path: '/index.html',                                                         label: 'Home' },
+  { path: '/database/LibreOfficeBase_Query/',    								 label: 'LibreOffice Base' },
+  { path: '/sistemi/codifica-binaria/', 										 label: 'Bin-Digit Decoder' },
   { path: '/intelligenza-artificiale/Guida_Prompting.html',                      label: 'Guida Prompting' },
   { path: '/intelligenza-artificiale/prompt-builder.html',                       label: 'Prompt Builder' },
   { path: '/intelligenza-artificiale/Guida_PeerReview_IA.html',                  label: 'Peer Review IA' },
-  { path: '/database/LibreOfficeBase_Query/Guida_LibreOfficeBase_Query.html',    label: 'LibreOffice Base' },
+  { path: '/database/LibreOfficeBase_Query/Guida_LibreOfficeBase_Query.html',    label: 'LibreOffice Base (o)' },
   { path: '/marketing/Guida_Marketing.html',                                     label: 'Marketing' },
   { path: '/marketing/bep-tool.html',         									 label: 'BEP Tool' },
   { path: '/networking/hfs-server.html', 										 label: 'Pillola HFS' },
   { path: '/networking/subnet-calculator.html', 								 label: 'Subnet Calculator' },
   { path: '/word/Guida_Word.html',                                               label: 'Guida Word' },
-  { path: '/sistemi/codifica-binaria/', 										 label: 'Bin-Digit Decoder' },
 ];
 
 // ── Non modificare da qui in poi ────────────────────────────────

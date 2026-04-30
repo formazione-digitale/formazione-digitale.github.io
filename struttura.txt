@@ -1,5 +1,5 @@
-Elenco del percorso delle cartelle per il volume Acer
-Numero di serie del volume: 544D-3F7C
+Elenco del percorso delle cartelle
+Numero di serie del volume: F609-4EB8
 C:.
 |   Formazione_Digitale_Guida_Collaboratori.docx
 |   index.html
@@ -9,7 +9,7 @@ C:.
 |   
 +---database
 |   \---LibreOfficeBase_Query
-|       |   Guida_LibreOfficeBase_Query.html
+|       |   index.html
 |       |   NERD-HERD.odb
 |       |   
 |       \---img
@@ -46,6 +46,9 @@ C:.
 |               2026-04-27_10h17_43.png
 |               2026-04-27_10h18_10.png
 |               2026-04-27_10h18_29.png
+|               2026-04-30_12h15_16.png
+|               2026-04-30_12h24_08.png
+|               2026-04-30_12h25_14.png
 |               
 +---docs
 |       Formazione_Digitale_Guida_Collaboratori.docx
@@ -82,6 +85,10 @@ C:.
 |           hfs-file.png
 |           hfs-view.png
 |           hfs2-admin.png
+|           
++---sistemi
+|   \---codifica-binaria
+|           index.html
 |           
 \---word
     |   Guida_Word.html
