@@ -1,237 +1,583 @@
-<!-- PATH: networking/hfs-server.html -->
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HFS 3: Modern File Server — Formazione Digitale</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --blue-dark: #1F4E79;
-            --blue-mid: #2E75B6;
-            --blue-pale: #EBF3FC;
-            --amber-dark: #7D4E00;
-            --gray-dark: #2C2C2C;
-            --white: #FFFFFF;
-            --font-display: 'DM Serif Display', serif;
-            --font-body: 'DM Sans', sans-serif;
-            --nav-height: 58px;
-            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HFS — Server HTTP in un click · Formazione Digitale</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue-dark:   #1F4E79;
+  --blue-mid:    #2E75B6;
+  --blue-light:  #D6E8F7;
+  --blue-pale:   #EBF3FC;
+  --green-dark:  #1E6B3C;
+  --green-light: #E8F5EE;
+  --amber-dark:  #7D4E00;
+  --amber-light: #FFF3CD;
+  --gray-dark:   #2C2C2C;
+  --gray-mid:    #666;
+  --gray-light:  #F5F5F5;
+  --white:       #FFFFFF;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-mono:    'Courier New', Courier, monospace;
+  --radius: 10px;
+  --shadow: 0 2px 16px rgba(31,78,121,.10);
+  --transition: .22s cubic-bezier(.4,0,.2,1);
+  --nav-height: 58px;
+}
+html { font-size: 16px; scroll-behavior: smooth; }
+body { font-family: var(--font-body); color: var(--gray-dark); background: #F0F6FF; min-height: 100vh; padding-top: var(--nav-height); }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: var(--font-body); background: #fdfdfd; color: var(--gray-dark); padding-top: var(--nav-height); line-height: 1.7; }
+/* ── STICKY NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--nav-height); background: var(--blue-dark);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; z-index: 200;
+  box-shadow: 0 2px 16px rgba(0,0,0,.2);
+}
+.nav-left { display: flex; align-items: center; gap: 1rem; }
+.nav-back { color: rgba(255,255,255,.8); text-decoration: none; font-size: .85rem; transition: color var(--transition); }
+.nav-back:hover { color: #fff; }
+.nav-sep  { width: 1px; height: 24px; background: rgba(255,255,255,.2); }
+.nav-title { font-family: var(--font-display); color: #fff; font-size: 1.05rem; }
+.btn-dl {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.3);
+  color: #fff; padding: .4rem 1.1rem; border-radius: 50px;
+  font-family: var(--font-body); font-size: .8rem; font-weight: 600;
+  text-decoration: none; transition: all var(--transition);
+}
+.btn-dl:hover { background: #fff; color: var(--blue-dark); }
+@media(max-width:520px){ .nav-title, .nav-sep { display:none; } }
 
-        /* ── STICKY NAV BAR ────────────────────────────────────── */
-        nav.sticky-bar {
-            position: fixed; top: 0; left: 0; right: 0;
-            height: var(--nav-height); background: var(--blue-dark);
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 1.5rem; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-        }
-        .nav-left { display: flex; align-items: center; gap: 1rem; }
-        .nav-back { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 5px; }
-        .nav-back:hover { color: white; }
-        .nav-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.2); }
-        .nav-title { font-family: var(--font-display); color: white; font-size: 1.1rem; }
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, #1A3F63 0%, var(--blue-dark) 45%, #2A6099 100%);
+  padding: 3rem 2.5rem 2.75rem;
+  position: relative; overflow: hidden;
+}
+.hero::after {
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(ellipse at 80% 50%, rgba(46,117,182,.22) 0%, transparent 65%);
+  pointer-events:none;
+}
+.hero-inner { max-width: 820px; margin: 0 auto; position: relative; z-index: 1; }
+.pill-meta  { display:flex; align-items:center; gap:.65rem; margin-bottom:.9rem; flex-wrap:wrap; }
+.pill-badge { font-size:.68rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:.25rem .75rem; border-radius:20px; }
+.badge-amber { background:var(--amber-light); color:var(--amber-dark); }
+.badge-green { background:var(--green-light); color:var(--green-dark); }
+.badge-blue  { background:var(--blue-light);  color:var(--blue-dark); }
+.pill-time   { font-size:.75rem; color:rgba(255,255,255,.55); }
+.hero-title  { font-family:var(--font-display); font-size:clamp(2rem,5vw,3rem); color:#fff; line-height:1.08; margin-bottom:.55rem; }
+.hero-title em { font-style:italic; color:var(--blue-light); }
+.hero-tagline { font-size:1.05rem; color:rgba(255,255,255,.78); max-width:560px; line-height:1.6; margin-bottom:1.4rem; }
+.hero-chips { display:flex; gap:.5rem; flex-wrap:wrap; }
+.chip { font-size:.75rem; font-weight:500; padding:.3rem .85rem; border-radius:20px; border:1px solid rgba(255,255,255,.22); color:rgba(255,255,255,.82); background:rgba(255,255,255,.08); }
 
-        .btn-download {
-            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3);
-            color: white; padding: 0.45rem 1.2rem; border-radius: 50px;
-            font-size: 0.8rem; font-weight: 600; text-decoration: none;
-            display: flex; align-items: center; gap: 8px; transition: all var(--transition);
-        }
-        .btn-download:hover { background: white; color: var(--blue-dark); }
+/* ── LAYOUT ── */
+.page-wrap { max-width: 820px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
 
-        /* ── CONTENT ─────────────────────────────────────────── */
-        article { max-width: 820px; margin: 3rem auto; padding: 0 1.5rem; }
-        
-        .hero-pill { 
-            background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid)); 
-            color: white; padding: 3rem; border-radius: 16px; margin-bottom: 2.5rem; 
-        }
-        .badge { background: var(--amber-dark); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
-        h1 { font-family: var(--font-display); font-size: 2.8rem; margin: 1rem 0; line-height: 1.1; }
+/* ── PANELS ── */
+.panel { background:var(--white); border:1px solid var(--blue-light); border-radius:var(--radius); box-shadow:var(--shadow); padding:1.5rem 1.75rem; margin-bottom:1.5rem; animation: fadeUp .4s both; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
 
-        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-        .feature-item { background: var(--blue-pale); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--blue-mid); }
-        .feature-item h3 { font-size: 1rem; color: var(--blue-dark); margin-bottom: 0.5rem; }
-        .feature-item p { font-size: 0.85rem; color: var(--gray-dark); }
+/* ── SEC HEAD ── */
+.sec { display:flex; align-items:center; gap:.65rem; font-size:.7rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--blue-mid); margin-bottom:.85rem; }
+.sec::before { content:''; display:block; width:18px; height:3px; border-radius:2px; background:currentColor; flex-shrink:0; }
+.sec.green { color:var(--green-dark); }
+.sec.amber { color:var(--amber-dark); }
 
-        .persist-box { 
-            background: #e8f5ee; border-left: 5px solid #1e6b3c; 
-            padding: 1.5rem; border-radius: 0 12px 12px 0; margin: 2rem 0; 
-        }
-        .persist-box h3 { color: #1e6b3c; margin-bottom: 0.5rem; font-size: 1.1rem; }
+/* ── FEATURE GRID ── */
+.feature-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin-bottom:1.25rem; }
+.feature-item { background:var(--blue-pale); padding:1.25rem; border-radius:var(--radius); border-left:4px solid var(--blue-mid); }
+.feature-item h3 { font-size:.95rem; color:var(--blue-dark); margin-bottom:.3rem; font-weight:600; }
+.feature-item p  { font-size:.83rem; color:var(--gray-dark); line-height:1.55; }
 
-        /* ── ADDRESS SECTION ────────────────────────────────── */
-        .address-callout {
-            background: var(--blue-pale);
-            border: 2px dashed var(--blue-mid);
-            padding: 1.5rem; border-radius: 12px;
-            margin: 2rem 0; text-align: center;
-        }
-        .address-callout code {
-            display: block; font-size: 1.5rem; color: var(--blue-dark);
-            margin: 10px 0; font-weight: 700;
-        }
+/* ── BOXES ── */
+.box { border-radius:var(--radius); padding:1.1rem 1.25rem; margin-bottom:1.1rem; font-size:.88rem; line-height:1.65; }
+.box-blue  { background:var(--blue-pale);   border-left:4px solid var(--blue-mid); }
+.box-green { background:var(--green-light); border-left:4px solid var(--green-dark); }
+.box-amber { background:var(--amber-light); border-left:4px solid var(--amber-dark); }
+.box strong { font-weight:600; }
+.box-blue  strong { color:var(--blue-dark); }
+.box-green strong { color:var(--green-dark); }
+.box-amber strong { color:var(--amber-dark); }
 
-        .case-study { background: #FFF9E6; border: 1px solid #FFE69C; padding: 1.5rem; border-radius: 12px; margin: 2rem 0; }
+/* ── ADDRESS CALLOUT ── */
+.address-callout {
+  background:var(--blue-pale); border:2px dashed var(--blue-mid);
+  padding:1.25rem; border-radius:var(--radius);
+  margin:1.1rem 0; text-align:center;
+}
+.address-callout p  { font-size:.82rem; color:var(--gray-mid); margin-bottom:.3rem; }
+.address-callout code { display:block; font-size:1.4rem; color:var(--blue-dark); font-family:var(--font-mono); font-weight:700; }
 
-        /* ── GALLERY ───────────────────────────────────────── */
-        .gallery-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem; margin: 3rem 0;
-        }
-        .screenshot-box {
-            position: relative; border: 1px solid #ddd;
-            border-radius: 8px; overflow: hidden;
-            background: #000; cursor: pointer;
-            transition: transform var(--transition);
-        }
-        .screenshot-box:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .screenshot-box img {
-            width: 100%; height: 200px; object-fit: cover;
-            display: block; transition: opacity var(--transition);
-        }
-        .screenshot-box:hover img { opacity: 0.8; }
-        .screenshot-label {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            background: rgba(0,0,0,0.7); color: white;
-            font-size: 0.75rem; padding: 8px; text-align: center;
-        }
+/* ── STEPS ── */
+.steps { display:flex; flex-direction:column; gap:1rem; }
+.step  { display:flex; gap:1rem; align-items:flex-start; }
+.step-num { flex-shrink:0; width:32px; height:32px; border-radius:50%; background:var(--blue-dark); color:#fff; font-family:var(--font-display); font-size:1rem; display:flex; align-items:center; justify-content:center; margin-top:.05rem; }
+.step-body { flex:1; }
+.step-title { font-weight:600; color:var(--blue-dark); margin-bottom:.25rem; font-size:.95rem; }
+.step-desc  { font-size:.87rem; color:var(--gray-mid); line-height:1.6; }
+.step-desc strong { color:var(--gray-dark); font-weight:600; }
 
-        /* ── MODAL ─────────────────────────────────────────── */
-        #imgModal {
-            position: fixed; inset: 0; background: rgba(15, 35, 60, 0.95);
-            display: none; align-items: center; justify-content: center;
-            z-index: 2000; padding: 40px; cursor: pointer;
-            backdrop-filter: blur(5px);
-        }
-        #imgModal.active { display: flex; animation: fadeIn 0.3s ease; }
-        #imgModal img { 
-            max-width: 100%; max-height: 90vh; border-radius: 4px; 
-            box-shadow: 0 0 40px rgba(0,0,0,0.5); transform: scale(0.95);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        #imgModal.active img { transform: scale(1); }
-        .modal-close-hint { position: absolute; top: 20px; right: 20px; color: white; font-size: 0.8rem; background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 20px; }
+/* ── CODE ── */
+code { font-family:var(--font-mono); font-size:.82rem; background:var(--blue-pale); color:var(--blue-dark); padding:.15rem .45rem; border-radius:4px; font-weight:600; }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+/* ── DIAGRAM ── */
+.diagram { background:var(--white); border:1px solid var(--blue-light); border-radius:var(--radius); padding:1.5rem; margin:1.1rem 0; }
+.diagram-title { font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--blue-mid); margin-bottom:1rem; }
+.lan-diagram { display:flex; align-items:center; justify-content:center; gap:0; flex-wrap:wrap; }
+.lan-node  { display:flex; flex-direction:column; align-items:center; gap:.4rem; padding:.75rem 1rem; }
+.lan-icon  { font-size:2rem; }
+.lan-label { font-size:.72rem; font-weight:600; color:var(--gray-dark); text-align:center; }
+.lan-sub   { font-size:.65rem; color:var(--gray-mid); text-align:center; line-height:1.4; }
+.lan-arrow { display:flex; flex-direction:column; align-items:center; gap:.3rem; padding:0 .5rem; }
+.lan-line  { font-size:.68rem; color:var(--blue-mid); font-weight:600; background:var(--blue-pale); border:1px solid var(--blue-light); border-radius:20px; padding:.2rem .65rem; white-space:nowrap; }
 
-        h2 { font-family: var(--font-display); color: var(--blue-dark); margin: 2rem 0 1rem; }
-        footer { margin-top: 4rem; padding: 2rem 0; border-top: 1px solid #eee; text-align: center; font-size: 0.85rem; color: #666; }
+/* ── GALLERY ── */
+.gallery-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin:1.25rem 0; }
+.screenshot-box {
+  position:relative; border:1px solid var(--blue-light); border-radius:var(--radius);
+  overflow:hidden; background:#000; cursor:pointer;
+  transition:transform var(--transition), box-shadow var(--transition);
+}
+.screenshot-box:hover { transform:translateY(-4px); box-shadow:0 10px 28px rgba(31,78,121,.18); }
+.screenshot-box img { width:100%; height:180px; object-fit:cover; display:block; transition:opacity var(--transition); }
+.screenshot-box:hover img { opacity:.85; }
+.screenshot-label { position:absolute; bottom:0; left:0; right:0; background:rgba(15,35,60,.75); color:#fff; font-size:.72rem; padding:.5rem .75rem; text-align:center; }
 
-        @media (max-width: 600px) { .hero-pill { padding: 2rem 1.2rem; } h1 { font-size: 2rem; } .nav-title, .nav-divider { display: none; } }
-    </style>
+/* ── MODAL ── */
+#imgModal {
+  position:fixed; inset:0; background:rgba(15,35,60,.92);
+  display:none; align-items:center; justify-content:center;
+  z-index:9999; padding:2.5rem; cursor:pointer;
+  backdrop-filter:blur(5px);
+}
+#imgModal.active { display:flex; animation:fadeIn .25s ease; }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+#imgModal img { max-width:100%; max-height:90vh; border-radius:6px; box-shadow:0 0 60px rgba(0,0,0,.5); transform:scale(.96); transition:transform .3s cubic-bezier(.34,1.56,.64,1); }
+#imgModal.active img { transform:scale(1); }
+.modal-hint { position:absolute; top:1.25rem; right:1.5rem; color:rgba(255,255,255,.7); font-size:.75rem; background:rgba(255,255,255,.1); padding:.3rem .8rem; border-radius:20px; }
+
+/* ── COMPARE ── */
+.compare { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+@media(max-width:520px){ .compare{grid-template-columns:1fr;} }
+.compare-col { border-radius:var(--radius); padding:1rem 1.1rem; }
+.compare-col.pro { background:var(--green-light); border:1px solid #b2d8c0; }
+.compare-col.con { background:var(--amber-light); border:1px solid #f0d990; }
+.compare-head { font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:.65rem; }
+.compare-col.pro .compare-head { color:var(--green-dark); }
+.compare-col.con .compare-head { color:var(--amber-dark); }
+.compare-list { list-style:none; display:flex; flex-direction:column; gap:.4rem; }
+.compare-list li { font-size:.84rem; line-height:1.5; display:flex; gap:.5rem; align-items:flex-start; }
+.compare-col.pro .compare-list li::before { content:'✓'; color:var(--green-dark); font-weight:700; flex-shrink:0; }
+.compare-col.con .compare-list li::before { content:'!'; color:var(--amber-dark); font-weight:700; flex-shrink:0; }
+
+/* ── CONCEPTS GRID ── */
+.concepts { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:.85rem; }
+.concept { border-left:4px solid var(--blue-mid); padding:.75rem 1rem; background:var(--blue-pale); border-radius:0 var(--radius) var(--radius) 0; }
+.concept.green { border-left-color:var(--green-dark); background:var(--green-light); }
+.concept-term { font-family:var(--font-display); font-size:.95rem; color:var(--blue-dark); margin-bottom:.25rem; }
+.concept.green .concept-term { color:var(--green-dark); }
+.concept-def  { font-size:.8rem; color:var(--gray-dark); line-height:1.55; }
+
+/* ── CTA ── */
+.cta-strip { background:var(--blue-dark); border-radius:var(--radius); padding:1.5rem 1.75rem; display:flex; align-items:center; justify-content:space-between; gap:1.25rem; flex-wrap:wrap; margin-top:2rem; }
+.cta-text h3 { font-family:var(--font-display); font-size:1.15rem; color:#fff; margin-bottom:.25rem; }
+.cta-text p  { font-size:.83rem; color:rgba(255,255,255,.7); line-height:1.5; }
+.cta-btn { display:inline-flex; align-items:center; gap:.4rem; background:#fff; color:var(--blue-dark); font-family:var(--font-body); font-size:.85rem; font-weight:700; padding:.6rem 1.4rem; border-radius:50px; text-decoration:none; transition:background var(--transition),transform .15s; white-space:nowrap; }
+.cta-btn:hover { background:var(--blue-light); transform:translateY(-2px); }
+
+/* ── PROSE ── */
+.prose { font-size:.92rem; line-height:1.75; color:var(--gray-dark); }
+.prose p { margin-bottom:.9rem; }
+.prose p:last-child { margin-bottom:0; }
+.prose strong { font-weight:600; color:var(--blue-dark); }
+
+hr { border:none; border-top:1px solid var(--blue-light); margin:1.5rem 0; }
+
+footer { background:var(--blue-dark); color:rgba(255,255,255,.6); text-align:center; padding:1.75rem 1.5rem; font-size:.8rem; line-height:1.7; }
+footer strong { color:rgba(255,255,255,.9); }
+footer a { color:var(--blue-light); text-decoration:none; }
+
+.tag-row { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.75rem; }
+.tag { font-size:.72rem; font-weight:500; padding:.22rem .7rem; border-radius:20px; }
+.tag-blue  { background:var(--blue-pale);  color:var(--blue-dark); }
+.tag-green { background:var(--green-light);color:var(--green-dark); }
+.tag-amber { background:var(--amber-light);color:var(--amber-dark); }
+</style>
 </head>
 <body>
 
-<nav class="sticky-bar">
-    <div class="nav-left">
-        <a href="../index.html" class="nav-back">← Portale</a>
-        <div class="nav-divider"></div>
-        <div class="nav-title">HFS 3 Modern Server</div>
-    </div>
-    <a href="hfs-windows-x64-3.0.8.zip" class="btn-download" download>
-        <span>↓</span> Scarica HFS per Windows
-    </a>
+<!-- STICKY NAV -->
+<nav>
+  <div class="nav-left">
+    <a href="../index.html" class="nav-back">← Portale</a>
+    <div class="nav-sep"></div>
+    <div class="nav-title">HFS — Server HTTP</div>
+  </div>
+  <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+    <a href="hfs2.0.zip" class="btn-dl" download style="font-size:.75rem;padding:.35rem .9rem;">↓ HFS 2 <span style="opacity:.6;font-weight:400;">(1 MB)</span></a>
+    <a href="hfs-windows-x64-3.0.8.zip" class="btn-dl" download>↓ HFS 3 <span style="opacity:.6;font-weight:400;">Windows</span></a>
+  </div>
 </nav>
 
-<article>
-    <div class="hero-pill">
-        <span class="badge">Pillola Digitale</span>
-        <h1>Web Server istantaneo e persistente.</h1>
-        <p>HFS 3 trasforma il tuo PC in un nodo di distribuzione file potente, sicuro e cross-platform.</p>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="pill-meta">
+      <span class="pill-badge badge-amber">💡 Pillola digitale</span>
+      <span class="pill-badge badge-green">🆓 Free &amp; Open Source</span>
+      <span class="pill-badge badge-blue">🖥 Windows · Linux · macOS</span>
+      <span class="pill-time">⏱ Lettura: 5 minuti</span>
     </div>
+    <h1 class="hero-title">Server HTTP istantaneo —<br><em>dalla versione classica alla moderna.</em></h1>
+    <p class="hero-tagline">HFS trasforma il tuo PC in un server web in pochi secondi — senza installazione, senza cloud, senza costi. Due versioni, una storia: dal singolo .exe da 1 MB all'interfaccia web moderna.</p>
+    <div class="hero-chips">
+      <span class="chip">HFS 2 — classico</span>
+      <span class="chip">HFS 3 — moderno</span>
+      <span class="chip">Rete locale (LAN)</span>
+      <span class="chip">Protocollo HTTP</span>
+      <span class="chip">Client–Server</span>
+      <span class="chip">GNU GPL v2</span>
+    </div>
+  </div>
+</section>
 
+<div class="page-wrap">
+
+  <!-- CHE COS'È -->
+  <div class="panel">
+    <div class="sec">Che cos'è HFS</div>
     <div class="feature-grid">
-        <div class="feature-item">
-            <h3>Zero Installazione</h3>
-            <p>Esegui il software senza permessi admin, direttamente da cartella.</p>
-        </div>
-        <div class="feature-item">
-            <h3>Open Source</h3>
-            <p>Licenza GNU GPL v2. Software libero per uso scolastico e privato.</p>
-        </div>
-        <div class="feature-item">
-            <h3>LAN Ready</h3>
-            <p>Perfetto per laboratori senza accesso a internet o reti isolate[cite: 1].</p>
-        </div>
+      <div class="feature-item">
+        <h3>Zero Installazione</h3>
+        <p>Un singolo eseguibile da avviare senza permessi admin, direttamente da cartella o chiavetta.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Open Source</h3>
+        <p>Licenza GNU GPL v2 — "Forever free software". Il codice sorgente è pubblico e liberamente consultabile.</p>
+      </div>
+      <div class="feature-item">
+        <h3>LAN Ready</h3>
+        <p>Perfetto per laboratori senza accesso a Internet. Il traffico resta sempre nella rete locale.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Persistenza nativa</h3>
+        <p>HFS 3 salva ogni modifica (VFS, utenti, permessi) istantaneamente in file JSON/YAML — nessuna perdita di configurazione al riavvio.</p>
+      </div>
     </div>
 
+    <div class="prose">
+      <p><strong>HFS (HTTP File Server)</strong> è un progetto di Massimo Rejetto nato nei primi anni 2000 per condividere file in LAN senza configurazioni complesse. La versione 3 — riscritta da zero — aggiunge un'interfaccia web moderna, un Virtual File System configurabile, gestione account granulare e supporto cross-platform (Windows, Linux, macOS).</p>
+    </div>
 
-    <h2>Accesso alle risorse</h2>
-    <p>Una volta configurato il Virtual File System, l'accesso avviene inserendo nel browser l'indirizzo IP locale del server (root o sottocartella):</p>
-    
+    <div class="box box-blue" style="margin-top:1rem;">
+      <strong>HFS 2 vs HFS 3.</strong> La versione classica 2.x era un singolo <code>.exe</code> Windows con interfaccia grafica desktop — semplicissima, ancora molto usata. HFS 3 è riscritta in modo moderno: si gestisce interamente via browser, salva le configurazioni in JSON/YAML e gira su qualsiasi sistema operativo. Per il laboratorio scolastico, <strong>HFS 3 è la scelta consigliata</strong>.
+    </div>
+  </div>
+
+  <!-- COME FUNZIONA -->
+  <div class="panel">
+    <div class="sec">Il modello client–server in pratica</div>
+
+    <div class="diagram">
+      <div class="diagram-title">Architettura in laboratorio</div>
+      <div class="lan-diagram">
+        <div class="lan-node">
+          <div class="lan-icon">🖥</div>
+          <div class="lan-label">PC Docente</div>
+          <div class="lan-sub">HFS 3 in esecuzione<br>IP: 192.168.1.8<br>Porta: 80</div>
+        </div>
+        <div class="lan-arrow">
+          <div class="lan-line">HTTP GET /file.pdf</div>
+          <div style="font-size:1.4rem;color:var(--blue-mid);line-height:1;">⇄</div>
+          <div class="lan-line">200 OK + dati</div>
+        </div>
+        <div class="lan-node">
+          <div class="lan-icon">💻</div>
+          <div class="lan-label">PC / Tablet Studente</div>
+          <div class="lan-sub">Browser qualsiasi<br>Nessuna installazione</div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:.75rem;font-size:.78rem;color:var(--gray-mid);">Tutto il traffico resta nella rete locale — <strong>non esce mai su Internet</strong></div>
+    </div>
+
+    <p style="font-size:.9rem;line-height:1.7;margin-bottom:1rem;">Il PC del docente diventa il <strong>server</strong>: esegue HFS, configura il Virtual File System e rimane in ascolto sulla porta <code>80</code>. I PC degli studenti sono i <strong>client</strong>: aprono il browser, digitano l'IP del docente e scaricano i file — esattamente come un sito web, ma in LAN.</p>
+
     <div class="address-callout">
-        <p>Indirizzo di esempio:</p>
-        <code>http://192.168.1.8/</code>
+      <p>Indirizzo da digitare nel browser degli studenti:</p>
+      <code>http://192.168.1.8/</code>
     </div>
 
-    <div class="case-study">
-        <strong>💡 Caso d'uso reale: Deploy Mobile Legacy</strong>
-        <p>Utilizzato per trasferire APK su tablet Android 2.2 via Wi-Fi locale, superando l'assenza di store ufficiali.</p>
+    <div class="box box-green">
+      <strong>💡 Connessione didattica.</strong> HFS è un esempio concreto e osservabile di protocollo HTTP: il browser manda una richiesta <code>GET</code>, il server risponde con un codice di stato (<code>200 OK</code>, <code>404 Not Found</code>…) e i dati del file. Aprendo gli strumenti sviluppatore del browser (F12 → Network) si vede tutto in diretta.
     </div>
+  </div>
 
-    <h2>Schermate e Funzionalità</h2>
-    <p>Visualizza i dettagli della configurazione. Clicca per ingrandire.</p>
-
+  <!-- SCHERMATE -->
+  <div class="panel">
+    <div class="sec">Interfaccia — pannello admin e vista utente</div>
+    <p style="font-size:.87rem;color:var(--gray-mid);margin-bottom:1rem;">Clicca su una schermata per ingrandirla.</p>
     <div class="gallery-grid">
-        <div class="screenshot-box" onclick="openModal('img/hfs-admin.png')">
-            <img src="img/hfs-admin.png" alt="Gestione VFS">
-            <div class="screenshot-label">Gestione FS Virtuale (Admin)</div>
-        </div>
-        <div class="screenshot-box" onclick="openModal('img/hfs-view.png')">
-            <img src="img/hfs-view.png" alt="Visione Utente">
-            <div class="screenshot-label">Visione del FS (Lato Utente)</div>
-        </div>
-        <div class="screenshot-box" onclick="openModal('img/hfs-file.png')">
-            <img src="img/hfs-file.png" alt="Gestione File">
-            <div class="screenshot-label">Gestione del singolo file</div>
-        </div>
+      <div class="screenshot-box" onclick="openModal('img/hfs-admin.png')">
+        <img src="img/hfs-admin.png" alt="Gestione Virtual File System (Admin)">
+        <div class="screenshot-label">Gestione VFS — Pannello Admin</div>
+      </div>
+      <div class="screenshot-box" onclick="openModal('img/hfs-view.png')">
+        <img src="img/hfs-view.png" alt="Vista file lato utente">
+        <div class="screenshot-label">Visione del FS — Lato Utente</div>
+      </div>
+      <div class="screenshot-box" onclick="openModal('img/hfs-file.png')">
+        <img src="img/hfs-file.png" alt="Gestione singolo file">
+        <div class="screenshot-label">Gestione del singolo file</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HFS 2 — LA VERSIONE CLASSICA -->
+  <div class="panel">
+    <div class="sec amber">HFS 2 — la versione originale: un file, un server</div>
+
+    <div class="box box-amber" style="margin-bottom:1.25rem;">
+      <strong>Prima di HFS 3, esiste HFS 2.</strong> Un singolo <code>.exe</code> da circa 1 MB. Nessuna dipendenza, nessuna configurazione, nessun browser richiesto per l'admin. Lo avvii, trascini i file dentro la finestra e in 10 secondi il tuo PC è un server HTTP. È con questa versione che tutto è iniziato — ed è ancora oggi il modo più rapido in assoluto per condividere un file in LAN.
     </div>
 
-    <h2>Specifiche Tecniche</h2>
-    <p>Monitoraggio dei log in tempo reale, gestione account granulare e interfaccia web basata su template HTML.</p>
-
-    <div class="persist-box">
-        <h3>🚀 Persistenza nativa</h3>
-        <p>A differenza della versione 2, HFS 3 salva ogni modifica (VFS, utenti, permessi) istantaneamente in file JSON/YAML.</p>
+    <!-- Screenshot HFS2 -->
+    <div class="gallery-grid" style="grid-template-columns:1fr;max-width:680px;">
+      <div class="screenshot-box" onclick="openModal('img/hfs2-admin.png')">
+        <img src="img/hfs2-admin.png" alt="HFS 2 — Interfaccia admin desktop" style="height:260px;object-fit:cover;object-position:top;">
+        <div class="screenshot-label">HFS 2.0 — Interfaccia admin desktop. A sinistra il VFS, a destra i log HTTP in tempo reale.</div>
+      </div>
     </div>
 
+    <div style="margin-top:1.1rem;font-size:.88rem;line-height:1.7;color:var(--gray-dark);">
+      <p style="margin-bottom:.75rem;">Quello che vedi nello screenshot è reale e funzionante: il VFS a sinistra mostra due file condivisi (un APK Android e un ebook .epub), il log a destra registra in tempo reale ogni richiesta HTTP con IP del client, nome file e velocità di trasferimento (<strong>fino a 9.097 KB/s</strong> — circa 9 MB/s in LAN).</p>
+      <p>La barra di stato in basso mostra tutto d'un colpo: connessioni attive, dati in entrata/uscita, totale trasferito, numero di elementi nel VFS. È un pannello di controllo essenziale ma completo — niente di superfluo.</p>
+    </div>
 
-    <footer>Risorsa parte del portale <strong>Formazione Digitale</strong> — 2026</footer>
-</article>
+    <!-- Confronto HFS2 vs HFS3 -->
+    <div style="margin-top:1.25rem;">
+      <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-dark);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;">
+        <span style="width:18px;height:3px;background:currentColor;border-radius:2px;display:inline-block;"></span>
+        HFS 2 vs HFS 3 — a colpo d'occhio
+      </div>
+      <div style="display:grid;grid-template-columns:auto 1fr 1fr;gap:0;border:1px solid var(--blue-light);border-radius:var(--radius);overflow:hidden;font-size:.82rem;">
+        <div style="background:var(--blue-dark);color:#fff;padding:.5rem .85rem;font-weight:600;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;">Caratteristica</div>
+        <div style="background:var(--blue-dark);color:var(--blue-light);padding:.5rem .85rem;font-weight:600;text-align:center;">HFS 2</div>
+        <div style="background:var(--blue-dark);color:var(--blue-light);padding:.5rem .85rem;font-weight:600;text-align:center;">HFS 3</div>
 
-<!-- Modal Structure -->
+        <div style="padding:.55rem .85rem;border-top:1px solid var(--blue-light);background:#fff;">Dimensione</div>
+        <div style="padding:.55rem .85rem;border-top:1px solid var(--blue-light);border-left:1px solid var(--blue-light);text-align:center;background:#fff;"><strong style="color:var(--green-dark);">~1 MB</strong></div>
+        <div style="padding:.55rem .85rem;border-top:1px solid var(--blue-light);border-left:1px solid var(--blue-light);text-align:center;background:#fff;">~15 MB</div>
+
+        <div style="padding:.55rem .85rem;border-top:1px solid var(--blue-light);background:var(--blue-pale);">Interfaccia admin</div>
+        <div style="padding:.55rem .85rem;border-top:1px solid var(--blue-light);border-left:1px solid var(--blue-light);text-align:center;background:var(--blue-pale);">Desktop nativa</div>
+        <div style="padding:.55rem .85rem;border-top:1px solid var(--blue-light);border-left:1px solid var(--blue-light);text-align:center;background:var(--blue-pale);"><strong style="color:var(--green-dark);">Browser web</strong></div>
+
+        <div style="padding:.55rem .85rem;border-top:1px solid var(--blue-light);background:#fff;">Piattaforme</div>
+        <div style="padding:.55rem .85rem;border-top:1px solid var(--blue-light);border-left:1px solid var(--blue-light);text-align:center;background:#fff;">Windows only</div>
+        <div style="padding:.55rem .85rem;border-top:1px solid var(--blue-light);border-left:1px solid var(--blue-light);text-align:center;background:#fff;"><strong style="color:var(--green-dark);">Win · Linux · macOS</strong></div>
+
+        <div style="padding:.55rem .85rem;border-top:1px solid var(--blue-light);background:var(--blue-pale);">Persistenza config</div>
+        <div style="padding:.55rem .85rem;border-top:1px solid var(--blue-light);border-left:1px solid var(--blue-light);text-align:center;background:var(--blue-pale);">Manuale</div>
+        <div style="padding:.55rem .85rem;border-top:1px solid var(--blue-light);border-left:1px solid var(--blue-light);text-align:center;background:var(--blue-pale);"><strong style="color:var(--green-dark);">Automatica (JSON)</strong></div>
+
+        <div style="padding:.55rem .85rem;border-top:1px solid var(--blue-light);background:#fff;">Tempo avvio–server</div>
+        <div style="padding:.55rem .85rem;border-top:1px solid var(--blue-light);border-left:1px solid var(--blue-light);text-align:center;background:#fff;"><strong style="color:var(--green-dark);">~5 secondi</strong></div>
+        <div style="padding:.55rem .85rem;border-top:1px solid var(--blue-light);border-left:1px solid var(--blue-light);text-align:center;background:#fff;">~15 secondi</div>
+
+        <div style="padding:.55rem .85rem;border-top:1px solid var(--blue-light);background:var(--blue-pale);">Ideale per</div>
+        <div style="padding:.55rem .85rem;border-top:1px solid var(--blue-light);border-left:1px solid var(--blue-light);text-align:center;background:var(--blue-pale);">Condivisione rapida</div>
+        <div style="padding:.55rem .85rem;border-top:1px solid var(--blue-light);border-left:1px solid var(--blue-light);text-align:center;background:var(--blue-pale);">Uso continuativo</div>
+      </div>
+    </div>
+
+    <div class="box box-blue" style="margin-top:1.1rem;margin-bottom:0;">
+      <strong>Quale scegliere?</strong> Per una dimostrazione in aula o una distribuzione rapida di materiale, <strong>HFS 2</strong> è imbattibile per semplicità. Per un server da tenere attivo tutto l'anno scolastico, con cartelle organizzate e configurazione che sopravvive ai riavvii, <strong>HFS 3</strong> è la scelta giusta.
+    </div>
+  </div>
+
+  <!-- GUIDA RAPIDA -->
+  <div class="panel">
+    <div class="sec green">Guida rapida — da zero a server in 5 passi</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Scarica HFS 3</div>
+          <div class="step-desc">Usa il bottone in alto oppure vai su <strong>rejetto.com/hfs</strong>. Scarica il file <code>.zip</code> per Windows, estrailo in una cartella. Nessuna installazione richiesta.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Avvia il programma</div>
+          <div class="step-desc">Doppio clic sull'eseguibile. Si apre automaticamente il pannello di amministrazione nel browser. In alto trovi il tuo <strong>indirizzo IP locale</strong> e la porta attiva.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Configura il Virtual File System</div>
+          <div class="step-desc">Dal pannello admin aggiungi cartelle reali del PC e mappale su percorsi virtuali (es. <code>/materiale</code>). La configurazione viene salvata <strong>automaticamente in JSON</strong> — persiste al riavvio.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Comunica l'indirizzo agli studenti</div>
+          <div class="step-desc">Scrivi alla lavagna (o proietta) l'IP mostrato da HFS. Gli studenti aprono il browser e digitano quell'indirizzo — nessuna installazione, nessun account necessario.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">Monitora i log in tempo reale</div>
+          <div class="step-desc">Nel pannello admin vedi in diretta chi si è connesso, quale file ha scaricato e quando. Utile anche per <strong>raccogliere elaborati</strong> abilitando la funzione di upload.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- USI IN LAB -->
+  <div class="panel">
+    <div class="sec amber">Idee per il laboratorio</div>
+    <div class="box box-amber">
+      <strong>🎯 Attività pratiche suggerite</strong>
+      <ul style="margin-top:.65rem;padding-left:1.1rem;display:flex;flex-direction:column;gap:.45rem;font-size:.87rem;line-height:1.55;">
+        <li><strong>Osservare il protocollo HTTP</strong> — F12 → Network mentre si scarica un file: richiesta GET, response header, codice 200 OK tutto visibile in diretta.</li>
+        <li><strong>Simulazione client-server</strong> — il PC docente è il server, i PC studenti sono i client. Discussione dal vivo su ruoli, porte, indirizzi IP.</li>
+        <li><strong>Distribuzione materiale d'aula</strong> — invece di chiavette USB o email, tutto arriva in pochi secondi a tutti i banchi.</li>
+        <li><strong>Raccolta elaborati</strong> — con la funzione upload abilitata, gli studenti inviano i propri file al server senza email o account.</li>
+        <li><strong>Test di raggiungibilità</strong> — <code>ping 192.168.1.8</code> prima di aprire il browser: verifica della rete a livello 3 prima del livello 7.</li>
+        <li><strong>Trovare il proprio IP</strong> — esercizio base: <code>ipconfig</code> su Windows per scoprire l'indirizzo della propria scheda di rete.</li>
+        <li><strong>Esplorare il VFS</strong> — confrontare la struttura virtuale esposta dal server con le cartelle reali del PC: astrazione vs. realtà fisica.</li>
+      </ul>
+    </div>
+
+    <div class="box box-blue">
+      <strong>Caso d'uso reale: Deploy Mobile Legacy.</strong> HFS è stato usato per trasferire APK su un tablet <strong>Android 2.2 (Froyo, 2010)</strong> via Wi-Fi locale, superando l'assenza di store ufficiali. Questo dimostra quanto il protocollo HTTP sia universale: funziona su qualsiasi sistema operativo, su qualsiasi hardware, dal 1991 ad oggi.
+    </div>
+  </div>
+
+  <!-- PRO / CONTRO -->
+  <div class="panel">
+    <div class="sec">Punti di forza e limiti</div>
+    <div class="compare" style="margin-bottom:1.1rem;">
+      <div class="compare-col pro">
+        <div class="compare-head">✓ Punti di forza</div>
+        <ul class="compare-list">
+          <li>Zero installazione — un singolo eseguibile</li>
+          <li>Gratuito e open source (GPL v2)</li>
+          <li>Interfaccia admin completa via browser</li>
+          <li>Virtual File System configurabile</li>
+          <li>Persistenza configurazione in JSON/YAML</li>
+          <li>Log connessioni in tempo reale</li>
+          <li>Supporta upload (raccolta elaborati)</li>
+          <li>Cross-platform: Windows, Linux, macOS</li>
+          <li>Compatibile con qualsiasi browser moderno</li>
+          <li>Funziona completamente offline</li>
+        </ul>
+      </div>
+      <div class="compare-col con">
+        <div class="compare-head">! Cose da sapere</div>
+        <ul class="compare-list">
+          <li>Nessun HTTPS nativo — traffico in chiaro in LAN</li>
+          <li>Non adatto a reti pubbliche o produzione</li>
+          <li>Il firewall di Windows potrebbe bloccare al primo avvio</li>
+          <li>Gli IP locali cambiano se la rete usa DHCP</li>
+          <li>HFS 3 richiede Node.js installato su alcune configurazioni</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box box-blue">
+      <strong>Nota sul firewall.</strong> Al primo avvio Windows chiede se consentire ad HFS di comunicare in rete. È sufficiente cliccare <strong>"Consenti accesso"</strong>. In ambienti scolastici con policy restrittive potrebbe servire l'intervento del tecnico di laboratorio.
+    </div>
+  </div>
+
+  <!-- CONCETTI CHIAVE -->
+  <div class="panel">
+    <div class="sec">Concetti chiave collegati</div>
+    <div class="concepts">
+      <div class="concept">
+        <div class="concept-term">Protocollo HTTP</div>
+        <div class="concept-def">HyperText Transfer Protocol — il linguaggio con cui browser e server si parlano. Basato su richieste (GET, POST…) e risposte con codice di stato (200, 404, 500…).</div>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Indirizzo IP locale</div>
+        <div class="concept-def">Identificativo del PC nella rete locale, assegnato dal router (es. <code>192.168.1.x</code>). Diverso dall'IP pubblico usato su Internet.</div>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Porta di rete</div>
+        <div class="concept-def">Numero (0–65535) che identifica un servizio su un host. HTTP usa la porta <code>80</code>, HTTPS la <code>443</code>. HFS può usare qualsiasi porta libera.</div>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Modello Client–Server</div>
+        <div class="concept-def">Il server offre risorse e rimane in attesa. Il client fa richieste e riceve risposte. HFS incarna questo modello nella sua forma più essenziale.</div>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Virtual File System</div>
+        <div class="concept-def">Struttura di cartelle e file esposta dal server, indipendente dalla struttura reale del disco. Permette di mappare percorsi arbitrari su URL puliti.</div>
+      </div>
+      <div class="concept">
+        <div class="concept-term">LAN (Local Area Network)</div>
+        <div class="concept-def">Rete locale che collega dispositivi in un'area limitata (aula, edificio). HFS funziona in LAN — i dati non escono mai su Internet.</div>
+      </div>
+      <div class="concept green">
+        <div class="concept-term">Open Source / GPL v2</div>
+        <div class="concept-def">Licenza che garantisce libertà di usare, studiare, modificare e ridistribuire il software. Il codice sorgente di HFS è pubblico e liberamente consultabile.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-strip">
+    <div class="cta-text">
+      <h3>Pronto a provarlo in laboratorio?</h3>
+      <p>Scarica HFS 3, avvialo e in meno di un minuto il tuo PC è un server web.</p>
+    </div>
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap;">
+      <a class="cta-btn" href="hfs2.0.zip" download>↓ HFS 2 — 1 MB</a>
+      <a class="cta-btn" href="hfs-windows-x64-3.0.8.zip" download>↓ HFS 3 — Windows</a>
+      <a class="cta-btn" href="https://www.rejetto.com/hfs/" target="_blank" rel="noopener" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);">🌐 Sito ufficiale</a>
+    </div>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<footer>
+  <strong>Formazione Digitale</strong> · <a href="../index.html">Torna alla home</a><br>
+  Pillola digitale libera e gratuita. Contenuti aggiornati al 2026.
+</footer>
+
+<!-- MODAL LIGHTBOX -->
 <div id="imgModal" onclick="closeModal()">
-    <span class="modal-close-hint">Clicca ovunque o premi ESC per uscire</span>
-    <img id="modalImg" src="" alt="Zoomed View" onclick="event.stopPropagation()">
+  <span class="modal-hint">ESC o clic per chiudere</span>
+  <img id="modalImg" src="" alt="Schermata ingrandita" onclick="event.stopPropagation()">
 </div>
 
 <script>
-    const modal = document.getElementById('imgModal');
-    const modalImg = document.getElementById('modalImg');
+const modal    = document.getElementById('imgModal');
+const modalImg = document.getElementById('modalImg');
 
-    function openModal(src) {
-        modalImg.src = src;
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
-    });
+function openModal(src) {
+  modalImg.src = src;
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
 </script>
-
 </body>
 </html>
