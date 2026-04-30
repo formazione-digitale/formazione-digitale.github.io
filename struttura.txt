@@ -1,5 +1,5 @@
-Elenco del percorso delle cartelle
-Numero di serie del volume: F609-4EB8
+Elenco del percorso delle cartelle per il volume Acer
+Numero di serie del volume: 544D-3F7C
 C:.
 |   Formazione_Digitale_Guida_Collaboratori.docx
 |   index.html
@@ -62,10 +62,15 @@ C:.
 |       formazione-digitale-logo.png
 |       
 +---intelligenza-artificiale
-|       Guida_PeerReview_IA.html
-|       Guida_Prompting.html
-|       prompt-builder.html
-|       
+|   +---guida-peer-review-ia
+|   |       index.html
+|   |       
+|   +---guida-prompting
+|   |       index.html
+|   |       
+|   \---prompt-builder
+|           index.html
+|           
 +---marketing
 |       bep-tool.html
 |       calcolo-break-even-point-old.xlsx

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mappa delle Risorse — Formazione Digitale</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue-dark:   #1F4E79;
+  --blue-mid:    #2E75B6;
+  --blue-light:  #D6E8F7;
+  --blue-pale:   #EBF3FC;
+  --green-dark:  #1E6B3C;
+  --green-light: #E8F5EE;
+  --amber-dark:  #7D4E00;
+  --amber-light: #FFF3CD;
+  --gray-dark:   #2C2C2C;
+  --gray-mid:    #666;
+  --gray-light:  #F5F5F5;
+  --white:       #FFFFFF;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --radius: 10px;
+  --transition: .22s cubic-bezier(.4,0,.2,1);
+
+  --c-guide:  #2E75B6;
+  --c-tool:   #1E6B3C;
+  --c-pill:   #7D4E00;
+  --c-root:   #1F4E79;
+  --c-sec-guide:  #EBF3FC;
+  --c-sec-tool:   #E8F5EE;
+  --c-sec-pill:   #FFF3CD;
+}
+
+html, body { height: 100%; overflow: hidden; font-family: var(--font-body); background: #F0F6FF; color: var(--gray-dark); }
+
+/* ── HEADER ── */
+.map-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 52px;
+  background: var(--blue-dark);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,.2);
+}
+.map-header-brand { display: flex; align-items: center; gap: .75rem; }
+.map-header-back {
+  display: flex; align-items: center; gap: .4rem;
+  font-size: .8rem; color: rgba(255,255,255,.7);
+  text-decoration: none; transition: color var(--transition);
+}
+.map-header-back:hover { color: #fff; }
+.map-header-back svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.map-header-title { font-family: var(--font-display); font-size: 1rem; color: #fff; }
+.map-header-sub   { font-size: .7rem; color: var(--blue-light); margin-left: .3rem; opacity: .8; }
+
+/* ── CONTROLS ── */
+.map-controls {
+  position: fixed; top: 62px; left: 50%; transform: translateX(-50%);
+  z-index: 150;
+  display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; justify-content: center;
+  padding: .5rem .75rem;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(8px);
+  border-radius: 50px;
+  border: 1px solid var(--blue-light);
+  box-shadow: 0 2px 12px rgba(31,78,121,.1);
+}
+.filter-pill {
+  padding: .3rem .85rem; border-radius: 50px; font-size: .78rem; font-weight: 500;
+  border: 1.5px solid transparent; background: transparent;
+  color: var(--gray-mid); cursor: pointer; font-family: var(--font-body);
+  transition: all var(--transition);
+}
+.filter-pill:hover  { border-color: var(--blue-light); color: var(--blue-dark); }
+.filter-pill.active { background: var(--blue-dark); color: #fff; border-color: var(--blue-dark); }
+.filter-pill.f-guide.active  { background: var(--c-guide); border-color: var(--c-guide); }
+.filter-pill.f-tool.active   { background: var(--c-tool);  border-color: var(--c-tool); }
+.filter-pill.f-pill.active   { background: var(--c-pill);  border-color: var(--c-pill); }
+.sep { width: 1px; height: 20px; background: var(--blue-light); margin: 0 .2rem; }
+
+/* ── ZOOM CONTROLS ── */
+.zoom-controls {
+  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 150;
+  display: flex; flex-direction: column; gap: .35rem;
+}
+.zoom-btn {
+  width: 36px; height: 36px; border-radius: 8px;
+  border: 1px solid var(--blue-light); background: rgba(255,255,255,.92);
+  backdrop-filter: blur(8px);
+  color: var(--blue-dark); font-size: 1.1rem; font-weight: 500;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(31,78,121,.1);
+  transition: all var(--transition);
+}
+.zoom-btn:hover { background: var(--blue-pale); border-color: var(--blue-mid); }
+
+/* ── CANVAS ── */
+#map-canvas {
+  position: fixed; top: 52px; left: 0; right: 0; bottom: 0;
+  overflow: hidden; cursor: grab;
+}
+#map-canvas.dragging { cursor: grabbing; }
+#map-world {
+  position: absolute;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+/* ── SVG EDGES ── */
+#edges-svg {
+  position: absolute; top: 0; left: 0;
+  pointer-events: none; overflow: visible;
+}
+
+/* ── NODE BASE ── */
+.node {
+  position: absolute;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, opacity .25s ease;
+  user-select: none;
+  will-change: transform;
+}
+.node:hover { transform: scale(1.07) !important; z-index: 50 !important; }
+.node.faded { opacity: .15; pointer-events: none; }
+
+/* ROOT node */
+.node-root {
+  width: 170px; text-align: center;
+  background: linear-gradient(135deg, var(--blue-dark) 0%, #2A6099 100%);
+  border: none; padding: 18px 14px;
+  box-shadow: 0 4px 24px rgba(31,78,121,.35);
+  color: #fff;
+  z-index: 10;
+}
+.node-root .n-emoji  { font-size: 26px; margin-bottom: 6px; }
+.node-root .n-label  { font-family: var(--font-display); font-size: 1rem; color: #fff; line-height: 1.2; }
+.node-root .n-sub    { font-size: .68rem; color: rgba(255,255,255,.6); margin-top: 3px; }
+
+/* SECTION node */
+.node-section {
+  width: 130px; text-align: center; padding: 12px 10px;
+  border: 2px solid; z-index: 8;
+  box-shadow: 0 2px 12px rgba(0,0,0,.08);
+}
+.node-section.s-guide { background: var(--c-sec-guide); border-color: var(--c-guide); }
+.node-section.s-tool  { background: var(--c-sec-tool);  border-color: var(--c-tool); }
+.node-section.s-pill  { background: var(--c-sec-pill);  border-color: var(--c-pill); }
+.node-section .n-emoji { font-size: 20px; margin-bottom: 4px; }
+.node-section .n-label { font-size: .82rem; font-weight: 600; line-height: 1.2; }
+.node-section.s-guide .n-label { color: var(--c-guide); }
+.node-section.s-tool  .n-label { color: var(--c-tool); }
+.node-section.s-pill  .n-label { color: var(--c-pill); }
+.node-section .n-count { font-size: .68rem; color: var(--gray-mid); margin-top: 2px; }
+
+/* RESOURCE node */
+.node-resource {
+  width: 136px; text-align: center; padding: 10px 8px;
+  border: 1.5px solid; z-index: 6;
+  box-shadow: 0 2px 10px rgba(0,0,0,.07);
+  background: #fff;
+  overflow: visible;
+}
+.node-resource.c-guide { border-color: #9DC3E6; }
+.node-resource.c-guide:hover { border-color: var(--c-guide); box-shadow: 0 6px 20px rgba(46,117,182,.22); }
+.node-resource.c-tool  { border-color: #9EC9B0; }
+.node-resource.c-tool:hover  { border-color: var(--c-tool);  box-shadow: 0 6px 20px rgba(30,107,60,.18); }
+.node-resource.c-pill  { border-color: #F0D990; }
+.node-resource.c-pill:hover  { border-color: var(--c-pill);  box-shadow: 0 6px 20px rgba(125,78,0,.15); }
+.node-resource.featured { border-width: 2px; border-color: var(--c-guide); }
+.node-resource .n-emoji { font-size: 18px; margin-bottom: 4px; }
+.node-resource .n-label { font-size: .78rem; font-weight: 500; color: var(--gray-dark); line-height: 1.3; }
+.node-resource .n-meta  { font-size: .65rem; color: var(--gray-mid); margin-top: 3px; line-height: 1.3; }
+.node-resource .n-badge {
+  display: inline-block; font-size: .62rem; font-weight: 600; letter-spacing: .04em;
+  text-transform: uppercase; padding: 2px 8px; border-radius: 20px; margin-bottom: 5px;
+  white-space: nowrap;
+}
+.n-badge.b-guide { background: var(--blue-pale);   color: var(--c-guide); }
+.n-badge.b-tool  { background: var(--green-light); color: var(--c-tool); }
+.n-badge.b-pill  { background: var(--amber-light); color: var(--c-pill); }
+.n-badge.b-feat  { background: var(--blue-dark);   color: #fff; }
+
+/* ── DETAIL PANEL ── */
+#detail-panel {
+  position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(20px);
+  width: min(420px, calc(100vw - 2rem));
+  background: #fff; border: 1px solid var(--blue-light);
+  border-radius: 14px; padding: 1.25rem 1.5rem 1rem;
+  box-shadow: 0 8px 32px rgba(31,78,121,.18);
+  z-index: 300;
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s ease, transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+#detail-panel.visible {
+  opacity: 1; pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+.dp-close {
+  position: absolute; top: .75rem; right: .85rem;
+  background: var(--gray-light); border: none; border-radius: 50%;
+  width: 26px; height: 26px; font-size: .85rem; cursor: pointer;
+  color: var(--gray-mid); display: flex; align-items: center; justify-content: center;
+  transition: background var(--transition);
+}
+.dp-close:hover { background: var(--blue-light); color: var(--blue-dark); }
+.dp-emoji { font-size: 1.8rem; margin-bottom: .5rem; }
+.dp-cat {
+  font-size: .68rem; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; margin-bottom: .3rem;
+}
+.dp-cat.g { color: var(--c-guide); }
+.dp-cat.t { color: var(--c-tool); }
+.dp-cat.p { color: var(--c-pill); }
+.dp-title { font-family: var(--font-display); font-size: 1.15rem; color: var(--blue-dark); margin-bottom: .4rem; line-height: 1.2; }
+.dp-meta  { font-size: .78rem; color: var(--gray-mid); margin-bottom: .75rem; }
+.dp-tags  { display: flex; flex-wrap: wrap; gap: .3rem; margin-bottom: .9rem; }
+.dp-tag   { font-size: .68rem; background: var(--blue-pale); color: var(--blue-dark); padding: .18rem .5rem; border-radius: 20px; }
+.dp-btn {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: var(--blue-dark); color: #fff;
+  text-decoration: none; border-radius: 50px;
+  padding: .55rem 1.25rem; font-size: .82rem; font-weight: 600;
+  font-family: var(--font-body);
+  transition: background var(--transition), transform .15s ease;
+}
+.dp-btn:hover { background: var(--blue-mid); transform: translateY(-1px); }
+.dp-btn .arrow { display: inline-block; transition: transform .2s; }
+.dp-btn:hover .arrow { transform: translateX(4px); }
+
+/* ── LEGEND ── */
+.map-legend {
+  position: fixed; bottom: 1.5rem; left: 1.5rem; z-index: 150;
+  background: rgba(255,255,255,.92); backdrop-filter: blur(8px);
+  border: 1px solid var(--blue-light); border-radius: 10px;
+  padding: .65rem .9rem;
+  box-shadow: 0 2px 8px rgba(31,78,121,.1);
+}
+.legend-item { display: flex; align-items: center; gap: .5rem; font-size: .7rem; color: var(--gray-mid); margin-bottom: .3rem; }
+.legend-item:last-child { margin-bottom: 0; }
+.legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+.ld-guide { background: var(--c-guide); }
+.ld-tool  { background: var(--c-tool); }
+.ld-pill  { background: var(--c-pill); }
+.ld-feat  { background: var(--blue-dark); }
+
+/* ── LOADING ── */
+#loading {
+  position: fixed; inset: 0; z-index: 500;
+  background: #F0F6FF;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: .75rem; transition: opacity .4s ease;
+}
+#loading.done { opacity: 0; pointer-events: none; }
+.loading-spinner {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 3px solid var(--blue-light);
+  border-top-color: var(--blue-mid);
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-size: .85rem; color: var(--gray-mid); }
+
+/* ── TOOLTIP ── */
+#tooltip {
+  position: fixed; z-index: 400; pointer-events: none;
+  background: var(--gray-dark); color: #fff;
+  font-size: .72rem; padding: .3rem .65rem; border-radius: 6px;
+  opacity: 0; transition: opacity .15s ease;
+  white-space: nowrap;
+}
+#tooltip.visible { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div id="loading">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Caricamento risorse…</div>
+</div>
+
+<div id="tooltip"></div>
+
+<!-- HEADER -->
+<header class="map-header">
+  <div class="map-header-brand">
+    <a class="map-header-back" href="index.html">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Torna al portale
+    </a>
+    <div style="width:1px;height:20px;background:rgba(255,255,255,.2);margin:0 .5rem;"></div>
+    <span class="map-header-title">Mappa delle risorse</span>
+    <span class="map-header-sub" id="header-count"></span>
+  </div>
+  <div style="font-size:.75rem;color:rgba(255,255,255,.5);">Trascina · Scorri per zoomare · Clicca per dettagli</div>
+</header>
+
+<!-- CONTROLS -->
+<div class="map-controls">
+  <button class="filter-pill active"    onclick="setFilter('all',this)">Tutto</button>
+  <button class="filter-pill f-guide"   onclick="setFilter('guide',this)">📘 Guide</button>
+  <button class="filter-pill f-tool"    onclick="setFilter('strumento',this)">🛠 Strumenti</button>
+  <button class="filter-pill f-pill"    onclick="setFilter('pillola',this)">💡 Pillole</button>
+  <div class="sep"></div>
+  <button class="filter-pill"           onclick="resetView()">↺ Reset vista</button>
+</div>
+
+<!-- CANVAS -->
+<div id="map-canvas">
+  <div id="map-world">
+    <svg id="edges-svg"></svg>
+  </div>
+</div>
+
+<!-- DETAIL PANEL -->
+<div id="detail-panel">
+  <button class="dp-close" onclick="closeDetail()">✕</button>
+  <div class="dp-emoji" id="dp-emoji"></div>
+  <div class="dp-cat"   id="dp-cat"></div>
+  <div class="dp-title" id="dp-title"></div>
+  <div class="dp-meta"  id="dp-meta"></div>
+  <div class="dp-tags"  id="dp-tags"></div>
+  <a   class="dp-btn"   id="dp-btn" href="#" target="_blank">
+    Apri la risorsa <span class="arrow">→</span>
+  </a>
+</div>
+
+<!-- ZOOM CONTROLS -->
+<div class="zoom-controls">
+  <button class="zoom-btn" onclick="zoom(1.2)" title="Zoom in">+</button>
+  <button class="zoom-btn" onclick="zoom(0.8)" title="Zoom out">−</button>
+  <button class="zoom-btn" onclick="fitView()" title="Adatta" style="font-size:.75rem;">⊡</button>
+</div>
+
+<!-- LEGEND -->
+<div class="map-legend">
+  <div class="legend-item"><div class="legend-dot ld-guide"></div>Guida</div>
+  <div class="legend-item"><div class="legend-dot ld-tool"></div>Strumento</div>
+  <div class="legend-item"><div class="legend-dot ld-pill"></div>Pillola</div>
+  <div class="legend-item"><div class="legend-dot ld-feat"></div>In evidenza</div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   LAYOUT CONSTANTS
+═══════════════════════════════════════════ */
+const CARD_W    = 136;
+const CARD_H    = 112;
+const COL_GAP   = 16;
+const ROW_GAP   = 18;
+const SEC_H     = 92;
+const SEC_W     = 140;
+const ROOT_W    = 170;
+const ROOT_H    = 108;
+const SEC_GAP   = 60;   /* horizontal gap between section columns */
+const ROOT_Y    = 40;
+const SEC_Y     = ROOT_Y + ROOT_H + 70;
+const CARDS_Y   = SEC_Y  + SEC_H  + 44;
+
+const SEC_DEFS = [
+  { id: 'guide',     label: 'Guide',     emoji: '📘', cls: 's-guide', badgeCls: 'b-guide', cardCls: 'c-guide', col: '#2E75B6', maxCols: 3 },
+  { id: 'strumento', label: 'Strumenti', emoji: '🛠', cls: 's-tool',  badgeCls: 'b-tool',  cardCls: 'c-tool',  col: '#1E6B3C', maxCols: 3 },
+  { id: 'pillola',   label: 'Pillole',   emoji: '💡', cls: 's-pill',  badgeCls: 'b-pill',  cardCls: 'c-pill',  col: '#7D4E00', maxCols: 2 },
+];
+
+/* ═══════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════ */
+let manifest   = [];
+let nodeEls    = {};   /* id → DOM element */
+let nodeData   = {};   /* id → {x,y,w,h,cat,data} */
+let activeFilter = 'all';
+let scale = 1, tx = 0, ty = 0;
+let dragging = false, dragStartX, dragStartY, dragTx, dragTy;
+
+/* ═══════════════════════════════════════════
+   BOOTSTRAP
+═══════════════════════════════════════════ */
+async function init() {
+  try {
+    const res = await fetch('manifest.json');
+    if (!res.ok) throw new Error('manifest not found');
+    manifest = await res.json();
+  } catch(e) {
+    console.warn('manifest.json non trovato, uso dati inline di fallback');
+    manifest = FALLBACK;
+  }
+  buildMap();
+  fitView();
+  document.getElementById('loading').classList.add('done');
+  document.getElementById('header-count').textContent =
+    '— ' + manifest.filter(r => r.active).length + ' risorse attive';
+}
+
+/* ═══════════════════════════════════════════
+   BUILD MAP
+═══════════════════════════════════════════ */
+function buildMap() {
+  const world = document.getElementById('map-world');
+  const active = manifest.filter(r => r.active);
+
+  /* group by category */
+  const byCat = { guide: [], strumento: [], pillola: [] };
+  active.forEach(r => { if (byCat[r.cat]) byCat[r.cat].push(r); });
+
+  /* ── 1. CALCULATE SECTION WIDTHS ── */
+  /* Each section's block width = cols * CARD_W + (cols-1) * COL_GAP */
+  const secLayouts = SEC_DEFS.map(sec => {
+    const items = byCat[sec.id] || [];
+    const cols  = Math.min(items.length || 1, sec.maxCols);
+    const rows  = Math.ceil(items.length / cols) || 1;
+    const blockW = cols * CARD_W + (cols - 1) * COL_GAP;
+    const blockH = rows * CARD_H + (rows - 1) * ROW_GAP;
+    const secW   = Math.max(SEC_W, blockW); /* section node at least as wide as cards */
+    return { ...sec, items, cols, rows, blockW, blockH, secW };
+  });
+
+  /* ── 2. HORIZONTAL POSITIONING ── */
+  /* Total world width = sum of section blocks + gaps between them */
+  const totalW = secLayouts.reduce((s, sl) => s + sl.blockW, 0)
+               + SEC_GAP * (secLayouts.length - 1);
+  const WORLD_OFFSET = 60; /* left padding */
+
+  let curX = WORLD_OFFSET;
+  secLayouts.forEach(sl => {
+    sl.blockX  = curX;
+    sl.secCx   = curX + sl.blockW / 2;
+    sl.secX    = sl.secCx - sl.secW / 2;
+    curX      += sl.blockW + SEC_GAP;
+  });
+
+  const worldW = totalW + WORLD_OFFSET * 2;
+  const rootX  = worldW / 2 - ROOT_W / 2;
+
+  /* ── 3. ROOT NODE ── */
+  const rootEl = mkNode('node-root', rootX, ROOT_Y, ROOT_W, `
+    <div class="n-emoji">🌐</div>
+    <div class="n-label">Formazione Digitale</div>
+    <div class="n-sub">homepage</div>
+  `);
+  rootEl.style.cursor = 'pointer';
+  rootEl.addEventListener('click', () => window.location.href = 'index.html');
+  world.appendChild(rootEl);
+  nodeData['root'] = { x: rootX, y: ROOT_Y, w: ROOT_W, h: ROOT_H, cat: 'root' };
+  nodeEls['root']  = rootEl;
+
+  /* ── 4. SECTIONS + CARDS ── */
+  secLayouts.forEach(sl => {
+    /* Section node */
+    const secEl = mkNode('node-section ' + sl.cls, sl.secX, SEC_Y, sl.secW, `
+      <div class="n-emoji">${sl.emoji}</div>
+      <div class="n-label">${sl.label}</div>
+      <div class="n-count">${sl.items.length} risorsa${sl.items.length !== 1 ? 'e' : ''}</div>
+    `);
+    secEl.dataset.cat = sl.id;
+    world.appendChild(secEl);
+    nodeData['sec-' + sl.id] = { x: sl.secX, y: SEC_Y, w: sl.secW, h: SEC_H, cat: sl.id };
+    nodeEls['sec-' + sl.id]  = secEl;
+
+    /* Card nodes */
+    const badgeLabel = { guide: 'Guida', strumento: 'Strumento', pillola: 'Pillola' };
+
+    sl.items.forEach((item, i) => {
+      const col  = i % sl.cols;
+      const row  = Math.floor(i / sl.cols);
+      const cx   = sl.blockX + col * (CARD_W + COL_GAP);
+      const cy   = CARDS_Y   + row * (CARD_H + ROW_GAP);
+
+      const badge = item.featured
+        ? `<div class="n-badge b-feat">★ In evidenza</div>`
+        : `<div class="n-badge ${sl.badgeCls}">${badgeLabel[sl.id]}</div>`;
+
+      const el = mkNode(
+        'node-resource ' + sl.cardCls + (item.featured ? ' featured' : ''),
+        cx, cy, CARD_W,
+        `${badge}
+         <div class="n-emoji">${item.emoji}</div>
+         <div class="n-label">${item.short}</div>
+         <div class="n-meta">${item.meta.split('·')[0].trim()}</div>`
+      );
+      el.dataset.cat = sl.id;
+      el.dataset.id  = item.path;
+      el.addEventListener('click', () => openDetail(item));
+      el.addEventListener('mouseenter', e => showTooltip(e, item.label));
+      el.addEventListener('mousemove',  e => moveTooltip(e));
+      el.addEventListener('mouseleave', hideTooltip);
+
+      world.appendChild(el);
+      nodeData[item.path] = { x: cx, y: cy, w: CARD_W, h: CARD_H, cat: sl.id };
+      nodeEls[item.path]  = el;
+    });
+  });
+
+  /* Store world dimensions for fitView */
+  const maxRows  = Math.max(...secLayouts.map(sl => sl.rows));
+  window._WORLD_W = worldW;
+  window._WORLD_H = CARDS_Y + maxRows * (CARD_H + ROW_GAP) + 60;
+
+  drawEdges(secLayouts, rootX);
+}
+
+/* ═══════════════════════════════════════════
+   NODE FACTORY
+═══════════════════════════════════════════ */
+function mkNode(cls, x, y, w, inner) {
+  const el = document.createElement('div');
+  el.className = 'node ' + cls;
+  el.style.left    = x + 'px';
+  el.style.top     = y + 'px';
+  el.style.width   = w + 'px';
+  el.innerHTML     = inner;
+  return el;
+}
+
+/* ═══════════════════════════════════════════
+   EDGES
+═══════════════════════════════════════════ */
+function drawEdges(secLayouts, rootX) {
+  const svg = document.getElementById('edges-svg');
+  svg.innerHTML = '';
+
+  const rootCx = rootX + ROOT_W / 2;
+  const rootCy = ROOT_Y + ROOT_H;
+
+  secLayouts.forEach(sl => {
+    const scx = sl.secCx;
+    const scy = SEC_Y;
+
+    /* root → section */
+    addEdge(svg, rootCx, rootCy, scx, scy, sl.col, 1.5, '0');
+
+    /* section → each card (from bottom of section to top of card) */
+    sl.items.forEach((item) => {
+      const cd = nodeData[item.path];
+      if (!cd) return;
+      const ccx = cd.x + cd.w / 2;
+      const ccy = cd.y;
+      addEdge(svg, scx, SEC_Y + SEC_H, ccx, ccy, sl.col, 1, '4 3');
+    });
+  });
+}
+
+function addEdge(svg, x1, y1, x2, y2, stroke, sw, dash) {
+  const my = (y1 + y2) / 2;
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('d', `M${x1},${y1} C${x1},${my} ${x2},${my} ${x2},${y2}`);
+  path.setAttribute('fill', 'none');
+  path.setAttribute('stroke', stroke);
+  path.setAttribute('stroke-width', sw);
+  path.setAttribute('stroke-dasharray', dash);
+  path.setAttribute('opacity', '0.3');
+  svg.appendChild(path);
+}
+
+/* ═══════════════════════════════════════════
+   PAN & ZOOM
+═══════════════════════════════════════════ */
+function applyTransform() {
+  document.getElementById('map-world').style.transform =
+    `translate(${tx}px,${ty}px) scale(${scale})`;
+}
+
+function zoom(factor, cx, cy) {
+  const canvas = document.getElementById('map-canvas');
+  cx = cx ?? canvas.clientWidth  / 2;
+  cy = cy ?? canvas.clientHeight / 2;
+  const newScale = Math.min(2.5, Math.max(0.3, scale * factor));
+  tx = cx - (cx - tx) * (newScale / scale);
+  ty = cy - (cy - ty) * (newScale / scale);
+  scale = newScale;
+  applyTransform();
+}
+
+function fitView() {
+  const canvas = document.getElementById('map-canvas');
+  const W = canvas.clientWidth, H = canvas.clientHeight;
+  const WORLD_W = window._WORLD_W || 1200;
+  const WORLD_H = window._WORLD_H || 620;
+  const pad = 60;
+  const s = Math.min((W - pad*2) / WORLD_W, (H - pad*2) / WORLD_H, 1.2);
+  scale = s;
+  tx = (W - WORLD_W * s) / 2;
+  ty = (H - WORLD_H * s) / 2 + 10;
+  applyTransform();
+}
+
+function resetView() {
+  setFilter('all', document.querySelector('.filter-pill'));
+  fitView();
+  closeDetail();
+}
+
+/* drag */
+const canvas = document.getElementById('map-canvas');
+canvas.addEventListener('mousedown', e => {
+  if (e.target.closest('.node') || e.target.closest('#detail-panel')) return;
+  dragging = true; canvas.classList.add('dragging');
+  dragStartX = e.clientX; dragStartY = e.clientY;
+  dragTx = tx; dragTy = ty;
+});
+window.addEventListener('mousemove', e => {
+  if (!dragging) return;
+  tx = dragTx + (e.clientX - dragStartX);
+  ty = dragTy + (e.clientY - dragStartY);
+  applyTransform();
+});
+window.addEventListener('mouseup', () => { dragging = false; canvas.classList.remove('dragging'); });
+
+canvas.addEventListener('wheel', e => {
+  e.preventDefault();
+  const factor = e.deltaY < 0 ? 1.1 : 0.91;
+  zoom(factor, e.clientX, e.clientY - 52);
+}, { passive: false });
+
+/* touch */
+let lastDist = 0;
+canvas.addEventListener('touchstart', e => {
+  if (e.touches.length === 1) {
+    dragging = true;
+    dragStartX = e.touches[0].clientX; dragStartY = e.touches[0].clientY;
+    dragTx = tx; dragTy = ty;
+  }
+  if (e.touches.length === 2) {
+    lastDist = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    );
+  }
+}, { passive: true });
+canvas.addEventListener('touchmove', e => {
+  if (e.touches.length === 1 && dragging) {
+    tx = dragTx + (e.touches[0].clientX - dragStartX);
+    ty = dragTy + (e.touches[0].clientY - dragStartY);
+    applyTransform();
+  }
+  if (e.touches.length === 2) {
+    const dist = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    );
+    zoom(dist / lastDist);
+    lastDist = dist;
+  }
+}, { passive: true });
+canvas.addEventListener('touchend', () => { dragging = false; });
+
+/* ═══════════════════════════════════════════
+   FILTER
+═══════════════════════════════════════════ */
+function setFilter(cat, btn) {
+  activeFilter = cat;
+  document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  closeDetail();
+
+  Object.entries(nodeEls).forEach(([id, el]) => {
+    const d = nodeData[id];
+    if (!d) return;
+    let show = true;
+    if (cat !== 'all') {
+      if (d.cat === 'root') show = true;
+      else show = (d.cat === cat);
+    }
+    el.classList.toggle('faded', !show);
+  });
+}
+
+/* ═══════════════════════════════════════════
+   DETAIL PANEL
+═══════════════════════════════════════════ */
+const catLabel = { guide: 'Guida completa', strumento: 'Strumento', pillola: 'Pillola digitale' };
+const catCls   = { guide: 'g', strumento: 't', pillola: 'p' };
+
+function openDetail(item) {
+  document.getElementById('dp-emoji').textContent = item.emoji;
+  const catEl = document.getElementById('dp-cat');
+  catEl.textContent  = (item.featured ? '★ In evidenza · ' : '') + (catLabel[item.cat] || '');
+  catEl.className    = 'dp-cat ' + (catCls[item.cat] || '');
+  document.getElementById('dp-title').textContent = item.label;
+  document.getElementById('dp-meta').textContent  = item.meta;
+  document.getElementById('dp-tags').innerHTML    =
+    (item.tags || []).slice(0,6).map(t => `<span class="dp-tag">${t}</span>`).join('');
+  const btn = document.getElementById('dp-btn');
+  btn.href = item.path;
+  document.getElementById('detail-panel').classList.add('visible');
+}
+function closeDetail() {
+  document.getElementById('detail-panel').classList.remove('visible');
+}
+
+/* ═══════════════════════════════════════════
+   TOOLTIP
+═══════════════════════════════════════════ */
+const tt = document.getElementById('tooltip');
+function showTooltip(e, text) { tt.textContent = text; tt.classList.add('visible'); moveTooltip(e); }
+function moveTooltip(e)       { tt.style.left = (e.clientX + 12) + 'px'; tt.style.top = (e.clientY - 30) + 'px'; }
+function hideTooltip()        { tt.classList.remove('visible'); }
+
+/* ═══════════════════════════════════════════
+   FALLBACK (se manifest.json non trovato)
+═══════════════════════════════════════════ */
+const FALLBACK = [
+  { path:"/word/Guida_Word.html", label:"Microsoft Word — Guida pratica", short:"Word", cat:"guide", emoji:"📝", tags:["word","office"], meta:"61 screenshot · Livello base", featured:false, active:true },
+  { path:"/database/LibreOfficeBase_Query/", label:"LibreOffice Base — Le Query", short:"LibreOffice Base", cat:"guide", emoji:"🗄️", tags:["database","sql"], meta:"Con DB di esempio", featured:false, active:true },
+  { path:"/marketing/Guida_Marketing.html", label:"Marketing & E-Commerce", short:"Marketing", cat:"guide", emoji:"🛒", tags:["marketing"], meta:"Livello intermedio", featured:false, active:true },
+  { path:"/intelligenza-artificiale/guida-prompting/", label:"Guida al Prompting con l'IA", short:"Guida Prompting", cat:"guide", emoji:"🤖", tags:["ia","prompting"], meta:"Livello base–intermedio", featured:true, active:true },
+  { path:"/intelligenza-artificiale/guida-peer-review-ia/", label:"Peer-review tra IA", short:"Peer-review IA", cat:"guide", emoji:"🔍", tags:["ia","valutazione"], meta:"Template pronti", featured:false, active:true },
+  { path:"/intelligenza-artificiale/prompt-builder/", label:"Prompt Builder", short:"Prompt Builder", cat:"strumento", emoji:"📋", tags:["prompt","ia"], meta:"Interattivo", featured:false, active:true },
+  { path:"/marketing/bep-tool.html", label:"Calcolatore Break-Even Point", short:"BEP Tool", cat:"strumento", emoji:"📊", tags:["marketing","economia"], meta:"Calcolo in tempo reale", featured:false, active:true },
+  { path:"/networking/subnet-calculator.html", label:"Calcolatore di Sottorete", short:"Subnet Calculator", cat:"strumento", emoji:"🌐", tags:["networking","ipv4"], meta:"Report esportabile", featured:false, active:true },
+  { path:"/sistemi/codifica-binaria/", label:"Bin-Digit Decoder Pro", short:"Bin-Digit Decoder", cat:"strumento", emoji:"🔢", tags:["binario","sistemi"], meta:"Step-by-step", featured:false, active:true },
+  { path:"/networking/hfs-server.html", label:"HFS: Server HTTP Persistente", short:"HFS Server", cat:"pillola", emoji:"⚙️", tags:["networking","http"], meta:"15 min", featured:false, active:true },
+];
+
+/* ═══════════════════════════════════════════
+   CLOSE on outside click
+═══════════════════════════════════════════ */
+canvas.addEventListener('click', e => {
+  if (!e.target.closest('.node') && !e.target.closest('#detail-panel')) closeDetail();
+});
+
+init();
+</script>
+</body>
+</html>

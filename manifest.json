@@ -1,0 +1,112 @@
+[
+  {
+    "path": "/word/Guida_Word.html",
+    "label": "Microsoft Word — Guida pratica",
+    "short": "Word",
+    "cat": "guide",
+    "emoji": "📝",
+    "tags": ["word", "microsoft", "office", "documento", "testo", "formattazione", "stili", "tabelle", "indice", "stampa unione"],
+    "meta": "61 screenshot · PDF scaricabile · Livello base",
+    "featured": false,
+    "active": true
+  },
+  {
+    "path": "/database/LibreOfficeBase_Query/",
+    "label": "LibreOffice Base — Le Query",
+    "short": "LibreOffice Base",
+    "cat": "guide",
+    "emoji": "🗄️",
+    "tags": ["libreoffice", "base", "query", "database", "sql", "odb"],
+    "meta": "Con DB di esempio · Livello intermedio",
+    "featured": false,
+    "active": true
+  },
+  {
+    "path": "/marketing/Guida_Marketing.html",
+    "label": "Marketing & E-Commerce",
+    "short": "Marketing",
+    "cat": "guide",
+    "emoji": "🛒",
+    "tags": ["marketing", "e-commerce", "digital marketing", "leva", "comunicazione", "mix commerciale"],
+    "meta": "Aggiornata · Livello intermedio",
+    "featured": false,
+    "active": true
+  },
+  {
+    "path": "/intelligenza-artificiale/guida-prompting/",
+    "label": "Guida al Prompting con l'IA",
+    "short": "Guida Prompting",
+    "cat": "guide",
+    "emoji": "🤖",
+    "tags": ["ia", "prompting", "didattica", "docenti", "meta-prompt", "chatgpt", "intelligenza artificiale"],
+    "meta": "Aggiornata · Livello base–intermedio",
+    "featured": true,
+    "active": true
+  },
+  {
+    "path": "/intelligenza-artificiale/guida-peer-review-ia/",
+    "label": "Peer-review tra IA",
+    "short": "Peer-review IA",
+    "cat": "guide",
+    "emoji": "🔍",
+    "tags": ["peer review", "ia", "intelligenza artificiale", "valutazione", "prompt", "handoff", "claude", "gemini", "gpt"],
+    "meta": "Template pronti · Checklist interattiva · Livello base–intermedio",
+    "featured": false,
+    "active": true
+  },
+  {
+    "path": "/intelligenza-artificiale/prompt-builder/",
+    "label": "Prompt Builder",
+    "short": "Prompt Builder",
+    "cat": "strumento",
+    "emoji": "📋",
+    "tags": ["prompt", "builder", "ia", "intelligenza artificiale", "chatgpt", "claude", "gemini", "docenti", "generatore"],
+    "meta": "Interattivo · Salvataggio locale · Livello base",
+    "featured": false,
+    "active": true
+  },
+  {
+    "path": "/marketing/bep-tool.html",
+    "label": "Calcolatore Break-Even Point",
+    "short": "BEP Tool",
+    "cat": "strumento",
+    "emoji": "📊",
+    "tags": ["break even", "bep", "calcolo", "costi", "ricavi", "marketing", "economia", "excel"],
+    "meta": "Interattivo · Calcolo in tempo reale · Livello intermedio",
+    "featured": false,
+    "active": true
+  },
+  {
+    "path": "/networking/subnet-calculator.html",
+    "label": "Calcolatore di Sottorete & Guida",
+    "short": "Subnet Calculator",
+    "cat": "strumento",
+    "emoji": "🌐",
+    "tags": ["subnetting", "ip", "calcolatore", "reti", "networking", "cidr", "ipv4", "binario"],
+    "meta": "Interattivo · Report esportabile · Livello intermedio",
+    "featured": false,
+    "active": true
+  },
+  {
+    "path": "/sistemi/codifica-binaria/",
+    "label": "Bin-Digit Decoder Pro",
+    "short": "Bin-Digit Decoder",
+    "cat": "strumento",
+    "emoji": "🔢",
+    "tags": ["binario", "decimale", "sistemi", "codifica", "algoritmo", "informatica"],
+    "meta": "Interattivo · Step-by-step",
+    "featured": false,
+    "active": true
+  },
+  {
+    "path": "/networking/hfs-server.html",
+    "label": "HFS: Server HTTP Persistente",
+    "short": "HFS Server",
+    "cat": "pillola",
+    "emoji": "⚙️",
+    "tags": ["hfs", "networking", "server", "http", "lan", "sharing", "windows", "web server"],
+    "meta": "Include HFS 2 e 3 · Livello intermedio-avanzato · 15 min",
+    "featured": false,
+    "active": true
+  }
+]
