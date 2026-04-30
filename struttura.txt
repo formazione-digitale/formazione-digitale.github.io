@@ -1,8 +1,9 @@
 Elenco del percorso delle cartelle per il volume Acer
 Numero di serie del volume: 544D-3F7C
 C:.
-|   Formazione_Digitale_Guida_Collaboratori.docx
 |   index.html
+|   manifest.json
+|   mappa.html
 |   stats.js
 |   struttura.bat
 |   struttura.txt
@@ -72,13 +73,15 @@ C:.
 |           index.html
 |           
 +---marketing
-|       bep-tool.html
-|       calcolo-break-even-point-old.xlsx
-|       calcolo-break-even-point.xlsx
-|       Guida_Marketing.html
-|       Introduzione_emarketing_2026_parte1.pptx
-|       Introduzione_emarketing_2026_parte2.pptx
-|       
+|   +---break-even-point-tool
+|   |       calcolo-break-even-point.xlsx
+|   |       index.html
+|   |       
+|   \---guida-marketing
+|           index.html
+|           Introduzione_emarketing_2026_parte1.pptx
+|           Introduzione_emarketing_2026_parte2.pptx
+|           
 +---networking
 |   |   hfs-server.html
 |   |   hfs-windows-x64-3.0.8.zip
