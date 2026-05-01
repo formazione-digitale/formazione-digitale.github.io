@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://cristianodepasquale.github.io/formazione-digitale/sitemap.xml
+Sitemap: https://formazione-digitale.github.io/sitemap.xml
