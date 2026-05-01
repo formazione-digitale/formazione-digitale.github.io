@@ -49,7 +49,7 @@
     "short": "Peer-review IA",
     "cat": "guide",
     "emoji": "🔍",
-    "tags": ["peer review", "ia", "intelligenza artificiale", "valutazione", "prompt", "handoff", "claude", "gemini", "gpt"],
+    "tags": ["peer review", "ia", "intelligenza artificiale", "valutazione", "prompt", "handoff", "modelli", "claude", "gemini", "gpt"],
     "meta": "Template pronti · Checklist interattiva · Livello base–intermedio",
     "featured": false,
     "active": true
@@ -71,7 +71,7 @@
     "short": "BEP Tool",
     "cat": "strumento",
     "emoji": "📊",
-    "tags": ["break even", "bep", "calcolo", "costi", "ricavi", "marketing", "economia", "excel"],
+    "tags": ["break even", "bep", "point", "calcolo", "costi", "ricavi", "marketing", "economia", "aziendale", "excel"],
     "meta": "Interattivo · Calcolo in tempo reale · Livello intermedio",
     "featured": false,
     "active": true
