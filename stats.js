@@ -6,22 +6,20 @@
 // pretty-link) che vuoi continuare a sommare nelle statistiche.
 
 const gcLegacy = [
-  // Home
+  // Home — sommate al totale, non entrano nel ranking
   { path: '/',           label: 'Home', isHome: true },
   { path: '/index.html', label: 'Home', isHome: true },
 
-  // Vecchi path flat — sommate al totale, non entrano nel ranking top 3
-  { path: '/intelligenza-artificiale/Guida_Prompting.html',                  label: 'Guida Prompting (o)' },
-  { path: '/intelligenza-artificiale/prompt-builder.html',                   label: 'Prompt Builder (o)' },
-  { path: '/intelligenza-artificiale/Guida_PeerReview_IA.html',              label: 'Peer Review IA (o)' },
-  { path: '/database/LibreOfficeBase_Query/Guida_LibreOfficeBase_Query.html',label: 'LibreOffice Base (o)' },
-  { path: '/marketing/Guida_Marketing.html',                                 label: 'Marketing (o)' },
-  { path: '/marketing/bep-tool.html',                                        label: 'BEP Tool (o)' },
-
-  // Varianti senza slash finale / path intermedi registrati da GoatCounter
-  { path: '/intelligenza-artificiale/prompt-builder',                        label: 'Prompt Builder (o)' },
-  { path: '/database/LibreOfficeBase_Query',                                 label: 'LibreOffice Base (o)' },
-  { path: '/marketing/guida-marketing',                                      label: 'Marketing (o)' },
+  // Vecchi path — mergeWith indica il path attivo a cui sommare le visite
+  { path: '/intelligenza-artificiale/Guida_Prompting.html',                   mergeWith: '/intelligenza-artificiale/guida-prompting/' },
+  { path: '/intelligenza-artificiale/prompt-builder.html',                    mergeWith: '/intelligenza-artificiale/prompt-builder/' },
+  { path: '/intelligenza-artificiale/prompt-builder',                         mergeWith: '/intelligenza-artificiale/prompt-builder/' },
+  { path: '/intelligenza-artificiale/Guida_PeerReview_IA.html',               mergeWith: '/intelligenza-artificiale/guida-peer-review-ia/' },
+  { path: '/database/LibreOfficeBase_Query/Guida_LibreOfficeBase_Query.html', mergeWith: '/database/guida-libreoffice-base-query/' },
+  { path: '/database/LibreOfficeBase_Query',                                  mergeWith: '/database/guida-libreoffice-base-query/' },
+  { path: '/marketing/Guida_Marketing.html',                                  mergeWith: '/marketing/guida-marketing/' },
+  { path: '/marketing/guida-marketing',                                       mergeWith: '/marketing/guida-marketing/' },
+  { path: '/marketing/bep-tool.html',                                         mergeWith: '/marketing/break-even-point-tool/' },
 ];
 
 // ── Non modificare da qui in poi ────────────────────────────────
@@ -36,8 +34,8 @@ async function loadGoatStats() {
 
     // 2. Lista completa: attive + legacy
     const allPaths = [
-      ...active.map(r => ({ path: r.path, label: r.short, isHome: false, isLegacy: false })),
-      ...gcLegacy.map(r => ({ ...r, isLegacy: !r.isHome })),
+      ...active.map(r => ({ path: r.path, label: r.short, isHome: false })),
+      ...gcLegacy,
     ];
 
     // 3. Fetch parallelo su tutti i path
@@ -50,12 +48,16 @@ async function loadGoatStats() {
     );
 
     // 4. Aggrega
-    //    - Home (/ e /index.html): sommate, non entrano in top
-    //    - Legacy (o): sommate al totale, non entrano in top
+    //    - Home (isHome): sommate al totale, non entrano nel ranking
+    //    - Legacy (mergeWith): sommate al conteggio del path attivo corrispondente
     //    - Attive: entrano nel ranking top 3
-    let homeCount   = 0;
-    let legacyCount = 0;
-    const pageMap   = {}; // path → { label, count }
+    let homeCount = 0;
+    const pageMap = {}; // path → { label, count }
+
+    // Inizializza pageMap con i path attivi
+    active.forEach(r => {
+      pageMap[r.path] = { label: r.short, count: 0 };
+    });
 
     risposte.forEach((d, i) => {
       const pv   = parseInt(d.count || 0);
@@ -65,18 +67,23 @@ async function loadGoatStats() {
         homeCount += pv;
         return;
       }
-      if (item.isLegacy) {
-        legacyCount += pv;
+      if (item.mergeWith) {
+        // Somma al path attivo corrispondente
+        if (pageMap[item.mergeWith]) {
+          pageMap[item.mergeWith].count += pv;
+        } else {
+          homeCount += pv; // fallback: somma al totale se il path non esiste
+        }
         return;
       }
-      if (!pageMap[item.path]) {
-        pageMap[item.path] = { label: item.label, count: 0 };
+      // Path attivo
+      if (pageMap[item.path]) {
+        pageMap[item.path].count += pv;
       }
-      pageMap[item.path].count += pv;
     });
 
     const pages  = Object.values(pageMap);
-    const totale = pages.reduce((s, p) => s + p.count, 0) + homeCount + legacyCount;
+    const totale = pages.reduce((s, p) => s + p.count, 0) + homeCount;
 
     // 5. Aggiorna DOM — totale pageview
     const elTot = document.getElementById('gc-total');
