@@ -39,7 +39,7 @@ async function loadGoatStats() {
     // 3. Fetch parallelo su tutti i path
     const risposte = await Promise.all(
       allPaths.map(p =>
-        fetch(base + encodeURIComponent(p.path) + '.json')
+        fetch(base + encodeURIComponent(p.path.replace(/^\//, '')) + '.json')
           .then(r => r.ok ? r.json() : { count: 0 })
           .catch(() => ({ count: 0 }))
       )
