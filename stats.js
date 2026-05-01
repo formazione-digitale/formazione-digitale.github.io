@@ -17,7 +17,6 @@ const gcLegacy = [
   { path: '/database/LibreOfficeBase_Query/Guida_LibreOfficeBase_Query.html',label: 'LibreOffice Base (o)' },
   { path: '/marketing/Guida_Marketing.html',                                 label: 'Marketing (o)' },
   { path: '/marketing/bep-tool.html',                                        label: 'BEP Tool (o)' },
-  { path: '/marketing/calcolo-break-even-point/',                            label: 'BEP Tool (o2)' },
 ];
 
 // ── Non modificare da qui in poi ────────────────────────────────

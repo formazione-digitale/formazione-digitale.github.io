@@ -77,7 +77,7 @@
     "active": true
   },
   {
-    "path": "/networking/subnet-calculator.html",
+    "path": "/networking/subnet-calculator/",
     "label": "Calcolatore di Sottorete & Guida",
     "short": "Subnet Calculator",
     "cat": "strumento",
@@ -99,7 +99,7 @@
     "active": true
   },
   {
-    "path": "/networking/hfs-server.html",
+    "path": "/networking/hfs-server/",
     "label": "HFS: Server HTTP Persistente",
     "short": "HFS Server",
     "cat": "pillola",
