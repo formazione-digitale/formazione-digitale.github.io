@@ -29,6 +29,12 @@ header{background:var(--blue-dark);padding:0 2rem;height:58px;display:flex;align
 .header-tag{font-size:.68rem;color:var(--blue-light);font-weight:300;letter-spacing:.04em;}
 .back-link{font-size:.8rem;color:rgba(255,255,255,.75);text-decoration:none;transition:color var(--transition);}
 .back-link:hover{color:#fff;}
+.header-left { display: flex; align-items: center; gap: .75rem; }
+.header-back { font-size: .78rem; color: rgba(255,255,255,.65); text-decoration: none; display: flex; align-items: center; gap: .3rem; transition: color .2s; }
+.header-back:hover { color: #fff; }
+.header-sep { width: 1px; height: 20px; background: rgba(255,255,255,.2); }
+.header-logo { font-family: var(--font-display); font-size: 1.05rem; color: #fff; }
+.header-sub { font-size: .72rem; color: var(--blue-light); font-weight: 300; display: none; }
 
 /* ── HERO — compatto, una riga ── */
 .hero{background:linear-gradient(135deg,#1A3F63 0%,var(--blue-dark) 40%,#2A6099 100%);padding:1.5rem 2.5rem;}
@@ -228,11 +234,13 @@ footer a{color:var(--blue-light);text-decoration:none;}
 
 <!-- HEADER -->
 <header>
-  <div>
-    <div class="header-name">Formazione Digitale</div>
-    <div class="header-tag">Strumenti didattici</div>
+  <div class="header-left">
+    <button id="hamburger"><span></span><span></span><span></span></button>
+        <a href="../../index.html" class="header-back">← Portale</a>
+    <div class="header-sep"></div>
+    <span class="header-logo">Marketing e Digital Marketing</span>
+    <span class="header-sub">Formazione Digitale</span>
   </div>
-      <a href="../../index.html" class="header-back">← Portale</a>
 </header>
 
 <!-- HERO compatto -->
