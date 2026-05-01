@@ -74,7 +74,7 @@ header {
 /* ── HERO ───────────────────────────────────────────────── */
 .hero {
   background: linear-gradient(135deg, #1A3F63 0%, var(--blue-dark) 40%, #2A6099 100%);
-  padding: 5rem 2rem 4.5rem;
+  padding: 3rem 2rem 1.75rem;
   text-align: center;
   position: relative; overflow: hidden;
 }
@@ -87,11 +87,11 @@ header {
 .hero-eyebrow {
   font-size: .75rem; font-weight: 600; letter-spacing: .14em;
   text-transform: uppercase; color: var(--blue-light);
-  margin-bottom: .9rem;
+  margin-top: .8rem; margin-bottom: .7rem;
 }
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
   color: #fff; line-height: 1.08; margin-bottom: .9rem;
 }
 .hero-title em { font-style: italic; color: var(--blue-light); }
@@ -658,6 +658,36 @@ body.modal-open { overflow: hidden; }
 }
 .modal-close:hover { background: #f5f5f5; }
 
+
+
+/* ── HERO MAP BTN ───────────────────────────────────────────── */
+.hero-search-row {
+  display: flex; align-items: center; gap: .75rem;
+  max-width: 560px; margin: 0 auto;
+  justify-content: center;
+}
+.hero-search-row .hero-search {
+  flex: 1; margin: 0; max-width: 100%;
+}
+.hero-map-btn {
+  display: inline-flex; align-items: center; gap: .35rem;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.35);
+  color: #fff; text-decoration: none;
+  border-radius: 50px; padding: .72rem 1.1rem;
+  font-size: .82rem; font-weight: 600;
+  font-family: var(--font-body);
+  white-space: nowrap; flex-shrink: 0;
+  transition: background var(--transition), border-color var(--transition), transform .15s ease;
+}
+.hero-map-btn .arrow { display: inline-block; transition: transform .25s cubic-bezier(.34,1.56,.64,1); }
+.hero-map-btn:hover { background: rgba(255,255,255,.25); border-color: rgba(255,255,255,.6); transform: translateY(-1px); }
+.hero-map-btn:hover .arrow { transform: translateX(4px); }
+@media(max-width:520px) {
+  .hero-search-row { flex-direction: column; gap: .6rem; }
+  .hero-map-btn { width: 100%; justify-content: center; }
+}
+
 </style>
   <!-- GoatCounter tracking -->
   <!-- GoatCounter tracking -->
@@ -687,12 +717,14 @@ body.modal-open { overflow: hidden; }
 
 <!-- ── HERO ────────────────────────────────────────────────────── -->
 <section class="hero">
-  <div class="hero-eyebrow">Risorse libere · Aggiornate · Per tutti</div>
   <h1 class="hero-title">Formazione<br><em>Digitale</em></h1>
-  <p class="hero-sub">Guide pratiche, strumenti e pillole di alfabetizzazione digitale. (Quasi) nessun prerequisito richiesto.</p>
-  <div class="hero-search">
-    <input type="text" id="search-input" placeholder="Cerca una risorsa..." oninput="filterAll()">
-    <button onclick="filterAll()">Cerca</button>
+  <div class="hero-eyebrow">Risorse libere · Aggiornate · Per tutti</div>
+  <div class="hero-search-row">
+    <div class="hero-search">
+      <input type="text" id="search-input" placeholder="Cerca una risorsa..." oninput="filterAll()">
+      <button onclick="filterAll()">Cerca</button>
+    </div>
+    <a href="mappa.html" class="hero-map-btn">🗺 Mappa <span class="arrow">→</span></a>
   </div>
 </section>
 
@@ -1079,7 +1111,7 @@ body.modal-open { overflow: hidden; }
     <button class="about-trigger" style="font-size:0.85rem;" onclick="openAbout()">👤 Chi sono — Cristiano De Pasquale</button>
   </div>
   <strong>Formazione Digitale</strong><br>
-  Risorse di alfabetizzazione digitale libere e gratuite.<br>
+  Guide pratiche, strumenti e pillole di alfabetizzazione digitale. (Quasi) nessun prerequisito richiesto.<br>
   Tutti i contenuti sono rilasciati per uso libero e non commerciale.
 </footer>
 
