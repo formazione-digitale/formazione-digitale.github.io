@@ -17,6 +17,11 @@ const gcLegacy = [
   { path: '/database/LibreOfficeBase_Query/Guida_LibreOfficeBase_Query.html',label: 'LibreOffice Base (o)' },
   { path: '/marketing/Guida_Marketing.html',                                 label: 'Marketing (o)' },
   { path: '/marketing/bep-tool.html',                                        label: 'BEP Tool (o)' },
+
+  // Varianti senza slash finale / path intermedi registrati da GoatCounter
+  { path: '/intelligenza-artificiale/prompt-builder',                        label: 'Prompt Builder (o)' },
+  { path: '/database/LibreOfficeBase_Query',                                 label: 'LibreOffice Base (o)' },
+  { path: '/marketing/guida-marketing',                                      label: 'Marketing (o)' },
 ];
 
 // ── Non modificare da qui in poi ────────────────────────────────
@@ -38,7 +43,7 @@ async function loadGoatStats() {
     // 3. Fetch parallelo su tutti i path
     const risposte = await Promise.all(
       allPaths.map(p =>
-        fetch(base + encodeURIComponent(p.path.replace(/^\//, '')) + '.json')
+        fetch(base + p.path.replace(/^\//, '') + '.json')
           .then(r => r.ok ? r.json() : { count: 0 })
           .catch(() => ({ count: 0 }))
       )
