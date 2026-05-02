@@ -1393,5 +1393,17 @@ function closeAboutOutside(e) {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAbout(); });
 </script>
 
+
+
+<!-- Service Worker -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .catch(err => console.warn('SW registration failed:', err));
+  });
+}
+</script>
+
 </body>
 </html>
