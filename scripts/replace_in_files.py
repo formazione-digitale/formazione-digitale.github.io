@@ -13,9 +13,9 @@ Lo script è idempotente: se TROVA non è presente ma SOSTITUISCI sì, salta il 
 import os
 
 # ── CONFIGURAZIONE ────────────────────────────────────────────────
-TROVA = '<link rel="icon" href="https://formazione-digitale.github.io/img/formazione-digitale-logo.png">'
+TROVA = '<link rel="icon" type="image/webp" href="https://formazione-digitale.github.io/img/formazione-digitale-logo.webp">'
 
-SOSTITUISCI = '<link rel="icon" type="image/webp" href="https://formazione-digitale.github.io/img/formazione-digitale-logo.webp">'
+SOSTITUISCI = '<link rel="icon" type="image/png" href="https://formazione-digitale.github.io/img/favicon.png">'
 
 # Cartelle da escludere dall'esplorazione
 EXCLUDE_DIRS = {'.git', 'node_modules', '.github', '.cache', 'docs'}
