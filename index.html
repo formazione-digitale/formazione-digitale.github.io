@@ -10,7 +10,7 @@
 <meta name="robots" content="index, follow">
 <meta name="google-site-verification" content="UP-KCQGoonIYmsGWYMYxhs2Qbn6iMeWXd6aAZyR0Itk">
 <link rel="canonical" href="https://formazione-digitale.github.io/">
-<link rel="icon" type="image/png" href="/img/favicon.png">
+<link rel="icon" href="https://formazione-digitale.github.io/img/formazione-digitale-logo.png">
 
 <!-- Open Graph -->
 <meta property="og:title" content="Formazione Digitale — Guide e Risorse di Alfabetizzazione Digitale">
@@ -54,6 +54,14 @@
 <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <!-- Statistiche homepage -->
 <script src="/stats.js" defer></script>
+<!-- Auth -->
+<script type="module">
+  import { initAuth, initAuthForm, closeAuthModal, closeProfileModal, logout } from '/auth.js';
+  window.closeAuthModal    = closeAuthModal;
+  window.closeProfileModal = closeProfileModal;
+  window.logout            = logout;
+  document.addEventListener('DOMContentLoaded', () => { initAuth(); initAuthForm(); });
+</script>
 <link rel="stylesheet" href="/css/shared.css?v=1">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -758,6 +766,7 @@ body.modal-open { overflow: hidden; }
     </nav>
     <button onclick="openAbout()" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); color:rgba(255,255,255,0.85); border-radius:20px; padding:5px 14px; font-size:0.8rem; cursor:pointer; font-family:inherit; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">👤 Chi sono</button>
     <button class="btn-contact" onclick="openModal()">✉ Contatti</button>
+    <button id="auth-btn" onclick="openAuthModal()">👤 Accedi</button>
   </div>
 </header>
 
@@ -1393,17 +1402,32 @@ function closeAboutOutside(e) {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAbout(); });
 </script>
 
+<!-- ── MODAL AUTH ───────────────────────────────────────────────── -->
+<div class="auth-overlay" id="auth-modal" role="dialog" aria-modal="true">
+  <div class="auth-panel" style="position:relative;">
+    <button class="auth-close" onclick="closeAuthModal()" aria-label="Chiudi">✕</button>
+    <div class="auth-title">Accedi al portale</div>
+    <div class="auth-sub">Inserisci la tua email — ti inviamo un link di accesso. Nessuna password richiesta.</div>
+    <form id="auth-form">
+      <input class="auth-input" type="email" id="auth-email" placeholder="tuamail@esempio.it" required>
+      <button class="auth-submit" type="submit">Invia link →</button>
+      <div class="auth-msg" id="auth-message"></div>
+    </form>
+  </div>
+</div>
 
-
-<!-- Service Worker -->
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .catch(err => console.warn('SW registration failed:', err));
-  });
-}
-</script>
+<!-- ── MODAL PROFILO ─────────────────────────────────────────────── -->
+<div class="auth-overlay" id="profile-modal" role="dialog" aria-modal="true">
+  <div class="auth-panel" style="position:relative;">
+    <button class="auth-close" onclick="closeProfileModal()" aria-label="Chiudi">✕</button>
+    <div class="auth-title">Il tuo profilo</div>
+    <div class="profile-info">
+      <div class="profile-email" id="profile-email"></div>
+      <div class="profile-stat">🔖 <span id="profile-bookmarks-count">0</span> risorse salvate</div>
+    </div>
+    <button class="btn-logout" onclick="logout(); closeProfileModal();">Esci dall'account</button>
+  </div>
+</div>
 
 </body>
 </html>
