@@ -10,8 +10,14 @@
   "scope": "/",
   "icons": [
     {
+      "src": "/img/formazione-digitale-logo.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
       "src": "/img/formazione-digitale-logo.png",
-      "sizes": "any",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
