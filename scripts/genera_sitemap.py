@@ -16,8 +16,9 @@ from datetime import date
 BASE_URL   = "https://formazione-digitale.github.io"
 LASTMOD    = date.today().isoformat()  # es. 2026-05-01
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-MANIFEST   = os.path.join(SCRIPT_DIR, "manifest.json")
-OUTPUT     = os.path.join(SCRIPT_DIR, "sitemap.xml")
+ROOT       = os.path.dirname(SCRIPT_DIR)  # risale da scripts/ alla root
+MANIFEST   = os.path.join(ROOT, "manifest.json")
+OUTPUT     = os.path.join(ROOT, "sitemap.xml")
 
 # ── PAGINE FISSE (non nel manifest) ─────────────────────────────
 PAGINE_FISSE = [

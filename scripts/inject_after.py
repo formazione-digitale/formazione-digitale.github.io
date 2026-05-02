@@ -26,8 +26,8 @@ EXCLUDE_DIRS = {'.git', 'node_modules', '.github', '.cache', 'docs'}
 # Estensioni da processare
 EXTENSIONS = {'.html', '.htm'}
 
-# Root del progetto — cartella dove si trova questo script
-ROOT = os.path.dirname(os.path.abspath(__file__))
+# Root del progetto — risale da scripts/ alla root
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # ─────────────────────────────────────────────────────────────────
 
 

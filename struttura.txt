@@ -1,14 +1,13 @@
 Elenco del percorso delle cartelle per il volume Acer
 Numero di serie del volume: 544D-3F7C
 C:.
-|   genera_sitemap.py
 |   index.html
 |   manifest.json
 |   mappa.html
 |   robots.txt
+|   site.webmanifest
 |   sitemap.xml
 |   stats.js
-|   struttura.bat
 |   struttura.txt
 |   
 +---database
@@ -131,7 +130,9 @@ C:.
 |               image_061.png
 |               
 +---img
+|       formazione-digitale-logo-large.png
 |       formazione-digitale-logo.png
+|       formazione-digitale-logo.webp
 |       
 +---intelligenza-artificiale
 |   +---guida-peer-review-ia
@@ -168,6 +169,12 @@ C:.
 |   \---subnet-calculator
 |           index.html
 |           
++---scripts
+|       genera_sitemap.py
+|       inject_after.py
+|       replace_in_files.py
+|       struttura.bat
+|       
 \---sistemi
     \---codifica-binaria
             index.html
