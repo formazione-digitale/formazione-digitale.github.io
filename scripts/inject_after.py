@@ -14,11 +14,9 @@ import os
 import sys
 
 # ── CONFIGURAZIONE ────────────────────────────────────────────────
-DOVE = '<link rel="icon" href="https://formazione-digitale.github.io/img/formazione-digitale-logo.png">'
+DOVE = '<link rel="icon" type="image/webp" href="https://formazione-digitale.github.io/img/formazione-digitale-logo.webp">'
 
-NEW  = """
-<link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#1F4E79">"""
+NEW  = '\n<link rel="icon" type="image/png" href="https://formazione-digitale.github.io/img/formazione-digitale-logo.png">'
 
 # Cartelle da escludere dall'esplorazione
 EXCLUDE_DIRS = {'.git', 'node_modules', '.github', '.cache', 'docs'}
