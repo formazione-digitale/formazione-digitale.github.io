@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HFS: Server HTTP Persistente — Formazione Digitale</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <meta name="description" content="Crea un web server locale persistente con HFS. Zero installazione, interfaccia moderna, download diretto del pacchetto v3.0.8 per Windows. Guida completa HFS 2 e 3.">
 <meta name="author" content="Cristiano De Pasquale">
@@ -55,104 +53,12 @@
 }
 </script>
 
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
 
 <!-- GoatCounter tracking -->
 <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
+<link rel="stylesheet" href="/css/shared.css?v=1">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --blue-dark:   #1F4E79;
-  --blue-mid:    #2E75B6;
-  --blue-light:  #D6E8F7;
-  --blue-pale:   #EBF3FC;
-  --green-dark:  #1E6B3C;
-  --green-light: #E8F5EE;
-  --amber-dark:  #7D4E00;
-  --amber-light: #FFF3CD;
-  --gray-dark:   #2C2C2C;
-  --gray-mid:    #666;
-  --gray-light:  #F5F5F5;
-  --white:       #FFFFFF;
-  --font-display: 'DM Serif Display', Georgia, serif;
-  --font-body:    'DM Sans', system-ui, sans-serif;
-  --font-mono:    'Courier New', Courier, monospace;
-  --radius: 10px;
-  --shadow: 0 2px 16px rgba(31,78,121,.10);
-  --transition: .22s cubic-bezier(.4,0,.2,1);
-  --nav-height: 58px;
-}
-html { font-size: 16px; scroll-behavior: smooth; }
-body { font-family: var(--font-body); color: var(--gray-dark); background: #F0F6FF; min-height: 100vh; padding-top: var(--nav-height); }
-
-/* ── STICKY NAV ── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0;
-  height: var(--nav-height); background: var(--blue-dark);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 2rem; z-index: 200;
-  box-shadow: 0 2px 16px rgba(0,0,0,.2);
-}
-.nav-left { display: flex; align-items: center; gap: 1rem; }
-.nav-back { color: rgba(255,255,255,.8); text-decoration: none; font-size: .85rem; transition: color var(--transition); }
-.nav-back:hover { color: #fff; }
-.nav-sep  { width: 1px; height: 24px; background: rgba(255,255,255,.2); }
-.nav-title { font-family: var(--font-display); color: #fff; font-size: 1.05rem; }
-.btn-dl {
-  display: inline-flex; align-items: center; gap: .4rem;
-  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.3);
-  color: #fff; padding: .4rem 1.1rem; border-radius: 50px;
-  font-family: var(--font-body); font-size: .8rem; font-weight: 600;
-  text-decoration: none; transition: all var(--transition);
-}
-.btn-dl:hover { background: #fff; color: var(--blue-dark); }
-@media(max-width:520px){ .nav-title, .nav-sep { display:none; } }
-
-/* ── HERO ── */
-.hero {
-  background: linear-gradient(135deg, #1A3F63 0%, var(--blue-dark) 45%, #2A6099 100%);
-  padding: 3rem 2.5rem 2.75rem;
-  position: relative; overflow: hidden;
-}
-.hero::after {
-  content:''; position:absolute; inset:0;
-  background: radial-gradient(ellipse at 80% 50%, rgba(46,117,182,.22) 0%, transparent 65%);
-  pointer-events:none;
-}
-.hero-inner { max-width: 820px; margin: 0 auto; position: relative; z-index: 1; }
-.pill-meta  { display:flex; align-items:center; gap:.65rem; margin-bottom:.9rem; flex-wrap:wrap; }
-.pill-badge { font-size:.68rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:.25rem .75rem; border-radius:20px; }
-.badge-amber { background:var(--amber-light); color:var(--amber-dark); }
-.badge-green { background:var(--green-light); color:var(--green-dark); }
-.badge-blue  { background:var(--blue-light);  color:var(--blue-dark); }
-.pill-time   { font-size:.75rem; color:rgba(255,255,255,.55); }
-.hero-title  { font-family:var(--font-display); font-size:clamp(2rem,5vw,3rem); color:#fff; line-height:1.08; margin-bottom:.55rem; }
-.hero-title em { font-style:italic; color:var(--blue-light); }
-.hero-tagline { font-size:1.05rem; color:rgba(255,255,255,.78); max-width:720px; line-height:1.6; margin-bottom:1.4rem; }
-.hero-chips { display:flex; gap:.5rem; flex-wrap:wrap; }
-.chip { font-size:.75rem; font-weight:500; padding:.3rem .85rem; border-radius:20px; border:1px solid rgba(255,255,255,.22); color:rgba(255,255,255,.82); background:rgba(255,255,255,.08); }
-
-/* ── LAYOUT ── */
-.page-wrap { max-width: 820px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
-
-/* ── PANELS ── */
-.panel { background:var(--white); border:1px solid var(--blue-light); border-radius:var(--radius); box-shadow:var(--shadow); padding:1.5rem 1.75rem; margin-bottom:1.5rem; animation: fadeUp .4s both; }
-@keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
-
-/* ── SEC HEAD ── */
-.sec { display:flex; align-items:center; gap:.65rem; font-size:.7rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--blue-mid); margin-bottom:.85rem; }
-.sec::before { content:''; display:block; width:18px; height:3px; border-radius:2px; background:currentColor; flex-shrink:0; }
-.sec.green { color:var(--green-dark); }
-.sec.amber { color:var(--amber-dark); }
-
-/* ── FEATURE GRID ── */
-.feature-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin-bottom:1.25rem; }
-.feature-item { background:var(--blue-pale); padding:1.25rem; border-radius:var(--radius); border-left:4px solid var(--blue-mid); }
-.feature-item h3 { font-size:.95rem; color:var(--blue-dark); margin-bottom:.3rem; font-weight:600; }
-.feature-item p  { font-size:.83rem; color:var(--gray-dark); line-height:1.55; }
-
-/* ── BOXES ── */
 .box { border-radius:var(--radius); padding:1.1rem 1.25rem; margin-bottom:1.1rem; font-size:.88rem; line-height:1.65; }
 .box-blue  { background:var(--blue-pale);   border-left:4px solid var(--blue-mid); }
 .box-green { background:var(--green-light); border-left:4px solid var(--green-dark); }
@@ -265,6 +171,7 @@ footer a { color:var(--blue-light); text-decoration:none; }
 .tag-blue  { background:var(--blue-pale);  color:var(--blue-dark); }
 .tag-green { background:var(--green-light);color:var(--green-dark); }
 .tag-amber { background:var(--amber-light);color:var(--amber-dark); }
+</style>
 </style>
 </head>
 <body>

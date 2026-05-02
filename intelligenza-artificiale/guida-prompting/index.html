@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guida al Prompting con l'IA — Formazione Digitale</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <meta name="description" content="Dal prompt semplice al meta-prompt: anatomia di un prompt efficace, tre esempi completi e template editabili per docenti e studenti. Gratis.">
 <meta name="author" content="Cristiano De Pasquale">
@@ -55,63 +53,12 @@
 }
 </script>
 
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
 
 <!-- GoatCounter tracking -->
 <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
+<link rel="stylesheet" href="/css/shared.css?v=1">
 <style>
-/* ── RESET & TOKENS ─────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --blue-dark:   #1F4E79;
-  --blue-mid:    #2E75B6;
-  --blue-light:  #D6E8F7;
-  --blue-pale:   #EBF3FC;
-  --green-dark:  #1E6B3C;
-  --green-light: #E8F5EE;
-  --amber-dark:  #7D4E00;
-  --amber-light: #FFF3CD;
-  --red-dark:    #8B1A1A;
-  --red-light:   #FDECEA;
-  --purple-dark: #4A148C;
-  --purple-light:#F3E5F5;
-  --gray-dark:   #2C2C2C;
-  --gray-mid:    #666;
-  --gray-light:  #F5F5F5;
-  --white:       #FFFFFF;
-  --font-display: 'DM Serif Display', Georgia, serif;
-  --font-body:    'DM Sans', system-ui, sans-serif;
-  --nav-w: 260px;
-  --header-h: 56px;
-  --radius: 8px;
-  --shadow: 0 2px 12px rgba(31,78,121,.10);
-  --transition: .22s cubic-bezier(.4,0,.2,1);
-}
-
-html { scroll-behavior: smooth; font-size: 16px; }
-body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FBFF; line-height: 1.7; }
-
-/* ── HEADER ─────────────────────────────────────────────────────── */
-#header {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  height: var(--header-h);
-  background: var(--blue-dark);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 1.25rem;
-  box-shadow: 0 2px 16px rgba(0,0,0,.18);
-}
-.header-left { display: flex; align-items: center; gap: .75rem; }
-.header-back { font-size: .78rem; color: rgba(255,255,255,.65); text-decoration: none; display: flex; align-items: center; gap: .3rem; transition: color .2s; }
-.header-back:hover { color: #fff; }
-.header-sep { width: 1px; height: 20px; background: rgba(255,255,255,.2); }
-.header-logo { font-family: var(--font-display); font-size: 1.05rem; color: #fff; letter-spacing: .01em; }
-.header-sub { font-size: .72rem; color: var(--blue-light); font-weight: 300; display: none; }
-@media(min-width:600px){ .header-sub { display: block; } }
-.header-right { display: flex; align-items: center; gap: .5rem; }
-
-/* Mode toggle */
 .mode-toggle {
   display: flex; align-items: center; gap: .4rem;
   background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
@@ -454,6 +401,7 @@ body.aula-mode #slide-nav { display: flex; }
   body.aula-mode #guide-content { display: block !important; }
   body.aula-mode #slides-container { display: none !important; }
 }
+</style>
 </style>
 
 
