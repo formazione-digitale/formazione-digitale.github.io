@@ -109,3 +109,39 @@ async function loadGoatStats() {
 }
 
 loadGoatStats();
+
+// ── SCHEMA.ORG ITEMLIST — generato da manifest.json ─────────────
+// Si aggiorna automaticamente ad ogni nuova risorsa nel manifest.
+// Non modificare questo blocco: aggiorna solo manifest.json.
+async function injectItemListSchema() {
+  try {
+    const res = await fetch('manifest.json');
+    if (!res.ok) return;
+    const manifest = await res.json();
+    const active = manifest.filter(r => r.active);
+
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Risorse di Formazione Digitale",
+      "url": "https://formazione-digitale.github.io/",
+      "numberOfItems": active.length,
+      "itemListElement": active.map((r, i) => ({
+        "@type": "ListItem",
+        "position": i + 1,
+        "name": r.label,
+        "url": "https://formazione-digitale.github.io" + r.path,
+        ...(r.description && { "description": r.description })
+      }))
+    };
+
+    const el = document.createElement('script');
+    el.type = 'application/ld+json';
+    el.textContent = JSON.stringify(schema);
+    document.head.appendChild(el);
+  } catch(e) {
+    // Silenzioso — schema non iniettato
+  }
+}
+
+injectItemListSchema();
