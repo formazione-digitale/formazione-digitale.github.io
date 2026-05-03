@@ -427,6 +427,7 @@ main { max-width: 1040px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
   margin-top: 3rem;
 }
 .cta-strip-text h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--blue-dark); margin-bottom: .3rem; }
+.cta-strip-title { font-family: var(--font-display); font-size: 1.2rem; color: var(--blue-dark); margin-bottom: .3rem; }
 .cta-strip-text p  { font-size: .85rem; color: var(--gray-mid); line-height: 1.5; }
 
 /* ── SEARCH FILTER ──────────────────────────────────────── */
@@ -648,6 +649,12 @@ body.modal-open { overflow: hidden; }
   flex-shrink: 0;
 }
 .modal-name {
+  color: white;
+}
+.modal-person-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 3px;
   color: white;
 }
 .modal-name h3 {
@@ -1150,7 +1157,7 @@ body.modal-open { overflow: hidden; }
   <!-- CTA STRIP -->
   <div class="cta-strip">
     <div class="cta-strip-text">
-      <h3>Nuove risorse in arrivo</h3>
+      <p class="cta-strip-title">Nuove risorse in arrivo</p>
       <p>Il portale è in crescita. Torna a visitarlo o salva il link tra i preferiti per trovare le prossime guide e pillole digitali.</p>
     </div>
     <div style="font-size:2rem;">📌</div>
@@ -1353,12 +1360,12 @@ if (contactForm) {
 </script>
 
 <!-- ── ABOUT MODAL ── -->
-<div class="about-overlay" id="aboutModal" onclick="closeAboutOutside(event)">
+<div class="about-overlay" id="aboutModal" role="dialog" aria-modal="true" aria-label="Chi sono — Cristiano De Pasquale" onclick="closeAboutOutside(event)">
   <div class="modal-box">
     <div class="modal-header">
       <img src="img/formazione-digitale-logo.png" alt="Logo Formazione Digitale" class="modal-logo">
       <div class="modal-name">
-        <h3>Cristiano De Pasquale</h3>
+        <p class="modal-person-name">Cristiano De Pasquale</p>
         <p>Docente di Informatica<br>IIS "Luigi Einaudi" — Chiari (BS)<br>Funzione Strumentale Innovazione Digitale</p>
       </div>
     </div>
@@ -1401,7 +1408,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAbout()
 </script>
 
 <!-- ── MODAL AUTH ───────────────────────────────────────────────── -->
-<div class="auth-overlay" id="auth-modal" role="dialog" aria-modal="true">
+<div class="auth-overlay" id="auth-modal" role="dialog" aria-modal="true" aria-label="Accedi al portale">
   <div class="auth-panel" style="position:relative;">
     <button class="auth-close" onclick="closeAuthModal()" aria-label="Chiudi">✕</button>
     <div class="auth-title">Accedi al portale</div>
@@ -1415,7 +1422,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAbout()
 </div>
 
 <!-- ── MODAL PROFILO ─────────────────────────────────────────────── -->
-<div class="auth-overlay" id="profile-modal" role="dialog" aria-modal="true">
+<div class="auth-overlay" id="profile-modal" role="dialog" aria-modal="true" aria-label="Il tuo profilo">
   <div class="auth-panel" style="position:relative;">
     <button class="auth-close" onclick="closeProfileModal()" aria-label="Chiudi">✕</button>
     <div class="auth-title">Il tuo profilo</div>
