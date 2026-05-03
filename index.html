@@ -104,13 +104,14 @@ header {
 .header-brand { display: flex; flex-direction: column; }
 .header-name  { font-family: var(--font-display); font-size: 1.1rem; color: #fff; }
 .header-tag   { font-size: .68rem; color: var(--blue-light); font-weight: 300; letter-spacing: .04em; }
-.header-right { display: flex; align-items: center; gap: 1.5rem; }
+.header-right { display: flex; align-items: center; gap: 1rem; }
 .header-nav   { display: flex; gap: 1.5rem; }
 .header-nav a {
-  font-size: .82rem; color: rgba(255,255,255,.75);
+  font-size: .9rem; font-weight: 500; color: rgba(255,255,255,.85);
   text-decoration: none; transition: color var(--transition);
 }
 .header-nav a:hover { color: #fff; }
+.header-sep-v { width: 1px; height: 22px; background: rgba(255,255,255,.25); flex-shrink: 0; }
 
 /* Bottone Scrivici */
 .btn-contact {
@@ -426,6 +427,7 @@ main { max-width: 1040px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
   margin-top: 3rem;
 }
 .cta-strip-text h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--blue-dark); margin-bottom: .3rem; }
+.cta-strip-title { font-family: var(--font-display); font-size: 1.2rem; color: var(--blue-dark); margin-bottom: .3rem; }
 .cta-strip-text p  { font-size: .85rem; color: var(--gray-mid); line-height: 1.5; }
 
 /* ── SEARCH FILTER ──────────────────────────────────────── */
@@ -510,16 +512,22 @@ footer strong { color: rgba(255,255,255,.9); }
   line-height: 1.55; margin-top: .3rem;
 }
 .modal-close {
-  flex-shrink: 0; background: rgba(255,255,255,.15); border: none;
-  width: 32px; height: 32px; border-radius: 50%;
-  font-size: 1rem; cursor: pointer; color: rgba(255,255,255,.8);
+  flex-shrink: 0; background: rgba(255,255,255,.15); border: 1.5px solid rgba(255,255,255,.4);
+  width: 36px; height: 36px; border-radius: 50%;
+  font-size: 1.2rem; cursor: pointer; 
+  color: #fff; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
-  transition: background var(--transition), color var(--transition);
+  transition: background var(--transition);
 }
-.modal-close:hover { background: rgba(255,255,255,.28); color: #fff; }
 
-/* Body form */
-.modal-body-form { padding: 1.75rem 1.75rem 1.5rem; }
+.modal-close:hover { background: rgba(255,255,255,.28); }
+
+/* Body form con scroll */
+.modal-body-form {
+  padding: 1.75rem 1.75rem 1.5rem;
+  max-height: calc(90vh - 100px);
+  overflow-y: auto;
+}
 
 /* Form */
 .contact-form { display: flex; flex-direction: column; gap: 1rem; }
@@ -552,7 +560,7 @@ footer strong { color: rgba(255,255,255,.9); }
 /* Separatore sezione facoltativa */
 .cf-optional-divider {
   display: flex; align-items: center; gap: .75rem;
-  margin: .5rem 0 .25rem;
+  margin: .25rem 0;
 }
 .cf-optional-divider::before,
 .cf-optional-divider::after {
@@ -595,6 +603,8 @@ footer strong { color: rgba(255,255,255,.9); }
   display: flex; flex-direction: column; align-items: center;
   gap: .6rem; text-align: center; padding: 3rem 2rem;
 }
+.cf-success .cf-btn { align-self: center; }
+
 .cf-success[hidden] { display: none; }
 .cf-success-icon {
   width: 56px; height: 56px; border-radius: 50%;
@@ -609,27 +619,23 @@ footer strong { color: rgba(255,255,255,.9); }
 body.modal-open { overflow: hidden; }
 
 @media(max-width:540px) {
-  .modal-head       { padding: 1.25rem 1.25rem 1rem; }
-  .modal-body-form  { padding: 1.25rem 1.25rem 1rem; }
-  .modal-title      { font-size: 1.3rem; }
+  .modal-head      { padding: 1.25rem 1.25rem 1rem; }
+  .modal-body-form { padding: 1.25rem 1.25rem 1rem; }
+  .modal-title     { font-size: 1.3rem; }
 }
 
 /* ── ABOUT MODAL ── */
 .about-trigger {
-  font-size: 0.82rem;
-  color: rgba(255,255,255,0.75);
-  text-decoration: none;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  transition: color 0.2s;
-  background: none;
-  border: none;
-  font-family: inherit;
-  padding: 0;
+  font-family: var(--font-body);
+  font-size: .8rem; font-weight: 600;
+  color: var(--blue-dark); background: #fff;
+  border: none; border-radius: 50px;
+  padding: .38rem 1rem;
+  cursor: pointer; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 5px;
+  transition: background var(--transition), transform .15s ease;
 }
-.about-trigger:hover { color: white; }
+.about-trigger:hover { background: var(--blue-light); transform: translateY(-1px); color: var(--blue-dark); }
 
 .about-overlay {
   display: none;
@@ -673,6 +679,12 @@ body.modal-open { overflow: hidden; }
   flex-shrink: 0;
 }
 .modal-name {
+  color: white;
+}
+.modal-person-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 3px;
   color: white;
 }
 .modal-name h3 {
@@ -786,9 +798,10 @@ body.modal-open { overflow: hidden; }
       <a href="#strumenti">Strumenti</a>
       <a href="#pillole">Pillole</a>
     </nav>
-    <button onclick="openAbout()" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); color:rgba(255,255,255,0.85); border-radius:20px; padding:5px 14px; font-size:0.8rem; cursor:pointer; font-family:inherit; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">👤 Chi sono</button>
+    <div class="header-sep-v"></div>
+    <button class="btn-contact" onclick="openAbout()">👤 Chi sono</button>
     <button class="btn-contact" onclick="openModal()">✉ Contatti</button>
-    <button id="auth-btn" onclick="openAuthModal()">👤 Accedi</button>
+    <button class="btn-contact" id="auth-btn" onclick="openAuthModal()">🔐 Accedi</button>
   </div>
 </header>
 
@@ -1174,7 +1187,7 @@ body.modal-open { overflow: hidden; }
   <!-- CTA STRIP -->
   <div class="cta-strip">
     <div class="cta-strip-text">
-      <h3>Nuove risorse in arrivo</h3>
+      <p class="cta-strip-title">Nuove risorse in arrivo</p>
       <p>Il portale è in crescita. Torna a visitarlo o salva il link tra i preferiti per trovare le prossime guide e pillole digitali.</p>
     </div>
     <div style="font-size:2rem;">📌</div>
@@ -1203,7 +1216,11 @@ body.modal-open { overflow: hidden; }
         <div class="modal-title" id="modal-title-text">Scrivimi</div>
         <div class="modal-sub">Un errore, un suggerimento, una proposta — ogni messaggio è benvenuto.</div>
       </div>
-      <button class="modal-close" onclick="closeModal()" aria-label="Chiudi">✕</button>
+      <button class="modal-close" onclick="closeModal()" aria-label="Chiudi">
+		  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M1 1l12 12M13 1L1 13" stroke="white" stroke-width="2" stroke-linecap="round"/>
+		  </svg>
+		</button>
     </div>
 
     <div class="modal-body-form">
@@ -1265,14 +1282,14 @@ body.modal-open { overflow: hidden; }
 
     </form>
 
-    <div class="cf-success" id="cf-success" hidden>
-      <div class="cf-success-icon">✓</div>
-      <strong>Grazie per il tuo messaggio!</strong>
-      <p>Ti risponderemo il prima possibile.</p>
-    </div>
+	<div class="cf-success" id="cf-success" hidden>
+	  <div class="cf-success-icon">✓</div>
+	  <strong>Grazie per il tuo messaggio!</strong>
+	  <p>Ti risponderemo il prima possibile.</p>
+	  <button class="cf-btn" onclick="closeModal()" style="margin-top:.5rem;">Chiudi la finestra</button>
+	</div>
 
     </div><!-- fine modal-body-form -->
-
   </div>
 </div>
 
@@ -1382,12 +1399,12 @@ if (contactForm) {
 </script>
 
 <!-- ── ABOUT MODAL ── -->
-<div class="about-overlay" id="aboutModal" onclick="closeAboutOutside(event)">
+<div class="about-overlay" id="aboutModal" role="dialog" aria-modal="true" aria-label="Chi sono — Cristiano De Pasquale" onclick="closeAboutOutside(event)">
   <div class="modal-box">
     <div class="modal-header">
       <img src="img/formazione-digitale-logo.png" alt="Logo Formazione Digitale" class="modal-logo">
       <div class="modal-name">
-        <h3>Cristiano De Pasquale</h3>
+        <p class="modal-person-name">Cristiano De Pasquale</p>
         <p>Docente di Informatica<br>IIS "Luigi Einaudi" — Chiari (BS)<br>Funzione Strumentale Innovazione Digitale</p>
       </div>
     </div>
@@ -1430,7 +1447,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAbout()
 </script>
 
 <!-- ── MODAL AUTH ───────────────────────────────────────────────── -->
-<div class="auth-overlay" id="auth-modal" role="dialog" aria-modal="true">
+<div class="auth-overlay" id="auth-modal" role="dialog" aria-modal="true" aria-label="Accedi al portale">
   <div class="auth-panel" style="position:relative;">
     <button class="auth-close" onclick="closeAuthModal()" aria-label="Chiudi">✕</button>
     <div class="auth-title">Accedi al portale</div>
@@ -1444,7 +1461,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAbout()
 </div>
 
 <!-- ── MODAL PROFILO ─────────────────────────────────────────────── -->
-<div class="auth-overlay" id="profile-modal" role="dialog" aria-modal="true">
+<div class="auth-overlay" id="profile-modal" role="dialog" aria-modal="true" aria-label="Il tuo profilo">
   <div class="auth-panel" style="position:relative;">
     <button class="auth-close" onclick="closeProfileModal()" aria-label="Chiudi">✕</button>
     <div class="auth-title">Il tuo profilo</div>
