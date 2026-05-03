@@ -98,7 +98,7 @@ function renderAuthUI() {
     btn.title = email;
     btn.onclick = openProfileModal;
   } else {
-    btn.innerHTML = '👤 Accedi';
+    btn.innerHTML = '🔐 Accedi';
     btn.onclick = openAuthModal;
   }
 }

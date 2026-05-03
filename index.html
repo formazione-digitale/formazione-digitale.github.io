@@ -104,13 +104,14 @@ header {
 .header-brand { display: flex; flex-direction: column; }
 .header-name  { font-family: var(--font-display); font-size: 1.1rem; color: #fff; }
 .header-tag   { font-size: .68rem; color: var(--blue-light); font-weight: 300; letter-spacing: .04em; }
-.header-right { display: flex; align-items: center; gap: 1.5rem; }
+.header-right { display: flex; align-items: center; gap: 1rem; }
 .header-nav   { display: flex; gap: 1.5rem; }
 .header-nav a {
-  font-size: .82rem; color: rgba(255,255,255,.75);
+  font-size: .9rem; font-weight: 500; color: rgba(255,255,255,.85);
   text-decoration: none; transition: color var(--transition);
 }
 .header-nav a:hover { color: #fff; }
+.header-sep-v { width: 1px; height: 22px; background: rgba(255,255,255,.25); flex-shrink: 0; }
 
 /* Bottone Scrivici */
 .btn-contact {
@@ -594,20 +595,16 @@ body.modal-open { overflow: hidden; }
 
 /* ── ABOUT MODAL ── */
 .about-trigger {
-  font-size: 0.82rem;
-  color: rgba(255,255,255,0.75);
-  text-decoration: none;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  transition: color 0.2s;
-  background: none;
-  border: none;
-  font-family: inherit;
-  padding: 0;
+  font-family: var(--font-body);
+  font-size: .8rem; font-weight: 600;
+  color: var(--blue-dark); background: #fff;
+  border: none; border-radius: 50px;
+  padding: .38rem 1rem;
+  cursor: pointer; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 5px;
+  transition: background var(--transition), transform .15s ease;
 }
-.about-trigger:hover { color: white; }
+.about-trigger:hover { background: var(--blue-light); transform: translateY(-1px); color: var(--blue-dark); }
 
 .about-overlay {
   display: none;
@@ -764,9 +761,10 @@ body.modal-open { overflow: hidden; }
       <a href="#strumenti">Strumenti</a>
       <a href="#pillole">Pillole</a>
     </nav>
-    <button onclick="openAbout()" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); color:rgba(255,255,255,0.85); border-radius:20px; padding:5px 14px; font-size:0.8rem; cursor:pointer; font-family:inherit; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">👤 Chi sono</button>
+    <div class="header-sep-v"></div>
+    <button class="btn-contact" onclick="openAbout()">👤 Chi sono</button>
     <button class="btn-contact" onclick="openModal()">✉ Contatti</button>
-    <button id="auth-btn" onclick="openAuthModal()">👤 Accedi</button>
+    <button class="btn-contact" id="auth-btn" onclick="openAuthModal()">🔐 Accedi</button>
   </div>
 </header>
 
