@@ -1,0 +1,22 @@
+name: Supabase Keep-Alive
+
+# Esegue ogni 3 giorni alle 08:00 UTC
+# e manualmente dal tab Actions su GitHub
+on:
+  schedule:
+    - cron: '0 8 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase
+        run: |
+          curl -s \
+            -o /dev/null \
+            -w "HTTP status: %{http_code}\n" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
+            "https://xfefrhaleoqvpzsrrepq.supabase.co/rest/v1/profiles?select=id&limit=1"
+          echo "Keep-alive completato: $(date)"
