@@ -484,7 +484,9 @@ footer strong { color: rgba(255,255,255,.9); }
 .modal-panel {
   background: var(--white);
   border-radius: 16px;
-  box-shadow: 0 24px 64px rgba(15,35,60,.35);
+  border-top: 4px solid var(--blue-mid);
+  box-shadow: 0 24px 64px rgba(15,35,60,.45),
+              0 0 0 1px rgba(46,117,182,.12);
   width: 100%; max-width: 520px;
   max-height: 90vh; overflow-y: auto;
   padding: 2.25rem 2rem 2rem;
@@ -492,6 +494,7 @@ footer strong { color: rgba(255,255,255,.9); }
   transform: translateY(28px);
   transition: transform .32s cubic-bezier(.34,1.56,.64,1);
 }
+
 .modal-overlay.is-open .modal-panel { transform: translateY(0); }
 
 /* Header modal */
@@ -508,13 +511,19 @@ footer strong { color: rgba(255,255,255,.9); }
   line-height: 1.55; margin-top: .3rem;
 }
 .modal-close {
-  flex-shrink: 0; background: var(--gray-light); border: none;
-  width: 32px; height: 32px; border-radius: 50%;
-  font-size: 1rem; cursor: pointer; color: var(--gray-mid);
+  flex-shrink: 0;
+  background: var(--blue-pale);
+  border: 1.5px solid var(--blue-light);
+  width: 36px; height: 36px; border-radius: 50%;
+  font-size: 1rem; cursor: pointer; color: var(--blue-mid);
   display: flex; align-items: center; justify-content: center;
-  transition: background var(--transition), color var(--transition);
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
 }
-.modal-close:hover { background: var(--blue-light); color: var(--blue-dark); }
+.modal-close:hover {
+  background: var(--blue-dark);
+  border-color: var(--blue-dark);
+  color: #fff;
+}
 
 /* Form */
 .contact-form { display: flex; flex-direction: column; gap: 1.1rem; }
