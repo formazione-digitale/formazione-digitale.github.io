@@ -452,6 +452,7 @@ const EXAMPLES = {
 <link rel="icon" type="image/png" href="/img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="dns-prefetch" href="//analytics.esempio.it">
+<meta name="theme-color" content="#1F4E79">
 <meta property="og:title" content="La mia pagina di esempio">
 <meta property="og:description" content="Una descrizione coinvolgente per i social media.">
 <meta property="og:url" content="https://esempio.it/pagina/">
@@ -795,9 +796,12 @@ function runPerfChecks(head) {
     checks.push({ status: 'ok', icon: '✅', title: 'preload dichiarato', detail: 'Risorse critiche caricate in anticipo — ottimo per il LCP.' });
   }
 
-  // Google Fonts + font-display
-  const hasGoogleFonts = /fonts\.googleapis\.com/.test(raw);
-  const hasFontDisplay = /font-display|display=swap/.test(raw);
+  // Google Fonts caricati via stylesheet (non solo preconnect)
+  const googleFontsLinks = Array.from(head.querySelectorAll('link[rel="stylesheet"]'))
+    .filter(el => (el.getAttribute('href') || '').includes('fonts.googleapis.com'));
+  const hasGoogleFonts = googleFontsLinks.length > 0;
+  const hasFontDisplay = googleFontsLinks.some(el => (el.getAttribute('href') || '').includes('display=swap'))
+    || /font-display\s*:\s*swap/.test(raw);
   if (hasGoogleFonts && !hasFontDisplay) {
     checks.push({ status: 'warn', icon: '⚠️', title: 'Google Fonts senza font-display', detail: 'Aggiungi &display=swap all\'URL dei font Google per evitare il FOIT e migliorare il LCP.' });
   } else if (hasGoogleFonts) {
@@ -879,9 +883,12 @@ function renderReport(checks, perfChecks, scoreData) {
   const panel = document.getElementById('report-panel');
   const cls = scoreClass(score);
   const allChecks = [...checks, ...(perfChecks || [])];
-  const nOk    = allChecks.filter(c => c.status === 'ok').length;
-  const nWarn  = allChecks.filter(c => c.status === 'warn').length;
-  const nError = allChecks.filter(c => c.status === 'error').length;
+  const nOk    = checks.filter(c => c.status === 'ok').length;
+  const nWarn  = checks.filter(c => c.status === 'warn').length;
+  const nError = checks.filter(c => c.status === 'error').length;
+  const nPOk   = (perfChecks||[]).filter(c => c.status === 'ok').length;
+  const nPWarn = (perfChecks||[]).filter(c => c.status === 'warn').length;
+  const nPError= (perfChecks||[]).filter(c => c.status === 'error').length;
 
   const ORDER = { error: 0, warn: 1, ok: 2, info: 3 };
   const sorted = [...checks].sort((a, b) => ORDER[a.status] - ORDER[b.status]);
@@ -896,7 +903,8 @@ function renderReport(checks, perfChecks, scoreData) {
       </div>
       <div class="score-info">
         <div class="score-label">${scoreLabel(score)}</div>
-        <div class="score-sublabel">✅ ${nOk} ok · ⚠️ ${nWarn} warn · ❌ ${nError} errori</div>
+        <div class="score-sublabel">SEO: ✅ ${nOk} · ⚠️ ${nWarn} · ❌ ${nError}</div>
+        <div class="score-sublabel">Perf: ✅ ${nPOk} · ⚠️ ${nPWarn} · ❌ ${nPError}</div>
         ${total < 120 ? '<div class="score-note">⚠ Head parziale — il punteggio è più affidabile su head completi</div>' : ''}
       </div>
     </div>`;
