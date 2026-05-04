@@ -397,9 +397,10 @@ footer a { color: var(--blue-light); text-decoration: none; }
 
 /* ── 17. HIGHLIGHT GRID ──────────────────────────────────────────── */
 .highlight-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr));
+  display: grid; grid-template-columns: repeat(3, 1fr);
   gap: .85rem; margin: 1.25rem 0;
 }
+@media(max-width:600px) { .highlight-grid { grid-template-columns: 1fr; } }
 .highlight-card {
   background: var(--blue-pale); border: 1px solid var(--blue-light);
   border-radius: var(--radius); padding: 1rem .9rem; text-align: center;
