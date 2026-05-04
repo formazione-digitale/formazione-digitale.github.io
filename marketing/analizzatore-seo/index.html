@@ -29,25 +29,41 @@
 <link rel="stylesheet" href="/css/shared.css?v=2">
 <style>
 
-/* ── LAYOUT STRUMENTO ── */
+/* ── LAYOUT STRUMENTO — 3 colonne: input | serp+report ── */
 .tool-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  grid-template-rows: auto 1fr;
+  gap: 1.25rem;
   margin-top: 1.5rem;
+  align-items: start;
 }
 @media(max-width:800px) { .tool-layout { grid-template-columns: 1fr; } }
 
 /* ── INPUT PANEL ── */
 .input-panel {
-  display: flex; flex-direction: column; gap: 1rem;
+  display: flex; flex-direction: column; gap: .85rem;
+  grid-row: 1 / 3;
 }
-.input-panel label {
+.input-label-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: .5rem; flex-wrap: wrap;
+}
+.input-label {
   font-size: .82rem; font-weight: 600; color: var(--blue-dark);
 }
+.sample-btn {
+  display: inline-flex; align-items: center; gap: .3rem;
+  font-size: .78rem; color: #fff; background: var(--blue-mid);
+  border: none; cursor: pointer; padding: .3rem .85rem;
+  border-radius: 20px; font-family: var(--font-body); font-weight: 500;
+  transition: background var(--transition);
+}
+.sample-btn:hover { background: var(--blue-dark); }
+
 .head-input {
-  width: 100%; min-height: 320px;
-  font-family: 'Courier New', monospace; font-size: .8rem;
+  width: 100%; min-height: 360px;
+  font-family: 'Courier New', monospace; font-size: .78rem;
   line-height: 1.6; color: #2C2C2C;
   border: 1.5px solid var(--blue-light); border-radius: var(--radius);
   padding: 1rem; resize: vertical; outline: none;
@@ -59,13 +75,14 @@
   background: #fff;
   box-shadow: 0 0 0 3px rgba(46,117,182,.12);
 }
+.btn-row { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
 .btn-analyze {
   background: var(--blue-dark); color: #fff;
   border: none; border-radius: 50px;
   padding: .75rem 2rem; font-size: .9rem; font-weight: 600;
   font-family: var(--font-body); cursor: pointer;
   transition: background var(--transition), transform .15s ease;
-  align-self: flex-start;
+  flex: 1;
 }
 .btn-analyze:hover    { background: var(--blue-mid); transform: translateY(-2px); }
 .btn-analyze:disabled { opacity: .5; cursor: not-allowed; transform: none; }
@@ -77,33 +94,52 @@
   transition: all var(--transition);
 }
 .btn-clear:hover { border-color: var(--blue-mid); color: var(--blue-dark); }
-.btn-row { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
 
-.sample-btn {
-  font-size: .75rem; color: var(--blue-mid); background: none;
-  border: none; cursor: pointer; padding: 0; font-family: var(--font-body);
-  text-decoration: underline; text-underline-offset: 2px;
+/* ── SERP PREVIEW — top right ── */
+.serp-panel {
+  grid-column: 2; grid-row: 1;
 }
-.sample-btn:hover { color: var(--blue-dark); }
+
+/* ── REPORT PANEL — bottom right, scroll interno ── */
+.report-panel {
+  grid-column: 2; grid-row: 2;
+  max-height: 520px;
+  overflow-y: auto;
+  display: flex; flex-direction: column; gap: .5rem;
+  padding-right: .25rem;
+}
+.report-panel::-webkit-scrollbar { width: 5px; }
+.report-panel::-webkit-scrollbar-track { background: var(--blue-pale); border-radius: 4px; }
+.report-panel::-webkit-scrollbar-thumb { background: var(--blue-light); border-radius: 4px; }
+@media(max-width:800px) {
+  .input-panel  { grid-row: auto; }
+  .serp-panel   { grid-column: 1; grid-row: auto; }
+  .report-panel { grid-column: 1; grid-row: auto; max-height: none; }
+}
 
 /* ── SCORE CIRCLE ── */
 .score-wrap {
-  display: flex; flex-direction: column; align-items: center;
-  gap: .5rem; margin-bottom: 1.5rem;
+  display: flex; align-items: center;
+  gap: 1rem; margin-bottom: 1rem;
+  padding: .75rem 1rem;
+  background: var(--blue-pale); border-radius: var(--radius);
+  border: 1px solid var(--blue-light);
 }
 .score-circle {
-  width: 96px; height: 96px; border-radius: 50%;
+  width: 72px; height: 72px; border-radius: 50%; flex-shrink: 0;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  border: 5px solid;
+  border: 4px solid;
   transition: all .5s ease;
 }
 .score-circle.excellent { border-color: var(--green-dark); background: var(--green-light); }
 .score-circle.good      { border-color: #2196F3; background: #E3F2FD; }
 .score-circle.warning   { border-color: var(--amber-dark); background: var(--amber-light); }
 .score-circle.poor      { border-color: #c5221f; background: #fce8e6; }
-.score-num  { font-family: var(--font-display); font-size: 1.8rem; line-height: 1; }
-.score-max  { font-size: .68rem; color: var(--gray-mid); }
-.score-label { font-size: .82rem; font-weight: 600; }
+.score-num  { font-family: var(--font-display); font-size: 1.5rem; line-height: 1; }
+.score-max  { font-size: .62rem; color: var(--gray-mid); }
+.score-info { display: flex; flex-direction: column; gap: .15rem; }
+.score-label { font-size: .9rem; font-weight: 700; }
+.score-sublabel { font-size: .75rem; color: var(--gray-mid); }
 .score-circle.excellent .score-num  { color: var(--green-dark); }
 .score-circle.good      .score-num  { color: #1565C0; }
 .score-circle.warning   .score-num  { color: var(--amber-dark); }
@@ -189,12 +225,12 @@ footer strong { color: rgba(255,255,255,.9); }
 <div id="main" style="max-width:1100px;">
 
 <!-- COVER -->
-<div class="cover-block">
-  <div class="cover-eyebrow">Formazione Digitale · Strumento interattivo · SEO</div>
-  <div class="cover-title">Analizzatore<br><em>SEO &lt;head&gt;</em></div>
-  <p class="cover-desc">Incolla il codice del tag <code style="background:rgba(255,255,255,.15);padding:.1rem .4rem;border-radius:4px;">&lt;head&gt;</code> della tua pagina e ricevi un report SEO immediato su tutti gli elementi che contano per Google.</p>
-  <div class="cover-divider"></div>
-  <p class="cover-intro">🔍 Strumento gratuito · Analisi locale nel browser · Nessun dato viene inviato</p>
+<div class="cover-block" style="padding:1.75rem 2rem 1.5rem;">
+  <div class="cover-title" style="font-size:clamp(1.6rem,3vw,2.2rem); white-space:nowrap;">Analizzatore SEO &lt;head&gt;</div>
+  <p style="font-size:1rem; color:rgba(255,255,255,.85); line-height:1.65; margin-top:.75rem; max-width:600px;">
+    Incolla il codice del tag <code style="background:rgba(255,255,255,.18);padding:.1rem .4rem;border-radius:4px;font-size:.9em;">&lt;head&gt;</code> della tua pagina e ricevi un report SEO immediato su tutti gli elementi che contano per Google.
+  </p>
+  <p style="font-size:.8rem; color:rgba(255,255,255,.55); margin-top:.5rem;">🔒 Analisi locale nel browser · Nessun dato viene inviato</p>
 </div>
 
 <!-- TOOL -->
@@ -202,10 +238,10 @@ footer strong { color: rgba(255,255,255,.9); }
 
   <!-- INPUT -->
   <div class="input-panel">
-    <label for="head-input">
-      Incolla qui il codice del tuo &lt;head&gt;
-      <button class="sample-btn" onclick="loadSample()" style="margin-left:.5rem;">Carica esempio</button>
-    </label>
+    <div class="input-label-row">
+      <span class="input-label">Incolla il codice del tuo &lt;head&gt;</span>
+      <button class="sample-btn" onclick="loadSample()">⚡ Carica esempio</button>
+    </div>
     <textarea
       class="head-input"
       id="head-input"
@@ -216,15 +252,23 @@ footer strong { color: rgba(255,255,255,.9); }
       <button class="btn-analyze" onclick="analyze()">🔍 Analizza</button>
       <button class="btn-clear" onclick="clearAll()">Pulisci</button>
     </div>
+  </div>
+
+  <!-- SERP PREVIEW — top right -->
+  <div class="serp-panel">
     <div class="serp-preview" id="serp-preview" style="display:none;">
       <div class="serp-preview-label">Anteprima SERP — Google</div>
-      <div class="serp-url" id="serp-url">formazione-digitale.github.io</div>
+      <div class="serp-url" id="serp-url">tuodominio.it › pagina</div>
       <div class="serp-title" id="serp-title">—</div>
       <div class="serp-desc" id="serp-desc">—</div>
     </div>
+    <div id="serp-empty" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:120px;background:var(--gray-light);border-radius:var(--radius);color:var(--gray-mid);font-size:.82rem;gap:.4rem;">
+      <span style="font-size:1.5rem;opacity:.4;">🖥️</span>
+      <span>L'anteprima SERP apparirà qui</span>
+    </div>
   </div>
 
-  <!-- REPORT -->
+  <!-- REPORT — bottom right con scroll interno -->
   <div class="report-panel" id="report-panel">
     <div class="report-empty" id="report-empty">
       <div class="report-empty-icon">🔍</div>
@@ -291,6 +335,7 @@ function clearAll() {
       <p>Incolla il codice del tuo &lt;head&gt;<br>e clicca <strong>Analizza</strong></p>
     </div>`;
   document.getElementById('serp-preview').style.display = 'none';
+  document.getElementById('serp-empty').style.display   = 'flex';
 }
 
 // ── PARSER ───────────────────────────────────────────────────
@@ -491,20 +536,34 @@ function scoreLabel(s) {
 function renderReport(checks, score, head) {
   const panel = document.getElementById('report-panel');
 
-  // Score
   const cls = scoreClass(score);
+
+  // Conta per tipo
+  const nOk    = checks.filter(c => c.status === 'ok').length;
+  const nWarn  = checks.filter(c => c.status === 'warn').length;
+  const nError = checks.filter(c => c.status === 'error').length;
+
+  // Score orizzontale compatto
   let html = `
     <div class="score-wrap">
       <div class="score-circle ${cls}">
         <span class="score-num">${score}</span>
         <span class="score-max">/100</span>
       </div>
-      <div class="score-label">${scoreLabel(score)}</div>
+      <div class="score-info">
+        <div class="score-label ${cls === 'excellent' ? 'score-circle' : ''}">${scoreLabel(score)}</div>
+        <div class="score-sublabel">
+          ✅ ${nOk} ok &nbsp;·&nbsp; ⚠️ ${nWarn} warn &nbsp;·&nbsp; ❌ ${nError} errori
+        </div>
+      </div>
     </div>`;
 
-  // Raggruppa per group
+  // Raggruppa per group, ordina: error → warn → ok → info
+  const ORDER = { error: 0, warn: 1, ok: 2, info: 3 };
+  const sorted = [...checks].sort((a, b) => ORDER[a.status] - ORDER[b.status]);
+
   const groups = {};
-  checks.forEach(c => {
+  sorted.forEach(c => {
     if (!groups[c.group]) groups[c.group] = [];
     groups[c.group].push(c);
   });
@@ -548,13 +607,15 @@ function updateSerpPreview(head) {
     } catch(e) {}
   }
 
-  const preview = document.getElementById('serp-preview');
-  const titleEl2 = document.getElementById('serp-title');
+  const preview   = document.getElementById('serp-preview');
+  const emptyEl   = document.getElementById('serp-empty');
+  const titleEl2  = document.getElementById('serp-title');
   titleEl2.textContent = title.length > 60 ? title.substring(0,57)+'…' : title;
-  titleEl2.className = 'serp-title' + (title.length > 60 ? ' too-long' : title.length < 30 ? ' too-short' : '');
-  document.getElementById('serp-url').textContent = url || 'tuodominio.it › pagina';
+  titleEl2.className   = 'serp-title' + (title.length > 60 ? ' too-long' : title.length < 30 ? ' too-short' : '');
+  document.getElementById('serp-url').textContent  = url || 'tuodominio.it › pagina';
   document.getElementById('serp-desc').textContent = desc.length > 160 ? desc.substring(0,157)+'…' : desc;
-  preview.style.display = 'block';
+  preview.style.display  = 'block';
+  emptyEl.style.display  = 'none';
 }
 
 // ── MAIN ─────────────────────────────────────────────────────
