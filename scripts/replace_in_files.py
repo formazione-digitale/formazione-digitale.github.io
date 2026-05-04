@@ -13,8 +13,8 @@ Lo script è idempotente: se TROVA non è presente ma SOSTITUISCI sì, salta il 
 import os
 
 # ── CONFIGURAZIONE ────────────────────────────────────────────────
-TROVA      = ' target="_blank"'
-SOSTITUISCI = '""'
+TROVA      = '"""'
+SOSTITUISCI = '"'
 
 # Cartelle da escludere dall'esplorazione
 EXCLUDE_DIRS = {'.git', 'node_modules', '.github', '.cache', 'docs'}
