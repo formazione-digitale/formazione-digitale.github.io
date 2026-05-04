@@ -1,0 +1,256 @@
+<!--
+  ════════════════════════════════════════════════════════════════
+  BADGE DIGCOMP/DIGCOMPEDU — Snippet di integrazione
+  Per il portale formazione-digitale.github.io
+  ════════════════════════════════════════════════════════════════
+
+  ISTRUZIONI:
+  1. Incolla il blocco <style> dentro il <style> esistente di index.html
+  2. Incolla il blocco JS dentro il <script> esistente (dopo updateStats())
+  3. Sostituisci il manifest.json con il file manifest_digcomp.json
+  4. I badge appaiono automaticamente in ogni card-footer
+
+  NESSUN'ALTRA MODIFICA ALL'HTML DELLE CARD È NECESSARIA.
+  ════════════════════════════════════════════════════════════════
+-->
+
+<!-- ══════════════════════════════════════════════════════════════
+     SEZIONE 1 — CSS DA INCOLLARE NEL <style> DI INDEX.HTML
+     ═══════════════════════════════════════════════════════════════ -->
+<style>
+
+/* ── BADGE DIGCOMP ───────────────────────────────────────────── */
+.dc-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem;
+  padding: .45rem 1.2rem .5rem;
+  border-top: 1px solid var(--blue-light);
+}
+.dc-badge {
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  padding: .15rem .45rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: .85;
+  transition: opacity .2s ease;
+}
+.card:hover .dc-badge { opacity: 1; }
+
+/* DigComp — blu */
+.dc-badge.dc { background: var(--blue-pale); color: var(--blue-dark); }
+/* DigCompEdu — verde */
+.dc-badge.dce { background: var(--green-light); color: var(--green-dark); }
+
+/* Livello pill */
+.dc-level {
+  font-size: .58rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: .13rem .4rem;
+  border-radius: 4px;
+  color: var(--gray-mid);
+  background: var(--gray-light);
+  white-space: nowrap;
+}
+.dc-level.foundation { color: #2E75B6; background: #EBF3FC; }
+.dc-level.intermediate { color: #1E6B3C; background: #E8F5EE; }
+.dc-level.advanced { color: #7D4E00; background: #FFF3CD; }
+
+/* ── FILTRO AREA DIGCOMP ─────────────────────────────────────── */
+.filter-bar-dc {
+  display: flex;
+  gap: .4rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  margin-top: -.75rem; /* avvicina al filtro principale */
+}
+.filter-btn-dc {
+  padding: .3rem .8rem;
+  border-radius: 20px;
+  font-size: .72rem;
+  border: 1.5px solid var(--blue-light);
+  background: var(--white);
+  color: var(--gray-mid);
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: all var(--transition);
+}
+.filter-btn-dc:hover  { border-color: var(--blue-mid); color: var(--blue-mid); }
+.filter-btn-dc.active { background: var(--blue-dark); color: #fff; border-color: var(--blue-dark); }
+
+/* Label "Area DigComp" */
+.filter-dc-label {
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gray-mid);
+  align-self: center;
+  padding: 0 .2rem;
+}
+
+</style>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SEZIONE 2 — HTML DA INCOLLARE NELL'INDEX.HTML
+     subito DOPO il .filter-bar esistente (le 4 pill Tutto/Guide/Strumenti/Pillole)
+     ═══════════════════════════════════════════════════════════════ -->
+
+<div class="filter-bar-dc" id="filter-bar-dc" style="display:none;">
+  <span class="filter-dc-label">Area DigComp:</span>
+  <button class="filter-btn-dc active" onclick="setDCFilter('all',this)">Tutte</button>
+  <button class="filter-btn-dc" onclick="setDCFilter('informazioni',this)">📋 Informazioni</button>
+  <button class="filter-btn-dc" onclick="setDCFilter('comunicazione',this)">💬 Comunicazione</button>
+  <button class="filter-btn-dc" onclick="setDCFilter('creazione',this)">✏️ Creazione</button>
+  <button class="filter-btn-dc" onclick="setDCFilter('sicurezza',this)">🔒 Sicurezza</button>
+  <button class="filter-btn-dc" onclick="setDCFilter('problem-solving',this)">⚙️ Problem Solving</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SEZIONE 3 — JAVASCRIPT DA INCOLLARE NEL <script> DI INDEX.HTML
+     (alla fine del blocco script esistente, prima del tag </script>)
+     ═══════════════════════════════════════════════════════════════ -->
+<script>
+// ── BADGE DIGCOMP — iniettati da manifest.json ───────────────────
+// Chiama questa funzione dopo che manifest.json è stato caricato.
+// Se non carichi manifest.json dinamicamente, puoi chiamarla
+// con il JSON inline: injectDCBadges(window.MANIFEST_DATA)
+
+let activeDCFilter = 'all';
+
+async function injectDCBadges() {
+  try {
+    const res = await fetch('manifest.json');
+    if (!res.ok) return;
+    const manifest = await res.json();
+
+    // Mappa path → dati digcomp
+    const dcMap = {};
+    manifest.forEach(r => {
+      if (r.active) dcMap[r.path] = r;
+    });
+
+    // Per ogni card, trova il path dall'href e inietta i badge
+    document.querySelectorAll('.card:not(.coming)').forEach(card => {
+      const link = card.querySelector('a');
+      if (!link) return;
+
+      // Normalizza il path per il lookup
+      let href = link.getAttribute('href') || '';
+      if (!href.startsWith('/')) href = '/' + href;
+      if (!href.endsWith('/')) href = href + '/';
+
+      const data = dcMap[href];
+      if (!data) return;
+
+      // Salva le aree come data-attribute per il filtro JS
+      if (data.digcomp_areas) {
+        card.dataset.dcAreas = data.digcomp_areas.join(' ');
+      }
+
+      // Costruisci la badge-row
+      const badges = [];
+
+      // Livello
+      if (data.digcomp_level) {
+        const levelLabels = { foundation: 'Foundation 1–2', intermediate: 'Intermediate 3–4', advanced: 'Advanced 5–6' };
+        badges.push(`<span class="dc-level ${data.digcomp_level}">${levelLabels[data.digcomp_level] || data.digcomp_level}</span>`);
+      }
+
+      // Codici DigComp
+      if (data.digcomp && data.digcomp.length) {
+        data.digcomp.forEach(code => {
+          badges.push(`<span class="dc-badge dc" title="DigComp 2.2">${code}</span>`);
+        });
+      }
+
+      // Codici DigCompEdu
+      if (data.digcompedu && data.digcompedu.length) {
+        data.digcompedu.forEach(code => {
+          badges.push(`<span class="dc-badge dce" title="DigCompEdu">${code}</span>`);
+        });
+      }
+
+      if (badges.length === 0) return;
+
+      const row = document.createElement('div');
+      row.className = 'dc-badge-row';
+      row.innerHTML = badges.join('');
+
+      // Inserisci PRIMA del card-footer
+      const footer = card.querySelector('.card-footer');
+      if (footer) {
+        card.querySelector('a').insertBefore(row, footer);
+      } else {
+        card.querySelector('a').appendChild(row);
+      }
+    });
+
+    // Mostra la barra filtro DC ora che i dati ci sono
+    const filterBarDC = document.getElementById('filter-bar-dc');
+    if (filterBarDC) filterBarDC.style.display = 'flex';
+
+  } catch(e) {
+    // Silenzioso — il portale funziona anche senza badge
+  }
+}
+
+// ── FILTRO PER AREA DIGCOMP ──────────────────────────────────────
+function setDCFilter(area, btn) {
+  activeDCFilter = area;
+  document.querySelectorAll('.filter-btn-dc').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterAll(); // richiama il filtro esistente (testo + categoria)
+}
+
+// PATCH per il filterAll esistente:
+// Dopo aver calcolato matchCat e matchQ, aggiunge il check sulle aree DC.
+// Sostituisci la funzione filterAll esistente con questa versione estesa:
+function filterAll() {
+  const q = document.getElementById('search-input').value.toLowerCase().trim();
+  const cards = document.querySelectorAll('.card');
+  let visible = 0;
+  cards.forEach(card => {
+    const cat    = card.dataset.cat || '';
+    const tags   = card.dataset.tags || '';
+    const areas  = card.dataset.dcAreas || '';
+    const text   = (card.innerText + ' ' + tags).toLowerCase();
+    const matchCat = activeFilter === 'all' || cat === activeFilter;
+    const matchQ   = !q || text.includes(q);
+    const matchDC  = activeDCFilter === 'all' || areas.includes(activeDCFilter);
+    const isComing = card.classList.contains('coming');
+    const show = matchCat && matchQ && matchDC;
+    card.style.display = (isComing && !matchQ) ? 'none' : (show ? '' : 'none');
+    if (show && !isComing) visible++;
+  });
+  document.getElementById('no-results').style.display = visible === 0 && (q || activeDCFilter !== 'all') ? 'block' : 'none';
+}
+
+// Avvia l'iniezione badge quando il DOM è pronto
+document.addEventListener('DOMContentLoaded', injectDCBadges);
+// Se DOMContentLoaded è già scattato (script in fondo alla pagina):
+if (document.readyState !== 'loading') injectDCBadges();
+</script>
+
+<!--
+  ════════════════════════════════════════════════════════════════
+  SEZIONE 4 — SNIPPET CARD CON BADGE MANUALE (alternativa statica)
+
+  Se non vuoi caricare manifest.json dinamicamente, puoi aggiungere
+  i badge direttamente nell'HTML della card, incollando questo blocco
+  PRIMA del .card-footer:
+
+  <div class="dc-badge-row">
+    <span class="dc-level intermediate">Intermediate 3–4</span>
+    <span class="dc-badge dc" title="DigComp 2.2">DC 3.1</span>
+    <span class="dc-badge dc" title="DigComp 2.2">DC 5.3</span>
+    <span class="dc-badge dce" title="DigCompEdu">DCEdu 3.1</span>
+  </div>
+
+  ════════════════════════════════════════════════════════════════
+-->
