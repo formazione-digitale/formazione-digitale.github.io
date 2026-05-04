@@ -26,14 +26,43 @@
 <link rel="stylesheet" href="/css/shared.css?v=2">
 <style>
 
-/* ── LAYOUT ── */
+/* ── WRAPPER UNICO cover + tool ── */
+.tool-wrapper {
+  background: #fff;
+  border: 2px solid #D6E8F7;
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: 1.5rem;
+}
+
+/* ── COVER compatta ── */
+.tool-cover {
+  background: linear-gradient(135deg, #1F4E79 0%, #2A6099 100%);
+  padding: 1.25rem 1.75rem 1.1rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+}
+.tool-cover-text {}
+.tool-cover-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+  color: #fff; line-height: 1.2; margin-bottom: .25rem;
+  white-space: nowrap;
+}
+.tool-cover-desc {
+  font-size: .85rem; color: rgba(255,255,255,.8); line-height: 1.5;
+}
+.tool-cover-badge {
+  font-size: .72rem; color: rgba(255,255,255,.5); margin-top: .3rem;
+}
+
+/* ── TOOL LAYOUT ── */
 .tool-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto 1fr;
   gap: 1.25rem;
-  margin-top: 1.5rem;
-  align-items: start;
+  padding: 1.25rem;
 }
 @media(max-width:800px) { .tool-layout { grid-template-columns: 1fr; } }
 
@@ -48,6 +77,23 @@
 }
 .input-label { font-size: .82rem; font-weight: 600; color: var(--blue-dark); }
 
+/* ── SELETTORE ESEMPI ── */
+.examples-row {
+  display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
+}
+.examples-label {
+  font-size: .72rem; font-weight: 600; color: #666;
+  text-transform: uppercase; letter-spacing: .06em; white-space: nowrap;
+}
+.example-btn {
+  font-size: .75rem; padding: .28rem .75rem; border-radius: 20px;
+  border: 1.5px solid #D6E8F7; background: #fff; color: #1F4E79;
+  cursor: pointer; font-family: var(--font-body); font-weight: 500;
+  transition: all .18s ease;
+}
+.example-btn:hover { background: #EBF3FC; border-color: #2E75B6; }
+.example-btn.active { background: #1F4E79; color: #fff; border-color: #1F4E79; }
+
 .sample-btn {
   display: inline-flex; align-items: center; gap: .3rem;
   font-size: .78rem; color: #fff; background: var(--blue-mid);
@@ -58,16 +104,16 @@
 .sample-btn:hover { background: var(--blue-dark); }
 
 .head-input {
-  width: 100%; min-height: 340px;
+  width: 100%; min-height: 320px;
   font-family: 'Courier New', monospace; font-size: .78rem;
   line-height: 1.6; color: #2C2C2C;
-  border: 2px solid var(--blue-light); border-radius: var(--radius);
+  border: 2px solid #9DC3E6; border-radius: var(--radius);
   padding: 1rem; resize: vertical; outline: none;
-  background: var(--blue-pale);
+  background: #EBF3FC;
   transition: border-color .2s, box-shadow .2s, background .2s;
   box-shadow: inset 0 1px 4px rgba(31,78,121,.06);
 }
-.head-input:focus { border-color: var(--blue-mid); background: #fff; box-shadow: 0 0 0 3px rgba(46,117,182,.12); }
+.head-input:focus { border-color: #2E75B6; background: #fff; box-shadow: 0 0 0 3px rgba(46,117,182,.15); }
 .head-input.input-error { border-color: #c5221f; background: #fef2f2; }
 
 .btn-row { display: flex; gap: .75rem; align-items: center; }
@@ -98,7 +144,7 @@
 .right-panel {
   grid-column: 2; grid-row: 1 / 3;
   display: flex; flex-direction: column; gap: .75rem;
-  background: var(--white); border: 2px solid var(--blue-light);
+  background: #fff; border: 2px solid #9DC3E6;
   border-radius: var(--radius); padding: 1rem;
 }
 @media(max-width:800px) {
@@ -164,8 +210,8 @@
 
 .report-empty {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  min-height: 280px; color: var(--gray-mid); text-align: center; gap: .5rem;
-  background: var(--blue-pale); border: 2px dashed var(--blue-light);
+  min-height: 280px; color: #666; text-align: center; gap: .5rem;
+  background: #EBF3FC; border: 2px dashed #9DC3E6;
   border-radius: var(--radius);
 }
 .report-empty-icon { font-size: 2.5rem; opacity: .4; }
@@ -260,40 +306,53 @@ footer strong { color: rgba(255,255,255,.9); }
 
 <div id="main" style="max-width:1100px;">
 
-<div class="cover-block" style="padding:1.75rem 2rem 1.5rem; border-radius: var(--radius) var(--radius) 0 0; margin-bottom:0;">
-  <div class="cover-title" style="font-size:clamp(1.6rem,3vw,2.2rem); white-space:nowrap;">Analizzatore SEO &lt;head&gt;</div>
-  <p style="font-size:1rem; color:rgba(255,255,255,.85); line-height:1.65; margin-top:.75rem; max-width:600px;">
-    Incolla il codice del tag <code style="background:rgba(255,255,255,.18);padding:.1rem .4rem;border-radius:4px;font-size:.9em;">&lt;head&gt;</code> della tua pagina e ricevi un report SEO immediato su tutti gli elementi che contano per Google.
-  </p>
-  <p style="font-size:.8rem; color:rgba(255,255,255,.55); margin-top:.5rem;">🔒 Analisi locale nel browser · Nessun dato viene inviato</p>
-</div>
+<div class="tool-wrapper">
 
-<div class="tool-layout">
-
-  <!-- INPUT -->
-  <div class="input-panel">
-    <div class="input-label-row">
-      <span class="input-label">Incolla il codice del tuo &lt;head&gt;</span>
-      <button class="sample-btn" onclick="loadSample()">⚡ Carica esempio</button>
-    </div>
-    <textarea class="head-input" id="head-input" spellcheck="false"
-      placeholder="<head>&#10;  <meta charset=&quot;UTF-8&quot;>&#10;  <title>Il titolo della pagina</title>&#10;  ...&#10;</head>"></textarea>
-    <div class="input-error-msg" id="input-error-msg">⚠ Il codice incollato sembra non contenere un tag &lt;head&gt; valido. Incolla il sorgente HTML della sezione head.</div>
-    <div class="btn-row">
-      <button class="btn-analyze" onclick="analyze()">🔍 Analizza</button>
-      <button class="btn-clear" onclick="clearAll()">Pulisci</button>
+  <!-- COVER COMPATTA -->
+  <div class="tool-cover">
+    <div class="tool-cover-text">
+      <div class="tool-cover-title">Analizzatore SEO &lt;head&gt;</div>
+      <div class="tool-cover-desc">Incolla il tag <code style="background:rgba(255,255,255,.18);padding:.1rem .35rem;border-radius:3px;font-size:.88em;">&lt;head&gt;</code> della tua pagina e ricevi un report SEO immediato.</div>
+      <div class="tool-cover-badge">🔒 Analisi locale nel browser · Nessun dato inviato</div>
     </div>
   </div>
 
-  <!-- RIGHT PANEL con TAB -->
-  <div class="right-panel" id="right-panel">
+  <!-- TOOL GRID -->
+  <div class="tool-layout">
 
-    <div class="tab-bar" id="tab-bar" style="display:none;">
-      <button class="tab-btn active" onclick="switchTab('report', this)">📋 Report</button>
-      <button class="tab-btn" onclick="switchTab('serp', this)">🔍 SERP</button>
-      <button class="tab-btn" onclick="switchTab('social', this)">📱 Social</button>
-      <button class="tab-btn" onclick="switchTab('perf', this)">⚡ Performance</button>
+    <!-- INPUT -->
+    <div class="input-panel">
+      <div class="input-label-row">
+        <span class="input-label">Incolla il codice del tuo &lt;head&gt;</span>
+      </div>
+
+      <!-- SELETTORE ESEMPI -->
+      <div class="examples-row">
+        <span class="examples-label">Esempi:</span>
+        <button class="example-btn" onclick="loadExample('ottimale', this)">✅ Ottimale</button>
+        <button class="example-btn" onclick="loadExample('errori', this)">⚠️ Con errori</button>
+        <button class="example-btn" onclick="loadExample('minimale', this)">📄 Minimale</button>
+        <button class="example-btn" onclick="loadExample('blank', this)">🗒 Vuoto</button>
+      </div>
+
+      <textarea class="head-input" id="head-input" spellcheck="false"
+        placeholder="<head>&#10;  <meta charset=&quot;UTF-8&quot;>&#10;  <title>Il titolo della pagina</title>&#10;  ...&#10;</head>"></textarea>
+      <div class="input-error-msg" id="input-error-msg">⚠ Il codice incollato non sembra contenere tag HTML validi.</div>
+      <div class="btn-row">
+        <button class="btn-analyze" onclick="analyze()">🔍 Analizza</button>
+        <button class="btn-clear" onclick="clearAll()">Pulisci</button>
+      </div>
     </div>
+
+    <!-- RIGHT PANEL con TAB -->
+    <div class="right-panel" id="right-panel">
+
+      <div class="tab-bar" id="tab-bar" style="display:none;">
+        <button class="tab-btn active" onclick="switchTab('report', this)">📋 Report</button>
+        <button class="tab-btn" onclick="switchTab('serp', this)">🔍 SERP</button>
+        <button class="tab-btn" onclick="switchTab('social', this)">📱 Social</button>
+        <button class="tab-btn" onclick="switchTab('perf', this)">⚡ Performance</button>
+      </div>
 
     <!-- TAB: REPORT -->
     <div class="tab-pane active" id="tab-report">
@@ -364,7 +423,9 @@ footer strong { color: rgba(255,255,255,.9); }
 
   </div><!-- /.right-panel -->
 
-</div><!-- /.tool-layout -->
+  </div><!-- /.tool-layout -->
+
+</div><!-- /.tool-wrapper -->
 
 </div><!-- /#main -->
 
@@ -376,7 +437,10 @@ footer strong { color: rgba(255,255,255,.9); }
 <script src="/scripts/ui.js" defer></script>
 <script>
 
-const SAMPLE = `<html lang="it">
+// ── ESEMPI ───────────────────────────────────────────────────
+const EXAMPLES = {
+
+  ottimale: `<html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -389,7 +453,7 @@ const SAMPLE = `<html lang="it">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="dns-prefetch" href="//analytics.esempio.it">
 <meta property="og:title" content="La mia pagina di esempio">
-<meta property="og:description" content="Una descrizione per i social media, coinvolgente e con call to action.">
+<meta property="og:description" content="Una descrizione coinvolgente per i social media.">
 <meta property="og:url" content="https://esempio.it/pagina/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://esempio.it/img/og-image.jpg">
@@ -407,7 +471,43 @@ const SAMPLE = `<html lang="it">
   "url": "https://esempio.it/pagina/"
 }
 <\/script>
-</head>`;
+</head>`,
+
+  errori: `<head>
+<meta charset="UTF-8">
+<title>La mia pagina con problemi SEO — questo titolo è decisamente troppo lungo e supererà i limiti di Google SERP</title>
+<meta name="description" content="Breve.">
+<link rel="canonical" href="/pagina/">
+<meta property="og:title" content="La mia pagina">
+<meta property="og:image" content="./img/foto.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "MioTipoPersonalizzato", "name": "Pagina" }
+<\/script>
+</head>`,
+
+  minimale: `<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La mia pagina</title>
+</head>`,
+
+  blank: `<head>
+<!-- Incolla qui il tuo codice -->
+</head>`
+};
+
+let activeExample = null;
+
+function loadExample(key, btn) {
+  document.getElementById('head-input').value = EXAMPLES[key] || '';
+  document.getElementById('input-error-msg').style.display = 'none';
+  document.getElementById('head-input').classList.remove('input-error');
+  // Aggiorna stato bottoni
+  document.querySelectorAll('.example-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  activeExample = key;
+}
 
 // ── TAB ──────────────────────────────────────────────────────
 function switchTab(id, btn) {
@@ -432,6 +532,8 @@ function clearAll() {
   document.getElementById('tab-bar').style.display = 'none';
   ['serp-content','social-content','perf-panel'].forEach(id => document.getElementById(id).style.display = 'none');
   ['serp-empty','social-empty','perf-empty'].forEach(id => document.getElementById(id).style.display = 'flex');
+  document.querySelectorAll('.example-btn').forEach(b => b.classList.remove('active'));
+  activeExample = null;
 }
 
 // ── PARSER ROBUSTO ───────────────────────────────────────────
