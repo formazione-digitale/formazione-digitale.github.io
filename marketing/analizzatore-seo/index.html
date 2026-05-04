@@ -94,7 +94,10 @@
 
 /* ── RIGHT PANEL con TAB ── */
 .right-panel { grid-column: 2; grid-row: 1 / 3; display: flex; flex-direction: column; gap: .75rem; }
-@media(max-width:800px) { .right-panel { grid-column: 1; grid-row: auto; } }
+@media(max-width:800px) {
+  .right-panel { grid-column: 1; grid-row: auto; }
+  .report-scroll { max-height: none; }
+}
 
 /* ── TAB ── */
 .tab-bar {
@@ -341,7 +344,7 @@ footer strong { color: rgba(255,255,255,.9); }
     <div class="tab-pane" id="tab-perf">
       <div class="preview-empty" id="perf-empty">
         <div class="preview-empty-icon">⚡</div>
-        <span>L'analisi apparirà dopo l'analisi</span>
+        <span>Lancia l'analisi per vedere i suggerimenti</span>
       </div>
       <div class="perf-grid" id="perf-panel" style="display:none;"></div>
     </div>
@@ -418,11 +421,12 @@ function clearAll() {
 // ── PARSER ROBUSTO ───────────────────────────────────────────
 function cleanHeadInput(raw) {
   let clean = raw.trim();
-  // Rimuovi tag html/body se incollati per errore
-  clean = clean.replace(/<\/?(html|body)[^>]*>/gi, '');
-  // Rimuovi tutto dopo </head>
+  // 1. Tronca PRIMA al </head> — tutto ciò che segue è body e va ignorato
   const headEnd = clean.toLowerCase().indexOf('</head>');
   if (headEnd !== -1) clean = clean.substring(0, headEnd + 7);
+  // 2. Rimuovi tag <html> e <body> rimasti prima del <head>
+  clean = clean.replace(/<\/?(html|body)[^>]*>/gi, '');
+  // 3. Wrap se manca il tag <head>
   if (!clean.toLowerCase().startsWith('<head')) {
     clean = '<head>' + clean + '</head>';
   }
@@ -464,18 +468,18 @@ function runChecks(head) {
   if (!title) {
     checks.push({ group: 'Fondamentali', status: 'error', icon: '❌', title: 'Title mancante', detail: 'Il tag <title> è obbligatorio. È il testo che appare nella tab del browser e nella SERP.' });
   } else if (title.length < 30) {
-    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: `Title troppo corto (${title.length} car.)`, detail: 'Ideale: 50–60 caratteri. Troppo corto spreca opportunità SEO.', value: title });
-  } else if (title.length > 60) {
-    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: `Title troppo lungo (${title.length} car.)`, detail: 'Google tronca i title oltre i ~60 caratteri. Accorcialo.', value: title });
+    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: `Title troppo corto (${title.length} car.)`, detail: 'Ideale: 50–65 caratteri. Troppo corto spreca opportunità SEO.', value: title });
+  } else if (title.length > 65) {
+    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: `Title lungo (${title.length} car.)`, detail: 'Google misura in pixel, non in caratteri — soglia indicativa ~65 car. ASCII. Con emoji o caratteri larghi il limite può essere inferiore.', value: title });
   } else {
-    checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: `Title ottimale (${title.length} car.)`, detail: 'Lunghezza nella norma (50–60 caratteri).', value: title });
+    checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: `Title nella norma (${title.length} car.)`, detail: 'Lunghezza ottimale (50–65 caratteri).', value: title });
   }
 
   // 2. META DESCRIPTION
   const desc = getMeta(head, 'description');
   if (!desc) {
     checks.push({ group: 'Fondamentali', status: 'error', icon: '❌', title: 'Meta description mancante', detail: 'Senza meta description Google genera automaticamente un estratto, spesso poco efficace.' });
-  } else if (desc.length < 100) {
+  } else if (desc.length < 70) {
     checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: `Meta description corta (${desc.length} car.)`, detail: 'Ideale: 150–160 caratteri. Includi keyword e un invito all\'azione.', value: desc });
   } else if (desc.length > 160) {
     checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: `Meta description lunga (${desc.length} car.)`, detail: 'Google tronca oltre i 160 caratteri.', value: desc });
@@ -487,20 +491,30 @@ function runChecks(head) {
   const canonical = getLink(head, 'canonical');
   if (!canonical) {
     checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: 'Canonical mancante', detail: 'Il tag canonical previene problemi di contenuto duplicato.' });
-  } else if (canonical.startsWith('./') || canonical.startsWith('../') || canonical.startsWith('/')) {
-    checks.push({ group: 'Fondamentali', status: 'error', icon: '❌', title: 'Canonical usa path relativo', detail: 'Il canonical richiede un URL assoluto con https://.', value: canonical });
+  } else if (canonical.startsWith('./') || canonical.startsWith('../')) {
+    checks.push({ group: 'Fondamentali', status: 'error', icon: '❌', title: 'Canonical usa path relativo', detail: 'Il canonical richiede un URL assoluto con https://. I path relativi con ./ o ../ non sono accettati.', value: canonical });
+  } else if (canonical.startsWith('/')) {
+    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: 'Canonical root-relative', detail: 'Google tollera i canonical root-relative (es. /pagina/) ma l\'URL assoluto con https:// è preferibile.', value: canonical });
   } else if (!canonical.startsWith('https://')) {
     checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: 'Canonical non usa HTTPS', detail: 'Il canonical dovrebbe puntare alla versione HTTPS.', value: canonical });
   } else {
     checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: 'Canonical presente e HTTPS', detail: 'URL canonico correttamente dichiarato.', value: canonical });
   }
 
-  // 4. LANG
-  const langMatch = raw.match(/lang=["']([a-z]{2}(?:-[A-Z]{2})?)['"]/i);
-  if (!langMatch) {
+  // 4. LANG — prima dal DOM parsato, poi regex sul raw come fallback
+  const langFromDOM = (() => {
+    try {
+      const d = new DOMParser().parseFromString(
+        '<!DOCTYPE html><html>' + cleanHeadInput(raw) + '<body></body></html>', 'text/html'
+      );
+      return d.documentElement.getAttribute('lang');
+    } catch(e) { return null; }
+  })();
+  const langVal = langFromDOM || (raw.match(/lang=["']([a-z]{2}(?:-[A-Z]{2})?)['"]/i) || [])[1] || null;
+  if (!langVal) {
     checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: 'Attributo lang mancante', detail: 'Aggiungi lang="it" al tag <html> per dichiarare la lingua.' });
   } else {
-    checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: `Lingua dichiarata: ${langMatch[1]}`, detail: 'L\'attributo lang è presente.' });
+    checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: `Lingua dichiarata: ${langVal}`, detail: 'L\'attributo lang è presente.' });
   }
 
   // 5. ROBOTS
@@ -602,52 +616,90 @@ function runChecks(head) {
 // ── CHECKS PERFORMANCE ───────────────────────────────────────
 function runPerfChecks(head) {
   const checks = [];
+  const raw = document.getElementById('head-input').value;
 
-  const hasPreconnect = head.querySelector('link[rel="preconnect"]') !== null;
+  // preconnect / dns-prefetch
+  const hasPreconnect  = head.querySelector('link[rel="preconnect"]') !== null;
   const hasDnsPrefetch = head.querySelector('link[rel="dns-prefetch"]') !== null;
-  const hasPreload = head.querySelector('link[rel="preload"]') !== null;
-
   if (!hasPreconnect && !hasDnsPrefetch) {
     checks.push({ status: 'warn', icon: '⚠️', title: 'Nessun preconnect o dns-prefetch', detail: 'Aggiungi <link rel="preconnect"> per i domini esterni critici (font, CDN) per migliorare il LCP.' });
   } else {
-    if (hasPreconnect) checks.push({ status: 'ok', icon: '✅', title: 'preconnect presente', detail: 'Riduce il tempo di connessione ai domini esterni critici.' });
+    if (hasPreconnect)  checks.push({ status: 'ok', icon: '✅', title: 'preconnect presente', detail: 'Riduce il tempo di connessione ai domini esterni critici.' });
     if (hasDnsPrefetch) checks.push({ status: 'ok', icon: '✅', title: 'dns-prefetch presente', detail: 'Risolve in anticipo i DNS per i domini esterni.' });
   }
 
+  // preload
+  const hasPreload = head.querySelector('link[rel="preload"]') !== null;
   if (!hasPreload) {
-    checks.push({ status: 'info', icon: 'ℹ️', title: 'Nessun preload dichiarato', detail: 'Usa <link rel="preload"> per caricare in anticipo risorse critiche (font, hero image) e migliorare il LCP.' });
+    checks.push({ status: 'info', icon: 'ℹ️', title: 'Nessun preload dichiarato', detail: 'Usa <link rel="preload"> per risorse critiche (font, hero image) e migliorare il LCP.' });
   } else {
     checks.push({ status: 'ok', icon: '✅', title: 'preload dichiarato', detail: 'Risorse critiche caricate in anticipo — ottimo per il LCP.' });
   }
 
-  // Font Google senza font-display
-  const raw = document.getElementById('head-input').value;
+  // Google Fonts + font-display
   const hasGoogleFonts = /fonts\.googleapis\.com/.test(raw);
-  const hasFontDisplay = /font-display/.test(raw);
+  const hasFontDisplay = /font-display|display=swap/.test(raw);
   if (hasGoogleFonts && !hasFontDisplay) {
-    checks.push({ status: 'warn', icon: '⚠️', title: 'Google Fonts senza font-display', detail: 'Aggiungi &display=swap all\'URL dei font Google per evitare il FOIT (flash of invisible text) e migliorare il LCP.' });
-  } else if (hasGoogleFonts && hasFontDisplay) {
+    checks.push({ status: 'warn', icon: '⚠️', title: 'Google Fonts senza font-display', detail: 'Aggiungi &display=swap all\'URL dei font Google per evitare il FOIT e migliorare il LCP.' });
+  } else if (hasGoogleFonts) {
     checks.push({ status: 'ok', icon: '✅', title: 'Google Fonts con font-display', detail: 'Font configurati correttamente per il rendering progressivo.' });
   }
 
-  // Theme color
+  // Script render-blocking
+  const blockingScripts = Array.from(head.querySelectorAll('script:not([defer]):not([async])')).filter(s => {
+    const t = (s.getAttribute('type') || '').toLowerCase();
+    return t !== 'application/ld+json' && t !== 'module';
+  });
+  if (blockingScripts.length > 0) {
+    checks.push({ status: 'warn', icon: '⚠️', title: `${blockingScripts.length} script render-blocking`, detail: 'Script nel <head> senza defer o async bloccano il rendering e aumentano il TBT. Aggiungi defer o sposta in fondo al body.' });
+  } else {
+    checks.push({ status: 'ok', icon: '✅', title: 'Nessun script render-blocking', detail: 'Tutti gli script nel head usano defer, async o type="module".' });
+  }
+
+  // CSS bloccante
+  const blockingCSS = head.querySelectorAll('link[rel="stylesheet"]:not([media])');
+  if (blockingCSS.length > 1) {
+    checks.push({ status: 'warn', icon: '⚠️', title: `${blockingCSS.length} stylesheet bloccanti`, detail: 'Ogni <link rel="stylesheet"> senza media attribute blocca il rendering. Valuta di caricare CSS non critici in modo asincrono.' });
+  } else if (blockingCSS.length === 1) {
+    checks.push({ status: 'ok', icon: '✅', title: '1 stylesheet bloccante', detail: 'Un solo CSS bloccante è accettabile per il foglio di stile principale.' });
+  }
+
+  // Richieste esterne nel head
+  const externalLinks = Array.from(head.querySelectorAll('link[href], script[src]')).filter(el => {
+    const val = el.getAttribute('href') || el.getAttribute('src') || '';
+    return val.startsWith('http') || val.startsWith('//');
+  });
+  if (externalLinks.length > 0) {
+    checks.push({ status: 'info', icon: 'ℹ️', title: `${externalLinks.length} richieste esterne nel head`, detail: `Ogni richiesta esterna aggiunge latenza. Valuta di ridurle o usare preconnect per i domini critici.` });
+  }
+
+  // theme-color
   const themeColor = head.querySelector('meta[name="theme-color"]');
   if (!themeColor) {
     checks.push({ status: 'info', icon: 'ℹ️', title: 'theme-color non dichiarato', detail: 'Il meta theme-color personalizza il colore dell\'interfaccia browser su mobile.' });
   } else {
-    checks.push({ status: 'ok', icon: '✅', title: `theme-color: ${themeColor.getAttribute('content')}`, detail: 'Colore dell\'interfaccia mobile dichiarato.' });
+    checks.push({ status: 'ok', icon: '✅', title: `theme-color: ${themeColor.getAttribute('content')}`, detail: 'Colore interfaccia mobile dichiarato.' });
   }
 
   return checks;
 }
 
 // ── SCORE ────────────────────────────────────────────────────
-function calcScore(checks) {
+function calcScore(checks, perfChecks) {
   let total = 0, earned = 0;
+  // Check SEO core: peso pieno (10/5/0)
   checks.forEach(c => {
     if (c.status === 'ok')    { total += 10; earned += 10; }
     if (c.status === 'warn')  { total += 10; earned += 5; }
     if (c.status === 'error') { total += 10; }
+    // info non conta
+  });
+  // Check Performance: peso dimezzato (5/2/0)
+  (perfChecks || []).forEach(c => {
+    if (c.status === 'ok')    { total += 5; earned += 5; }
+    if (c.status === 'warn')  { total += 5; earned += 2; }
+    if (c.status === 'error') { total += 5; }
+    // info non conta
   });
   return total > 0 ? Math.round((earned / total) * 100) : 0;
 }
@@ -666,12 +718,13 @@ function scoreLabel(s) {
 }
 
 // ── RENDER REPORT ────────────────────────────────────────────
-function renderReport(checks, score) {
+function renderReport(checks, perfChecks, score) {
   const panel = document.getElementById('report-panel');
   const cls = scoreClass(score);
-  const nOk    = checks.filter(c => c.status === 'ok').length;
-  const nWarn  = checks.filter(c => c.status === 'warn').length;
-  const nError = checks.filter(c => c.status === 'error').length;
+  const allChecks = [...checks, ...(perfChecks || [])];
+  const nOk    = allChecks.filter(c => c.status === 'ok').length;
+  const nWarn  = allChecks.filter(c => c.status === 'warn').length;
+  const nError = allChecks.filter(c => c.status === 'error').length;
 
   const ORDER = { error: 0, warn: 1, ok: 2, info: 3 };
   const sorted = [...checks].sort((a, b) => ORDER[a.status] - ORDER[b.status]);
@@ -775,28 +828,15 @@ function escHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ── VALIDATE INPUT ───────────────────────────────────────────
-function validateInput(raw) {
-  const lower = raw.toLowerCase();
-  if (!lower.includes('<title') && !lower.includes('<meta') && !lower.includes('<link')) {
-    return false;
-  }
-  return true;
-}
-
 // ── MAIN ─────────────────────────────────────────────────────
 function analyze() {
-  const raw = document.getElementById('head-input').value.trim();
+  const raw      = document.getElementById('head-input').value.trim();
   const inputEl  = document.getElementById('head-input');
   const errorMsg = document.getElementById('input-error-msg');
 
   if (!raw) {
-    alert('Incolla prima il codice del tuo <head>.');
-    return;
-  }
-
-  if (!validateInput(raw)) {
     inputEl.classList.add('input-error');
+    errorMsg.textContent = '⚠ Incolla il codice del tuo <head> prima di procedere.';
     errorMsg.style.display = 'block';
     return;
   }
@@ -807,15 +847,14 @@ function analyze() {
   const head       = parseHead(raw);
   const checks     = runChecks(head);
   const perfChecks = runPerfChecks(head);
-  const score      = calcScore(checks);
+  const score      = calcScore(checks, perfChecks);
 
-  // Mostra tab bar
   document.getElementById('tab-bar').style.display = 'flex';
 
-  renderReport(checks, score);
+  renderReport(checks, perfChecks, score);
   renderPerf(perfChecks);
-  document.getElementById('perf-empty').style.display  = 'none';
-  document.getElementById('perf-panel').style.display  = 'flex';
+  document.getElementById('perf-empty').style.display = 'none';
+  document.getElementById('perf-panel').style.display = 'flex';
 
   updateSerpPreview(head);
   updateSocialPreview(head);
