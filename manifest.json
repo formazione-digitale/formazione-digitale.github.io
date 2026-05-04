@@ -254,5 +254,31 @@
     "description": "Incolla il tag head HTML del tuo sito e ricevi un report SEO completo: title, meta description, Open Graph, Twitter Card, Schema.org e canonical.",
     "featured": false,
     "active": true
-  }
+  },
+  {
+  "path": "/sicurezza/cybersicurezza-personale/",
+  "label": "Cybersicurezza Personale — Proteggi te stesso online",
+  "short": "Cybersicurezza Personale",
+  "cat": "pillola",
+  "emoji": "🔒",
+  "tags": [
+    "cybersicurezza",
+    "sicurezza informatica",
+    "password",
+    "phishing",
+    "aggiornamenti",
+    "privacy",
+    "tracciamento",
+    "backup",
+    "2fa",
+    "autenticazione",
+    "wi-fi",
+    "ransomware",
+    "truffa online"
+  ],
+  "meta": "Piano d'azione immediato · Livello base · ~20 min",
+  "description": "Password sicure, phishing, aggiornamenti, privacy e backup: tutto quello che devi fare per proteggerti online, senza essere un esperto.",
+  "featured": false,
+  "active": true
+}
 ]

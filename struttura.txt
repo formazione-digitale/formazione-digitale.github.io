@@ -1,5 +1,5 @@
 Elenco del percorso delle cartelle per il volume Acer
-Numero di serie del volume: 544D-3F7C
+Numero di serie del volume: 00000041-544D:3F7C
 C:.
 |   404.html
 |   auth.js
@@ -7,7 +7,6 @@ C:.
 |   manifest.json
 |   mappa.html
 |   robots.txt
-|   scripts.zip
 |   site.webmanifest
 |   sitemap.xml
 |   stats.js
@@ -15,6 +14,10 @@ C:.
 |   supabase.js
 |   sw.js
 |   
++---.github
+|   \---workflows
+|           supabase-keep-alive.yml
+|           
 +---css
 |       shared.css
 |       
@@ -24,124 +27,32 @@ C:.
 |       |   NERD-HERD.odb
 |       |   
 |       \---img
-|               1777056578375_image.png
-|               1777056637968_image.png
-|               1777056679705_image.png
-|               1777056774067_image.png
-|               1777056887201_image.png
-|               1777057018152_image.png
-|               1777057037640_image.png
-|               1777057170045_image.png
-|               1777057180615_image.png
-|               1777057214520_image.png
-|               1777057222282_image.png
-|               1777057341164_image.png
-|               1777057354021_image.png
-|               1777057367527_image.png
-|               1777057399791_image.png
-|               1777057438613_image.png
-|               1777057604164_image.png
-|               1777057744488_image.png
-|               1777058464659_image.png
-|               1777058623433_image.png
-|               1777058677103_image.png
-|               1777058903166_image.png
-|               1777059003240_image.png
-|               1777059031404_image.png
-|               1777277786031_image.png
-|               1777277868548_image.png
-|               1777277893140_image.png
-|               1777277912522_image.png
-|               2026-04-27_10h15_57.png
-|               2026-04-27_10h17_15.png
-|               2026-04-27_10h17_43.png
-|               2026-04-27_10h18_10.png
-|               2026-04-27_10h18_29.png
-|               2026-04-30_12h15_16.png
-|               2026-04-30_12h24_08.png
-|               2026-04-30_12h25_14.png
 |               
 +---docs
-|       Formazione_Digitale_Guida_Collaboratori.docx
-|       MAPPA_DigComp_metodo.md
-|       MAPPA_DigComp_metodo_v1.3.md
-|       META-PROMPT_Formazione_Digitale.md
-|       PROGETTO_istruzioni-fisse.md
-|       SESSIONE_template-chat.md
-|       
+|   |   ARCHITETTURA_Formazione_Digitale.docx
+|   |   Formazione_Digitale_Guida_Collaboratori.docx
+|   |   MAPPA_DigComp_metodo.md
+|   |   MAPPA_DigComp_metodo_v1.3.md
+|   |   META-PROMPT_Formazione_Digitale.md
+|   |   PROGETTO_istruzioni-fisse.md
+|   |   SESSIONE_template-chat.md
+|   |   
+|   \---digcomp
+|           badge_digcomp_snippet.html
+|           digcomp 2.2_ita_manuale.pdf
+|           digcomp 2.2_ita_syllabus.pdf
+|           digcompedu_syllabus.pdf
+|           INTEGRAZIONE_DigComp_Badge.md
+|           manifest_digcomp.json
+|           
 +---elaborazione-testi
 |   \---guida-word
 |       |   Guida_Word.pdf
 |       |   index.html
 |       |   
 |       \---img
-|               image_001.png
-|               image_002.png
-|               image_003.png
-|               image_004.png
-|               image_005.png
-|               image_006.png
-|               image_007.png
-|               image_008.png
-|               image_009.png
-|               image_010.png
-|               image_011.png
-|               image_012.png
-|               image_013.png
-|               image_014.png
-|               image_015.png
-|               image_016.png
-|               image_017.png
-|               image_018.png
-|               image_019.png
-|               image_020.png
-|               image_021.png
-|               image_022.png
-|               image_023.png
-|               image_024.png
-|               image_025.png
-|               image_026.png
-|               image_027.png
-|               image_028.png
-|               image_029.png
-|               image_030.png
-|               image_031.png
-|               image_032.png
-|               image_033.png
-|               image_034.png
-|               image_035.png
-|               image_036.png
-|               image_037.png
-|               image_038.png
-|               image_039.png
-|               image_040.png
-|               image_041.png
-|               image_042.png
-|               image_043.png
-|               image_044.png
-|               image_045.png
-|               image_046.png
-|               image_047.png
-|               image_048.png
-|               image_049.png
-|               image_050.png
-|               image_051.png
-|               image_052.png
-|               image_053.png
-|               image_054.png
-|               image_055.png
-|               image_056.png
-|               image_057.png
-|               image_058.png
-|               image_059.png
-|               image_060.png
-|               image_061.png
 |               
 +---img
-|       favicon.png
-|       formazione-digitale-logo-large.png
-|       formazione-digitale-logo.png
-|       formazione-digitale-logo.webp
 |       
 +---intelligenza-artificiale
 |   +---guida-peer-review-ia
@@ -154,14 +65,20 @@ C:.
 |           index.html
 |           
 +---marketing
+|   +---analizzatore-seo
+|   |       index.html
+|   |       
 |   +---break-even-point-tool
 |   |       calcolo-break-even-point.xlsx
 |   |       index.html
 |   |       
-|   \---guida-marketing
+|   +---guida-marketing
+|   |       index.html
+|   |       Introduzione_emarketing_2026_parte1.pptx
+|   |       Introduzione_emarketing_2026_parte2.pptx
+|   |       
+|   \---pillola-seo
 |           index.html
-|           Introduzione_emarketing_2026_parte1.pptx
-|           Introduzione_emarketing_2026_parte2.pptx
 |           
 +---networking
 |   +---hfs-server
@@ -170,10 +87,6 @@ C:.
 |   |   |   index.html
 |   |   |   
 |   |   \---img
-|   |           hfs-admin.png
-|   |           hfs-file.png
-|   |           hfs-view.png
-|   |           hfs2-admin.png
 |   |           
 |   \---subnet-calculator
 |           index.html
@@ -183,7 +96,13 @@ C:.
 |       inject_after.py
 |       replace_in_files.py
 |       struttura.bat
+|       supabase-keep-alive.yml
 |       
++---sicurezza
+|   \---cybersicurezza-personale
+|           index-2.html
+|           index.html
+|           
 \---sistemi
     \---codifica-binaria
             index.html
