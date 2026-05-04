@@ -414,5 +414,21 @@
       "informazioni",
       "problem-solving"
     ]
-  }
+  },
+  {
+  "path": "/sicurezza/cybersicurezza-personale/",
+  "label": "Cybersicurezza Personale — Proteggi te stesso online",
+  "short": "Cybersicurezza Personale",
+  "cat": "pillola",
+  "emoji": "🔒",
+  "tags": ["cybersicurezza", "sicurezza informatica", "password", "phishing", "aggiornamenti", "privacy", "tracciamento", "backup", "2fa", "autenticazione", "wi-fi", "ransomware", "truffa online"],
+  "meta": "Piano d'azione immediato · Livello base · ~20 min",
+  "description": "Password sicure, phishing, aggiornamenti, privacy e backup: tutto quello che devi fare per proteggerti online, senza essere un esperto.",
+  "featured": false,
+  "active": true,
+  "digcomp":       ["DC 4.1", "DC 4.2"],
+  "digcomp_level": "foundation",
+  "digcompedu":    ["DCEdu 6.4"],
+  "digcomp_areas": ["sicurezza"]
+}
 ]
