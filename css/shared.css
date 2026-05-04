@@ -340,3 +340,82 @@ footer a { color: var(--blue-light); text-decoration: none; }
   cursor: pointer; transition: all var(--transition);
 }
 .btn-logout:hover { background: var(--red-light); border-color: var(--red-dark); color: var(--red-dark); }
+
+/* ── 12. READING BAR ─────────────────────────────────────────────── */
+#reading-bar  { position: fixed; top: var(--header-h); left: 0; right: 0; height: 3px; background: rgba(255,255,255,.1); z-index: 99; }
+#reading-fill { height: 100%; background: var(--blue-mid); width: 0; transition: width .2s; }
+
+/* ── 13. HEADER ACTIONS (download, mode toggle) ──────────────────── */
+.btn-download {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25);
+  color: #fff; text-decoration: none; border-radius: 20px;
+  padding: .35rem .9rem; font-size: .78rem; font-weight: 500;
+  font-family: var(--font-body); white-space: nowrap;
+  transition: background .2s;
+}
+.btn-download:hover { background: rgba(255,255,255,.22); }
+.btn-dl-label { display: none; }
+@media(min-width:600px) { .btn-dl-label { display: inline; } }
+
+.mode-toggle {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25);
+  color: #fff; border-radius: 20px; padding: .35rem .9rem;
+  font-size: .78rem; font-weight: 500; font-family: var(--font-body);
+  cursor: pointer; white-space: nowrap; transition: background .2s;
+}
+.mode-toggle:hover { background: rgba(255,255,255,.22); }
+
+/* ── 14. NAV PART LABEL ──────────────────────────────────────────── */
+.nav-part-label {
+  font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--blue-mid);
+  padding: .75rem 1.25rem .35rem; opacity: .7;
+}
+
+/* ── 15. COVER EXTRAS ────────────────────────────────────────────── */
+.cover-eyebrow { font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--blue-light); margin-bottom: .5rem; }
+.cover-badges  { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .85rem; }
+.cover-badge   { font-size: .78rem; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.85); padding: .3rem .75rem; border-radius: 20px; }
+
+/* ── 16. PART HEADER ─────────────────────────────────────────────── */
+.part-header {
+  display: flex; align-items: stretch;
+  background: linear-gradient(135deg, var(--blue-dark) 0%, #2A6099 100%);
+  border-radius: var(--radius); overflow: hidden;
+  margin: 2.5rem 0 1.5rem; box-shadow: var(--shadow);
+}
+.part-num {
+  display: flex; align-items: center; justify-content: center;
+  min-width: 72px; background: rgba(0,0,0,.2);
+  font-family: var(--font-display); font-size: 2.5rem; color: #fff; padding: 1rem;
+}
+.part-titles   { flex: 1; padding: 1rem 1.25rem; }
+.part-title    { font-family: var(--font-display); font-size: 1.4rem; color: #fff; line-height: 1.2; }
+.part-subtitle { font-size: .82rem; color: var(--blue-light); font-style: italic; margin-top: .2rem; }
+
+/* ── 17. HIGHLIGHT GRID ──────────────────────────────────────────── */
+.highlight-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr));
+  gap: .85rem; margin: 1.25rem 0;
+}
+.highlight-card {
+  background: var(--blue-pale); border: 1px solid var(--blue-light);
+  border-radius: var(--radius); padding: 1rem .9rem; text-align: center;
+}
+.hc-emoji { font-size: 1.6rem; margin-bottom: .4rem; }
+.hc-title { font-weight: 700; font-size: .88rem; color: var(--blue-dark); margin-bottom: .3rem; }
+.hc-body  { font-size: .8rem; color: var(--gray-mid); line-height: 1.55; }
+
+/* ── 18. DO/DON'T ────────────────────────────────────────────────── */
+.dodont { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; margin: 1.25rem 0; }
+@media(max-width:520px) { .dodont { grid-template-columns: 1fr; } }
+.do-col   { background: var(--green-light); border: 1px solid #b2dfc3; border-radius: var(--radius); padding: .9rem 1rem; }
+.dont-col { background: var(--amber-light); border: 1px solid #f0d080; border-radius: var(--radius); padding: .9rem 1rem; }
+.dodont-title { font-size: .8rem; font-weight: 700; margin-bottom: .5rem; }
+.do-col   .dodont-title { color: var(--green-dark); }
+.dont-col .dodont-title { color: var(--amber-dark); }
+.dodont ul { padding-left: 1.1rem; font-size: .82rem; line-height: 1.65; }
+.do-col   ul { color: var(--green-dark); }
+.dont-col ul { color: var(--amber-dark); }
