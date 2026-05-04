@@ -3,17 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Cybersicurezza Personale — Proteggi te stesso online · Formazione Digitale</title>
-
 <meta name="description" content="Password sicure, phishing, aggiornamenti, privacy e backup: tutto quello che devi sapere per proteggere i tuoi dispositivi e la tua identità digitale. Guida pratica senza gergo tecnico.">
 <meta name="author" content="Cristiano De Pasquale">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#1F4E79">
 <link rel="canonical" href="https://formazione-digitale.github.io/sicurezza/cybersicurezza-personale/">
-<link rel="icon" type="image/png" href="https://formazione-digitale.github.io/img/favicon.png">
+<link rel="icon" type="image/png" href="/img/favicon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="dns-prefetch" href="//gc.zgo.at">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
 
-<!-- Open Graph -->
 <meta property="og:title" content="Cybersicurezza Personale — Proteggi te stesso online · Formazione Digitale">
 <meta property="og:description" content="Password sicure, phishing, aggiornamenti, privacy e backup: guida pratica per difendersi online senza essere esperti.">
 <meta property="og:url" content="https://formazione-digitale.github.io/sicurezza/cybersicurezza-personale/">
@@ -21,14 +22,11 @@
 <meta property="og:image" content="https://formazione-digitale.github.io/img/formazione-digitale-logo.png">
 <meta property="og:locale" content="it_IT">
 <meta property="og:site_name" content="Formazione Digitale">
-
-<!-- Twitter/X Card -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cybersicurezza Personale — Proteggi te stesso online · Formazione Digitale">
 <meta name="twitter:description" content="Password sicure, phishing, aggiornamenti, privacy e backup. Guida pratica.">
 <meta name="twitter:image" content="https://formazione-digitale.github.io/img/formazione-digitale-logo.png">
 
-<!-- Schema.org LearningResource -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -37,229 +35,44 @@
   "description": "Password sicure, phishing, aggiornamenti, privacy e backup: tutto quello che devi sapere per proteggere i tuoi dispositivi e la tua identità digitale.",
   "url": "https://formazione-digitale.github.io/sicurezza/cybersicurezza-personale/",
   "inLanguage": "it",
-  "educationalLevel": "beginner",
-  "learningResourceType": "PracticalGuide",
-  "teaches": ["cybersicurezza", "password sicure", "phishing", "privacy digitale", "backup"],
-  "isPartOf": {
-    "@type": "WebSite",
-    "name": "Formazione Digitale",
-    "url": "https://formazione-digitale.github.io/"
-  },
+  "educationalLevel": "Foundation",
   "author": {
     "@type": "Person",
     "name": "Cristiano De Pasquale",
     "jobTitle": "Docente di Informatica"
-  }
+  },
+  "provider": {
+    "@type": "WebSite",
+    "name": "Formazione Digitale",
+    "url": "https://formazione-digitale.github.io"
+  },
+  "keywords": "cybersicurezza, password sicure, phishing, privacy digitale, backup, 2fa, aggiornamenti"
 }
 </script>
 
-<!-- GoatCounter tracking -->
 <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-
 <link rel="stylesheet" href="/css/shared.css?v=2">
-
 <style>
-/* ══════════════════════════════════════════
-   VARIABILI & RESET
-══════════════════════════════════════════ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ═══════════════════════════════════════════
+   CSS SPECIFICO — Pillola Cybersicurezza
+   Solo componenti non presenti in shared.css
+═══════════════════════════════════════════ */
 
-:root {
-  --blue-dark:   #1F4E79;
-  --blue-mid:    #2E75B6;
-  --blue-light:  #D6E8F7;
-  --blue-pale:   #EBF3FC;
-  --green-dark:  #1E6B3C;
-  --green-light: #E8F5EE;
-  --amber-dark:  #7D4E00;
-  --amber-light: #FFF3CD;
-  --red-dark:    #C0392B;
-  --red-light:   #FDECEA;
-  --gray-dark:   #2C2C2C;
-  --gray-mid:    #666;
-  --gray-light:  #F5F5F5;
-  --white:       #FFFFFF;
-  --font-display: 'DM Serif Display', Georgia, serif;
-  --font-body:    'DM Sans', system-ui, sans-serif;
-  --font-mono:    'Courier New', Courier, monospace;
-  --radius: 10px;
-  --shadow: 0 2px 16px rgba(31,78,121,.10);
-  --transition: .22s cubic-bezier(.4,0,.2,1);
-}
-
-html { font-size: 16px; scroll-behavior: smooth; }
-body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FBFF; min-height: 100vh; }
-
-/* ── READING BAR ─────────────────────────────────────── */
-#reading-bar {
-  position: fixed; top: 0; left: 0; z-index: 999;
-  height: 3px; width: 0%;
-  background: linear-gradient(90deg, var(--blue-mid), var(--green-dark));
-  transition: width .1s linear;
-  pointer-events: none;
-}
-
-/* ── HEADER ──────────────────────────────────────────── */
-.guide-header {
-  position: sticky; top: 0; z-index: 100;
-  height: 52px;
-  background: var(--blue-dark);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 1.5rem;
-  box-shadow: 0 2px 12px rgba(0,0,0,.2);
-}
-.guide-header-back {
-  display: flex; align-items: center; gap: .4rem;
-  font-size: .8rem; color: rgba(255,255,255,.75);
-  text-decoration: none; transition: color var(--transition);
-}
-.guide-header-back:hover { color: #fff; }
-.guide-header-back svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-
-.guide-header-center {
-  position: absolute; left: 50%; transform: translateX(-50%);
-  font-family: var(--font-display); font-size: .95rem; color: #fff;
-  white-space: nowrap; pointer-events: none;
-}
-@media(max-width:600px){ .guide-header-center { display: none; } }
-
-.guide-header-right { display: flex; align-items: center; gap: .75rem; }
-
-/* Hamburger menu */
-.hamburger {
-  display: none; flex-direction: column; gap: 4px;
-  background: none; border: none; cursor: pointer;
-  padding: 4px; border-radius: 4px;
-}
-.hamburger span {
-  display: block; width: 20px; height: 2px;
-  background: rgba(255,255,255,.8); border-radius: 2px;
-  transition: all .25s ease;
-}
-.hamburger.is-open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-.hamburger.is-open span:nth-child(2) { opacity: 0; }
-.hamburger.is-open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-@media(max-width:860px){ .hamburger { display: flex; } }
-
-/* ── LAYOUT ──────────────────────────────────────────── */
+/* ── OVERRIDE LAYOUT: max-width più ampio + sidebar più larga ── */
 .guide-layout {
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 0;
-  max-width: 1060px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  align-items: start;
+  grid-template-columns: 260px 1fr;
+  max-width: 1200px;
 }
 
-/* ── SIDEBAR ─────────────────────────────────────────── */
-.guide-sidebar {
-  position: sticky; top: 52px;
-  padding: 2rem 1rem 2rem 0;
-  height: calc(100vh - 52px);
-  overflow-y: auto;
-  scrollbar-width: none;
-}
-.guide-sidebar::-webkit-scrollbar { display: none; }
-
-.sidebar-label {
-  font-size: .68rem; font-weight: 700; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--gray-mid);
-  margin-bottom: .75rem; padding-left: .1rem;
-}
-.sidebar-nav { list-style: none; }
-.sidebar-nav li + li { margin-top: .1rem; }
-
-.nav-item {
-  display: flex; align-items: flex-start; gap: .5rem;
-  padding: .45rem .6rem;
-  border-radius: 7px;
-  text-decoration: none;
-  font-size: .8rem; color: var(--gray-mid);
-  line-height: 1.3;
-  transition: background var(--transition), color var(--transition);
-  cursor: pointer;
-}
-.nav-item:hover { background: var(--blue-pale); color: var(--blue-dark); }
-.nav-item.active { background: var(--blue-pale); color: var(--blue-mid); font-weight: 600; }
-.nav-num {
-  flex-shrink: 0;
-  width: 18px; height: 18px; border-radius: 50%;
-  background: var(--gray-light); color: var(--gray-mid);
-  font-size: .67rem; font-weight: 700; display: flex;
-  align-items: center; justify-content: center;
-  transition: background var(--transition), color var(--transition);
-}
-.nav-item.active .nav-num { background: var(--blue-mid); color: #fff; }
-.nav-text { flex: 1; }
-
-/* Separatore e link utili */
-.sidebar-divider { border: none; border-top: 1px solid var(--blue-light); margin: 1rem 0; }
-.sidebar-meta { font-size: .73rem; color: var(--gray-mid); line-height: 1.6; padding-left: .1rem; }
-.sidebar-meta strong { color: var(--gray-dark); }
-
-@media(max-width:860px){
-  .guide-layout { grid-template-columns: 1fr; }
-  .guide-sidebar {
-    position: fixed;
-    top: 52px; left: 0;
-    width: 260px; height: calc(100vh - 52px);
-    background: var(--white);
-    border-right: 1px solid var(--blue-light);
-    box-shadow: 4px 0 20px rgba(31,78,121,.12);
-    padding: 1.5rem 1.25rem;
-    transform: translateX(-100%);
-    transition: transform .3s cubic-bezier(.4,0,.2,1);
-    z-index: 90;
-  }
-  .guide-sidebar.is-open { transform: translateX(0); }
-  .sidebar-overlay {
-    display: none;
-    position: fixed; inset: 0; top: 52px;
-    background: rgba(0,0,0,.35); z-index: 89;
-  }
-  .sidebar-overlay.is-open { display: block; }
+/* ── BOX ROSSO (non in shared.css) ── */
+.box-red {
+  background: #FDECEA;
+  border-left: 4px solid #C0392B;
+  color: #7a1e15;
 }
 
-/* ── MAIN CONTENT ────────────────────────────────────── */
-.guide-main {
-  padding: 2.5rem 1.5rem 5rem;
-  min-width: 0;
-}
-
-/* ── HERO ────────────────────────────────────────────── */
-.guide-hero {
-  background: linear-gradient(135deg, var(--blue-dark) 0%, #2A6099 100%);
-  border-radius: 14px;
-  padding: 2.25rem 2rem 2rem;
-  margin-bottom: 2.5rem;
-  position: relative; overflow: hidden;
-}
-.guide-hero::before {
-  content: '';
-  position: absolute; top: -40%; right: -10%;
-  width: 300px; height: 300px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,.06) 0%, transparent 70%);
-  pointer-events: none;
-}
-.guide-hero-eyebrow {
-  font-size: .72rem; font-weight: 600; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--blue-light);
-  margin-bottom: .6rem;
-}
-.guide-hero-title {
-  font-family: var(--font-display);
-  font-size: clamp(1.65rem, 3.5vw, 2.4rem);
-  color: #fff; line-height: 1.1;
-  margin-bottom: .75rem;
-}
-.guide-hero-title em { font-style: italic; color: var(--blue-light); }
-.guide-hero-sub {
-  font-size: .93rem; color: rgba(255,255,255,.72);
-  max-width: 520px; line-height: 1.65;
-  margin-bottom: 1.25rem;
-}
-.guide-hero-badges { display: flex; flex-wrap: wrap; gap: .4rem; }
+/* ── HERO BADGES ── */
+.guide-hero-badges { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.25rem; }
 .hero-badge {
   display: inline-flex; align-items: center; gap: .3rem;
   background: rgba(255,255,255,.12);
@@ -269,179 +82,7 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
   padding: .28rem .7rem; border-radius: 20px;
 }
 
-/* ── SECTIONS ────────────────────────────────────────── */
-.guide-section {
-  margin-bottom: 3rem;
-  scroll-margin-top: 72px;
-}
-.section-header {
-  display: flex; align-items: flex-start; gap: .85rem;
-  margin-bottom: 1.25rem; padding-bottom: .9rem;
-  border-bottom: 2px solid var(--blue-light);
-}
-.section-num {
-  flex-shrink: 0;
-  width: 34px; height: 34px; border-radius: 50%;
-  background: var(--blue-dark); color: #fff;
-  font-family: var(--font-display); font-size: 1rem;
-  display: flex; align-items: center; justify-content: center;
-  margin-top: 2px;
-}
-.section-title {
-  font-family: var(--font-display);
-  font-size: 1.45rem; color: var(--blue-dark);
-  line-height: 1.2; margin-bottom: .2rem;
-}
-.section-subtitle {
-  font-size: .82rem; color: var(--gray-mid);
-  line-height: 1.4;
-}
-
-.guide-section p {
-  font-size: .94rem; color: var(--gray-dark);
-  line-height: 1.75; margin-bottom: 1rem;
-}
-.guide-section p:last-child { margin-bottom: 0; }
-
-/* sub-title */
-.sub-title {
-  font-family: var(--font-display);
-  font-size: 1.1rem; color: var(--blue-dark);
-  margin: 1.5rem 0 .6rem;
-}
-
-/* ── BOX COMPONENTI ──────────────────────────────────── */
-.box {
-  border-radius: var(--radius);
-  padding: 1rem 1.25rem;
-  margin: 1.25rem 0;
-  display: flex; gap: .85rem; align-items: flex-start;
-  font-size: .88rem; line-height: 1.65;
-}
-.box-icon { font-size: 1.15rem; flex-shrink: 0; margin-top: .05rem; }
-.box strong { display: block; margin-bottom: .25rem; font-size: .9rem; }
-
-.box-info   { background: var(--blue-pale);   border-left: 4px solid var(--blue-mid);  color: #1a3d6b; }
-.box-tip    { background: var(--green-light); border-left: 4px solid var(--green-dark); color: #1a4a2e; }
-.box-warn   { background: var(--amber-light); border-left: 4px solid var(--amber-dark); color: #5a3700; }
-.box-red    { background: var(--red-light);   border-left: 4px solid var(--red-dark);   color: #7a1e15; }
-
-/* ── HIGHLIGHT GRID ──────────────────────────────────── */
-.highlight-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-  gap: .85rem;
-  margin: 1.25rem 0;
-}
-.highlight-card {
-  background: var(--white);
-  border: 1px solid var(--blue-light);
-  border-radius: var(--radius);
-  padding: 1.1rem 1rem;
-  box-shadow: var(--shadow);
-}
-.highlight-card .hc-icon { font-size: 1.5rem; margin-bottom: .5rem; }
-.highlight-card .hc-title {
-  font-family: var(--font-display); font-size: .95rem;
-  color: var(--blue-dark); margin-bottom: .35rem;
-}
-.highlight-card .hc-desc { font-size: .8rem; color: var(--gray-mid); line-height: 1.55; }
-
-/* Highlight verde */
-.highlight-card.hc-green { border-color: #9EC9B0; }
-.highlight-card.hc-green .hc-title { color: var(--green-dark); }
-
-/* Highlight ambra */
-.highlight-card.hc-amber { border-color: #F0D990; }
-.highlight-card.hc-amber .hc-title { color: var(--amber-dark); }
-
-/* Highlight rosso */
-.highlight-card.hc-red { border-color: #f5b7b1; }
-.highlight-card.hc-red .hc-title { color: var(--red-dark); }
-
-/* ── STEP LIST ────────────────────────────────────────── */
-.step-list { list-style: none; counter-reset: step-counter; margin: 1.25rem 0; }
-.step-item {
-  counter-increment: step-counter;
-  display: flex; gap: .9rem; align-items: flex-start;
-  padding: .85rem 0;
-  border-bottom: 1px solid var(--blue-light);
-}
-.step-item:last-child { border-bottom: none; }
-.step-item::before {
-  content: counter(step-counter);
-  flex-shrink: 0;
-  width: 28px; height: 28px; border-radius: 50%;
-  background: var(--blue-dark); color: #fff;
-  font-family: var(--font-display); font-size: .85rem;
-  display: flex; align-items: center; justify-content: center;
-  margin-top: .1rem;
-}
-.step-item strong { display: block; font-size: .9rem; color: var(--gray-dark); margin-bottom: .2rem; }
-.step-item span { font-size: .84rem; color: var(--gray-mid); line-height: 1.6; }
-
-/* ── DO/DON'T ─────────────────────────────────────────── */
-.dodont {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin: 1.25rem 0;
-}
-@media(max-width:560px){ .dodont { grid-template-columns: 1fr; } }
-
-.do-col, .dont-col {
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-.do-col-head, .dont-col-head {
-  padding: .55rem 1rem;
-  font-size: .8rem; font-weight: 700; letter-spacing: .06em;
-  text-transform: uppercase;
-}
-.do-col-head   { background: var(--green-dark); color: #fff; }
-.dont-col-head { background: var(--red-dark);   color: #fff; }
-
-.do-col-body, .dont-col-body { padding: .75rem 1rem; }
-.do-col-body   { background: var(--green-light); border: 1px solid #9EC9B0; border-top: none; }
-.dont-col-body { background: var(--red-light);   border: 1px solid #f5b7b1; border-top: none; }
-
-.dodont ul { list-style: none; }
-.dodont li {
-  font-size: .84rem; line-height: 1.6;
-  padding: .3rem 0; border-bottom: 1px dashed rgba(0,0,0,.08);
-  display: flex; gap: .5rem; align-items: flex-start;
-}
-.dodont li:last-child { border-bottom: none; }
-.dodont li::before { flex-shrink: 0; margin-top: .15rem; }
-.do-col-body li::before   { content: '✓'; color: var(--green-dark); font-weight: 700; }
-.dont-col-body li::before { content: '✗'; color: var(--red-dark);   font-weight: 700; }
-
-/* ── TABELLA ─────────────────────────────────────────── */
-.table-wrap {
-  overflow-x: auto;
-  border-radius: var(--radius);
-  border: 1px solid var(--blue-light);
-  margin: 1.25rem 0;
-  box-shadow: var(--shadow);
-}
-.table-wrap table {
-  width: 100%; border-collapse: collapse;
-  font-size: .84rem;
-}
-.table-wrap thead th {
-  background: var(--blue-dark); color: #fff;
-  padding: .65rem 1rem; text-align: left;
-  font-weight: 600; letter-spacing: .03em;
-}
-.table-wrap tbody tr:nth-child(even) { background: var(--blue-pale); }
-.table-wrap tbody td {
-  padding: .6rem 1rem;
-  border-bottom: 1px solid var(--blue-light);
-  color: var(--gray-dark); vertical-align: top;
-}
-.table-wrap tbody tr:last-child td { border-bottom: none; }
-
-/* ── PASSWORD STRENGTH VISUALIZER ────────────────────── */
+/* ── PASSWORD STRENGTH VISUALIZER ── */
 .pwd-demo {
   background: var(--white);
   border: 1px solid var(--blue-light);
@@ -450,10 +91,16 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
   margin: 1.25rem 0;
   box-shadow: var(--shadow);
 }
-.pwd-demo-title { font-size: .8rem; font-weight: 600; color: var(--gray-mid); text-transform: uppercase; letter-spacing: .07em; margin-bottom: .75rem; }
-.pwd-demo-row { display: flex; align-items: center; gap: .75rem; margin-bottom: .6rem; flex-wrap: wrap; }
+.pwd-demo-title {
+  font-size: .8rem; font-weight: 600; color: var(--gray-mid);
+  text-transform: uppercase; letter-spacing: .07em; margin-bottom: .75rem;
+}
+.pwd-demo-row {
+  display: flex; align-items: center; gap: .75rem;
+  margin-bottom: .6rem; flex-wrap: wrap;
+}
 .pwd-example {
-  font-family: var(--font-mono); font-size: .88rem;
+  font-family: 'Courier New', monospace; font-size: .88rem;
   background: var(--gray-light); padding: .3rem .65rem; border-radius: 5px;
   color: var(--gray-dark); flex: 1; min-width: 180px;
 }
@@ -462,21 +109,22 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
   height: 8px; border-radius: 4px; width: 120px;
   background: var(--gray-light); overflow: hidden;
 }
-.pwd-bar-fill { height: 100%; border-radius: 4px; transition: width .4s ease; }
+.pwd-bar-fill { height: 100%; border-radius: 4px; }
 .pwd-label { font-size: .75rem; font-weight: 600; min-width: 50px; }
-.bar-weak   .pwd-bar-fill { background: var(--red-dark);   width: 25%; }
+.bar-weak   .pwd-bar-fill { background: #C0392B; width: 25%; }
 .bar-fair   .pwd-bar-fill { background: var(--amber-dark); width: 50%; }
-.bar-good   .pwd-bar-fill { background: var(--blue-mid);   width: 75%; }
+.bar-good   .pwd-bar-fill { background: var(--blue-mid); width: 75%; }
 .bar-strong .pwd-bar-fill { background: var(--green-dark); width: 100%; }
-.label-weak   { color: var(--red-dark); }
+.label-weak   { color: #C0392B; }
 .label-fair   { color: var(--amber-dark); }
 .label-good   { color: var(--blue-mid); }
 .label-strong { color: var(--green-dark); }
+@media(max-width:500px) { .pwd-demo-row { flex-direction: column; align-items: flex-start; } }
 
-/* ── PHISHING CHECK ──────────────────────────────────── */
+/* ── PHISHING CARD ── */
 .phishing-card {
   background: var(--white);
-  border: 2px solid var(--red-dark);
+  border: 2px solid #C0392B;
   border-radius: var(--radius);
   padding: 1.25rem 1.5rem;
   margin: 1.25rem 0;
@@ -484,36 +132,36 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
 }
 .phishing-card-label {
   position: absolute; top: -12px; left: 1rem;
-  background: var(--red-dark); color: #fff;
+  background: #C0392B; color: #fff;
   font-size: .7rem; font-weight: 700; letter-spacing: .08em;
   text-transform: uppercase; padding: .2rem .7rem; border-radius: 20px;
 }
 .phishing-email {
-  font-family: var(--font-mono); font-size: .82rem;
+  font-family: 'Courier New', monospace; font-size: .82rem;
   background: #fdf9f9; border: 1px solid #f5b7b1;
   border-radius: 6px; padding: .75rem 1rem;
   line-height: 1.9; margin-bottom: .75rem;
   color: var(--gray-dark);
 }
 .phishing-email .flag {
-  background: #FDECEA; border-bottom: 2px solid var(--red-dark);
-  cursor: default; position: relative;
+  background: #FDECEA;
+  border-bottom: 2px solid #C0392B;
+  cursor: default;
 }
 .phishing-flags { display: flex; flex-wrap: wrap; gap: .5rem; }
 .phishing-flag-item {
   display: flex; align-items: flex-start; gap: .4rem;
-  font-size: .78rem; color: var(--red-dark); line-height: 1.5;
-  background: var(--red-light); border-radius: 6px;
+  font-size: .78rem; color: #C0392B; line-height: 1.5;
+  background: #FDECEA; border-radius: 6px;
   padding: .3rem .65rem;
 }
 .phishing-flag-item::before { content: '⚑'; flex-shrink: 0; }
 
-/* ── TRACCIAMENTO WIDGET ──────────────────────────────── */
+/* ── TRACCIAMENTO WIDGET ── */
 .tracking-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: .75rem;
-  margin: 1.25rem 0;
+  gap: .75rem; margin: 1.25rem 0;
 }
 .tracking-item {
   background: var(--white);
@@ -522,7 +170,6 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
   padding: .85rem 1rem;
   font-size: .82rem; line-height: 1.6;
   display: flex; gap: .6rem; align-items: flex-start;
-  cursor: default;
   transition: border-color .22s ease, box-shadow .22s ease, transform .22s ease, background .22s ease;
   position: relative;
 }
@@ -538,72 +185,35 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F8FB
   transition: transform .25s cubic-bezier(.34,1.56,.64,1);
 }
 .tracking-item:hover .ti-icon { transform: scale(1.25); }
-.tracking-item .ti-text strong { display: block; color: var(--gray-dark); margin-bottom: .15rem; transition: color .2s; }
+.tracking-item .ti-text strong { display: block; color: var(--gray-dark); margin-bottom: .15rem; }
 .tracking-item:hover .ti-text strong { color: var(--blue-dark); }
 .tracking-item .ti-text span { color: var(--gray-mid); }
-
-/* Tooltip espanso */
 .tracking-item .ti-tooltip {
   display: none;
-  position: absolute;
-  bottom: calc(100% + 8px); left: 50%;
+  position: absolute; bottom: calc(100% + 8px); left: 50%;
   transform: translateX(-50%);
   width: 220px;
   background: var(--blue-dark); color: #fff;
   font-size: .75rem; line-height: 1.55;
   padding: .65rem .85rem; border-radius: 8px;
   box-shadow: 0 6px 20px rgba(0,0,0,.22);
-  pointer-events: none;
-  z-index: 50;
+  pointer-events: none; z-index: 50;
 }
 .tracking-item .ti-tooltip::after {
-  content: '';
-  position: absolute; top: 100%; left: 50%;
+  content: ''; position: absolute; top: 100%; left: 50%;
   transform: translateX(-50%);
   border: 6px solid transparent;
   border-top-color: var(--blue-dark);
 }
 .tracking-item:hover .ti-tooltip { display: block; }
-
-/* su mobile niente tooltip (non c'è hover reale) */
-@media(max-width:600px){ .tracking-item .ti-tooltip { display: none !important; } }
-
-/* ── FOOTER ──────────────────────────────────────────── */
-.guide-footer {
-  background: var(--blue-dark);
-  color: rgba(255,255,255,.6);
-  text-align: center; padding: 2rem 1.5rem;
-  font-size: .8rem; line-height: 1.7;
-}
-.guide-footer strong { color: rgba(255,255,255,.9); }
-
-/* ── UTILITY ─────────────────────────────────────────── */
-code {
-  font-family: var(--font-mono); font-size: .84rem;
-  background: var(--gray-light); padding: .1rem .4rem;
-  border-radius: 4px; color: var(--blue-dark);
-}
-
-/* ── RESPONSIVITÀ ────────────────────────────────────── */
-@media(max-width:860px){
-  .guide-main { padding: 1.5rem 1rem 4rem; }
-  .guide-hero { padding: 1.75rem 1.25rem 1.5rem; }
-}
-@media(max-width:500px){
-  .highlight-grid { grid-template-columns: 1fr 1fr; }
-  .pwd-demo-row   { flex-direction: column; align-items: flex-start; }
-}
+@media(max-width:600px) { .tracking-item .ti-tooltip { display: none !important; } }
 </style>
 </head>
 <body>
 
-<!-- ── READING BAR ───────────────────────────────────────── -->
 <div id="reading-bar"></div>
-
-<!-- ── SIDEBAR OVERLAY ──────────────────────────────────── -->
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
 
-<!-- ── HEADER ───────────────────────────────────────────── -->
 <header class="guide-header">
   <a class="guide-header-back" href="/index.html">
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
@@ -617,10 +227,8 @@ code {
   </div>
 </header>
 
-<!-- ── LAYOUT ────────────────────────────────────────────── -->
 <div class="guide-layout">
 
-  <!-- SIDEBAR -->
   <aside class="guide-sidebar" id="guide-sidebar">
     <div class="sidebar-label">Sezioni</div>
     <ul class="sidebar-nav" id="sidebar-nav">
@@ -643,10 +251,8 @@ code {
     </div>
   </aside>
 
-  <!-- CONTENUTO PRINCIPALE -->
   <main class="guide-main">
 
-    <!-- HERO -->
     <div class="guide-hero">
       <div class="guide-hero-eyebrow">Formazione Digitale · Pillola digitale · Sicurezza</div>
       <h1 class="guide-hero-title">Cybersicurezza<br><em>Personale</em></h1>
@@ -659,9 +265,7 @@ code {
       </div>
     </div>
 
-    <!-- ═══════════════════════════════════════
-         S1 — PERCHÉ CI RIGUARDA TUTTI
-    ═══════════════════════════════════════ -->
+    <!-- S1 -->
     <section class="guide-section" id="s1">
       <div class="section-header">
         <div class="section-num">1</div>
@@ -670,11 +274,8 @@ code {
           <p class="section-subtitle">Non serve essere VIP o avere segreti per essere un bersaglio</p>
         </div>
       </div>
-
       <p>C'è una convinzione diffusa: <em>"Non sono importante abbastanza da essere hackerato."</em> È un errore pericoloso. La maggior parte degli attacchi informatici non è mirata — è automatica, indiscriminata, e cerca semplicemente qualcuno con le difese basse.</p>
-
       <p>Pensa alla tua casa. Non la lasci aperta perché "non hai niente di valore", vero? Il tuo spazio digitale — email, smartphone, profili social, conti bancari — merita lo stesso rispetto.</p>
-
       <div class="highlight-grid">
         <div class="highlight-card hc-red">
           <div class="hc-icon">📧</div>
@@ -697,16 +298,13 @@ code {
           <div class="hc-desc">I robot testano milioni di combinazioni ogni giorno. Non ti scelgono — trovano chi non si è protetto.</div>
         </div>
       </div>
-
       <div class="box box-info">
         <div class="box-icon">💡</div>
-        <div><strong>Analogia utile</strong>Il lucchetto della tua bicicletta non ferma un ladro determinatissimo — ma ti protegge dai furti opportunistici, che sono il 90% dei casi. La sicurezza digitale funziona allo stesso modo: bastano poche misure di buon senso per non essere il bersaglio più facile.</div>
+        <div><strong>Analogia utile</strong> Il lucchetto della tua bicicletta non ferma un ladro determinatissimo — ma ti protegge dai furti opportunistici, che sono il 90% dei casi. La sicurezza digitale funziona allo stesso modo: bastano poche misure di buon senso per non essere il bersaglio più facile.</div>
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════
-         S2 — PHISHING
-    ═══════════════════════════════════════ -->
+    <!-- S2 -->
     <section class="guide-section" id="s2">
       <div class="section-header">
         <div class="section-num">2</div>
@@ -715,12 +313,8 @@ code {
           <p class="section-subtitle">L'attacco più comune — e il più sottovalutato</p>
         </div>
       </div>
-
       <p>Il <strong>phishing</strong> è una truffa che usa messaggi falsi — email, SMS, WhatsApp — per farti rivelare password, dati della carta o cliccare su link pericolosi. Il nome viene dall'inglese "fishing" (pescare): il truffatore lancia l'amo e aspetta che qualcuno abbocchi.</p>
-
       <p>Non è una questione di intelligenza. Oggi i messaggi di phishing sono spesso indistinguibili da quelli reali — usano loghi ufficiali, linguaggio formale e creano urgenza per farti agire in fretta, senza pensare.</p>
-
-      <!-- Email esempio annotata -->
       <div class="phishing-card">
         <div class="phishing-card-label">⚠ Esempio di email di phishing — analisi</div>
         <div class="phishing-email">
@@ -740,7 +334,6 @@ code {
           <div class="phishing-flag-item">Firma vaga: "Il team di sicurezza" senza nome o contatto reale</div>
         </div>
       </div>
-
       <div class="dodont">
         <div class="do-col">
           <div class="do-col-head">✓ Cosa fare</div>
@@ -767,21 +360,17 @@ code {
           </div>
         </div>
       </div>
-
       <div class="box box-warn">
         <div class="box-icon">⚠️</div>
-        <div><strong>Lo smishing: phishing via SMS</strong>Funziona esattamente come il phishing via email, ma arriva come SMS o WhatsApp. Spesso si spaccia per la tua banca, il corriere, l'Agenzia delle Entrate o Poste Italiane. La regola è identica: non cliccare mai link da messaggi inattesi — accedi sempre direttamente dal sito ufficiale.</div>
+        <div><strong>Lo smishing: phishing via SMS</strong> Funziona esattamente come il phishing via email, ma arriva come SMS o WhatsApp. Spesso si spaccia per la tua banca, il corriere, l'Agenzia delle Entrate o Poste Italiane. La regola è identica: non cliccare mai link da messaggi inattesi — accedi sempre direttamente dal sito ufficiale.</div>
       </div>
-
       <div class="box box-tip">
         <div class="box-icon">✅</div>
-        <div><strong>Fai subito questo</strong>Pensa all'ultima email "urgente" che hai ricevuto da una banca, corriere o servizio online. Prima di cliccare qualsiasi link, cerca il nome dell'azienda su Google e vai direttamente al loro sito ufficiale. Quella è la tua difesa numero uno contro il phishing.</div>
+        <div><strong>Fai subito questo</strong> Pensa all'ultima email "urgente" che hai ricevuto da una banca, corriere o servizio online. Prima di cliccare qualsiasi link, cerca il nome dell'azienda su Google e vai direttamente al loro sito ufficiale. Quella è la tua difesa numero uno contro il phishing.</div>
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════
-         S3 — PASSWORD
-    ═══════════════════════════════════════ -->
+    <!-- S3 -->
     <section class="guide-section" id="s3">
       <div class="section-header">
         <div class="section-num">3</div>
@@ -790,13 +379,9 @@ code {
           <p class="section-subtitle">La serratura della tua vita digitale</p>
         </div>
       </div>
-
       <p>La password è la prima linea di difesa dei tuoi account. Una password debole è come una serratura di plastica: esiste, ma non protegge nulla. I programmi automatici testano milioni di combinazioni al secondo — password come <code>123456</code> o <code>mario1990</code> vengono scoperte in meno di un secondo.</p>
-
-      <!-- Visualizzatore forza password -->
       <div class="pwd-demo">
         <div class="pwd-demo-title">Confronto: dalla password debole a quella forte</div>
-
         <div class="pwd-demo-row bar-weak">
           <div class="pwd-example">mario1990</div>
           <div class="pwd-bar-wrap">
@@ -804,7 +389,6 @@ code {
             <span class="pwd-label label-weak">Debole</span>
           </div>
         </div>
-
         <div class="pwd-demo-row bar-fair">
           <div class="pwd-example">Mario@1990!</div>
           <div class="pwd-bar-wrap">
@@ -812,7 +396,6 @@ code {
             <span class="pwd-label label-fair">Discreta</span>
           </div>
         </div>
-
         <div class="pwd-demo-row bar-good">
           <div class="pwd-example">Tigre-Nuvola-Porta-7</div>
           <div class="pwd-bar-wrap">
@@ -820,7 +403,6 @@ code {
             <span class="pwd-label label-good">Buona</span>
           </div>
         </div>
-
         <div class="pwd-demo-row bar-strong">
           <div class="pwd-example">j4#Kw!mR9@qLdTx2</div>
           <div class="pwd-bar-wrap">
@@ -828,19 +410,16 @@ code {
             <span class="pwd-label label-strong">Ottima</span>
           </div>
         </div>
-        <div class="box box-info" style="margin-top:.9rem; margin-bottom:0;">
+        <div class="box box-info" style="margin-top:.9rem;margin-bottom:0;">
           <div class="box-icon">🗝️</div>
-          <div><strong>Questa password non si ricorda — si delega</strong>Una stringa come <code>j4#Kw!mR9@qLdTx2</code> è generata e memorizzata da un <strong>gestore di password</strong>. Tu non devi ricordarla: ci pensa il software. Senza un gestore, questo tipo di password è inutilizzabile nella pratica.</div>
+          <div><strong>Questa password non si ricorda — si delega</strong> Una stringa come <code>j4#Kw!mR9@qLdTx2</code> è generata e memorizzata da un <strong>gestore di password</strong>. Tu non devi ricordarla: ci pensa il software.</div>
         </div>
       </div>
-
       <div class="box box-info">
         <div class="box-icon">💡</div>
-        <div><strong>Il trucco della passphrase</strong>Quattro parole <em>casuali</em> unite da un trattino (<code>Tigre-Nuvola-Porta-7</code>) sono più sicure di una stringa caotica come <code>P@ss!</code> — e molto più facili da ricordare. La parola chiave è <strong>casuali</strong>: "CasaMiaRomaForza" non vale, perché le parole sono semanticamente connesse e prevedibili. La lunghezza batte la complessità: ogni carattere in più moltiplica astronomicamente il tempo necessario per scoprirla.</div>
+        <div><strong>Il trucco della passphrase</strong> Quattro parole <em>casuali</em> unite da un trattino (<code>Tigre-Nuvola-Porta-7</code>) sono più sicure di una stringa caotica come <code>P@ss!</code> — e molto più facili da ricordare. La parola chiave è <strong>casuali</strong>: "CasaMiaRomaForza" non vale. La lunghezza batte la complessità.</div>
       </div>
-
       <h3 class="sub-title">Le 3 regole d'oro delle password</h3>
-
       <div class="highlight-grid">
         <div class="highlight-card">
           <div class="hc-icon">🔢</div>
@@ -855,39 +434,30 @@ code {
         <div class="highlight-card hc-green">
           <div class="hc-icon">🗝️</div>
           <div class="hc-title">3. Usa un gestore di password</div>
-          <div class="hc-desc">Genera e ricorda password sicure uniche per ogni sito. Devi ricordare solo una password principale. <strong>Bitwarden</strong> è gratuito, open source e disponibile su tutti i dispositivi — è la prima scelta consigliata.</div>
+          <div class="hc-desc">Genera e ricorda password sicure uniche per ogni sito. Devi ricordare solo una password principale. <strong>Bitwarden</strong> è gratuito, open source e disponibile su tutti i dispositivi.</div>
         </div>
       </div>
-
       <div class="box box-tip">
         <div class="box-icon">✅</div>
-        <div><strong>Fai subito questo</strong>Controlla se le tue password sono state compromesse su <strong>haveibeenpwned.com</strong> — inserisci solo la tua email, è un servizio sicuro. Se il sito segnala una violazione, cambia subito la password di quell'account (e di tutti quelli dove la usavi).</div>
+        <div><strong>Fai subito questo</strong> Controlla se le tue password sono state compromesse su <strong>haveibeenpwned.com</strong> — inserisci solo la tua email. Se il sito segnala una violazione, cambia subito la password di quell'account.</div>
       </div>
-
       <h3 class="sub-title">Autenticazione a due fattori (2FA)</h3>
-
-      <p>Anche la password più sicura può essere rubata. L'<strong>autenticazione a due fattori</strong> aggiunge un secondo passaggio: dopo la password, ricevi un codice temporaneo sul telefono. È come avere sia la chiave che il codice dell'allarme — anche se qualcuno copia la chiave, senza il codice non entra.</p>
-
+      <p>Anche la password più sicura può essere rubata. L'<strong>autenticazione a due fattori</strong> aggiunge un secondo passaggio: dopo la password, ricevi un codice temporaneo sul telefono. È come avere sia la chiave che il codice dell'allarme.</p>
       <div class="table-wrap">
         <table>
           <thead>
-            <tr>
-              <th>Metodo 2FA</th>
-              <th>Come funziona</th>
-              <th>Sicurezza</th>
-              <th>Consigliato per</th>
-            </tr>
+            <tr><th>Metodo 2FA</th><th>Come funziona</th><th>Sicurezza</th><th>Consigliato per</th></tr>
           </thead>
           <tbody>
             <tr>
               <td><strong>SMS</strong></td>
               <td>Codice via messaggio di testo</td>
               <td>🟡 Discreta</td>
-              <td>Banche, servizi pubblici — meglio di niente, ma vulnerabile a SIM swapping e intercettazioni SS7</td>
+              <td>Banche, servizi pubblici — meglio di niente, ma vulnerabile a SIM swapping</td>
             </tr>
             <tr>
               <td><strong>App Authenticator</strong></td>
-              <td>Codice generato localmente ogni 30 sec — non transita sulla rete telefonica</td>
+              <td>Codice generato localmente ogni 30 sec</td>
               <td>🟢 Ottima</td>
               <td>Email, social, account importanti — sempre preferibile all'SMS</td>
             </tr>
@@ -900,16 +470,13 @@ code {
           </tbody>
         </table>
       </div>
-
       <div class="box box-warn">
         <div class="box-icon">⚠️</div>
-        <div><strong>Mai condividere un codice 2FA</strong>Nessuna azienda legittima ti chiederà mai di comunicare un codice di verifica ricevuto via SMS o app. Se qualcuno lo richiede — anche fingendo di essere il supporto tecnico — è una truffa.</div>
+        <div><strong>Mai condividere un codice 2FA</strong> Nessuna azienda legittima ti chiederà mai di comunicare un codice di verifica. Se qualcuno lo richiede — anche fingendo di essere il supporto tecnico — è una truffa.</div>
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════
-         S4 — AGGIORNAMENTI
-    ═══════════════════════════════════════ -->
+    <!-- S4 -->
     <section class="guide-section" id="s4">
       <div class="section-header">
         <div class="section-num">4</div>
@@ -918,11 +485,7 @@ code {
           <p class="section-subtitle">Il tuo sistema operativo e le tue app devono essere sempre aggiornati</p>
         </div>
       </div>
-
       <p>Ogni software ha imperfezioni — alcune delle quali permettono ai malintenzionati di entrare nel tuo dispositivo. Quando le aziende scoprono questi "buchi" li correggono e rilasciano un aggiornamento. Ignorarlo è come lasciare una finestra rotta: tutti sanno che è lì.</p>
-
-      <p>Gli aggiornamenti non servono solo ad aggiungere funzionalità. La maggior parte contiene <strong>patch di sicurezza</strong> — correzioni urgenti che chiudono vulnerabilità note e sfruttate attivamente.</p>
-
       <div class="dodont">
         <div class="do-col">
           <div class="do-col-head">✓ Buone abitudini</div>
@@ -932,7 +495,7 @@ code {
               <li>Aggiorna le app regolarmente — anche quelle usate poco</li>
               <li>Aggiorna il browser: è il programma più esposto agli attacchi</li>
               <li>Aggiorna il firmware del router almeno una volta l'anno</li>
-              <li>Riavvia il dispositivo dopo gli aggiornamenti — completa l'installazione</li>
+              <li>Riavvia il dispositivo dopo gli aggiornamenti</li>
             </ul>
           </div>
         </div>
@@ -942,28 +505,24 @@ code {
             <ul>
               <li>Rimandare gli aggiornamenti "perché non ho tempo"</li>
               <li>Usare sistemi operativi fuori supporto (es. Windows 7/8)</li>
-              <li>Scaricare app da fonti non ufficiali per evitare aggiornamenti a pagamento</li>
+              <li>Scaricare app da fonti non ufficiali per evitare aggiornamenti</li>
               <li>Ignorare le notifiche di aggiornamento per mesi</li>
               <li>Pensare che un antivirus compensi la mancanza di aggiornamenti</li>
             </ul>
           </div>
         </div>
       </div>
-
       <div class="box box-info">
         <div class="box-icon">🛡️</div>
-        <div><strong>Il caso WannaCry (2017)</strong>Nel 2017 un attacco ransomware bloccò centinaia di migliaia di computer in 150 paesi — ospedali, banche, aziende. Colpì solo sistemi Windows <em>non aggiornati</em>: la patch che correggeva la vulnerabilità sfruttata era disponibile da mesi. Chi aveva aggiornato non fu toccato.</div>
+        <div><strong>Il caso WannaCry (2017)</strong> Nel 2017 un attacco ransomware bloccò centinaia di migliaia di computer in 150 paesi. Colpì solo sistemi Windows <em>non aggiornati</em>: la patch che correggeva la vulnerabilità era disponibile da mesi. Chi aveva aggiornato non fu toccato.</div>
       </div>
-
       <div class="box box-tip">
         <div class="box-icon">✅</div>
-        <div><strong>Fai subito questo</strong>Apri le impostazioni del tuo smartphone e del tuo computer e verifica che gli aggiornamenti automatici siano attivi. Se trovi aggiornamenti in attesa, installali adesso. Ci vogliono 5 minuti.</div>
+        <div><strong>Fai subito questo</strong> Apri le impostazioni del tuo smartphone e del tuo computer e verifica che gli aggiornamenti automatici siano attivi. Se trovi aggiornamenti in attesa, installali adesso. Ci vogliono 5 minuti.</div>
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════
-         S5 — PRIVACY & TRACCIAMENTO
-    ═══════════════════════════════════════ -->
+    <!-- S5 -->
     <section class="guide-section" id="s5">
       <div class="section-header">
         <div class="section-num">5</div>
@@ -972,9 +531,7 @@ code {
           <p class="section-subtitle">Cosa sanno di te — e come limitarlo</p>
         </div>
       </div>
-
       <p>Ogni volta che usi internet, lasci tracce. Alcune sono inevitabili e necessarie, altre sono dati raccolti e venduti per mostrarti pubblicità. Capire chi raccoglie cosa ti permette di fare scelte consapevoli.</p>
-
       <div class="tracking-list">
         <div class="tracking-item">
           <div class="ti-icon">🍪</div>
@@ -982,7 +539,7 @@ code {
             <strong>Cookie di terze parti</strong>
             <span>Seguono i tuoi movimenti da sito a sito, costruendo un profilo dei tuoi interessi.</span>
           </div>
-          <div class="ti-tooltip">Rimangono attivi anche dopo che esci dal sito. Puoi bloccarli nelle impostazioni del browser o scegliendo "Rifiuta tutto" nei banner cookie.</div>
+          <div class="ti-tooltip">Puoi bloccarli nelle impostazioni del browser o scegliendo "Rifiuta tutto" nei banner cookie.</div>
         </div>
         <div class="tracking-item">
           <div class="ti-icon">📍</div>
@@ -990,7 +547,7 @@ code {
             <strong>Geolocalizzazione</strong>
             <span>Molte app chiedono l'accesso alla posizione anche quando non ne hanno bisogno.</span>
           </div>
-          <div class="ti-tooltip">Imposta l'accesso su "Solo mentre uso l'app" o "Mai" per le app che non hanno bisogno della tua posizione. Vai in Impostazioni → App → Permessi.</div>
+          <div class="ti-tooltip">Imposta l'accesso su "Solo mentre uso l'app" o "Mai". Vai in Impostazioni → App → Permessi.</div>
         </div>
         <div class="tracking-item">
           <div class="ti-icon">📱</div>
@@ -998,7 +555,7 @@ code {
             <strong>Permessi app eccessivi</strong>
             <span>Una torcia che chiede accesso ai contatti, al microfono e alla fotocamera. Perché?</span>
           </div>
-          <div class="ti-tooltip">Regola d'oro: se un'app chiede un permesso che non ha senso per la sua funzione, non concederlo — o disinstallala. Controlla i permessi periodicamente.</div>
+          <div class="ti-tooltip">Se un'app chiede un permesso che non ha senso per la sua funzione, non concederlo — o disinstallala.</div>
         </div>
         <div class="tracking-item">
           <div class="ti-icon">🔍</div>
@@ -1006,7 +563,7 @@ code {
             <strong>Cronologia ricerche</strong>
             <span>I motori di ricerca e i browser tracciano tutto ciò che cerchi e visiti.</span>
           </div>
-          <div class="ti-tooltip">Usa la modalità privata/incognito per sessioni che non vuoi salvare. Per le ricerche, esistono alternative privacy-friendly come DuckDuckGo.</div>
+          <div class="ti-tooltip">Usa la modalità privata/incognito per sessioni che non vuoi salvare. Considera DuckDuckGo come alternativa privacy-friendly.</div>
         </div>
         <div class="tracking-item">
           <div class="ti-icon">📧</div>
@@ -1014,7 +571,7 @@ code {
             <strong>Pixel di tracciamento</strong>
             <span>Immagini invisibili nelle email che comunicano al mittente quando hai aperto il messaggio.</span>
           </div>
-          <div class="ti-tooltip">Disabilita il caricamento automatico delle immagini nelle email nelle impostazioni del tuo client di posta. Molti client moderni lo bloccano già di default.</div>
+          <div class="ti-tooltip">Disabilita il caricamento automatico delle immagini nelle email. Molti client moderni lo bloccano già di default.</div>
         </div>
         <div class="tracking-item">
           <div class="ti-icon">🌐</div>
@@ -1022,44 +579,39 @@ code {
             <strong>Fingerprinting</strong>
             <span>Il browser rivela informazioni tecniche uniche che permettono di identificarti anche senza cookie.</span>
           </div>
-          <div class="ti-tooltip">Più difficile da bloccare dei cookie. Browser come Firefox e Brave includono protezioni anti-fingerprinting attive per impostazione predefinita.</div>
+          <div class="ti-tooltip">Browser come Firefox e Brave includono protezioni anti-fingerprinting attive per impostazione predefinita.</div>
         </div>
       </div>
-
       <h3 class="sub-title">Cosa puoi fare concretamente</h3>
-
       <ol class="step-list">
         <li class="step-item">
           <strong>Rivedi i permessi delle app</strong>
-          <span>Smartphone → Impostazioni → App → Permessi. Revoca l'accesso a posizione, microfono e fotocamera per le app che non ne hanno bisogno. Fallo oggi.</span>
+          <span>Smartphone → Impostazioni → App → Permessi. Revoca l'accesso a posizione, microfono e fotocamera per le app che non ne hanno bisogno.</span>
         </li>
         <li class="step-item">
           <strong>Usa un browser attento alla privacy</strong>
-          <span>I browser moderni (Firefox, Brave, Safari) bloccano i tracker di terze parti per impostazione predefinita. Considera di cambiare se usi ancora browser che non lo fanno.</span>
+          <span>Firefox, Brave e Safari bloccano i tracker di terze parti per impostazione predefinita.</span>
         </li>
         <li class="step-item">
-          <strong>Leggi — almeno in parte — le richieste di consenso</strong>
-          <span>Non cliccare sempre "Accetta tutto". Molti siti offrono l'opzione "Solo cookie necessari" o "Gestisci preferenze". Usala.</span>
+          <strong>Leggi le richieste di consenso</strong>
+          <span>Non cliccare sempre "Accetta tutto". Molti siti offrono "Solo cookie necessari". Usala.</span>
         </li>
         <li class="step-item">
           <strong>Usa indirizzi email separati</strong>
-          <span>Un indirizzo per gli account importanti (banca, lavoro), un altro per i servizi che probabilmente ti invieranno spam. Mantieni il principale pulito e monitorato.</span>
+          <span>Un indirizzo per gli account importanti, un altro per i servizi che probabilmente ti invieranno spam.</span>
         </li>
         <li class="step-item">
-          <strong>Controlla i dati che condividi sui social</strong>
-          <span>Data di nascita completa, numero di telefono, indirizzo di casa: limitare questi dati riduce il rischio di social engineering e furto d'identità.</span>
+          <strong>Controlla i dati sui social</strong>
+          <span>Data di nascita completa, numero di telefono, indirizzo: limitare questi dati riduce il rischio di furto d'identità.</span>
         </li>
       </ol>
-
       <div class="box box-info">
         <div class="box-icon">💡</div>
-        <div><strong>La regola del "minimo necessario"</strong>Ogni volta che installi un'app o ti iscrivi a un servizio, dai solo i dati strettamente necessari. Non è necessario compilare tutti i campi facoltativi di un modulo. Meno dati condividi, meno dati possono essere rubati o usati impropriamente.</div>
+        <div><strong>La regola del "minimo necessario"</strong> Ogni volta che installi un'app o ti iscrivi a un servizio, dai solo i dati strettamente necessari. Non è necessario compilare tutti i campi facoltativi. Meno dati condividi, meno dati possono essere rubati.</div>
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════
-         S6 — RETI WI-FI
-    ═══════════════════════════════════════ -->
+    <!-- S6 -->
     <section class="guide-section" id="s6">
       <div class="section-header">
         <div class="section-num">6</div>
@@ -1068,57 +620,31 @@ code {
           <p class="section-subtitle">Non tutte le reti sono sicure — e alcune sono trappole</p>
         </div>
       </div>
-
       <p>La rete Wi-Fi è il canale attraverso cui transitano tutti i tuoi dati online. Una rete non sicura è come una conversazione in un luogo pubblico: chiunque nelle vicinanze potrebbe ascoltare.</p>
-
       <div class="table-wrap">
         <table>
           <thead>
-            <tr>
-              <th>Tipo di rete</th>
-              <th>Rischio</th>
-              <th>Cosa fare</th>
-            </tr>
+            <tr><th>Tipo di rete</th><th>Rischio</th><th>Cosa fare</th></tr>
           </thead>
           <tbody>
-            <tr>
-              <td><strong>Wi-Fi di casa</strong></td>
-              <td>🟢 Basso se configurata bene</td>
-              <td>Usa WPA3 o WPA2, password lunga, cambia quella di default del router</td>
-            </tr>
-            <tr>
-              <td><strong>Wi-Fi aziendale/scolastica</strong></td>
-              <td>🟡 Medio — gestita da altri</td>
-              <td>Usa solo per attività lavorative, evita accessi bancari sensibili</td>
-            </tr>
-            <tr>
-              <td><strong>Wi-Fi pubblica (bar, aeroporto)</strong></td>
-              <td>🔴 Alto</td>
-              <td>Evita transazioni bancarie, usa VPN se necessario navigare</td>
-            </tr>
-            <tr>
-              <td><strong>Hotspot sconosciuto senza password</strong></td>
-              <td>🔴 Molto alto — potrebbe essere una trappola</td>
-              <td>Non connetterti mai. Usa i dati mobili del tuo operatore</td>
-            </tr>
+            <tr><td><strong>Wi-Fi di casa</strong></td><td>🟢 Basso se configurata bene</td><td>Usa WPA3 o WPA2, password lunga, cambia quella di default del router</td></tr>
+            <tr><td><strong>Wi-Fi aziendale/scolastica</strong></td><td>🟡 Medio — gestita da altri</td><td>Usa solo per attività lavorative, evita accessi bancari sensibili</td></tr>
+            <tr><td><strong>Wi-Fi pubblica (bar, aeroporto)</strong></td><td>🔴 Alto</td><td>Evita transazioni bancarie, usa VPN se necessario navigare</td></tr>
+            <tr><td><strong>Hotspot sconosciuto senza password</strong></td><td>🔴 Molto alto — potrebbe essere una trappola</td><td>Non connetterti mai. Usa i dati mobili del tuo operatore</td></tr>
           </tbody>
         </table>
       </div>
-
       <div class="box box-warn">
         <div class="box-icon">⚠️</div>
-        <div><strong>L'attacco "Evil Twin"</strong>Un malintenzionato può creare una rete Wi-Fi con lo stesso nome di quella del bar dove ti trovi (es. "CafeWifi"). Se ti connetti alla rete falsa, tutto il tuo traffico passa attraverso il suo dispositivo. Il segnale HTTPS protegge il contenuto, ma non sempre basta. La regola: in dubbio, usa i dati mobili.</div>
+        <div><strong>L'attacco "Evil Twin"</strong> Un malintenzionato può creare una rete Wi-Fi con lo stesso nome di quella del bar dove ti trovi. Se ti connetti alla rete falsa, tutto il tuo traffico passa attraverso il suo dispositivo. In dubbio, usa i dati mobili.</div>
       </div>
-
       <div class="box box-tip">
         <div class="box-icon">✅</div>
-        <div><strong>Fai subito questo</strong>Vai nelle impostazioni del router di casa (di solito <code>192.168.1.1</code> nel browser), cambia la password di accesso all'interfaccia di amministrazione (spesso è ancora "admin/admin") e verifica che la protezione sia WPA2 o WPA3 — non WEP, che è obsoleto e insicuro.</div>
+        <div><strong>Fai subito questo</strong> Vai nelle impostazioni del router di casa (di solito <code>192.168.1.1</code> nel browser), cambia la password di accesso all'interfaccia di amministrazione e verifica che la protezione sia WPA2 o WPA3 — non WEP, che è obsoleto.</div>
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════
-         S7 — BACKUP
-    ═══════════════════════════════════════ -->
+    <!-- S7 -->
     <section class="guide-section" id="s7">
       <div class="section-header">
         <div class="section-num">7</div>
@@ -1127,19 +653,16 @@ code {
           <p class="section-subtitle">Non se i dati si perdono — ma quando</p>
         </div>
       </div>
-
-      <p>Il backup è la copia dei tuoi dati importanti conservata in un posto separato. Non serve solo contro gli attacchi informatici: serve anche contro guasti hardware, smarrimento del dispositivo, cancellazioni accidentali. La domanda non è <em>se</em> perderai dei dati, ma <em>quando</em> — e se avrai una copia.</p>
-
+      <p>Il backup è la copia dei tuoi dati importanti conservata in un posto separato. La domanda non è <em>se</em> perderai dei dati, ma <em>quando</em> — e se avrai una copia.</p>
       <div class="box box-info">
         <div class="box-icon">🔢</div>
-        <div><strong>La regola del 3-2-1</strong>La strategia di backup più raccomandata al mondo: <strong>3</strong> copie dei dati, su <strong>2</strong> supporti diversi, di cui <strong>1</strong> fuori dalla tua posizione fisica (es. cloud). Se hai 3 copie tutte sullo stesso computer, non hai un backup — hai solo ridondanza locale.</div>
+        <div><strong>La regola del 3-2-1</strong> La strategia di backup più raccomandata: <strong>3</strong> copie dei dati, su <strong>2</strong> supporti diversi, di cui <strong>1</strong> fuori dalla tua posizione fisica (es. cloud). Se hai 3 copie tutte sullo stesso computer, non hai un backup — hai solo ridondanza locale.</div>
       </div>
-
       <div class="highlight-grid">
         <div class="highlight-card hc-green">
           <div class="hc-icon">☁️</div>
           <div class="hc-title">Backup su cloud</div>
-          <div class="hc-desc">Automatico, accessibile ovunque. Ideale per foto e documenti. Attenzione: non è infinito — dipende dal piano.</div>
+          <div class="hc-desc">Automatico, accessibile ovunque. Ideale per foto e documenti.</div>
         </div>
         <div class="highlight-card hc-green">
           <div class="hc-icon">💾</div>
@@ -1149,70 +672,39 @@ code {
         <div class="highlight-card hc-amber">
           <div class="hc-icon">📱</div>
           <div class="hc-title">Backup smartphone</div>
-          <div class="hc-desc">Attiva il backup automatico nelle impostazioni: salva contatti, foto, messaggi e app sul cloud del produttore.</div>
+          <div class="hc-desc">Attiva il backup automatico nelle impostazioni: salva contatti, foto, messaggi e app.</div>
         </div>
         <div class="highlight-card">
           <div class="hc-icon">🔐</div>
           <div class="hc-title">Backup cifrato</div>
-          <div class="hc-desc">Se il backup contiene dati sensibili, proteggilo con password. Alcuni strumenti lo fanno automaticamente.</div>
+          <div class="hc-desc">Se il backup contiene dati sensibili, proteggilo con password.</div>
         </div>
       </div>
-
-      <h3 class="sub-title">Cosa devi assolutamente mettere al sicuro</h3>
-
       <div class="table-wrap">
         <table>
           <thead>
-            <tr>
-              <th>Tipo di dato</th>
-              <th>Priorità</th>
-              <th>Dove conservarlo</th>
-            </tr>
+            <tr><th>Tipo di dato</th><th>Priorità</th><th>Dove conservarlo</th></tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Foto e video personali</td>
-              <td>🔴 Alta — irrecuperabili</td>
-              <td>Cloud + disco esterno</td>
-            </tr>
-            <tr>
-              <td>Documenti di lavoro/studio</td>
-              <td>🔴 Alta</td>
-              <td>Cloud sincronizzato + copia locale</td>
-            </tr>
-            <tr>
-              <td>Contatti telefono</td>
-              <td>🟠 Media</td>
-              <td>Backup automatico cloud del telefono</td>
-            </tr>
-            <tr>
-              <td>Password (se non usi un gestore)</td>
-              <td>🔴 Alta</td>
-              <td>Gestore di password con backup cifrato</td>
-            </tr>
-            <tr>
-              <td>Codici di recupero account</td>
-              <td>🔴 Altissima</td>
-              <td>Stampati e conservati in posto fisico sicuro</td>
-            </tr>
+            <tr><td>Foto e video personali</td><td>🔴 Alta — irrecuperabili</td><td>Cloud + disco esterno</td></tr>
+            <tr><td>Documenti di lavoro/studio</td><td>🔴 Alta</td><td>Cloud sincronizzato + copia locale</td></tr>
+            <tr><td>Contatti telefono</td><td>🟠 Media</td><td>Backup automatico cloud del telefono</td></tr>
+            <tr><td>Password (se non usi un gestore)</td><td>🔴 Alta</td><td>Gestore di password con backup cifrato</td></tr>
+            <tr><td>Codici di recupero account</td><td>🔴 Altissima</td><td>Stampati e conservati in posto fisico sicuro</td></tr>
           </tbody>
         </table>
       </div>
-
       <div class="box box-red">
         <div class="box-icon">🚨</div>
-        <div><strong>Ransomware: quando il backup salva tutto</strong>Il ransomware è un tipo di malware che cifra tutti i tuoi file e chiede un riscatto per restituirteli. Se hai un backup recente su un disco scollegato dal computer (o su cloud), puoi semplicemente ripristinare i dati senza pagare nulla. Il backup offline è l'unica vera difesa contro il ransomware.</div>
+        <div><strong>Ransomware: quando il backup salva tutto</strong> Il ransomware cifra tutti i tuoi file e chiede un riscatto. Se hai un backup recente su un disco scollegato (o su cloud), puoi ripristinare i dati senza pagare nulla. Il backup offline è l'unica vera difesa contro il ransomware.</div>
       </div>
-
       <div class="box box-tip">
         <div class="box-icon">✅</div>
-        <div><strong>Fai subito questo</strong>Verifica che il tuo smartphone faccia il backup automatico. Su iPhone: Impostazioni → [tuo nome] → iCloud → Backup iCloud. Su Android: Impostazioni → Google → Backup. Se non è attivo, attivalo adesso. Per le foto sul computer, scegli uno dei servizi cloud gratuiti e configura la sincronizzazione automatica.</div>
+        <div><strong>Fai subito questo</strong> Verifica che il tuo smartphone faccia il backup automatico. Su iPhone: Impostazioni → [tuo nome] → iCloud → Backup iCloud. Su Android: Impostazioni → Google → Backup. Se non è attivo, attivalo adesso.</div>
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════
-         S8 — PIANO D'AZIONE
-    ═══════════════════════════════════════ -->
+    <!-- S8 -->
     <section class="guide-section" id="s8">
       <div class="section-header">
         <div class="section-num">8</div>
@@ -1221,9 +713,7 @@ code {
           <p class="section-subtitle">Cosa fare oggi, questa settimana, questo mese</p>
         </div>
       </div>
-
       <p>La sicurezza digitale non si raggiunge in un giorno, ma si può migliorare significativamente in pochissimo tempo. Ecco un piano scalabile — inizia dal primo livello e aggiungi un passo alla volta.</p>
-
       <h3 class="sub-title">⚡ Oggi (30 minuti)</h3>
       <ol class="step-list">
         <li class="step-item">
@@ -1239,7 +729,6 @@ code {
           <span>Foto e contatti sono i dati più preziosi e più facilmente persi. Tre minuti nelle impostazioni li mettono al sicuro.</span>
         </li>
       </ol>
-
       <h3 class="sub-title">📅 Questa settimana (1-2 ore)</h3>
       <ol class="step-list">
         <li class="step-item">
@@ -1255,16 +744,15 @@ code {
           <span>Impostazioni → App → Permessi. Revoca accesso a posizione e microfono per le app che non ne hanno bisogno.</span>
         </li>
       </ol>
-
       <h3 class="sub-title">🗓️ Questo mese (configurazione duratura)</h3>
       <ol class="step-list">
         <li class="step-item">
           <strong>Scegli e configura un gestore di password</strong>
-          <span>Esistono opzioni gratuite valide. Una volta configurato, genera password uniche per ogni account — non devi più ricordarle.</span>
+          <span>Una volta configurato, genera password uniche per ogni account — non devi più ricordarle.</span>
         </li>
         <li class="step-item">
           <strong>Imposta un backup regolare per il computer</strong>
-          <span>Un disco esterno o un servizio cloud configurato per la sincronizzazione automatica. Poi dimentica — ci pensa da solo.</span>
+          <span>Un disco esterno o un servizio cloud configurato per la sincronizzazione automatica.</span>
         </li>
         <li class="step-item">
           <strong>Cambia la password del router di casa</strong>
@@ -1272,29 +760,22 @@ code {
         </li>
         <li class="step-item">
           <strong>Attiva il 2FA su tutti gli account importanti</strong>
-          <span>Banca, email secondaria, servizi dove hai carta di credito salvata. Più account protetti, meno danni in caso di furto password.</span>
+          <span>Banca, email secondaria, servizi dove hai carta di credito salvata.</span>
         </li>
       </ol>
-
       <div class="box box-tip">
         <div class="box-icon">🎯</div>
-        <div><strong>Il principio della sicurezza ragionevole</strong>Non esiste sicurezza assoluta — nemmeno per le grandi aziende. L'obiettivo non è diventare invulnerabili, ma essere abbastanza difficili da attaccare da non valere la pena. Il 90% dei rischi si elimina con le misure di base: password forti e uniche, aggiornamenti, backup, attenzione al phishing. Inizia da lì.</div>
+        <div><strong>Il principio della sicurezza ragionevole</strong> Non esiste sicurezza assoluta. L'obiettivo non è diventare invulnerabili, ma essere abbastanza difficili da attaccare da non valere la pena. Il 90% dei rischi si elimina con le misure di base: password forti e uniche, aggiornamenti, backup, attenzione al phishing.</div>
       </div>
-
       <div class="box box-info">
         <div class="box-icon">📚</div>
-        <div>
-          <strong>Prossimamente su Formazione Digitale</strong>
-          Guida completa alla Cybersicurezza personale — con la triade CIA (Confidenzialità, Integrità, Disponibilità), crittografia spiegata semplicemente, sicurezza sullo smartphone e gestione delle crisi (cosa fare se sei già stato attaccato).
-        </div>
+        <div><strong>Prossimamente su Formazione Digitale</strong> Guida completa alla Cybersicurezza: triade CIA, crittografia spiegata semplicemente, sicurezza sullo smartphone e cosa fare se sei già stato attaccato.</div>
       </div>
-
     </section>
 
   </main>
 </div>
 
-<!-- ── FOOTER ────────────────────────────────────────────── -->
 <footer class="guide-footer">
   <strong>Formazione Digitale</strong><br>
   Risorse di alfabetizzazione digitale libere e gratuite.<br>
@@ -1303,73 +784,41 @@ code {
   <a href="/index.html" style="color:rgba(255,255,255,.5);font-size:.75rem;">← Torna al portale</a>
 </footer>
 
-<!-- ══════════════════════════════════════════
-     JAVASCRIPT
-══════════════════════════════════════════ -->
 <script>
-/* ── READING BAR ──────────────────────────────────── */
 (function() {
   const bar = document.getElementById('reading-bar');
-  function updateBar() {
-    const scrollTop    = window.scrollY;
-    const docHeight    = document.documentElement.scrollHeight - window.innerHeight;
-    const pct          = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-    bar.style.width    = pct + '%';
-  }
-  window.addEventListener('scroll', updateBar, { passive: true });
+  if (!bar) return;
+  window.addEventListener('scroll', function() {
+    const scrollTop  = window.scrollY;
+    const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width  = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+  }, { passive: true });
 })();
 
-/* ── SIDEBAR TOGGLE ───────────────────────────────── */
 function toggleSidebar() {
-  const sidebar  = document.getElementById('guide-sidebar');
-  const overlay  = document.getElementById('sidebar-overlay');
-  const hamburger= document.getElementById('hamburger-btn');
-  sidebar.classList.toggle('is-open');
-  overlay.classList.toggle('is-open');
-  hamburger.classList.toggle('is-open');
+  document.getElementById('guide-sidebar').classList.toggle('is-open');
+  document.getElementById('sidebar-overlay').classList.toggle('is-open');
+  document.getElementById('hamburger-btn').classList.toggle('is-open');
 }
 function closeSidebar() {
-  const sidebar  = document.getElementById('guide-sidebar');
-  const overlay  = document.getElementById('sidebar-overlay');
-  const hamburger= document.getElementById('hamburger-btn');
-  sidebar.classList.remove('is-open');
-  overlay.classList.remove('is-open');
-  hamburger.classList.remove('is-open');
+  document.getElementById('guide-sidebar').classList.remove('is-open');
+  document.getElementById('sidebar-overlay').classList.remove('is-open');
+  document.getElementById('hamburger-btn').classList.remove('is-open');
 }
 
-/* ── SCROLL SPY ───────────────────────────────────── */
 (function() {
-  const sections  = document.querySelectorAll('.guide-section');
-  const navItems  = document.querySelectorAll('.nav-item');
-
-  function getActiveSection() {
-    const offset = 90;
+  const sections = document.querySelectorAll('.guide-section');
+  const navItems = document.querySelectorAll('.nav-item');
+  function update() {
     let active = null;
-    sections.forEach(sec => {
-      const top = sec.getBoundingClientRect().top;
-      if (top <= offset) active = sec.id;
-    });
-    return active;
+    sections.forEach(sec => { if (sec.getBoundingClientRect().top <= 90) active = sec.id; });
+    navItems.forEach(item => item.classList.toggle('active', item.getAttribute('href') === '#' + active));
   }
-
-  function updateNav() {
-    const active = getActiveSection();
-    navItems.forEach(item => {
-      const href = item.getAttribute('href');
-      if (active && href === '#' + active) {
-        item.classList.add('active');
-      } else {
-        item.classList.remove('active');
-      }
-    });
-  }
-
-  window.addEventListener('scroll', updateNav, { passive: true });
-  updateNav();
+  window.addEventListener('scroll', update, { passive: true });
+  update();
 })();
 </script>
 
 <script src="/scripts/ui.js" defer></script>
-
 </body>
 </html>
