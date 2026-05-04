@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO — Ottimizzazione per i Motori di Ricerca · Formazione Digitale</title>
+<meta name="description" content="Cos'è la SEO, come funzionano i motori di ricerca, i fattori di ranking, le metriche Core Web Vitals e gli strumenti per migliorare la visibilità online. Guida pratica.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://formazione-digitale.github.io/marketing/pillola-seo/">
+<link rel="icon" type="image/png" href="/img/favicon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#1F4E79">
+
+<meta property="og:title" content="SEO — Ottimizzazione per i Motori di Ricerca · Formazione Digitale">
+<meta property="og:description" content="Cos'è la SEO, come funzionano i motori di ricerca, i fattori di ranking e gli strumenti per migliorare la visibilità online.">
+<meta property="og:url" content="https://formazione-digitale.github.io/marketing/pillola-seo/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://formazione-digitale.github.io/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SEO — Ottimizzazione per i Motori di Ricerca · Formazione Digitale">
+<meta name="twitter:description" content="Guida pratica alla SEO: metriche, strumenti, fattori di ranking.">
+<meta name="twitter:image" content="https://formazione-digitale.github.io/img/formazione-digitale-logo.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "SEO — Ottimizzazione per i Motori di Ricerca",
+  "description": "Guida pratica alla SEO: cos'è, come funziona, metriche e strumenti.",
+  "url": "https://formazione-digitale.github.io/marketing/pillola-seo/",
+  "inLanguage": "it",
+  "author": { "@type": "Person", "name": "Cristiano De Pasquale" },
+  "provider": { "@type": "WebSite", "name": "Formazione Digitale", "url": "https://formazione-digitale.github.io" },
+  "educationalLevel": "Livello base–intermedio",
+  "keywords": "SEO, ottimizzazione, motori di ricerca, Google, PageSpeed, Core Web Vitals, ranking"
+}
+</script>
+
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="stylesheet" href="/css/shared.css?v=2">
+<style>
+
+/* ── SERP PREVIEW ── */
+.serp-preview {
+  background: #fff;
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
+  font-family: Arial, sans-serif;
+}
+.serp-url    { font-size: .78rem; color: #202124; margin-bottom: .15rem; }
+.serp-url span { color: #4d5156; }
+.serp-title  { font-size: 1.1rem; color: #1a0dab; font-weight: 400; margin-bottom: .2rem; cursor: pointer; }
+.serp-title:hover { text-decoration: underline; }
+.serp-desc   { font-size: .84rem; color: #4d5156; line-height: 1.58; }
+.serp-label  { font-size: .68rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--blue-mid); margin-bottom: .5rem; }
+
+/* ── RANKING FACTORS ── */
+.factors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: .75rem; margin: 1.25rem 0;
+}
+.factor-card {
+  background: var(--white);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  padding: .9rem 1rem;
+  position: relative;
+  overflow: hidden;
+}
+.factor-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+}
+.factor-card.high::before   { background: var(--green-dark); }
+.factor-card.medium::before { background: var(--amber-dark); }
+.factor-card.low::before    { background: var(--blue-mid); }
+.factor-icon  { font-size: 1.4rem; margin-bottom: .35rem; }
+.factor-title { font-weight: 600; font-size: .88rem; color: var(--blue-dark); margin-bottom: .2rem; }
+.factor-desc  { font-size: .78rem; color: var(--gray-mid); line-height: 1.5; }
+.factor-badge {
+  display: inline-block; font-size: .62rem; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  padding: .15rem .5rem; border-radius: 20px; margin-bottom: .4rem;
+}
+.factor-badge.high   { background: var(--green-light); color: var(--green-dark); }
+.factor-badge.medium { background: var(--amber-light); color: var(--amber-dark); }
+.factor-badge.low    { background: var(--blue-pale);   color: var(--blue-mid); }
+
+/* ── VITALS ── */
+.vitals-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: .75rem; margin: 1.25rem 0;
+}
+@media(max-width:520px) { .vitals-grid { grid-template-columns: 1fr; } }
+.vital-card {
+  background: var(--blue-pale);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  padding: 1rem; text-align: center;
+}
+.vital-metric { font-family: var(--font-display); font-size: 1.5rem; color: var(--blue-dark); }
+.vital-name   { font-size: .72rem; font-weight: 700; color: var(--blue-mid); margin: .2rem 0 .4rem; text-transform: uppercase; letter-spacing: .06em; }
+.vital-desc   { font-size: .76rem; color: var(--gray-mid); line-height: 1.5; }
+.vital-range  { margin-top: .5rem; font-size: .68rem; }
+.vital-range span { display: inline-block; padding: .1rem .4rem; border-radius: 4px; margin: .1rem; }
+.vr-good   { background: #e6f4ea; color: #137333; }
+.vr-medium { background: #fef7e0; color: #a16207; }
+.vr-bad    { background: #fce8e6; color: #c5221f; }
+
+/* ── TOOLS ── */
+.tools-list { display: flex; flex-direction: column; gap: .6rem; margin: 1rem 0; }
+.tool-item {
+  display: flex; align-items: center; gap: 1rem;
+  background: var(--white); border: 1px solid var(--blue-light);
+  border-radius: var(--radius); padding: .75rem 1rem;
+  text-decoration: none; color: inherit;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+.tool-item:hover { box-shadow: var(--shadow); transform: translateX(4px); }
+.tool-emoji { font-size: 1.4rem; flex-shrink: 0; }
+.tool-name  { font-weight: 600; font-size: .88rem; color: var(--blue-dark); }
+.tool-desc  { font-size: .78rem; color: var(--gray-mid); margin-top: .1rem; }
+.tool-url   { font-size: .72rem; color: var(--blue-mid); margin-left: auto; flex-shrink: 0; }
+
+/* ── HEAD ANATOMY ── */
+.head-anatomy {
+  background: #1e1e2e;
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
+  font-family: 'Courier New', monospace;
+  font-size: .82rem;
+  line-height: 1.8;
+  overflow-x: auto;
+}
+.ha-comment  { color: #6272a4; }
+.ha-tag      { color: #ff79c6; }
+.ha-attr     { color: #50fa7b; }
+.ha-val      { color: #f1fa8c; }
+.ha-text     { color: #f8f8f2; }
+.ha-ok       { color: #50fa7b; }
+.ha-warn     { color: #ffb86c; }
+.ha-critical { color: #ff5555; }
+
+/* ── MYTH BUSTING ── */
+.myths { display: flex; flex-direction: column; gap: .6rem; margin: 1rem 0; }
+.myth-item {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: .75rem; background: var(--white);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius); overflow: hidden;
+}
+@media(max-width:520px) { .myth-item { grid-template-columns: 1fr; } }
+.myth-false { background: #fce8e6; padding: .75rem 1rem; }
+.myth-true  { background: var(--green-light); padding: .75rem 1rem; }
+.myth-label { font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .25rem; }
+.myth-false .myth-label { color: #c5221f; }
+.myth-true  .myth-label { color: var(--green-dark); }
+.myth-text  { font-size: .82rem; line-height: 1.5; }
+.myth-false .myth-text { color: #7d1c1c; }
+.myth-true  .myth-text { color: var(--green-dark); }
+
+/* ── FOOTER ── */
+footer { background: var(--blue-dark); color: rgba(255,255,255,.6); text-align: center; padding: 2rem 1.5rem; font-size: .8rem; line-height: 1.7; }
+footer strong { color: rgba(255,255,255,.9); }
+@media(min-width:900px) { footer { margin-left: var(--nav-w); } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header">
+  <div class="header-left">
+    <button id="hamburger"><span></span><span></span><span></span></button>
+    <a href="/index.html" class="header-back">← Portale</a>
+    <div class="header-sep"></div>
+    <span class="header-logo">SEO</span>
+    <span class="header-sub">Ottimizzazione per i Motori di Ricerca</span>
+  </div>
+</div>
+
+<div id="overlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <a class="nav-item" href="#s1"><span class="nav-num">1</span>Cos'è la SEO</a>
+  <a class="nav-item" href="#s2"><span class="nav-num">2</span>Come funziona Google</a>
+  <a class="nav-item" href="#s3"><span class="nav-num">3</span>Anatomia dell'&lt;head&gt;</a>
+  <a class="nav-item" href="#s4"><span class="nav-num">4</span>Fattori di ranking</a>
+  <a class="nav-item" href="#s5"><span class="nav-num">5</span>Core Web Vitals</a>
+  <a class="nav-item" href="#s6"><span class="nav-num">6</span>SEO vs SEA vs SEM</a>
+  <a class="nav-item" href="#s7"><span class="nav-num">7</span>Strumenti</a>
+  <a class="nav-item" href="#s8"><span class="nav-num">8</span>Miti da sfatare</a>
+  <hr class="nav-divider">
+  <a class="nav-item" href="/marketing/analizzatore-seo/" style="color:var(--green-dark);font-weight:600;">
+    <span class="nav-num" style="background:var(--green-dark);">🔍</span>Analizza il tuo &lt;head&gt;
+  </a>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+
+<!-- COVER -->
+<div class="cover-block">
+  <div class="cover-eyebrow">Formazione Digitale · Pillola digitale · Web & Internet</div>
+  <div class="cover-title">SEO — Ottimizzazione<br><em>per i Motori di Ricerca</em></div>
+  <p class="cover-desc">Cos'è la SEO, come la usa Google, quali fattori contano davvero e come misurare le prestazioni del tuo sito. Con gli strumenti giusti e senza miti.</p>
+  <div class="cover-divider"></div>
+  <p class="cover-intro">💡 Pillola · Livello base–intermedio · ~15 min · Aggiornata 2026</p>
+</div>
+
+<!-- 1 -->
+<section class="guide-section" id="s1">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div class="section-titles">
+      <div class="section-title">Cos'è la SEO</div>
+      <div class="section-subtitle">Visibilità organica: guadagnata col lavoro, non comprata</div>
+    </div>
+  </div>
+
+  <p>La <strong>SEO</strong> (Search Engine Optimization) è l'insieme delle tecniche per migliorare la posizione di una pagina web nei risultati <em>organici</em> dei motori di ricerca — quelli non a pagamento.</p>
+
+  <div class="box box-info">
+    <div class="box-label">In parole semplici</div>
+    <p>Immagina Google come un bibliotecario con miliardi di libri. La SEO è il lavoro che fai per far sì che il tuo libro sia ben organizzato, abbia un titolo chiaro, sia citato da fonti autorevoli e risponda davvero alle domande dei lettori. Il bibliotecario lo consiglierà più volentieri.</p>
+  </div>
+
+  <p>Un risultato di ricerca si chiama <strong>SERP</strong> (Search Engine Results Page). Ecco come appare un risultato ottimizzato:</p>
+
+  <div class="serp-preview">
+    <div class="serp-label">Anteprima SERP — come appare su Google</div>
+    <div class="serp-url">formazione-digitale.github.io › seo › pillola-seo <span>›</span></div>
+    <div class="serp-title">SEO — Ottimizzazione per i Motori di Ricerca · Formazione Digitale</div>
+    <div class="serp-desc">Cos'è la SEO, come funzionano i motori di ricerca, i fattori di ranking, le metriche Core Web Vitals e gli strumenti per migliorare la visibilità online. Guida pratica.</div>
+  </div>
+
+  <div class="box box-tip">
+    <div class="box-label">💡 Organico vs a pagamento</div>
+    <p>I risultati organici (SEO) non si comprano — si conquistano con contenuti di qualità, struttura tecnica corretta e autorevolezza. I risultati a pagamento (SEA/Google Ads) appaiono sopra i risultati organici con l'etichetta "Sponsorizzato" e scompaiono quando finisce il budget.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 2 -->
+<section class="guide-section" id="s2">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div class="section-titles">
+      <div class="section-title">Come funziona Google</div>
+      <div class="section-subtitle">Crawling → Indicizzazione → Ranking</div>
+    </div>
+  </div>
+
+  <p>Google non cerca in tempo reale ogni volta che qualcuno digita una query. Mantiene un enorme indice di pagine, costruito in tre fasi continue.</p>
+
+  <div class="step-list">
+    <div class="step-item">
+      <div class="step-dot">1</div>
+      <div class="step-body">
+        <strong>Crawling — Googlebot esplora il web</strong>
+        <span>Un software automatico (Googlebot) segue i link da pagina a pagina, scaricando il contenuto di ogni URL che trova. È come un ragno che tesse la sua rete. Se il tuo sito non ha link in entrata, Googlebot potrebbe non trovarlo mai.</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-dot">2</div>
+      <div class="step-body">
+        <strong>Indicizzazione — il contenuto viene analizzato e archiviato</strong>
+        <span>Google analizza il contenuto delle pagine crawlate: testo, immagini, video, metadati. Le pagine che superano i controlli di qualità vengono inserite nell'indice — il database consultato durante le ricerche. Una pagina può essere crawlata ma non indicizzata se Google la considera di bassa qualità.</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-dot">3</div>
+      <div class="step-body">
+        <strong>Ranking — l'ordine dei risultati</strong>
+        <span>Quando un utente cerca qualcosa, Google interroga il suo indice e ordina i risultati in base a oltre 200 fattori di ranking. L'ordine cambia continuamente — Google aggiorna il suo algoritmo migliaia di volte l'anno.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="box box-warn">
+    <div class="box-label">⚠ Sitemap e robots.txt</div>
+    <p>La <strong>sitemap.xml</strong> è una mappa del tuo sito che aiuta Googlebot a trovare tutte le pagine. Il file <strong>robots.txt</strong> dice a Googlebot quali pagine non crawlare. Entrambi vanno nella root del sito e sono fondamentali per i siti con molte pagine.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 3 -->
+<section class="guide-section" id="s3">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div class="section-titles">
+      <div class="section-title">Anatomia dell'&lt;head&gt; HTML</div>
+      <div class="section-subtitle">I metadati che Google legge prima del contenuto</div>
+    </div>
+  </div>
+
+  <p>Il tag <code>&lt;head&gt;</code> di una pagina HTML contiene informazioni invisibili all'utente ma fondamentali per i motori di ricerca. Ecco un esempio ottimizzato commentato:</p>
+
+  <div class="head-anatomy">
+    <span class="ha-comment">&lt;!-- ✅ FONDAMENTALI --&gt;</span><br>
+    <span class="ha-tag">&lt;title&gt;</span><span class="ha-text">Titolo pagina — Nome Sito</span><span class="ha-tag">&lt;/title&gt;</span>
+    <span class="ha-ok"> ← 50–60 caratteri</span><br>
+    <span class="ha-tag">&lt;meta</span> <span class="ha-attr">name</span>=<span class="ha-val">"description"</span> <span class="ha-attr">content</span>=<span class="ha-val">"Descrizione..."</span><span class="ha-tag">&gt;</span>
+    <span class="ha-ok"> ← 150–160 char</span><br>
+    <span class="ha-tag">&lt;link</span> <span class="ha-attr">rel</span>=<span class="ha-val">"canonical"</span> <span class="ha-attr">href</span>=<span class="ha-val">"https://..."</span><span class="ha-tag">&gt;</span>
+    <span class="ha-ok"> ← URL canonico</span><br>
+    <span class="ha-tag">&lt;html</span> <span class="ha-attr">lang</span>=<span class="ha-val">"it"</span><span class="ha-tag">&gt;</span>
+    <span class="ha-ok"> ← lingua della pagina</span><br><br>
+
+    <span class="ha-comment">&lt;!-- ✅ SOCIAL (Open Graph) --&gt;</span><br>
+    <span class="ha-tag">&lt;meta</span> <span class="ha-attr">property</span>=<span class="ha-val">"og:title"</span> <span class="ha-attr">content</span>=<span class="ha-val">"..."</span><span class="ha-tag">&gt;</span><br>
+    <span class="ha-tag">&lt;meta</span> <span class="ha-attr">property</span>=<span class="ha-val">"og:description"</span> <span class="ha-attr">content</span>=<span class="ha-val">"..."</span><span class="ha-tag">&gt;</span><br>
+    <span class="ha-tag">&lt;meta</span> <span class="ha-attr">property</span>=<span class="ha-val">"og:image"</span> <span class="ha-attr">content</span>=<span class="ha-val">"https://..."</span><span class="ha-tag">&gt;</span>
+    <span class="ha-ok"> ← min 1200×630px</span><br>
+    <span class="ha-tag">&lt;meta</span> <span class="ha-attr">property</span>=<span class="ha-val">"og:url"</span> <span class="ha-attr">content</span>=<span class="ha-val">"https://..."</span><span class="ha-tag">&gt;</span><br>
+    <span class="ha-tag">&lt;meta</span> <span class="ha-attr">property</span>=<span class="ha-val">"og:type"</span> <span class="ha-attr">content</span>=<span class="ha-val">"website"</span><span class="ha-tag">&gt;</span><br><br>
+
+    <span class="ha-comment">&lt;!-- ✅ TWITTER/X --&gt;</span><br>
+    <span class="ha-tag">&lt;meta</span> <span class="ha-attr">name</span>=<span class="ha-val">"twitter:card"</span> <span class="ha-attr">content</span>=<span class="ha-val">"summary_large_image"</span><span class="ha-tag">&gt;</span><br>
+    <span class="ha-tag">&lt;meta</span> <span class="ha-attr">name</span>=<span class="ha-val">"twitter:title"</span> <span class="ha-attr">content</span>=<span class="ha-val">"..."</span><span class="ha-tag">&gt;</span><br><br>
+
+    <span class="ha-comment">&lt;!-- ✅ TECNICI --&gt;</span><br>
+    <span class="ha-tag">&lt;meta</span> <span class="ha-attr">name</span>=<span class="ha-val">"robots"</span> <span class="ha-attr">content</span>=<span class="ha-val">"index, follow"</span><span class="ha-tag">&gt;</span><br>
+    <span class="ha-tag">&lt;meta</span> <span class="ha-attr">name</span>=<span class="ha-val">"viewport"</span> <span class="ha-attr">content</span>=<span class="ha-val">"width=device-width, initial-scale=1.0"</span><span class="ha-tag">&gt;</span><br>
+    <span class="ha-tag">&lt;link</span> <span class="ha-attr">rel</span>=<span class="ha-val">"icon"</span> <span class="ha-attr">type</span>=<span class="ha-val">"image/png"</span> <span class="ha-attr">href</span>=<span class="ha-val">"/img/favicon.png"</span><span class="ha-tag">&gt;</span><br><br>
+
+    <span class="ha-comment">&lt;!-- ✅ SCHEMA.ORG (dati strutturati) --&gt;</span><br>
+    <span class="ha-tag">&lt;script</span> <span class="ha-attr">type</span>=<span class="ha-val">"application/ld+json"</span><span class="ha-tag">&gt;</span><br>
+    <span class="ha-text">{ "@context": "https://schema.org", "@type": "WebPage", ... }</span><br>
+    <span class="ha-tag">&lt;/script&gt;</span>
+  </div>
+
+  <div class="box box-tip">
+    <div class="box-label">💡 Schema.org e Rich Results</div>
+    <p>I dati strutturati (JSON-LD) permettono a Google di capire il tipo di contenuto e mostrare <em>rich results</em> — risultati arricchiti con stelle, prezzi, FAQ, breadcrumb. Non influenzano direttamente il ranking ma aumentano il CTR (click-through rate).</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 4 -->
+<section class="guide-section" id="s4">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div class="section-titles">
+      <div class="section-title">Fattori di ranking</div>
+      <div class="section-subtitle">Cosa conta davvero secondo Google</div>
+    </div>
+  </div>
+
+  <p>Google usa oltre 200 fattori per ordinare i risultati. Ecco i principali, suddivisi per impatto:</p>
+
+  <div class="factors-grid">
+    <div class="factor-card high">
+      <div class="factor-badge high">Impatto alto</div>
+      <div class="factor-icon">📝</div>
+      <div class="factor-title">Qualità del contenuto</div>
+      <div class="factor-desc">Testo originale, approfondito, aggiornato. Google premia l'expertise (E-E-A-T).</div>
+    </div>
+    <div class="factor-card high">
+      <div class="factor-badge high">Impatto alto</div>
+      <div class="factor-icon">🔗</div>
+      <div class="factor-title">Backlink di qualità</div>
+      <div class="factor-desc">Link da siti autorevoli verso il tuo. È come un voto di fiducia — conta chi vota, non quanti.</div>
+    </div>
+    <div class="factor-card high">
+      <div class="factor-badge high">Impatto alto</div>
+      <div class="factor-icon">⚡</div>
+      <div class="factor-title">Core Web Vitals</div>
+      <div class="factor-desc">LCP, FID, CLS — metriche di velocità e stabilità della pagina. Fattore ufficiale dal 2021.</div>
+    </div>
+    <div class="factor-card high">
+      <div class="factor-badge high">Impatto alto</div>
+      <div class="factor-icon">📱</div>
+      <div class="factor-title">Mobile-first</div>
+      <div class="factor-desc">Google indicizza prima la versione mobile. Un sito non responsive penalizza il ranking.</div>
+    </div>
+    <div class="factor-card medium">
+      <div class="factor-badge medium">Impatto medio</div>
+      <div class="factor-icon">🔑</div>
+      <div class="factor-title">Keyword nel title e H1</div>
+      <div class="factor-desc">Le parole chiave nei tag principali segnalano il tema della pagina. Senza keyword stuffing.</div>
+    </div>
+    <div class="factor-card medium">
+      <div class="factor-badge medium">Impatto medio</div>
+      <div class="factor-icon">🔒</div>
+      <div class="factor-title">HTTPS</div>
+      <div class="factor-desc">Il certificato SSL è fattore di ranking dal 2014. Un sito HTTP è penalizzato e segnalato come non sicuro.</div>
+    </div>
+    <div class="factor-card medium">
+      <div class="factor-badge medium">Impatto medio</div>
+      <div class="factor-icon">🏗️</div>
+      <div class="factor-title">Struttura URL</div>
+      <div class="factor-desc">URL leggibili, brevi, con keyword. /guida-seo/ è meglio di /p?id=293847.</div>
+    </div>
+    <div class="factor-card low">
+      <div class="factor-badge low">Impatto basso</div>
+      <div class="factor-icon">📅</div>
+      <div class="factor-title">Freschezza contenuto</div>
+      <div class="factor-desc">Per topic time-sensitive (news, eventi) la freschezza conta molto. Per contenuti evergreen, meno.</div>
+    </div>
+  </div>
+
+  <div class="box box-warn">
+    <div class="box-label">⚠ E-E-A-T: Experience, Expertise, Authoritativeness, Trustworthiness</div>
+    <p>Dal 2022 Google valuta esplicitamente l'esperienza diretta dell'autore sull'argomento. Per topic YMYL (Your Money or Your Life — salute, finanza, legge) i requisiti di E-E-A-T sono altissimi. Un blog di un medico rankerà meglio di un sito anonimo sullo stesso tema.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 5 -->
+<section class="guide-section" id="s5">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <div class="section-titles">
+      <div class="section-title">Core Web Vitals</div>
+      <div class="section-subtitle">Le metriche di prestazione che Google misura</div>
+    </div>
+  </div>
+
+  <p>Dal 2021 Google usa tre metriche di esperienza utente come fattore di ranking ufficiale. Si misurano con PageSpeed Insights e Google Search Console.</p>
+
+  <div class="vitals-grid">
+    <div class="vital-card">
+      <div class="vital-metric">LCP</div>
+      <div class="vital-name">Largest Contentful Paint</div>
+      <div class="vital-desc">Tempo di caricamento dell'elemento principale (immagine hero, titolo grande). Misura la velocità percepita.</div>
+      <div class="vital-range">
+        <span class="vr-good">≤ 2.5s ✓</span>
+        <span class="vr-medium">≤ 4s ⚠</span>
+        <span class="vr-bad">&gt; 4s ✗</span>
+      </div>
+    </div>
+    <div class="vital-card">
+      <div class="vital-metric">FID</div>
+      <div class="vital-name">First Input Delay</div>
+      <div class="vital-desc">Tempo tra il primo clic dell'utente e la risposta del browser. Misura l'interattività della pagina.</div>
+      <div class="vital-range">
+        <span class="vr-good">≤ 100ms ✓</span>
+        <span class="vr-medium">≤ 300ms ⚠</span>
+        <span class="vr-bad">&gt; 300ms ✗</span>
+      </div>
+    </div>
+    <div class="vital-card">
+      <div class="vital-metric">CLS</div>
+      <div class="vital-name">Cumulative Layout Shift</div>
+      <div class="vital-desc">Misura quanto gli elementi si spostano durante il caricamento. Un CLS alto causa click accidentali.</div>
+      <div class="vital-range">
+        <span class="vr-good">≤ 0.1 ✓</span>
+        <span class="vr-medium">≤ 0.25 ⚠</span>
+        <span class="vr-bad">&gt; 0.25 ✗</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="box box-tip">
+    <div class="box-label">💡 Cause frequenti di LCP alto</div>
+    <p>Immagini non ottimizzate (usa WebP), font Google caricati senza <code>font-display: swap</code>, CSS bloccante above the fold. Il modo più rapido per migliorare il LCP è ottimizzare le immagini e usare un CDN.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 6 -->
+<section class="guide-section" id="s6">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <div class="section-titles">
+      <div class="section-title">SEO vs SEA vs SEM</div>
+      <div class="section-subtitle">Tre termini spesso confusi</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Termine</th><th>Cosa significa</th><th>Costo</th><th>Tempo ai risultati</th><th>Durata</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>SEO</strong></td>
+          <td>Ottimizzazione per risultati organici</td>
+          <td>Lavoro (tempo, competenze)</td>
+          <td>Mesi</td>
+          <td>Duratura</td>
+        </tr>
+        <tr>
+          <td><strong>SEA</strong></td>
+          <td>Pubblicità a pagamento su motori di ricerca (Google Ads)</td>
+          <td>Budget per clic (PPC)</td>
+          <td>Immediato</td>
+          <td>Finisce col budget</td>
+        </tr>
+        <tr>
+          <td><strong>SEM</strong></td>
+          <td>Strategia integrata SEO + SEA</td>
+          <td>Entrambi</td>
+          <td>Immediato + lungo termine</td>
+          <td>Massima copertura</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box box-note">
+    <p>La strategia ideale usa SEA per visibilità immediata sui termini più competitivi, e SEO per costruire autorevolezza nel lungo periodo. Le due si complementano: i dati di Google Ads rivelano quali keyword convertono meglio, informando la strategia SEO.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 7 -->
+<section class="guide-section" id="s7">
+  <div class="section-header">
+    <div class="section-num">7</div>
+    <div class="section-titles">
+      <div class="section-title">Strumenti indispensabili</div>
+      <div class="section-subtitle">Tutti gratuiti o con piano free significativo</div>
+    </div>
+  </div>
+
+  <div class="tools-list">
+    <a class="tool-item" href="https://search.google.com/search-console" target="_blank" rel="noopener">
+      <div class="tool-emoji">📊</div>
+      <div>
+        <div class="tool-name">Google Search Console</div>
+        <div class="tool-desc">Monitora indicizzazione, copertura, sitemap, query e click dalla SERP. Gratuito.</div>
+      </div>
+      <div class="tool-url">search.google.com →</div>
+    </a>
+    <a class="tool-item" href="https://pagespeed.web.dev" target="_blank" rel="noopener">
+      <div class="tool-emoji">⚡</div>
+      <div>
+        <div class="tool-name">PageSpeed Insights</div>
+        <div class="tool-desc">Analisi Core Web Vitals, Performance, Accessibilità, SEO e Best Practice. Usa Lighthouse.</div>
+      </div>
+      <div class="tool-url">pagespeed.web.dev →</div>
+    </a>
+    <a class="tool-item" href="https://ahrefs.com/webmaster-tools" target="_blank" rel="noopener">
+      <div class="tool-emoji">🔗</div>
+      <div>
+        <div class="tool-name">Ahrefs Webmaster Tools</div>
+        <div class="tool-desc">Analisi backlink, keyword, errori tecnici. Piano free per siti verificati.</div>
+      </div>
+      <div class="tool-url">ahrefs.com →</div>
+    </a>
+    <a class="tool-item" href="https://validator.w3.org" target="_blank" rel="noopener">
+      <div class="tool-emoji">✅</div>
+      <div>
+        <div class="tool-name">W3C Validator</div>
+        <div class="tool-desc">Validazione HTML e CSS. Errori di markup possono impedire il corretto parsing da parte di Googlebot.</div>
+      </div>
+      <div class="tool-url">validator.w3.org →</div>
+    </a>
+    <a class="tool-item" href="https://search.google.com/test/rich-results" target="_blank" rel="noopener">
+      <div class="tool-emoji">🌟</div>
+      <div>
+        <div class="tool-name">Rich Results Test</div>
+        <div class="tool-desc">Verifica se i dati strutturati Schema.org sono corretti e idonei per i rich results.</div>
+      </div>
+      <div class="tool-url">search.google.com →</div>
+    </a>
+  </div>
+
+  <div class="box box-info">
+    <div class="box-label">🔍 Strumento del portale</div>
+    <p>Hai a disposizione il nostro <strong>Analizzatore SEO &lt;head&gt;</strong> — incolla il codice del tuo tag head e ricevi un report immediato su tutti gli elementi SEO. <a href="/marketing/analizzatore-seo/" style="color:var(--blue-mid);font-weight:600;">Apri l'analizzatore →</a></p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 8 -->
+<section class="guide-section" id="s8">
+  <div class="section-header">
+    <div class="section-num">8</div>
+    <div class="section-titles">
+      <div class="section-title">Miti da sfatare</div>
+      <div class="section-subtitle">Cosa NON è vero sulla SEO</div>
+    </div>
+  </div>
+
+  <div class="myths">
+    <div class="myth-item">
+      <div class="myth-false">
+        <div class="myth-label">✗ Falso</div>
+        <div class="myth-text">Più keyword metti nella pagina, più Google la premia.</div>
+      </div>
+      <div class="myth-true">
+        <div class="myth-label">✓ Vero</div>
+        <div class="myth-text">Il keyword stuffing è penalizzato. Google premia contenuti che rispondono naturalmente alle domande degli utenti.</div>
+      </div>
+    </div>
+    <div class="myth-item">
+      <div class="myth-false">
+        <div class="myth-label">✗ Falso</div>
+        <div class="myth-text">La SEO è una cosa che si fa una volta sola.</div>
+      </div>
+      <div class="myth-true">
+        <div class="myth-label">✓ Vero</div>
+        <div class="myth-text">Google aggiorna il suo algoritmo migliaia di volte l'anno. La SEO richiede monitoraggio e aggiornamenti continui.</div>
+      </div>
+    </div>
+    <div class="myth-item">
+      <div class="myth-false">
+        <div class="myth-label">✗ Falso</div>
+        <div class="myth-text">Comprare Google Ads migliora il posizionamento organico.</div>
+      </div>
+      <div class="myth-true">
+        <div class="myth-label">✓ Vero</div>
+        <div class="myth-text">SEO e SEA sono canali separati. Investire in Ads non influenza direttamente il ranking organico.</div>
+      </div>
+    </div>
+    <div class="myth-item">
+      <div class="myth-false">
+        <div class="myth-label">✗ Falso</div>
+        <div class="myth-text">Più pagine ha il sito, meglio ranka.</div>
+      </div>
+      <div class="myth-true">
+        <div class="myth-label">✓ Vero</div>
+        <div class="myth-text">La qualità batte la quantità. Molte pagine di bassa qualità danneggiano il sito. Google preferisce siti con meno pagine ma contenuti autorevoli.</div>
+      </div>
+    </div>
+    <div class="myth-item">
+      <div class="myth-false">
+        <div class="myth-label">✗ Falso</div>
+        <div class="myth-text">I meta tag keywords servono ancora.</div>
+      </div>
+      <div class="myth-true">
+        <div class="myth-label">✓ Vero</div>
+        <div class="myth-text">Google ignora il meta tag "keywords" dal 2009. Era troppo facilmente manipolabile. Non aggiungono alcun valore SEO.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /#main -->
+
+<footer>
+  <strong>Formazione Digitale</strong><br>
+  Risorse di alfabetizzazione digitale libere e gratuite.<br>
+  Tutti i contenuti sono rilasciati per uso libero e non commerciale.
+</footer>
+
+<script src="/scripts/ui.js" defer></script>
+<script>
+// ── SIDEBAR ──────────────────────────────────────────────────
+function toggleSidebar() {
+  const sb = document.getElementById('sidebar');
+  const hb = document.getElementById('hamburger');
+  const ov = document.getElementById('overlay');
+  const open = sb.classList.toggle('open');
+  hb.classList.toggle('open', open);
+  ov.classList.toggle('open', open);
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+document.getElementById('hamburger').addEventListener('click', toggleSidebar);
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    item.classList.add('active');
+    closeSidebar();
+  });
+});
+
+// ── SCROLL SPY ────────────────────────────────────────────────
+const sections = document.querySelectorAll('.guide-section');
+const navItems = document.querySelectorAll('.nav-item');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) current = s.id; });
+  navItems.forEach(n => n.classList.toggle('active', n.getAttribute('href') === '#' + current));
+}, { passive: true });
+</script>
+</body>
+</html>

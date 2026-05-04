@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analizzatore SEO &lt;head&gt; — Formazione Digitale</title>
+<meta name="description" content="Analizza il tag head HTML del tuo sito e ricevi un report SEO completo: title, meta description, Open Graph, Twitter Card, Schema.org, canonical e Core Web Vitals.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://formazione-digitale.github.io/marketing/analizzatore-seo/">
+<link rel="icon" type="image/png" href="/img/favicon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#1F4E79">
+
+<meta property="og:title" content="Analizzatore SEO &lt;head&gt; — Formazione Digitale">
+<meta property="og:description" content="Incolla il tuo tag head HTML e ricevi un report SEO completo e immediato.">
+<meta property="og:url" content="https://formazione-digitale.github.io/marketing/analizzatore-seo/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://formazione-digitale.github.io/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Analizzatore SEO &lt;head&gt; — Formazione Digitale">
+<meta name="twitter:description" content="Incolla il tuo tag head HTML e ricevi un report SEO completo e immediato.">
+<meta name="twitter:image" content="https://formazione-digitale.github.io/img/formazione-digitale-logo.png">
+
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="stylesheet" href="/css/shared.css?v=2">
+<style>
+
+/* ── LAYOUT STRUMENTO ── */
+.tool-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+@media(max-width:800px) { .tool-layout { grid-template-columns: 1fr; } }
+
+/* ── INPUT PANEL ── */
+.input-panel {
+  display: flex; flex-direction: column; gap: 1rem;
+}
+.input-panel label {
+  font-size: .82rem; font-weight: 600; color: var(--blue-dark);
+}
+.head-input {
+  width: 100%; min-height: 320px;
+  font-family: 'Courier New', monospace; font-size: .8rem;
+  line-height: 1.6; color: #2C2C2C;
+  border: 1.5px solid var(--blue-light); border-radius: var(--radius);
+  padding: 1rem; resize: vertical; outline: none;
+  background: var(--blue-pale);
+  transition: border-color .2s, box-shadow .2s;
+}
+.head-input:focus {
+  border-color: var(--blue-mid);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(46,117,182,.12);
+}
+.btn-analyze {
+  background: var(--blue-dark); color: #fff;
+  border: none; border-radius: 50px;
+  padding: .75rem 2rem; font-size: .9rem; font-weight: 600;
+  font-family: var(--font-body); cursor: pointer;
+  transition: background var(--transition), transform .15s ease;
+  align-self: flex-start;
+}
+.btn-analyze:hover    { background: var(--blue-mid); transform: translateY(-2px); }
+.btn-analyze:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+.btn-clear {
+  background: transparent; color: var(--gray-mid);
+  border: 1.5px solid var(--blue-light); border-radius: 50px;
+  padding: .72rem 1.25rem; font-size: .85rem;
+  font-family: var(--font-body); cursor: pointer;
+  transition: all var(--transition);
+}
+.btn-clear:hover { border-color: var(--blue-mid); color: var(--blue-dark); }
+.btn-row { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+
+.sample-btn {
+  font-size: .75rem; color: var(--blue-mid); background: none;
+  border: none; cursor: pointer; padding: 0; font-family: var(--font-body);
+  text-decoration: underline; text-underline-offset: 2px;
+}
+.sample-btn:hover { color: var(--blue-dark); }
+
+/* ── SCORE CIRCLE ── */
+.score-wrap {
+  display: flex; flex-direction: column; align-items: center;
+  gap: .5rem; margin-bottom: 1.5rem;
+}
+.score-circle {
+  width: 96px; height: 96px; border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border: 5px solid;
+  transition: all .5s ease;
+}
+.score-circle.excellent { border-color: var(--green-dark); background: var(--green-light); }
+.score-circle.good      { border-color: #2196F3; background: #E3F2FD; }
+.score-circle.warning   { border-color: var(--amber-dark); background: var(--amber-light); }
+.score-circle.poor      { border-color: #c5221f; background: #fce8e6; }
+.score-num  { font-family: var(--font-display); font-size: 1.8rem; line-height: 1; }
+.score-max  { font-size: .68rem; color: var(--gray-mid); }
+.score-label { font-size: .82rem; font-weight: 600; }
+.score-circle.excellent .score-num  { color: var(--green-dark); }
+.score-circle.good      .score-num  { color: #1565C0; }
+.score-circle.warning   .score-num  { color: var(--amber-dark); }
+.score-circle.poor      .score-num  { color: #c5221f; }
+
+/* ── REPORT ── */
+.report-panel { display: flex; flex-direction: column; gap: .6rem; }
+.report-empty {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 320px; color: var(--gray-mid); text-align: center; gap: .5rem;
+}
+.report-empty-icon { font-size: 3rem; opacity: .3; }
+.report-empty p { font-size: .85rem; }
+
+.check-item {
+  display: flex; align-items: flex-start; gap: .75rem;
+  padding: .75rem .9rem; border-radius: var(--radius);
+  border: 1px solid;
+  animation: fadeIn .3s both;
+}
+@keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+
+.check-item.ok      { background: #f0faf4; border-color: #b2dfc3; }
+.check-item.warn    { background: #fffbf0; border-color: #f0d080; }
+.check-item.error   { background: #fef2f2; border-color: #fca5a5; }
+.check-item.info    { background: var(--blue-pale); border-color: var(--blue-light); }
+
+.check-icon { font-size: 1rem; flex-shrink: 0; margin-top: .1rem; }
+.check-content { flex: 1; min-width: 0; }
+.check-title { font-size: .84rem; font-weight: 600; margin-bottom: .15rem; }
+.check-item.ok    .check-title { color: var(--green-dark); }
+.check-item.warn  .check-title { color: var(--amber-dark); }
+.check-item.error .check-title { color: #c5221f; }
+.check-item.info  .check-title { color: var(--blue-dark); }
+.check-detail { font-size: .76rem; color: var(--gray-mid); line-height: 1.5; word-break: break-word; }
+.check-value  { font-family: 'Courier New', monospace; font-size: .72rem; background: rgba(0,0,0,.06); padding: .15rem .4rem; border-radius: 4px; margin-top: .2rem; display: inline-block; word-break: break-all; }
+
+/* ── SERP PREVIEW ── */
+.serp-preview {
+  background: #fff;
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-top: 1rem;
+}
+.serp-preview-label { font-size: .68rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--blue-mid); margin-bottom: .6rem; }
+.serp-url   { font-size: .75rem; color: #4d5156; margin-bottom: .1rem; }
+.serp-title { font-size: 1rem; color: #1a0dab; font-weight: 400; margin-bottom: .2rem; line-height: 1.3; }
+.serp-desc  { font-size: .82rem; color: #4d5156; line-height: 1.55; }
+.serp-title.too-long { color: #c5221f; }
+.serp-title.too-short { color: var(--amber-dark); }
+
+/* ── SECTION HEADERS nel report ── */
+.report-section-label {
+  font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--blue-mid);
+  padding: .5rem 0 .25rem;
+  border-bottom: 1px solid var(--blue-light);
+  margin-top: .5rem;
+}
+
+/* ── FOOTER ── */
+footer { background: var(--blue-dark); color: rgba(255,255,255,.6); text-align: center; padding: 2rem 1.5rem; font-size: .8rem; line-height: 1.7; }
+footer strong { color: rgba(255,255,255,.9); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header">
+  <div class="header-left">
+    <button id="hamburger"><span></span><span></span><span></span></button>
+    <a href="/index.html" class="header-back">← Portale</a>
+    <div class="header-sep"></div>
+    <span class="header-logo">Analizzatore SEO</span>
+    <span class="header-sub">Analisi del tag &lt;head&gt;</span>
+  </div>
+</div>
+
+<div id="overlay"></div>
+
+<!-- MAIN (no sidebar — strumento full width) -->
+<div id="main" style="max-width:1100px;">
+
+<!-- COVER -->
+<div class="cover-block">
+  <div class="cover-eyebrow">Formazione Digitale · Strumento interattivo · SEO</div>
+  <div class="cover-title">Analizzatore<br><em>SEO &lt;head&gt;</em></div>
+  <p class="cover-desc">Incolla il codice del tag <code style="background:rgba(255,255,255,.15);padding:.1rem .4rem;border-radius:4px;">&lt;head&gt;</code> della tua pagina e ricevi un report SEO immediato su tutti gli elementi che contano per Google.</p>
+  <div class="cover-divider"></div>
+  <p class="cover-intro">🔍 Strumento gratuito · Analisi locale nel browser · Nessun dato viene inviato</p>
+</div>
+
+<!-- TOOL -->
+<div class="tool-layout">
+
+  <!-- INPUT -->
+  <div class="input-panel">
+    <label for="head-input">
+      Incolla qui il codice del tuo &lt;head&gt;
+      <button class="sample-btn" onclick="loadSample()" style="margin-left:.5rem;">Carica esempio</button>
+    </label>
+    <textarea
+      class="head-input"
+      id="head-input"
+      placeholder="&lt;head&gt;&#10;  &lt;meta charset=&quot;UTF-8&quot;&gt;&#10;  &lt;title&gt;Il titolo della pagina&lt;/title&gt;&#10;  ...&#10;&lt;/head&gt;"
+      spellcheck="false"
+    ></textarea>
+    <div class="btn-row">
+      <button class="btn-analyze" onclick="analyze()">🔍 Analizza</button>
+      <button class="btn-clear" onclick="clearAll()">Pulisci</button>
+    </div>
+    <div class="serp-preview" id="serp-preview" style="display:none;">
+      <div class="serp-preview-label">Anteprima SERP — Google</div>
+      <div class="serp-url" id="serp-url">formazione-digitale.github.io</div>
+      <div class="serp-title" id="serp-title">—</div>
+      <div class="serp-desc" id="serp-desc">—</div>
+    </div>
+  </div>
+
+  <!-- REPORT -->
+  <div class="report-panel" id="report-panel">
+    <div class="report-empty" id="report-empty">
+      <div class="report-empty-icon">🔍</div>
+      <p>Incolla il codice del tuo &lt;head&gt;<br>e clicca <strong>Analizza</strong></p>
+    </div>
+  </div>
+
+</div>
+
+</div><!-- /#main -->
+
+<footer>
+  <strong>Formazione Digitale</strong><br>
+  Strumento didattico libero e gratuito. I dati inseriti non vengono salvati né trasmessi.
+</footer>
+
+<script src="/scripts/ui.js" defer></script>
+<script>
+// ══════════════════════════════════════════════════════════════
+//  ANALIZZATORE SEO HEAD — Formazione Digitale
+//  Parsing DOM locale, zero server, zero dati inviati.
+// ══════════════════════════════════════════════════════════════
+
+// ── SAMPLE HEAD ──────────────────────────────────────────────
+const SAMPLE = `<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La mia pagina di esempio — Sito Web</title>
+<meta name="description" content="Una descrizione breve della pagina.">
+<meta name="author" content="Mario Rossi">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://esempio.it/pagina/">
+<link rel="icon" type="image/png" href="/img/favicon.png">
+
+<meta property="og:title" content="La mia pagina di esempio">
+<meta property="og:description" content="Una descrizione per i social media.">
+<meta property="og:url" content="https://esempio.it/pagina/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://esempio.it/img/og-image.jpg">
+<meta property="og:locale" content="it_IT">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="La mia pagina di esempio">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "La mia pagina",
+  "url": "https://esempio.it/pagina/"
+}
+<\/script>
+</head>`;
+
+function loadSample() {
+  document.getElementById('head-input').value = SAMPLE;
+}
+
+function clearAll() {
+  document.getElementById('head-input').value = '';
+  document.getElementById('report-panel').innerHTML = `
+    <div class="report-empty" id="report-empty">
+      <div class="report-empty-icon">🔍</div>
+      <p>Incolla il codice del tuo &lt;head&gt;<br>e clicca <strong>Analizza</strong></p>
+    </div>`;
+  document.getElementById('serp-preview').style.display = 'none';
+}
+
+// ── PARSER ───────────────────────────────────────────────────
+function parseHead(raw) {
+  // Wrap in documento fittizio per DOMParser
+  let html = raw.trim();
+  if (!html.toLowerCase().startsWith('<head')) {
+    html = '<head>' + html + '</head>';
+  }
+  const doc = new DOMParser().parseFromString(
+    '<!DOCTYPE html><html>' + html + '<body></body></html>', 'text/html'
+  );
+  return doc.head;
+}
+
+function getMeta(head, name) {
+  const el = head.querySelector(`meta[name="${name}"]`);
+  return el ? el.getAttribute('content') || '' : null;
+}
+function getProp(head, prop) {
+  const el = head.querySelector(`meta[property="${prop}"]`);
+  return el ? el.getAttribute('content') || '' : null;
+}
+function getLink(head, rel) {
+  const el = head.querySelector(`link[rel="${rel}"]`);
+  return el ? (el.getAttribute('href') || el.getAttribute('content') || '') : null;
+}
+
+// ── CHECKS ───────────────────────────────────────────────────
+function runChecks(head) {
+  const checks = [];
+
+  // ── 1. TITLE ──
+  const titleEl = head.querySelector('title');
+  const title = titleEl ? titleEl.textContent.trim() : null;
+  if (!title) {
+    checks.push({ group: 'Fondamentali', status: 'error', icon: '❌', title: 'Title mancante', detail: 'Il tag <title> è obbligatorio. È il testo che appare nella tab del browser e nei risultati di ricerca.' });
+  } else if (title.length < 30) {
+    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: `Title troppo corto (${title.length} car.)`, detail: 'Il title ideale è tra 50 e 60 caratteri. Troppo corto spreca opportunità SEO.', value: title });
+  } else if (title.length > 60) {
+    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: `Title troppo lungo (${title.length} car.)`, detail: 'Google tronca i title oltre i 60 caratteri. Considera di accorciarlo.', value: title });
+  } else {
+    checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: `Title ottimale (${title.length} car.)`, detail: 'Lunghezza nella norma (50–60 caratteri).', value: title });
+  }
+
+  // ── 2. META DESCRIPTION ──
+  const desc = getMeta(head, 'description');
+  if (!desc) {
+    checks.push({ group: 'Fondamentali', status: 'error', icon: '❌', title: 'Meta description mancante', detail: 'Senza meta description Google genera automaticamente un estratto, spesso poco efficace.' });
+  } else if (desc.length < 100) {
+    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: `Meta description corta (${desc.length} car.)`, detail: 'Ideale: 150–160 caratteri. Una description efficace include keyword e un invito all\'azione.', value: desc });
+  } else if (desc.length > 160) {
+    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: `Meta description lunga (${desc.length} car.)`, detail: 'Google tronca oltre i 160 caratteri. L\'utente vedrà la description tagliata.', value: desc });
+  } else {
+    checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: `Meta description ottimale (${desc.length} car.)`, detail: 'Lunghezza nella norma (150–160 caratteri).', value: desc });
+  }
+
+  // ── 3. CANONICAL ──
+  const canonical = getLink(head, 'canonical');
+  if (!canonical) {
+    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: 'Canonical mancante', detail: 'Il tag canonical previene problemi di contenuto duplicato indicando a Google l\'URL preferito.' });
+  } else if (!canonical.startsWith('https://')) {
+    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: 'Canonical non usa HTTPS', detail: 'Il canonical dovrebbe puntare alla versione HTTPS del sito.', value: canonical });
+  } else {
+    checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: 'Canonical presente e HTTPS', detail: 'URL canonico correttamente dichiarato.', value: canonical });
+  }
+
+  // ── 4. LANG ──
+  // Cerca sia in <html lang> che nel raw
+  const raw = document.getElementById('head-input').value;
+  const langMatch = raw.match(/lang=["']([a-z]{2}(?:-[A-Z]{2})?)['"]/i);
+  if (!langMatch) {
+    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: 'Attributo lang mancante', detail: 'Aggiungi lang="it" al tag <html> per dichiarare la lingua della pagina.' });
+  } else {
+    checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: `Lingua dichiarata: ${langMatch[1]}`, detail: 'L\'attributo lang è presente sul tag <html>.' });
+  }
+
+  // ── 5. ROBOTS ──
+  const robots = getMeta(head, 'robots');
+  if (!robots) {
+    checks.push({ group: 'Fondamentali', status: 'info', icon: 'ℹ️', title: 'Meta robots non dichiarato', detail: 'Senza meta robots Google usa "index, follow" come default. Non è un errore, ma dichiararlo è una buona pratica.' });
+  } else if (robots.includes('noindex')) {
+    checks.push({ group: 'Fondamentali', status: 'error', icon: '🚫', title: 'Pagina esclusa dall\'indice (noindex)', detail: 'Il tag robots contiene "noindex": Google non indicizzerà questa pagina. Se intenzionale, ok — altrimenti rimuovilo.', value: robots });
+  } else {
+    checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: `Robots: ${robots}`, detail: 'La pagina è indicizzabile.' });
+  }
+
+  // ── 6. VIEWPORT ──
+  const viewport = getMeta(head, 'viewport');
+  if (!viewport) {
+    checks.push({ group: 'Fondamentali', status: 'error', icon: '❌', title: 'Viewport mancante', detail: 'Senza viewport la pagina non è responsive. Google penalizza i siti non mobile-friendly.' });
+  } else {
+    checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: 'Viewport dichiarato', detail: 'La pagina è configurata per dispositivi mobili.', value: viewport });
+  }
+
+  // ── 7. FAVICON ──
+  const favicon = head.querySelector('link[rel="icon"], link[rel="shortcut icon"]');
+  if (!favicon) {
+    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: 'Favicon mancante', detail: 'La favicon migliora il riconoscimento del sito nelle tab e nei preferiti. Non influenza direttamente il ranking ma migliora l\'UX.' });
+  } else {
+    checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: 'Favicon presente', detail: 'Il tag link rel="icon" è dichiarato.' });
+  }
+
+  // ── 8. OPEN GRAPH ──
+  const ogTitle = getProp(head, 'og:title');
+  const ogDesc  = getProp(head, 'og:description');
+  const ogImage = getProp(head, 'og:image');
+  const ogUrl   = getProp(head, 'og:url');
+  const ogType  = getProp(head, 'og:type');
+
+  if (!ogTitle && !ogDesc && !ogImage) {
+    checks.push({ group: 'Open Graph', status: 'error', icon: '❌', title: 'Open Graph completamente mancante', detail: 'Senza OG tag le condivisioni sui social (Facebook, LinkedIn, WhatsApp) non mostreranno anteprime ottimizzate.' });
+  } else {
+    if (!ogTitle)  checks.push({ group: 'Open Graph', status: 'warn',  icon: '⚠️', title: 'og:title mancante',       detail: 'Aggiungi <meta property="og:title"> per controllare il titolo nelle condivisioni social.' });
+    else           checks.push({ group: 'Open Graph', status: 'ok',    icon: '✅', title: 'og:title presente',       detail: '', value: ogTitle });
+    if (!ogDesc)   checks.push({ group: 'Open Graph', status: 'warn',  icon: '⚠️', title: 'og:description mancante', detail: 'Aggiungi <meta property="og:description"> per la descrizione nelle condivisioni.' });
+    else           checks.push({ group: 'Open Graph', status: 'ok',    icon: '✅', title: 'og:description presente', detail: '', value: ogDesc });
+    if (!ogImage)  checks.push({ group: 'Open Graph', status: 'warn',  icon: '⚠️', title: 'og:image mancante',       detail: 'Senza og:image le condivisioni non avranno un\'anteprima visiva. Usa un\'immagine di almeno 1200×630px.' });
+    else           checks.push({ group: 'Open Graph', status: 'ok',    icon: '✅', title: 'og:image presente',       detail: 'Assicurati che sia almeno 1200×630px.', value: ogImage });
+    if (!ogUrl)    checks.push({ group: 'Open Graph', status: 'info',  icon: 'ℹ️', title: 'og:url non dichiarato',   detail: 'Consigliato dichiarare og:url per evitare ambiguità sull\'URL canonico nelle condivisioni.' });
+    else           checks.push({ group: 'Open Graph', status: 'ok',    icon: '✅', title: 'og:url presente',         detail: '', value: ogUrl });
+    if (!ogType)   checks.push({ group: 'Open Graph', status: 'info',  icon: 'ℹ️', title: 'og:type non dichiarato',  detail: 'Usa og:type="website" per le homepage, "article" per gli articoli.' });
+    else           checks.push({ group: 'Open Graph', status: 'ok',    icon: '✅', title: `og:type: ${ogType}`,     detail: '' });
+  }
+
+  // ── 9. TWITTER CARD ──
+  const twCard  = getMeta(head, 'twitter:card');
+  const twTitle = getMeta(head, 'twitter:title');
+  if (!twCard) {
+    checks.push({ group: 'Twitter/X', status: 'warn', icon: '⚠️', title: 'Twitter Card mancante', detail: 'Senza twitter:card le condivisioni su X/Twitter non mostreranno anteprime. Usa "summary" o "summary_large_image".' });
+  } else {
+    checks.push({ group: 'Twitter/X', status: 'ok', icon: '✅', title: `Twitter Card: ${twCard}`, detail: '' });
+    if (!twTitle) checks.push({ group: 'Twitter/X', status: 'info', icon: 'ℹ️', title: 'twitter:title non dichiarato', detail: 'Twitter usa og:title come fallback, ma dichiarare twitter:title esplicitamente è consigliato.' });
+    else          checks.push({ group: 'Twitter/X', status: 'ok',   icon: '✅', title: 'twitter:title presente', detail: '', value: twTitle });
+  }
+
+  // ── 10. SCHEMA.ORG ──
+  const schemas = head.querySelectorAll('script[type="application/ld+json"]');
+  if (schemas.length === 0) {
+    checks.push({ group: 'Schema.org', status: 'warn', icon: '⚠️', title: 'Dati strutturati mancanti', detail: 'Schema.org (JSON-LD) permette a Google di mostrare rich results. Non è obbligatorio ma aumenta il CTR.' });
+  } else {
+    let validCount = 0;
+    schemas.forEach(s => {
+      try { JSON.parse(s.textContent); validCount++; } catch(e) {}
+    });
+    if (validCount < schemas.length) {
+      checks.push({ group: 'Schema.org', status: 'error', icon: '❌', title: 'JSON-LD con errori di sintassi', detail: 'Uno o più blocchi application/ld+json contengono JSON non valido. Usa il Rich Results Test per verificare.' });
+    } else {
+      const types = Array.from(schemas).map(s => {
+        try { return JSON.parse(s.textContent)['@type']; } catch(e) { return '?'; }
+      }).filter(Boolean);
+      checks.push({ group: 'Schema.org', status: 'ok', icon: '✅', title: `Dati strutturati validi (${schemas.length})`, detail: `Tipi rilevati: ${types.join(', ')}` });
+    }
+  }
+
+  // ── 11. CHARSET ──
+  const charset = head.querySelector('meta[charset]');
+  if (!charset) {
+    checks.push({ group: 'Tecnici', status: 'warn', icon: '⚠️', title: 'Charset non dichiarato', detail: 'Dichiara <meta charset="UTF-8"> come prima riga del head per evitare problemi di encoding.' });
+  } else {
+    const cs = charset.getAttribute('charset');
+    if (cs.toUpperCase() !== 'UTF-8') {
+      checks.push({ group: 'Tecnici', status: 'warn', icon: '⚠️', title: `Charset: ${cs}`, detail: 'UTF-8 è lo standard consigliato per il web moderno.' });
+    } else {
+      checks.push({ group: 'Tecnici', status: 'ok', icon: '✅', title: 'Charset UTF-8', detail: 'Encoding corretto.' });
+    }
+  }
+
+  return checks;
+}
+
+// ── SCORE ────────────────────────────────────────────────────
+function calcScore(checks) {
+  let total = 0, earned = 0;
+  checks.forEach(c => {
+    if (c.status === 'ok')    { total += 10; earned += 10; }
+    if (c.status === 'warn')  { total += 10; earned += 5;  }
+    if (c.status === 'error') { total += 10; earned += 0;  }
+    if (c.status === 'info')  { /* non conta */ }
+  });
+  return total > 0 ? Math.round((earned / total) * 100) : 0;
+}
+
+function scoreClass(s) {
+  if (s >= 90) return 'excellent';
+  if (s >= 70) return 'good';
+  if (s >= 50) return 'warning';
+  return 'poor';
+}
+function scoreLabel(s) {
+  if (s >= 90) return '🎉 Eccellente';
+  if (s >= 70) return '👍 Buono';
+  if (s >= 50) return '⚠️ Migliorabile';
+  return '🚨 Critico';
+}
+
+// ── RENDER ───────────────────────────────────────────────────
+function renderReport(checks, score, head) {
+  const panel = document.getElementById('report-panel');
+
+  // Score
+  const cls = scoreClass(score);
+  let html = `
+    <div class="score-wrap">
+      <div class="score-circle ${cls}">
+        <span class="score-num">${score}</span>
+        <span class="score-max">/100</span>
+      </div>
+      <div class="score-label">${scoreLabel(score)}</div>
+    </div>`;
+
+  // Raggruppa per group
+  const groups = {};
+  checks.forEach(c => {
+    if (!groups[c.group]) groups[c.group] = [];
+    groups[c.group].push(c);
+  });
+
+  Object.entries(groups).forEach(([group, items], gi) => {
+    html += `<div class="report-section-label">${group}</div>`;
+    items.forEach((c, i) => {
+      html += `
+        <div class="check-item ${c.status}" style="animation-delay:${(gi*5+i)*0.04}s">
+          <span class="check-icon">${c.icon}</span>
+          <div class="check-content">
+            <div class="check-title">${c.title}</div>
+            ${c.detail ? `<div class="check-detail">${c.detail}</div>` : ''}
+            ${c.value  ? `<div class="check-value">${escHtml(c.value.substring(0,120))}${c.value.length>120?'…':''}</div>` : ''}
+          </div>
+        </div>`;
+    });
+  });
+
+  panel.innerHTML = html;
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── SERP PREVIEW ─────────────────────────────────────────────
+function updateSerpPreview(head) {
+  const titleEl = head.querySelector('title');
+  const descEl  = head.querySelector('meta[name="description"]');
+  const canonEl = head.querySelector('link[rel="canonical"]');
+
+  const title = titleEl ? titleEl.textContent.trim() : '—';
+  const desc  = descEl  ? descEl.getAttribute('content') || '—' : '—';
+  let   url   = canonEl ? canonEl.getAttribute('href') || '' : '';
+
+  if (url) {
+    try {
+      const u = new URL(url);
+      url = u.hostname + u.pathname;
+    } catch(e) {}
+  }
+
+  const preview = document.getElementById('serp-preview');
+  const titleEl2 = document.getElementById('serp-title');
+  titleEl2.textContent = title.length > 60 ? title.substring(0,57)+'…' : title;
+  titleEl2.className = 'serp-title' + (title.length > 60 ? ' too-long' : title.length < 30 ? ' too-short' : '');
+  document.getElementById('serp-url').textContent = url || 'tuodominio.it › pagina';
+  document.getElementById('serp-desc').textContent = desc.length > 160 ? desc.substring(0,157)+'…' : desc;
+  preview.style.display = 'block';
+}
+
+// ── MAIN ─────────────────────────────────────────────────────
+function analyze() {
+  const raw = document.getElementById('head-input').value.trim();
+  if (!raw) {
+    alert('Incolla prima il codice del tuo <head>.');
+    return;
+  }
+
+  const head = parseHead(raw);
+  const checks = runChecks(head);
+  const score  = calcScore(checks);
+
+  renderReport(checks, score, head);
+  updateSerpPreview(head);
+}
+
+// Hamburger (senza sidebar — strumento fullwidth)
+document.getElementById('hamburger').addEventListener('click', function() {
+  this.classList.toggle('open');
+});
+</script>
+</body>
+</html>

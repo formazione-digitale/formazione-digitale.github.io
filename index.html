@@ -104,14 +104,13 @@ header {
 .header-brand { display: flex; flex-direction: column; }
 .header-name  { font-family: var(--font-display); font-size: 1.1rem; color: #fff; }
 .header-tag   { font-size: .68rem; color: var(--blue-light); font-weight: 300; letter-spacing: .04em; }
-.header-right { display: flex; align-items: center; gap: 1rem; }
+.header-right { display: flex; align-items: center; gap: 1.5rem; }
 .header-nav   { display: flex; gap: 1.5rem; }
 .header-nav a {
-  font-size: .9rem; font-weight: 500; color: rgba(255,255,255,.85);
+  font-size: .82rem; color: rgba(255,255,255,.75);
   text-decoration: none; transition: color var(--transition);
 }
 .header-nav a:hover { color: #fff; }
-.header-sep-v { width: 1px; height: 22px; background: rgba(255,255,255,.25); flex-shrink: 0; }
 
 /* Bottone Scrivici */
 .btn-contact {
@@ -427,7 +426,6 @@ main { max-width: 1040px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
   margin-top: 3rem;
 }
 .cta-strip-text h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--blue-dark); margin-bottom: .3rem; }
-.cta-strip-title { font-family: var(--font-display); font-size: 1.2rem; color: var(--blue-dark); margin-bottom: .3rem; }
 .cta-strip-text p  { font-size: .85rem; color: var(--gray-mid); line-height: 1.5; }
 
 /* ── SEARCH FILTER ──────────────────────────────────────── */
@@ -489,108 +487,81 @@ footer strong { color: rgba(255,255,255,.9); }
   box-shadow: 0 24px 64px rgba(15,35,60,.35);
   width: 100%; max-width: 520px;
   max-height: 90vh; overflow-y: auto;
+  padding: 2.25rem 2rem 2rem;
   position: relative;
   transform: translateY(28px);
   transition: transform .32s cubic-bezier(.34,1.56,.64,1);
-  overflow: hidden;
 }
 .modal-overlay.is-open .modal-panel { transform: translateY(0); }
 
-/* Header modal — banda colorata */
+/* Header modal */
 .modal-head {
   display: flex; align-items: flex-start; justify-content: space-between;
-  gap: 1rem;
-  background: linear-gradient(135deg, var(--blue-dark) 0%, #2A6099 100%);
-  padding: 1.5rem 1.75rem 1.25rem;
+  margin-bottom: 1.75rem; gap: 1rem;
 }
 .modal-title {
   font-family: var(--font-display);
-  font-size: 1.55rem; color: #fff; line-height: 1.15;
+  font-size: 1.55rem; color: var(--blue-dark); line-height: 1.15;
 }
 .modal-sub {
-  font-size: .83rem; color: var(--blue-light);
+  font-size: .83rem; color: var(--gray-mid);
   line-height: 1.55; margin-top: .3rem;
 }
 .modal-close {
-  flex-shrink: 0; background: rgba(255,255,255,.15); border: 1.5px solid rgba(255,255,255,.4);
-  width: 36px; height: 36px; border-radius: 50%;
-  font-size: 1.2rem; cursor: pointer; 
-  color: #fff; font-weight: 700;
+  flex-shrink: 0; background: var(--gray-light); border: none;
+  width: 32px; height: 32px; border-radius: 50%;
+  font-size: 1rem; cursor: pointer; color: var(--gray-mid);
   display: flex; align-items: center; justify-content: center;
-  transition: background var(--transition);
+  transition: background var(--transition), color var(--transition);
 }
-
-.modal-close:hover { background: rgba(255,255,255,.28); }
-
-/* Body form con scroll */
-.modal-body-form {
-  padding: 1.75rem 1.75rem 1.5rem;
-  max-height: calc(90vh - 100px);
-  overflow-y: auto;
-}
+.modal-close:hover { background: var(--blue-light); color: var(--blue-dark); }
 
 /* Form */
-.contact-form { display: flex; flex-direction: column; gap: 1rem; }
+.contact-form { display: flex; flex-direction: column; gap: 1.1rem; }
 
 .cf-group { display: flex; flex-direction: column; gap: .35rem; }
-.cf-label { font-size: .8rem; font-weight: 600; color: var(--blue-dark); }
+.cf-label { font-size: .8rem; font-weight: 600; color: var(--gray-dark); }
 .cf-req   { color: var(--blue-mid); }
 .cf-opt   { font-weight: 400; color: var(--gray-mid); font-size: .75rem; }
 
 .cf-input {
   font-family: var(--font-body); font-size: .9rem; color: var(--gray-dark);
   border: 1.5px solid var(--blue-light); border-radius: 8px;
-  padding: .65rem 1rem; background: var(--blue-pale); width: 100%; outline: none;
-  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+  padding: .6rem .9rem; background: #FAFCFF; width: 100%; outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
 }
 .cf-input:focus {
   border-color: var(--blue-mid);
-  background: #fff;
   box-shadow: 0 0 0 3px rgba(46,117,182,.12);
 }
 .cf-select {
   cursor: pointer; appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232E75B6' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 1rem center;
-  background-color: var(--blue-pale);
   padding-right: 2.5rem;
 }
 .cf-textarea { resize: vertical; min-height: 100px; }
 
-/* Separatore sezione facoltativa */
-.cf-optional-divider {
-  display: flex; align-items: center; gap: .75rem;
-  margin: .25rem 0;
-}
-.cf-optional-divider::before,
-.cf-optional-divider::after {
-  content: ''; flex: 1; height: 1px; background: var(--blue-light);
-}
-.cf-optional-divider span {
-  font-size: .7rem; font-weight: 600; letter-spacing: .08em;
-  text-transform: uppercase; color: var(--gray-mid); white-space: nowrap;
-}
-
-/* Stelle */
+/* Stelle — input inversi nel DOM, flex row-reverse per hover progressivo */
 .cf-stars {
   display: flex; flex-direction: row-reverse;
-  justify-content: flex-end; gap: .2rem;
+  justify-content: flex-end; gap: .1rem;
 }
 .cf-stars input[type="radio"] { display: none; }
 .cf-stars label {
-  font-size: 2.1rem; color: var(--blue-light); cursor: pointer;
+  font-size: 1.9rem; color: #ddd; cursor: pointer;
   transition: color .15s ease; line-height: 1; user-select: none;
 }
 .cf-stars label:hover,
 .cf-stars label:hover ~ label,
 .cf-stars input:checked ~ label { color: var(--amber-dark); }
 
-.cf-submit-row { margin-top: .75rem; gap: .6rem; }
+.cf-submit-row { margin-top: .4rem; gap: .6rem; }
 .cf-btn {
   align-self: flex-start;
   background: var(--blue-dark); color: #fff;
   border: none; border-radius: 50px;
-  padding: .75rem 2rem; font-size: .88rem; font-weight: 600;
+  padding: .7rem 1.8rem; font-size: .88rem; font-weight: 600;
   font-family: var(--font-body); cursor: pointer;
   transition: background var(--transition), transform .15s ease;
 }
@@ -601,15 +572,13 @@ footer strong { color: rgba(255,255,255,.9); }
 /* Successo */
 .cf-success {
   display: flex; flex-direction: column; align-items: center;
-  gap: .6rem; text-align: center; padding: 3rem 2rem;
+  gap: .6rem; text-align: center; padding: 2rem 1rem;
 }
-.cf-success .cf-btn { align-self: center; }
-
 .cf-success[hidden] { display: none; }
 .cf-success-icon {
-  width: 56px; height: 56px; border-radius: 50%;
+  width: 52px; height: 52px; border-radius: 50%;
   background: var(--green-light); color: var(--green-dark);
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   display: flex; align-items: center; justify-content: center;
   margin-bottom: .25rem;
 }
@@ -619,23 +588,26 @@ footer strong { color: rgba(255,255,255,.9); }
 body.modal-open { overflow: hidden; }
 
 @media(max-width:540px) {
-  .modal-head      { padding: 1.25rem 1.25rem 1rem; }
-  .modal-body-form { padding: 1.25rem 1.25rem 1rem; }
-  .modal-title     { font-size: 1.3rem; }
+  .modal-panel  { padding: 1.75rem 1.25rem 1.5rem; }
+  .modal-title  { font-size: 1.3rem; }
 }
 
 /* ── ABOUT MODAL ── */
 .about-trigger {
-  font-family: var(--font-body);
-  font-size: .8rem; font-weight: 600;
-  color: var(--blue-dark); background: #fff;
-  border: none; border-radius: 50px;
-  padding: .38rem 1rem;
-  cursor: pointer; white-space: nowrap;
-  display: inline-flex; align-items: center; gap: 5px;
-  transition: background var(--transition), transform .15s ease;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.2s;
+  background: none;
+  border: none;
+  font-family: inherit;
+  padding: 0;
 }
-.about-trigger:hover { background: var(--blue-light); transform: translateY(-1px); color: var(--blue-dark); }
+.about-trigger:hover { color: white; }
 
 .about-overlay {
   display: none;
@@ -679,12 +651,6 @@ body.modal-open { overflow: hidden; }
   flex-shrink: 0;
 }
 .modal-name {
-  color: white;
-}
-.modal-person-name {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-bottom: 3px;
   color: white;
 }
 .modal-name h3 {
@@ -798,10 +764,9 @@ body.modal-open { overflow: hidden; }
       <a href="#strumenti">Strumenti</a>
       <a href="#pillole">Pillole</a>
     </nav>
-    <div class="header-sep-v"></div>
-    <button class="btn-contact" onclick="openAbout()">👤 Chi sono</button>
+    <button onclick="openAbout()" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); color:rgba(255,255,255,0.85); border-radius:20px; padding:5px 14px; font-size:0.8rem; cursor:pointer; font-family:inherit; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">👤 Chi sono</button>
     <button class="btn-contact" onclick="openModal()">✉ Contatti</button>
-    <button class="btn-contact" id="auth-btn" onclick="openAuthModal()">🔐 Accedi</button>
+    <button id="auth-btn" onclick="openAuthModal()">👤 Accedi</button>
   </div>
 </header>
 
@@ -1088,6 +1053,29 @@ body.modal-open { overflow: hidden; }
 	  </a>
 	</div>
 
+
+	<!-- CARD: Analizzatore SEO -->
+	<div class="card card-active card-green" data-cat="strumento" data-tags="seo analizzatore head html meta tag open graph twitter card schema canonical report">
+	  <div class="card-badge-strip badge-green"></div>
+	  <a href="marketing/analizzatore-seo/">
+		<div class="card-body">
+		  <div class="card-icon">🧪</div>
+		  <div class="card-category cat-tool">Strumento</div>
+		  <div class="card-title">Analizzatore SEO &lt;head&gt;</div>
+		  <div class="card-tags">
+			<span class="tag tag-green">SEO</span>
+			<span class="tag tag-green">HTML</span>
+			<span class="tag tag-green">Interattivo</span>
+		  </div>
+		  <div class="card-desc">Incolla il tag head HTML del tuo sito e ricevi un report SEO immediato: title, meta, Open Graph, Twitter Card, Schema.org e canonical.</div>
+		</div>
+		<div class="card-footer">
+		  <div class="card-meta">Interattivo · Analisi locale · Report immediato</div>
+		  <div class="card-cta">Apri lo strumento <span class="arrow">→</span></div>
+		</div>
+	  </a>
+	</div>
+
       <div class="card coming" data-cat="strumento" data-tags="">
         <div class="card-badge-strip badge-green"></div>
         <div class="card-body">
@@ -1134,6 +1122,29 @@ body.modal-open { overflow: hidden; }
 		</div>
 		<div class="card-footer">
 		  <div class="card-meta">Include HFS 2 e 3 · Livello intermedio-avanzato · 15 min</div>
+		  <div class="card-cta">Apri la pillola <span class="arrow">→</span></div>
+		</div>
+	  </a>
+	</div>
+
+
+	<!-- CARD: Pillola SEO -->
+	<div class="card card-active card-amber" data-cat="pillola" data-tags="seo ottimizzazione motori ricerca google pagespeed core web vitals ranking backlink serp meta tag">
+	  <div class="card-badge-strip badge-amber"></div>
+	  <a href="marketing/pillola-seo/">
+		<div class="card-body">
+		  <div class="card-icon">🔍</div>
+		  <div class="card-category cat-pill">Pillola digitale</div>
+		  <div class="card-title">SEO — Ottimizzazione per i Motori di Ricerca</div>
+		  <div class="card-tags">
+			<span class="tag tag-amber">SEO</span>
+			<span class="tag tag-amber">Google</span>
+			<span class="tag tag-amber">Web</span>
+		  </div>
+		  <div class="card-desc">Cos'è la SEO, come funziona Google, fattori di ranking, Core Web Vitals e strumenti per migliorare la visibilità online.</div>
+		</div>
+		<div class="card-footer">
+		  <div class="card-meta">Con strumento integrato · Livello base–intermedio · 15 min</div>
 		  <div class="card-cta">Apri la pillola <span class="arrow">→</span></div>
 		</div>
 	  </a>
@@ -1187,7 +1198,7 @@ body.modal-open { overflow: hidden; }
   <!-- CTA STRIP -->
   <div class="cta-strip">
     <div class="cta-strip-text">
-      <p class="cta-strip-title">Nuove risorse in arrivo</p>
+      <h3>Nuove risorse in arrivo</h3>
       <p>Il portale è in crescita. Torna a visitarlo o salva il link tra i preferiti per trovare le prossime guide e pillole digitali.</p>
     </div>
     <div style="font-size:2rem;">📌</div>
@@ -1213,17 +1224,12 @@ body.modal-open { overflow: hidden; }
 
     <div class="modal-head">
       <div>
-        <div class="modal-title" id="modal-title-text">Scrivimi</div>
+        <div class="modal-title" id="modal-title-text">Scrivici</div>
         <div class="modal-sub">Un errore, un suggerimento, una proposta — ogni messaggio è benvenuto.</div>
       </div>
-      <button class="modal-close" onclick="closeModal()" aria-label="Chiudi">
-		  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<path d="M1 1l12 12M13 1L1 13" stroke="white" stroke-width="2" stroke-linecap="round"/>
-		  </svg>
-		</button>
+      <button class="modal-close" onclick="closeModal()" aria-label="Chiudi">✕</button>
     </div>
 
-    <div class="modal-body-form">
 	<form class="contact-form" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
 	  <input type="hidden" name="access_key" value="d6f13ff7-11e1-487b-aa97-34e68375aeb9">
 	  <input type="hidden" name="subject" value="Nuovo messaggio da Formazione Digitale">
@@ -1257,10 +1263,8 @@ body.modal-open { overflow: hidden; }
           minlength="5" required></textarea>
       </div>
 
-      <div class="cf-optional-divider"><span>Facoltativo</span></div>
-
       <div class="cf-group">
-        <label class="cf-label">Come valuti il portale?</label>
+        <label class="cf-label">Come valuti il portale? <span class="cf-opt">(facoltativo)</span></label>
         <div class="cf-stars" role="radiogroup" aria-label="Valutazione del portale">
           <input type="radio" id="s5" name="valutazione" value="5"><label for="s5" title="Ottimo">★</label>
           <input type="radio" id="s4" name="valutazione" value="4"><label for="s4" title="Buono">★</label>
@@ -1271,7 +1275,7 @@ body.modal-open { overflow: hidden; }
       </div>
 
       <div class="cf-group">
-        <label class="cf-label" for="cf-fonte">Come hai trovato questo portale?</label>
+        <label class="cf-label" for="cf-fonte">Come hai trovato questo portale? <span class="cf-opt">(facoltativo)</span></label>
         <input class="cf-input" type="text" id="cf-fonte" name="fonte" placeholder="Es. un collega, Google, social…">
       </div>
 
@@ -1282,14 +1286,12 @@ body.modal-open { overflow: hidden; }
 
     </form>
 
-	<div class="cf-success" id="cf-success" hidden>
-	  <div class="cf-success-icon">✓</div>
-	  <strong>Grazie per il tuo messaggio!</strong>
-	  <p>Ti risponderemo il prima possibile.</p>
-	  <button class="cf-btn" onclick="closeModal()" style="margin-top:.5rem;">Chiudi la finestra</button>
-	</div>
+    <div class="cf-success" id="cf-success" hidden>
+      <div class="cf-success-icon">✓</div>
+      <strong>Grazie per il tuo messaggio!</strong>
+      <p>Ti risponderemo il prima possibile.</p>
+    </div>
 
-    </div><!-- fine modal-body-form -->
   </div>
 </div>
 
@@ -1399,12 +1401,12 @@ if (contactForm) {
 </script>
 
 <!-- ── ABOUT MODAL ── -->
-<div class="about-overlay" id="aboutModal" role="dialog" aria-modal="true" aria-label="Chi sono — Cristiano De Pasquale" onclick="closeAboutOutside(event)">
+<div class="about-overlay" id="aboutModal" onclick="closeAboutOutside(event)">
   <div class="modal-box">
     <div class="modal-header">
       <img src="img/formazione-digitale-logo.png" alt="Logo Formazione Digitale" class="modal-logo">
       <div class="modal-name">
-        <p class="modal-person-name">Cristiano De Pasquale</p>
+        <h3>Cristiano De Pasquale</h3>
         <p>Docente di Informatica<br>IIS "Luigi Einaudi" — Chiari (BS)<br>Funzione Strumentale Innovazione Digitale</p>
       </div>
     </div>
@@ -1447,7 +1449,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAbout()
 </script>
 
 <!-- ── MODAL AUTH ───────────────────────────────────────────────── -->
-<div class="auth-overlay" id="auth-modal" role="dialog" aria-modal="true" aria-label="Accedi al portale">
+<div class="auth-overlay" id="auth-modal" role="dialog" aria-modal="true">
   <div class="auth-panel" style="position:relative;">
     <button class="auth-close" onclick="closeAuthModal()" aria-label="Chiudi">✕</button>
     <div class="auth-title">Accedi al portale</div>
@@ -1461,7 +1463,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAbout()
 </div>
 
 <!-- ── MODAL PROFILO ─────────────────────────────────────────────── -->
-<div class="auth-overlay" id="profile-modal" role="dialog" aria-modal="true" aria-label="Il tuo profilo">
+<div class="auth-overlay" id="profile-modal" role="dialog" aria-modal="true">
   <div class="auth-panel" style="position:relative;">
     <button class="auth-close" onclick="closeProfileModal()" aria-label="Chiudi">✕</button>
     <div class="auth-title">Il tuo profilo</div>
@@ -1473,6 +1475,5 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAbout()
   </div>
 </div>
 
-</body><script src="/scripts/ui.js" defer></script>
-
+</body>
 </html>
