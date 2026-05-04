@@ -140,6 +140,7 @@
 .score-info { display: flex; flex-direction: column; gap: .2rem; }
 .score-label { font-size: .95rem; font-weight: 700; color: var(--blue-dark); }
 .score-sublabel { font-size: .72rem; color: var(--gray-mid); }
+.score-note { font-size: .68rem; color: var(--amber-dark); margin-top: .2rem; }
 
 /* ── REPORT ── */
 .report-scroll {
@@ -462,8 +463,12 @@ function runChecks(head) {
   const checks = [];
   const raw = document.getElementById('head-input').value;
 
-  // 1. TITLE
-  const titleEl = head.querySelector('title');
+  // 1. TITLE — check doppio tag
+  const titleEls = head.querySelectorAll('title');
+  if (titleEls.length > 1) {
+    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: `Title duplicato (${titleEls.length} tag trovati)`, detail: 'Sono presenti più tag <title>. Google usa il primo, ma la duplicazione è un bug frequente nei CMS. Rimuovi i duplicati.' });
+  }
+  const titleEl = titleEls[0];
   const title = titleEl ? titleEl.textContent.trim() : null;
   if (!title) {
     checks.push({ group: 'Fondamentali', status: 'error', icon: '❌', title: 'Title mancante', detail: 'Il tag <title> è obbligatorio. È il testo che appare nella tab del browser e nella SERP.' });
@@ -564,6 +569,14 @@ function runChecks(head) {
     if (!ogType)   checks.push({ group: 'Open Graph', status: 'info', icon: 'ℹ️', title: 'og:type non dichiarato', detail: 'Usa og:type="website" per homepage, "article" per articoli.' });
     else           checks.push({ group: 'Open Graph', status: 'ok',   icon: '✅', title: `og:type: ${ogType}`, detail: '' });
 
+    // og:locale e og:site_name (buona pratica)
+    const ogLocale   = getProp(head, 'og:locale');
+    const ogSiteName = getProp(head, 'og:site_name');
+    if (!ogLocale)   checks.push({ group: 'Open Graph', status: 'info', icon: 'ℹ️', title: 'og:locale non dichiarato', detail: 'Consigliato per dichiarare la lingua del contenuto. Es: it_IT, en_US.' });
+    else             checks.push({ group: 'Open Graph', status: 'ok',   icon: '✅', title: `og:locale: ${ogLocale}`, detail: '' });
+    if (!ogSiteName) checks.push({ group: 'Open Graph', status: 'info', icon: 'ℹ️', title: 'og:site_name non dichiarato', detail: 'Permette a Facebook di mostrare il nome del sito nella card di condivisione.' });
+    else             checks.push({ group: 'Open Graph', status: 'ok',   icon: '✅', title: `og:site_name: ${ogSiteName}`, detail: '' });
+
     // Check coerenza canonical vs og:url
     if (canonical && ogUrl && canonical !== ogUrl) {
       checks.push({ group: 'Open Graph', status: 'warn', icon: '⚠️', title: 'Canonical e og:url non coincidono', detail: 'Google potrebbe ricevere segnali contrastanti. I due URL dovrebbero essere identici.', value: `canonical: ${canonical} | og:url: ${ogUrl}` });
@@ -573,26 +586,55 @@ function runChecks(head) {
   // 9. TWITTER
   const twCard  = getMeta(head, 'twitter:card');
   const twTitle = getMeta(head, 'twitter:title');
+  const twImage = getMeta(head, 'twitter:image');
   if (!twCard) {
     checks.push({ group: 'Twitter/X', status: 'warn', icon: '⚠️', title: 'Twitter Card mancante', detail: 'Senza twitter:card le condivisioni su X non mostreranno anteprime. Usa "summary" o "summary_large_image".' });
   } else {
     checks.push({ group: 'Twitter/X', status: 'ok', icon: '✅', title: `Twitter Card: ${twCard}`, detail: '' });
     if (!twTitle) checks.push({ group: 'Twitter/X', status: 'info', icon: 'ℹ️', title: 'twitter:title non dichiarato', detail: 'Twitter usa og:title come fallback, ma dichiararlo esplicitamente è consigliato.' });
     else          checks.push({ group: 'Twitter/X', status: 'ok',   icon: '✅', title: 'twitter:title presente', detail: '', value: twTitle });
+    // twitter:image obbligatoria per summary_large_image
+    if (twCard === 'summary_large_image' && !twImage) {
+      checks.push({ group: 'Twitter/X', status: 'error', icon: '❌', title: 'twitter:image mancante (obbligatoria)', detail: 'Con twitter:card="summary_large_image" l\'immagine è obbligatoria. Senza, X non mostrerà l\'anteprima.' });
+    } else if (!twImage) {
+      checks.push({ group: 'Twitter/X', status: 'info', icon: 'ℹ️', title: 'twitter:image non dichiarata', detail: 'X usa og:image come fallback, ma dichiarare twitter:image esplicitamente garantisce il controllo dell\'anteprima.' });
+    } else {
+      checks.push({ group: 'Twitter/X', status: 'ok', icon: '✅', title: 'twitter:image presente', detail: '', value: twImage });
+    }
   }
 
   // 10. SCHEMA.ORG
+  const SCHEMA_WHITELIST = new Set([
+    'WebPage','WebSite','Article','NewsArticle','BlogPosting','LearningResource',
+    'Course','FAQPage','HowTo','BreadcrumbList','Product','Offer','Review',
+    'Person','Organization','LocalBusiness','Event','VideoObject','ImageObject',
+    'SoftwareApplication','ItemList','CreativeWork','Book','Recipe'
+  ]);
   const schemas = head.querySelectorAll('script[type="application/ld+json"]');
   if (schemas.length === 0) {
     checks.push({ group: 'Schema.org', status: 'warn', icon: '⚠️', title: 'Dati strutturati mancanti', detail: 'Schema.org (JSON-LD) permette a Google di mostrare rich results. Aumenta il CTR.' });
   } else {
     let validCount = 0;
-    schemas.forEach(s => { try { JSON.parse(s.textContent); validCount++; } catch(e) {} });
+    const types = [];
+    const unknownTypes = [];
+    schemas.forEach(s => {
+      try {
+        const parsed = JSON.parse(s.textContent);
+        validCount++;
+        const t = parsed['@type'];
+        if (t) {
+          if (SCHEMA_WHITELIST.has(t)) types.push(t);
+          else unknownTypes.push(t);
+        }
+      } catch(e) {}
+    });
     if (validCount < schemas.length) {
       checks.push({ group: 'Schema.org', status: 'error', icon: '❌', title: 'JSON-LD con errori di sintassi', detail: 'Usa il Rich Results Test di Google per verificare.' });
     } else {
-      const types = Array.from(schemas).map(s => { try { return JSON.parse(s.textContent)['@type']; } catch(e) { return null; } }).filter(Boolean);
-      checks.push({ group: 'Schema.org', status: 'ok', icon: '✅', title: `Dati strutturati validi (${schemas.length})`, detail: `Tipi: ${types.join(', ')}` });
+      if (types.length > 0)
+        checks.push({ group: 'Schema.org', status: 'ok', icon: '✅', title: `Dati strutturati validi (${schemas.length})`, detail: `Tipi riconosciuti: ${types.join(', ')}` });
+      if (unknownTypes.length > 0)
+        checks.push({ group: 'Schema.org', status: 'warn', icon: '⚠️', title: `Tipo Schema.org non standard: ${unknownTypes.join(', ')}`, detail: 'Il tipo dichiarato non è nella lista dei tipi Schema.org comuni. Verifica che sia corretto su schema.org.' });
     }
   }
 
@@ -687,21 +729,18 @@ function runPerfChecks(head) {
 // ── SCORE ────────────────────────────────────────────────────
 function calcScore(checks, perfChecks) {
   let total = 0, earned = 0;
-  // Check SEO core: peso pieno (10/5/0)
   checks.forEach(c => {
     if (c.status === 'ok')    { total += 10; earned += 10; }
     if (c.status === 'warn')  { total += 10; earned += 5; }
     if (c.status === 'error') { total += 10; }
-    // info non conta
   });
-  // Check Performance: peso dimezzato (5/2/0)
   (perfChecks || []).forEach(c => {
     if (c.status === 'ok')    { total += 5; earned += 5; }
     if (c.status === 'warn')  { total += 5; earned += 2; }
     if (c.status === 'error') { total += 5; }
-    // info non conta
   });
-  return total > 0 ? Math.round((earned / total) * 100) : 0;
+  const score = total > 0 ? Math.round((earned / total) * 100) : 0;
+  return { score, total };
 }
 
 function scoreClass(s) {
@@ -718,7 +757,8 @@ function scoreLabel(s) {
 }
 
 // ── RENDER REPORT ────────────────────────────────────────────
-function renderReport(checks, perfChecks, score) {
+function renderReport(checks, perfChecks, scoreData) {
+  const { score, total } = scoreData;
   const panel = document.getElementById('report-panel');
   const cls = scoreClass(score);
   const allChecks = [...checks, ...(perfChecks || [])];
@@ -740,6 +780,7 @@ function renderReport(checks, perfChecks, score) {
       <div class="score-info">
         <div class="score-label">${scoreLabel(score)}</div>
         <div class="score-sublabel">✅ ${nOk} ok · ⚠️ ${nWarn} warn · ❌ ${nError} errori</div>
+        ${total < 80 ? '<div class="score-note">⚠ Head parziale — il punteggio è più affidabile su head completi</div>' : ''}
       </div>
     </div>`;
 
@@ -847,11 +888,11 @@ function analyze() {
   const head       = parseHead(raw);
   const checks     = runChecks(head);
   const perfChecks = runPerfChecks(head);
-  const score      = calcScore(checks, perfChecks);
+  const scoreData  = calcScore(checks, perfChecks);
 
   document.getElementById('tab-bar').style.display = 'flex';
 
-  renderReport(checks, perfChecks, score);
+  renderReport(checks, perfChecks, scoreData);
   renderPerf(perfChecks);
   document.getElementById('perf-empty').style.display = 'none';
   document.getElementById('perf-panel').style.display = 'flex';
