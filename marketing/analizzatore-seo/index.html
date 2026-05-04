@@ -4,14 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Analizzatore SEO &lt;head&gt; — Formazione Digitale</title>
-<meta name="description" content="Analizza il tag head HTML del tuo sito e ricevi un report SEO completo: title, meta description, Open Graph, Twitter Card, Schema.org, canonical e Core Web Vitals.">
+<meta name="description" content="Analizza il tag head HTML del tuo sito e ricevi un report SEO completo: title, meta description, Open Graph, Twitter Card, Schema.org, canonical e performance.">
 <meta name="author" content="Cristiano De Pasquale">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://formazione-digitale.github.io/marketing/analizzatore-seo/">
 <link rel="icon" type="image/png" href="/img/favicon.png">
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#1F4E79">
-
 <meta property="og:title" content="Analizzatore SEO &lt;head&gt; — Formazione Digitale">
 <meta property="og:description" content="Incolla il tuo tag head HTML e ricevi un report SEO completo e immediato.">
 <meta property="og:url" content="https://formazione-digitale.github.io/marketing/analizzatore-seo/">
@@ -19,17 +18,15 @@
 <meta property="og:image" content="https://formazione-digitale.github.io/img/formazione-digitale-logo.png">
 <meta property="og:locale" content="it_IT">
 <meta property="og:site_name" content="Formazione Digitale">
-
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Analizzatore SEO &lt;head&gt; — Formazione Digitale">
 <meta name="twitter:description" content="Incolla il tuo tag head HTML e ricevi un report SEO completo e immediato.">
 <meta name="twitter:image" content="https://formazione-digitale.github.io/img/formazione-digitale-logo.png">
-
 <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <link rel="stylesheet" href="/css/shared.css?v=2">
 <style>
 
-/* ── LAYOUT STRUMENTO — 3 colonne: input | serp+report ── */
+/* ── LAYOUT ── */
 .tool-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -49,9 +46,8 @@
   display: flex; align-items: center; justify-content: space-between;
   gap: .5rem; flex-wrap: wrap;
 }
-.input-label {
-  font-size: .82rem; font-weight: 600; color: var(--blue-dark);
-}
+.input-label { font-size: .82rem; font-weight: 600; color: var(--blue-dark); }
+
 .sample-btn {
   display: inline-flex; align-items: center; gap: .3rem;
   font-size: .78rem; color: #fff; background: var(--blue-mid);
@@ -62,30 +58,25 @@
 .sample-btn:hover { background: var(--blue-dark); }
 
 .head-input {
-  width: 100%; min-height: 360px;
+  width: 100%; min-height: 340px;
   font-family: 'Courier New', monospace; font-size: .78rem;
   line-height: 1.6; color: #2C2C2C;
   border: 1.5px solid var(--blue-light); border-radius: var(--radius);
   padding: 1rem; resize: vertical; outline: none;
   background: var(--blue-pale);
-  transition: border-color .2s, box-shadow .2s;
+  transition: border-color .2s, box-shadow .2s, background .2s;
 }
-.head-input:focus {
-  border-color: var(--blue-mid);
-  background: #fff;
-  box-shadow: 0 0 0 3px rgba(46,117,182,.12);
-}
-.btn-row { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+.head-input:focus { border-color: var(--blue-mid); background: #fff; box-shadow: 0 0 0 3px rgba(46,117,182,.12); }
+.head-input.input-error { border-color: #c5221f; background: #fef2f2; }
+
+.btn-row { display: flex; gap: .75rem; align-items: center; }
 .btn-analyze {
-  background: var(--blue-dark); color: #fff;
-  border: none; border-radius: 50px;
+  background: var(--blue-dark); color: #fff; border: none; border-radius: 50px;
   padding: .75rem 2rem; font-size: .9rem; font-weight: 600;
-  font-family: var(--font-body); cursor: pointer;
+  font-family: var(--font-body); cursor: pointer; flex: 1;
   transition: background var(--transition), transform .15s ease;
-  flex: 1;
 }
-.btn-analyze:hover    { background: var(--blue-mid); transform: translateY(-2px); }
-.btn-analyze:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+.btn-analyze:hover { background: var(--blue-mid); transform: translateY(-2px); }
 .btn-clear {
   background: transparent; color: var(--gray-mid);
   border: 1.5px solid var(--blue-light); border-radius: 50px;
@@ -95,111 +86,142 @@
 }
 .btn-clear:hover { border-color: var(--blue-mid); color: var(--blue-dark); }
 
-/* ── SERP PREVIEW — top right ── */
-.serp-panel {
-  grid-column: 2; grid-row: 1;
+.input-error-msg {
+  font-size: .78rem; color: #c5221f; display: none;
+  background: #fef2f2; border: 1px solid #fca5a5;
+  border-radius: var(--radius); padding: .5rem .75rem;
 }
 
-/* ── REPORT PANEL — bottom right, scroll interno ── */
-.report-panel {
-  grid-column: 2; grid-row: 2;
-  max-height: 520px;
-  overflow-y: auto;
-  display: flex; flex-direction: column; gap: .5rem;
-  padding-right: .25rem;
-}
-.report-panel::-webkit-scrollbar { width: 5px; }
-.report-panel::-webkit-scrollbar-track { background: var(--blue-pale); border-radius: 4px; }
-.report-panel::-webkit-scrollbar-thumb { background: var(--blue-light); border-radius: 4px; }
-@media(max-width:800px) {
-  .input-panel  { grid-row: auto; }
-  .serp-panel   { grid-column: 1; grid-row: auto; }
-  .report-panel { grid-column: 1; grid-row: auto; max-height: none; }
-}
+/* ── RIGHT PANEL con TAB ── */
+.right-panel { grid-column: 2; grid-row: 1 / 3; display: flex; flex-direction: column; gap: .75rem; }
+@media(max-width:800px) { .right-panel { grid-column: 1; grid-row: auto; } }
 
-/* ── SCORE CIRCLE ── */
+/* ── TAB ── */
+.tab-bar {
+  display: flex; gap: 0; border-bottom: 2px solid var(--blue-light);
+}
+.tab-btn {
+  padding: .5rem 1rem; font-size: .8rem; font-weight: 600;
+  border: none; background: none; cursor: pointer;
+  font-family: var(--font-body); color: var(--gray-mid);
+  border-bottom: 2px solid transparent; margin-bottom: -2px;
+  transition: color var(--transition), border-color var(--transition);
+}
+.tab-btn:hover { color: var(--blue-dark); }
+.tab-btn.active { color: var(--blue-dark); border-bottom-color: var(--blue-dark); }
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+/* ── SCORE ── */
 .score-wrap {
-  display: flex; align-items: center;
-  gap: 1rem; margin-bottom: 1rem;
-  padding: .75rem 1rem;
+  display: flex; align-items: center; gap: 1rem;
+  padding: .85rem 1rem; margin-bottom: .5rem;
   background: var(--blue-pale); border-radius: var(--radius);
   border: 1px solid var(--blue-light);
 }
 .score-circle {
-  width: 72px; height: 72px; border-radius: 50%; flex-shrink: 0;
+  width: 68px; height: 68px; border-radius: 50%; flex-shrink: 0;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  border: 4px solid;
-  transition: all .5s ease;
+  border: 4px solid; transition: all .5s ease;
 }
 .score-circle.excellent { border-color: var(--green-dark); background: var(--green-light); }
 .score-circle.good      { border-color: #2196F3; background: #E3F2FD; }
 .score-circle.warning   { border-color: var(--amber-dark); background: var(--amber-light); }
 .score-circle.poor      { border-color: #c5221f; background: #fce8e6; }
-.score-num  { font-family: var(--font-display); font-size: 1.5rem; line-height: 1; }
-.score-max  { font-size: .62rem; color: var(--gray-mid); }
-.score-info { display: flex; flex-direction: column; gap: .15rem; }
-.score-label { font-size: .9rem; font-weight: 700; }
-.score-sublabel { font-size: .75rem; color: var(--gray-mid); }
-.score-circle.excellent .score-num  { color: var(--green-dark); }
-.score-circle.good      .score-num  { color: #1565C0; }
-.score-circle.warning   .score-num  { color: var(--amber-dark); }
-.score-circle.poor      .score-num  { color: #c5221f; }
+.score-num  { font-family: var(--font-display); font-size: 1.4rem; line-height: 1; }
+.score-max  { font-size: .6rem; color: var(--gray-mid); }
+.score-circle.excellent .score-num { color: var(--green-dark); }
+.score-circle.good      .score-num { color: #1565C0; }
+.score-circle.warning   .score-num { color: var(--amber-dark); }
+.score-circle.poor      .score-num { color: #c5221f; }
+.score-info { display: flex; flex-direction: column; gap: .2rem; }
+.score-label { font-size: .95rem; font-weight: 700; color: var(--blue-dark); }
+.score-sublabel { font-size: .72rem; color: var(--gray-mid); }
 
 /* ── REPORT ── */
-.report-panel { display: flex; flex-direction: column; gap: .6rem; }
+.report-scroll {
+  max-height: 480px; overflow-y: auto;
+  display: flex; flex-direction: column; gap: .45rem;
+  padding-right: .2rem;
+}
+.report-scroll::-webkit-scrollbar { width: 4px; }
+.report-scroll::-webkit-scrollbar-track { background: var(--blue-pale); border-radius: 4px; }
+.report-scroll::-webkit-scrollbar-thumb { background: var(--blue-light); border-radius: 4px; }
+
 .report-empty {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  min-height: 320px; color: var(--gray-mid); text-align: center; gap: .5rem;
+  min-height: 280px; color: var(--gray-mid); text-align: center; gap: .5rem;
 }
-.report-empty-icon { font-size: 3rem; opacity: .3; }
-.report-empty p { font-size: .85rem; }
+.report-empty-icon { font-size: 2.5rem; opacity: .3; }
+.report-empty p { font-size: .82rem; }
 
 .check-item {
-  display: flex; align-items: flex-start; gap: .75rem;
-  padding: .75rem .9rem; border-radius: var(--radius);
-  border: 1px solid;
-  animation: fadeIn .3s both;
+  display: flex; align-items: flex-start; gap: .6rem;
+  padding: .6rem .8rem; border-radius: var(--radius); border: 1px solid;
+  animation: fadeIn .25s both;
 }
-@keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+@keyframes fadeIn { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+.check-item.ok    { background: #f0faf4; border-color: #b2dfc3; }
+.check-item.warn  { background: #fffbf0; border-color: #e8c840; }
+.check-item.error { background: #fef2f2; border-color: #fca5a5; }
+.check-item.info  { background: var(--blue-pale); border-color: var(--blue-light); }
 
-.check-item.ok      { background: #f0faf4; border-color: #b2dfc3; }
-.check-item.warn    { background: #fffbf0; border-color: #f0d080; }
-.check-item.error   { background: #fef2f2; border-color: #fca5a5; }
-.check-item.info    { background: var(--blue-pale); border-color: var(--blue-light); }
-
-.check-icon { font-size: 1rem; flex-shrink: 0; margin-top: .1rem; }
+.check-icon   { font-size: .95rem; flex-shrink: 0; margin-top: .1rem; }
 .check-content { flex: 1; min-width: 0; }
-.check-title { font-size: .84rem; font-weight: 600; margin-bottom: .15rem; }
-.check-item.ok    .check-title { color: var(--green-dark); }
-.check-item.warn  .check-title { color: var(--amber-dark); }
-.check-item.error .check-title { color: #c5221f; }
+.check-title  { font-size: .82rem; font-weight: 600; margin-bottom: .1rem; }
+.check-item.ok    .check-title { color: #1a5c35; }
+.check-item.warn  .check-title { color: #7a4a00; }
+.check-item.error .check-title { color: #9b1c1c; }
 .check-item.info  .check-title { color: var(--blue-dark); }
-.check-detail { font-size: .76rem; color: var(--gray-mid); line-height: 1.5; word-break: break-word; }
-.check-value  { font-family: 'Courier New', monospace; font-size: .72rem; background: rgba(0,0,0,.06); padding: .15rem .4rem; border-radius: 4px; margin-top: .2rem; display: inline-block; word-break: break-all; }
+.check-detail { font-size: .73rem; color: var(--gray-mid); line-height: 1.5; word-break: break-word; }
+.check-value  { font-family: 'Courier New', monospace; font-size: .7rem; background: rgba(0,0,0,.06); padding: .12rem .35rem; border-radius: 3px; margin-top: .15rem; display: inline-block; word-break: break-all; }
+
+.report-section-label {
+  font-size: .65rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--blue-mid);
+  padding: .4rem 0 .2rem; border-bottom: 1px solid var(--blue-light);
+  margin-top: .25rem;
+}
 
 /* ── SERP PREVIEW ── */
 .serp-preview {
-  background: #fff;
-  border: 1px solid var(--blue-light);
-  border-radius: var(--radius);
-  padding: 1rem 1.25rem;
-  margin-top: 1rem;
+  background: #fff; border: 1px solid var(--blue-light);
+  border-radius: var(--radius); padding: 1rem 1.25rem;
 }
-.serp-preview-label { font-size: .68rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--blue-mid); margin-bottom: .6rem; }
-.serp-url   { font-size: .75rem; color: #4d5156; margin-bottom: .1rem; }
-.serp-title { font-size: 1rem; color: #1a0dab; font-weight: 400; margin-bottom: .2rem; line-height: 1.3; }
-.serp-desc  { font-size: .82rem; color: #4d5156; line-height: 1.55; }
-.serp-title.too-long { color: #c5221f; }
-.serp-title.too-short { color: var(--amber-dark); }
+.serp-preview-label { font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--blue-mid); margin-bottom: .5rem; }
+.serp-url   { font-size: .73rem; color: #4d5156; margin-bottom: .1rem; }
+.serp-title { font-size: .98rem; color: #1a0dab; font-weight: 400; margin-bottom: .2rem; line-height: 1.3; }
+.serp-desc  { font-size: .8rem; color: #4d5156; line-height: 1.55; }
+.serp-title.too-long  { color: #c5221f; }
+.serp-title.too-short { color: #7a4a00; }
 
-/* ── SECTION HEADERS nel report ── */
-.report-section-label {
-  font-size: .68rem; font-weight: 700; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--blue-mid);
-  padding: .5rem 0 .25rem;
-  border-bottom: 1px solid var(--blue-light);
-  margin-top: .5rem;
+/* ── SOCIAL PREVIEW ── */
+.social-preview {
+  background: #f0f2f5; border-radius: 8px; overflow: hidden;
+  border: 1px solid #ddd; max-width: 480px;
 }
+.social-img-placeholder {
+  width: 100%; height: 120px; background: linear-gradient(135deg, var(--blue-light), var(--blue-pale));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; color: var(--blue-mid);
+}
+.social-img-real { width: 100%; height: 120px; object-fit: cover; display: none; }
+.social-meta { padding: .65rem .85rem; background: #fff; }
+.social-domain { font-size: .68rem; color: #606770; text-transform: uppercase; letter-spacing: .04em; }
+.social-title  { font-size: .9rem; font-weight: 700; color: #1c1e21; line-height: 1.3; margin: .1rem 0; }
+.social-desc   { font-size: .78rem; color: #606770; line-height: 1.4; }
+
+.social-preview-label { font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--blue-mid); margin-bottom: .5rem; }
+
+.preview-empty {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 200px; background: var(--gray-light); border-radius: var(--radius);
+  color: var(--gray-mid); font-size: .82rem; gap: .4rem;
+}
+.preview-empty-icon { font-size: 1.5rem; opacity: .4; }
+
+/* ── PERFORMANCE TAB ── */
+.perf-grid { display: flex; flex-direction: column; gap: .45rem; }
 
 /* ── FOOTER ── */
 footer { background: var(--blue-dark); color: rgba(255,255,255,.6); text-align: center; padding: 2rem 1.5rem; font-size: .8rem; line-height: 1.7; }
@@ -208,7 +230,6 @@ footer strong { color: rgba(255,255,255,.9); }
 </head>
 <body>
 
-<!-- HEADER -->
 <div id="header">
   <div class="header-left">
     <button id="hamburger"><span></span><span></span><span></span></button>
@@ -221,10 +242,8 @@ footer strong { color: rgba(255,255,255,.9); }
 
 <div id="overlay"></div>
 
-<!-- MAIN (no sidebar — strumento full width) -->
 <div id="main" style="max-width:1100px;">
 
-<!-- COVER -->
 <div class="cover-block" style="padding:1.75rem 2rem 1.5rem;">
   <div class="cover-title" style="font-size:clamp(1.6rem,3vw,2.2rem); white-space:nowrap;">Analizzatore SEO &lt;head&gt;</div>
   <p style="font-size:1rem; color:rgba(255,255,255,.85); line-height:1.65; margin-top:.75rem; max-width:600px;">
@@ -233,7 +252,6 @@ footer strong { color: rgba(255,255,255,.9); }
   <p style="font-size:.8rem; color:rgba(255,255,255,.55); margin-top:.5rem;">🔒 Analisi locale nel browser · Nessun dato viene inviato</p>
 </div>
 
-<!-- TOOL -->
 <div class="tool-layout">
 
   <!-- INPUT -->
@@ -242,41 +260,95 @@ footer strong { color: rgba(255,255,255,.9); }
       <span class="input-label">Incolla il codice del tuo &lt;head&gt;</span>
       <button class="sample-btn" onclick="loadSample()">⚡ Carica esempio</button>
     </div>
-    <textarea
-      class="head-input"
-      id="head-input"
-      placeholder="&lt;head&gt;&#10;  &lt;meta charset=&quot;UTF-8&quot;&gt;&#10;  &lt;title&gt;Il titolo della pagina&lt;/title&gt;&#10;  ...&#10;&lt;/head&gt;"
-      spellcheck="false"
-    ></textarea>
+    <textarea class="head-input" id="head-input" spellcheck="false"
+      placeholder="<head>&#10;  <meta charset=&quot;UTF-8&quot;>&#10;  <title>Il titolo della pagina</title>&#10;  ...&#10;</head>"></textarea>
+    <div class="input-error-msg" id="input-error-msg">⚠ Il codice incollato sembra non contenere un tag &lt;head&gt; valido. Incolla il sorgente HTML della sezione head.</div>
     <div class="btn-row">
       <button class="btn-analyze" onclick="analyze()">🔍 Analizza</button>
       <button class="btn-clear" onclick="clearAll()">Pulisci</button>
     </div>
   </div>
 
-  <!-- SERP PREVIEW — top right -->
-  <div class="serp-panel">
-    <div class="serp-preview" id="serp-preview" style="display:none;">
-      <div class="serp-preview-label">Anteprima SERP — Google</div>
-      <div class="serp-url" id="serp-url">tuodominio.it › pagina</div>
-      <div class="serp-title" id="serp-title">—</div>
-      <div class="serp-desc" id="serp-desc">—</div>
-    </div>
-    <div id="serp-empty" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:120px;background:var(--gray-light);border-radius:var(--radius);color:var(--gray-mid);font-size:.82rem;gap:.4rem;">
-      <span style="font-size:1.5rem;opacity:.4;">🖥️</span>
-      <span>L'anteprima SERP apparirà qui</span>
-    </div>
-  </div>
+  <!-- RIGHT PANEL con TAB -->
+  <div class="right-panel" id="right-panel">
 
-  <!-- REPORT — bottom right con scroll interno -->
-  <div class="report-panel" id="report-panel">
-    <div class="report-empty" id="report-empty">
-      <div class="report-empty-icon">🔍</div>
-      <p>Incolla il codice del tuo &lt;head&gt;<br>e clicca <strong>Analizza</strong></p>
+    <div class="tab-bar" id="tab-bar" style="display:none;">
+      <button class="tab-btn active" onclick="switchTab('report', this)">📋 Report</button>
+      <button class="tab-btn" onclick="switchTab('serp', this)">🔍 SERP</button>
+      <button class="tab-btn" onclick="switchTab('social', this)">📱 Social</button>
+      <button class="tab-btn" onclick="switchTab('perf', this)">⚡ Performance</button>
     </div>
-  </div>
 
-</div>
+    <!-- TAB: REPORT -->
+    <div class="tab-pane active" id="tab-report">
+      <div class="report-scroll" id="report-panel">
+        <div class="report-empty">
+          <div class="report-empty-icon">🔍</div>
+          <p>Incolla il codice del tuo &lt;head&gt;<br>e clicca <strong>Analizza</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: SERP -->
+    <div class="tab-pane" id="tab-serp">
+      <div class="preview-empty" id="serp-empty">
+        <div class="preview-empty-icon">🖥️</div>
+        <span>L'anteprima apparirà dopo l'analisi</span>
+      </div>
+      <div id="serp-content" style="display:none;">
+        <div class="serp-preview-label">Anteprima SERP — Google</div>
+        <div class="serp-preview">
+          <div class="serp-url" id="serp-url">tuodominio.it › pagina</div>
+          <div class="serp-title" id="serp-title">—</div>
+          <div class="serp-desc" id="serp-desc">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: SOCIAL -->
+    <div class="tab-pane" id="tab-social">
+      <div class="preview-empty" id="social-empty">
+        <div class="preview-empty-icon">📱</div>
+        <span>L'anteprima apparirà dopo l'analisi</span>
+      </div>
+      <div id="social-content" style="display:none; flex-direction:column; gap:1rem;">
+        <div>
+          <div class="social-preview-label">Facebook / LinkedIn</div>
+          <div class="social-preview">
+            <img class="social-img-real" id="og-img" src="" alt="og:image" onerror="this.style.display='none';document.getElementById('og-img-ph').style.display='flex'">
+            <div class="social-img-placeholder" id="og-img-ph">🖼️</div>
+            <div class="social-meta">
+              <div class="social-domain" id="og-domain">—</div>
+              <div class="social-title"  id="og-title">—</div>
+              <div class="social-desc"   id="og-desc">—</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="social-preview-label">X / Twitter</div>
+          <div class="social-preview">
+            <div class="social-img-placeholder" id="tw-img-ph">🐦</div>
+            <div class="social-meta">
+              <div class="social-title" id="tw-title">—</div>
+              <div class="social-desc"  id="tw-desc">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: PERFORMANCE -->
+    <div class="tab-pane" id="tab-perf">
+      <div class="preview-empty" id="perf-empty">
+        <div class="preview-empty-icon">⚡</div>
+        <span>L'analisi apparirà dopo l'analisi</span>
+      </div>
+      <div class="perf-grid" id="perf-panel" style="display:none;"></div>
+    </div>
+
+  </div><!-- /.right-panel -->
+
+</div><!-- /.tool-layout -->
 
 </div><!-- /#main -->
 
@@ -287,32 +359,27 @@ footer strong { color: rgba(255,255,255,.9); }
 
 <script src="/scripts/ui.js" defer></script>
 <script>
-// ══════════════════════════════════════════════════════════════
-//  ANALIZZATORE SEO HEAD — Formazione Digitale
-//  Parsing DOM locale, zero server, zero dati inviati.
-// ══════════════════════════════════════════════════════════════
 
-// ── SAMPLE HEAD ──────────────────────────────────────────────
 const SAMPLE = `<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>La mia pagina di esempio — Sito Web</title>
-<meta name="description" content="Una descrizione breve della pagina.">
+<meta name="description" content="Una descrizione breve della pagina di esempio, ottimizzata per i motori di ricerca con le parole chiave principali.">
 <meta name="author" content="Mario Rossi">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://esempio.it/pagina/">
 <link rel="icon" type="image/png" href="/img/favicon.png">
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="//analytics.esempio.it">
 <meta property="og:title" content="La mia pagina di esempio">
-<meta property="og:description" content="Una descrizione per i social media.">
+<meta property="og:description" content="Una descrizione per i social media, coinvolgente e con call to action.">
 <meta property="og:url" content="https://esempio.it/pagina/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://esempio.it/img/og-image.jpg">
 <meta property="og:locale" content="it_IT">
-
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="La mia pagina di esempio">
-
+<meta name="twitter:description" content="Una descrizione per X/Twitter.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -323,30 +390,49 @@ const SAMPLE = `<head>
 <\/script>
 </head>`;
 
+// ── TAB ──────────────────────────────────────────────────────
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── SAMPLE ───────────────────────────────────────────────────
 function loadSample() {
   document.getElementById('head-input').value = SAMPLE;
+  document.getElementById('head-input').classList.remove('input-error');
+  document.getElementById('input-error-msg').style.display = 'none';
 }
 
 function clearAll() {
   document.getElementById('head-input').value = '';
-  document.getElementById('report-panel').innerHTML = `
-    <div class="report-empty" id="report-empty">
-      <div class="report-empty-icon">🔍</div>
-      <p>Incolla il codice del tuo &lt;head&gt;<br>e clicca <strong>Analizza</strong></p>
-    </div>`;
-  document.getElementById('serp-preview').style.display = 'none';
-  document.getElementById('serp-empty').style.display   = 'flex';
+  document.getElementById('head-input').classList.remove('input-error');
+  document.getElementById('input-error-msg').style.display = 'none';
+  document.getElementById('report-panel').innerHTML = `<div class="report-empty"><div class="report-empty-icon">🔍</div><p>Incolla il codice del tuo &lt;head&gt;<br>e clicca <strong>Analizza</strong></p></div>`;
+  document.getElementById('tab-bar').style.display = 'none';
+  ['serp-content','social-content','perf-panel'].forEach(id => document.getElementById(id).style.display = 'none');
+  ['serp-empty','social-empty','perf-empty'].forEach(id => document.getElementById(id).style.display = 'flex');
 }
 
-// ── PARSER ───────────────────────────────────────────────────
-function parseHead(raw) {
-  // Wrap in documento fittizio per DOMParser
-  let html = raw.trim();
-  if (!html.toLowerCase().startsWith('<head')) {
-    html = '<head>' + html + '</head>';
+// ── PARSER ROBUSTO ───────────────────────────────────────────
+function cleanHeadInput(raw) {
+  let clean = raw.trim();
+  // Rimuovi tag html/body se incollati per errore
+  clean = clean.replace(/<\/?(html|body)[^>]*>/gi, '');
+  // Rimuovi tutto dopo </head>
+  const headEnd = clean.toLowerCase().indexOf('</head>');
+  if (headEnd !== -1) clean = clean.substring(0, headEnd + 7);
+  if (!clean.toLowerCase().startsWith('<head')) {
+    clean = '<head>' + clean + '</head>';
   }
+  return clean;
+}
+
+function parseHead(raw) {
+  const clean = cleanHeadInput(raw);
   const doc = new DOMParser().parseFromString(
-    '<!DOCTYPE html><html>' + html + '<body></body></html>', 'text/html'
+    '<!DOCTYPE html><html>' + clean + '<body></body></html>', 'text/html'
   );
   return doc.head;
 }
@@ -361,85 +447,89 @@ function getProp(head, prop) {
 }
 function getLink(head, rel) {
   const el = head.querySelector(`link[rel="${rel}"]`);
-  return el ? (el.getAttribute('href') || el.getAttribute('content') || '') : null;
+  return el ? (el.getAttribute('href') || '') : null;
+}
+function hasLink(head, rel) {
+  return head.querySelector(`link[rel="${rel}"]`) !== null;
 }
 
-// ── CHECKS ───────────────────────────────────────────────────
+// ── CHECKS SEO ───────────────────────────────────────────────
 function runChecks(head) {
   const checks = [];
+  const raw = document.getElementById('head-input').value;
 
-  // ── 1. TITLE ──
+  // 1. TITLE
   const titleEl = head.querySelector('title');
   const title = titleEl ? titleEl.textContent.trim() : null;
   if (!title) {
-    checks.push({ group: 'Fondamentali', status: 'error', icon: '❌', title: 'Title mancante', detail: 'Il tag <title> è obbligatorio. È il testo che appare nella tab del browser e nei risultati di ricerca.' });
+    checks.push({ group: 'Fondamentali', status: 'error', icon: '❌', title: 'Title mancante', detail: 'Il tag <title> è obbligatorio. È il testo che appare nella tab del browser e nella SERP.' });
   } else if (title.length < 30) {
-    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: `Title troppo corto (${title.length} car.)`, detail: 'Il title ideale è tra 50 e 60 caratteri. Troppo corto spreca opportunità SEO.', value: title });
+    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: `Title troppo corto (${title.length} car.)`, detail: 'Ideale: 50–60 caratteri. Troppo corto spreca opportunità SEO.', value: title });
   } else if (title.length > 60) {
-    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: `Title troppo lungo (${title.length} car.)`, detail: 'Google tronca i title oltre i 60 caratteri. Considera di accorciarlo.', value: title });
+    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: `Title troppo lungo (${title.length} car.)`, detail: 'Google tronca i title oltre i ~60 caratteri. Accorcialo.', value: title });
   } else {
     checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: `Title ottimale (${title.length} car.)`, detail: 'Lunghezza nella norma (50–60 caratteri).', value: title });
   }
 
-  // ── 2. META DESCRIPTION ──
+  // 2. META DESCRIPTION
   const desc = getMeta(head, 'description');
   if (!desc) {
     checks.push({ group: 'Fondamentali', status: 'error', icon: '❌', title: 'Meta description mancante', detail: 'Senza meta description Google genera automaticamente un estratto, spesso poco efficace.' });
   } else if (desc.length < 100) {
-    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: `Meta description corta (${desc.length} car.)`, detail: 'Ideale: 150–160 caratteri. Una description efficace include keyword e un invito all\'azione.', value: desc });
+    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: `Meta description corta (${desc.length} car.)`, detail: 'Ideale: 150–160 caratteri. Includi keyword e un invito all\'azione.', value: desc });
   } else if (desc.length > 160) {
-    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: `Meta description lunga (${desc.length} car.)`, detail: 'Google tronca oltre i 160 caratteri. L\'utente vedrà la description tagliata.', value: desc });
+    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: `Meta description lunga (${desc.length} car.)`, detail: 'Google tronca oltre i 160 caratteri.', value: desc });
   } else {
     checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: `Meta description ottimale (${desc.length} car.)`, detail: 'Lunghezza nella norma (150–160 caratteri).', value: desc });
   }
 
-  // ── 3. CANONICAL ──
+  // 3. CANONICAL
   const canonical = getLink(head, 'canonical');
   if (!canonical) {
-    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: 'Canonical mancante', detail: 'Il tag canonical previene problemi di contenuto duplicato indicando a Google l\'URL preferito.' });
+    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: 'Canonical mancante', detail: 'Il tag canonical previene problemi di contenuto duplicato.' });
+  } else if (canonical.startsWith('./') || canonical.startsWith('../') || canonical.startsWith('/')) {
+    checks.push({ group: 'Fondamentali', status: 'error', icon: '❌', title: 'Canonical usa path relativo', detail: 'Il canonical richiede un URL assoluto con https://.', value: canonical });
   } else if (!canonical.startsWith('https://')) {
-    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: 'Canonical non usa HTTPS', detail: 'Il canonical dovrebbe puntare alla versione HTTPS del sito.', value: canonical });
+    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: 'Canonical non usa HTTPS', detail: 'Il canonical dovrebbe puntare alla versione HTTPS.', value: canonical });
   } else {
     checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: 'Canonical presente e HTTPS', detail: 'URL canonico correttamente dichiarato.', value: canonical });
   }
 
-  // ── 4. LANG ──
-  // Cerca sia in <html lang> che nel raw
-  const raw = document.getElementById('head-input').value;
+  // 4. LANG
   const langMatch = raw.match(/lang=["']([a-z]{2}(?:-[A-Z]{2})?)['"]/i);
   if (!langMatch) {
-    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: 'Attributo lang mancante', detail: 'Aggiungi lang="it" al tag <html> per dichiarare la lingua della pagina.' });
+    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: 'Attributo lang mancante', detail: 'Aggiungi lang="it" al tag <html> per dichiarare la lingua.' });
   } else {
-    checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: `Lingua dichiarata: ${langMatch[1]}`, detail: 'L\'attributo lang è presente sul tag <html>.' });
+    checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: `Lingua dichiarata: ${langMatch[1]}`, detail: 'L\'attributo lang è presente.' });
   }
 
-  // ── 5. ROBOTS ──
+  // 5. ROBOTS
   const robots = getMeta(head, 'robots');
   if (!robots) {
-    checks.push({ group: 'Fondamentali', status: 'info', icon: 'ℹ️', title: 'Meta robots non dichiarato', detail: 'Senza meta robots Google usa "index, follow" come default. Non è un errore, ma dichiararlo è una buona pratica.' });
+    checks.push({ group: 'Fondamentali', status: 'info', icon: 'ℹ️', title: 'Meta robots non dichiarato', detail: 'Google usa "index, follow" come default. Non è un errore, ma dichiararlo è buona pratica.' });
   } else if (robots.includes('noindex')) {
-    checks.push({ group: 'Fondamentali', status: 'error', icon: '🚫', title: 'Pagina esclusa dall\'indice (noindex)', detail: 'Il tag robots contiene "noindex": Google non indicizzerà questa pagina. Se intenzionale, ok — altrimenti rimuovilo.', value: robots });
+    checks.push({ group: 'Fondamentali', status: 'error', icon: '🚫', title: 'Pagina esclusa (noindex)', detail: 'Google non indicizzerà questa pagina. Se intenzionale, ok.', value: robots });
   } else {
     checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: `Robots: ${robots}`, detail: 'La pagina è indicizzabile.' });
   }
 
-  // ── 6. VIEWPORT ──
+  // 6. VIEWPORT
   const viewport = getMeta(head, 'viewport');
   if (!viewport) {
     checks.push({ group: 'Fondamentali', status: 'error', icon: '❌', title: 'Viewport mancante', detail: 'Senza viewport la pagina non è responsive. Google penalizza i siti non mobile-friendly.' });
   } else {
-    checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: 'Viewport dichiarato', detail: 'La pagina è configurata per dispositivi mobili.', value: viewport });
+    checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: 'Viewport dichiarato', detail: 'Pagina configurata per dispositivi mobili.', value: viewport });
   }
 
-  // ── 7. FAVICON ──
+  // 7. FAVICON
   const favicon = head.querySelector('link[rel="icon"], link[rel="shortcut icon"]');
   if (!favicon) {
-    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: 'Favicon mancante', detail: 'La favicon migliora il riconoscimento del sito nelle tab e nei preferiti. Non influenza direttamente il ranking ma migliora l\'UX.' });
+    checks.push({ group: 'Fondamentali', status: 'warn', icon: '⚠️', title: 'Favicon mancante', detail: 'Migliora il riconoscimento del sito nelle tab e nei preferiti.' });
   } else {
-    checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: 'Favicon presente', detail: 'Il tag link rel="icon" è dichiarato.' });
+    checks.push({ group: 'Fondamentali', status: 'ok', icon: '✅', title: 'Favicon presente', detail: '' });
   }
 
-  // ── 8. OPEN GRAPH ──
+  // 8. OPEN GRAPH
   const ogTitle = getProp(head, 'og:title');
   const ogDesc  = getProp(head, 'og:description');
   const ogImage = getProp(head, 'og:image');
@@ -447,61 +537,105 @@ function runChecks(head) {
   const ogType  = getProp(head, 'og:type');
 
   if (!ogTitle && !ogDesc && !ogImage) {
-    checks.push({ group: 'Open Graph', status: 'error', icon: '❌', title: 'Open Graph completamente mancante', detail: 'Senza OG tag le condivisioni sui social (Facebook, LinkedIn, WhatsApp) non mostreranno anteprime ottimizzate.' });
+    checks.push({ group: 'Open Graph', status: 'error', icon: '❌', title: 'Open Graph completamente mancante', detail: 'Senza OG tag le condivisioni social non mostreranno anteprime ottimizzate.' });
   } else {
-    if (!ogTitle)  checks.push({ group: 'Open Graph', status: 'warn',  icon: '⚠️', title: 'og:title mancante',       detail: 'Aggiungi <meta property="og:title"> per controllare il titolo nelle condivisioni social.' });
-    else           checks.push({ group: 'Open Graph', status: 'ok',    icon: '✅', title: 'og:title presente',       detail: '', value: ogTitle });
-    if (!ogDesc)   checks.push({ group: 'Open Graph', status: 'warn',  icon: '⚠️', title: 'og:description mancante', detail: 'Aggiungi <meta property="og:description"> per la descrizione nelle condivisioni.' });
-    else           checks.push({ group: 'Open Graph', status: 'ok',    icon: '✅', title: 'og:description presente', detail: '', value: ogDesc });
-    if (!ogImage)  checks.push({ group: 'Open Graph', status: 'warn',  icon: '⚠️', title: 'og:image mancante',       detail: 'Senza og:image le condivisioni non avranno un\'anteprima visiva. Usa un\'immagine di almeno 1200×630px.' });
-    else           checks.push({ group: 'Open Graph', status: 'ok',    icon: '✅', title: 'og:image presente',       detail: 'Assicurati che sia almeno 1200×630px.', value: ogImage });
-    if (!ogUrl)    checks.push({ group: 'Open Graph', status: 'info',  icon: 'ℹ️', title: 'og:url non dichiarato',   detail: 'Consigliato dichiarare og:url per evitare ambiguità sull\'URL canonico nelle condivisioni.' });
-    else           checks.push({ group: 'Open Graph', status: 'ok',    icon: '✅', title: 'og:url presente',         detail: '', value: ogUrl });
-    if (!ogType)   checks.push({ group: 'Open Graph', status: 'info',  icon: 'ℹ️', title: 'og:type non dichiarato',  detail: 'Usa og:type="website" per le homepage, "article" per gli articoli.' });
-    else           checks.push({ group: 'Open Graph', status: 'ok',    icon: '✅', title: `og:type: ${ogType}`,     detail: '' });
+    if (!ogTitle)  checks.push({ group: 'Open Graph', status: 'warn', icon: '⚠️', title: 'og:title mancante', detail: 'Necessario per controllare il titolo nelle condivisioni social.' });
+    else           checks.push({ group: 'Open Graph', status: 'ok',   icon: '✅', title: 'og:title presente', detail: '', value: ogTitle });
+    if (!ogDesc)   checks.push({ group: 'Open Graph', status: 'warn', icon: '⚠️', title: 'og:description mancante', detail: 'Aggiungi og:description per la descrizione nelle condivisioni.' });
+    else           checks.push({ group: 'Open Graph', status: 'ok',   icon: '✅', title: 'og:description presente', detail: '', value: ogDesc });
+    if (!ogImage)  checks.push({ group: 'Open Graph', status: 'warn', icon: '⚠️', title: 'og:image mancante', detail: 'Senza og:image le condivisioni non avranno anteprima visiva. Min 1200×630px.' });
+    else           checks.push({ group: 'Open Graph', status: 'ok',   icon: '✅', title: 'og:image presente', detail: 'Min 1200×630px.', value: ogImage });
+    if (!ogUrl)    checks.push({ group: 'Open Graph', status: 'info', icon: 'ℹ️', title: 'og:url non dichiarato', detail: 'Consigliato per evitare ambiguità sull\'URL nelle condivisioni.' });
+    else           checks.push({ group: 'Open Graph', status: 'ok',   icon: '✅', title: 'og:url presente', detail: '', value: ogUrl });
+    if (!ogType)   checks.push({ group: 'Open Graph', status: 'info', icon: 'ℹ️', title: 'og:type non dichiarato', detail: 'Usa og:type="website" per homepage, "article" per articoli.' });
+    else           checks.push({ group: 'Open Graph', status: 'ok',   icon: '✅', title: `og:type: ${ogType}`, detail: '' });
+
+    // Check coerenza canonical vs og:url
+    if (canonical && ogUrl && canonical !== ogUrl) {
+      checks.push({ group: 'Open Graph', status: 'warn', icon: '⚠️', title: 'Canonical e og:url non coincidono', detail: 'Google potrebbe ricevere segnali contrastanti. I due URL dovrebbero essere identici.', value: `canonical: ${canonical} | og:url: ${ogUrl}` });
+    }
   }
 
-  // ── 9. TWITTER CARD ──
+  // 9. TWITTER
   const twCard  = getMeta(head, 'twitter:card');
   const twTitle = getMeta(head, 'twitter:title');
   if (!twCard) {
-    checks.push({ group: 'Twitter/X', status: 'warn', icon: '⚠️', title: 'Twitter Card mancante', detail: 'Senza twitter:card le condivisioni su X/Twitter non mostreranno anteprime. Usa "summary" o "summary_large_image".' });
+    checks.push({ group: 'Twitter/X', status: 'warn', icon: '⚠️', title: 'Twitter Card mancante', detail: 'Senza twitter:card le condivisioni su X non mostreranno anteprime. Usa "summary" o "summary_large_image".' });
   } else {
     checks.push({ group: 'Twitter/X', status: 'ok', icon: '✅', title: `Twitter Card: ${twCard}`, detail: '' });
-    if (!twTitle) checks.push({ group: 'Twitter/X', status: 'info', icon: 'ℹ️', title: 'twitter:title non dichiarato', detail: 'Twitter usa og:title come fallback, ma dichiarare twitter:title esplicitamente è consigliato.' });
+    if (!twTitle) checks.push({ group: 'Twitter/X', status: 'info', icon: 'ℹ️', title: 'twitter:title non dichiarato', detail: 'Twitter usa og:title come fallback, ma dichiararlo esplicitamente è consigliato.' });
     else          checks.push({ group: 'Twitter/X', status: 'ok',   icon: '✅', title: 'twitter:title presente', detail: '', value: twTitle });
   }
 
-  // ── 10. SCHEMA.ORG ──
+  // 10. SCHEMA.ORG
   const schemas = head.querySelectorAll('script[type="application/ld+json"]');
   if (schemas.length === 0) {
-    checks.push({ group: 'Schema.org', status: 'warn', icon: '⚠️', title: 'Dati strutturati mancanti', detail: 'Schema.org (JSON-LD) permette a Google di mostrare rich results. Non è obbligatorio ma aumenta il CTR.' });
+    checks.push({ group: 'Schema.org', status: 'warn', icon: '⚠️', title: 'Dati strutturati mancanti', detail: 'Schema.org (JSON-LD) permette a Google di mostrare rich results. Aumenta il CTR.' });
   } else {
     let validCount = 0;
-    schemas.forEach(s => {
-      try { JSON.parse(s.textContent); validCount++; } catch(e) {}
-    });
+    schemas.forEach(s => { try { JSON.parse(s.textContent); validCount++; } catch(e) {} });
     if (validCount < schemas.length) {
-      checks.push({ group: 'Schema.org', status: 'error', icon: '❌', title: 'JSON-LD con errori di sintassi', detail: 'Uno o più blocchi application/ld+json contengono JSON non valido. Usa il Rich Results Test per verificare.' });
+      checks.push({ group: 'Schema.org', status: 'error', icon: '❌', title: 'JSON-LD con errori di sintassi', detail: 'Usa il Rich Results Test di Google per verificare.' });
     } else {
-      const types = Array.from(schemas).map(s => {
-        try { return JSON.parse(s.textContent)['@type']; } catch(e) { return '?'; }
-      }).filter(Boolean);
-      checks.push({ group: 'Schema.org', status: 'ok', icon: '✅', title: `Dati strutturati validi (${schemas.length})`, detail: `Tipi rilevati: ${types.join(', ')}` });
+      const types = Array.from(schemas).map(s => { try { return JSON.parse(s.textContent)['@type']; } catch(e) { return null; } }).filter(Boolean);
+      checks.push({ group: 'Schema.org', status: 'ok', icon: '✅', title: `Dati strutturati validi (${schemas.length})`, detail: `Tipi: ${types.join(', ')}` });
     }
   }
 
-  // ── 11. CHARSET ──
+  // 11. CHARSET
   const charset = head.querySelector('meta[charset]');
   if (!charset) {
-    checks.push({ group: 'Tecnici', status: 'warn', icon: '⚠️', title: 'Charset non dichiarato', detail: 'Dichiara <meta charset="UTF-8"> come prima riga del head per evitare problemi di encoding.' });
+    checks.push({ group: 'Tecnici', status: 'warn', icon: '⚠️', title: 'Charset non dichiarato', detail: 'Dichiara <meta charset="UTF-8"> come prima riga del head.' });
   } else {
     const cs = charset.getAttribute('charset');
-    if (cs.toUpperCase() !== 'UTF-8') {
-      checks.push({ group: 'Tecnici', status: 'warn', icon: '⚠️', title: `Charset: ${cs}`, detail: 'UTF-8 è lo standard consigliato per il web moderno.' });
-    } else {
-      checks.push({ group: 'Tecnici', status: 'ok', icon: '✅', title: 'Charset UTF-8', detail: 'Encoding corretto.' });
-    }
+    checks.push({ group: 'Tecnici', status: cs.toUpperCase() === 'UTF-8' ? 'ok' : 'warn', icon: cs.toUpperCase() === 'UTF-8' ? '✅' : '⚠️', title: `Charset: ${cs}`, detail: cs.toUpperCase() === 'UTF-8' ? 'Encoding corretto.' : 'UTF-8 è lo standard consigliato.' });
+  }
+
+  // 12. RELATIVE PATHS in og:image
+  if (ogImage && (ogImage.startsWith('./') || ogImage.startsWith('../') || ogImage.startsWith('/'))) {
+    checks.push({ group: 'Tecnici', status: 'warn', icon: '⚠️', title: 'og:image usa path relativo', detail: 'og:image richiede un URL assoluto (https://...) per funzionare sui social.', value: ogImage });
+  }
+
+  return checks;
+}
+
+// ── CHECKS PERFORMANCE ───────────────────────────────────────
+function runPerfChecks(head) {
+  const checks = [];
+
+  const hasPreconnect = head.querySelector('link[rel="preconnect"]') !== null;
+  const hasDnsPrefetch = head.querySelector('link[rel="dns-prefetch"]') !== null;
+  const hasPreload = head.querySelector('link[rel="preload"]') !== null;
+
+  if (!hasPreconnect && !hasDnsPrefetch) {
+    checks.push({ status: 'warn', icon: '⚠️', title: 'Nessun preconnect o dns-prefetch', detail: 'Aggiungi <link rel="preconnect"> per i domini esterni critici (font, CDN) per migliorare il LCP.' });
+  } else {
+    if (hasPreconnect) checks.push({ status: 'ok', icon: '✅', title: 'preconnect presente', detail: 'Riduce il tempo di connessione ai domini esterni critici.' });
+    if (hasDnsPrefetch) checks.push({ status: 'ok', icon: '✅', title: 'dns-prefetch presente', detail: 'Risolve in anticipo i DNS per i domini esterni.' });
+  }
+
+  if (!hasPreload) {
+    checks.push({ status: 'info', icon: 'ℹ️', title: 'Nessun preload dichiarato', detail: 'Usa <link rel="preload"> per caricare in anticipo risorse critiche (font, hero image) e migliorare il LCP.' });
+  } else {
+    checks.push({ status: 'ok', icon: '✅', title: 'preload dichiarato', detail: 'Risorse critiche caricate in anticipo — ottimo per il LCP.' });
+  }
+
+  // Font Google senza font-display
+  const raw = document.getElementById('head-input').value;
+  const hasGoogleFonts = /fonts\.googleapis\.com/.test(raw);
+  const hasFontDisplay = /font-display/.test(raw);
+  if (hasGoogleFonts && !hasFontDisplay) {
+    checks.push({ status: 'warn', icon: '⚠️', title: 'Google Fonts senza font-display', detail: 'Aggiungi &display=swap all\'URL dei font Google per evitare il FOIT (flash of invisible text) e migliorare il LCP.' });
+  } else if (hasGoogleFonts && hasFontDisplay) {
+    checks.push({ status: 'ok', icon: '✅', title: 'Google Fonts con font-display', detail: 'Font configurati correttamente per il rendering progressivo.' });
+  }
+
+  // Theme color
+  const themeColor = head.querySelector('meta[name="theme-color"]');
+  if (!themeColor) {
+    checks.push({ status: 'info', icon: 'ℹ️', title: 'theme-color non dichiarato', detail: 'Il meta theme-color personalizza il colore dell\'interfaccia browser su mobile.' });
+  } else {
+    checks.push({ status: 'ok', icon: '✅', title: `theme-color: ${themeColor.getAttribute('content')}`, detail: 'Colore dell\'interfaccia mobile dichiarato.' });
   }
 
   return checks;
@@ -512,9 +646,8 @@ function calcScore(checks) {
   let total = 0, earned = 0;
   checks.forEach(c => {
     if (c.status === 'ok')    { total += 10; earned += 10; }
-    if (c.status === 'warn')  { total += 10; earned += 5;  }
-    if (c.status === 'error') { total += 10; earned += 0;  }
-    if (c.status === 'info')  { /* non conta */ }
+    if (c.status === 'warn')  { total += 10; earned += 5; }
+    if (c.status === 'error') { total += 10; }
   });
   return total > 0 ? Math.round((earned / total) * 100) : 0;
 }
@@ -532,18 +665,19 @@ function scoreLabel(s) {
   return '🚨 Critico';
 }
 
-// ── RENDER ───────────────────────────────────────────────────
-function renderReport(checks, score, head) {
+// ── RENDER REPORT ────────────────────────────────────────────
+function renderReport(checks, score) {
   const panel = document.getElementById('report-panel');
-
   const cls = scoreClass(score);
-
-  // Conta per tipo
   const nOk    = checks.filter(c => c.status === 'ok').length;
   const nWarn  = checks.filter(c => c.status === 'warn').length;
   const nError = checks.filter(c => c.status === 'error').length;
 
-  // Score orizzontale compatto
+  const ORDER = { error: 0, warn: 1, ok: 2, info: 3 };
+  const sorted = [...checks].sort((a, b) => ORDER[a.status] - ORDER[b.status]);
+  const groups = {};
+  sorted.forEach(c => { if (!groups[c.group]) groups[c.group] = []; groups[c.group].push(c); });
+
   let html = `
     <div class="score-wrap">
       <div class="score-circle ${cls}">
@@ -551,90 +685,142 @@ function renderReport(checks, score, head) {
         <span class="score-max">/100</span>
       </div>
       <div class="score-info">
-        <div class="score-label ${cls === 'excellent' ? 'score-circle' : ''}">${scoreLabel(score)}</div>
-        <div class="score-sublabel">
-          ✅ ${nOk} ok &nbsp;·&nbsp; ⚠️ ${nWarn} warn &nbsp;·&nbsp; ❌ ${nError} errori
-        </div>
+        <div class="score-label">${scoreLabel(score)}</div>
+        <div class="score-sublabel">✅ ${nOk} ok · ⚠️ ${nWarn} warn · ❌ ${nError} errori</div>
       </div>
     </div>`;
-
-  // Raggruppa per group, ordina: error → warn → ok → info
-  const ORDER = { error: 0, warn: 1, ok: 2, info: 3 };
-  const sorted = [...checks].sort((a, b) => ORDER[a.status] - ORDER[b.status]);
-
-  const groups = {};
-  sorted.forEach(c => {
-    if (!groups[c.group]) groups[c.group] = [];
-    groups[c.group].push(c);
-  });
 
   Object.entries(groups).forEach(([group, items], gi) => {
     html += `<div class="report-section-label">${group}</div>`;
     items.forEach((c, i) => {
-      html += `
-        <div class="check-item ${c.status}" style="animation-delay:${(gi*5+i)*0.04}s">
-          <span class="check-icon">${c.icon}</span>
-          <div class="check-content">
-            <div class="check-title">${c.title}</div>
-            ${c.detail ? `<div class="check-detail">${c.detail}</div>` : ''}
-            ${c.value  ? `<div class="check-value">${escHtml(c.value.substring(0,120))}${c.value.length>120?'…':''}</div>` : ''}
-          </div>
-        </div>`;
+      html += `<div class="check-item ${c.status}" style="animation-delay:${(gi*5+i)*0.04}s">
+        <span class="check-icon">${c.icon}</span>
+        <div class="check-content">
+          <div class="check-title">${c.title}</div>
+          ${c.detail ? `<div class="check-detail">${c.detail}</div>` : ''}
+          ${c.value  ? `<div class="check-value">${escHtml(c.value.substring(0,120))}${c.value.length>120?'…':''}</div>` : ''}
+        </div>
+      </div>`;
     });
   });
 
   panel.innerHTML = html;
 }
 
-function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+// ── RENDER PERF ──────────────────────────────────────────────
+function renderPerf(checks) {
+  const panel = document.getElementById('perf-panel');
+  let html = '';
+  checks.forEach((c, i) => {
+    html += `<div class="check-item ${c.status}" style="animation-delay:${i*0.05}s">
+      <span class="check-icon">${c.icon}</span>
+      <div class="check-content">
+        <div class="check-title">${c.title}</div>
+        ${c.detail ? `<div class="check-detail">${c.detail}</div>` : ''}
+      </div>
+    </div>`;
+  });
+  panel.innerHTML = html;
 }
 
 // ── SERP PREVIEW ─────────────────────────────────────────────
 function updateSerpPreview(head) {
-  const titleEl = head.querySelector('title');
-  const descEl  = head.querySelector('meta[name="description"]');
-  const canonEl = head.querySelector('link[rel="canonical"]');
-
+  const titleEl  = head.querySelector('title');
+  const descEl   = head.querySelector('meta[name="description"]');
+  const canonEl  = head.querySelector('link[rel="canonical"]');
   const title = titleEl ? titleEl.textContent.trim() : '—';
   const desc  = descEl  ? descEl.getAttribute('content') || '—' : '—';
-  let   url   = canonEl ? canonEl.getAttribute('href') || '' : '';
+  let url = canonEl ? canonEl.getAttribute('href') || '' : '';
+  if (url) { try { const u = new URL(url); url = u.hostname + u.pathname; } catch(e) {} }
 
-  if (url) {
-    try {
-      const u = new URL(url);
-      url = u.hostname + u.pathname;
-    } catch(e) {}
-  }
-
-  const preview   = document.getElementById('serp-preview');
-  const emptyEl   = document.getElementById('serp-empty');
-  const titleEl2  = document.getElementById('serp-title');
+  const titleEl2 = document.getElementById('serp-title');
   titleEl2.textContent = title.length > 60 ? title.substring(0,57)+'…' : title;
   titleEl2.className   = 'serp-title' + (title.length > 60 ? ' too-long' : title.length < 30 ? ' too-short' : '');
   document.getElementById('serp-url').textContent  = url || 'tuodominio.it › pagina';
   document.getElementById('serp-desc').textContent = desc.length > 160 ? desc.substring(0,157)+'…' : desc;
-  preview.style.display  = 'block';
-  emptyEl.style.display  = 'none';
+  document.getElementById('serp-empty').style.display   = 'none';
+  document.getElementById('serp-content').style.display = 'block';
+}
+
+// ── SOCIAL PREVIEW ───────────────────────────────────────────
+function updateSocialPreview(head) {
+  const ogTitle = getProp(head, 'og:title') || head.querySelector('title')?.textContent || '—';
+  const ogDesc  = getProp(head, 'og:description') || getMeta(head, 'description') || '—';
+  const ogImage = getProp(head, 'og:image') || '';
+  const ogUrl   = getProp(head, 'og:url') || getLink(head, 'canonical') || '';
+  const twTitle = getMeta(head, 'twitter:title') || ogTitle;
+  const twDesc  = getMeta(head, 'twitter:description') || ogDesc;
+
+  let domain = '—';
+  if (ogUrl) { try { domain = new URL(ogUrl).hostname.toUpperCase(); } catch(e) {} }
+
+  document.getElementById('og-domain').textContent = domain;
+  document.getElementById('og-title').textContent  = ogTitle.substring(0, 80);
+  document.getElementById('og-desc').textContent   = ogDesc.substring(0, 120);
+  document.getElementById('tw-title').textContent  = twTitle.substring(0, 80);
+  document.getElementById('tw-desc').textContent   = twDesc.substring(0, 120);
+
+  if (ogImage && ogImage.startsWith('https://')) {
+    const img = document.getElementById('og-img');
+    img.src = ogImage;
+    img.style.display = 'block';
+    document.getElementById('og-img-ph').style.display = 'none';
+  }
+
+  document.getElementById('social-empty').style.display   = 'none';
+  document.getElementById('social-content').style.display = 'flex';
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── VALIDATE INPUT ───────────────────────────────────────────
+function validateInput(raw) {
+  const lower = raw.toLowerCase();
+  if (!lower.includes('<title') && !lower.includes('<meta') && !lower.includes('<link')) {
+    return false;
+  }
+  return true;
 }
 
 // ── MAIN ─────────────────────────────────────────────────────
 function analyze() {
   const raw = document.getElementById('head-input').value.trim();
+  const inputEl  = document.getElementById('head-input');
+  const errorMsg = document.getElementById('input-error-msg');
+
   if (!raw) {
     alert('Incolla prima il codice del tuo <head>.');
     return;
   }
 
-  const head = parseHead(raw);
-  const checks = runChecks(head);
-  const score  = calcScore(checks);
+  if (!validateInput(raw)) {
+    inputEl.classList.add('input-error');
+    errorMsg.style.display = 'block';
+    return;
+  }
 
-  renderReport(checks, score, head);
+  inputEl.classList.remove('input-error');
+  errorMsg.style.display = 'none';
+
+  const head       = parseHead(raw);
+  const checks     = runChecks(head);
+  const perfChecks = runPerfChecks(head);
+  const score      = calcScore(checks);
+
+  // Mostra tab bar
+  document.getElementById('tab-bar').style.display = 'flex';
+
+  renderReport(checks, score);
+  renderPerf(perfChecks);
+  document.getElementById('perf-empty').style.display  = 'none';
+  document.getElementById('perf-panel').style.display  = 'flex';
+
   updateSerpPreview(head);
+  updateSocialPreview(head);
 }
 
-// Hamburger (senza sidebar — strumento fullwidth)
 document.getElementById('hamburger').addEventListener('click', function() {
   this.classList.toggle('open');
 });
