@@ -280,7 +280,6 @@
   "featured": false,
   "active": true
 },
-// AGGIUNTA entry guida
 {
   "path": "/sicurezza/guida-cybersicurezza/",
   "label": "Guida alla Cybersicurezza Personale",

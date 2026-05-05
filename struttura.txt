@@ -1,5 +1,5 @@
 Elenco del percorso delle cartelle per il volume Acer
-Numero di serie del volume: 00000041-544D:3F7C
+Numero di serie del volume: 00000042-544D:3F7C
 C:.
 |   404.html
 |   auth.js
@@ -97,12 +97,16 @@ C:.
 |       replace_in_files.py
 |       struttura.bat
 |       supabase-keep-alive.yml
+|       ui.js
 |       
 +---sicurezza
-|   \---cybersicurezza-personale
-|           index-2.html
-|           index.html
-|           
+|   +---guida-cybersicurezza
+|   |       index.html
+|   |       
+|   +---pillola-cybersicurezza
+|   |       index.html
+|   |       
+|   \---pillola-triade-cia
 \---sistemi
     \---codifica-binaria
             index.html
