@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersicurezza in 5 Minuti — Proteggiti subito · Formazione Digitale</title>
+<meta name="description" content="Le 6 mosse essenziali per proteggerti online. Password, phishing, 2FA, backup: solo quello che conta davvero, in 5 minuti.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#1F4E79">
+<link rel="canonical" href="https://formazione-digitale.github.io/sicurezza/pillola-cybersicurezza/">
+<link rel="icon" type="image/png" href="/img/favicon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="dns-prefetch" href="//gc.zgo.at">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+
+<meta property="og:title" content="Cybersicurezza in 5 Minuti · Formazione Digitale">
+<meta property="og:description" content="Le 6 mosse essenziali per proteggerti online. Solo quello che conta davvero.">
+<meta property="og:url" content="https://formazione-digitale.github.io/sicurezza/pillola-cybersicurezza/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://formazione-digitale.github.io/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cybersicurezza in 5 Minuti · Formazione Digitale">
+<meta name="twitter:description" content="Le 6 mosse essenziali per proteggerti online.">
+<meta name="twitter:image" content="https://formazione-digitale.github.io/img/formazione-digitale-logo.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Cybersicurezza in 5 Minuti — Proteggiti subito",
+  "description": "Le 6 mosse essenziali per proteggerti online: password, phishing, 2FA, aggiornamenti, Wi-Fi e backup.",
+  "url": "https://formazione-digitale.github.io/sicurezza/cybersicurezza-personale/",
+  "inLanguage": "it",
+  "educationalLevel": "Foundation",
+  "author": {
+    "@type": "Person",
+    "name": "Cristiano De Pasquale",
+    "jobTitle": "Docente di Informatica"
+  },
+  "provider": {
+    "@type": "WebSite",
+    "name": "Formazione Digitale",
+    "url": "https://formazione-digitale.github.io"
+  },
+  "keywords": "cybersicurezza, password sicure, phishing, 2fa, backup, wi-fi, protezione online"
+}
+</script>
+
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="stylesheet" href="/css/shared.css?v=2">
+<style>
+/* ════════════════════════════════════════
+   PILLOLA CYBERSICUREZZA — Layout fast
+   Layout verticale, una card per mossa
+════════════════════════════════════════ */
+
+/* Header fisso */
+.pill-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 52px; background: var(--blue-dark);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.25rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,.18);
+}
+.pill-header-back {
+  display: flex; align-items: center; gap: .4rem;
+  font-size: .78rem; color: rgba(255,255,255,.65);
+  text-decoration: none; transition: color .2s;
+}
+.pill-header-back svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none; }
+.pill-header-back:hover { color: #fff; }
+.pill-header-title {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  font-size: .83rem; color: rgba(255,255,255,.85); font-weight: 500;
+  white-space: nowrap;
+}
+.pill-header-badge {
+  font-size: .7rem; color: rgba(255,255,255,.5);
+  background: rgba(255,255,255,.1); border-radius: 20px;
+  padding: .2rem .65rem; white-space: nowrap;
+}
+
+/* Reading bar */
+#reading-bar {
+  position: fixed; top: 0; left: 0; height: 3px; z-index: 200;
+  background: var(--blue-light); width: 0; transition: width .1s linear;
+}
+
+/* Wrapper principale */
+.pill-wrap {
+  max-width: 680px;
+  margin: 52px auto 0;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* Hero compatto */
+.pill-hero {
+  background: linear-gradient(135deg, var(--blue-dark) 0%, #2A6099 100%);
+  border-radius: 12px;
+  padding: 2rem 1.75rem 1.75rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 24px rgba(31,78,121,.22);
+}
+.pill-hero-eyebrow {
+  font-size: .68rem; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--blue-light); margin-bottom: .4rem;
+}
+.pill-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  color: #fff; line-height: 1.1; margin-bottom: .5rem;
+}
+.pill-hero-title em { font-style: italic; color: var(--blue-light); }
+.pill-hero-sub {
+  font-size: .9rem; color: rgba(255,255,255,.75); line-height: 1.6;
+}
+.pill-hero-badges { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: 1.1rem; }
+.hero-badge {
+  display: inline-flex; align-items: center;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+  color: rgba(255,255,255,.85); font-size: .68rem; font-weight: 500;
+  padding: .22rem .65rem; border-radius: 20px;
+}
+
+/* Intro */
+.pill-intro {
+  font-size: .95rem; color: var(--gray-mid); line-height: 1.7;
+  margin-bottom: 1.75rem; padding: 0 .25rem;
+}
+.pill-intro strong { color: var(--blue-dark); }
+
+/* Mossa card */
+.mossa {
+  background: var(--white);
+  border: 1px solid var(--blue-light);
+  border-radius: 12px;
+  padding: 1.4rem 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 12px rgba(31,78,121,.07);
+  display: flex; gap: 1rem; align-items: flex-start;
+  transition: box-shadow .22s, transform .22s, border-color .22s;
+}
+.mossa:hover {
+  box-shadow: 0 6px 22px rgba(31,78,121,.14);
+  transform: translateY(-2px);
+  border-color: var(--blue-mid);
+}
+.mossa-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 38px; height: 38px; flex-shrink: 0;
+  background: var(--blue-dark); color: #fff;
+  border-radius: 8px; font-size: 1rem; font-weight: 700;
+}
+.mossa-body { flex: 1; min-width: 0; }
+.mossa-title {
+  font-weight: 700; font-size: 1rem; color: var(--blue-dark);
+  margin-bottom: .35rem; display: flex; align-items: center; gap: .45rem;
+  flex-wrap: wrap;
+}
+.mossa-title .emoji { font-size: 1.15rem; }
+.mossa-text { font-size: .88rem; color: var(--gray-dark); line-height: 1.65; }
+.mossa-text code {
+  font-family: 'Courier New', monospace; font-size: .82em;
+  background: var(--gray-light); padding: .1rem .35rem; border-radius: 4px;
+  color: var(--blue-dark);
+}
+.mossa-tag {
+  display: inline-block; font-size: .68rem; font-weight: 600;
+  padding: .15rem .55rem; border-radius: 20px; margin-left: .35rem;
+  vertical-align: middle;
+}
+.tag-red    { background: #FDECEA; color: #8B1A1A; }
+.tag-amber  { background: var(--amber-light); color: var(--amber-dark); }
+.tag-green  { background: var(--green-light); color: var(--green-dark); }
+.mossa-do {
+  margin-top: .75rem;
+  background: var(--green-light);
+  border-left: 3px solid var(--green-dark);
+  border-radius: 0 6px 6px 0;
+  padding: .55rem .85rem;
+  font-size: .82rem; color: #14472a;
+  line-height: 1.55;
+}
+.mossa-warn {
+  margin-top: .75rem;
+  background: var(--amber-light);
+  border-left: 3px solid var(--amber-dark);
+  border-radius: 0 6px 6px 0;
+  padding: .55rem .85rem;
+  font-size: .82rem; color: #5a3500;
+  line-height: 1.55;
+}
+
+/* Checklist finale */
+.checklist-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem; color: var(--blue-dark);
+  margin: 2.5rem 0 1rem;
+}
+.checklist {
+  list-style: none; padding: 0; margin: 0;
+}
+.checklist li {
+  display: flex; gap: .75rem; align-items: flex-start;
+  padding: .6rem 0; border-bottom: 1px solid var(--blue-light);
+  font-size: .88rem; color: var(--gray-dark); line-height: 1.5;
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist li::before {
+  content: '☐'; font-size: 1.1rem; color: var(--blue-mid);
+  flex-shrink: 0; margin-top: -.05rem;
+}
+.checklist li strong { color: var(--blue-dark); }
+
+/* Link alla guida completa */
+.pill-cta {
+  background: var(--blue-pale);
+  border: 1px solid var(--blue-light);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin-top: 2rem;
+  display: flex; gap: 1rem; align-items: center;
+  text-decoration: none;
+  transition: background .2s, border-color .2s;
+}
+.pill-cta:hover { background: var(--blue-light); border-color: var(--blue-mid); }
+.pill-cta-icon { font-size: 1.8rem; flex-shrink: 0; }
+.pill-cta-text { flex: 1; }
+.pill-cta-label { font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .09em; color: var(--blue-mid); margin-bottom: .2rem; }
+.pill-cta-title { font-weight: 700; color: var(--blue-dark); font-size: .95rem; }
+.pill-cta-desc { font-size: .82rem; color: var(--gray-mid); margin-top: .15rem; }
+.pill-cta-arrow { color: var(--blue-mid); font-size: 1.2rem; flex-shrink: 0; transition: transform .2s; }
+.pill-cta:hover .pill-cta-arrow { transform: translateX(4px); }
+
+/* Footer */
+.pill-footer {
+  background: var(--blue-dark); color: rgba(255,255,255,.6);
+  text-align: center; padding: 1.75rem 1rem;
+  font-size: .8rem; line-height: 1.8; margin-top: 3rem;
+}
+.pill-footer a { color: rgba(255,255,255,.4); }
+</style>
+</head>
+<body>
+
+<div id="reading-bar"></div>
+
+<header class="pill-header">
+  <a class="pill-header-back" href="/index.html">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Portale
+  </a>
+  <div class="pill-header-title">Cybersicurezza in 5 min</div>
+  <div class="pill-header-badge">⏱ 5 min</div>
+</header>
+
+<div class="pill-wrap">
+
+  <div class="pill-hero">
+    <div class="pill-hero-eyebrow">Formazione Digitale · Pillola digitale · Sicurezza</div>
+    <h1 class="pill-hero-title">Cybersicurezza<br><em>in 5 minuti</em></h1>
+    <p class="pill-hero-sub">Le 6 mosse essenziali per proteggerti online. Nessuna competenza richiesta — solo azioni concrete.</p>
+    <div class="pill-hero-badges">
+      <span class="hero-badge">🔒 Sicurezza</span>
+      <span class="hero-badge">⏱ 5 minuti</span>
+      <span class="hero-badge">✅ Azione immediata</span>
+      <span class="hero-badge">💡 Livello base</span>
+    </div>
+  </div>
+
+  <p class="pill-intro">
+    La maggior parte degli attacchi informatici non è mirata: è <strong>automatica</strong>, cerca chi ha le difese basse. Non devi diventare un esperto — bastano poche mosse giuste per non essere il bersaglio più facile.
+  </p>
+
+  <!-- Mossa 1 -->
+  <div class="mossa">
+    <div class="mossa-num">1</div>
+    <div class="mossa-body">
+      <div class="mossa-title">
+        <span class="emoji">🎣</span>
+        Riconosci il phishing
+        <span class="mossa-tag tag-red">Rischio alto</span>
+      </div>
+      <div class="mossa-text">
+        Il phishing è una truffa via email, SMS o WhatsApp che ti spinge a cliccare link pericolosi o a rivelare password. I messaggi imitano banche, Poste Italiane o corrieri — creano urgenza per farti agire senza pensare.<br><br>
+        <strong>Segnali da riconoscere:</strong> mittente con dominio strano, tono urgente ("il tuo conto è bloccato"), link che portano a URL diversi dal sito ufficiale.<br><br>
+        Nel 2026 i truffatori usano anche l'AI per <strong>clonare voci e volti</strong>: se ricevi una chiamata inaspettata da un "familiare" che chiede denaro, richiama tu al numero che hai in rubrica.
+      </div>
+      <div class="mossa-do">
+        🔍 <strong>Come verificare un link:</strong> passa il mouse sopra senza cliccare — l'URL reale appare in basso nel browser. Su smartphone, tieni premuto il link.
+      </div>
+    </div>
+  </div>
+
+  <!-- Mossa 2 -->
+  <div class="mossa">
+    <div class="mossa-num">2</div>
+    <div class="mossa-body">
+      <div class="mossa-title">
+        <span class="emoji">🔑</span>
+        Password: una per ogni account
+        <span class="mossa-tag tag-amber">Fondamentale</span>
+      </div>
+      <div class="mossa-text">
+        Password brevi o riusate su più siti sono il problema più comune. Se un sito viene violato, tutti gli altri account con la stessa password sono a rischio.<br><br>
+        <strong>Passphrase:</strong> quattro parole casuali unite da un trattino (<code>Tigre-Nuvola-Porta-7</code>) sono più sicure di stringhe caotiche come <code>P@ss!</code> e molto più facili da ricordare. La lunghezza batte la complessità.<br><br>
+        <strong>Gestore di password:</strong> usa <strong>Bitwarden</strong> (gratuito, open source) o il gestore integrato nel tuo browser per iniziare. Genera e ricorda password uniche per ogni sito — devi ricordare solo una password principale.
+      </div>
+      <div class="mossa-do">
+        ✅ Controlla se le tue email sono state violate su <strong>haveibeenpwned.com</strong>. Se appare una violazione, cambia subito quella password.
+      </div>
+    </div>
+  </div>
+
+  <!-- Mossa 3 -->
+  <div class="mossa">
+    <div class="mossa-num">3</div>
+    <div class="mossa-body">
+      <div class="mossa-title">
+        <span class="emoji">🔐</span>
+        Attiva il 2FA
+        <span class="mossa-tag tag-red">Priorità massima</span>
+      </div>
+      <div class="mossa-text">
+        Il <strong>2FA (autenticazione a due fattori)</strong> aggiunge un secondo passaggio dopo la password: anche se qualcuno la ruba, non entra. Funziona così: digiti la password, poi confermi con un codice temporaneo dal telefono.<br><br>
+        <strong>App authenticator</strong> (Google Authenticator, Authy) è la scelta migliore: genera un codice ogni 30 secondi sul tuo dispositivo, senza dipendere dalla rete.<br><br>
+        L'SMS è un'alternativa accettabile, ma meno sicura — i truffatori possono intercettarlo con il SIM swapping. Dove puoi, usa l'app.
+      </div>
+      <div class="mossa-do">
+        ✅ <strong>Attivalo subito sull'email principale.</strong> È la chiave di tutti gli altri account: chi entra nella tua email può resettare qualsiasi altra password.
+      </div>
+    </div>
+  </div>
+
+  <!-- Mossa 4 -->
+  <div class="mossa">
+    <div class="mossa-num">4</div>
+    <div class="mossa-body">
+      <div class="mossa-title">
+        <span class="emoji">🔄</span>
+        Aggiorna tutto
+        <span class="mossa-tag tag-amber">Facile e spesso trascurato</span>
+      </div>
+      <div class="mossa-text">
+        Gli aggiornamenti correggono falle di sicurezza già note ai malintenzionati. Ignorarli è come lasciare una finestra rotta: tutti sanno che è lì.<br><br>
+        <strong>Ordine di priorità:</strong> sistema operativo → browser → app bancarie → tutto il resto. Attiva gli aggiornamenti automatici dove possibile.
+      </div>
+      <div class="mossa-do">
+        ✅ Apri le impostazioni del telefono e del computer: installa subito gli aggiornamenti in attesa.
+      </div>
+    </div>
+  </div>
+
+  <!-- Mossa 5 -->
+  <div class="mossa">
+    <div class="mossa-num">5</div>
+    <div class="mossa-body">
+      <div class="mossa-title">
+        <span class="emoji">📶</span>
+        Attenzione al Wi-Fi pubblico
+        <span class="mossa-tag tag-amber">Spesso sottovalutato</span>
+      </div>
+      <div class="mossa-text">
+        Le reti Wi-Fi di bar, aeroporti e hotel sono non sicure per accedere a banca o email. Un malintenzionato sulla stessa rete può intercettare il traffico — anche su siti con HTTPS.<br><br>
+        <strong>Regola semplice:</strong> su Wi-Fi pubblico, evita qualsiasi accesso a conti bancari o email. Per tutto il resto, usa una <strong>VPN</strong> — cifra il traffico e protegge anche la destinazione. ProtonVPN offre un piano gratuito senza limiti di dati.
+      </div>
+      <div class="mossa-warn">
+        ⚠️ Hotspot senza password o con nome sospetto? Non connetterti — usa i dati mobili.
+      </div>
+    </div>
+  </div>
+
+  <!-- Mossa 6 -->
+  <div class="mossa">
+    <div class="mossa-num">6</div>
+    <div class="mossa-body">
+      <div class="mossa-title">
+        <span class="emoji">💾</span>
+        Backup: fallo adesso
+        <span class="mossa-tag tag-green">Salva tutto</span>
+      </div>
+      <div class="mossa-text">
+        I dati si perdono — per guasto, furto, ransomware o errore umano. La domanda non è <em>se</em>, ma <em>quando</em>. Con un backup recente, un attacco ransomware è un fastidio invece di una catastrofe.<br><br>
+        <strong>La regola 3-2-1:</strong> 3 copie, su 2 supporti diversi, di cui 1 fuori casa (cloud). In pratica: cloud automatico (Google Drive, iCloud) + disco esterno periodico.
+      </div>
+      <div class="mossa-do">
+        ✅ Su iPhone: Impostazioni → [nome] → iCloud → Backup iCloud.<br>
+        Su Android: Impostazioni → Google → Backup.<br>
+        Attivalo adesso — ci vogliono 2 minuti.
+      </div>
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <h2 class="checklist-title">✅ La tua checklist minima</h2>
+  <ul class="checklist">
+    <li><strong>Non cliccare mai</strong> link urgenti da email o SMS — vai direttamente al sito ufficiale</li>
+    <li><strong>Password diversa</strong> per ogni account importante (email, banca, social)</li>
+    <li><strong>2FA attivo</strong> sull'email principale con app authenticator</li>
+    <li><strong>Aggiornamenti automatici</strong> attivi su telefono e computer</li>
+    <li><strong>Niente banca o email</strong> su Wi-Fi pubblici non protetti</li>
+    <li><strong>Backup automatico</strong> del telefono attivo sul cloud</li>
+  </ul>
+
+  <!-- CTA guida completa -->
+  <a class="pill-cta" href="/sicurezza/guida-cybersicurezza/">
+    <div class="pill-cta-icon">📖</div>
+    <div class="pill-cta-text">
+      <div class="pill-cta-label">Vuoi approfondire?</div>
+      <div class="pill-cta-title">Guida completa alla Cybersicurezza</div>
+      <div class="pill-cta-desc">2FA passo per passo, passkey, VPN, privacy sui social, esempi di phishing analizzati e piano d'azione mensile.</div>
+    </div>
+    <div class="pill-cta-arrow">→</div>
+  </a>
+
+</div>
+
+<footer class="pill-footer">
+  <strong>Formazione Digitale</strong><br>
+  Risorse di alfabetizzazione digitale libere e gratuite.<br>
+  Tutti i contenuti sono rilasciati per uso libero e non commerciale.<br><br>
+  <a href="/index.html">← Torna al portale</a>
+</footer>
+
+<script>
+(function() {
+  const bar = document.getElementById('reading-bar');
+  if (!bar) return;
+  window.addEventListener('scroll', function() {
+    const s = window.scrollY;
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (h > 0 ? (s / h) * 100 : 0) + '%';
+  }, { passive: true });
+})();
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>

@@ -3,37 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cybersicurezza Personale — Proteggi te stesso online · Formazione Digitale</title>
-<meta name="description" content="Password sicure, phishing, aggiornamenti, privacy e backup: tutto quello che devi sapere per proteggere i tuoi dispositivi e la tua identità digitale. Guida pratica senza gergo tecnico.">
+<title>Guida alla Cybersicurezza Personale — Proteggi te stesso online · Formazione Digitale</title>
+<meta name="description" content="Guida completa alla cybersicurezza personale: password sicure, phishing, 2FA, aggiornamenti, privacy, reti Wi-Fi e backup. Piano d'azione immediato, senza gergo tecnico.">
 <meta name="author" content="Cristiano De Pasquale">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#1F4E79">
-<link rel="canonical" href="https://formazione-digitale.github.io/sicurezza/cybersicurezza-personale/">
+<link rel="canonical" href="https://formazione-digitale.github.io/sicurezza/guida-cybersicurezza/">
 <link rel="icon" type="image/png" href="/img/favicon.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link rel="dns-prefetch" href="//gc.zgo.at">
 <link rel="dns-prefetch" href="//fonts.googleapis.com">
 
-<meta property="og:title" content="Cybersicurezza Personale — Proteggi te stesso online · Formazione Digitale">
-<meta property="og:description" content="Password sicure, phishing, aggiornamenti, privacy e backup: guida pratica per difendersi online senza essere esperti.">
-<meta property="og:url" content="https://formazione-digitale.github.io/sicurezza/cybersicurezza-personale/">
+<meta property="og:title" content="Guida alla Cybersicurezza Personale · Formazione Digitale">
+<meta property="og:description" content="Password sicure, phishing, 2FA, aggiornamenti, privacy e backup: guida completa per difendersi online senza essere esperti.">
+<meta property="og:url" content="https://formazione-digitale.github.io/sicurezza/guida-cybersicurezza/">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://formazione-digitale.github.io/img/formazione-digitale-logo.png">
 <meta property="og:locale" content="it_IT">
 <meta property="og:site_name" content="Formazione Digitale">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Cybersicurezza Personale — Proteggi te stesso online · Formazione Digitale">
-<meta name="twitter:description" content="Password sicure, phishing, aggiornamenti, privacy e backup. Guida pratica.">
+<meta name="twitter:title" content="Guida alla Cybersicurezza Personale · Formazione Digitale">
+<meta name="twitter:description" content="Password sicure, phishing, 2FA, aggiornamenti, privacy e backup. Guida completa.">
 <meta name="twitter:image" content="https://formazione-digitale.github.io/img/formazione-digitale-logo.png">
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "LearningResource",
-  "name": "Cybersicurezza Personale — Proteggi te stesso online",
-  "description": "Password sicure, phishing, aggiornamenti, privacy e backup: tutto quello che devi sapere per proteggere i tuoi dispositivi e la tua identità digitale.",
-  "url": "https://formazione-digitale.github.io/sicurezza/cybersicurezza-personale/",
+  "name": "Guida alla Cybersicurezza Personale — Proteggi te stesso online",
+  "description": "Password sicure, phishing, 2FA, aggiornamenti, privacy e backup: tutto quello che devi sapere per proteggere i tuoi dispositivi e la tua identità digitale.",
+  "url": "https://formazione-digitale.github.io/sicurezza/guida-cybersicurezza/",
   "inLanguage": "it",
   "educationalLevel": "Foundation",
   "author": {
@@ -46,7 +46,7 @@
     "name": "Formazione Digitale",
     "url": "https://formazione-digitale.github.io"
   },
-  "keywords": "cybersicurezza, password sicure, phishing, privacy digitale, backup, 2fa, aggiornamenti"
+  "keywords": "cybersicurezza, password sicure, phishing, 2fa, autenticazione, privacy digitale, backup, vpn, deepfake, passkey, aggiornamenti"
 }
 </script>
 
@@ -54,14 +54,9 @@
 <link rel="stylesheet" href="/css/shared.css?v=2">
 <style>
 /* ═══════════════════════════════════════════
-   CSS SPECIFICO — Pillola Cybersicurezza
+   CSS SPECIFICO — Guida Cybersicurezza
    Solo componenti non presenti in shared.css
 ═══════════════════════════════════════════ */
-
-/* ════════════════════════════════════════════════════════
-   LAYOUT PILLOLA — guide-* (specifico cybersicurezza)
-   Non in shared.css perché usato solo da questa pillola
-════════════════════════════════════════════════════════ */
 
 /* Header */
 .guide-header {
@@ -98,9 +93,9 @@
 }
 .hamburger:hover { background: rgba(255,255,255,.12); }
 .hamburger span { display: block; height: 2px; background: #fff; border-radius: 2px; transition: all var(--transition); }
-.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.is-open span:nth-child(2) { opacity: 0; }
+.hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* Layout a griglia */
 .guide-layout {
@@ -132,17 +127,13 @@
     transform: translateX(-100%);
     box-shadow: 2px 0 20px rgba(31,78,121,.12);
   }
-  .guide-sidebar.open,
-.guide-sidebar.is-open { transform: translateX(0); }
-
+  .guide-sidebar.is-open { transform: translateX(0); }
 }
 .sidebar-overlay {
   display: none; position: fixed; inset: 0; z-index: 80;
   background: rgba(0,0,0,.35); backdrop-filter: blur(2px);
 }
-.sidebar-overlay.open,
 .sidebar-overlay.is-open { display: block; }
-
 @media(min-width:900px) { .sidebar-overlay { display: none !important; } }
 
 .sidebar-label {
@@ -202,17 +193,6 @@
   font-size: .95rem; color: rgba(255,255,255,.75);
   line-height: 1.65; max-width: 600px;
 }
-
-
-
-/* ── BOX ROSSO (non in shared.css) ── */
-.box-red {
-  background: #FDECEA;
-  border-left: 4px solid #C0392B;
-  color: #7a1e15;
-}
-
-/* ── HERO BADGES ── */
 .guide-hero-badges { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.25rem; }
 .hero-badge {
   display: inline-flex; align-items: center; gap: .3rem;
@@ -223,36 +203,85 @@
   padding: .28rem .7rem; border-radius: 20px;
 }
 
-/* ── PASSWORD STRENGTH VISUALIZER ── */
+/* Sezioni */
+.guide-section { padding: 2rem 0; border-bottom: 1px solid var(--blue-light); }
+.guide-section:last-child { border-bottom: none; }
+.section-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.25rem; }
+.section-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 40px; height: 40px;
+  background: var(--blue-dark); color: #fff;
+  border-radius: 8px; font-size: 1.1rem; font-weight: 700; flex-shrink: 0;
+}
+.section-titles { flex: 1; }
+.section-title { font-family: var(--font-display); font-size: clamp(1.25rem,3vw,1.7rem); color: var(--blue-dark); line-height: 1.2; }
+.section-subtitle { font-size: .88rem; color: var(--gray-mid); margin-top: .2rem; }
+.sub-title { font-size: 1rem; font-weight: 600; color: var(--blue-dark); margin: 1.5rem 0 .75rem; }
+
+p { margin-bottom: 1rem; line-height: 1.75; }
+code { font-family: 'Courier New', monospace; font-size: .88em; background: var(--gray-light); padding: .15rem .4rem; border-radius: 4px; color: var(--blue-dark); }
+
+/* Box */
+.box { display: flex; gap: .85rem; border-radius: var(--radius); padding: 1rem 1.25rem; margin: 1.25rem 0; line-height: 1.65; font-size: .9rem; }
+.box-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: .05rem; }
+.box-info  { background: var(--blue-pale);   border-left: 4px solid var(--blue-mid); color: #1a3a5c; }
+.box-tip   { background: var(--green-light); border-left: 4px solid var(--green-dark); color: #14472a; }
+.box-warn  { background: var(--amber-light); border-left: 4px solid var(--amber-dark); color: #5a3500; }
+.box-red   { background: #FDECEA; border-left: 4px solid #C0392B; color: #7a1e15; }
+
+/* Highlight grid */
+.highlight-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: .85rem; margin: 1.25rem 0; }
+.highlight-card { background: var(--white); border: 1px solid var(--blue-light); border-radius: var(--radius); padding: 1rem 1.1rem; }
+.hc-icon { font-size: 1.5rem; margin-bottom: .4rem; }
+.hc-title { font-weight: 600; font-size: .9rem; color: var(--blue-dark); margin-bottom: .3rem; }
+.hc-desc { font-size: .82rem; color: var(--gray-mid); line-height: 1.55; }
+.hc-red   { border-color: #f5b7b1; background: #fff8f7; }
+.hc-amber { border-color: #f0c060; background: var(--amber-light); }
+.hc-green { border-color: #a8d5b5; background: var(--green-light); }
+
+/* Do/Don't */
+.dodont { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0; }
+@media(max-width:600px) { .dodont { grid-template-columns: 1fr; } }
+.do-col, .dont-col { border-radius: var(--radius); overflow: hidden; }
+.do-col-head { background: var(--green-dark); color: #fff; padding: .6rem 1rem; font-weight: 600; font-size: .85rem; }
+.do-col-body { background: var(--green-light); padding: 1rem; }
+.dont-col-head { background: #C0392B; color: #fff; padding: .6rem 1rem; font-weight: 600; font-size: .85rem; }
+.dont-col-body { background: #fff8f7; padding: 1rem; }
+.do-col-body ul, .dont-col-body ul { padding-left: 1.2rem; }
+.do-col-body li, .dont-col-body li { font-size: .84rem; margin-bottom: .4rem; line-height: 1.5; }
+
+/* Step list */
+.step-list { padding-left: 0; list-style: none; counter-reset: steps; margin: 1rem 0; }
+.step-item {
+  counter-increment: steps;
+  display: flex; gap: .85rem; align-items: flex-start;
+  padding: .75rem 0; border-bottom: 1px solid var(--blue-light);
+}
+.step-item:last-child { border-bottom: none; }
+.step-item::before {
+  content: counter(steps);
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 26px; height: 26px;
+  background: var(--blue-mid); color: #fff;
+  border-radius: 50%; font-size: .8rem; font-weight: 700; flex-shrink: 0; margin-top: .1rem;
+}
+.step-item strong { display: block; color: var(--blue-dark); margin-bottom: .2rem; font-size: .95rem; }
+.step-item span { font-size: .88rem; color: var(--gray-mid); line-height: 1.55; }
+
+/* Password strength visualizer */
 .pwd-demo {
-  background: var(--white);
-  border: 1px solid var(--blue-light);
-  border-radius: var(--radius);
-  padding: 1.1rem 1.25rem;
-  margin: 1.25rem 0;
-  box-shadow: var(--shadow);
+  background: var(--white); border: 1px solid var(--blue-light);
+  border-radius: var(--radius); padding: 1.1rem 1.25rem;
+  margin: 1.25rem 0; box-shadow: var(--shadow);
 }
-.pwd-demo-title {
-  font-size: .8rem; font-weight: 600; color: var(--gray-mid);
-  text-transform: uppercase; letter-spacing: .07em; margin-bottom: .75rem;
-}
-.pwd-demo-row {
-  display: flex; align-items: center; gap: .75rem;
-  margin-bottom: .6rem; flex-wrap: wrap;
-}
-.pwd-example {
-  font-family: 'Courier New', monospace; font-size: .88rem;
-  background: var(--gray-light); padding: .3rem .65rem; border-radius: 5px;
-  color: var(--gray-dark); flex: 1; min-width: 180px;
-}
+.pwd-demo-title { font-size: .8rem; font-weight: 600; color: var(--gray-mid); text-transform: uppercase; letter-spacing: .07em; margin-bottom: .75rem; }
+.pwd-demo-row { display: flex; align-items: center; gap: .75rem; margin-bottom: .6rem; flex-wrap: wrap; }
+.pwd-example { font-family: 'Courier New', monospace; font-size: .88rem; background: var(--gray-light); padding: .3rem .65rem; border-radius: 5px; color: var(--gray-dark); flex: 1; min-width: 180px; }
 .pwd-bar-wrap { display: flex; align-items: center; gap: .5rem; flex-shrink: 0; }
-.pwd-bar {
-  height: 8px; border-radius: 4px; width: 120px;
-  background: var(--gray-light); overflow: hidden;
-}
+.pwd-bar { height: 8px; border-radius: 4px; width: 120px; background: var(--gray-light); overflow: hidden; }
 .pwd-bar-fill { height: 100%; border-radius: 4px; }
 .pwd-label { font-size: .75rem; font-weight: 600; min-width: 50px; }
-.bar-weak   .pwd-bar-fill { background: #C0392B; width: 25%; }
+.bar-weak   .pwd-bar-fill { background: #C0392B; width: 20%; }
 .bar-fair   .pwd-bar-fill { background: var(--amber-dark); width: 50%; }
 .bar-good   .pwd-bar-fill { background: var(--blue-mid); width: 75%; }
 .bar-strong .pwd-bar-fill { background: var(--green-dark); width: 100%; }
@@ -260,16 +289,12 @@
 .label-fair   { color: var(--amber-dark); }
 .label-good   { color: var(--blue-mid); }
 .label-strong { color: var(--green-dark); }
-@media(max-width:500px) { .pwd-demo-row { flex-direction: column; align-items: flex-start; } }
 
-/* ── PHISHING CARD ── */
+/* Phishing card */
 .phishing-card {
-  background: var(--white);
-  border: 2px solid #C0392B;
-  border-radius: var(--radius);
-  padding: 1.25rem 1.5rem;
-  margin: 1.25rem 0;
-  position: relative;
+  background: var(--white); border: 2px solid #C0392B;
+  border-radius: var(--radius); padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0; position: relative;
 }
 .phishing-card-label {
   position: absolute; top: -12px; left: 1rem;
@@ -281,59 +306,39 @@
   font-family: 'Courier New', monospace; font-size: .82rem;
   background: #fdf9f9; border: 1px solid #f5b7b1;
   border-radius: 6px; padding: .75rem 1rem;
-  line-height: 1.9; margin-bottom: .75rem;
-  color: var(--gray-dark);
+  line-height: 1.9; margin-bottom: .75rem; color: var(--gray-dark);
 }
-.phishing-email .flag {
-  background: #FDECEA;
-  border-bottom: 2px solid #C0392B;
-  cursor: default;
-}
+.phishing-email .flag { background: #FDECEA; border-bottom: 2px solid #C0392B; cursor: default; }
 .phishing-flags { display: flex; flex-wrap: wrap; gap: .5rem; }
 .phishing-flag-item {
   display: flex; align-items: flex-start; gap: .4rem;
   font-size: .78rem; color: #C0392B; line-height: 1.5;
-  background: #FDECEA; border-radius: 6px;
-  padding: .3rem .65rem;
+  background: #FDECEA; border-radius: 6px; padding: .3rem .65rem;
 }
 .phishing-flag-item::before { content: '⚑'; flex-shrink: 0; }
 
-/* ── TRACCIAMENTO WIDGET ── */
+/* Tracking list */
 .tracking-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: .75rem; margin: 1.25rem 0;
 }
 .tracking-item {
-  background: var(--white);
-  border: 1px solid var(--blue-light);
-  border-radius: 8px;
-  padding: .85rem 1rem;
+  background: var(--white); border: 1px solid var(--blue-light);
+  border-radius: 8px; padding: .85rem 1rem;
   font-size: .82rem; line-height: 1.6;
   display: flex; gap: .6rem; align-items: flex-start;
-  transition: border-color .22s ease, box-shadow .22s ease, transform .22s ease, background .22s ease;
+  transition: border-color .22s, box-shadow .22s, transform .22s, background .22s;
   position: relative;
 }
-.tracking-item:hover {
-  border-color: var(--blue-mid);
-  box-shadow: 0 6px 20px rgba(31,78,121,.13);
-  transform: translateY(-3px);
-  background: var(--blue-pale);
-  z-index: 2;
-}
-.tracking-item .ti-icon {
-  font-size: 1.35rem; flex-shrink: 0;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1);
-}
+.tracking-item:hover { border-color: var(--blue-mid); box-shadow: 0 6px 20px rgba(31,78,121,.13); transform: translateY(-3px); background: var(--blue-pale); z-index: 2; }
+.tracking-item .ti-icon { font-size: 1.35rem; flex-shrink: 0; transition: transform .25s cubic-bezier(.34,1.56,.64,1); }
 .tracking-item:hover .ti-icon { transform: scale(1.25); }
 .tracking-item .ti-text strong { display: block; color: var(--gray-dark); margin-bottom: .15rem; }
 .tracking-item:hover .ti-text strong { color: var(--blue-dark); }
 .tracking-item .ti-text span { color: var(--gray-mid); }
 .tracking-item .ti-tooltip {
-  display: none;
-  position: absolute; bottom: calc(100% + 8px); left: 50%;
-  transform: translateX(-50%);
-  width: 220px;
+  display: none; position: absolute; bottom: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%); width: 220px;
   background: var(--blue-dark); color: #fff;
   font-size: .75rem; line-height: 1.55;
   padding: .65rem .85rem; border-radius: 8px;
@@ -343,34 +348,38 @@
 .tracking-item .ti-tooltip::after {
   content: ''; position: absolute; top: 100%; left: 50%;
   transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-top-color: var(--blue-dark);
+  border: 6px solid transparent; border-top-color: var(--blue-dark);
 }
 .tracking-item:hover .ti-tooltip { display: block; }
 @media(max-width:600px) { .tracking-item .ti-tooltip { display: none !important; } }
 
-
-
 /* Tabelle */
 .table-wrap { overflow-x: auto; margin: 1.25rem 0; }
-table {
-  width: 100%; border-collapse: collapse;
-  font-size: .88rem;
-}
-th {
-  background: var(--blue-dark); color: #fff;
-  padding: .6rem 1rem; text-align: left;
-  font-weight: 600; font-size: .8rem;
-}
-td {
-  padding: .6rem 1rem;
-  border-bottom: 1px solid var(--blue-light);
-  vertical-align: top; line-height: 1.55;
-}
+table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+th { background: var(--blue-dark); color: #fff; padding: .6rem 1rem; text-align: left; font-weight: 600; font-size: .8rem; }
+td { padding: .6rem 1rem; border-bottom: 1px solid var(--blue-light); vertical-align: top; line-height: 1.55; }
 tr:nth-child(even) td { background: var(--blue-pale); }
 tr:last-child td { border-bottom: none; }
 
+/* Box futuro / novità 2026 */
+.box-future {
+  background: var(--purple-light);
+  border-left: 4px solid var(--purple-dark);
+  color: #2e0a5e;
+}
 
+/* Footer */
+.guide-footer {
+  background: var(--blue-dark); color: rgba(255,255,255,.65);
+  text-align: center; padding: 2rem 1rem; font-size: .82rem; line-height: 1.8;
+}
+.guide-footer a { color: rgba(255,255,255,.5); font-size: .75rem; }
+
+/* Reading bar */
+#reading-bar {
+  position: fixed; top: 0; left: 0; height: 3px; z-index: 200;
+  background: var(--blue-light); width: 0; transition: width .1s linear;
+}
 </style>
 </head>
 <body>
@@ -383,7 +392,7 @@ tr:last-child td { border-bottom: none; }
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
     Portale
   </a>
-  <div class="guide-header-center">Cybersicurezza Personale</div>
+  <div class="guide-header-center">Guida alla Cybersicurezza</div>
   <div class="guide-header-right">
     <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu sezioni">
       <span></span><span></span><span></span>
@@ -399,33 +408,36 @@ tr:last-child td { border-bottom: none; }
       <li><a class="nav-item active" href="#s1" onclick="closeSidebar()"><span class="nav-num">1</span><span class="nav-text">Perché ci riguarda tutti</span></a></li>
       <li><a class="nav-item" href="#s2" onclick="closeSidebar()"><span class="nav-num">2</span><span class="nav-text">La trappola del phishing</span></a></li>
       <li><a class="nav-item" href="#s3" onclick="closeSidebar()"><span class="nav-num">3</span><span class="nav-text">Password sicure</span></a></li>
-      <li><a class="nav-item" href="#s4" onclick="closeSidebar()"><span class="nav-num">4</span><span class="nav-text">Aggiornamenti</span></a></li>
-      <li><a class="nav-item" href="#s5" onclick="closeSidebar()"><span class="nav-num">5</span><span class="nav-text">Privacy & tracciamento</span></a></li>
-      <li><a class="nav-item" href="#s6" onclick="closeSidebar()"><span class="nav-num">6</span><span class="nav-text">Reti Wi-Fi</span></a></li>
-      <li><a class="nav-item" href="#s7" onclick="closeSidebar()"><span class="nav-num">7</span><span class="nav-text">Backup dei dati</span></a></li>
-      <li><a class="nav-item" href="#s8" onclick="closeSidebar()"><span class="nav-num">8</span><span class="nav-text">Il piano d'azione</span></a></li>
+      <li><a class="nav-item" href="#s4" onclick="closeSidebar()"><span class="nav-num">4</span><span class="nav-text">Autenticazione a due fattori</span></a></li>
+      <li><a class="nav-item" href="#s5" onclick="closeSidebar()"><span class="nav-num">5</span><span class="nav-text">Aggiornamenti</span></a></li>
+      <li><a class="nav-item" href="#s6" onclick="closeSidebar()"><span class="nav-num">6</span><span class="nav-text">Privacy & tracciamento</span></a></li>
+      <li><a class="nav-item" href="#s7" onclick="closeSidebar()"><span class="nav-num">7</span><span class="nav-text">Reti Wi-Fi</span></a></li>
+      <li><a class="nav-item" href="#s8" onclick="closeSidebar()"><span class="nav-num">8</span><span class="nav-text">Backup dei dati</span></a></li>
+      <li><a class="nav-item" href="#s9" onclick="closeSidebar()"><span class="nav-num">9</span><span class="nav-text">Il futuro: passkey</span></a></li>
+      <li><a class="nav-item" href="#s10" onclick="closeSidebar()"><span class="nav-num">10</span><span class="nav-text">Il piano d'azione</span></a></li>
     </ul>
     <hr class="sidebar-divider">
     <div class="sidebar-meta">
-      <strong>Cybersicurezza Personale</strong><br>
-      💡 Pillola digitale<br>
-      ⏱ ~20 min di lettura<br>
+      <strong>Guida Cybersicurezza</strong><br>
+      📖 Guida completa<br>
+      ⏱ ~35 min di lettura<br>
       📊 Livello base<br>
-      🔄 Aggiornata 2026
+      🔄 Aggiornata maggio 2026
     </div>
   </aside>
 
   <main class="guide-main">
 
     <div class="guide-hero">
-      <div class="guide-hero-eyebrow">Formazione Digitale · Pillola digitale · Sicurezza</div>
+      <div class="guide-hero-eyebrow">Formazione Digitale · Guida completa · Sicurezza</div>
       <h1 class="guide-hero-title">Cybersicurezza<br><em>Personale</em></h1>
-      <p class="guide-hero-sub">Password sicure, phishing, aggiornamenti, privacy e backup. Tutto quello che devi fare per proteggerti online — senza essere un esperto.</p>
+      <p class="guide-hero-sub">Password sicure, phishing, 2FA, aggiornamenti, privacy e backup. Tutto quello che devi sapere per proteggerti online — senza essere un esperto.</p>
       <div class="guide-hero-badges">
         <span class="hero-badge">🔒 Sicurezza</span>
         <span class="hero-badge">💡 Livello base</span>
-        <span class="hero-badge">⏱ ~20 minuti</span>
-        <span class="hero-badge">✅ Azione immediata</span>
+        <span class="hero-badge">⏱ ~35 minuti</span>
+        <span class="hero-badge">✅ Piano d'azione incluso</span>
+        <span class="hero-badge">🗓 Aggiornata 2026</span>
       </div>
     </div>
 
@@ -478,7 +490,7 @@ tr:last-child td { border-bottom: none; }
         </div>
       </div>
       <p>Il <strong>phishing</strong> è una truffa che usa messaggi falsi — email, SMS, WhatsApp — per farti rivelare password, dati della carta o cliccare su link pericolosi. Il nome viene dall'inglese "fishing" (pescare): il truffatore lancia l'amo e aspetta che qualcuno abbocchi.</p>
-      <p>Non è una questione di intelligenza. Oggi i messaggi di phishing sono spesso indistinguibili da quelli reali — usano loghi ufficiali, linguaggio formale e creano urgenza per farti agire in fretta, senza pensare.</p>
+      <p>Non è una questione di intelligenza. Oggi i messaggi di phishing sono spesso indistinguibili da quelli reali — usano loghi ufficiali, linguaggio formale e creano urgenza per farti agire in fretta, senza pensare. Spesso portano a <strong>siti web falsi</strong> che imitano perfettamente quelli di banche, Poste Italiane o PayPal — con URL solo leggermente diversi dall'originale.</p>
       <div class="phishing-card">
         <div class="phishing-card-label">⚠ Esempio di email di phishing — analisi</div>
         <div class="phishing-email">
@@ -498,6 +510,12 @@ tr:last-child td { border-bottom: none; }
           <div class="phishing-flag-item">Firma vaga: "Il team di sicurezza" senza nome o contatto reale</div>
         </div>
       </div>
+
+      <div class="box box-tip" style="margin-top:1rem;">
+        <div class="box-icon">🔍</div>
+        <div><strong>Come verificare un link prima di cliccare</strong> Passa il mouse sopra il link senza cliccare: l'URL reale apparirà in basso a sinistra nel browser. Se non corrisponde al sito ufficiale, non cliccare. Su smartphone, tieni premuto il link per vedere l'anteprima dell'URL.</div>
+      </div>
+
       <div class="dodont">
         <div class="do-col">
           <div class="do-col-head">✓ Cosa fare</div>
@@ -524,10 +542,17 @@ tr:last-child td { border-bottom: none; }
           </div>
         </div>
       </div>
+
       <div class="box box-warn">
         <div class="box-icon">⚠️</div>
         <div><strong>Lo smishing: phishing via SMS</strong> Funziona esattamente come il phishing via email, ma arriva come SMS o WhatsApp. Spesso si spaccia per la tua banca, il corriere, l'Agenzia delle Entrate o Poste Italiane. La regola è identica: non cliccare mai link da messaggi inattesi — accedi sempre direttamente dal sito ufficiale.</div>
       </div>
+
+      <div class="box box-red">
+        <div class="box-icon">🤖</div>
+        <div><strong>Attenzione: le truffe AI nel 2026</strong> Oggi i truffatori usano l'intelligenza artificiale per clonare voci e volti. Potresti ricevere una telefonata dalla "voce" di un tuo familiare che chiede denaro urgente, o un video falso convincente. Se ricevi richieste inaspettate di soldi — anche da chi conosci — verifica sempre richiamando direttamente al numero che hai in rubrica.</div>
+      </div>
+
       <div class="box box-tip">
         <div class="box-icon">✅</div>
         <div><strong>Fai subito questo</strong> Pensa all'ultima email "urgente" che hai ricevuto da una banca, corriere o servizio online. Prima di cliccare qualsiasi link, cerca il nome dell'azienda su Google e vai direttamente al loro sito ufficiale. Quella è la tua difesa numero uno contro il phishing.</div>
@@ -588,25 +613,66 @@ tr:last-child td { border-bottom: none; }
         <div class="highlight-card">
           <div class="hc-icon">🔢</div>
           <div class="hc-title">1. Una password, un account</div>
-          <div class="hc-desc">Mai usare la stessa password su più siti. Se un sito viene violato, tutti gli altri account con quella password sono a rischio.</div>
+          <div class="hc-desc">Mai usare la stessa password su più siti. Se un sito viene violato, tutti gli account con quella password sono a rischio.</div>
         </div>
         <div class="highlight-card">
           <div class="hc-icon">📏</div>
           <div class="hc-title">2. Lunga è meglio di complicata</div>
-          <div class="hc-desc">Almeno 12 caratteri. Una frase di 4 parole è più sicura di <code>P@ss!</code> e molto più facile da ricordare.</div>
+          <div class="hc-desc">Almeno 12 caratteri. Una frase di 4 parole casuali è più sicura di <code>P@ss!</code> e molto più facile da ricordare.</div>
         </div>
         <div class="highlight-card hc-green">
           <div class="hc-icon">🗝️</div>
           <div class="hc-title">3. Usa un gestore di password</div>
-          <div class="hc-desc">Genera e ricorda password sicure uniche per ogni sito. Devi ricordare solo una password principale. <strong>Bitwarden</strong> è gratuito, open source e disponibile su tutti i dispositivi.</div>
+          <div class="hc-desc">Genera e ricorda password sicure uniche per ogni sito. Devi ricordare solo una password principale.</div>
         </div>
       </div>
+
+      <h3 class="sub-title">Quale gestore di password scegliere?</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Strumento</th><th>Tipo</th><th>Adatto a</th><th>Note</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Bitwarden</strong></td>
+              <td>App dedicata (gratuita)</td>
+              <td>Tutti — prima scelta consigliata</td>
+              <td>Open source, multi-dispositivo, sincronizzazione cloud</td>
+            </tr>
+            <tr>
+              <td><strong>KeePass</strong></td>
+              <td>App locale (gratuita)</td>
+              <td>Chi preferisce non usare il cloud</td>
+              <td>Il database è solo sul tuo dispositivo — più sicuro, meno comodo</td>
+            </tr>
+            <tr>
+              <td><strong>Gestore del browser</strong><br><small>(Chrome, Firefox, Safari)</small></td>
+              <td>Integrato nel browser</td>
+              <td>Chi inizia — ottimo punto di partenza</td>
+              <td>Comodo e automatico, ma funziona solo in quel browser. Accettabile per iniziare.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <div class="box box-tip">
         <div class="box-icon">✅</div>
-        <div><strong>Fai subito questo</strong> Controlla se le tue password sono state compromesse su <strong>haveibeenpwned.com</strong> — inserisci solo la tua email. Se il sito segnala una violazione, cambia subito la password di quell'account.</div>
+        <div><strong>Fai subito questo</strong> Controlla se le tue password sono state compromesse su <strong>haveibeenpwned.com</strong> — inserisci solo la tua email. Se il sito segnala una violazione, cambia subito la password di quell'account. Ricorda: il sito verifica violazioni <em>passate</em> — se hai già cambiato la password dopo il leak, sei al sicuro.</div>
       </div>
-      <h3 class="sub-title">Autenticazione a due fattori (2FA)</h3>
-      <p>Anche la password più sicura può essere rubata. L'<strong>autenticazione a due fattori</strong> aggiunge un secondo passaggio: dopo la password, ricevi un codice temporaneo sul telefono. È come avere sia la chiave che il codice dell'allarme.</p>
+    </section>
+
+    <!-- S4 — 2FA sezione dedicata (nuova) -->
+    <section class="guide-section" id="s4">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div class="section-titles">
+          <h2 class="section-title">Autenticazione a due fattori (2FA)</h2>
+          <p class="section-subtitle">Il secondo lucchetto — quello che fa la differenza</p>
+        </div>
+      </div>
+      <p>Anche la password più sicura può essere rubata — attraverso una violazione di dati, il phishing o semplicemente perché qualcuno la indovina. L'<strong>autenticazione a due fattori (2FA)</strong> aggiunge un secondo passaggio: dopo la password, devi confermare la tua identità con un secondo elemento che solo tu possiedi.</p>
+      <p>È come avere sia la chiave che il codice dell'allarme: anche se qualcuno ruba la chiave, senza il codice non entra.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -614,42 +680,74 @@ tr:last-child td { border-bottom: none; }
           </thead>
           <tbody>
             <tr>
-              <td><strong>SMS</strong></td>
-              <td>Codice via messaggio di testo</td>
-              <td>🟡 Discreta</td>
-              <td>Banche, servizi pubblici — meglio di niente, ma vulnerabile a SIM swapping</td>
+              <td><strong>App Authenticator</strong><br><small>(Google Authenticator, Authy)</small></td>
+              <td>Codice di 6 cifre generato localmente, cambia ogni 30 secondi</td>
+              <td>🟢 Ottima</td>
+              <td>Email, social, tutti gli account importanti — sempre la prima scelta</td>
             </tr>
             <tr>
-              <td><strong>App Authenticator</strong></td>
-              <td>Codice generato localmente ogni 30 sec</td>
-              <td>🟢 Ottima</td>
-              <td>Email, social, account importanti — sempre preferibile all'SMS</td>
+              <td><strong>SMS</strong></td>
+              <td>Codice inviato via messaggio di testo</td>
+              <td>🟡 Sufficiente</td>
+              <td>Banche, servizi pubblici — meglio di niente, ma vulnerabile al SIM swapping</td>
             </tr>
             <tr>
               <td><strong>Email</strong></td>
-              <td>Codice inviato alla tua email</td>
-              <td>🟠 Sufficiente</td>
-              <td>Solo se l'email stessa è protetta con 2FA</td>
+              <td>Codice inviato alla tua casella email</td>
+              <td>🟠 Bassa</td>
+              <td>Solo se l'email stessa è protetta con 2FA forte</td>
             </tr>
           </tbody>
         </table>
       </div>
+
       <div class="box box-warn">
         <div class="box-icon">⚠️</div>
-        <div><strong>Mai condividere un codice 2FA</strong> Nessuna azienda legittima ti chiederà mai di comunicare un codice di verifica. Se qualcuno lo richiede — anche fingendo di essere il supporto tecnico — è una truffa.</div>
+        <div><strong>Il SIM Swapping: perché l'SMS non basta</strong> I truffatori possono convincere il tuo operatore telefonico a trasferire il tuo numero su una SIM in loro possesso. Da quel momento ricevono tutti i tuoi SMS — inclusi i codici 2FA. Il fenomeno è in crescita nel 2026. Per gli account più importanti, usa sempre un'app authenticator anziché l'SMS.</div>
+      </div>
+
+      <h3 class="sub-title">Come attivare il 2FA — passo per passo</h3>
+      <ol class="step-list">
+        <li class="step-item">
+          <strong>Installa un'app authenticator</strong>
+          <span>Scarica Google Authenticator o Authy dal tuo store (iOS o Android). Sono gratuite.</span>
+        </li>
+        <li class="step-item">
+          <strong>Vai nelle impostazioni di sicurezza dell'account</strong>
+          <span>Su Gmail: Account Google → Sicurezza → Verifica in due passaggi. Su Facebook: Impostazioni → Sicurezza e accesso → Autenticazione a due fattori.</span>
+        </li>
+        <li class="step-item">
+          <strong>Scegli "App di autenticazione" come metodo</strong>
+          <span>Ti verrà mostrato un QR code. Aprilo con l'app: la scansione è automatica.</span>
+        </li>
+        <li class="step-item">
+          <strong>Salva i codici di recupero</strong>
+          <span>Ogni servizio fornisce codici di emergenza usa-e-getta. Stampali o annotali e conservali in un posto fisico sicuro — servono se perdi il telefono.</span>
+        </li>
+      </ol>
+
+      <div class="box box-red">
+        <div class="box-icon">🚫</div>
+        <div><strong>Mai condividere un codice 2FA</strong> Nessuna azienda legittima ti chiederà mai di comunicare un codice di verifica ricevuto via SMS o app. Se qualcuno lo richiede — anche fingendo di essere il supporto tecnico — è una truffa. Riaggancia e contatta direttamente l'azienda.</div>
+      </div>
+
+      <div class="box box-tip">
+        <div class="box-icon">✅</div>
+        <div><strong>Priorità di attivazione</strong> Attiva il 2FA nell'ordine: (1) email principale, (2) conto bancario, (3) social network, (4) tutti gli account dove hai dati di pagamento salvati. L'email è la chiave di tutto: proteggerla è il singolo cambiamento più importante che puoi fare oggi.</div>
       </div>
     </section>
 
-    <!-- S4 -->
-    <section class="guide-section" id="s4">
+    <!-- S5 -->
+    <section class="guide-section" id="s5">
       <div class="section-header">
-        <div class="section-num">4</div>
+        <div class="section-num">5</div>
         <div class="section-titles">
           <h2 class="section-title">Aggiornamenti: la difesa più semplice</h2>
           <p class="section-subtitle">Il tuo sistema operativo e le tue app devono essere sempre aggiornati</p>
         </div>
       </div>
       <p>Ogni software ha imperfezioni — alcune delle quali permettono ai malintenzionati di entrare nel tuo dispositivo. Quando le aziende scoprono questi "buchi" li correggono e rilasciano un aggiornamento. Ignorarlo è come lasciare una finestra rotta: tutti sanno che è lì.</p>
+      <p><strong>Ordine di priorità:</strong> sistema operativo prima (Windows, macOS, iOS, Android), poi il browser (Chrome, Firefox, Safari) — il programma più esposto agli attacchi — poi le app critiche come quelle bancarie, infine tutto il resto.</p>
       <div class="dodont">
         <div class="do-col">
           <div class="do-col-head">✓ Buone abitudini</div>
@@ -686,16 +784,17 @@ tr:last-child td { border-bottom: none; }
       </div>
     </section>
 
-    <!-- S5 -->
-    <section class="guide-section" id="s5">
+    <!-- S6 -->
+    <section class="guide-section" id="s6">
       <div class="section-header">
-        <div class="section-num">5</div>
+        <div class="section-num">6</div>
         <div class="section-titles">
           <h2 class="section-title">Privacy e tracciamento</h2>
           <p class="section-subtitle">Cosa sanno di te — e come limitarlo</p>
         </div>
       </div>
       <p>Ogni volta che usi internet, lasci tracce. Alcune sono inevitabili e necessarie, altre sono dati raccolti e venduti per mostrarti pubblicità. Capire chi raccoglie cosa ti permette di fare scelte consapevoli.</p>
+      <p>I metodi di tracciamento si dividono in due grandi categorie: quelli legati alla <strong>navigazione</strong> (cosa fai online) e quelli legati al <strong>dispositivo</strong> (chi sei e dove sei).</p>
       <div class="tracking-list">
         <div class="tracking-item">
           <div class="ti-icon">🍪</div>
@@ -704,6 +803,22 @@ tr:last-child td { border-bottom: none; }
             <span>Seguono i tuoi movimenti da sito a sito, costruendo un profilo dei tuoi interessi.</span>
           </div>
           <div class="ti-tooltip">Puoi bloccarli nelle impostazioni del browser o scegliendo "Rifiuta tutto" nei banner cookie.</div>
+        </div>
+        <div class="tracking-item">
+          <div class="ti-icon">📧</div>
+          <div class="ti-text">
+            <strong>Pixel di tracciamento</strong>
+            <span>Immagini invisibili nelle email che comunicano al mittente quando hai aperto il messaggio.</span>
+          </div>
+          <div class="ti-tooltip">Disabilita il caricamento automatico delle immagini nelle email. Molti client moderni lo bloccano già di default.</div>
+        </div>
+        <div class="tracking-item">
+          <div class="ti-icon">🌐</div>
+          <div class="ti-text">
+            <strong>Fingerprinting</strong>
+            <span>Il browser rivela informazioni tecniche che permettono di identificarti anche senza cookie. Browser come Firefox e Brave includono protezioni attive.</span>
+          </div>
+          <div class="ti-tooltip">Per chi vuole più protezione: Firefox con uBlock Origin, oppure Brave, bloccano il fingerprinting per impostazione predefinita.</div>
         </div>
         <div class="tracking-item">
           <div class="ti-icon">📍</div>
@@ -729,22 +844,6 @@ tr:last-child td { border-bottom: none; }
           </div>
           <div class="ti-tooltip">Usa la modalità privata/incognito per sessioni che non vuoi salvare. Considera DuckDuckGo come alternativa privacy-friendly.</div>
         </div>
-        <div class="tracking-item">
-          <div class="ti-icon">📧</div>
-          <div class="ti-text">
-            <strong>Pixel di tracciamento</strong>
-            <span>Immagini invisibili nelle email che comunicano al mittente quando hai aperto il messaggio.</span>
-          </div>
-          <div class="ti-tooltip">Disabilita il caricamento automatico delle immagini nelle email. Molti client moderni lo bloccano già di default.</div>
-        </div>
-        <div class="tracking-item">
-          <div class="ti-icon">🌐</div>
-          <div class="ti-text">
-            <strong>Fingerprinting</strong>
-            <span>Il browser rivela informazioni tecniche uniche che permettono di identificarti anche senza cookie.</span>
-          </div>
-          <div class="ti-tooltip">Browser come Firefox e Brave includono protezioni anti-fingerprinting attive per impostazione predefinita.</div>
-        </div>
       </div>
       <h3 class="sub-title">Cosa puoi fare concretamente</h3>
       <ol class="step-list">
@@ -766,7 +865,7 @@ tr:last-child td { border-bottom: none; }
         </li>
         <li class="step-item">
           <strong>Controlla i dati sui social</strong>
-          <span>Data di nascita completa, numero di telefono, indirizzo: limitare questi dati riduce il rischio di furto d'identità.</span>
+          <span>Data di nascita completa, numero di telefono, indirizzo: limitare questi dati riduce il rischio di furto d'identità. Vai in Impostazioni → Privacy su ogni piattaforma.</span>
         </li>
       </ol>
       <div class="box box-info">
@@ -775,10 +874,10 @@ tr:last-child td { border-bottom: none; }
       </div>
     </section>
 
-    <!-- S6 -->
-    <section class="guide-section" id="s6">
+    <!-- S7 -->
+    <section class="guide-section" id="s7">
       <div class="section-header">
-        <div class="section-num">6</div>
+        <div class="section-num">7</div>
         <div class="section-titles">
           <h2 class="section-title">Reti Wi-Fi: attenzione a dove ti connetti</h2>
           <p class="section-subtitle">Non tutte le reti sono sicure — e alcune sono trappole</p>
@@ -793,25 +892,37 @@ tr:last-child td { border-bottom: none; }
           <tbody>
             <tr><td><strong>Wi-Fi di casa</strong></td><td>🟢 Basso se configurata bene</td><td>Usa WPA3 o WPA2, password lunga, cambia quella di default del router</td></tr>
             <tr><td><strong>Wi-Fi aziendale/scolastica</strong></td><td>🟡 Medio — gestita da altri</td><td>Usa solo per attività lavorative, evita accessi bancari sensibili</td></tr>
-            <tr><td><strong>Wi-Fi pubblica (bar, aeroporto)</strong></td><td>🔴 Alto</td><td>Evita transazioni bancarie, usa VPN se necessario navigare</td></tr>
+            <tr><td><strong>Wi-Fi pubblica (bar, aeroporto)</strong></td><td>🔴 Alto</td><td>Evita transazioni bancarie e accessi a email. Usa VPN se devi navigare</td></tr>
             <tr><td><strong>Hotspot sconosciuto senza password</strong></td><td>🔴 Molto alto — potrebbe essere una trappola</td><td>Non connetterti mai. Usa i dati mobili del tuo operatore</td></tr>
           </tbody>
         </table>
       </div>
+
+      <div class="box box-info">
+        <div class="box-icon">🔒</div>
+        <div><strong>HTTPS protegge il contenuto, non la destinazione</strong> Su una rete pubblica, il protocollo HTTPS cifra ciò che trasmetti (es. la tua password), ma non nasconde a quale sito sei connesso. Un osservatore sulla stessa rete può comunque vedere che stai accedendo a "bancaXYZ.it" — anche senza vedere le credenziali. Una VPN risolve anche questo.</div>
+      </div>
+
       <div class="box box-warn">
         <div class="box-icon">⚠️</div>
         <div><strong>L'attacco "Evil Twin"</strong> Un malintenzionato può creare una rete Wi-Fi con lo stesso nome di quella del bar dove ti trovi. Se ti connetti alla rete falsa, tutto il tuo traffico passa attraverso il suo dispositivo. In dubbio, usa i dati mobili.</div>
       </div>
+
+      <div class="box box-tip">
+        <div class="box-icon">🛡️</div>
+        <div><strong>Cos'è una VPN e quando usarla</strong> Una VPN (Virtual Private Network) cifra tutto il traffico internet e lo instrada attraverso un server sicuro — rendendo illeggibile anche la destinazione dei tuoi dati. Usala quando navighi su Wi-Fi pubblici. Opzioni gratuite affidabili: <strong>ProtonVPN</strong> (nessun limite di dati sul piano free). Evita le VPN gratuite sconosciute: potrebbero vendere i tuoi dati.</div>
+      </div>
+
       <div class="box box-tip">
         <div class="box-icon">✅</div>
         <div><strong>Fai subito questo</strong> Vai nelle impostazioni del router di casa (di solito <code>192.168.1.1</code> nel browser), cambia la password di accesso all'interfaccia di amministrazione e verifica che la protezione sia WPA2 o WPA3 — non WEP, che è obsoleto.</div>
       </div>
     </section>
 
-    <!-- S7 -->
-    <section class="guide-section" id="s7">
+    <!-- S8 -->
+    <section class="guide-section" id="s8">
       <div class="section-header">
-        <div class="section-num">7</div>
+        <div class="section-num">8</div>
         <div class="section-titles">
           <h2 class="section-title">Backup: la rete di sicurezza finale</h2>
           <p class="section-subtitle">Non se i dati si perdono — ma quando</p>
@@ -826,7 +937,7 @@ tr:last-child td { border-bottom: none; }
         <div class="highlight-card hc-green">
           <div class="hc-icon">☁️</div>
           <div class="hc-title">Backup su cloud</div>
-          <div class="hc-desc">Automatico, accessibile ovunque. Ideale per foto e documenti.</div>
+          <div class="hc-desc">Automatico, accessibile ovunque. Ideale per foto e documenti. Google Drive, iCloud e OneDrive sono opzioni affidabili.</div>
         </div>
         <div class="highlight-card hc-green">
           <div class="hc-icon">💾</div>
@@ -841,7 +952,7 @@ tr:last-child td { border-bottom: none; }
         <div class="highlight-card">
           <div class="hc-icon">🔐</div>
           <div class="hc-title">Backup cifrato</div>
-          <div class="hc-desc">Se il backup contiene dati sensibili, proteggilo con password.</div>
+          <div class="hc-desc">Se il backup contiene dati sensibili, proteggilo con password. Soprattutto per i backup su disco esterno.</div>
         </div>
       </div>
       <div class="table-wrap">
@@ -860,7 +971,7 @@ tr:last-child td { border-bottom: none; }
       </div>
       <div class="box box-red">
         <div class="box-icon">🚨</div>
-        <div><strong>Ransomware: quando il backup salva tutto</strong> Il ransomware cifra tutti i tuoi file e chiede un riscatto. Se hai un backup recente su un disco scollegato (o su cloud), puoi ripristinare i dati senza pagare nulla. Il backup offline è l'unica vera difesa contro il ransomware.</div>
+        <div><strong>Ransomware: quando il backup salva tutto</strong> Il ransomware cifra tutti i tuoi file e chiede un riscatto. Se hai un backup recente su un disco scollegato o su cloud, puoi ripristinare i dati senza pagare nulla. Il backup offline è l'unica vera difesa contro il ransomware. Un backup cloud sincronizzato in tempo reale non è sufficiente da solo: se il ransomware cifra i file, la sincronizzazione carica anche i file cifrati.</div>
       </div>
       <div class="box box-tip">
         <div class="box-icon">✅</div>
@@ -868,10 +979,47 @@ tr:last-child td { border-bottom: none; }
       </div>
     </section>
 
-    <!-- S8 -->
-    <section class="guide-section" id="s8">
+    <!-- S9 — Passkey (nuova sezione) -->
+    <section class="guide-section" id="s9">
       <div class="section-header">
-        <div class="section-num">8</div>
+        <div class="section-num">9</div>
+        <div class="section-titles">
+          <h2 class="section-title">Il futuro: passkey e autenticazione senza password</h2>
+          <p class="section-subtitle">La password tradizionale sta per diventare obsoleta</p>
+        </div>
+      </div>
+      <p>Le <strong>passkey</strong> sono il successore delle password: un sistema di autenticazione che elimina completamente la necessità di ricordare una stringa segreta. Nel 2026 sono già supportate da Google, Apple, Microsoft e da migliaia di siti web.</p>
+      <div class="box box-future">
+        <div class="box-icon">🔑</div>
+        <div><strong>Come funzionano le passkey</strong> Invece di una password, il tuo dispositivo crea una coppia di chiavi crittografiche. La chiave pubblica va al sito web; quella privata rimane sul tuo dispositivo, protetta dalla biometria (impronta, Face ID). Per accedere, basta sbloccare il telefono — nessuna password da ricordare, nessuna possibilità di phishing sulla password.</div>
+      </div>
+      <div class="highlight-grid">
+        <div class="highlight-card hc-green">
+          <div class="hc-icon">🛡️</div>
+          <div class="hc-title">Immune al phishing</div>
+          <div class="hc-desc">Non c'è nessuna password da rubare. Un sito falso non può sottrarti nulla.</div>
+        </div>
+        <div class="highlight-card hc-green">
+          <div class="hc-icon">⚡</div>
+          <div class="hc-title">Accesso immediato</div>
+          <div class="hc-desc">Impronta digitale o Face ID — nessuna digitazione, nessun codice SMS da aspettare.</div>
+        </div>
+        <div class="highlight-card">
+          <div class="hc-icon">📱</div>
+          <div class="hc-title">Già disponibile</div>
+          <div class="hc-desc">Google, Apple, Microsoft, PayPal, GitHub e molti altri supportano già le passkey. Cercale nelle impostazioni di sicurezza del tuo account.</div>
+        </div>
+      </div>
+      <div class="box box-info">
+        <div class="box-icon">💡</div>
+        <div><strong>Cosa fare adesso</strong> Le passkey non sono ancora universali — per ora convivi con password + 2FA. Ma quando un servizio che usi ti offre la passkey come opzione, accettala: è più sicura e più comoda di qualsiasi password.</div>
+      </div>
+    </section>
+
+    <!-- S10 -->
+    <section class="guide-section" id="s10">
+      <div class="section-header">
+        <div class="section-num">10</div>
         <div class="section-titles">
           <h2 class="section-title">Il tuo piano d'azione</h2>
           <p class="section-subtitle">Cosa fare oggi, questa settimana, questo mese</p>
@@ -882,11 +1030,11 @@ tr:last-child td { border-bottom: none; }
       <ol class="step-list">
         <li class="step-item">
           <strong>Aggiorna tutti i dispositivi</strong>
-          <span>Smartphone, computer, tablet. Installa tutti gli aggiornamenti in attesa e riavvia. È la difesa più semplice e più trascurata.</span>
+          <span>Smartphone, computer, tablet. Inizia dal sistema operativo, poi il browser. Installa tutti gli aggiornamenti in attesa e riavvia.</span>
         </li>
         <li class="step-item">
           <strong>Controlla le tue email su haveibeenpwned.com</strong>
-          <span>Se appare una violazione, cambia subito la password di quell'account — e di tutti quelli dove usavi la stessa.</span>
+          <span>Se appare una violazione, cambia subito la password di quell'account — e di tutti quelli dove usavi la stessa password.</span>
         </li>
         <li class="step-item">
           <strong>Attiva il backup automatico sullo smartphone</strong>
@@ -896,12 +1044,12 @@ tr:last-child td { border-bottom: none; }
       <h3 class="sub-title">📅 Questa settimana (1-2 ore)</h3>
       <ol class="step-list">
         <li class="step-item">
-          <strong>Cambia le password deboli o riutilizzate</strong>
-          <span>Inizia dagli account più importanti: email principale, internet banking, social network. Usa una password diversa per ciascuno.</span>
+          <strong>Attiva il 2FA sull'email principale con un'app authenticator</strong>
+          <span>È il singolo cambiamento più importante che puoi fare. Usa Google Authenticator o Authy — non l'SMS se puoi evitarlo.</span>
         </li>
         <li class="step-item">
-          <strong>Attiva il 2FA sull'email principale</strong>
-          <span>È il singolo cambiamento più importante che puoi fare. L'email è la chiave di tutti gli altri account.</span>
+          <strong>Cambia le password deboli o riutilizzate</strong>
+          <span>Inizia dagli account più importanti: email principale, internet banking, social network. Usa una password diversa per ciascuno.</span>
         </li>
         <li class="step-item">
           <strong>Rivedi i permessi delle app sul telefono</strong>
@@ -912,28 +1060,28 @@ tr:last-child td { border-bottom: none; }
       <ol class="step-list">
         <li class="step-item">
           <strong>Scegli e configura un gestore di password</strong>
-          <span>Una volta configurato, genera password uniche per ogni account — non devi più ricordarle.</span>
+          <span>Bitwarden (gratuito, open source) è la prima scelta. Una volta configurato, genera password uniche per ogni account — non devi più ricordarle.</span>
         </li>
         <li class="step-item">
           <strong>Imposta un backup regolare per il computer</strong>
-          <span>Un disco esterno o un servizio cloud configurato per la sincronizzazione automatica.</span>
+          <span>Un disco esterno + un servizio cloud (Google Drive, iCloud, OneDrive) configurato per la sincronizzazione automatica.</span>
         </li>
         <li class="step-item">
           <strong>Cambia la password del router di casa</strong>
-          <span>Molti router hanno ancora "admin/admin" come credenziali di fabbrica. Accedi all'interfaccia e cambiale.</span>
+          <span>Molti router hanno ancora "admin/admin" come credenziali di fabbrica. Accedi all'interfaccia (di solito 192.168.1.1) e cambiale.</span>
         </li>
         <li class="step-item">
           <strong>Attiva il 2FA su tutti gli account importanti</strong>
-          <span>Banca, email secondaria, servizi dove hai carta di credito salvata.</span>
+          <span>Banca, email secondaria, servizi dove hai carta di credito salvata. Cerca le passkey dove disponibili.</span>
         </li>
       </ol>
       <div class="box box-tip">
         <div class="box-icon">🎯</div>
-        <div><strong>Il principio della sicurezza ragionevole</strong> Non esiste sicurezza assoluta. L'obiettivo non è diventare invulnerabili, ma essere abbastanza difficili da attaccare da non valere la pena. Il 90% dei rischi si elimina con le misure di base: password forti e uniche, aggiornamenti, backup, attenzione al phishing.</div>
+        <div><strong>Il principio della sicurezza ragionevole</strong> Non esiste sicurezza assoluta. L'obiettivo non è diventare invulnerabili, ma essere abbastanza difficili da attaccare da non valere la pena. Il 90% dei rischi si elimina con le misure di base: password forti e uniche, 2FA, aggiornamenti, backup, attenzione al phishing.</div>
       </div>
       <div class="box box-info">
-        <div class="box-icon">📚</div>
-        <div><strong>Prossimamente su Formazione Digitale</strong> Guida completa alla Cybersicurezza: triade CIA, crittografia spiegata semplicemente, sicurezza sullo smartphone e cosa fare se sei già stato attaccato.</div>
+        <div class="box-icon">🔒</div>
+        <div><strong>Vuoi la versione essenziale?</strong> Se cerchi un ripasso rapido dei punti chiave, consulta la <a href="/sicurezza/pillola-cybersicurezza/" style="color:var(--blue-mid);font-weight:600;">Pillola Cybersicurezza</a> — stessi concetti, formato compatto, lettura in 5 minuti.</div>
       </div>
     </section>
 
@@ -945,7 +1093,7 @@ tr:last-child td { border-bottom: none; }
   Risorse di alfabetizzazione digitale libere e gratuite.<br>
   Tutti i contenuti sono rilasciati per uso libero e non commerciale.<br>
   <br>
-  <a href="/index.html" style="color:rgba(255,255,255,.5);font-size:.75rem;">← Torna al portale</a>
+  <a href="/index.html">← Torna al portale</a>
 </footer>
 
 <script>
@@ -953,9 +1101,9 @@ tr:last-child td { border-bottom: none; }
   const bar = document.getElementById('reading-bar');
   if (!bar) return;
   window.addEventListener('scroll', function() {
-    const scrollTop  = window.scrollY;
-    const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
-    bar.style.width  = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
   }, { passive: true });
 })();
 
@@ -984,6 +1132,5 @@ function closeSidebar() {
 </script>
 
 <script src="/scripts/ui.js" defer></script>
-</body><script src="/scripts/ui.js" defer></script>
-
+</body>
 </html>

@@ -84,10 +84,16 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://formazione-digitale.github.io/sicurezza/cybersicurezza-personale/</loc>
-    <lastmod>2026-05-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+	<url>
+	  <loc>https://formazione-digitale.github.io/sicurezza/pillola-cybersicurezza/</loc>
+	  <lastmod>2026-05-05</lastmod>
+	  <changefreq>monthly</changefreq>
+	  <priority>0.8</priority>
+	</url>
+	<url>
+	  <loc>https://formazione-digitale.github.io/sicurezza/guida-cybersicurezza/</loc>
+	  <lastmod>2026-05-05</lastmod>
+	  <changefreq>monthly</changefreq>
+	  <priority>0.8</priority>
+	</url>
 </urlset>

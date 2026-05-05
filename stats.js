@@ -20,6 +20,7 @@ const gcLegacy = [
   { path: '/marketing/Guida_Marketing.html',                                  mergeWith: '/marketing/guida-marketing/' },
   { path: '/marketing/guida-marketing',                                       mergeWith: '/marketing/guida-marketing/' },
   { path: '/marketing/bep-tool.html',                                         mergeWith: '/marketing/break-even-point-tool/' },
+  { path: '/sicurezza/cybersicurezza-personale/',                             mergeWith: '/sicurezza/pillola-cybersicurezza/' },
 ];
 
 // ── Non modificare da qui in poi ────────────────────────────────
