@@ -96,6 +96,9 @@
 .hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .hamburger.is-open span:nth-child(2) { opacity: 0; }
 .hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+@media(min-width:900px) {
+  #hamburger-btn { display: none; }
+}
 
 /* Layout a griglia */
 .guide-layout {
@@ -254,19 +257,40 @@ code { font-family: 'Courier New', monospace; font-size: .88em; background: var(
 .step-list { padding-left: 0; list-style: none; counter-reset: steps; margin: 1rem 0; }
 .step-item {
   counter-increment: steps;
-  display: flex; gap: .85rem; align-items: flex-start;
-  padding: .75rem 0; border-bottom: 1px solid var(--blue-light);
+  display: grid;
+  grid-template-columns: 32px 1fr 1fr;
+  gap: 0 1rem;
+  align-items: start;
+  padding: .85rem 0;
+  border-bottom: 1px solid var(--blue-light);
 }
 .step-item:last-child { border-bottom: none; }
 .step-item::before {
   content: counter(steps);
   display: inline-flex; align-items: center; justify-content: center;
-  min-width: 26px; height: 26px;
+  width: 26px; height: 26px;
   background: var(--blue-mid); color: #fff;
-  border-radius: 50%; font-size: .8rem; font-weight: 700; flex-shrink: 0; margin-top: .1rem;
+  border-radius: 50%; font-size: .8rem; font-weight: 700;
+  grid-row: 1; grid-column: 1;
+  margin-top: .15rem;
 }
-.step-item strong { display: block; color: var(--blue-dark); margin-bottom: .2rem; font-size: .95rem; }
-.step-item span { font-size: .88rem; color: var(--gray-mid); line-height: 1.55; }
+.step-item strong {
+  grid-column: 2; grid-row: 1;
+  color: var(--blue-dark); font-size: .92rem; line-height: 1.4;
+  align-self: start;
+}
+.step-item span {
+  grid-column: 3; grid-row: 1;
+  font-size: .88rem; color: var(--gray-mid); line-height: 1.55;
+}
+
+@media(max-width:650px) {
+  .step-item {
+    grid-template-columns: 32px 1fr;
+  }
+  .step-item strong { grid-column: 2; }
+  .step-item span   { grid-column: 2; grid-row: 2; margin-top: .25rem; }
+}
 
 /* Password strength visualizer */
 .pwd-demo {
