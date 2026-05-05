@@ -102,19 +102,19 @@ body {
 /* ── HEADER NAV LINKS ── */
 .header-nav { display: flex; align-items: center; gap: 1.5rem; }
 .header-nav-link {
-  font-size: .85rem; font-weight: 600;
-  color: #fff; text-decoration: none;
-  letter-spacing: .02em;
-  opacity: .85;
+  font-size: .85rem; font-weight: 700;
+  color: #fff;
+  opacity: 1;
+  text-shadow: 0 1px 3px rgba(0,0,0,.2);
   transition: opacity .2s;
 }
 .header-nav-link:hover { opacity: 1; }
 
 /* ── HEADER PILL BUTTONS (Chi sono / Contatti / Accedi) ── */
 .header-pill-btn {
-  background: rgba(255,255,255,.1);
-  border: 1px solid rgba(255,255,255,.25);
-  color: rgba(255,255,255,.85);
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.4);
+  color: #fff;
   border-radius: 20px;
   padding: 5px 14px;
   font-size: .8rem;
