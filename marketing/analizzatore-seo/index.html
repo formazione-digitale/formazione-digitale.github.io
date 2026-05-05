@@ -558,7 +558,8 @@ function cleanHeadInput(raw) {
 function parseHead(raw) {
   const clean = cleanHeadInput(raw);
   const doc = new DOMParser().parseFromString(
-    '<!DOCTYPE html><html>' + clean + '<body></body></html>', 'text/html'
+    '<!DOCTYPE html><html>' + clean + '<body></body><script src="/scripts/ui.js" defer></script>
+</html>', 'text/html'
   );
   return doc.head;
 }
