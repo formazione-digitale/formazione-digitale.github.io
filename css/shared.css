@@ -99,6 +99,35 @@ body {
 #hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 @media(min-width:900px) { #hamburger { display: none; } }
 
+/* ── HEADER NAV LINKS ── */
+.header-nav { display: flex; align-items: center; gap: 1.5rem; }
+.header-nav-link {
+  font-size: .85rem; font-weight: 600;
+  color: #fff; text-decoration: none;
+  letter-spacing: .02em;
+  opacity: .85;
+  transition: opacity .2s;
+}
+.header-nav-link:hover { opacity: 1; }
+
+/* ── HEADER PILL BUTTONS (Chi sono / Contatti / Accedi) ── */
+.header-pill-btn {
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.25);
+  color: rgba(255,255,255,.85);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: .8rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+  white-space: nowrap;
+}
+.header-pill-btn:hover {
+  background: rgba(255,255,255,.2);
+  color: #fff;
+}
+
 /* ── 5. SIDEBAR ──────────────────────────────────────────────────── */
 #sidebar {
   position: fixed; top: var(--header-h); left: 0; bottom: 0; z-index: 90;

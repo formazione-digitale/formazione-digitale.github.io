@@ -762,21 +762,22 @@ body.modal-open { overflow: hidden; }
 
 <!-- ── HEADER ──────────────────────────────────────────────────── -->
 <header>
-  <div class="header-brand">
-    <div class="header-name">Formazione Digitale</div>
-    <div class="header-tag">Risorse di alfabetizzazione digitale</div>
-  </div>
-  <div style="flex:1;"></div>
-  <div class="header-right">
-    <nav class="header-nav">
-      <a href="#guide">Guide</a>
-      <a href="#strumenti">Strumenti</a>
-      <a href="#pillole">Pillole</a>
-    </nav>
-    <button onclick="openAbout()" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); color:rgba(255,255,255,0.85); border-radius:20px; padding:5px 14px; font-size:0.8rem; cursor:pointer; font-family:inherit; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">👤 Chi sono</button>
-    <button class="btn-contact" onclick="openModal()">✉ Contatti</button>
-    <button id="auth-btn" onclick="openAuthModal()">👤 Accedi</button>
-  </div>
+	<div class="header-brand">
+		<div class="header-name">Formazione Digitale</div>
+		<div class="header-tag">Risorse di alfabetizzazione digitale</div>
+	</div>
+	<div style="flex:1;"></div>
+	<div class="header-right">
+	  <nav class="header-nav">
+		<a class="header-nav-link" href="#guide">Guide</a>
+		<a class="header-nav-link" href="#strumenti">Strumenti</a>
+		<a class="header-nav-link" href="#pillole">Pillole</a>
+	  </nav>
+	  <div class="header-sep"></div>
+	  <button class="header-pill-btn" onclick="openAbout()">👤 Chi sono</button>
+	  <button class="header-pill-btn" onclick="openModal()">✉ Contatti</button>
+	  <button class="header-pill-btn" onclick="openAuthModal()">🔒 Accedi</button>
+	</div>
 </header>
 
 <!-- ── HERO ────────────────────────────────────────────────────── -->
