@@ -503,7 +503,7 @@ function buildMap() {
     const secEl = mkNode('node-section ' + sl.cls, sl.secX, SEC_Y, sl.secW, `
       <div class="n-emoji">${sl.emoji}</div>
       <div class="n-label">${sl.label}</div>
-      <div class="n-count">${sl.items.length} risorsa${sl.items.length !== 1 ? 'e' : ''}</div>
+      <div class="n-count">${sl.items.length} ${sl.items.length !== 1 ? 'risorse' : 'risorsa'}</div>
     `);
     secEl.dataset.cat = sl.id;
     world.appendChild(secEl);
