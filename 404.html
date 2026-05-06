@@ -50,7 +50,7 @@ main {
 }
 
 .error-box {
-  max-width: 520px; width: 100%;
+  max-width: 580px; width: 100%;
   text-align: center;
   animation: fadeUp .5s both;
 }
@@ -102,13 +102,89 @@ main {
   font-size: .95rem;
   color: var(--gray-mid);
   line-height: 1.7;
-  margin-bottom: 2rem;
-  max-width: 380px;
+  margin-bottom: 1.5rem;
+  max-width: 400px;
   margin-left: auto; margin-right: auto;
 }
 
+/* ── MINI GAME ── */
+.mini-game-box {
+  background: var(--white);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem 1.25rem;
+  margin-bottom: 1.75rem;
+  box-shadow: 0 2px 16px rgba(31,78,121,.08);
+}
+
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: .75rem;
+}
+
+.game-title {
+  font-size: .72rem; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--blue-mid);
+}
+
+.game-score-box {
+  display: flex; gap: 1rem; align-items: center;
+}
+
+.game-score {
+  font-size: .78rem; color: var(--gray-mid);
+}
+
+.game-score strong {
+  font-family: 'Courier New', monospace;
+  font-size: .95rem;
+  color: var(--blue-dark);
+  font-weight: 700;
+}
+
+.game-best {
+  font-size: .72rem; color: var(--gray-mid);
+}
+.game-best strong {
+  font-family: 'Courier New', monospace;
+  color: var(--gray-dark);
+}
+
+#snakeCanvas {
+  display: block;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  border-radius: 6px;
+  border: 1.5px solid var(--blue-light);
+  cursor: pointer;
+  touch-action: none;
+  background: #0A1628;
+}
+
+.game-hint {
+  font-size: .72rem; color: var(--gray-mid);
+  margin-top: .6rem;
+  line-height: 1.5;
+}
+
+.game-hint kbd {
+  display: inline-block;
+  background: var(--gray-light);
+  border: 1px solid #ccc;
+  border-bottom: 2px solid #bbb;
+  border-radius: 3px;
+  padding: .1rem .4rem;
+  font-size: .68rem;
+  font-family: var(--font-body);
+}
+
+/* ── ACTIONS ── */
 .error-actions {
   display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap;
+  margin-bottom: 1.75rem;
 }
 
 .btn-primary {
@@ -140,9 +216,8 @@ main {
   transform: translateY(-2px);
 }
 
-/* Suggerimenti */
+/* ── SUGGESTIONS ── */
 .error-suggestions {
-  margin-top: 2.5rem;
   background: var(--white);
   border: 1px solid var(--blue-light);
   border-radius: var(--radius);
@@ -202,14 +277,34 @@ footer strong { color: rgba(255,255,255,.9); }
     <h1 class="error-title">Questa pagina non esiste</h1>
     <p class="error-desc">
       Il link che hai seguito potrebbe essere sbagliato, scaduto,
-      o la risorsa potrebbe essere stata spostata.
+      o la risorsa potrebbe essere stata spostata.<br>
+      Nel frattempo… guida il serpente binario!
     </p>
+
+    <!-- ── SNAKE GAME ── -->
+    <div class="mini-game-box">
+      <div class="game-header">
+        <div class="game-title">🐍 Binary Snake</div>
+        <div class="game-score-box">
+          <div class="game-score">Punti: <strong id="score">0</strong></div>
+          <div class="game-best">Record: <strong id="best">0</strong></div>
+        </div>
+      </div>
+
+      <canvas id="snakeCanvas" width="520" height="260"></canvas>
+
+      <p class="game-hint">
+        Clicca sul riquadro o premi <kbd>Space</kbd> per iniziare &nbsp;·&nbsp;
+        <kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> per muoverti &nbsp;·&nbsp;
+        Su mobile: scorri col dito
+      </p>
+    </div>
 
     <div class="error-actions">
       <a href="/" class="btn-primary">
         Torna alla homepage <span class="arrow">→</span>
       </a>
-      <a href="mappa.html" class="btn-secondary">
+      <a href="/mappa.html" class="btn-secondary">
         🗺 Vedi la mappa
       </a>
     </div>
@@ -251,6 +346,324 @@ footer strong { color: rgba(255,255,255,.9); }
   <strong>Formazione Digitale</strong> — Guide pratiche, strumenti e pillole di alfabetizzazione digitale.
 </footer>
 
-</body><script src="/scripts/ui.js" defer></script>
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   BINARY SNAKE — Formazione Digitale 404
+   Ogni segmento del corpo mostra un bit alternato (1 0 1 0 ...)
+   Il cibo è un "byte" casuale (es. 0xA3) che si illumina.
+═══════════════════════════════════════════════════════════════ */
 
+(function () {
+  const canvas  = document.getElementById('snakeCanvas');
+  const ctx     = canvas.getContext('2d');
+  const scoreEl = document.getElementById('score');
+  const bestEl  = document.getElementById('best');
+
+  /* ── GRID ── */
+  const COLS = 26;
+  const ROWS = 13;
+  let   CW, CH;   // cell width/height — computed on resize
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const w = Math.min(rect.width - 32, 520);
+    canvas.style.width  = w + 'px';
+    canvas.style.height = (w * (ROWS / COLS)) + 'px';
+    CW = w / COLS;
+    CH = (w * (ROWS / COLS)) / ROWS;
+  }
+
+  /* ── PALETTE ── */
+  const BG        = '#0A1628';
+  const GRID_CLR  = '#0E1E38';
+  const HEAD_CLR  = '#2E75B6';   // blue-mid
+  const BIT1_CLR  = '#58A6E8';   // corpo bit "1"
+  const BIT0_CLR  = '#1C4A70';   // corpo bit "0"
+  const FOOD_CLR  = '#FFD700';   // giallo oro
+  const FOOD_GLOW = 'rgba(255,215,0,0.35)';
+  const TEXT_CLR  = '#FFFFFF';
+  const DEAD_CLR  = '#E55353';
+  const DEAD_BG   = 'rgba(10,22,40,0.82)';
+  const MONO      = "'Courier New', monospace";
+
+  /* ── STATE ── */
+  let snake, dir, nextDir, food, score, best, state, frameId, lastTime, interval;
+
+  const INIT_SPEED  = 160;   // ms per step
+  const MIN_SPEED   = 65;
+
+  function speedFor(sc) {
+    return Math.max(MIN_SPEED, INIT_SPEED - Math.floor(sc / 3) * 12);
+  }
+
+  function initGame() {
+    snake   = [{ x: 6, y: 6 }, { x: 5, y: 6 }, { x: 4, y: 6 }];
+    dir     = { x: 1, y: 0 };
+    nextDir = { x: 1, y: 0 };
+    score   = 0;
+    state   = 'idle';   // idle | running | dead
+    food    = spawnFood();
+    scoreEl.textContent = 0;
+    lastTime = 0;
+    interval = INIT_SPEED;
+  }
+
+  function spawnFood() {
+    let pos;
+    do {
+      pos = { x: Math.floor(Math.random() * COLS), y: Math.floor(Math.random() * ROWS) };
+    } while (snake.some(s => s.x === pos.x && s.y === pos.y));
+    // random byte label  e.g. "A3"
+    pos.label = (Math.floor(Math.random() * 256)).toString(16).toUpperCase().padStart(2, '0');
+    return pos;
+  }
+
+  /* ── DRAW ── */
+  function draw(now) {
+    const W = canvas.width  = Math.round(CW * COLS);
+    const H = canvas.height = Math.round(CH * ROWS);
+
+    // Background
+    ctx.fillStyle = BG;
+    ctx.fillRect(0, 0, W, H);
+
+    // Grid lines
+    ctx.strokeStyle = GRID_CLR;
+    ctx.lineWidth   = 0.5;
+    for (let c = 1; c < COLS; c++) {
+      ctx.beginPath(); ctx.moveTo(c * CW, 0); ctx.lineTo(c * CW, H); ctx.stroke();
+    }
+    for (let r = 1; r < ROWS; r++) {
+      ctx.beginPath(); ctx.moveTo(0, r * CH); ctx.lineTo(W, r * CH); ctx.stroke();
+    }
+
+    // Food — pulsating glow
+    const pulse = 0.6 + 0.4 * Math.sin(now / 300);
+    const fx = (food.x + 0.5) * CW;
+    const fy = (food.y + 0.5) * CH;
+    const gr = ctx.createRadialGradient(fx, fy, 0, fx, fy, CW * 0.9 * pulse);
+    gr.addColorStop(0, FOOD_GLOW);
+    gr.addColorStop(1, 'transparent');
+    ctx.fillStyle = gr;
+    ctx.fillRect(food.x * CW - CW, food.y * CH - CH, CW * 3, CH * 3);
+
+    // Food cell
+    drawCell(food.x, food.y, FOOD_CLR, 0.18);
+    ctx.fillStyle = '#1A1200';
+    ctx.font      = `bold ${Math.round(CW * 0.38)}px ${MONO}`;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('0x' + food.label, (food.x + 0.5) * CW, (food.y + 0.5) * CH);
+
+    // Snake body (tail → neck, skip head)
+    for (let i = snake.length - 1; i >= 1; i--) {
+      const bit  = i % 2;          // alternates 0/1
+      const clr  = bit ? BIT1_CLR : BIT0_CLR;
+      drawCell(snake[i].x, snake[i].y, clr, 0.14);
+
+      ctx.fillStyle = bit ? '#A8D4F8' : '#2A6090';
+      ctx.font      = `bold ${Math.round(CW * 0.42)}px ${MONO}`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(String(bit), (snake[i].x + 0.5) * CW, (snake[i].y + 0.5) * CH);
+    }
+
+    // Snake head
+    const isDead = state === 'dead';
+    drawCell(snake[0].x, snake[0].y, isDead ? DEAD_CLR : HEAD_CLR, 0.15);
+    ctx.fillStyle = '#fff';
+    ctx.font      = `bold ${Math.round(CW * 0.38)}px ${MONO}`;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('>>',
+      (snake[0].x + 0.5) * CW,
+      (snake[0].y + 0.5) * CH);
+
+    // ── OVERLAY SCREENS ──
+    if (state === 'idle') {
+      drawOverlay(W, H, '🐍 Binary Snake',
+        'Premi Spazio o clicca per iniziare',
+        'Mangia i byte esadecimali\ne cresci infinito!');
+    } else if (state === 'dead') {
+      drawOverlay(W, H, 'SEGMENTATION FAULT',
+        `Punteggio: ${score}  ·  Record: ${best}`,
+        'Premi Spazio o clicca per riprovare');
+    }
+  }
+
+  function drawCell(gx, gy, color, radius) {
+    const pad = 2;
+    const x = gx * CW + pad;
+    const y = gy * CH + pad;
+    const w = CW - pad * 2;
+    const h = CH - pad * 2;
+    const r = Math.min(w * radius, 4);
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.roundRect(x, y, w, h, r);
+    ctx.fill();
+  }
+
+  function drawOverlay(W, H, title, sub, hint) {
+    ctx.fillStyle = DEAD_BG;
+    ctx.fillRect(0, 0, W, H);
+
+    const cy = H / 2;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+
+    ctx.font      = `bold ${Math.round(H * 0.13)}px ${MONO}`;
+    ctx.fillStyle = state === 'dead' ? DEAD_CLR : BIT1_CLR;
+    ctx.fillText(title, W / 2, cy - H * 0.17);
+
+    ctx.font      = `${Math.round(H * 0.085)}px ${MONO}`;
+    ctx.fillStyle = TEXT_CLR;
+    ctx.fillText(sub, W / 2, cy + H * 0.01);
+
+    ctx.font      = `${Math.round(H * 0.07)}px ${MONO}`;
+    ctx.fillStyle = 'rgba(255,255,255,0.45)';
+    const lines = hint.split('\n');
+    lines.forEach((l, i) => ctx.fillText(l, W / 2, cy + H * 0.14 + i * H * 0.09));
+  }
+
+  /* ── STEP ── */
+  function step() {
+    dir = { ...nextDir };
+    const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+
+    // Wall collision
+    if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS) {
+      return die();
+    }
+    // Self collision
+    if (snake.some(s => s.x === head.x && s.y === head.y)) {
+      return die();
+    }
+
+    snake.unshift(head);
+
+    // Food eaten?
+    if (head.x === food.x && head.y === food.y) {
+      score++;
+      scoreEl.textContent = score;
+      if (score > best) { best = score; bestEl.textContent = best; }
+      food     = spawnFood();
+      interval = speedFor(score);
+      // don't remove tail — snake grows
+    } else {
+      snake.pop();
+    }
+  }
+
+  function die() {
+    state = 'dead';
+    cancelAnimationFrame(frameId);
+  }
+
+  /* ── GAME LOOP ── */
+  let accumulator = 0;
+
+  function loop(ts) {
+    if (state !== 'running') return;
+    if (!lastTime) lastTime = ts;
+    accumulator += ts - lastTime;
+    lastTime = ts;
+
+    while (accumulator >= interval) {
+      step();
+      accumulator -= interval;
+      if (state !== 'running') break;
+    }
+
+    resize();
+    draw(ts);
+    if (state === 'running') frameId = requestAnimationFrame(loop);
+    else draw(ts);  // final frame (dead screen)
+  }
+
+  function startGame() {
+    cancelAnimationFrame(frameId);
+    initGame();
+    state       = 'running';
+    lastTime    = 0;
+    accumulator = 0;
+    frameId     = requestAnimationFrame(loop);
+  }
+
+  /* ── IDLE / DEAD LOOP (just draw) ── */
+  function idleLoop(ts) {
+    if (state === 'running') return;
+    resize();
+    draw(ts);
+    requestAnimationFrame(idleLoop);
+  }
+
+  /* ── INPUT ── */
+  const DIRS = {
+    ArrowUp:    { x: 0, y: -1 }, ArrowDown:  { x: 0, y: 1 },
+    ArrowLeft:  { x: -1, y: 0 }, ArrowRight: { x: 1, y: 0 },
+    w: { x: 0, y: -1 }, s: { x: 0, y: 1 },
+    a: { x: -1, y: 0 }, d: { x: 1, y: 0 },
+  };
+
+  document.addEventListener('keydown', e => {
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      if (state !== 'running') startGame();
+      return;
+    }
+    if (state !== 'running') return;
+    const d = DIRS[e.key];
+    if (!d) return;
+    // prevent 180° reversal
+    if (d.x === -dir.x && d.y === -dir.y) return;
+    e.preventDefault();
+    nextDir = d;
+  });
+
+  canvas.addEventListener('click', () => {
+    if (state !== 'running') startGame();
+  });
+
+  // Touch swipe
+  let touchStartX = 0, touchStartY = 0;
+  canvas.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    if (state !== 'running') startGame();
+  }, { passive: true });
+
+  canvas.addEventListener('touchend', e => {
+    if (state !== 'running') return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+    let d;
+    if (Math.abs(dx) > Math.abs(dy)) {
+      d = dx > 0 ? { x: 1, y: 0 } : { x: -1, y: 0 };
+    } else {
+      d = dy > 0 ? { x: 0, y: 1 } : { x: 0, y: -1 };
+    }
+    if (d.x === -dir.x && d.y === -dir.y) return;
+    nextDir = d;
+  }, { passive: true });
+
+  /* ── INIT ── */
+  best = parseInt(localStorage.getItem('fd_snake_best') || '0');
+  bestEl.textContent = best;
+
+  // Save best on unload
+  window.addEventListener('beforeunload', () => {
+    if (score > best) localStorage.setItem('fd_snake_best', score);
+    // also save best already stored
+    const stored = parseInt(localStorage.getItem('fd_snake_best') || '0');
+    if (best > stored) localStorage.setItem('fd_snake_best', best);
+  });
+
+  window.addEventListener('resize', () => { resize(); });
+
+  resize();
+  initGame();
+  requestAnimationFrame(idleLoop);
+
+})();
+</script>
+
+</body>
 </html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Pagina non trovata | Formazione Digitale</title>
+<meta name="robots" content="noindex, follow">
+<link rel="stylesheet" href="/css/shared.css?v=1">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue-dark:   #1F4E79;
+  --blue-mid:    #2E75B6;
+  --blue-light:  #D6E8F7;
+  --blue-pale:   #EBF3FC;
+  --gray-dark:   #2C2C2C;
+  --gray-mid:    #666;
+  --gray-light:  #F5F5F5;
+  --white:       #FFFFFF;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --radius: 10px;
+  --transition: .22s cubic-bezier(.4,0,.2,1);
+}
+
+html, body {
+  height: 100%;
+  font-family: var(--font-body);
+  color: var(--gray-dark);
+  background: #F8FBFF;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--blue-dark);
+  height: 58px;
+  display: flex; align-items: center;
+  padding: 0 2rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,.2);
+}
+.header-name  { font-family: var(--font-display); font-size: 1.1rem; color: #fff; text-decoration: none; }
+.header-tag   { font-size: .68rem; color: var(--blue-light); font-weight: 300; letter-spacing: .04em; margin-top: 1px; }
+
+/* ── MAIN ── */
+main {
+  min-height: calc(100vh - 58px - 80px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 3rem 1.5rem;
+}
+
+.error-box {
+  max-width: 520px; width: 100%;
+  text-align: center;
+  animation: fadeUp .5s both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.error-code {
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 18vw, 9rem);
+  line-height: 1;
+  color: var(--blue-light);
+  letter-spacing: -.02em;
+  margin-bottom: .25rem;
+  position: relative;
+  display: inline-block;
+}
+
+.error-code::after {
+  content: '404';
+  position: absolute; inset: 0;
+  color: var(--blue-dark);
+  clip-path: inset(0 0 40% 0);
+}
+
+.error-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 1rem;
+  animation: wobble 3s ease-in-out infinite;
+}
+
+@keyframes wobble {
+  0%, 100% { transform: rotate(-4deg); }
+  50%       { transform: rotate(4deg); }
+}
+
+.error-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  color: var(--blue-dark);
+  margin-bottom: .75rem;
+  line-height: 1.15;
+}
+
+.error-desc {
+  font-size: .95rem;
+  color: var(--gray-mid);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  max-width: 380px;
+  margin-left: auto; margin-right: auto;
+}
+
+.error-actions {
+  display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: var(--blue-dark); color: #fff;
+  text-decoration: none; border-radius: 50px;
+  padding: .7rem 1.6rem; font-size: .88rem; font-weight: 600;
+  font-family: var(--font-body);
+  transition: background var(--transition), transform .15s ease;
+}
+.btn-primary:hover { background: var(--blue-mid); transform: translateY(-2px); }
+.btn-primary .arrow {
+  display: inline-block;
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1);
+}
+.btn-primary:hover .arrow { transform: translateX(4px); }
+
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: transparent; color: var(--blue-mid);
+  text-decoration: none; border-radius: 50px;
+  border: 1.5px solid var(--blue-light);
+  padding: .7rem 1.4rem; font-size: .88rem; font-weight: 500;
+  font-family: var(--font-body);
+  transition: border-color var(--transition), color var(--transition), transform .15s ease;
+}
+.btn-secondary:hover {
+  border-color: var(--blue-mid);
+  transform: translateY(-2px);
+}
+
+/* Suggerimenti */
+.error-suggestions {
+  margin-top: 2.5rem;
+  background: var(--white);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+}
+
+.error-suggestions h2 {
+  font-size: .72rem; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--blue-mid);
+  margin-bottom: .85rem;
+}
+
+.suggestion-list {
+  list-style: none;
+  display: flex; flex-direction: column; gap: .5rem;
+}
+
+.suggestion-list a {
+  display: flex; align-items: center; gap: .6rem;
+  color: var(--gray-dark); text-decoration: none;
+  font-size: .87rem; padding: .4rem .2rem;
+  border-radius: 6px;
+  transition: color var(--transition), padding-left var(--transition);
+}
+.suggestion-list a:hover {
+  color: var(--blue-mid);
+  padding-left: .5rem;
+}
+.suggestion-list .s-emoji { font-size: 1rem; flex-shrink: 0; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--blue-dark);
+  color: rgba(255,255,255,.6);
+  text-align: center; padding: 1.25rem 1.5rem;
+  font-size: .8rem;
+}
+footer strong { color: rgba(255,255,255,.9); }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <a class="header-name" href="/">Formazione Digitale</a>
+    <div class="header-tag">Risorse di alfabetizzazione digitale</div>
+  </div>
+</header>
+
+<main>
+  <div class="error-box">
+
+    <span class="error-icon">🗺️</span>
+    <div class="error-code">404</div>
+
+    <h1 class="error-title">Questa pagina non esiste</h1>
+    <p class="error-desc">
+      Il link che hai seguito potrebbe essere sbagliato, scaduto,
+      o la risorsa potrebbe essere stata spostata.
+    </p>
+
+    <div class="error-actions">
+      <a href="/" class="btn-primary">
+        Torna alla homepage <span class="arrow">→</span>
+      </a>
+      <a href="mappa.html" class="btn-secondary">
+        🗺 Vedi la mappa
+      </a>
+    </div>
+
+    <div class="error-suggestions">
+      <h2>Forse stavi cercando…</h2>
+      <ul class="suggestion-list">
+        <li>
+          <a href="/intelligenza-artificiale/guida-prompting/">
+            <span class="s-emoji">🤖</span>
+            Guida al Prompting con l'IA
+          </a>
+        </li>
+        <li>
+          <a href="/elaborazione-testi/guida-word/">
+            <span class="s-emoji">📝</span>
+            Microsoft Word — Guida pratica
+          </a>
+        </li>
+        <li>
+          <a href="/networking/subnet-calculator/">
+            <span class="s-emoji">🌐</span>
+            Calcolatore di Sottorete
+          </a>
+        </li>
+        <li>
+          <a href="/intelligenza-artificiale/prompt-builder/">
+            <span class="s-emoji">📋</span>
+            Prompt Builder
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <strong>Formazione Digitale</strong> — Guide pratiche, strumenti e pillole di alfabetizzazione digitale.
+</footer>
+
+</body><script src="/scripts/ui.js" defer></script>
+
+</html>
