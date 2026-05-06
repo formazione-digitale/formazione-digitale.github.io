@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://formazione-digitale.github.io/sitemap.xml
+Sitemap: https://formazione-digitale.it/sitemap.xml
+
