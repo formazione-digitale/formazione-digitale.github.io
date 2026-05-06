@@ -1,11 +1,14 @@
 Elenco del percorso delle cartelle per il volume Acer
-Numero di serie del volume: 00000042-544D:3F7C
+Numero di serie del volume: 00000030-544D:3F7C
 C:.
 |   404.html
+|   404_.html
 |   auth.js
+|   cookie-policy.html
 |   index.html
 |   manifest.json
 |   mappa.html
+|   privacy-policy.html
 |   robots.txt
 |   site.webmanifest
 |   sitemap.xml
@@ -17,6 +20,10 @@ C:.
 +---.github
 |   \---workflows
 |           supabase-keep-alive.yml
+|           
++---competenze-digitali
+|   \---pillola-wikipedia-speedrun
+|           index.html
 |           
 +---css
 |       shared.css
@@ -30,6 +37,7 @@ C:.
 |               
 +---docs
 |   |   ARCHITETTURA_Formazione_Digitale.docx
+|   |   ARCHITETTURA_Formazione_Digitale_v2.docx
 |   |   Formazione_Digitale_Guida_Collaboratori.docx
 |   |   MAPPA_DigComp_metodo.md
 |   |   MAPPA_DigComp_metodo_v1.3.md
@@ -92,6 +100,9 @@ C:.
 |           index.html
 |           
 +---scripts
+|       aggiorna_dominio.py
+|       aggiungi_footer_index.py
+|       aggiungi_link_footer.py
 |       genera_sitemap.py
 |       inject_after.py
 |       replace_in_files.py

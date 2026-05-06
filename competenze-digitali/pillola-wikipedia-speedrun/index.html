@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wikipedia Speedrun — Naviga il Web come un Pro · Formazione Digitale</title>
+<meta name="description" content="Scopri i Wikipedia Speedrun: un gioco che allena navigazione ipertestuale, lettura rapida e filtraggio delle informazioni. DigComp 1.1 e 2.1 in azione.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://formazione-digitale.it/competenze-digitali/pillola-wikipedia-speedrun/">
+<link rel="icon" type="image/png" href="/img/favicon.png">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="dns-prefetch" href="//gc.zgo.at">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#1F4E79">
+
+<meta property="og:title" content="Wikipedia Speedrun — Naviga il Web come un Pro · Formazione Digitale">
+<meta property="og:description" content="Un gioco per allenare navigazione ipertestuale, lettura rapida e filtraggio delle informazioni. DigComp 1.1 e 2.1 in azione.">
+<meta property="og:url" content="https://formazione-digitale.it/competenze-digitali/pillola-wikipedia-speedrun/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Wikipedia Speedrun — Naviga il Web come un Pro">
+<meta name="twitter:description" content="Un gioco che allena competenze digitali reali: navigazione ipertestuale, lettura rapida, filtraggio delle informazioni.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Wikipedia Speedrun — Naviga il Web come un Pro",
+  "description": "Pillola digitale sui Wikipedia Speedrun: come funzionano e quali competenze digitali sviluppano.",
+  "url": "https://formazione-digitale.it/competenze-digitali/pillola-wikipedia-speedrun/",
+  "inLanguage": "it",
+  "author": { "@type": "Person", "name": "Cristiano De Pasquale" },
+  "provider": { "@type": "WebSite", "name": "Formazione Digitale", "url": "https://formazione-digitale.it" },
+  "educationalLevel": "Beginner",
+  "keywords": "Wikipedia, speedrun, navigazione web, link ipertestuali, competenze digitali, DigComp, gamification"
+}
+</script>
+
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="stylesheet" href="/css/shared.css?v=2">
+<style>
+
+/* ── DEMO LINK GRAPH ── */
+.link-graph {
+  background: #fff;
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin: 1.25rem 0;
+  text-align: center;
+  overflow-x: auto;
+}
+.lg-title {
+  font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--blue-mid);
+  margin-bottom: 1.2rem;
+}
+.lg-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+.lg-node {
+  background: var(--blue-pale);
+  border: 1.5px solid var(--blue-light);
+  border-radius: 8px;
+  padding: .5rem .9rem;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--blue-dark);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.lg-node.start {
+  background: var(--blue-dark);
+  border-color: var(--blue-dark);
+  color: #fff;
+}
+.lg-node.end {
+  background: var(--green-dark);
+  border-color: var(--green-dark);
+  color: #fff;
+}
+.lg-node.current {
+  background: var(--amber-light);
+  border-color: var(--amber-dark);
+  color: var(--amber-dark);
+}
+.lg-arrow {
+  color: var(--gray-mid);
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.lg-steps {
+  display: flex; gap: .4rem; flex-wrap: wrap; justify-content: center;
+  margin-top: .75rem;
+}
+.lg-step-badge {
+  font-size: .7rem; padding: .2rem .6rem;
+  border-radius: 20px;
+  background: var(--blue-pale);
+  color: var(--blue-dark);
+  border: 1px solid var(--blue-light);
+}
+
+/* ── COMPETENZE GRID ── */
+.comp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: .75rem;
+  margin: 1.25rem 0;
+}
+.comp-card {
+  background: var(--white);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  position: relative;
+  overflow: hidden;
+}
+.comp-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.comp-card.digcomp::before  { background: var(--blue-mid); }
+.comp-card.digcompedu::before { background: var(--green-dark); }
+.comp-card.indire::before   { background: var(--amber-dark); }
+.comp-icon  { font-size: 1.4rem; margin-bottom: .5rem; }
+.comp-badge {
+  display: inline-block;
+  font-size: .62rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; padding: .18rem .55rem;
+  border-radius: 20px; margin-bottom: .4rem;
+}
+.comp-badge.digcomp    { background: var(--blue-pale);   color: var(--blue-dark); }
+.comp-badge.digcompedu { background: var(--green-light); color: var(--green-dark); }
+.comp-badge.indire     { background: var(--amber-light); color: var(--amber-dark); }
+.comp-title { font-weight: 700; font-size: .88rem; color: var(--gray-dark); margin-bottom: .3rem; }
+.comp-desc  { font-size: .78rem; color: var(--gray-mid); line-height: 1.5; }
+
+/* ── REGOLE SPEEDRUN ── */
+.rules-list {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  margin: 1.1rem 0;
+}
+.rule-item {
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+  background: var(--white);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  padding: .8rem 1rem;
+}
+.rule-icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  margin-top: .05rem;
+}
+.rule-body strong { font-size: .88rem; color: var(--gray-dark); display: block; margin-bottom: .2rem; }
+.rule-body span   { font-size: .8rem; color: var(--gray-mid); line-height: 1.5; }
+.rule-ok   { border-left: 3px solid var(--green-dark); }
+.rule-no   { border-left: 3px solid #c5221f; }
+
+/* ── TECNICA PRATICA ── */
+.technique-steps {
+  counter-reset: tech-counter;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  margin: 1.1rem 0;
+}
+.tech-step {
+  counter-increment: tech-counter;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.tech-num {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--amber-dark);
+  color: #fff;
+  font-weight: 700; font-size: .85rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.tech-body strong { font-size: .9rem; color: var(--gray-dark); display: block; margin-bottom: .2rem; }
+.tech-body p      { font-size: .82rem; color: var(--gray-mid); line-height: 1.55; margin: 0; }
+
+/* ── PROMPT EXAMPLES ── */
+.prompt-examples {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  margin: 1rem 0;
+}
+.prompt-ex {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  background: var(--white);
+  border: 1px solid var(--blue-light);
+  border-radius: 8px;
+  padding: .65rem 1rem;
+  font-size: .84rem;
+}
+.prompt-start { font-weight: 700; color: var(--blue-dark); }
+.prompt-arrow { color: var(--gray-mid); flex-shrink: 0; }
+.prompt-end   { font-weight: 700; color: var(--green-dark); }
+.prompt-diff  {
+  margin-left: auto;
+  font-size: .68rem; font-weight: 600; letter-spacing: .06em;
+  text-transform: uppercase; padding: .18rem .55rem; border-radius: 20px;
+  flex-shrink: 0;
+}
+.diff-easy   { background: var(--green-light); color: var(--green-dark); }
+.diff-medium { background: var(--amber-light); color: var(--amber-dark); }
+.diff-hard   { background: #fce8e6; color: #c5221f; }
+
+/* ── CTA BLOCK ── */
+.cta-block {
+  background: linear-gradient(135deg, var(--blue-dark) 0%, #2A6099 100%);
+  border-radius: var(--radius);
+  padding: 2rem 2rem 1.75rem;
+  text-align: center;
+  margin: 1.5rem 0;
+  color: #fff;
+}
+.cta-block-emoji { font-size: 2.5rem; margin-bottom: .75rem; }
+.cta-block-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem; color: #fff; margin-bottom: .5rem;
+  line-height: 1.2;
+}
+.cta-block-sub {
+  font-size: .88rem; color: rgba(255,255,255,.75);
+  margin-bottom: 1.25rem; line-height: 1.6;
+}
+.cta-block-btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: #fff; color: var(--blue-dark);
+  text-decoration: none; border-radius: 50px;
+  padding: .7rem 1.6rem;
+  font-size: .9rem; font-weight: 700;
+  font-family: var(--font-body);
+  transition: transform .2s ease, box-shadow .2s ease;
+  box-shadow: 0 4px 16px rgba(0,0,0,.2);
+}
+.cta-block-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.28);
+}
+.cta-block-note {
+  font-size: .72rem; color: rgba(255,255,255,.5);
+  margin-top: .9rem;
+}
+
+/* ── DOCENTE BOX ── */
+.docente-box {
+  background: var(--blue-pale);
+  border: 1.5px solid var(--blue-light);
+  border-left: 4px solid var(--blue-mid);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.25rem;
+  margin: 1rem 0;
+}
+.docente-label {
+  font-size: .65rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--blue-mid);
+  margin-bottom: .5rem;
+}
+.docente-box p {
+  font-size: .82rem; color: var(--blue-dark); line-height: 1.6; margin: 0;
+}
+
+/* ── CHECKLIST ── */
+.checklist {
+  list-style: none;
+  padding: 0; margin: 1rem 0;
+  display: flex; flex-direction: column; gap: .5rem;
+}
+.checklist li {
+  display: flex; align-items: flex-start; gap: .65rem;
+  font-size: .88rem; line-height: 1.5; color: var(--gray-dark);
+}
+.checklist li::before {
+  content: '✅';
+  flex-shrink: 0;
+  font-size: .9rem;
+  margin-top: .05rem;
+}
+
+/* ── WIKIPEDIA ANATOMY ── */
+.wiki-anatomy {
+  background: #fff;
+  border: 1.5px solid var(--blue-light);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 1.25rem 0;
+  font-family: var(--font-body);
+}
+.wiki-bar {
+  background: #f8f9fa;
+  border-bottom: 1px solid var(--blue-light);
+  padding: .65rem 1rem;
+  display: flex; align-items: center; gap: .75rem;
+  font-size: .78rem; color: var(--gray-mid);
+}
+.wiki-logo {
+  font-weight: 800; font-size: .95rem; color: var(--gray-dark);
+}
+.wiki-tag {
+  margin-left: auto;
+  font-size: .65rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  background: var(--blue-pale); color: var(--blue-dark);
+  padding: .15rem .55rem; border-radius: 20px;
+}
+.wiki-body { padding: 1rem 1.25rem; }
+.wiki-title { font-family: 'Linux Libertine', 'Georgia', serif; font-size: 1.4rem; color: var(--gray-dark); margin-bottom: .35rem; border-bottom: 1px solid var(--blue-light); padding-bottom: .4rem; }
+.wiki-intro { font-size: .84rem; color: var(--gray-dark); line-height: 1.7; margin-bottom: .75rem; }
+.wiki-intro a { color: #0645ad; text-decoration: underline; cursor: pointer; }
+.wiki-intro a.highlight {
+  background: #fff3cd;
+  border-radius: 3px;
+  padding: 0 2px;
+  font-weight: 600;
+  color: var(--amber-dark);
+  text-decoration: underline;
+  outline: 2px solid var(--amber-dark);
+}
+.wiki-hint {
+  font-size: .7rem; color: var(--amber-dark);
+  background: var(--amber-light);
+  border-radius: 6px; padding: .4rem .8rem;
+  display: inline-flex; align-items: center; gap: .4rem;
+  margin-top: .4rem;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--blue-dark);
+  color: rgba(255,255,255,.6);
+  text-align: center;
+  padding: 2rem 1.5rem;
+  font-size: .8rem;
+  line-height: 1.7;
+}
+footer strong { color: rgba(255,255,255,.9); }
+@media(min-width:900px) { footer { margin-left: var(--nav-w); } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header">
+  <div class="header-left">
+    <button id="hamburger"><span></span><span></span><span></span></button>
+    <a href="/index.html" class="header-back">← Portale</a>
+    <div class="header-sep"></div>
+    <span class="header-logo">⚡ Speedrun</span>
+    <span class="header-sub">Wikipedia come non l'hai mai usata</span>
+  </div>
+</div>
+
+<div id="overlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <a class="nav-item" href="#s1"><span class="nav-num">1</span>Cos'è uno Speedrun</a>
+  <a class="nav-item" href="#s2"><span class="nav-num">2</span>Cosa impari davvero</a>
+  <a class="nav-item" href="#s3"><span class="nav-num">3</span>Le regole del gioco</a>
+  <a class="nav-item" href="#s4"><span class="nav-num">4</span>La tecnica pratica</a>
+  <a class="nav-item" href="#s5"><span class="nav-num">5</span>Prova tu ora</a>
+  <hr class="nav-divider">
+  <a class="nav-item" href="https://wikispeedruns.com/" target="_blank" rel="noopener" style="color:var(--amber-dark);font-weight:600;">
+    <span class="nav-num" style="background:var(--amber-dark);">🏁</span>Gioca su wikispeedruns.com
+  </a>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+
+<!-- COVER -->
+<div class="cover-block">
+  <div class="cover-eyebrow">Formazione Digitale · Pillola digitale · Competenze Digitali</div>
+  <div class="cover-title">Wikipedia Speedrun<br><em>naviga il web come un pro</em></div>
+  <p class="cover-desc">Un gioco dove parti da una pagina Wikipedia e devi raggiungere un'altra seguendo solo i link. Sembra semplice — ma allena competenze digitali reali.</p>
+  <div class="cover-divider"></div>
+  <p class="cover-intro">🎮 Pillola · Gamification · Livello base · ~10 min · DigComp 1.1 · 2.1</p>
+</div>
+
+<!-- 1 -->
+<section class="guide-section" id="s1">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div class="section-titles">
+      <div class="section-title">Cos'è uno Wikipedia Speedrun</div>
+      <div class="section-subtitle">Da Spaghetti alla NASA — usando solo i link</div>
+    </div>
+  </div>
+
+  <p>Immagina questa sfida: parti dalla voce Wikipedia su <strong>Spaghetti</strong> e devi arrivare a <strong>NASA</strong>. Non puoi cercare nulla, non puoi tornare indietro. Puoi solo cliccare i link blu che trovi nel testo. Hai un timer che ticchetta.</p>
+
+  <p>Questo è uno <strong>Wikipedia Speedrun</strong>. Un gioco nato dalla community online che ha trasformato la navigazione ipertestuale in una gara di intelligenza e strategia.</p>
+
+  <div class="link-graph">
+    <div class="lg-title">Esempio di percorso — Spaghetti → NASA</div>
+    <div class="lg-flow">
+      <div class="lg-node start">🍝 Spaghetti</div>
+      <div class="lg-arrow">→</div>
+      <div class="lg-node">Italia</div>
+      <div class="lg-arrow">→</div>
+      <div class="lg-node">Seconda guerra mondiale</div>
+      <div class="lg-arrow">→</div>
+      <div class="lg-node">Stati Uniti</div>
+      <div class="lg-arrow">→</div>
+      <div class="lg-node end">🚀 NASA</div>
+    </div>
+    <div class="lg-steps">
+      <div class="lg-step-badge">4 click</div>
+      <div class="lg-step-badge">~45 secondi</div>
+      <div class="lg-step-badge">Percorso da intermedio</div>
+    </div>
+  </div>
+
+  <div class="box box-info">
+    <div class="box-label">📖 Come funziona Wikipedia in questo gioco</div>
+    <p>Wikipedia è organizzata come una rete di voci collegate. Ogni voce contiene decine o centinaia di <strong>link ipertestuali</strong> (parole in blu) che rimandano ad altre voci. Un buon speedrunner sa che quasi ogni argomento è collegato a quasi ogni altro — basta trovare il percorso giusto.</p>
+  </div>
+
+  <p>Il sito ufficiale per giocare è <strong><a href="https://wikispeedruns.com/" target="_blank" rel="noopener">wikispeedruns.com</a></strong>: propone un prompt del giorno, una modalità allenamento con percorsi classici e la modalità party per giocare in gruppo.</p>
+
+</section>
+
+<hr class="section-divider">
+
+<!-- 2 -->
+<section class="guide-section" id="s2">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div class="section-titles">
+      <div class="section-title">Cosa impari davvero</div>
+      <div class="section-subtitle">Il gioco è il gancio — le competenze sono il valore reale</div>
+    </div>
+  </div>
+
+  <p>Ogni volta che giochi a uno speedrun di Wikipedia, stai allenando — senza accorgertene — quattro competenze digitali fondamentali.</p>
+
+  <div class="comp-grid">
+    <div class="comp-card digcomp">
+      <div class="comp-icon">🔗</div>
+      <div class="comp-badge digcomp">DigComp 1.1</div>
+      <div class="comp-title">Navigare, ricercare e filtrare</div>
+      <div class="comp-desc">L'utente esplora Wikipedia seguendo i link, costruendo un percorso ragionato. Ogni scelta di link è anche un atto di filtraggio: si scarta il non rilevante e si seleziona il pertinente rispetto all'obiettivo.</div>
+    </div>
+    <div class="comp-card digcomp">
+      <div class="comp-icon">🎯</div>
+      <div class="comp-badge digcomp">DigComp 2.1</div>
+      <div class="comp-title">Interagire con tecnologie digitali</div>
+      <div class="comp-desc">Il gioco richiede di usare attivamente una risorsa digitale strutturata (Wikipedia) per raggiungere un obiettivo definito: navigare link, leggere selettivamente, decidere in tempo reale quale percorso seguire.</div>
+    </div>
+    <div class="comp-card digcompedu">
+      <div class="comp-icon">🗂</div>
+      <div class="comp-badge digcompedu">DigCompEdu 3.1</div>
+      <div class="comp-title">Struttura di Wikipedia</div>
+      <div class="comp-desc">Scopri come Wikipedia è organizzata: voci correlate, categorie, infobox, sezioni standard. Conoscere la struttura accelera la navigazione — in gioco e nella vita reale.</div>
+    </div>
+    <div class="comp-card indire">
+      <div class="comp-icon">🧠</div>
+      <div class="comp-badge indire">INDIRE · B1</div>
+      <div class="comp-title">Didattica digitale</div>
+      <div class="comp-desc">Il docente integra uno strumento digitale ludico in un percorso didattico strutturato, con attività di debriefing che rendono esplicite le competenze esercitate dagli studenti durante il gioco.</div>
+    </div>
+  </div>
+
+  <div class="wiki-anatomy">
+    <div class="wiki-bar">
+      <span class="wiki-logo">Wikipedia</span>
+      <span>🔍 Cerca...</span>
+      <span class="wiki-tag">Esempio interattivo</span>
+    </div>
+    <div class="wiki-body">
+      <div class="wiki-title">Pasta</div>
+      <div class="wiki-intro">
+        La <a>pasta</a> è un alimento a base di semola di <a>grano duro</a> impastato con acqua. È uno dei simboli della <a>cucina italiana</a>, diffuso in tutto il mondo. La produzione moderna avviene in <a>impianti industriali</a> che garantiscono standard uniformi. La pasta secca si conserva a lungo ed è un alimento base nella <a class="highlight">dieta mediterranea</a> — uno stile alimentare riconosciuto <a>patrimonio UNESCO</a> diffuso anche in <a>Grecia</a>, <a>Spagna</a> e <a>Portogallo</a>.
+      </div>
+      <div class="wiki-hint">💡 Se il tuo obiettivo fosse "Europa" — quale link cliccheresti? <em>dieta mediterranea → Grecia → Europa</em> è una strada. Ma anche <em>patrimonio UNESCO</em> ci porta lì più velocemente.</div>
+    </div>
+  </div>
+
+  <div class="box box-tip">
+    <div class="box-label">💡 Il paradosso dello speedrun</div>
+    <p>Chi è più lento vince? No — ma chi si <em>ferma a pensare</em> un secondo prima di cliccare batte chi clicca subito a caso. La lettura rapida efficace non significa leggere veloce: significa <strong>trovare subito il punto rilevante</strong>. È una skill che si trasferisce perfettamente alla ricerca online quotidiana.</p>
+  </div>
+
+  <div class="docente-box">
+    <div class="docente-label">🎓 Nota per il docente — DigCompEdu 3.1</div>
+    <p>Proporre uno speedrun come attività introduttiva a una lezione su Wikipedia, le fonti digitali o la ricerca online è un approccio <strong>DigCompEdu 3.1</strong> (ricerca e selezione di risorse digitali): il docente usa uno strumento digitale per guidare gli studenti verso un'esplorazione autonoma e consapevole. La debriefing post-gioco — "perché hai scelto quel link?" — è il momento in cui le competenze DigComp <strong>1.1</strong> (navigare e filtrare) e <strong>2.1</strong> (interagire con tecnologie digitali) diventano esplicite e nominabili.</p>
+  </div>
+
+</section>
+
+<hr class="section-divider">
+
+<!-- 3 -->
+<section class="guide-section" id="s3">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div class="section-titles">
+      <div class="section-title">Le regole del gioco</div>
+      <div class="section-subtitle">Cosa puoi fare — e cosa è vietato</div>
+    </div>
+  </div>
+
+  <p>Le regole degli speedrun Wikipedia sono semplici ma creano un contesto di apprendimento preciso. Ogni regola ha una ragione didattica.</p>
+
+  <div class="rules-list">
+    <div class="rule-item rule-ok">
+      <div class="rule-icon">✅</div>
+      <div class="rule-body">
+        <strong>Clicca i link interni nel testo</strong>
+        <span>I link blu nel corpo della voce sono il tuo unico strumento. Allena a leggere selettivamente e a valutare ogni parola linkata come una potenziale connessione.</span>
+      </div>
+    </div>
+    <div class="rule-item rule-ok">
+      <div class="rule-icon">✅</div>
+      <div class="rule-body">
+        <strong>Usa le categorie e i box laterali</strong>
+        <span>L'infobox a destra e le categorie in fondo alla pagina contengono link utili. Chi conosce la struttura di Wikipedia ha un vantaggio reale — un incentivo a capirla meglio.</span>
+      </div>
+    </div>
+    <div class="rule-item rule-no">
+      <div class="rule-icon">🚫</div>
+      <div class="rule-body">
+        <strong>Vietato: barra di ricerca Wikipedia</strong>
+        <span>Non puoi cercare direttamente la voce di destinazione. Questo obbliga a ragionare sui collegamenti tra concetti anziché saltare direttamente all'obiettivo.</span>
+      </div>
+    </div>
+    <div class="rule-item rule-no">
+      <div class="rule-icon">🚫</div>
+      <div class="rule-body">
+        <strong>Vietato: tasto Indietro del browser</strong>
+        <span>Non si può tornare alla pagina precedente. Ogni scelta è definitiva — come in molti contesti reali di navigazione informativa dove bisogna impegnarsi nella direzione presa.</span>
+      </div>
+    </div>
+    <div class="rule-item rule-no">
+      <div class="rule-icon">🚫</div>
+      <div class="rule-body">
+        <strong>Vietato: Ctrl+F per cercare nella pagina</strong>
+        <span>Nelle versioni competitive non si usa la ricerca nella pagina: la lettura deve essere attiva, non automatizzata. Nelle versioni didattiche questo vincolo è spesso rimosso per i principianti.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="box box-info">
+    <div class="box-label">📌 Modalità su wikispeedruns.com</div>
+    <p><strong>Sprint</strong> — arrivi alla destinazione nel minor numero di click possibile.<br>
+    <strong>Marathon</strong> — percorso lungo con tappe intermedie.<br>
+    <strong>Prompt del giorno</strong> — una sfida nuova ogni 24 ore, uguale per tutti.<br>
+    <strong>Party Mode</strong> — giochi in tempo reale con altri via link condiviso: ottimo per l'uso in classe.</p>
+  </div>
+
+</section>
+
+<hr class="section-divider">
+
+<!-- 4 -->
+<section class="guide-section" id="s4">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div class="section-titles">
+      <div class="section-title">La tecnica pratica</div>
+      <div class="section-subtitle">Come i giocatori esperti navigano — e cosa puoi rubare</div>
+    </div>
+  </div>
+
+  <p>I giocatori avanzati hanno sviluppato strategie che, senza saperlo, replicano le tecniche di ricerca esperta. Imparare la tecnica dello speedrun significa imparare a navigare il web in modo più efficiente in generale.</p>
+
+  <div class="technique-steps">
+    <div class="tech-step">
+      <div class="tech-num">1</div>
+      <div class="tech-body">
+        <strong>Leggi solo il primo paragrafo e l'infobox</strong>
+        <p>Il primo paragrafo di ogni voce Wikipedia contiene i concetti più ampi e generali — quelli con più connessioni. L'infobox laterale ha link densi e categorizzati. Inizia da lì, non leggere tutto il testo.</p>
+      </div>
+    </div>
+    <div class="tech-step">
+      <div class="tech-num">2</div>
+      <div class="tech-body">
+        <strong>Sali sempre verso il generale</strong>
+        <p>Da un argomento specifico è difficile raggiungere un altro argomento specifico. La strategia vincente è salire verso concetti più generali — <em>paese</em>, <em>continente</em>, <em>periodo storico</em> — da cui è facile scendere verso qualsiasi destinazione.</p>
+      </div>
+    </div>
+    <div class="tech-step">
+      <div class="tech-num">3</div>
+      <div class="tech-body">
+        <strong>Usa gli "hub" universali</strong>
+        <p>Alcune voci sono connettori universali: <em>Europa</em>, <em>Stati Uniti</em>, <em>Seconda guerra mondiale</em>, <em>Scienza</em>, <em>Sport</em>. Se riesci ad arrivarci, puoi raggiungere quasi qualsiasi cosa. I giocatori esperti le conoscono a memoria.</p>
+      </div>
+    </div>
+    <div class="tech-step">
+      <div class="tech-num">4</div>
+      <div class="tech-body">
+        <strong>Valuta il "peso semantico" del link</strong>
+        <p>Un link a "Italia" da una voce di gastronomia ti porta alla voce generica sull'Italia. Un link a "Italia" da una voce di calcio ti porta probabilmente alla stessa voce — ma da lì troverai altri link diversi. Il contesto del link conta quanto la parola linkata.</p>
+      </div>
+    </div>
+    <div class="tech-step">
+      <div class="tech-num">5</div>
+      <div class="tech-body">
+        <strong>Scorri in fondo prima di scegliere</strong>
+        <p>Le sezioni "Voci correlate" e "Categorie" in fondo a ogni pagina Wikipedia contengono spesso il link diretto che cerchi — senza passare per voci intermedie. Un'occhiata veloce al fondo può risparmiarti 3-4 click.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="box box-tip">
+    <div class="box-label">💡 I percorsi classici da allenamento</div>
+    <p>Alcuni prompt sono diventati dei classici per iniziare. Ecco quelli consigliati per livello:</p>
+  </div>
+
+  <div class="prompt-examples">
+    <div class="prompt-ex">
+      <span class="prompt-start">🐱 Gatto</span>
+      <span class="prompt-arrow">→</span>
+      <span class="prompt-end">🌍 Africa</span>
+      <span class="prompt-diff diff-easy">Facile</span>
+    </div>
+    <div class="prompt-ex">
+      <span class="prompt-start">🍕 Pizza</span>
+      <span class="prompt-arrow">→</span>
+      <span class="prompt-end">🚀 NASA</span>
+      <span class="prompt-diff diff-medium">Medio</span>
+    </div>
+    <div class="prompt-ex">
+      <span class="prompt-start">🎹 Pianoforte</span>
+      <span class="prompt-arrow">→</span>
+      <span class="prompt-end">⚽ FIFA</span>
+      <span class="prompt-diff diff-medium">Medio</span>
+    </div>
+    <div class="prompt-ex">
+      <span class="prompt-start">🐋 Balena blu</span>
+      <span class="prompt-arrow">→</span>
+      <span class="prompt-end">🧠 Sigmund Freud</span>
+      <span class="prompt-diff diff-hard">Difficile</span>
+    </div>
+    <div class="prompt-ex">
+      <span class="prompt-start">🏛 Colosseo</span>
+      <span class="prompt-arrow">→</span>
+      <span class="prompt-end">🤖 Alan Turing</span>
+      <span class="prompt-diff diff-hard">Difficile</span>
+    </div>
+  </div>
+
+</section>
+
+<hr class="section-divider">
+
+<!-- 5 -->
+<section class="guide-section" id="s5">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <div class="section-titles">
+      <div class="section-title">Prova tu ora</div>
+      <div class="section-subtitle">Una sfida, un link, nessuna scusa</div>
+    </div>
+  </div>
+
+  <p>Hai letto le regole, conosci le tecniche. Ora manca solo una cosa: farlo davvero.</p>
+
+  <div class="cta-block">
+    <div class="cta-block-emoji">🏁</div>
+    <div class="cta-block-title">Gioca su Wikipedia Speedruns</div>
+    <div class="cta-block-sub">Prompt del giorno, allenamento libero o sfida con i tuoi compagni in Party Mode. Gratuito, senza registrazione per iniziare.</div>
+    <a class="cta-block-btn" href="https://wikispeedruns.com/" target="_blank" rel="noopener">
+      Apri wikispeedruns.com ↗
+    </a>
+    <div class="cta-block-note">Funziona su browser desktop e mobile · In italiano o inglese a seconda della Wikipedia usata</div>
+  </div>
+
+  <p>Dopo aver giocato almeno una partita, prova a rispondere a queste domande — sono la base del debriefing didattico:</p>
+
+  <ul class="checklist">
+    <li>Quale link hai scelto per primo — e perché? Era la scelta migliore col senno di poi?</li>
+    <li>Sei mai rimasto bloccato su una pagina senza sapere dove andare? Come hai risolto?</li>
+    <li>Hai usato le categorie in fondo alla pagina o solo i link nel testo?</li>
+    <li>Qual è il percorso più corto che hai trovato? E quello che pensavi fosse corto ma non lo era?</li>
+    <li>Cosa hai imparato su come è organizzata Wikipedia che non sapevi prima?</li>
+  </ul>
+
+  <div class="docente-box">
+    <div class="docente-label">🎓 Proposta di attività in classe — 20 minuti</div>
+    <p><strong>Fase 1 (5 min):</strong> ogni studente gioca individualmente al prompt del giorno su wikispeedruns.com. Registra il numero di click e il percorso fatto.<br><br>
+    <strong>Fase 2 (5 min):</strong> in coppia, confrontate i percorsi: chi ha fatto meno click? Perché? Identificate il "nodo hub" che avete usato o avreste dovuto usare.<br><br>
+    <strong>Fase 3 (10 min):</strong> discussione in classe. Il docente chiede: "Quali criteri usate per scegliere un link rispetto a un altro?" Le risposte emergenti — pertinenza, generalità, contesto — sono le competenze DigComp <strong>1.1</strong> (navigare e filtrare) e <strong>2.1</strong> (interagire con tecnologie digitali) nominate con parole proprie.</p>
+  </div>
+
+  <div class="box box-warn">
+    <div class="box-label">⚠ Attenzione: Wikipedia ≠ fonte accademica</div>
+    <p>Gli speedrun allevano a <em>navigare</em> Wikipedia — non a <em>citarla</em> come fonte. Parte del valore didattico è discutere questo confine: Wikipedia è un ottimo punto di partenza per orientarsi in un argomento e trovare fonti primarie (i link in fondo a ogni voce). Non è una fonte primaria essa stessa.</p>
+  </div>
+
+</section>
+
+<!-- RIEPILOGO COMPETENZE -->
+<hr class="section-divider">
+<section class="guide-section" id="recap">
+  <div class="section-header">
+    <div class="section-num" style="background:var(--green-dark);">✅</div>
+    <div class="section-titles">
+      <div class="section-title">Riepilogo competenze attivate</div>
+      <div class="section-subtitle">Un gioco — quattro framework</div>
+    </div>
+  </div>
+
+  <div class="comp-grid">
+    <div class="comp-card digcomp">
+      <div class="comp-badge digcomp">DigComp 1.1</div>
+      <div class="comp-title">Navigare, ricercare e filtrare</div>
+      <div class="comp-desc">L'utente esplora Wikipedia seguendo link ipertestuali verso un obiettivo preciso, filtrando attivamente le informazioni non pertinenti ad ogni passaggio.</div>
+    </div>
+    <div class="comp-card digcomp">
+      <div class="comp-badge digcomp">DigComp 2.1</div>
+      <div class="comp-title">Interagire con tecnologie digitali</div>
+      <div class="comp-desc">Il giocatore usa Wikipedia come risorsa strutturata, navigandola in modo attivo e intenzionale per raggiungere un obiettivo definito in un contesto competitivo.</div>
+    </div>
+    <div class="comp-card digcompedu">
+      <div class="comp-badge digcompedu">DigCompEdu 3.1</div>
+      <div class="comp-title">Ricerca e selezione digitale</div>
+      <div class="comp-desc">Il docente usa uno strumento digitale ludico per guidare studenti verso competenze di ricerca e valutazione dell'informazione.</div>
+    </div>
+    <div class="comp-card indire">
+      <div class="comp-badge indire">INDIRE · B1</div>
+      <div class="comp-title">Didattica digitale</div>
+      <div class="comp-desc">L'attività strutturata con debriefing dimostra integrazione di strumenti digitali nel curricolo con progettazione didattica consapevole e orientata alle competenze.</div>
+    </div>
+  </div>
+
+</section>
+
+</div><!-- /main -->
+
+<footer>
+  <strong>Formazione Digitale</strong><br>
+  Risorse di alfabetizzazione digitale libere e gratuite.<br>
+  Tutti i contenuti sono rilasciati per uso libero e non commerciale.<br>
+  <span style="font-size:.78rem;">
+    <a href="/privacy-policy.html" style="color:rgba(255,255,255,.5);">Privacy Policy</a> &nbsp;·&nbsp;
+    <a href="/cookie-policy.html"  style="color:rgba(255,255,255,.5);">Cookie Policy</a> &nbsp;·&nbsp;
+    <a href="/index.html"          style="color:rgba(255,255,255,.5);">← Torna al portale</a>
+  </span>
+</footer>
+
+<script>
+// Hamburger / sidebar — identico alle altre pillole
+const hamburger = document.getElementById('hamburger');
+const sidebar   = document.getElementById('sidebar');
+const overlay   = document.getElementById('overlay');
+
+function openSidebar()  { sidebar.classList.add('open'); overlay.classList.add('open'); document.body.classList.add('sidebar-open'); }
+function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('open'); document.body.classList.remove('sidebar-open'); }
+hamburger.addEventListener('click', () => sidebar.classList.contains('open') ? closeSidebar() : openSidebar());
+
+// Scroll spy — evidenzia sezione attiva nella sidebar
+const sections = document.querySelectorAll('section[id]');
+const navItems = document.querySelectorAll('#sidebar .nav-item[href^="#"]');
+
+function updateSpy() {
+  let current = '';
+  sections.forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+  });
+  navItems.forEach(item => {
+    item.classList.toggle('active', item.getAttribute('href') === '#' + current);
+  });
+}
+window.addEventListener('scroll', updateSpy, { passive: true });
+updateSpy();
+</script>
+
+</body>
+</html>

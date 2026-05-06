@@ -474,5 +474,33 @@
     "digcomp_level": "intermediate",
     "digcompedu":    ["DCEdu 6.4", "DCEdu 6.1"],
     "digcomp_areas": ["sicurezza"]
-  }
+  },
+  {
+  "path": "/competenze-digitali/pillola-wikipedia-speedrun/",
+  "label": "Wikipedia Speedrun — Naviga il Web come un Pro",
+  "short": "Wikipedia Speedrun",
+  "cat": "pillola",
+  "emoji": "⚡",
+  "tags": [
+    "wikipedia",
+    "speedrun",
+    "navigazione",
+    "link ipertestuali",
+    "gamification",
+    "web",
+    "competenze digitali",
+    "informazione",
+    "fonti",
+    "didattica"
+  ],
+  "meta": "Gamification · DigComp 1.1 · 2.1 · Livello base · ~10 min",
+  "description": "Un gioco per navigare Wikipedia seguendo solo i link: allena filtraggio delle informazioni, lettura selettiva e comprensione della struttura del web.",
+  "featured": false,
+  "active": true,
+  "digcomp": ["DC 1.1", "DC 2.1"],
+  "digcomp_level": "foundation",
+  "digcomp_areas": ["informazione", "comunicazione"],
+  "digcompedu": ["DCEdu 3.1"]
+}
+
 ]
