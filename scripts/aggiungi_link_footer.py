@@ -23,7 +23,7 @@ FOOTER_COMPLETO = '\n<footer>\n' + LINK + '</footer>\n'
 EXCLUDE_DIRS  = {'.git', 'node_modules', '.github', '.cache', 'docs'}
 EXTENSIONS    = {'.html', '.htm'}
 # File nella root — gestiti da aggiungi_footer_index.py
-EXCLUDE_FILES = {'index.html', 'mappa.html', '404.html', 'privacy-policy.html', 'cookie-policy.html'}
+EXCLUDE_FILES = {'privacy-policy.html', 'cookie-policy.html'}
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # ─────────────────────────────────────────────────────────────────
@@ -33,8 +33,9 @@ def find_html_files(root):
     found = []
     for dirpath, dirnames, filenames in os.walk(root):
         dirnames[:] = [d for d in dirnames if d not in EXCLUDE_DIRS]
-        # Salta i file nella root
-        if os.path.abspath(dirpath) == os.path.abspath(root):
+        rel = os.path.relpath(dirpath, root)
+        print(f"DIR: {rel} — files: {filenames}")  # DEBUG
+        if rel == '.':
             continue
         for filename in filenames:
             if os.path.splitext(filename)[1].lower() in EXTENSIONS:
@@ -84,6 +85,8 @@ def main():
 
     files = find_html_files(ROOT)
     print(f"File HTML trovati: {len(files)}\n")
+    for f in files:
+        print(f)
 
     stats = {'ok': 0, 'skip': 0, 'not_found': 0, 'error': 0}
 
