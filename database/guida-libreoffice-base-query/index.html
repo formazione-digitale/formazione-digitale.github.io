@@ -193,6 +193,11 @@ nav.toc a.active {
   font-weight: 700;
 }
 nav.toc span { display: none; }
+nav.toc span.row-break {
+  display: block;
+  width: 100%;
+  height: 0;
+}
 
 /* ── LAYOUT ── */
 main { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
@@ -773,7 +778,7 @@ section { animation: fadeIn 0.4s ease both; }
   <a href="#s6">Filtri dinamici</a>
   <span>·</span>
   <a href="#s7">AND e OR</a>
-  <span>·</span>
+  <span class="row-break"></span>
   <a href="#s8">Visibile</a>
   <span>·</span>
   <a href="#s9">Aggregazione</a>
@@ -783,6 +788,8 @@ section { animation: fadeIn 0.4s ease both; }
   <a href="#s11">Tipi di join</a>
   <span>·</span>
   <a href="#s12">Relazioni in cascata</a>
+  <span>·</span>
+  <a href="#s13">Estendere il database</a>
 </nav>
 
 <!-- ══════════════════ MAIN ══════════════════ -->
@@ -1794,6 +1801,92 @@ section { animation: fadeIn 0.4s ease both; }
   <div class="callout tip">
     <div class="callout-icon">💡</div>
     <div class="callout-body"><strong>La cascata fa il lavoro sporco.</strong> Se le relazioni sono configurate correttamente con Aggiorna/Elimina cascata, puoi modificare o cancellare record padre direttamente dalla vista tabella — il database propagherà le modifiche ai figli in automatico.</div>
+  </div>
+</section>
+
+<!-- ─── 13. ESTENDERE UN DATABASE ESISTENTE ─── -->
+<section id="s13">
+  <div class="section-label">Progettazione avanzata</div>
+  <span class="section-num">13</span>
+  <h2>Estendere un database esistente</h2>
+
+  <p>Un database in produzione — già popolato di dati — può richiedere modifiche strutturali: nuove tabelle, nuove relazioni, nuovi vincoli. L'obiettivo è <strong>preservare i dati esistenti</strong> e le regole di integrità già in vigore, senza dover ricostruire tutto da zero.</p>
+
+  <div class="callout warning">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body"><strong>Prima di modificare la struttura:</strong> fai sempre un backup del file .odb. Le modifiche alla struttura non sono reversibili con Annulla.</div>
+  </div>
+
+  <h3>Caso d'uso — Normalizzare il metodo di pagamento</h3>
+  <p>Nella tabella SCONTRINO il campo <code>Metodo_Pagamento</code> contiene testo libero: <em>Contanti</em>, <em>Carta</em>, <em>Satispay</em>. Vogliamo trasformarlo in una chiave esterna verso una nuova tabella di decodifica, così da garantire coerenza e poter aggiungere informazioni al metodo (es. commissione applicata).</p>
+
+  <h3>Passo 0 — Situazione di partenza</h3>
+  <p>La tabella SCONTRINO contiene già dati. Il campo <code>Metodo_Pagamento</code> è testo libero — nessun vincolo impedisce valori incoerenti o errori di battitura.</p>
+
+  <figure class="screenshot">
+    <img loading="lazy" src="img/2026-05-08_21h35_09.png" alt="Tabella SCONTRINO con dati — Metodo_Pagamento testo libero">
+    <figcaption>Schermata reale — Tabella SCONTRINO: il campo Metodo_Pagamento contiene testo libero. Tre valori distinti in uso: Contanti, Carta, Satispay.</figcaption>
+  </figure>
+
+  <h3>Passo 1 — Preparare il campo esistente</h3>
+  <p>Prima di istituire la relazione, il campo <code>Metodo_Pagamento</code> deve essere impostato come <strong>NOT NULL</strong> — obbligatorio. Apri la struttura della tabella SCONTRINO e imposta <em>Digitazione necessaria</em> su <strong>Sì</strong>.</p>
+
+  <figure class="screenshot">
+    <img loading="lazy" src="img/1778270010975_image.png" alt="Struttura tabella SCONTRINO — Digitazione necessaria impostata a Sì">
+    <figcaption>Schermata reale — Proprietà del campo Metodo_Pagamento: Digitazione necessaria = Sì. Da questo momento il campo non può essere vuoto.</figcaption>
+  </figure>
+
+  <h3>Passo 2 — Individuare i valori già in uso</h3>
+  <p>Prima di creare la nuova tabella, è necessario conoscere <strong>tutti e soli</strong> i valori già presenti nel campo. Apri il designer delle query e crea una query di raggruppamento su <code>Metodo_Pagamento</code> dalla tabella SCONTRINO.</p>
+
+  <figure class="screenshot">
+    <img loading="lazy" src="img/2026-05-08_21h40_28.png" alt="Query di raggruppamento su Metodo_Pagamento — risultato: Carta, Contanti, Satispay">
+    <figcaption>Schermata reale — Query di raggruppamento: i tre valori distinti già presenti negli scontrini. Questi valori <strong>devono essere presenti</strong> nella nuova tabella come PK.</figcaption>
+  </figure>
+
+  <div class="callout tip">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body"><strong>Perché il raggruppamento?</strong> Con molti record è impossibile scorrere la tabella manualmente. Il raggruppamento restituisce ogni valore una sola volta, qualunque sia il numero di scontrini.</div>
+  </div>
+
+  <h3>Passo 3 — Creare la tabella di decodifica</h3>
+  <p>Crea la nuova tabella <strong>METODI_PAGAMENTO</strong> con <code>COD_METODO</code> come chiave primaria. Inserisci <em>almeno</em> i valori già presenti negli scontrini — puoi aggiungerne altri se prevedi metodi futuri.</p>
+
+  <figure class="screenshot">
+    <img loading="lazy" src="img/2026-05-08_21h45_22.png" alt="Tabella METODI_PAGAMENTO con COD_METODO, DESC_METODO e COMMISSIONE">
+    <figcaption>Schermata reale — La nuova tabella METODI_PAGAMENTO. I valori già usati negli scontrini (Carta, Contanti, Satispay) sono presenti come PK. Paypal e Bonifico vengono aggiunti in anticipo.</figcaption>
+  </figure>
+
+  <div class="callout warning">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body"><strong>Attenzione ai valori mancanti.</strong> Se negli scontrini esiste un valore che non è presente nella nuova tabella, la relazione non potrà essere istituita — il database segnala una violazione di integrità referenziale. Il raggruppamento del Passo 2 serve proprio a evitare questo problema.</div>
+  </div>
+
+  <h3>Passo 4 — Istituire la relazione</h3>
+  <p>Vai su <strong>Strumenti → Relazioni</strong>, aggiungi entrambe le tabelle e collega <code>SCONTRINO.Metodo_Pagamento</code> a <code>METODI_PAGAMENTO.COD_METODO</code>. Configura le opzioni in base alle regole di business:</p>
+
+  <figure class="screenshot">
+    <img loading="lazy" src="img/2026-05-08_21h47_22.png" alt="Dialog Relazioni SCONTRINO–METODI_PAGAMENTO con Aggiorna cascata e Nessuna operazione per eliminazione">
+    <figcaption>Schermata reale — Relazione SCONTRINO → METODI_PAGAMENTO. Aggiorna cascata: se il codice metodo cambia, si aggiorna automaticamente in tutti gli scontrini. Nessuna operazione per eliminazione: non è possibile cancellare un metodo se esistono scontrini collegati.</figcaption>
+  </figure>
+
+  <table class="compare-table">
+    <thead><tr><th>Opzione scelta</th><th>Motivazione</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Aggiorna cascata</strong></td><td>Se il codice di un metodo viene rinominato, tutti gli scontrini si aggiornano automaticamente</td></tr>
+      <tr><td><strong>Nessuna operazione (eliminazione)</strong></td><td>Non si può cancellare un metodo di pagamento se esistono scontrini che lo usano — il database blocca l'operazione</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Risultato</h3>
+  <p>Da questo momento il campo <code>Metodo_Pagamento</code> in SCONTRINO è una chiave esterna verso METODI_PAGAMENTO. Ogni nuovo scontrino <strong>dovrà obbligatoriamente</strong> indicare un metodo tra quelli presenti nella tabella di decodifica — valori non previsti verranno rifiutati dal database.</p>
+
+  <div class="highlight-box">
+    <h4>// Prima vs Dopo:</h4>
+    <ul>
+      <li><strong>Prima:</strong> testo libero — nessun controllo, possibili errori di battitura, valori incoerenti tra record</li>
+      <li><strong>Dopo:</strong> chiave esterna NOT NULL — solo valori ammessi, coerenza garantita, possibilità di aggiungere attributi al metodo (descrizione, commissione, attivo/disattivo)</li>
+    </ul>
   </div>
 </section>
 
