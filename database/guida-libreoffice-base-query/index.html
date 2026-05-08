@@ -167,6 +167,7 @@ nav.toc {
   flex-wrap: wrap;
   gap: 0.25rem;
   align-items: center;
+  justify-content: center;
 }
 nav.toc a {
   font-size: 0.82rem;
@@ -598,7 +599,8 @@ p { margin-bottom: 0.9rem; }
   overflow: hidden;
   box-shadow: 0 4px 16px rgba(0,0,0,0.1);
 }
-.screenshot img { width: 100%; display: block; }
+.screenshot img { max-width: 100%; display: block; margin: 0 auto; }
+
 .screenshot figcaption {
   background: var(--lo-grid-header);
   padding: 6px 12px;
@@ -761,8 +763,8 @@ section { animation: fadeIn 0.4s ease both; }
 
 <!-- ══════════════════ NAV ══════════════════ -->
 <div style="height:4px; background:linear-gradient(to right, var(--accent), var(--accent2), var(--accent3));"></div>
+<div style="background:var(--ink); padding: 0.3rem 1.5rem 0; font-family:'Space Mono',monospace; font-size:0.65rem; color:#666; letter-spacing:0.1em; text-transform:uppercase;">Sezioni →</div>
 <nav class="toc">
-  <span style="font-family:'Space Mono',monospace; font-size:0.65rem; color:#666; letter-spacing:0.1em; text-transform:uppercase; margin-right:0.5rem; display:block; white-space:nowrap;">Sezioni →</span>
   <a href="#s0">Cos'è una query</a>
   <span>·</span>
   <a href="#s1">Aprire il designer</a>
@@ -1697,7 +1699,7 @@ section { animation: fadeIn 0.4s ease both; }
   </div>
 
   <figure class="screenshot">
-    <img loading="lazy" src="img/1777277786031_image.png" alt="Dialog Relazioni con opzioni cascata" style="max-width:380px; display:block; margin:0 auto;">
+    <img loading="lazy" src="img/1777277786031_image.png" alt="Dialog Relazioni con opzioni cascata">
     <figcaption>Schermata reale — Dialog Relazioni tra PRODOTTO e TIPOLOGIA: opzioni di aggiornamento ed eliminazione</figcaption>
   </figure>
 
@@ -1768,8 +1770,7 @@ section { animation: fadeIn 0.4s ease both; }
 	<div class="two-col">
 	  <figure class="screenshot">
 		<img loading="lazy" src="img/1778268092371_image.png"
-			 alt="Dialog Relazioni TESSERA–CLIENTE con Elimina cascata"
-			 style="max-width:380px; display:block; margin:0 auto;">
+			 alt="Dialog Relazioni TESSERA–CLIENTE con Elimina cascata">
 		<figcaption>
 		  Relazione TESSERA → CLIENTE — <em>Elimina cascata</em> attivo:
 		  cancellando il cliente, la tessera viene eliminata automaticamente.
@@ -1778,8 +1779,7 @@ section { animation: fadeIn 0.4s ease both; }
 
 	  <figure class="screenshot">
 		<img loading="lazy" src="img/1778268159982_image.png"
-			 alt="Dialog Relazioni SCONTRINO–CLIENTE con Imposta NULL"
-			 style="max-width:380px; display:block; margin:0 auto;">
+			 alt="Dialog Relazioni SCONTRINO–CLIENTE con Imposta NULL">
 		<figcaption>
 		  Relazione SCONTRINO → CLIENTE — <em>Imposta NULL</em> attivo:
 		  cancellando il cliente, gli scontrini restano ma
