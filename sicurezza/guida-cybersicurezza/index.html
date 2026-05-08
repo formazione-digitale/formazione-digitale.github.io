@@ -58,47 +58,6 @@
    Solo componenti non presenti in shared.css
 ═══════════════════════════════════════════ */
 
-/* Header */
-.guide-header {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  height: 56px;
-  background: var(--blue-dark);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 1.25rem;
-  box-shadow: 0 2px 16px rgba(0,0,0,.18);
-}
-.guide-header-back {
-  display: flex; align-items: center; gap: .4rem;
-  font-size: .78rem; color: rgba(255,255,255,.65);
-  text-decoration: none; transition: color .2s;
-}
-.guide-header-back svg {
-  width: 16px; height: 16px; stroke: currentColor;
-  stroke-width: 2; fill: none;
-}
-.guide-header-back:hover { color: #fff; }
-.guide-header-center {
-  font-size: .85rem; color: rgba(255,255,255,.85);
-  font-weight: 500; position: absolute; left: 50%; transform: translateX(-50%);
-  white-space: nowrap;
-}
-.guide-header-right { display: flex; align-items: center; gap: .5rem; }
-
-/* Hamburger */
-.hamburger {
-  display: flex; flex-direction: column; justify-content: center; gap: 5px;
-  width: 36px; height: 36px; cursor: pointer; padding: 6px;
-  border-radius: 6px; background: none; border: none;
-  transition: background var(--transition);
-}
-.hamburger:hover { background: rgba(255,255,255,.12); }
-.hamburger span { display: block; height: 2px; background: #fff; border-radius: 2px; transition: all var(--transition); }
-.hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.hamburger.is-open span:nth-child(2) { opacity: 0; }
-.hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-@media(min-width:900px) {
-  #hamburger-btn { display: none; }
-}
 
 /* Layout a griglia */
 .guide-layout {
