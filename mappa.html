@@ -331,7 +331,7 @@ html, body { height: 100%; overflow: hidden; font-family: var(--font-body); back
 
 @media(max-width: 600px) {
   .map-header { padding: 0 .75rem; }
-  .map-header-title { font-size: .85rem; }
+  .map-header-title { font-size: .85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 45%; }
   .map-header-sub { display: none; }
   .map-header-back { font-size: .72rem; }
 }
