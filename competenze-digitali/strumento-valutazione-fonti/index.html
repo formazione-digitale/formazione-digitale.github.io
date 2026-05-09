@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verifica Fonti Online — Formazione Digitale</title>
+
+<meta name="description" content="Strumento guidato per valutare l'affidabilità di qualsiasi fonte online. CRAAP test, lateral reading e verifica immagini in un unico flusso interattivo.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://formazione-digitale.it/competenze-digitali/strumento-valutazione-fonti/">
+<link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Verifica Fonti Online — Formazione Digitale">
+<meta property="og:description" content="Strumento guidato per valutare l'affidabilità di qualsiasi fonte online con CRAAP test, lateral reading e verifica immagini.">
+<meta property="og:url" content="https://formazione-digitale.it/competenze-digitali/strumento-valutazione-fonti/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+
+<!-- Twitter/X Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Verifica Fonti Online — Formazione Digitale">
+<meta name="twitter:description" content="Checklist guidata per valutare qualsiasi fonte online. Tutto client-side, nessun dato trasmesso.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Verifica Fonti Online",
+  "description": "Strumento guidato per valutare l'affidabilità di qualsiasi fonte online con CRAAP test, lateral reading e verifica immagini.",
+  "url": "https://formazione-digitale.it/competenze-digitali/strumento-valutazione-fonti/",
+  "inLanguage": "it",
+  "educationalLevel": "Beginner",
+  "learningResourceType": "Strumento interattivo",
+  "author": {
+    "@type": "Person",
+    "name": "Cristiano De Pasquale"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Formazione Digitale",
+    "url": "https://formazione-digitale.it"
+  }
+}
+</script>
+
+<!-- Anti-flash theme -->
+<script>
+  (function() {
+    const t = localStorage.getItem('fd-theme');
+    if (t) document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+
+<!-- GoatCounter -->
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+<link rel="stylesheet" href="/css/shared.css?v=1">
+
+<style>
+/* variabili specifiche strumento */
+:root {
+  --pill-border: #f0d990;
+  --tool-accent: #1E6B3C;
+  --tool-light:  #E8F5EE;
+
+  /* fasce report */
+  --score-green:  #1E6B3C;
+  --score-orange: #B45309;
+  --score-amber:  #7D4E00;
+  --score-red:    #B91C1C;
+  --score-green-bg:  #E8F5EE;
+  --score-orange-bg: #FEF3C7;
+  --score-amber-bg:  #FFF3CD;
+  --score-red-bg:    #FEE2E2;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  color: var(--gray-dark);
+  background: #F4F8FB;
+  min-height: 100vh;
+}
+
+/* ═══════════════════════════════════════
+   HEADER
+═══════════════════════════════════════ */
+.tool-header {
+  background: var(--blue-dark);
+  height: 52px;
+  display: flex; align-items: center;
+  padding: 0 1.5rem; gap: 1rem;
+  position: sticky; top: 0; z-index: 200;
+  box-shadow: 0 2px 12px rgba(0,0,0,.2);
+}
+.tool-header-back {
+  display: flex; align-items: center; gap: .4rem;
+  font-size: .8rem; color: rgba(255,255,255,.7);
+  text-decoration: none; transition: color .2s;
+  flex-shrink: 0;
+}
+.tool-header-back:hover { color: #fff; }
+.tool-header-back svg { width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round; }
+.tool-header-sep { width:1px;height:20px;background:rgba(255,255,255,.2); }
+.tool-header-title { font-family: var(--font-display); font-size: .95rem; color: #fff; }
+.tool-header-badge {
+  margin-left: auto;
+  font-size: .68rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  background: rgba(255,255,255,.15); color: rgba(255,255,255,.85);
+  padding: .2rem .65rem; border-radius: 20px;
+}
+
+/* ═══════════════════════════════════════
+   BARRA PROGRESSO
+═══════════════════════════════════════ */
+.progress-bar-wrap {
+  background: var(--blue-pale);
+  border-bottom: 1px solid var(--blue-light);
+  padding: .75rem 1.5rem;
+  position: sticky; top: 52px; z-index: 190;
+}
+.progress-bar-inner {
+  max-width: 680px; margin: 0 auto;
+  display: flex; align-items: center; gap: 1rem;
+}
+.progress-steps {
+  display: flex; gap: .4rem; flex: 1;
+}
+.progress-step {
+  flex: 1; height: 6px; border-radius: 3px;
+  background: var(--blue-light);
+  transition: background .3s ease;
+}
+.progress-step.done   { background: var(--green-dark); }
+.progress-step.active { background: var(--blue-mid); }
+.progress-label {
+  font-size: .75rem; color: var(--gray-mid);
+  white-space: nowrap; flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════
+   WRAPPER CENTRATO
+═══════════════════════════════════════ */
+.tool-wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 5rem;
+}
+
+/* ═══════════════════════════════════════
+   SCHEDE STEP (visibilità gestita da JS)
+═══════════════════════════════════════ */
+.step-card {
+  background: #fff;
+  border: 1px solid var(--blue-light);
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(31,78,121,.08);
+  overflow: hidden;
+  display: none; /* mostrato da JS */
+}
+.step-card.active { display: block; }
+
+.step-card-head {
+  background: var(--blue-dark);
+  padding: 1.25rem 1.5rem;
+  display: flex; align-items: flex-start; gap: 1rem;
+}
+.step-card-num {
+  font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  background: rgba(255,255,255,.15); color: rgba(255,255,255,.85);
+  padding: .2rem .6rem; border-radius: 20px; white-space: nowrap;
+  flex-shrink: 0; margin-top: .15rem;
+}
+.step-card-title {
+  font-family: var(--font-display); font-size: 1.2rem; color: #fff; line-height: 1.2;
+}
+.step-card-sub {
+  font-size: .82rem; color: rgba(255,255,255,.65); margin-top: .3rem; line-height: 1.5;
+}
+
+.step-card-body { padding: 1.5rem; }
+
+/* ═══════════════════════════════════════
+   BANNER PREREQUISITO (step 0)
+═══════════════════════════════════════ */
+.prereq-banner {
+  display: flex; align-items: center; gap: .9rem;
+  background: var(--amber-light);
+  border: 1px solid #f0d990;
+  border-radius: 10px;
+  padding: .85rem 1.1rem;
+  margin-bottom: 1.25rem;
+  font-size: .85rem; line-height: 1.55;
+}
+.prereq-banner a {
+  color: var(--amber-dark); font-weight: 600; text-decoration: none;
+}
+.prereq-banner a:hover { text-decoration: underline; }
+
+/* ═══════════════════════════════════════
+   INPUT FONTE (step 0)
+═══════════════════════════════════════ */
+.input-mode-toggle {
+  display: flex; gap: .5rem; margin-bottom: 1rem;
+}
+.input-mode-btn {
+  flex: 1; padding: .5rem;
+  border: 1.5px solid var(--blue-light);
+  border-radius: 8px;
+  background: #fff; font-family: var(--font-body);
+  font-size: .82rem; color: var(--gray-mid);
+  cursor: pointer; text-align: center;
+  transition: all .2s;
+}
+.input-mode-btn.active {
+  background: var(--blue-pale);
+  border-color: var(--blue-mid);
+  color: var(--blue-dark); font-weight: 600;
+}
+
+.form-group { margin-bottom: 1.1rem; }
+.form-label {
+  display: block; font-size: .82rem; font-weight: 600;
+  color: var(--gray-dark); margin-bottom: .4rem;
+}
+.form-label span { font-weight: 400; color: var(--gray-mid); }
+.form-input {
+  width: 100%;
+  border: 1.5px solid var(--blue-light);
+  border-radius: 8px;
+  padding: .65rem .9rem;
+  font-family: var(--font-body); font-size: .9rem; color: var(--gray-dark);
+  background: #FAFCFF;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.form-input:focus {
+  border-color: var(--blue-mid);
+  box-shadow: 0 0 0 3px rgba(46,117,182,.12);
+}
+.form-input.error { border-color: #e74c3c; }
+
+.domain-preview {
+  display: none;
+  align-items: center; gap: .5rem;
+  background: var(--green-light);
+  border: 1px solid #9de0bb;
+  border-radius: 7px;
+  padding: .45rem .85rem;
+  margin-top: .5rem;
+  font-size: .82rem; color: var(--green-dark);
+}
+.domain-preview.show { display: flex; }
+.domain-preview strong { font-weight: 700; }
+
+/* ═══════════════════════════════════════
+   DOMANDE (step 1-3)
+═══════════════════════════════════════ */
+.question-block {
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--blue-light);
+}
+.question-block:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+.question-head {
+  display: flex; align-items: flex-start; gap: .65rem;
+  margin-bottom: .9rem;
+}
+.question-num {
+  flex-shrink: 0;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--blue-dark); color: #fff;
+  font-size: .72rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: .1rem;
+}
+.question-text {
+  font-size: .95rem; font-weight: 600; color: var(--blue-dark);
+  line-height: 1.4; flex: 1;
+}
+.tooltip-btn {
+  flex-shrink: 0;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--blue-pale); border: 1px solid var(--blue-light);
+  color: var(--blue-mid); font-size: .7rem; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all .2s; margin-top: .1rem;
+}
+.tooltip-btn:hover { background: var(--blue-light); }
+.tooltip-box {
+  background: var(--blue-pale);
+  border-left: 3px solid var(--blue-mid);
+  border-radius: 0 8px 8px 0;
+  padding: .75rem 1rem;
+  font-size: .82rem; line-height: 1.6; color: var(--gray-dark);
+  margin-bottom: .85rem;
+  display: none;
+}
+.tooltip-box.open { display: block; }
+
+/* Istruzione operativa */
+.op-instruction {
+  background: var(--gray-light);
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: .75rem 1rem;
+  margin-bottom: .85rem;
+  font-size: .8rem; line-height: 1.7;
+  font-family: 'DM Mono', monospace, var(--font-body);
+  color: var(--gray-dark);
+  white-space: pre-wrap;
+}
+.op-instruction-label {
+  font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--gray-mid); margin-bottom: .4rem;
+  font-family: var(--font-body);
+}
+
+/* Opzioni risposta */
+.options-list {
+  display: flex; flex-direction: column; gap: .45rem;
+}
+.option-btn {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .7rem 1rem;
+  border: 1.5px solid var(--blue-light);
+  border-radius: 9px;
+  background: #fff;
+  cursor: pointer; text-align: left;
+  font-family: var(--font-body); font-size: .88rem; color: var(--gray-dark);
+  line-height: 1.45;
+  transition: all .18s;
+  width: 100%;
+}
+.option-btn:hover { border-color: var(--blue-mid); background: var(--blue-pale); }
+.option-btn.selected-green  { border-color: var(--green-dark); background: var(--green-light); color: var(--green-dark); font-weight: 500; }
+.option-btn.selected-yellow { border-color: #B45309; background: #FEF3C7; color: #92400E; font-weight: 500; }
+.option-btn.selected-red    { border-color: #B91C1C; background: #FEE2E2; color: #991B1B; font-weight: 500; }
+.option-btn.selected-neutral{ border-color: #6B7280; background: #F3F4F6; color: #374151; font-weight: 500; }
+.option-dot { flex-shrink: 0; font-size: 1rem; }
+
+/* Domanda condizionale immagini */
+.cond-question {
+  background: var(--amber-light);
+  border: 1px solid #f0d990;
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 1.25rem;
+}
+.cond-question-label {
+  font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--amber-dark); margin-bottom: .6rem;
+}
+.cond-question-text { font-size: .9rem; color: var(--gray-dark); margin-bottom: .75rem; font-weight: 500; }
+.cond-toggle {
+  display: flex; gap: .5rem;
+}
+.cond-btn {
+  flex: 1; padding: .5rem;
+  border: 1.5px solid #f0d990;
+  border-radius: 8px; background: #fff;
+  font-family: var(--font-body); font-size: .85rem;
+  color: var(--amber-dark); cursor: pointer;
+  transition: all .2s; text-align: center;
+}
+.cond-btn.active { background: var(--amber-dark); color: #fff; border-color: var(--amber-dark); }
+
+/* ═══════════════════════════════════════
+   NAVIGAZIONE TRA STEP
+═══════════════════════════════════════ */
+.step-nav {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 1.75rem; gap: 1rem;
+}
+.btn-back {
+  display: flex; align-items: center; gap: .4rem;
+  padding: .6rem 1.1rem;
+  border: 1.5px solid var(--blue-light);
+  border-radius: 50px;
+  background: #fff; font-family: var(--font-body);
+  font-size: .85rem; color: var(--gray-mid);
+  cursor: pointer; transition: all .2s;
+}
+.btn-back:hover { border-color: var(--blue-mid); color: var(--blue-dark); }
+.btn-back:disabled { opacity: .35; pointer-events: none; }
+
+.btn-next {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .7rem 1.5rem;
+  border: none; border-radius: 50px;
+  background: var(--blue-dark); color: #fff;
+  font-family: var(--font-body); font-size: .88rem; font-weight: 600;
+  cursor: pointer; transition: background .2s, transform .15s;
+}
+.btn-next:hover { background: var(--blue-mid); transform: translateY(-1px); }
+.btn-next:disabled { opacity: .4; pointer-events: none; }
+.btn-next .arrow { transition: transform .2s; }
+.btn-next:hover .arrow { transform: translateX(4px); }
+
+.validation-msg {
+  font-size: .78rem; color: #B91C1C;
+  display: none;
+}
+.validation-msg.show { display: block; }
+
+/* ═══════════════════════════════════════
+   REPORT (step 4)
+═══════════════════════════════════════ */
+.copy-feedback {
+  display: inline-block;
+  font-size: .78rem; font-weight: 600;
+  color: var(--green-dark);
+  background: var(--green-light);
+  border: 1px solid #9de0bb;
+  border-radius: 20px;
+  padding: .2rem .75rem;
+  opacity: 0;
+  transition: opacity .2s ease;
+  pointer-events: none;
+}
+.copy-feedback.show { opacity: 1; }
+
+.report-score-box {
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.report-domain {
+  font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  opacity: .7; margin-bottom: .5rem;
+}
+.report-score-num {
+  font-family: var(--font-display);
+  font-size: 3.5rem; line-height: 1; font-weight: 700;
+  margin-bottom: .3rem;
+}
+.report-score-label {
+  font-size: 1rem; font-weight: 600;
+}
+.report-rec {
+  font-size: .85rem; margin-top: .65rem; line-height: 1.6; opacity: .85;
+}
+
+/* tabella dettaglio */
+.report-detail-title {
+  font-family: var(--font-display); font-size: 1.05rem;
+  color: var(--blue-dark); margin-bottom: .75rem;
+}
+.report-table {
+  width: 100%; border-collapse: collapse;
+  font-size: .83rem; margin-bottom: 1.5rem;
+}
+.report-table th {
+  background: var(--blue-dark); color: #fff;
+  text-align: left; padding: .55rem .85rem;
+  font-size: .75rem; letter-spacing: .04em;
+}
+.report-table th:first-child { border-radius: 8px 0 0 0; }
+.report-table th:last-child  { border-radius: 0 8px 0 0; }
+.report-table td {
+  padding: .55rem .85rem;
+  border-bottom: 1px solid var(--blue-light);
+  vertical-align: top; line-height: 1.5;
+}
+.report-table tr:last-child td { border-bottom: none; }
+.report-table tr:nth-child(even) td { background: var(--blue-pale); }
+.report-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: .4rem; vertical-align: middle; }
+.dot-green  { background: var(--score-green); }
+.dot-yellow { background: #D97706; }
+.dot-red    { background: #DC2626; }
+.dot-neutral{ background: #9CA3AF; }
+
+/* punti forza / attenzione */
+.report-lists {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+@media(max-width:520px){ .report-lists { grid-template-columns: 1fr; } }
+.report-list-box {
+  border-radius: 10px; padding: 1rem 1.1rem;
+}
+.report-list-box.strengths { background: var(--green-light); border: 1px solid #9de0bb; }
+.report-list-box.warnings  { background: #FEE2E2; border: 1px solid #FECACA; }
+.report-list-title {
+  font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  margin-bottom: .6rem;
+}
+.report-list-box.strengths .report-list-title { color: var(--green-dark); }
+.report-list-box.warnings  .report-list-title { color: #B91C1C; }
+.report-list-items { list-style: none; display: flex; flex-direction: column; gap: .35rem; }
+.report-list-items li { font-size: .82rem; line-height: 1.5; }
+.report-list-box.strengths li::before { content: '✓ '; color: var(--green-dark); font-weight: 700; }
+.report-list-box.warnings  li::before { content: '⚠ '; color: #B91C1C; }
+
+/* azioni post-report */
+.report-actions {
+  display: flex; flex-wrap: wrap; gap: .65rem;
+  margin-top: 1.25rem;
+}
+.btn-action {
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .6rem 1.1rem;
+  border: 1.5px solid var(--blue-light);
+  border-radius: 50px; background: #fff;
+  font-family: var(--font-body); font-size: .82rem; color: var(--gray-dark);
+  cursor: pointer; text-decoration: none;
+  transition: all .2s;
+}
+.btn-action:hover { border-color: var(--blue-mid); color: var(--blue-dark); background: var(--blue-pale); }
+.btn-action.primary {
+  background: var(--blue-dark); color: #fff; border-color: var(--blue-dark);
+}
+.btn-action.primary:hover { background: var(--blue-mid); border-color: var(--blue-mid); }
+
+/* blocchi forza/attenzione per il blocco */
+.report-block-label {
+  font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--gray-mid); padding: .4rem .85rem;
+  background: var(--gray-light); border-bottom: 1px solid var(--blue-light);
+}
+
+/* ═══════════════════════════════════════
+   PRINT
+═══════════════════════════════════════ */
+@media print {
+  .tool-header, .progress-bar-wrap, .report-actions,
+  .prereq-banner, .step-nav { display: none !important; }
+  body { background: #fff; }
+  .step-card { display: none !important; }
+  .step-card#step-4 { display: block !important; box-shadow: none; border: none; }
+  .step-card-head { background: #1F4E79 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .report-score-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media(max-width:600px) {
+  .tool-wrap { padding: 1.25rem .85rem 4rem; }
+  .step-card-body { padding: 1.1rem 1rem; }
+  .step-card-head { padding: 1rem; }
+  .report-score-num { font-size: 2.8rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="tool-header">
+  <a class="tool-header-back" href="/">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Portale
+  </a>
+  <div class="tool-header-sep"></div>
+  <span class="tool-header-title">Verifica Fonti Online</span>
+  <span class="tool-header-badge">🧪 Strumento · DC 1.2</span>
+</header>
+
+<!-- BARRA PROGRESSO -->
+<div class="progress-bar-wrap">
+  <div class="progress-bar-inner">
+    <div class="progress-steps">
+      <div class="progress-step active" id="prog-0"></div>
+      <div class="progress-step"        id="prog-1"></div>
+      <div class="progress-step"        id="prog-2"></div>
+      <div class="progress-step"        id="prog-3"></div>
+    </div>
+    <div class="progress-label" id="progress-label">Step 0 di 3</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     MAIN
+════════════════════════════════════ -->
+<main class="tool-wrap">
+
+  <!-- ═══ STEP 0 — Inserimento fonte ═══ -->
+  <div class="step-card active" id="step-0">
+    <div class="step-card-head">
+      <div>
+        <div class="step-card-title">Di quale fonte vuoi verificare l'affidabilità?</div>
+        <div class="step-card-sub">Tutto avviene localmente nel tuo browser — nessun dato viene trasmesso.</div>
+      </div>
+    </div>
+    <div class="step-card-body">
+
+      <div class="prereq-banner">
+        💡 Non conosci ancora i metodi di verifica?
+        <a href="/competenze-digitali/pillola-valutazione-fonti/">Leggi prima la pillola →</a>
+      </div>
+
+      <!-- Toggle URL / testo -->
+      <div class="input-mode-toggle">
+        <button class="input-mode-btn active" id="mode-url-btn" onclick="switchInputMode('url')">🔗 Ho un URL</button>
+        <button class="input-mode-btn"        id="mode-text-btn" onclick="switchInputMode('text')">📝 Descrivo la fonte</button>
+      </div>
+
+      <!-- Input URL -->
+      <div id="input-url-block">
+        <div class="form-group">
+          <label class="form-label" for="input-url">URL della fonte</label>
+          <input class="form-input" type="url" id="input-url"
+            placeholder="https://esempio.it/articolo"
+            oninput="parseUrl(this.value)"
+            autocomplete="off" spellcheck="false">
+          <div class="domain-preview" id="domain-preview">
+            🌐 Dominio rilevato: <strong id="domain-value"></strong>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="input-titolo">Titolo o argomento <span>(facoltativo)</span></label>
+          <input class="form-input" type="text" id="input-titolo" placeholder="Es. Articolo sul cambiamento climatico">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="input-data">Data di pubblicazione indicata <span>(facoltativo)</span></label>
+          <input class="form-input" type="text" id="input-data" placeholder="Es. 15 marzo 2024">
+        </div>
+      </div>
+
+      <!-- Input testo libero -->
+      <div id="input-text-block" style="display:none;">
+        <div class="form-group">
+          <label class="form-label" for="input-descrizione">Descrivi la fonte</label>
+          <textarea class="form-input" id="input-descrizione" rows="3"
+            placeholder="Es. Un video YouTube di un canale medico, un articolo di un blog senza autore, un post Facebook condiviso da un amico..."
+            style="resize:vertical;"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="input-titolo-text">Titolo o argomento <span>(facoltativo)</span></label>
+          <input class="form-input" type="text" id="input-titolo-text" placeholder="Es. Rimedi naturali contro l'influenza">
+        </div>
+      </div>
+
+      <div class="step-nav">
+        <div></div><!-- spacer -->
+        <div>
+          <div class="validation-msg" id="val-0">Inserisci almeno l'URL o una descrizione della fonte.</div>
+          <button class="btn-next" onclick="goToStep(1)">
+            Inizia la verifica <span class="arrow">→</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ STEP 1 — Blocco CRAAP ═══ -->
+  <div class="step-card" id="step-1">
+    <div class="step-card-head">
+      <div>
+        <div class="step-card-num">1 / 3 · Analisi della fonte</div>
+        <div class="step-card-title">Blocco CRAAP</div>
+        <div class="step-card-sub">5 criteri fondamentali per valutare la fonte direttamente.</div>
+      </div>
+    </div>
+    <div class="step-card-body">
+
+      <!-- D1 Attualità -->
+      <div class="question-block" id="qb-d1">
+        <div class="question-head">
+          <div class="question-num">1</div>
+          <div class="question-text">Quando è stata pubblicata o aggiornata questa fonte?</div>
+          <button class="tooltip-btn" onclick="toggleTooltip('tip-d1')" aria-label="Mostra spiegazione">?</button>
+        </div>
+        <div class="tooltip-box" id="tip-d1">Per argomenti scientifici, tecnologici o di attualità, una fonte vecchia può contenere informazioni superate. Per storia o filosofia, la data è meno critica.</div>
+        <div class="options-list" id="opts-d1">
+          <button class="option-btn" onclick="selectOption('d1','green',this)"><span class="option-dot">🟢</span>Negli ultimi 12 mesi</button>
+          <button class="option-btn" onclick="selectOption('d1','yellow',this)"><span class="option-dot">🟡</span>Tra 1 e 3 anni fa</button>
+          <button class="option-btn" onclick="selectOption('d1','yellow',this)"><span class="option-dot">🟠</span>Più di 3 anni fa</button>
+          <button class="option-btn" onclick="selectOption('d1','red',this)"><span class="option-dot">🔴</span>Non è indicata nessuna data</button>
+        </div>
+      </div>
+
+      <!-- D2 Rilevanza -->
+      <div class="question-block" id="qb-d2">
+        <div class="question-head">
+          <div class="question-num">2</div>
+          <div class="question-text">Questa fonte risponde davvero alla tua domanda?</div>
+          <button class="tooltip-btn" onclick="toggleTooltip('tip-d2')" aria-label="Mostra spiegazione">?</button>
+        </div>
+        <div class="tooltip-box" id="tip-d2">Una fonte autorevole ma irrilevante è inutile quanto una fonte inaffidabile. Assicurati che risponda alla domanda specifica che stai cercando di rispondere.</div>
+        <div class="options-list" id="opts-d2">
+          <button class="option-btn" onclick="selectOption('d2','green',this)"><span class="option-dot">🟢</span>Sì, tratta esattamente l'argomento che cerco</button>
+          <button class="option-btn" onclick="selectOption('d2','yellow',this)"><span class="option-dot">🟡</span>In parte — tocca l'argomento ma non è il focus principale</button>
+          <button class="option-btn" onclick="selectOption('d2','red',this)"><span class="option-dot">🔴</span>No — parla d'altro o è troppo generica</button>
+        </div>
+      </div>
+
+      <!-- D3 Autorevolezza -->
+      <div class="question-block" id="qb-d3">
+        <div class="question-head">
+          <div class="question-num">3</div>
+          <div class="question-text">Chi ha prodotto questo contenuto?</div>
+          <button class="tooltip-btn" onclick="toggleTooltip('tip-d3')" aria-label="Mostra spiegazione">?</button>
+        </div>
+        <div class="tooltip-box" id="tip-d3">Autorevolezza non significa "famoso" — significa competente sul tema specifico. Un medico è autorevole sulla salute, non necessariamente sull'economia.</div>
+        <div class="options-list" id="opts-d3">
+          <button class="option-btn" onclick="selectOption('d3','green',this)"><span class="option-dot">🟢</span>Istituzione riconosciuta (università, ente pubblico, testata storica)</button>
+          <button class="option-btn" onclick="selectOption('d3','green',this)"><span class="option-dot">🟢</span>Esperto con credenziali verificabili nel campo specifico</button>
+          <button class="option-btn" onclick="selectOption('d3','yellow',this)"><span class="option-dot">🟡</span>Autore noto ma senza credenziali verificate</button>
+          <button class="option-btn" onclick="selectOption('d3','yellow',this)"><span class="option-dot">🟡</span>Sito tematico senza autore identificato ma con storia consolidata</button>
+          <button class="option-btn" onclick="selectOption('d3','red',this)"><span class="option-dot">🔴</span>Autore anonimo o non identificabile</button>
+          <button class="option-btn" onclick="selectOption('d3','red',this)"><span class="option-dot">🔴</span>Sito creato di recente senza informazioni sull'editore</button>
+        </div>
+      </div>
+
+      <!-- D4 Accuratezza -->
+      <div class="question-block" id="qb-d4">
+        <div class="question-head">
+          <div class="question-num">4</div>
+          <div class="question-text">Il contenuto è verificabile e documentato?</div>
+          <button class="tooltip-btn" onclick="toggleTooltip('tip-d4')" aria-label="Mostra spiegazione">?</button>
+        </div>
+        <div class="tooltip-box" id="tip-d4">Una fonte accurata non devi crederci sulla parola — puoi verificarla. Se le affermazioni principali non sono supportate da fonti citabili, trattala con cautela.</div>
+        <div class="options-list" id="opts-d4">
+          <button class="option-btn" onclick="selectOption('d4','green',this)"><span class="option-dot">🟢</span>Cita fonti primarie (studi, dati ufficiali, leggi) con link verificabili</button>
+          <button class="option-btn" onclick="selectOption('d4','yellow',this)"><span class="option-dot">🟡</span>Fa affermazioni verificabili ma senza citare le fonti</button>
+          <button class="option-btn" onclick="selectOption('d4','yellow',this)"><span class="option-dot">🟡</span>Cita fonti ma non è possibile verificarle facilmente</button>
+          <button class="option-btn" onclick="selectOption('d4','red',this)"><span class="option-dot">🔴</span>Nessuna fonte citata — solo affermazioni</button>
+          <button class="option-btn" onclick="selectOption('d4','red',this)"><span class="option-dot">🔴</span>Contiene errori fattuali evidenti</button>
+        </div>
+      </div>
+
+      <!-- D5 Scopo -->
+      <div class="question-block" id="qb-d5">
+        <div class="question-head">
+          <div class="question-num">5</div>
+          <div class="question-text">Qual è lo scopo principale di questo contenuto?</div>
+          <button class="tooltip-btn" onclick="toggleTooltip('tip-d5')" aria-label="Mostra spiegazione">?</button>
+        </div>
+        <div class="tooltip-box" id="tip-d5">Uno scopo persuasivo non rende una fonte automaticamente inaffidabile — dipende dalla trasparenza. Un articolo di opinione su una testata seria è diverso da propaganda mascherata da notizia.</div>
+        <div class="options-list" id="opts-d5">
+          <button class="option-btn" onclick="selectOption('d5','green',this)"><span class="option-dot">🟢</span>Informare — presenta fatti e dati in modo equilibrato</button>
+          <button class="option-btn" onclick="selectOption('d5','green',this)"><span class="option-dot">🟢</span>Istruire — spiega un argomento con intento educativo</button>
+          <button class="option-btn" onclick="selectOption('d5','yellow',this)"><span class="option-dot">🟡</span>Persuadere — argomenta una posizione (va letto con consapevolezza)</button>
+          <button class="option-btn" onclick="selectOption('d5','red',this)"><span class="option-dot">🔴</span>Vendere — il contenuto promuove un prodotto o servizio</button>
+          <button class="option-btn" onclick="selectOption('d5','red',this)"><span class="option-dot">🔴</span>Intrattenere — priorità all'engagement, non alla precisione</button>
+          <button class="option-btn" onclick="selectOption('d5','red',this)"><span class="option-dot">🔴</span>Provocare — linguaggio emotivo, titoli sensazionalistici</button>
+        </div>
+      </div>
+
+      <div class="step-nav">
+        <button class="btn-back" onclick="goToStep(0)">← Indietro</button>
+        <div>
+          <div class="validation-msg" id="val-1">Rispondi a tutte le 5 domande prima di continuare.</div>
+          <button class="btn-next" onclick="goToStep(2)">Continua <span class="arrow">→</span></button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ STEP 2 — Lateral Reading ═══ -->
+  <div class="step-card" id="step-2">
+    <div class="step-card-head">
+      <div>
+        <div class="step-card-num">2 / 3 · Verifica esterna</div>
+        <div class="step-card-title">Lateral Reading</div>
+        <div class="step-card-sub">Esci dalla fonte e cerca cosa dicono altri di lei. Apri una nuova scheda.</div>
+      </div>
+    </div>
+    <div class="step-card-body">
+
+      <!-- D6 Reputazione -->
+      <div class="question-block" id="qb-d6">
+        <div class="question-head">
+          <div class="question-num">6</div>
+          <div class="question-text">Cosa dicono fonti indipendenti di questa fonte?</div>
+          <button class="tooltip-btn" onclick="toggleTooltip('tip-d6')" aria-label="Mostra spiegazione">?</button>
+        </div>
+        <div class="tooltip-box" id="tip-d6">I fact-checker professionisti non leggono a fondo una fonte per giudicarla — aprono subito altre schede e cercano cosa dicono gli altri di quella fonte.</div>
+        <div class="op-instruction-label">📋 Istruzione operativa</div>
+        <div class="op-instruction">Apri Google in una nuova scheda.
+Cerca: "[nome del sito o autore] affidabile"
+   oppure: "[nome del sito] bias"
+Guarda i primi 3–4 risultati (non il sito stesso).</div>
+        <div class="options-list" id="opts-d6">
+          <button class="option-btn" onclick="selectOption('d6','green',this)"><span class="option-dot">🟢</span>Fonti indipendenti la citano come affidabile o autorevole</button>
+          <button class="option-btn" onclick="selectOption('d6','yellow',this)"><span class="option-dot">🟡</span>Non ho trovato informazioni significative (fonte poco nota)</button>
+          <button class="option-btn" onclick="selectOption('d6','yellow',this)"><span class="option-dot">🟡</span>Opinioni contrastanti — alcune positive, alcune critiche</button>
+          <button class="option-btn" onclick="selectOption('d6','red',this)"><span class="option-dot">🔴</span>Fonti indipendenti la segnalano come inaffidabile, di parte o falsa</button>
+        </div>
+      </div>
+
+      <!-- D7 Dominio -->
+      <div class="question-block" id="qb-d7">
+        <div class="question-head">
+          <div class="question-num">7</div>
+          <div class="question-text">Il dominio della fonte è consolidato?</div>
+          <button class="tooltip-btn" onclick="toggleTooltip('tip-d7')" aria-label="Mostra spiegazione">?</button>
+        </div>
+        <div class="tooltip-box" id="tip-d7">I siti creati di recente per diffondere disinformazione hanno spesso domini registrati da pochi mesi. Un dominio vecchio non garantisce l'affidabilità, ma uno recentissimo è un segnale di attenzione.</div>
+        <div class="op-instruction-label">📋 Istruzione operativa</div>
+        <div class="op-instruction">Vai su chi.it o whois.domaintools.com
+Inserisci il nome del dominio (es. esempio.it).
+Nota: data di registrazione e titolare (se disponibile).</div>
+        <div class="options-list" id="opts-d7">
+          <button class="option-btn" onclick="selectOption('d7','green',this)"><span class="option-dot">🟢</span>Dominio registrato da più di 5 anni</button>
+          <button class="option-btn" onclick="selectOption('d7','yellow',this)"><span class="option-dot">🟡</span>Dominio registrato tra 1 e 5 anni fa</button>
+          <button class="option-btn" onclick="selectOption('d7','red',this)"><span class="option-dot">🔴</span>Dominio registrato negli ultimi 12 mesi</button>
+          <button class="option-btn" onclick="selectOption('d7','neutral',this)"><span class="option-dot">⬜</span>Non sono riuscito a verificarlo</button>
+        </div>
+      </div>
+
+      <!-- D8 Copertura incrociata -->
+      <div class="question-block" id="qb-d8">
+        <div class="question-head">
+          <div class="question-num">8</div>
+          <div class="question-text">La stessa informazione è riportata da altre fonti indipendenti?</div>
+          <button class="tooltip-btn" onclick="toggleTooltip('tip-d8')" aria-label="Mostra spiegazione">?</button>
+        </div>
+        <div class="tooltip-box" id="tip-d8">Se una notizia importante è riportata da una sola fonte, è un segnale di attenzione — non di falsità automatica, ma vale approfondire prima di condividerla o usarla.</div>
+        <div class="options-list" id="opts-d8">
+          <button class="option-btn" onclick="selectOption('d8','green',this)"><span class="option-dot">🟢</span>Sì — almeno 2–3 fonti indipendenti riportano la stessa informazione</button>
+          <button class="option-btn" onclick="selectOption('d8','yellow',this)"><span class="option-dot">🟡</span>Fonte unica — solo questo sito riporta questa informazione</button>
+          <button class="option-btn" onclick="selectOption('d8','red',this)"><span class="option-dot">🔴</span>Altre fonti la contraddicono esplicitamente</button>
+        </div>
+      </div>
+
+      <div class="step-nav">
+        <button class="btn-back" onclick="goToStep(1)">← Indietro</button>
+        <div>
+          <div class="validation-msg" id="val-2">Rispondi a tutte le domande prima di continuare.</div>
+          <button class="btn-next" onclick="goToStep(3)">Continua <span class="arrow">→</span></button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ STEP 3 — Immagini/Media ═══ -->
+  <div class="step-card" id="step-3">
+    <div class="step-card-head">
+      <div>
+        <div class="step-card-num">3 / 3 · Verifica visiva</div>
+        <div class="step-card-title">Immagini e media</div>
+        <div class="step-card-sub">Le immagini fuori contesto sono la forma più comune di disinformazione visiva.</div>
+      </div>
+    </div>
+    <div class="step-card-body">
+
+      <!-- Domanda condizionale attivazione blocco -->
+      <div class="cond-question">
+        <div class="cond-question-label">Prima di tutto</div>
+        <div class="cond-question-text">La fonte contiene immagini o video rilevanti per le sue affermazioni?</div>
+        <div class="cond-toggle">
+          <button class="cond-btn active" id="cond-yes" onclick="setImageBlock(true)">✅ Sì</button>
+          <button class="cond-btn"        id="cond-no"  onclick="setImageBlock(false)">⏭ No — passa al report</button>
+        </div>
+      </div>
+
+      <!-- Blocco domande immagini (condizionale) -->
+      <div id="image-questions">
+
+        <!-- D9 Reverse image search -->
+        <div class="question-block" id="qb-d9">
+          <div class="question-head">
+            <div class="question-num">9</div>
+            <div class="question-text">L'immagine principale è nel contesto originale?</div>
+            <button class="tooltip-btn" onclick="toggleTooltip('tip-d9')" aria-label="Mostra spiegazione">?</button>
+          </div>
+          <div class="tooltip-box" id="tip-d9">Una foto reale usata fuori contesto è una forma di disinformazione molto efficace — il contenuto è autentico, ma il messaggio che trasmette è falso.</div>
+          <div class="op-instruction-label">📋 Istruzione operativa</div>
+          <div class="op-instruction">Salva o copia l'immagine principale della fonte.
+Vai su images.google.com
+Clicca sull'icona fotocamera → carica l'immagine o incolla URL.
+Guarda quando e dove è apparsa per la prima volta.</div>
+          <div class="options-list" id="opts-d9">
+            <button class="option-btn" onclick="selectOption('d9','green',this)"><span class="option-dot">🟢</span>L'immagine corrisponde al contesto descritto dalla fonte</button>
+            <button class="option-btn" onclick="selectOption('d9','yellow',this)"><span class="option-dot">🟡</span>L'immagine è generica — non prova né confuta le affermazioni</button>
+            <button class="option-btn" onclick="selectOption('d9','red',this)"><span class="option-dot">🔴</span>L'immagine è usata fuori contesto (data, luogo o evento diverso)</button>
+            <button class="option-btn" onclick="selectOption('d9','red',this)"><span class="option-dot">🔴</span>L'immagine non esiste altrove — possibile AI o manipolazione</button>
+            <button class="option-btn" onclick="selectOption('d9','neutral',this)"><span class="option-dot">⬜</span>Non sono riuscito a verificarla</button>
+          </div>
+        </div>
+
+        <!-- D10 Coerenza visiva -->
+        <div class="question-block" id="qb-d10">
+          <div class="question-head">
+            <div class="question-num">10</div>
+            <div class="question-text">Le immagini sono coerenti con il testo?</div>
+          </div>
+          <div class="options-list" id="opts-d10">
+            <button class="option-btn" onclick="selectOption('d10','green',this)"><span class="option-dot">🟢</span>Sì — le immagini illustrano correttamente quanto scritto</button>
+            <button class="option-btn" onclick="selectOption('d10','yellow',this)"><span class="option-dot">🟡</span>Le immagini sono decorative — non aggiungono né tolgono credibilità</button>
+            <button class="option-btn" onclick="selectOption('d10','red',this)"><span class="option-dot">🔴</span>Le immagini contraddicono o esagerano quanto scritto nel testo</button>
+          </div>
+        </div>
+
+      </div><!-- /image-questions -->
+
+      <div class="step-nav">
+        <button class="btn-back" onclick="goToStep(2)">← Indietro</button>
+        <div>
+          <div class="validation-msg" id="val-3">Se hai selezionato "Sì", rispondi a entrambe le domande sulle immagini.</div>
+          <button class="btn-next" onclick="generateReport()">Genera report <span class="arrow">→</span></button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ STEP 4 — Report ═══ -->
+  <div class="step-card" id="step-4">
+    <div class="step-card-head">
+      <div>
+        <div class="step-card-num">Report finale</div>
+        <div class="step-card-title" id="report-header-title">🔎 Report di verifica</div>
+        <div class="step-card-sub" id="report-header-sub"></div>
+      </div>
+    </div>
+    <div class="step-card-body" id="report-body">
+      <!-- generato da JS -->
+    </div>
+  </div>
+
+</main>
+
+<script src="/scripts/ui.js" defer></script>
+
+<!-- ════════════════════════════════════
+     LOGICA APPLICAZIONE
+════════════════════════════════════ -->
+<script>
+/* ═══════════════════════════════════════════════════════
+   STATO
+═══════════════════════════════════════════════════════ */
+const analisi = {
+  url:       '',
+  dominio:   '',
+  titolo:    '',
+  modalita:  'url',   // 'url' | 'text'
+  risposte:  {},      // { d1: {colore, peso}, ... }
+  imageBlock: true,   // blocco immagini attivo?
+  timestamp: null
+};
+
+/* pesi per-blocco */
+const PESI = {
+  d1: 15, d2: 10, d3: 25, d4: 25, d5: 25,   // CRAAP  (tot 100)
+  d6: 20, d7: 10, d8: 10,                     // Lateral (tot 40 → normalizzato)
+  d9: 15, d10: 5                              // Immagini (tot 20 → normalizzato)
+};
+
+/* punteggio per colore */
+const VAL = { green: 1, yellow: 0.5, red: 0, neutral: null }; // null = escluso
+
+/* etichette domande per il report */
+const DOMANDE_LABEL = {
+  d1:  'Attualità (Currency)',
+  d2:  'Rilevanza (Relevance)',
+  d3:  'Autorevolezza (Authority)',
+  d4:  'Accuratezza (Accuracy)',
+  d5:  'Scopo (Purpose)',
+  d6:  'Reputazione esterna',
+  d7:  'Consolidamento dominio',
+  d8:  'Copertura incrociata',
+  d9:  'Reverse image search',
+  d10: 'Coerenza visiva'
+};
+
+const BLOCCHI_LABEL = {
+  craap:   'CRAAP Test',
+  lateral: 'Lateral Reading',
+  immagini:'Verifica immagini'
+};
+
+/* step corrente */
+let currentStep = 0;
+
+/* ═══════════════════════════════════════════════════════
+   NAVIGAZIONE STEP
+═══════════════════════════════════════════════════════ */
+function goToStep(n) {
+  if (!validateStep(currentStep)) return;
+  showStep(n);
+}
+
+function showStep(n) {
+  document.querySelectorAll('.step-card').forEach(c => c.classList.remove('active'));
+  document.getElementById('step-' + n).classList.add('active');
+  currentStep = n;
+  updateProgress(n);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateProgress(n) {
+  const steps = [0,1,2,3];
+  steps.forEach(i => {
+    const el = document.getElementById('prog-' + i);
+    if (i < n)       el.className = 'progress-step done';
+    else if (i === n) el.className = 'progress-step active';
+    else             el.className = 'progress-step';
+  });
+  const labels = ['Fonte', 'CRAAP', 'Lateral', 'Immagini'];
+  document.getElementById('progress-label').textContent =
+    n < 4 ? 'Step ' + n + ' di 3 · ' + labels[n] : 'Report';
+}
+
+/* ═══════════════════════════════════════════════════════
+   VALIDAZIONE PER STEP
+═══════════════════════════════════════════════════════ */
+function validateStep(n) {
+  hideValidation(n);
+
+  if (n === 0) {
+    const hasUrl  = analisi.modalita === 'url'  && document.getElementById('input-url').value.trim();
+    const hasText = analisi.modalita === 'text' && document.getElementById('input-descrizione').value.trim();
+    if (!hasUrl && !hasText) { showValidation(0); return false; }
+    // salva dati fonte
+    analisi.titolo = analisi.modalita === 'url'
+      ? (document.getElementById('input-titolo').value.trim() || analisi.dominio)
+      : (document.getElementById('input-titolo-text').value.trim() || 'Fonte analizzata');
+    return true;
+  }
+
+  if (n === 1) {
+    const required = ['d1','d2','d3','d4','d5'];
+    if (!required.every(d => analisi.risposte[d])) { showValidation(1); return false; }
+    return true;
+  }
+
+  if (n === 2) {
+    const required = ['d6','d7','d8'];
+    if (!required.every(d => analisi.risposte[d])) { showValidation(2); return false; }
+    return true;
+  }
+
+  if (n === 3) {
+    if (analisi.imageBlock) {
+      if (!analisi.risposte['d9'] || !analisi.risposte['d10']) { showValidation(3); return false; }
+    }
+    return true;
+  }
+
+  return true;
+}
+
+function showValidation(n) {
+  const el = document.getElementById('val-' + n);
+  if (el) { el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 3500); }
+}
+function hideValidation(n) {
+  const el = document.getElementById('val-' + n);
+  if (el) el.classList.remove('show');
+}
+
+/* ═══════════════════════════════════════════════════════
+   INPUT FONTE
+═══════════════════════════════════════════════════════ */
+function switchInputMode(mode) {
+  analisi.modalita = mode;
+  document.getElementById('mode-url-btn').classList.toggle('active', mode === 'url');
+  document.getElementById('mode-text-btn').classList.toggle('active', mode === 'text');
+  document.getElementById('input-url-block').style.display  = mode === 'url'  ? '' : 'none';
+  document.getElementById('input-text-block').style.display = mode === 'text' ? '' : 'none';
+  if (mode === 'text') {
+    // Nessun dominio da mostrare in modalità testo
+    document.getElementById('domain-preview').classList.remove('show');
+  }
+}
+
+function parseUrl(val) {
+  analisi.url = val;
+  try {
+    const u = new URL(val);
+    analisi.dominio = u.hostname.replace(/^www\./, '');
+    document.getElementById('domain-value').textContent = analisi.dominio;
+    document.getElementById('domain-preview').classList.add('show');
+  } catch {
+    analisi.dominio = '';
+    document.getElementById('domain-preview').classList.remove('show');
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   SELEZIONE RISPOSTA
+═══════════════════════════════════════════════════════ */
+function selectOption(domanda, colore, btn) {
+  // deselect tutti nello stesso gruppo
+  const container = document.getElementById('opts-' + domanda);
+  container.querySelectorAll('.option-btn').forEach(b => {
+    b.className = 'option-btn';
+  });
+  // seleziona questo
+  const cls = { green: 'selected-green', yellow: 'selected-yellow', red: 'selected-red', neutral: 'selected-neutral' };
+  btn.classList.add(cls[colore]);
+
+  analisi.risposte[domanda] = { colore, peso: PESI[domanda] };
+}
+
+/* ═══════════════════════════════════════════════════════
+   BLOCCO IMMAGINI CONDIZIONALE
+═══════════════════════════════════════════════════════ */
+function setImageBlock(attivo) {
+  analisi.imageBlock = attivo;
+  document.getElementById('cond-yes').classList.toggle('active', attivo);
+  document.getElementById('cond-no').classList.toggle('active', !attivo);
+  document.getElementById('image-questions').style.display = attivo ? '' : 'none';
+  if (!attivo) {
+    delete analisi.risposte['d9'];
+    delete analisi.risposte['d10'];
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   TOOLTIP
+═══════════════════════════════════════════════════════ */
+function toggleTooltip(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+/* ═══════════════════════════════════════════════════════
+   CALCOLO PUNTEGGIO
+   Logica: media ponderata per blocco → media ponderata blocchi attivi
+   Pesi globali: CRAAP 50%, Lateral 35%, Immagini 15%
+   Se blocco immagini inattivo: CRAAP 50/(50+35)*100 ≈ 58.8% → 59%, Lateral 41%
+═══════════════════════════════════════════════════════ */
+function calcolaPunteggioBlocko(domande) {
+  let pesoTot = 0, somma = 0;
+  domande.forEach(d => {
+    const r = analisi.risposte[d];
+    if (!r) return;
+    const v = VAL[r.colore];
+    if (v === null) return; // neutral escluso
+    somma   += v * r.peso;
+    pesoTot += r.peso;
+  });
+  return pesoTot > 0 ? (somma / pesoTot) * 100 : null;
+}
+
+function calcolaPunteggioFinale() {
+  const scoreCraap   = calcolaPunteggioBlocko(['d1','d2','d3','d4','d5']);
+  const scoreLateral = calcolaPunteggioBlocko(['d6','d7','d8']);
+  const scoreImg     = analisi.imageBlock ? calcolaPunteggioBlocko(['d9','d10']) : null;
+
+  // pesi globali attivi
+  const pesoBase = { craap: 50, lateral: 35, immagini: 15 };
+  let pesoTot = pesoBase.craap + pesoBase.lateral + (scoreImg !== null ? pesoBase.immagini : 0);
+
+  let finale = 0;
+  if (scoreCraap   !== null) finale += scoreCraap   * (pesoBase.craap   / pesoTot);
+  if (scoreLateral !== null) finale += scoreLateral  * (pesoBase.lateral / pesoTot);
+  if (scoreImg     !== null) finale += scoreImg      * (pesoBase.immagini / pesoTot);
+
+  return {
+    finale: Math.round(finale),
+    craap:   scoreCraap   !== null ? Math.round(scoreCraap)   : null,
+    lateral: scoreLateral !== null ? Math.round(scoreLateral)  : null,
+    img:     scoreImg     !== null ? Math.round(scoreImg)      : null
+  };
+}
+
+/* ═══════════════════════════════════════════════════════
+   GENERAZIONE REPORT
+═══════════════════════════════════════════════════════ */
+function generateReport() {
+  if (!validateStep(3)) return;
+  analisi.timestamp = new Date();
+
+  const score = calcolaPunteggioFinale();
+
+  // Fascia
+  let fascia, fasciaColor, fasciaLabel, raccLabel;
+  if (score.finale >= 80) {
+    fascia='✅'; fasciaLabel='Fonte affidabile';
+    fasciaColor = 'var(--score-green)';
+    raccLabel = 'Puoi usarla citandola correttamente. Ricorda di indicare autore, data e URL.';
+  } else if (score.finale >= 60) {
+    fascia='⚠️'; fasciaLabel='Fonte da approfondire';
+    fasciaColor = 'var(--score-orange)';
+    raccLabel = 'Verifica almeno un altro punto prima di usarla — cerca conferme su fonti indipendenti.';
+  } else if (score.finale >= 40) {
+    fascia='🔶'; fasciaLabel='Fonte parzialmente attendibile';
+    fasciaColor = 'var(--score-amber)';
+    raccLabel = 'Usa solo le informazioni che riesci a verificare su altre fonti primarie. Non citarla come unica referenza.';
+  } else {
+    fascia='❌'; fasciaLabel='Fonte inaffidabile';
+    fasciaColor = 'var(--score-red)';
+    raccLabel = 'Non usarla. Cerca fonti alternative con autorevolezza verificabile.';
+  }
+
+  const domLabel = analisi.dominio || analisi.titolo || 'Fonte analizzata';
+
+  // Header step
+  document.getElementById('report-header-title').textContent = '🔎 Report — ' + domLabel;
+  document.getElementById('report-header-sub').textContent =
+    'Analisi completata il ' + analisi.timestamp.toLocaleDateString('it-IT');
+
+  // Colori blocco score
+  const scoreColors = {
+    'var(--score-green)':  { bg: 'var(--score-green-bg)',  text: 'var(--score-green)' },
+    'var(--score-orange)': { bg: 'var(--score-orange-bg)', text: 'var(--score-orange)' },
+    'var(--score-amber)':  { bg: 'var(--score-amber-bg)',  text: 'var(--score-amber)' },
+    'var(--score-red)':    { bg: 'var(--score-red-bg)',    text: 'var(--score-red)' }
+  };
+  const sc = scoreColors[fasciaColor];
+
+  // Righe tabella dettaglio
+  function righeBlocko(domande, bloccoLabel) {
+    let rows = `<tr><td colspan="3" class="report-block-label">${bloccoLabel}</td></tr>`;
+    domande.forEach(d => {
+      const r = analisi.risposte[d];
+      if (!r) return;
+      const dotClass = { green:'dot-green', yellow:'dot-yellow', red:'dot-red', neutral:'dot-neutral' }[r.colore];
+      const contrib = VAL[r.colore] !== null
+        ? Math.round(VAL[r.colore] * r.peso * 10) / 10
+        : '—';
+      rows += `<tr>
+        <td><span class="report-dot ${dotClass}"></span>${DOMANDE_LABEL[d]}</td>
+        <td style="white-space:nowrap;text-align:center;">${r.peso}%</td>
+        <td style="white-space:nowrap;text-align:center;">${contrib !== '—' ? contrib + ' pt' : 'n/v'}</td>
+      </tr>`;
+    });
+    return rows;
+  }
+
+  // Punti forza e attenzione
+  const strengths = [], warnings = [];
+  Object.entries(analisi.risposte).forEach(([d, r]) => {
+    if (r.colore === 'green')  strengths.push(DOMANDE_LABEL[d]);
+    if (r.colore === 'red')    warnings.push(DOMANDE_LABEL[d]);
+  });
+
+  function listItems(arr, empty) {
+    if (!arr.length) return `<li>${empty}</li>`;
+    return arr.map(l => `<li>${l}</li>`).join('');
+  }
+
+  // Punteggi blocco
+  function bloccoScore(val) {
+    return val !== null ? `<span style="font-weight:600;">${val}/100</span>` : '<span style="color:var(--gray-mid);">n/a</span>';
+  }
+
+  const reportHTML = `
+    <!-- Score box -->
+    <div class="report-score-box" style="background:${sc.bg};color:${sc.text};">
+      <div class="report-domain">${domLabel}</div>
+      <div class="report-score-num">${score.finale}<span style="font-size:1.5rem;opacity:.6;">/100</span></div>
+      <div class="report-score-label">${fascia} ${fasciaLabel}</div>
+      <div class="report-rec">${raccLabel}</div>
+    </div>
+
+    <!-- Punteggi per blocco -->
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem;">
+      <div style="flex:1;min-width:120px;background:var(--blue-pale);border:1px solid var(--blue-light);border-radius:9px;padding:.85rem 1rem;text-align:center;">
+        <div style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-mid);margin-bottom:.3rem;">CRAAP Test</div>
+        <div>${bloccoScore(score.craap)}</div>
+        <div style="font-size:.72rem;color:var(--gray-mid);margin-top:.2rem;">peso 50%</div>
+      </div>
+      <div style="flex:1;min-width:120px;background:var(--blue-pale);border:1px solid var(--blue-light);border-radius:9px;padding:.85rem 1rem;text-align:center;">
+        <div style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-mid);margin-bottom:.3rem;">Lateral Reading</div>
+        <div>${bloccoScore(score.lateral)}</div>
+        <div style="font-size:.72rem;color:var(--gray-mid);margin-top:.2rem;">${analisi.imageBlock ? 'peso 35%' : 'peso 41%'}</div>
+      </div>
+      ${analisi.imageBlock ? `
+      <div style="flex:1;min-width:120px;background:var(--blue-pale);border:1px solid var(--blue-light);border-radius:9px;padding:.85rem 1rem;text-align:center;">
+        <div style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-mid);margin-bottom:.3rem;">Immagini</div>
+        <div>${bloccoScore(score.img)}</div>
+        <div style="font-size:.72rem;color:var(--gray-mid);margin-top:.2rem;">peso 15%</div>
+      </div>` : `
+      <div style="flex:1;min-width:120px;background:var(--gray-light);border:1px solid #e0e0e0;border-radius:9px;padding:.85rem 1rem;text-align:center;opacity:.5;">
+        <div style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-mid);margin-bottom:.3rem;">Immagini</div>
+        <div style="font-size:.82rem;color:var(--gray-mid);">Non applicato</div>
+      </div>`}
+    </div>
+
+    <!-- Punti forza / attenzione -->
+    <div class="report-lists">
+      <div class="report-list-box strengths">
+        <div class="report-list-title">✓ Punti di forza</div>
+        <ul class="report-list-items">${listItems(strengths, 'Nessun criterio verde — rivedi la fonte')}</ul>
+      </div>
+      <div class="report-list-box warnings">
+        <div class="report-list-title">⚠ Aree di attenzione</div>
+        <ul class="report-list-items">${listItems(warnings, 'Nessuna criticità rilevata')}</ul>
+      </div>
+    </div>
+
+    <!-- Tabella dettaglio -->
+    <div class="report-detail-title">Dettaglio per criterio</div>
+    <table class="report-table">
+      <thead><tr><th>Criterio</th><th style="text-align:center;">Peso</th><th style="text-align:center;">Contributo</th></tr></thead>
+      <tbody>
+        ${righeBlocko(['d1','d2','d3','d4','d5'], 'CRAAP Test')}
+        ${righeBlocko(['d6','d7','d8'], 'Lateral Reading')}
+        ${analisi.imageBlock ? righeBlocko(['d9','d10'], 'Verifica immagini') : ''}
+      </tbody>
+    </table>
+
+    <!-- Azioni -->
+    <div class="report-actions">
+      <button class="btn-action primary" onclick="window.print()">🖨 Stampa / Salva PDF</button>
+      <button class="btn-action" id="btn-copia" onclick="copyReport(${score.finale}, '${fasciaLabel}', '${domLabel}')">📋 Copia testo</button>
+      <button class="btn-action" onclick="resetTool()">🔄 Analizza un'altra fonte</button>
+      <a class="btn-action" href="/competenze-digitali/pillola-valutazione-fonti/">← Torna alla pillola</a>
+    </div>
+    <div id="copy-feedback" class="copy-feedback" style="margin-top:.5rem;"></div>
+
+    <!-- Badge competenze -->
+    <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--blue-light);display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;">
+      <span style="font-size:.72rem;color:var(--gray-mid);margin-right:.3rem;">Competenze:</span>
+      <span style="font-size:.72rem;font-weight:700;background:var(--blue-pale);color:var(--blue-dark);padding:.18rem .55rem;border-radius:20px;border:1px solid var(--blue-light);">DC 1.2</span>
+      <span style="font-size:.72rem;font-weight:700;background:var(--blue-pale);color:var(--blue-dark);padding:.18rem .55rem;border-radius:20px;border:1px solid var(--blue-light);">DC 1.1</span>
+      <span style="font-size:.72rem;font-weight:700;background:var(--green-light);color:var(--green-dark);padding:.18rem .55rem;border-radius:20px;border:1px solid #9de0bb;">DCEdu 6.1</span>
+      <span style="font-size:.72rem;font-weight:700;background:var(--green-light);color:var(--green-dark);padding:.18rem .55rem;border-radius:20px;border:1px solid #9de0bb;">DCEdu 4.1</span>
+    </div>
+  `;
+
+  document.getElementById('report-body').innerHTML = reportHTML;
+  showStep(4);
+}
+
+/* ═══════════════════════════════════════════════════════
+   AZIONI POST REPORT
+═══════════════════════════════════════════════════════ */
+function copyReport(punteggio, fascia, fonte) {
+  const righe = Object.entries(analisi.risposte).map(([d, r]) =>
+    `${DOMANDE_LABEL[d]}: ${r.colore.toUpperCase()}`
+  ).join('\n');
+
+  const testo = `REPORT VERIFICA FONTE — Formazione Digitale
+Fonte: ${fonte}
+Data: ${analisi.timestamp.toLocaleDateString('it-IT')}
+
+PUNTEGGIO FINALE: ${punteggio}/100 — ${fascia}
+
+DETTAGLIO:
+${righe}
+
+Generato con Verifica Fonti Online — formazione-digitale.it`;
+
+  navigator.clipboard.writeText(testo).then(() => {
+    const fb = document.getElementById('copy-feedback');
+    if (fb) { fb.textContent = '✓ Copiato'; fb.classList.add('show'); setTimeout(() => fb.classList.remove('show'), 2000); }
+  }).catch(() => {
+    const fb = document.getElementById('copy-feedback');
+    if (fb) { fb.textContent = '✗ Usa Stampa per salvare'; fb.classList.add('show'); setTimeout(() => fb.classList.remove('show'), 3000); }
+  });
+}
+
+function resetTool() {
+  // reset stato
+  analisi.url = ''; analisi.dominio = ''; analisi.titolo = '';
+  analisi.modalita = 'url'; analisi.risposte = {};
+  analisi.imageBlock = true; analisi.timestamp = null;
+
+  // reset UI input
+  document.getElementById('input-url').value = '';
+  document.getElementById('input-titolo').value = '';
+  document.getElementById('input-data').value = '';
+  document.getElementById('input-descrizione').value = '';
+  document.getElementById('input-titolo-text').value = '';
+  document.getElementById('domain-preview').classList.remove('show');
+
+  // reset opzioni
+  document.querySelectorAll('.option-btn').forEach(b => b.className = 'option-btn');
+
+  // reset blocco immagini
+  setImageBlock(true);
+
+  // torna a step 0
+  switchInputMode('url');
+  showStep(0);
+}
+
+/* init: blocco immagini visibile per default */
+document.getElementById('image-questions').style.display = '';
+</script>
+
+</body>
+</html>

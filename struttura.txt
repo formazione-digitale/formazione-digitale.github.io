@@ -1,9 +1,10 @@
 Elenco del percorso delle cartelle per il volume Acer
-Numero di serie del volume: 000000F1-544D:3F7C
+Numero di serie del volume: 000000FC-544D:3F7C
 C:.
 |   404.html
 |   auth.js
 |   cookie-policy.html
+|   index - Copia.html
 |   index.html
 |   manifest.json
 |   mappa.html
@@ -23,13 +24,16 @@ C:.
 +---competenze-digitali
 |   +---pillola-valutazione-fonti
 |   |       Caccia_alla_fonte_griglia.pdf
+|   |       CRAAP_test_griglia.pdf
 |   |       index.html
-|   |       INTEGRAZIONI.md
 |   |       
 |   +---pillola-wikipedia-speedrun
 |   |       index.html
 |   |       
 |   \---strumento-valutazione-fonti
+|           index.html
+|           INTEGRAZIONI.md
+|           
 +---css
 |       shared.css
 |       

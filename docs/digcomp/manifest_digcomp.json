@@ -502,33 +502,37 @@
   "digcomp_areas": ["informazione", "comunicazione"],
   "digcompedu": ["DCEdu 3.1"]
 },
+,
 {
   "path": "/competenze-digitali/pillola-valutazione-fonti/",
   "label": "Valutare le Fonti Online",
   "short": "Valutazione Fonti",
   "cat": "pillola",
   "emoji": "🔎",
-  "tags": [
-    "fonti",
-    "valutazione",
-    "craap test",
-    "lateral reading",
-    "reverse image search",
-    "disinformazione",
-    "fake news",
-    "fact checking",
-    "affidabilità",
-    "informazione",
-    "media literacy",
-    "competenze digitali"
-  ],
-  "meta": "CRAAP test · Lateral reading · Livello base · ~15 min",
-  "description": "Tre metodi per valutare qualsiasi fonte online in 5 minuti: CRAAP test, lateral reading e reverse image search. Per studenti e docenti.",
+  "tags": ["fonti", "verifica", "craap test", "lateral reading", "fact checking", "disinformazione", "media literacy"],
+  "meta": "3 metodi · Checklist interattiva · Livello base",
+  "description": "Tre metodi per valutare qualsiasi fonte online in 5 minuti: CRAAP test, lateral reading e reverse image search.",
   "featured": false,
   "active": true,
   "digcomp": ["DC 1.2", "DC 1.1"],
   "digcomp_level": "foundation",
   "digcompedu": ["DCEdu 6.1", "DCEdu 3.2"],
+  "digcomp_areas": ["informazioni"]
+},
+{
+  "path": "/competenze-digitali/strumento-valutazione-fonti/",
+  "label": "Verifica Fonti Online",
+  "short": "Verifica Fonti",
+  "cat": "strumento",
+  "emoji": "🧪",
+  "tags": ["fonti", "verifica", "craap test", "lateral reading", "reverse image search", "affidabilità", "fact checking", "disinformazione", "media literacy"],
+  "meta": "Checklist guidata · Report affidabilità · Livello base",
+  "description": "Strumento guidato per valutare l'affidabilità di qualsiasi fonte online. CRAAP test, lateral reading e verifica immagini in un unico flusso interattivo. Tutto client-side.",
+  "featured": false,
+  "active": true,
+  "digcomp": ["DC 1.2", "DC 1.1"],
+  "digcomp_level": "foundation",
+  "digcompedu": ["DCEdu 6.1", "DCEdu 4.1"],
   "digcomp_areas": ["informazioni"]
 }
 
