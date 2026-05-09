@@ -791,7 +791,9 @@ section { animation: fadeIn 0.4s ease both; }
   <span>·</span>
   <a href="#s12">Relazioni in cascata</a>
   <span>·</span>
-  <a href="#s13">Estendere il database</a>
+  <a href="#s14">Query calcolate</a>
+  <span>·</span>
+  <a href="#s14">Estendere il database</a>
 </nav>
 
 <!-- ══════════════════ MAIN ══════════════════ -->
@@ -1804,10 +1806,71 @@ section { animation: fadeIn 0.4s ease both; }
   </div>
 </section>
 
-<!-- ─── 13. ESTENDERE UN DATABASE ESISTENTE ─── -->
+
+<!-- ─── 13. QUERY CALCOLATE ─── -->
 <section id="s13">
-  <div class="section-label">Progettazione avanzata</div>
+  <div class="section-label">Analisi dei dati</div>
   <span class="section-num">13</span>
+  <h2>Query calcolate e raggruppamento</h2>
+
+  <p>Nelle query che coinvolgono calcoli tra campi, il <strong>campo non è una colonna della tabella</strong> ma un'<strong>espressione matematica</strong> da inserire direttamente nella riga <em>Campo</em> del QBE. L'alias assegnato nella riga <em>Alias</em> diventa il nome della colonna nel risultato.</p>
+
+  <h3>Caso 1 — Totale venduto per prodotto</h3>
+  <p>Vogliamo sapere quanto ha reso ogni prodotto: moltiplichiamo il prezzo di listino per la quantità venduta, raggruppando per descrizione del prodotto.</p>
+
+  <div class="steps">
+    <div class="step"><div class="step-body">Aggiungi le tabelle <strong>PRODOTTO</strong> e <strong>DETTAGLIO_VENDITA</strong> al designer.</div></div>
+    <div class="step"><div class="step-body">Nella riga <em>Campo</em>, inserisci l'espressione: <code>"PRODOTTO"."Prezzo_Listino" * "DETTAGLIO_VENDITA"."Qta"</code></div></div>
+    <div class="step"><div class="step-body">Nella riga <em>Alias</em>, scrivi: <code>Totale per prodotto</code></div></div>
+    <div class="step"><div class="step-body">Per il campo <em>Descrizione</em> imposta <strong>Funzione → Gruppo</strong>; per l'espressione calcolata imposta <strong>Funzione → Somma</strong>.</div></div>
+  </div>
+
+  <div class="two-col">
+    <figure class="screenshot">
+      <img loading="lazy" src="img/1778328699104_image.png" alt="QBE query calcolata — totale per prodotto">
+      <figcaption>QBE — L'espressione matematica nel campo, alias "Totale per prodotto", Funzione Gruppo su Descrizione e Somma sull'espressione.</figcaption>
+    </figure>
+    <figure class="screenshot">
+      <img loading="lazy" src="img/1778328712119_image.png" alt="Risultato query — totale venduto per prodotto">
+      <figcaption>Risultato — ogni riga riporta un prodotto con il totale delle vendite calcolato.</figcaption>
+    </figure>
+  </div>
+
+  <h3>Caso 2 — Totale per scontrino</h3>
+  <p>La <strong>stessa espressione matematica</strong> può essere usata per rispondere a una domanda diversa: quanto vale ogni singolo scontrino? Basta cambiare la dimensione di raggruppamento — non la formula.</p>
+
+  <div class="steps">
+    <div class="step"><div class="step-body">Aggiungi anche la tabella <strong>SCONTRINO</strong> al designer.</div></div>
+    <div class="step"><div class="step-body">Usa la stessa espressione: <code>"PRODOTTO"."Prezzo_Listino" * "DETTAGLIO_VENDITA"."Qta"</code> con alias <code>Totale scontrino</code></div></div>
+    <div class="step"><div class="step-body">Imposta <strong>Funzione → Gruppo</strong> su <em>ID_Scontrino</em> e <em>NUM_Scontrino</em>; <strong>Funzione → Somma</strong> sull'espressione calcolata.</div></div>
+  </div>
+
+  <div class="two-col">
+    <figure class="screenshot">
+      <img loading="lazy" src="img/1778329092202_image.png" alt="QBE query calcolata — totale per scontrino">
+      <figcaption>QBE — Stessa espressione, raggruppamento su ID_Scontrino e NUM_Scontrino.</figcaption>
+    </figure>
+    <figure class="screenshot">
+      <img loading="lazy" src="img/1778329102309_image.png" alt="Risultato query — totale per scontrino">
+      <figcaption>Risultato — ogni riga riporta uno scontrino con il proprio totale.</figcaption>
+    </figure>
+  </div>
+
+  <div class="highlight-box">
+    <h4>// Formula invariante, significato variabile:</h4>
+    <ul>
+      <li><strong>L'espressione matematica non cambia</strong> — <code>Prezzo_Listino × Qta</code> è sempre la stessa.</li>
+      <li><strong>È la dimensione di raggruppamento a determinare il dato:</strong> raggruppo per prodotto → totale per articolo; raggruppo per scontrino → totale per transazione.</li>
+      <li>Questo principio è alla base di qualsiasi analisi dati: stessa misura, granularità diversa, risposta diversa.</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ─── 14. ESTENDERE UN DATABASE ESISTENTE ─── -->
+<section id="s14">
+  <div class="section-label">Progettazione avanzata</div>
+  <span class="section-num">14</span>
   <h2>Estendere un database esistente</h2>
 
   <p>Un database in produzione — già popolato di dati — può richiedere modifiche strutturali: nuove tabelle, nuove relazioni, nuovi vincoli. L'obiettivo è <strong>preservare i dati esistenti</strong> e le regole di integrità già in vigore, senza dover ricostruire tutto da zero.</p>
