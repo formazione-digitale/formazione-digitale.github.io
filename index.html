@@ -1445,6 +1445,9 @@ function updateStats() {
   document.getElementById('count-guide').textContent = guides;
   document.getElementById('count-tool').textContent  = tools;
   document.getElementById('count-pill').textContent  = pills;
+  document.getElementById('label-count-guide').textContent = guides + (guides === 1 ? ' risorsa' : ' risorse');
+  document.getElementById('label-count-tool').textContent  = tools  > 0 ? tools + ' risorse' : 'In arrivo';
+  document.getElementById('label-count-pill').textContent  = pills  > 0 ? pills + ' risorse' : 'In arrivo';
   // GoatCounter stats — gestite da stats.js
 }
 updateStats();
