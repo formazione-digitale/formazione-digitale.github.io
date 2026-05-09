@@ -1301,7 +1301,7 @@ function generateReport() {
     <!-- Azioni -->
     <div class="report-actions">
       <button class="btn-action primary" onclick="window.print()">🖨 Stampa / Salva PDF</button>
-      <button class="btn-action" id="btn-copia" onclick="copyReport(${score.finale}, '${fasciaLabel}', '${domLabel}')">📋 Copia testo</button>
+      <button class="btn-action" id="btn-copia" onclick="copyReport()">📋 Copia testo</button>
       <button class="btn-action" onclick="resetTool()">🔄 Analizza un'altra fonte</button>
       <a class="btn-action" href="/competenze-digitali/pillola-valutazione-fonti/">← Torna alla pillola</a>
     </div>
@@ -1316,6 +1316,9 @@ function generateReport() {
       <span style="font-size:.72rem;font-weight:700;background:var(--green-light);color:var(--green-dark);padding:.18rem .55rem;border-radius:20px;border:1px solid #9de0bb;">DCEdu 4.1</span>
     </div>
   `;
+  
+  /* salva dati report per copyReport() */
+	window._reportData = { punteggio: score.finale, fascia: fasciaLabel, fonte: domLabel };
 
   document.getElementById('report-body').innerHTML = reportHTML;
   showStep(4);
