@@ -71,6 +71,7 @@
   --blue-mid:    #2E75B6;
   --blue-light:  #D6E8F7;
   --blue-pale:   #EBF3FC;
+  --blue-soft: 	 #A8C8E8;
   --green-dark:  #1E6B3C;
   --green-light: #E8F5EE;
   --amber-dark:  #7D4E00;
@@ -203,7 +204,7 @@ header {
 .stat-btn {
   display: flex; flex-direction: column; align-items: center;
   padding: .4rem .9rem; border-radius: 20px;
-  border: 1.5px solid var(--blue-light); background: var(--white);
+  border: 1.5px solid var(--blue-soft); background: var(--white);
   cursor: pointer; font-family: var(--font-body);
   transition: all var(--transition); gap: .1rem;
 }
@@ -849,13 +850,6 @@ body.modal-open { overflow: hidden; }
 
 <!-- ── MAIN ─────────────────────────────────────────────────────── -->
 <main>
-
-  <div class="filter-bar">
-    <button class="filter-btn active" onclick="setFilter('all', this)">Tutto</button>
-    <button class="filter-btn" onclick="setFilter('guide', this)">📘 Guide</button>
-    <button class="filter-btn" onclick="setFilter('strumento', this)">🛠 Strumenti</button>
-    <button class="filter-btn" onclick="setFilter('pillola', this)">💡 Pillole</button>
-  </div>
 
   <div id="no-results">Nessuna risorsa trovata per questa ricerca.</div>
 
