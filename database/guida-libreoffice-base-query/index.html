@@ -157,18 +157,17 @@ header p {
 
 /* ── INDICE ── */
 nav.toc {
-  background: var(--ink);
-  border-bottom: 3px solid var(--accent);
   padding: 0.7rem 1.5rem;
-  position: sticky;
-  top: 0;
-  z-index: 100;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
   gap: 0.25rem;
   align-items: center;
   justify-content: center;
+  scrollbar-width: none;
 }
+nav.toc::-webkit-scrollbar { display: none; }
+
 nav.toc a {
   font-size: 0.82rem;
   font-family: 'Sora', sans-serif;
@@ -199,6 +198,15 @@ nav.toc span.row-break {
   width: 100%;
   height: 0;
 }
+
+.toc-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--ink);
+  border-bottom: 3px solid var(--accent);
+}
+
 
 /* ── LAYOUT ── */
 main { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
@@ -690,7 +698,6 @@ section { animation: fadeIn 0.4s ease both; }
 /* ── RESPONSIVE ── */
 @media (max-width: 600px) {
   .lo-tables-area { flex-direction: column; gap: 15px; }
-  nav.toc { overflow-x: auto; flex-wrap: nowrap; }
 }
 
 /* ── CAMPO HIGHLIGHT ── */
@@ -736,6 +743,21 @@ section { animation: fadeIn 0.4s ease both; }
   margin-left: 1rem;
   margin-top: -0.5rem;
 }
+
+.back-to-top {
+  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
+  width: 40px; height: 40px;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: 50%;
+  font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 12px rgba(214,79,42,.35);
+  opacity: 0; pointer-events: none;
+  transition: opacity .22s ease, transform .22s ease;
+}
+.back-to-top.visible { opacity: 1; pointer-events: all; }
+.back-to-top:hover { transform: translateY(-2px); }
+
 </style>
 
 
@@ -764,6 +786,7 @@ section { animation: fadeIn 0.4s ease both; }
 <!-- ══════════════════ NAV ══════════════════ -->
 <div style="height:4px; background:linear-gradient(to right, var(--accent), var(--accent2), var(--accent3));"></div>
 <div style="background:var(--ink); padding: 0.3rem 1.5rem 0; font-family:'Space Mono',monospace; font-size:0.65rem; color:#666; letter-spacing:0.1em; text-transform:uppercase;">Sezioni →</div>
+<div class="toc-wrap">
 <nav class="toc">
   <a href="#s0">Cos'è una query</a>
   <span>·</span>
@@ -795,6 +818,7 @@ section { animation: fadeIn 0.4s ease both; }
   <span>·</span>
   <a href="#s14">Estendere il database</a>
 </nav>
+</div>
 
 <!-- ══════════════════ MAIN ══════════════════ -->
 <main>
@@ -2001,6 +2025,10 @@ const observer = new IntersectionObserver((entries) => {
 
 sections.forEach(s => observer.observe(s));
 </script>
-</body><script src="/scripts/ui.js" defer></script>
+
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Torna su">↑</button>
+
+</body>
+<script src="/scripts/ui.js" defer></script>
 
 </html>
