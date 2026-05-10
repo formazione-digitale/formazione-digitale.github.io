@@ -131,16 +131,15 @@ body {
 /* ── ABOUT BUTTONS MODAL ── */
 .about-trigger {
   font-size: 0.82rem;
-  color: rgba(255,255,255,.15);
-  border: 1px solid rgba(255,255,255,.4);
+  color: rgba(255,255,255,0.75);
   text-decoration: none;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 5px;
   transition: color 0.2s;
-  background: none;
-  border: none;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.4);
   font-family: inherit;
   padding: 0;
 }
