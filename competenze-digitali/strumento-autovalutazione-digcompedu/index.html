@@ -1059,21 +1059,21 @@ function renderQuestion() {
 
   // Event listener opzioni
   wrap.querySelectorAll('.level-option').forEach(opt => {
-    opt.addEventListener('click', () => {
-      const compId = opt.dataset.comp;
-      const level  = opt.dataset.level;
-      answers[compId] = level;
-      wrap.querySelectorAll('.level-option').forEach(o => o.classList.remove('selected'));
-      opt.classList.add('selected');
-      // Auto-avanza dopo 400ms
-      setTimeout(() => {
-        if (currentIdx < allQuestions.length - 1) {
-          currentIdx++;
-          renderQuestion();
-          updateProgress();
-        }
-      }, 380);
-    });
+	opt.addEventListener('click', (e) => {
+	  if (e.target.tagName === 'INPUT') return;
+	  const compId = opt.dataset.comp;
+	  const level  = opt.dataset.level;
+	  answers[compId] = level;
+	  wrap.querySelectorAll('.level-option').forEach(o => o.classList.remove('selected'));
+	  opt.classList.add('selected');
+	  setTimeout(() => {
+		if (currentIdx < allQuestions.length - 1) {
+		  currentIdx++;
+		  renderQuestion();
+		  updateProgress();
+		}
+	  }, 380);
+	});
   });
 
   // Navigazione bottoni
