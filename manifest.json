@@ -20,7 +20,11 @@
     "meta": "61 screenshot · PDF scaricabile · Livello base",
     "description": "Stili, tabelle, indice automatico, stampa unione e molto altro. Con 61 screenshot e PDF scaricabile.",
     "featured": false,
-    "active": true
+    "active": true,
+    "digcomp": ["DC 3.1", "DC 3.2"],
+    "digcomp_level": "foundation",
+    "digcomp_areas": ["creazione"],
+    "digcompedu": ["DCEdu 2.2", "DCEdu 6.2", "DCEdu 6.3"]
   },
   {
     "path": "/database/guida-libreoffice-base-query/",
@@ -39,7 +43,11 @@
     "meta": "Con DB di esempio · Livello intermedio",
     "description": "Guida pratica alle query in LibreOffice Base. Include database di esempio scaricabile e immagini passo per passo.",
     "featured": false,
-    "active": true
+    "active": true,
+    "digcomp": ["DC 2.1", "DC 5.1", "DC 5.2"],
+    "digcomp_level": "intermediate",
+    "digcomp_areas": ["comunicazione", "problem-solving"],
+    "digcompedu": ["DCEdu 2.2", "DCEdu 6.5"]
   },
   {
     "path": "/marketing/guida-marketing/",
@@ -58,7 +66,11 @@
     "meta": "Aggiornata · Livello intermedio",
     "description": "Dalle leve del marketing mix alle strategie di vendita online. Guida pratica per orientarsi nel mercato digitale.",
     "featured": false,
-    "active": true
+    "active": true,
+    "digcomp": ["DC 3.1", "DC 5.2"],
+    "digcomp_level": "intermediate",
+    "digcomp_areas": ["informazioni", "creazione", "problem-solving"],
+    "digcompedu": ["DCEdu 6.1", "DCEdu 6.3"]
   },
   {
     "path": "/intelligenza-artificiale/guida-prompting/",
@@ -78,7 +90,11 @@
     "meta": "Aggiornata · Livello base–intermedio",
     "description": "Dal prompt semplice al meta-prompt. Anatomia di un prompt efficace, template editabili e modalità presentazione per l'aula.",
     "featured": true,
-    "active": true
+    "active": true,
+    "digcomp": ["DC 3.2", "DC 5.3"],
+    "digcomp_level": "intermediate",
+    "digcomp_areas": ["creazione", "problem-solving"],
+    "digcompedu": ["DCEdu 3.1", "DCEdu 6.3", "DCEdu 6.5"]
   },
   {
     "path": "/intelligenza-artificiale/guida-peer-review-ia/",
@@ -101,7 +117,11 @@
     "meta": "Template pronti · Checklist interattiva · Livello base–intermedio",
     "description": "Far valutare l'output di un modello da un altro. Quale combinazione usare, come strutturare il prompt di handoff e quando evitarlo.",
     "featured": false,
-    "active": true
+    "active": true,
+    "digcomp": ["DC 1.2", "DC 5.3"],
+    "digcomp_level": "intermediate",
+    "digcomp_areas": ["informazioni", "problem-solving"],
+    "digcompedu": ["DCEdu 2.1", "DCEdu 3.3", "DCEdu 4.1"]
   },
   {
     "path": "/intelligenza-artificiale/prompt-builder/",
@@ -123,7 +143,11 @@
     "meta": "Interattivo · Salvataggio locale · Livello base",
     "description": "Costruisci prompt strutturati passo per passo. Preset pronti, ottimizzazione per modello e libreria personale con export/import.",
     "featured": false,
-    "active": true
+    "active": true,
+    "digcomp": ["DC 3.2", "DC 5.3"],
+    "digcomp_level": "foundation",
+    "digcomp_areas": ["creazione", "problem-solving"],
+    "digcompedu": ["DCEdu 2.2", "DCEdu 3.4"]
   },
   {
     "path": "/marketing/break-even-point-tool/",
@@ -146,7 +170,11 @@
     "meta": "Interattivo · Calcolo in tempo reale · Livello intermedio",
     "description": "Calcola il punto di pareggio inserendo costi fissi, costi variabili e prezzo di vendita. Grafico interattivo e analisi immediata.",
     "featured": false,
-    "active": true
+    "active": true,
+    "digcomp": ["DC 5.2", "DC 1.3"],
+    "digcomp_level": "intermediate",
+    "digcomp_areas": ["informazioni", "problem-solving"],
+    "digcompedu": ["DCEdu 5.3", "DCEdu 6.5"]
   },
   {
     "path": "/networking/subnet-calculator/",
@@ -167,7 +195,11 @@
     "meta": "Interattivo · Report esportabile · Livello intermedio",
     "description": "Strumento dinamico con analisi dell'AND logico binario, calcolo range host e guida teorica integrata per la segmentazione delle reti.",
     "featured": false,
-    "active": true
+    "active": true,
+    "digcomp": ["DC 3.4", "DC 5.1"],
+    "digcomp_level": "intermediate",
+    "digcomp_areas": ["creazione", "problem-solving"],
+    "digcompedu": ["DCEdu 6.5"]
   },
   {
     "path": "/sistemi/codifica-binaria/",
@@ -186,7 +218,11 @@
     "meta": "Interattivo · Step-by-step",
     "description": "Visualizzatore dinamico dell'algoritmo delle divisioni successive e calcolo delle potenze di 2.",
     "featured": false,
-    "active": true
+    "active": true,
+    "digcomp": ["DC 3.4", "DC 5.1"],
+    "digcomp_level": "foundation",
+    "digcomp_areas": ["creazione", "problem-solving"],
+    "digcompedu": ["DCEdu 5.3", "DCEdu 6.5"]
   },
   {
     "path": "/networking/hfs-server/",
@@ -207,7 +243,11 @@
     "meta": "Include HFS 2 e 3 · Livello intermedio-avanzato · 15 min",
     "description": "Crea un web server locale con gestione persistente. Zero installazione, interfaccia moderna e download diretto del pacchetto v3.0.8 per Windows.",
     "featured": false,
-    "active": true
+    "active": true,
+    "digcomp": ["DC 2.2", "DC 5.1"],
+    "digcomp_level": "advanced",
+    "digcomp_areas": ["comunicazione", "problem-solving"],
+    "digcompedu": ["DCEdu 2.3", "DCEdu 3.1", "DCEdu 6.2"]
   },
   {
     "path": "/marketing/pillola-seo/",
@@ -230,11 +270,15 @@
     "meta": "Con strumento integrato · Livello base–intermedio · 15 min",
     "description": "Cos'è la SEO, come funzionano i motori di ricerca, i fattori di ranking, Core Web Vitals e gli strumenti per migliorare la visibilità online.",
     "featured": false,
-    "active": true
+    "active": true,
+    "digcomp": ["DC 1.1", "DC 1.2", "DC 5.2"],
+    "digcomp_level": "intermediate",
+    "digcomp_areas": ["informazioni", "problem-solving"],
+    "digcompedu": ["DCEdu 6.1"]
   },
   {
     "path": "/marketing/analizzatore-seo/",
-    "label": "Analizzatore SEO &lt;head&gt;",
+    "label": "Analizzatore SEO <head>",
     "short": "Analizzatore SEO",
     "cat": "strumento",
     "emoji": "🧪",
@@ -253,109 +297,150 @@
     "meta": "Interattivo · Analisi locale · Report immediato",
     "description": "Incolla il tag head HTML del tuo sito e ricevi un report SEO completo: title, meta description, Open Graph, Twitter Card, Schema.org e canonical.",
     "featured": false,
-    "active": true
+    "active": true,
+    "digcomp": ["DC 1.2", "DC 5.2"],
+    "digcomp_level": "intermediate",
+    "digcomp_areas": ["informazioni", "problem-solving"],
+    "digcompedu": ["DCEdu 6.1", "DCEdu 6.5"]
   },
   {
-  "path": "/sicurezza/pillola-cybersicurezza/",
-  "label": "Cybersicurezza in 5 Minuti — Le mosse essenziali",
-  "short": "Cybersicurezza 5 min",
-  "cat": "pillola",
-  "emoji": "🔒",
-  "tags": [
-    "cybersicurezza",
-    "sicurezza informatica",
-    "password",
-    "phishing",
-    "2fa",
-    "autenticazione",
-    "backup",
-    "vpn",
-    "deepfake",
-    "wi-fi",
-    "ransomware",
-    "truffa online"
-  ],
-  "meta": "6 mosse · Checklist · Livello base · ~5 min",
-  "description": "Le 6 mosse essenziali per proteggerti online. Password, phishing, 2FA e backup: solo quello che conta davvero.",
-  "featured": false,
-  "active": true
-},
-{
-  "path": "/sicurezza/guida-cybersicurezza/",
-  "label": "Guida alla Cybersicurezza Personale",
-  "short": "Guida Cybersicurezza",
-  "cat": "guide",
-  "emoji": "🔒",
-  "tags": [
-    "cybersicurezza",
-    "sicurezza informatica",
-    "password",
-    "phishing",
-    "2fa",
-    "autenticazione",
-    "backup",
-    "privacy",
-    "vpn",
-    "passkey",
-    "deepfake",
-    "ransomware",
-    "wi-fi",
-    "sim swapping"
-  ],
-  "meta": "10 sezioni · Piano d'azione · Livello base · ~35 min",
-  "description": "Phishing, 2FA, VPN, passkey e backup: percorso completo per proteggerti online. Aggiornata al 2026 con piano d'azione immediato.",
-  "featured": false,
-  "active": true
-},
-{
-  "path": "/competenze-digitali/pillola-wikipedia-speedrun/",
-  "label": "Wikipedia Speedrun — Naviga il Web come un Pro",
-  "short": "Wikipedia Speedrun",
-  "cat": "pillola",
-  "emoji": "⚡",
-  "tags": [
-    "wikipedia",
-    "speedrun",
-    "navigazione",
-    "link ipertestuali",
-    "gamification",
-    "web",
-    "competenze digitali",
-    "informazione",
-    "fonti",
-    "didattica"
-  ],
-  "meta": "Gamification · DigComp 1.1 · 2.1 · Livello base · ~10 min",
-  "description": "Un gioco per navigare Wikipedia seguendo solo i link: allena filtraggio delle informazioni, lettura selettiva e comprensione della struttura del web.",
-  "featured": false,
-  "active": true,
-  "digcomp": ["DC 1.1", "DC 2.1"],
-  "digcomp_level": "foundation",
-  "digcomp_areas": ["informazione", "comunicazione"],
-  "digcompedu": ["DCEdu 3.1"]
-},
-{
-  "path": "/competenze-digitali/pillola-valutazione-fonti/",
-  "label": "Valutare le Fonti Online",
-  "short": "Valutazione Fonti",
-  "cat": "pillola",
-  "emoji": "🔎",
-  "tags": ["fonti", "verifica", "craap test", "lateral reading", "fact checking", "disinformazione", "media literacy", "competenze digitali"],
-  "meta": "3 metodi · Checklist interattiva · Livello base",
-  "description": "Tre metodi per valutare qualsiasi fonte online in 5 minuti: CRAAP test, lateral reading e reverse image search.",
-  "featured": false,
-  "active": true
-},
-{
-  "path": "/competenze-digitali/strumento-valutazione-fonti/",
-  "label": "Verifica Fonti Online",
-  "short": "Verifica Fonti",
-  "cat": "strumento",
-  "emoji": "🧪",
-  "tags": ["fonti", "verifica", "craap test", "lateral reading", "reverse image search", "affidabilità", "fact checking", "disinformazione", "media literacy", "competenze digitali", "checklist"],
-  "meta": "Checklist guidata · Report affidabilità · Livello base",
-  "description": "Strumento guidato per valutare l'affidabilità di qualsiasi fonte online. CRAAP test, lateral reading e verifica immagini in un unico flusso interattivo. Tutto client-side.",
-  "featured": false,
-  "active": true
-}
+    "path": "/sicurezza/pillola-cybersicurezza/",
+    "label": "Cybersicurezza in 5 Minuti — Le mosse essenziali",
+    "short": "Cybersicurezza 5 min",
+    "cat": "pillola",
+    "emoji": "🔒",
+    "tags": [
+      "cybersicurezza",
+      "sicurezza informatica",
+      "password",
+      "phishing",
+      "2fa",
+      "autenticazione",
+      "backup",
+      "vpn",
+      "deepfake",
+      "wi-fi",
+      "ransomware",
+      "truffa online"
+    ],
+    "meta": "6 mosse · Checklist · Livello base · ~5 min",
+    "description": "Le 6 mosse essenziali per proteggerti online. Password, phishing, 2FA e backup: solo quello che conta davvero.",
+    "featured": false,
+    "active": true,
+    "digcomp": ["DC 4.1", "DC 4.2"],
+    "digcomp_level": "foundation",
+    "digcomp_areas": ["sicurezza"],
+    "digcompedu": ["DCEdu 6.4"]
+  },
+  {
+    "path": "/sicurezza/guida-cybersicurezza/",
+    "label": "Guida alla Cybersicurezza Personale",
+    "short": "Guida Cybersicurezza",
+    "cat": "guide",
+    "emoji": "🔒",
+    "tags": [
+      "cybersicurezza",
+      "sicurezza informatica",
+      "password",
+      "phishing",
+      "2fa",
+      "autenticazione",
+      "backup",
+      "privacy",
+      "vpn",
+      "passkey",
+      "deepfake",
+      "ransomware",
+      "wi-fi",
+      "sim swapping"
+    ],
+    "meta": "10 sezioni · Piano d'azione · Livello base · ~35 min",
+    "description": "Phishing, 2FA, VPN, passkey e backup: percorso completo per proteggerti online. Aggiornata al 2026 con piano d'azione immediato.",
+    "featured": false,
+    "active": true,
+    "digcomp": ["DC 4.1", "DC 4.2", "DC 2.6"],
+    "digcomp_level": "intermediate",
+    "digcomp_areas": ["sicurezza"],
+    "digcompedu": ["DCEdu 6.4", "DCEdu 6.1"]
+  },
+  {
+    "path": "/competenze-digitali/pillola-wikipedia-speedrun/",
+    "label": "Wikipedia Speedrun — Naviga il Web come un Pro",
+    "short": "Wikipedia Speedrun",
+    "cat": "pillola",
+    "emoji": "⚡",
+    "tags": [
+      "wikipedia",
+      "speedrun",
+      "navigazione",
+      "link ipertestuali",
+      "gamification",
+      "web",
+      "competenze digitali",
+      "informazione",
+      "fonti",
+      "didattica"
+    ],
+    "meta": "Gamification · DigComp 1.1 · 2.1 · Livello base · ~10 min",
+    "description": "Un gioco per navigare Wikipedia seguendo solo i link: allena filtraggio delle informazioni, lettura selettiva e comprensione della struttura del web.",
+    "featured": false,
+    "active": true,
+    "digcomp": ["DC 1.1", "DC 2.1"],
+    "digcomp_level": "foundation",
+    "digcomp_areas": ["informazione", "comunicazione"],
+    "digcompedu": ["DCEdu 3.1"]
+  },
+  {
+    "path": "/competenze-digitali/pillola-valutazione-fonti/",
+    "label": "Valutare le Fonti Online",
+    "short": "Valutazione Fonti",
+    "cat": "pillola",
+    "emoji": "🔎",
+    "tags": [
+      "fonti",
+      "verifica",
+      "craap test",
+      "lateral reading",
+      "fact checking",
+      "disinformazione",
+      "media literacy",
+      "competenze digitali"
+    ],
+    "meta": "3 metodi · Checklist interattiva · Livello base",
+    "description": "Tre metodi per valutare qualsiasi fonte online in 5 minuti: CRAAP test, lateral reading e reverse image search.",
+    "featured": false,
+    "active": true,
+    "digcomp": ["DC 1.2", "DC 1.1"],
+    "digcomp_level": "foundation",
+    "digcomp_areas": ["informazioni"],
+    "digcompedu": ["DCEdu 6.1", "DCEdu 3.2"]
+  },
+  {
+    "path": "/competenze-digitali/strumento-valutazione-fonti/",
+    "label": "Verifica Fonti Online",
+    "short": "Verifica Fonti",
+    "cat": "strumento",
+    "emoji": "🧪",
+    "tags": [
+      "fonti",
+      "verifica",
+      "craap test",
+      "lateral reading",
+      "reverse image search",
+      "affidabilità",
+      "fact checking",
+      "disinformazione",
+      "media literacy",
+      "competenze digitali",
+      "checklist"
+    ],
+    "meta": "Checklist guidata · Report affidabilità · Livello base",
+    "description": "Strumento guidato per valutare l'affidabilità di qualsiasi fonte online. CRAAP test, lateral reading e verifica immagini in un unico flusso interattivo. Tutto client-side.",
+    "featured": false,
+    "active": true,
+    "digcomp": ["DC 1.2", "DC 1.1"],
+    "digcomp_level": "foundation",
+    "digcomp_areas": ["informazioni"],
+    "digcompedu": ["DCEdu 6.1", "DCEdu 4.1"]
+  }
 ]
