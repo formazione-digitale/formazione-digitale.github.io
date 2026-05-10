@@ -304,6 +304,22 @@
     "digcompedu": ["DCEdu 6.1", "DCEdu 6.5"]
   },
   {
+  "path": "/competenze-digitali/strumento-autovalutazione-digcompedu/",
+  "label": "Autovalutazione DigCompEdu",
+  "short": "Autovalut. DigCompEdu",
+  "cat": "strumento",
+  "emoji": "🎯",
+  "tags": ["digcompedu", "autovalutazione", "framework", "competenze digitali", "docenti", "portfolio", "indire", "livelli", "a1", "c2", "europeo", "educatori"],
+  "meta": "22 competenze · Scala A1–C2 · Report esportabile · ~10 min",
+  "description": "Strumento di autovalutazione delle competenze digitali del docente secondo il framework europeo DigCompEdu. 22 domande, scala A1–C2 ufficiale, report con profilo per area e risorse consigliate.",
+  "featured": false,
+  "active": true,
+  "digcomp": ["DC 5.4"],
+  "digcomp_level": "intermediate",
+  "digcomp_areas": ["problem-solving"],
+  "digcompedu": ["DCEdu 1.3", "DCEdu 1.4"]
+},
+  {
     "path": "/sicurezza/pillola-cybersicurezza/",
     "label": "Cybersicurezza in 5 Minuti — Le mosse essenziali",
     "short": "Cybersicurezza 5 min",

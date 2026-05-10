@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autovalutazione DigCompEdu — Formazione Digitale</title>
+
+<meta name="description" content="Strumento di autovalutazione delle competenze digitali del docente secondo il framework DigCompEdu. 22 domande, scala A1–C2, report con risorse consigliate.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://formazione-digitale.it/competenze-digitali/strumento-autovalutazione-digcompedu/">
+<link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#1F4E79">
+
+<!-- Twitter/X Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Autovalutazione DigCompEdu — Formazione Digitale">
+<meta name="twitter:description" content="Posizionati sul framework europeo DigCompEdu in 10 minuti. Report con profilo competenze e risorse per colmare i gap.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Autovalutazione DigCompEdu — Formazione Digitale">
+<meta property="og:description" content="Posizionati sul framework europeo DigCompEdu in 10 minuti. Report con profilo competenze e risorse per colmare i gap.">
+<meta property="og:url" content="https://formazione-digitale.it/competenze-digitali/strumento-autovalutazione-digcompedu/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Autovalutazione DigCompEdu",
+  "description": "Strumento di autovalutazione delle competenze digitali del docente secondo il framework europeo DigCompEdu.",
+  "url": "https://formazione-digitale.it/competenze-digitali/strumento-autovalutazione-digcompedu/",
+  "inLanguage": "it",
+  "educationalLevel": "professional",
+  "learningResourceType": "Self-assessment tool",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Formazione Digitale",
+    "url": "https://formazione-digitale.it"
+  }
+}
+</script>
+
+<!-- GoatCounter -->
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+<!-- Anti-flash dark mode: sincrono, prima di qualsiasi CSS -->
+<script>(function(){var t=localStorage.getItem('fd-theme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css?v=1">
+
+<style>
+/* ════════════════════════════════════════════════════════════════
+   AUTOVALUTAZIONE DIGCOMPEDU — stili specifici
+   v1.0 — maggio 2026
+════════════════════════════════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue-dark:    #1F4E79;
+  --blue-mid:     #2E75B6;
+  --blue-light:   #D6E8F7;
+  --blue-pale:    #EBF3FC;
+  --green-dark:   #1E6B3C;
+  --green-light:  #E8F5EE;
+  --amber-dark:   #7D4E00;
+  --amber-light:  #FFF3CD;
+  --purple-dark:  #4A148C;
+  --purple-light: #F3E5F5;
+  --gray-dark:    #2C2C2C;
+  --gray-mid:     #666;
+  --gray-light:   #F5F5F5;
+  --white:        #FFFFFF;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --radius: 10px;
+  --transition: .22s cubic-bezier(.4,0,.2,1);
+}
+
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  color: var(--gray-dark);
+  background: #F0F6FF;
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.dce-header {
+  background: var(--blue-dark);
+  height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.5rem;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,.2);
+}
+.dce-header-left { display: flex; align-items: center; gap: .75rem; }
+.dce-back {
+  display: flex; align-items: center; gap: .35rem;
+  font-size: .8rem; color: rgba(255,255,255,.7);
+  text-decoration: none; transition: color var(--transition);
+}
+.dce-back:hover { color: #fff; }
+.dce-back svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.dce-header-sep { width: 1px; height: 20px; background: rgba(255,255,255,.2); }
+.dce-header-title { font-family: var(--font-display); font-size: 1rem; color: #fff; }
+.dce-header-sub { font-size: .7rem; color: var(--blue-light); opacity: .8; }
+
+/* ── PROGRESS BAR ── */
+#progress-bar {
+  height: 3px;
+  background: rgba(255,255,255,.15);
+  position: sticky; top: 52px; z-index: 99;
+}
+#progress-fill {
+  height: 100%;
+  background: var(--blue-light);
+  width: 0;
+  transition: width .4s ease;
+}
+
+/* ── MAIN LAYOUT ── */
+.dce-wrap {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 5rem;
+}
+
+/* ── SCREENS ── */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ════════ SCREEN: INTRO ════════ */
+.intro-hero {
+  background: linear-gradient(135deg, #1A3F63 0%, var(--blue-dark) 50%, #2A6099 100%);
+  border-radius: 16px;
+  padding: 2.5rem 2rem 2rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.intro-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 80% 20%, rgba(46,117,182,.3) 0%, transparent 60%);
+  pointer-events: none;
+}
+.intro-eyebrow {
+  font-size: .72rem; font-weight: 600; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--blue-light);
+  margin-bottom: .6rem;
+}
+.intro-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  color: #fff; line-height: 1.1;
+  margin-bottom: .75rem;
+}
+.intro-sub {
+  font-size: .9rem; color: rgba(255,255,255,.75);
+  line-height: 1.7; max-width: 520px;
+  margin-bottom: 1.25rem;
+}
+.intro-badges {
+  display: flex; flex-wrap: wrap; gap: .5rem;
+}
+.intro-badge {
+  font-size: .75rem; font-weight: 500;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.2);
+  color: rgba(255,255,255,.85);
+  padding: .28rem .7rem; border-radius: 20px;
+}
+
+/* Info box intro */
+.intro-info-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1rem; margin-bottom: 1.5rem;
+}
+@media(max-width:540px) { .intro-info-grid { grid-template-columns: 1fr; } }
+
+.intro-info-card {
+  background: var(--white);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.25rem;
+}
+.intro-info-card h3 {
+  font-size: .82rem; font-weight: 700; color: var(--blue-dark);
+  margin-bottom: .5rem;
+  display: flex; align-items: center; gap: .4rem;
+}
+.intro-info-card p, .intro-info-card li {
+  font-size: .82rem; color: var(--gray-mid);
+  line-height: 1.65;
+}
+.intro-info-card ul { padding-left: 1.1rem; }
+.intro-info-card li { margin-bottom: .15rem; }
+
+/* Scala livelli intro */
+.levels-preview {
+  background: var(--white);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.levels-preview h3 {
+  font-size: .82rem; font-weight: 700; color: var(--blue-dark);
+  margin-bottom: .75rem;
+}
+.levels-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: .5rem;
+}
+@media(max-width:600px) { .levels-grid { grid-template-columns: 1fr 1fr; } }
+@media(max-width:380px) { .levels-grid { grid-template-columns: 1fr; } }
+
+.level-chip {
+  border-radius: 8px; padding: .6rem .75rem;
+  border: 1.5px solid;
+}
+.level-chip .lc-code {
+  font-size: .8rem; font-weight: 700; letter-spacing: .06em;
+  margin-bottom: .2rem;
+}
+.level-chip .lc-name {
+  font-size: .75rem; font-weight: 600; margin-bottom: .1rem;
+}
+.level-chip .lc-desc { font-size: .68rem; color: var(--gray-mid); line-height: 1.4; }
+
+.lc-a1 { background: #FFF8E1; border-color: #FFD54F; }
+.lc-a1 .lc-code { color: #E65100; }
+.lc-a1 .lc-name { color: #E65100; }
+
+.lc-a2 { background: #FFF3E0; border-color: #FFB74D; }
+.lc-a2 .lc-code { color: #BF360C; }
+.lc-a2 .lc-name { color: #BF360C; }
+
+.lc-b1 { background: #E8F5E9; border-color: #81C784; }
+.lc-b1 .lc-code { color: var(--green-dark); }
+.lc-b1 .lc-name { color: var(--green-dark); }
+
+.lc-b2 { background: var(--green-light); border-color: #4CAF50; }
+.lc-b2 .lc-code { color: #1B5E20; }
+.lc-b2 .lc-name { color: #1B5E20; }
+
+.lc-c1 { background: var(--blue-pale); border-color: var(--blue-mid); }
+.lc-c1 .lc-code { color: var(--blue-dark); }
+.lc-c1 .lc-name { color: var(--blue-dark); }
+
+.lc-c2 { background: var(--purple-light); border-color: var(--purple-dark); }
+.lc-c2 .lc-code { color: var(--purple-dark); }
+.lc-c2 .lc-name { color: var(--purple-dark); }
+
+/* CTA Intro */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--blue-dark); color: #fff;
+  border: none; border-radius: 50px;
+  padding: .75rem 2rem; font-size: .95rem; font-weight: 600;
+  font-family: var(--font-body); cursor: pointer;
+  transition: background var(--transition), transform .15s ease;
+  text-decoration: none;
+}
+.btn-primary:hover { background: var(--blue-mid); transform: translateY(-2px); }
+.btn-primary .arrow { transition: transform .2s; }
+.btn-primary:hover .arrow { transform: translateX(4px); }
+
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--white); color: var(--blue-dark);
+  border: 1.5px solid var(--blue-light); border-radius: 50px;
+  padding: .7rem 1.5rem; font-size: .88rem; font-weight: 600;
+  font-family: var(--font-body); cursor: pointer;
+  transition: all var(--transition);
+}
+.btn-secondary:hover { border-color: var(--blue-mid); color: var(--blue-mid); transform: translateY(-1px); }
+
+/* ════════ SCREEN: QUESTIONARIO ════════ */
+
+/* Area header */
+.area-progress-header {
+  margin-bottom: 1.5rem;
+}
+.area-info {
+  display: flex; align-items: center; gap: .75rem;
+  margin-bottom: .75rem;
+}
+.area-dot {
+  width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0;
+}
+.area-name {
+  font-family: var(--font-display); font-size: 1.15rem;
+  color: var(--blue-dark); line-height: 1.2;
+}
+.area-count { font-size: .78rem; color: var(--gray-mid); }
+
+/* Step nav pills */
+.step-nav {
+  display: flex; gap: .3rem; flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+.step-pip {
+  height: 5px; border-radius: 3px;
+  background: var(--blue-light); flex: 1; min-width: 20px;
+  transition: background .3s ease;
+}
+.step-pip.done    { background: var(--blue-mid); }
+.step-pip.current { background: var(--blue-dark); }
+
+/* Singola domanda */
+.question-card {
+  background: var(--white);
+  border: 1px solid var(--blue-light);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(31,78,121,.08);
+  margin-bottom: 1.25rem;
+}
+.question-header {
+  background: var(--blue-pale);
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--blue-light);
+  display: flex; align-items: flex-start; gap: .75rem;
+}
+.q-id-badge {
+  font-size: .68rem; font-weight: 700; letter-spacing: .08em;
+  background: var(--blue-dark); color: #fff;
+  padding: .2rem .5rem; border-radius: 5px;
+  white-space: nowrap; flex-shrink: 0; margin-top: .1rem;
+}
+.q-label {
+  font-size: .92rem; font-weight: 500; color: var(--blue-dark);
+  line-height: 1.4;
+}
+
+/* Scala A1→C2 */
+.level-scale {
+  padding: 1.25rem 1.5rem;
+  display: flex; flex-direction: column; gap: .5rem;
+}
+.level-option {
+  display: flex; align-items: flex-start; gap: .75rem;
+  padding: .65rem .9rem; border-radius: 8px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all .18s ease;
+  background: transparent;
+}
+.level-option:hover { background: var(--blue-pale); border-color: var(--blue-light); }
+.level-option input[type="radio"] { display: none; }
+.level-option.selected { border-color: var(--blue-mid); background: var(--blue-pale); }
+.level-option.selected .lo-code { background: var(--blue-dark); color: #fff; }
+
+.lo-code {
+  font-size: .75rem; font-weight: 700; letter-spacing: .06em;
+  min-width: 28px; height: 24px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 5px; flex-shrink: 0; margin-top: .1rem;
+  transition: all .18s;
+}
+.lo-a1 { background: #FFF8E1; color: #E65100; }
+.lo-a2 { background: #FFF3E0; color: #BF360C; }
+.lo-b1 { background: #E8F5E9; color: var(--green-dark); }
+.lo-b2 { background: var(--green-light); color: #1B5E20; }
+.lo-c1 { background: var(--blue-pale); color: var(--blue-dark); }
+.lo-c2 { background: var(--purple-light); color: var(--purple-dark); }
+
+.lo-name  { font-size: .8rem; font-weight: 600; color: var(--gray-dark); }
+.lo-desc  { font-size: .75rem; color: var(--gray-mid); line-height: 1.4; margin-top: .1rem; }
+
+/* Navigation */
+.q-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; margin-top: .25rem;
+}
+.q-nav-info {
+  font-size: .78rem; color: var(--gray-mid);
+  text-align: center; flex: 1;
+}
+
+/* Pulsante "salta" */
+.btn-skip {
+  display: inline-flex; align-items: center; gap: .3rem;
+  font-size: .78rem; color: var(--gray-mid);
+  background: none; border: none; cursor: pointer;
+  font-family: var(--font-body);
+  padding: .4rem .75rem; border-radius: 20px;
+  transition: all var(--transition);
+}
+.btn-skip:hover { color: var(--blue-mid); background: var(--blue-pale); }
+
+/* Anteprima aree nella sidebar */
+.area-sidebar {
+  background: var(--white);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+.area-sidebar h4 {
+  font-size: .72rem; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--blue-mid);
+  margin-bottom: .6rem;
+}
+.area-mini-item {
+  display: flex; align-items: center; gap: .5rem;
+  font-size: .78rem; color: var(--gray-mid);
+  padding: .3rem 0;
+  border-bottom: 1px solid #F0F6FF;
+}
+.area-mini-item:last-child { border-bottom: none; }
+.area-mini-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.area-mini-label { flex: 1; }
+.area-mini-status { font-size: .68rem; font-weight: 600; }
+.area-mini-status.done { color: var(--green-dark); }
+.area-mini-status.current { color: var(--blue-dark); }
+
+/* ════════ SCREEN: REPORT ════════ */
+.report-hero {
+  background: linear-gradient(135deg, #1A3F63 0%, var(--blue-dark) 60%, #1E6B3C 100%);
+  border-radius: 16px; padding: 2rem 2rem 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative; overflow: hidden;
+}
+.report-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 30% 70%, rgba(30,107,60,.2) 0%, transparent 50%);
+  pointer-events: none;
+}
+.report-hero-top {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 1rem; margin-bottom: 1.25rem;
+}
+.report-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  color: #fff; line-height: 1.15;
+}
+.report-sub { font-size: .82rem; color: rgba(255,255,255,.65); margin-top: .3rem; }
+.report-overall-badge {
+  text-align: center; flex-shrink: 0;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+  border-radius: 12px; padding: .75rem 1.25rem;
+}
+.rob-level { font-size: 1.6rem; font-weight: 700; color: #fff; letter-spacing: .04em; }
+.rob-label { font-size: .68rem; color: rgba(255,255,255,.6); text-transform: uppercase; letter-spacing: .08em; margin-top: .1rem; }
+
+/* Summary stats */
+.report-stats-row {
+  display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;
+}
+.rs-card {
+  flex: 1; min-width: 120px;
+  background: var(--white); border: 1px solid var(--blue-light);
+  border-radius: var(--radius); padding: .75rem 1rem;
+  border-left: 4px solid var(--blue-light);
+}
+.rs-card.strong { border-left-color: var(--green-dark); }
+.rs-card.gap    { border-left-color: #FFB74D; }
+.rs-card.cov    { border-left-color: var(--blue-mid); }
+.rs-num { font-family: var(--font-display); font-size: 1.6rem; color: var(--blue-dark); line-height: 1; }
+.rs-label { font-size: .68rem; color: var(--gray-mid); text-transform: uppercase; letter-spacing: .06em; margin-top: .2rem; }
+
+/* Radar SVG */
+.radar-section {
+  background: var(--white); border: 1px solid var(--blue-light);
+  border-radius: var(--radius); padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 1px 8px rgba(31,78,121,.06);
+}
+.radar-section h3 {
+  font-family: var(--font-display); font-size: 1rem;
+  color: var(--blue-dark); margin-bottom: 1rem;
+}
+#radar-svg-wrap {
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Area breakdown */
+.area-breakdown {
+  background: var(--white); border: 1px solid var(--blue-light);
+  border-radius: var(--radius); padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 1px 8px rgba(31,78,121,.06);
+}
+.area-breakdown h3 {
+  font-family: var(--font-display); font-size: 1rem;
+  color: var(--blue-dark); margin-bottom: 1rem;
+}
+.ab-row {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .6rem 0; border-bottom: 1px solid #F0F6FF;
+}
+.ab-row:last-child { border-bottom: none; }
+.ab-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.ab-label { font-size: .82rem; color: var(--gray-dark); flex: 1; min-width: 0; }
+.ab-bar-wrap { width: 140px; flex-shrink: 0; }
+.ab-bar-bg { height: 8px; background: var(--gray-light); border-radius: 4px; overflow: hidden; }
+.ab-bar-fill { height: 100%; border-radius: 4px; transition: width .6s ease; }
+.ab-level { font-size: .78rem; font-weight: 700; color: var(--blue-dark); min-width: 28px; text-align: right; flex-shrink: 0; }
+
+/* Competenze forti */
+.strengths-section, .gaps-section {
+  background: var(--white); border: 1px solid var(--blue-light);
+  border-radius: var(--radius); padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 1px 8px rgba(31,78,121,.06);
+}
+.strengths-section { border-left: 4px solid var(--green-dark); }
+.gaps-section { border-left: 4px solid #FFB74D; }
+.strengths-section h3 { color: var(--green-dark); }
+.gaps-section h3 { color: var(--amber-dark); }
+.strengths-section h3, .gaps-section h3 {
+  font-family: var(--font-display); font-size: 1rem; margin-bottom: .75rem;
+  display: flex; align-items: center; gap: .5rem;
+}
+.comp-row {
+  display: flex; align-items: flex-start; gap: .75rem;
+  padding: .55rem 0; border-bottom: 1px solid #F0F6FF;
+}
+.comp-row:last-child { border-bottom: none; }
+.comp-badge {
+  font-size: .65rem; font-weight: 700; letter-spacing: .06em;
+  padding: .18rem .45rem; border-radius: 4px;
+  white-space: nowrap; flex-shrink: 0; margin-top: .1rem;
+}
+.cb-strength { background: var(--green-light); color: var(--green-dark); }
+.cb-gap      { background: var(--amber-light); color: var(--amber-dark); }
+.comp-text { font-size: .82rem; color: var(--gray-dark); line-height: 1.4; flex: 1; }
+.comp-level { font-size: .72rem; font-weight: 700; color: var(--gray-mid); flex-shrink: 0; }
+
+/* Risorse consigliate */
+.resources-section {
+  background: var(--white); border: 1px solid var(--blue-light);
+  border-radius: var(--radius); padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 1px 8px rgba(31,78,121,.06);
+}
+.resources-section h3 {
+  font-family: var(--font-display); font-size: 1rem;
+  color: var(--blue-dark); margin-bottom: .25rem;
+  display: flex; align-items: center; gap: .5rem;
+}
+.resources-section .rs-sub {
+  font-size: .78rem; color: var(--gray-mid); margin-bottom: 1rem;
+}
+.resource-chip {
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .4rem .85rem; border-radius: 20px;
+  font-size: .78rem; font-weight: 500;
+  text-decoration: none; border: 1px solid transparent;
+  transition: all var(--transition); margin: .25rem .2rem;
+}
+.rc-guide     { background: var(--blue-pale);   color: var(--blue-mid);   border-color: var(--blue-light); }
+.rc-strumento { background: var(--green-light); color: var(--green-dark); border-color: #b2d8c0; }
+.rc-pillola   { background: var(--amber-light); color: var(--amber-dark); border-color: #f0d990; }
+.resource-chip:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+
+/* Nessuna risorsa */
+.no-resources {
+  font-size: .82rem; color: var(--gray-mid); font-style: italic;
+  padding: .5rem 0;
+}
+
+/* Export bar */
+.export-bar {
+  background: var(--blue-pale);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+.export-bar-text h3 {
+  font-family: var(--font-display); font-size: 1rem;
+  color: var(--blue-dark); margin-bottom: .2rem;
+}
+.export-bar-text p { font-size: .8rem; color: var(--gray-mid); }
+.export-btns { display: flex; gap: .5rem; flex-wrap: wrap; }
+
+.btn-export {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-size: .82rem; font-weight: 600;
+  padding: .55rem 1.1rem; border-radius: 50px;
+  border: 1.5px solid; cursor: pointer;
+  font-family: var(--font-body);
+  transition: all var(--transition);
+}
+.btn-export-print {
+  background: var(--blue-dark); color: #fff; border-color: var(--blue-dark);
+}
+.btn-export-print:hover { background: var(--blue-mid); border-color: var(--blue-mid); }
+.btn-export-copy {
+  background: var(--white); color: var(--blue-dark); border-color: var(--blue-light);
+}
+.btn-export-copy:hover { border-color: var(--blue-mid); color: var(--blue-mid); }
+
+.btn-restart {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: none; border: 1.5px solid var(--blue-light);
+  color: var(--gray-mid); border-radius: 50px;
+  padding: .55rem 1.1rem; font-size: .82rem; font-weight: 600;
+  font-family: var(--font-body); cursor: pointer;
+  transition: all var(--transition);
+}
+.btn-restart:hover { border-color: var(--blue-mid); color: var(--blue-mid); }
+
+/* ── NON RISPOSTO avviso ── */
+.unanswered-warning {
+  background: var(--amber-light); border: 1px solid #f0d090;
+  border-left: 4px solid var(--amber-dark);
+  border-radius: var(--radius); padding: .75rem 1rem;
+  font-size: .82rem; color: var(--amber-dark);
+  margin-bottom: 1rem; display: none;
+}
+
+/* ── FOOTER ── */
+.dce-footer {
+  background: var(--blue-dark);
+  color: rgba(255,255,255,.6);
+  text-align: center; padding: 1.75rem 1.5rem;
+  font-size: .78rem; line-height: 1.7;
+  margin-top: 4rem;
+}
+.dce-footer a { color: var(--blue-light); text-decoration: none; }
+
+/* ── RESPONSIVE ── */
+@media(max-width: 600px) {
+  .dce-wrap { padding: 1.5rem 1rem 4rem; }
+  .intro-hero { padding: 1.75rem 1.25rem 1.5rem; }
+  .report-hero-top { flex-direction: column; }
+  .export-bar { flex-direction: column; align-items: flex-start; }
+  .q-nav { gap: .5rem; }
+  .area-breakdown .ab-bar-wrap { width: 80px; }
+}
+
+/* ── PRINT ── */
+@media print {
+  .dce-header, #progress-bar, .export-bar, .btn-restart,
+  .screen.active:not(#screen-report),
+  #screen-intro, #screen-quiz { display: none !important; }
+  #screen-report { display: block !important; }
+  .dce-footer { display: none; }
+  body { background: #fff; }
+  .report-hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* ── ANIMAZIONI ENTRATA ── */
+.q-enter {
+  animation: qEnter .28s cubic-bezier(.4,0,.2,1) both;
+}
+@keyframes qEnter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.report-enter {
+  animation: reportEnter .4s cubic-bezier(.4,0,.2,1) both;
+}
+@keyframes reportEnter {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* ── BACK TO TOP ── */
+.back-to-top {
+  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
+  width: 40px; height: 40px;
+  background: var(--blue-dark); color: #fff;
+  border: none; border-radius: 50%;
+  font-size: 1.1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 12px rgba(31,78,121,.3);
+  opacity: 0; pointer-events: none;
+  transition: opacity .22s ease, transform .22s ease;
+}
+.back-to-top.visible { opacity: 1; pointer-events: all; }
+.back-to-top:hover { transform: translateY(-2px); background: var(--blue-mid); }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="dce-header">
+  <div class="dce-header-left">
+    <a href="/" class="dce-back">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Home
+    </a>
+    <div class="dce-header-sep"></div>
+    <span class="dce-header-title">Autovalutazione DigCompEdu</span>
+    <span class="dce-header-sub" id="header-area-label"></span>
+  </div>
+</header>
+
+<!-- ── PROGRESS BAR ── -->
+<div id="progress-bar"><div id="progress-fill"></div></div>
+
+<!-- ── MAIN ── -->
+<div class="dce-wrap">
+
+  <!-- ════════ SCREEN: INTRO ════════ -->
+  <div class="screen active" id="screen-intro">
+
+    <div class="intro-hero">
+      <div class="intro-eyebrow">Framework Europeo · JRC Commissione Europea 2017</div>
+      <h1 class="intro-title">Dove mi colloco<br>nel DigCompEdu?</h1>
+      <p class="intro-sub">Uno strumento di autovalutazione per docenti. 22 domande, una per ogni competenza del framework europeo. Risultato immediato con profilo per area e risorse per colmare i gap.</p>
+      <div class="intro-badges">
+        <span class="intro-badge">🕐 ~10 minuti</span>
+        <span class="intro-badge">📊 22 competenze</span>
+        <span class="intro-badge">🎯 Scala A1–C2</span>
+        <span class="intro-badge">📋 Portfolio INDIRE</span>
+      </div>
+    </div>
+
+    <div class="intro-info-grid">
+      <div class="intro-info-card">
+        <h3>📚 Cos'è DigCompEdu</h3>
+        <p>Il framework europeo per le competenze digitali degli educatori, sviluppato dal Joint Research Centre della Commissione Europea. 6 aree, 22 competenze, 6 livelli di padronanza.</p>
+      </div>
+      <div class="intro-info-card">
+        <h3>🎯 A cosa serve questo strumento</h3>
+        <ul>
+          <li>Posizionarti sul framework</li>
+          <li>Identificare punti di forza e gap</li>
+          <li>Trovare risorse per colmare i gap</li>
+          <li>Preparare la sezione digitale del portfolio INDIRE</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="levels-preview">
+      <h3>La scala di autovalutazione — 6 livelli ufficiali DigCompEdu</h3>
+      <div class="levels-grid">
+        <div class="level-chip lc-a1">
+          <div class="lc-code">A1</div>
+          <div class="lc-name">Novizio</div>
+          <div class="lc-desc">Uso guidato e limitato. Consapevolezza bassa.</div>
+        </div>
+        <div class="level-chip lc-a2">
+          <div class="lc-code">A2</div>
+          <div class="lc-name">Esploratore</div>
+          <div class="lc-desc">Sperimenta con apertura, ancora in modo discontinuo.</div>
+        </div>
+        <div class="level-chip lc-b1">
+          <div class="lc-code">B1</div>
+          <div class="lc-name">Integratore</div>
+          <div class="lc-desc">Integra le tecnologie in pratiche consolidate.</div>
+        </div>
+        <div class="level-chip lc-b2">
+          <div class="lc-code">B2</div>
+          <div class="lc-name">Esperto</div>
+          <div class="lc-desc">Uso strategico e flessibile, adatta ai contesti.</div>
+        </div>
+        <div class="level-chip lc-c1">
+          <div class="lc-code">C1</div>
+          <div class="lc-name">Leader</div>
+          <div class="lc-desc">Guida gli altri, condivide pratiche avanzate.</div>
+        </div>
+        <div class="level-chip lc-c2">
+          <div class="lc-code">C2</div>
+          <div class="lc-name">Pioniere</div>
+          <div class="lc-desc">Innova, sperimenta approcci nuovi, influenza il campo.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="intro-info-card" style="margin-bottom:1.5rem;">
+      <h3>⚠️ Nota metodologica</h3>
+      <p>Il risultato è un'autovalutazione indicativa, non una certificazione. Il posizionamento formale richiede la valutazione tramite strumento ufficiale (SELFIE for Teachers o equivalente). I dati restano nel tuo browser — non vengono trasmessi a nessun server.</p>
+    </div>
+
+    <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+      <button class="btn-primary" onclick="startQuiz()">
+        Inizia l'autovalutazione <span class="arrow">→</span>
+      </button>
+    </div>
+
+  </div><!-- /screen-intro -->
+
+
+  <!-- ════════ SCREEN: QUIZ ════════ -->
+  <div class="screen" id="screen-quiz">
+
+    <!-- Panoramica aree -->
+    <div class="area-sidebar" id="area-sidebar"></div>
+
+    <!-- Header area corrente -->
+    <div class="area-progress-header">
+      <div class="area-info">
+        <div class="area-dot" id="area-dot"></div>
+        <div>
+          <div class="area-name" id="area-name"></div>
+          <div class="area-count" id="area-count"></div>
+        </div>
+      </div>
+      <!-- Pip progress per domande nell'area -->
+      <div class="step-nav" id="step-nav"></div>
+    </div>
+
+    <!-- Domanda -->
+    <div id="question-wrap"></div>
+
+    <!-- Warning risposte mancanti -->
+    <div class="unanswered-warning" id="unanswered-warning">
+      ⚠️ Hai saltato alcune domande. Puoi completarle tornando indietro o procedere con il report parziale.
+    </div>
+
+    <!-- Navigazione -->
+    <div class="q-nav">
+      <button class="btn-secondary" id="btn-prev" onclick="prevQuestion()" style="visibility:hidden;">
+        ← Indietro
+      </button>
+      <div class="q-nav-info" id="q-nav-info"></div>
+      <button class="btn-primary" id="btn-next" onclick="nextQuestion()">
+        Avanti →
+      </button>
+    </div>
+
+  </div><!-- /screen-quiz -->
+
+
+  <!-- ════════ SCREEN: REPORT ════════ -->
+  <div class="screen" id="screen-report">
+
+    <div class="report-hero">
+      <div class="report-hero-top">
+        <div>
+          <div class="intro-eyebrow" style="color:rgba(255,255,255,.6);">Il tuo profilo DigCompEdu</div>
+          <div class="report-title">Autovalutazione completata</div>
+          <div class="report-sub" id="report-date"></div>
+        </div>
+        <div class="report-overall-badge">
+          <div class="rob-level" id="overall-level">—</div>
+          <div class="rob-label">Livello medio</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Statistiche sommario -->
+    <div class="report-stats-row" id="report-stats"></div>
+
+    <!-- Radar -->
+    <div class="radar-section">
+      <h3>📊 Profilo per area</h3>
+      <div id="radar-svg-wrap"></div>
+    </div>
+
+    <!-- Breakdown per area -->
+    <div class="area-breakdown" id="area-breakdown">
+      <h3>📋 Dettaglio per area</h3>
+    </div>
+
+    <!-- Punti di forza -->
+    <div class="strengths-section" id="strengths-section">
+      <h3>✅ Punti di forza</h3>
+    </div>
+
+    <!-- Gap -->
+    <div class="gaps-section" id="gaps-section">
+      <h3>📌 Gap da colmare</h3>
+    </div>
+
+    <!-- Risorse consigliate -->
+    <div class="resources-section" id="resources-section">
+      <h3>🔗 Risorse del portale consigliate</h3>
+      <p class="rs-sub">Selezionate in base ai gap rilevati — collegate alle competenze DigCompEdu che puoi sviluppare.</p>
+    </div>
+
+    <!-- Export -->
+    <div class="export-bar">
+      <div class="export-bar-text">
+        <h3>Salva il tuo report</h3>
+        <p>Stampa o copia un riepilogo testuale da incollare nel portfolio INDIRE.</p>
+      </div>
+      <div class="export-btns">
+        <button class="btn-export btn-export-print" onclick="window.print()">🖨 Stampa / PDF</button>
+        <button class="btn-export btn-export-copy" onclick="copyReport()">📋 Copia testo</button>
+        <button class="btn-restart" onclick="restartQuiz()">↺ Ricomincia</button>
+      </div>
+    </div>
+
+  </div><!-- /screen-report -->
+
+</div><!-- /dce-wrap -->
+
+<footer class="dce-footer">
+  <strong>Formazione Digitale</strong><br>
+  Strumento di autovalutazione basato sul framework DigCompEdu (JRC, 2017).<br>
+  Nessun dato viene trasmesso — tutto resta nel tuo browser.<br>
+  <a href="/">Home</a> &nbsp;·&nbsp;
+  <a href="/mappa-framework.html">Mappa Framework</a> &nbsp;·&nbsp;
+  <a href="/privacy-policy.html">Privacy Policy</a>
+</footer>
+
+<script>
+/* ════════════════════════════════════════════════════════════════
+   AUTOVALUTAZIONE DIGCOMPEDU
+   Legge framework.json e manifest.json dinamicamente.
+   Tutto client-side, nessun server.
+════════════════════════════════════════════════════════════════ */
+
+// ── COSTANTI LIVELLI ──────────────────────────────────────────────
+const LEVELS = [
+  { code: 'A1', name: 'Novizio',    desc: 'Uso guidato e limitato. Consapevolezza bassa.',               score: 1, cls: 'lo-a1' },
+  { code: 'A2', name: 'Esploratore',desc: 'Sperimenta con apertura, ancora in modo discontinuo.',        score: 2, cls: 'lo-a2' },
+  { code: 'B1', name: 'Integratore',desc: 'Integra le tecnologie in pratiche didattiche consolidate.',   score: 3, cls: 'lo-b1' },
+  { code: 'B2', name: 'Esperto',    desc: 'Uso strategico e flessibile, adatta ai diversi contesti.',    score: 4, cls: 'lo-b2' },
+  { code: 'C1', name: 'Leader',     desc: 'Guida altri, condivide pratiche avanzate con colleghi.',      score: 5, cls: 'lo-c1' },
+  { code: 'C2', name: 'Pioniere',   desc: 'Innova, sperimenta approcci nuovi, influenza il campo.',      score: 6, cls: 'lo-c2' },
+];
+
+// ── STATO ────────────────────────────────────────────────────────
+let FRAMEWORK  = null;  // da framework.json
+let MANIFEST   = null;  // da manifest.json
+let allQuestions = [];  // [{areaIdx, areaId, areaLabel, areaColor, comp}]
+let currentIdx = 0;
+let answers    = {};    // compId → levelCode
+
+// ── BOOTSTRAP ────────────────────────────────────────────────────
+async function loadData() {
+  const [fw, mf] = await Promise.all([
+    fetch('/framework.json').then(r => r.json()),
+    fetch('/manifest.json').then(r => r.json()),
+  ]);
+  FRAMEWORK = fw;
+  MANIFEST  = mf.filter(r => r.active !== false);
+
+  // Costruisce lista domande piatta
+  const eduAreas = fw.digcompedu.areas;
+  allQuestions = [];
+  eduAreas.forEach((area, aIdx) => {
+    area.competences.forEach(comp => {
+      allQuestions.push({
+        areaIdx:   aIdx,
+        areaId:    area.id,
+        areaLabel: area.label,
+        areaShort: area.short,
+        areaColor: area.color,
+        comp,
+      });
+    });
+  });
+}
+
+// ── AVVIO ────────────────────────────────────────────────────────
+function startQuiz() {
+  currentIdx = 0;
+  answers = {};
+  showScreen('screen-quiz');
+  renderQuestion();
+  updateProgress();
+}
+
+// ── NAVIGAZIONE DOMANDE ──────────────────────────────────────────
+function prevQuestion() {
+  if (currentIdx > 0) {
+    currentIdx--;
+    renderQuestion();
+    updateProgress();
+  }
+}
+
+function nextQuestion() {
+  // Ultima domanda → genera report
+  if (currentIdx >= allQuestions.length - 1) {
+    const unanswered = allQuestions.filter(q => !answers[q.comp.id]).length;
+    if (unanswered > 0) {
+      document.getElementById('unanswered-warning').style.display = 'block';
+      // Mostra il report comunque dopo 1s
+      setTimeout(generateReport, 800);
+    } else {
+      generateReport();
+    }
+    return;
+  }
+  currentIdx++;
+  renderQuestion();
+  updateProgress();
+}
+
+function goToQuestion(idx) {
+  currentIdx = idx;
+  renderQuestion();
+  updateProgress();
+}
+
+// ── RENDER DOMANDA ────────────────────────────────────────────────
+function renderQuestion() {
+  const q   = allQuestions[currentIdx];
+  const isLast = currentIdx === allQuestions.length - 1;
+
+  // Header area
+  document.getElementById('area-dot').style.background  = q.areaColor;
+  document.getElementById('area-name').textContent       = q.areaLabel;
+  document.getElementById('header-area-label').textContent = ' — ' + q.areaShort;
+
+  // Quante domande in quest'area
+  const areaQs = allQuestions.filter(x => x.areaId === q.areaId);
+  const areaQIdx = areaQs.findIndex(x => x.comp.id === q.comp.id);
+  document.getElementById('area-count').textContent =
+    `Competenza ${areaQIdx + 1} di ${areaQs.length}`;
+
+  // Step nav (pip per domande nell'area corrente)
+  const stepNav = document.getElementById('step-nav');
+  stepNav.innerHTML = areaQs.map((aq, i) => {
+    let cls = 'step-pip';
+    if (i < areaQIdx)       cls += ' done';
+    else if (i === areaQIdx) cls += ' current';
+    return `<div class="${cls}" onclick="goToQuestion(${allQuestions.indexOf(aq)})" style="cursor:pointer;" title="${aq.comp.id}"></div>`;
+  }).join('');
+
+  // Area sidebar
+  renderAreaSidebar();
+
+  // Card domanda
+  const currentAnswer = answers[q.comp.id] || null;
+  const wrap = document.getElementById('question-wrap');
+  wrap.innerHTML = `
+    <div class="question-card q-enter">
+      <div class="question-header">
+        <span class="q-id-badge">${q.comp.id}</span>
+        <div class="q-label">${q.comp.label}</div>
+      </div>
+      <div class="level-scale">
+        ${LEVELS.map(lv => `
+          <label class="level-option${currentAnswer === lv.code ? ' selected' : ''}" data-comp="${q.comp.id}" data-level="${lv.code}">
+            <input type="radio" name="level_${q.comp.id}" value="${lv.code}" ${currentAnswer === lv.code ? 'checked' : ''}>
+            <span class="lo-code ${lv.cls}">${lv.code}</span>
+            <div>
+              <div class="lo-name">${lv.name}</div>
+              <div class="lo-desc">${lv.desc}</div>
+            </div>
+          </label>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  // Event listener opzioni
+  wrap.querySelectorAll('.level-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const compId = opt.dataset.comp;
+      const level  = opt.dataset.level;
+      answers[compId] = level;
+      wrap.querySelectorAll('.level-option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      // Auto-avanza dopo 400ms
+      setTimeout(() => {
+        if (currentIdx < allQuestions.length - 1) {
+          currentIdx++;
+          renderQuestion();
+          updateProgress();
+        }
+      }, 380);
+    });
+  });
+
+  // Navigazione bottoni
+  document.getElementById('btn-prev').style.visibility = currentIdx > 0 ? 'visible' : 'hidden';
+  document.getElementById('btn-next').textContent = isLast ? 'Vedi il report →' : 'Avanti →';
+  document.getElementById('q-nav-info').textContent =
+    `Domanda ${currentIdx + 1} di ${allQuestions.length}`;
+}
+
+// ── AREA SIDEBAR ──────────────────────────────────────────────────
+function renderAreaSidebar() {
+  const areas = FRAMEWORK.digcompedu.areas;
+  const currentAreaId = allQuestions[currentIdx].areaId;
+
+  document.getElementById('area-sidebar').innerHTML = `
+    <h4>Aree del framework</h4>
+    ${areas.map(area => {
+      const areaQs = allQuestions.filter(q => q.areaId === area.id);
+      const answered = areaQs.filter(q => answers[q.comp.id]).length;
+      const isDone    = answered === areaQs.length;
+      const isCurrent = area.id === currentAreaId;
+      return `<div class="area-mini-item">
+        <div class="area-mini-dot" style="background:${area.color}"></div>
+        <div class="area-mini-label">${area.short}</div>
+        <div class="area-mini-status ${isDone ? 'done' : (isCurrent ? 'current' : '')}">
+          ${isDone ? '✓' : `${answered}/${areaQs.length}`}
+        </div>
+      </div>`;
+    }).join('')}
+  `;
+}
+
+// ── PROGRESS BAR ──────────────────────────────────────────────────
+function updateProgress() {
+  const pct = ((currentIdx + 1) / allQuestions.length) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
+}
+
+// ── GENERAZIONE REPORT ────────────────────────────────────────────
+function generateReport() {
+  showScreen('screen-report');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const areas = FRAMEWORK.digcompedu.areas;
+
+  // Calcola punteggi per area
+  const areaScores = areas.map(area => {
+    const areaQs = allQuestions.filter(q => q.areaId === area.id);
+    const answered = areaQs.filter(q => answers[q.comp.id]);
+    const total = answered.reduce((s, q) => {
+      const lv = LEVELS.find(l => l.code === answers[q.comp.id]);
+      return s + (lv ? lv.score : 0);
+    }, 0);
+    const avg = answered.length > 0 ? total / answered.length : 0;
+    return { area, avg, answered: answered.length, total: areaQs.length };
+  });
+
+  // Livello medio globale
+  const answeredAll = allQuestions.filter(q => answers[q.comp.id]);
+  const globalAvg = answeredAll.length > 0
+    ? answeredAll.reduce((s, q) => {
+        const lv = LEVELS.find(l => l.code === answers[q.comp.id]);
+        return s + (lv ? lv.score : 0);
+      }, 0) / answeredAll.length
+    : 0;
+  const overallLevel = scoreToLevel(globalAvg);
+
+  // Data
+  document.getElementById('report-date').textContent =
+    'Completata il ' + new Date().toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' });
+  document.getElementById('overall-level').textContent = overallLevel;
+
+  // Stats
+  const strong = allQuestions.filter(q => {
+    const lv = LEVELS.find(l => l.code === answers[q.comp.id]);
+    return lv && lv.score >= 4;
+  }).length;
+  const gaps = allQuestions.filter(q => {
+    const lv = LEVELS.find(l => l.code === answers[q.comp.id]);
+    return !lv || lv.score <= 2;
+  }).length;
+
+  document.getElementById('report-stats').innerHTML = `
+    <div class="rs-card">
+      <div class="rs-num">${answeredAll.length}/${allQuestions.length}</div>
+      <div class="rs-label">Risposte date</div>
+    </div>
+    <div class="rs-card strong">
+      <div class="rs-num" style="color:var(--green-dark)">${strong}</div>
+      <div class="rs-label">Punti di forza (≥ B2)</div>
+    </div>
+    <div class="rs-card gap">
+      <div class="rs-num" style="color:#E65100">${gaps}</div>
+      <div class="rs-label">Gap (≤ A2)</div>
+    </div>
+    <div class="rs-card cov">
+      <div class="rs-num" style="color:var(--blue-mid)">${overallLevel}</div>
+      <div class="rs-label">Livello medio</div>
+    </div>
+  `;
+
+  // Radar SVG
+  renderRadar(areaScores);
+
+  // Breakdown per area
+  renderBreakdown(areaScores);
+
+  // Punti di forza e gap
+  renderStrengthsAndGaps();
+
+  // Risorse consigliate
+  renderResources();
+}
+
+// ── SCORE → LEVEL ─────────────────────────────────────────────────
+function scoreToLevel(score) {
+  if (score <= 0)   return '—';
+  if (score <= 1.5) return 'A1';
+  if (score <= 2.5) return 'A2';
+  if (score <= 3.5) return 'B1';
+  if (score <= 4.5) return 'B2';
+  if (score <= 5.5) return 'C1';
+  return 'C2';
+}
+
+function levelToScore(code) {
+  const lv = LEVELS.find(l => l.code === code);
+  return lv ? lv.score : 0;
+}
+
+// ── RADAR SVG ─────────────────────────────────────────────────────
+function renderRadar(areaScores) {
+  const N    = areaScores.length; // 6
+  const CX   = 200, CY = 200, R = 150;
+  const MAX_SCORE = 6;
+
+  // Angoli (partendo dall'alto, senso orario)
+  const angles = areaScores.map((_, i) => (i * (2 * Math.PI / N)) - Math.PI / 2);
+
+  function polarToXY(angle, radius) {
+    return {
+      x: CX + radius * Math.cos(angle),
+      y: CY + radius * Math.sin(angle),
+    };
+  }
+
+  // Ragnatela (5 livelli)
+  let webs = '';
+  for (let l = 1; l <= MAX_SCORE; l++) {
+    const r = (l / MAX_SCORE) * R;
+    const pts = angles.map(a => polarToXY(a, r));
+    webs += `<polygon points="${pts.map(p => `${p.x},${p.y}`).join(' ')}"
+      fill="none" stroke="${l === MAX_SCORE ? 'rgba(46,117,182,.3)' : 'rgba(46,117,182,.12)'}"
+      stroke-width="${l === MAX_SCORE ? 1.5 : 1}"/>`;
+  }
+
+  // Assi
+  let axes = '';
+  angles.forEach(a => {
+    const end = polarToXY(a, R);
+    axes += `<line x1="${CX}" y1="${CY}" x2="${end.x}" y2="${end.y}" stroke="rgba(46,117,182,.18)" stroke-width="1"/>`;
+  });
+
+  // Poligono dati
+  const dataPts = areaScores.map((as, i) => {
+    const r = (as.avg / MAX_SCORE) * R;
+    return polarToXY(angles[i], r);
+  });
+  const polyData = dataPts.map(p => `${p.x},${p.y}`).join(' ');
+
+  // Etichette
+  let labels = '';
+  areaScores.forEach((as, i) => {
+    const offset = 18;
+    const pos = polarToXY(angles[i], R + offset);
+    const anchor = pos.x < CX - 5 ? 'end' : pos.x > CX + 5 ? 'start' : 'middle';
+    const level = scoreToLevel(as.avg);
+    labels += `
+      <text x="${pos.x}" y="${pos.y - 4}" text-anchor="${anchor}"
+        font-family="DM Sans, sans-serif" font-size="10" font-weight="600"
+        fill="#1F4E79">${as.area.short}</text>
+      <text x="${pos.x}" y="${pos.y + 9}" text-anchor="${anchor}"
+        font-family="DM Sans, sans-serif" font-size="9"
+        fill="${level === '—' ? '#bbb' : '#2E75B6'}">${level}</text>`;
+  });
+
+  // Punti
+  let dots = '';
+  dataPts.forEach((p, i) => {
+    if (areaScores[i].avg > 0) {
+      dots += `<circle cx="${p.x}" cy="${p.y}" r="4" fill="${areaScores[i].area.color}" stroke="#fff" stroke-width="1.5"/>`;
+    }
+  });
+
+  const svg = `
+    <svg viewBox="0 0 400 400" width="340" height="340" xmlns="http://www.w3.org/2000/svg">
+      ${webs}
+      ${axes}
+      <polygon points="${polyData}"
+        fill="rgba(46,117,182,.15)"
+        stroke="rgba(46,117,182,.7)"
+        stroke-width="2"
+        stroke-linejoin="round"/>
+      ${dots}
+      ${labels}
+    </svg>`;
+  document.getElementById('radar-svg-wrap').innerHTML = svg;
+}
+
+// ── BREAKDOWN PER AREA ────────────────────────────────────────────
+function renderBreakdown(areaScores) {
+  const container = document.getElementById('area-breakdown');
+  container.innerHTML = '<h3>📋 Dettaglio per area</h3>';
+  areaScores.forEach(as => {
+    const level = scoreToLevel(as.avg);
+    const pct   = (as.avg / 6) * 100;
+    const row   = document.createElement('div');
+    row.className = 'ab-row';
+    row.innerHTML = `
+      <div class="ab-dot" style="background:${as.area.color}"></div>
+      <div class="ab-label">${as.area.short}</div>
+      <div class="ab-bar-wrap">
+        <div class="ab-bar-bg">
+          <div class="ab-bar-fill" style="width:${pct}%;background:${as.area.color}"></div>
+        </div>
+      </div>
+      <div class="ab-level">${level}</div>
+    `;
+    container.appendChild(row);
+  });
+}
+
+// ── PUNTI DI FORZA E GAP ─────────────────────────────────────────
+function renderStrengthsAndGaps() {
+  const strengths = document.getElementById('strengths-section');
+  const gaps      = document.getElementById('gaps-section');
+
+  strengths.innerHTML = '<h3>✅ Punti di forza (livello B2 o superiore)</h3>';
+  gaps.innerHTML      = '<h3>📌 Gap da colmare (livello A2 o inferiore)</h3>';
+
+  let hasStrengths = false, hasGaps = false;
+
+  allQuestions.forEach(q => {
+    const lvCode = answers[q.comp.id];
+    if (!lvCode) return;
+    const lv = LEVELS.find(l => l.code === lvCode);
+    if (!lv) return;
+
+    const row = `
+      <div class="comp-row">
+        <span class="comp-badge ${lv.score >= 4 ? 'cb-strength' : 'cb-gap'}">${lv.code}</span>
+        <div class="comp-text">
+          <strong style="font-size:.75rem;color:var(--gray-mid);">${q.comp.id}</strong><br>
+          ${q.comp.label}
+        </div>
+        <div class="comp-level">${lv.name}</div>
+      </div>`;
+
+    if (lv.score >= 4) { strengths.innerHTML += row; hasStrengths = true; }
+    if (lv.score <= 2) { gaps.innerHTML      += row; hasGaps      = true; }
+  });
+
+  if (!hasStrengths) strengths.innerHTML += '<p style="font-size:.82rem;color:var(--gray-mid);font-style:italic;">Nessuna competenza al livello B2 o superiore.</p>';
+  if (!hasGaps)      gaps.innerHTML      += '<p style="font-size:.82rem;color:var(--gray-mid);font-style:italic;">Ottimo — nessun gap critico rilevato.</p>';
+}
+
+// ── RISORSE CONSIGLIATE ───────────────────────────────────────────
+function renderResources() {
+  const container = document.getElementById('resources-section');
+  container.innerHTML = `
+    <h3>🔗 Risorse del portale consigliate</h3>
+    <p class="rs-sub">Selezionate in base ai gap rilevati — collegate alle competenze DigCompEdu che puoi sviluppare.</p>
+  `;
+
+  // Trova competenze con gap (score ≤ 2) o non risposto
+  const gapCompIds = allQuestions
+    .filter(q => {
+      const lv = LEVELS.find(l => l.code === answers[q.comp.id]);
+      return !lv || lv.score <= 2;
+    })
+    .map(q => q.comp.id);
+
+  if (gapCompIds.length === 0) {
+    container.innerHTML += '<p class="no-resources">Nessun gap critico rilevato. Esplora comunque le risorse del portale per approfondire.</p>';
+    const btn = document.createElement('a');
+    btn.href = '/';
+    btn.className = 'resource-chip rc-guide';
+    btn.textContent = '🏠 Esplora tutte le risorse';
+    container.appendChild(btn);
+    return;
+  }
+
+  // Filtra risorse che coprono almeno una competenza in gap
+  const suggested = MANIFEST.filter(r => {
+    if (!Array.isArray(r.digcompedu)) return false;
+    return r.digcompedu.some(cid => gapCompIds.includes(cid));
+  });
+
+  if (suggested.length === 0) {
+    container.innerHTML += '<p class="no-resources">Nessuna risorsa del portale copre direttamente i gap rilevati. Nuove risorse sono in arrivo.</p>';
+    return;
+  }
+
+  const chips = suggested.map(r => {
+    const cls = `rc-${r.cat}`;
+    const coveredGaps = r.digcompedu.filter(cid => gapCompIds.includes(cid));
+    const title = coveredGaps.length > 0
+      ? `Copre: ${coveredGaps.join(', ')}`
+      : '';
+    return `<a href="${r.path}" class="resource-chip ${cls}" title="${title}">
+      ${r.emoji} ${r.short}
+    </a>`;
+  }).join('');
+
+  container.innerHTML += `<div style="line-height:2.2;">${chips}</div>`;
+}
+
+// ── COPY REPORT ───────────────────────────────────────────────────
+function copyReport() {
+  const areas = FRAMEWORK.digcompedu.areas;
+  const lines = [
+    'AUTOVALUTAZIONE DIGCOMPEDU',
+    'Generata il ' + new Date().toLocaleDateString('it-IT'),
+    '─'.repeat(40),
+    '',
+    'LIVELLO MEDIO GLOBALE: ' + document.getElementById('overall-level').textContent,
+    '',
+    'PROFILO PER AREA',
+  ];
+
+  areas.forEach(area => {
+    const areaQs = allQuestions.filter(q => q.areaId === area.id);
+    const answered = areaQs.filter(q => answers[q.comp.id]);
+    const avg = answered.length > 0
+      ? answered.reduce((s, q) => s + levelToScore(answers[q.comp.id]), 0) / answered.length
+      : 0;
+    lines.push(`  ${area.short}: ${scoreToLevel(avg)}`);
+  });
+
+  lines.push('', 'DETTAGLIO COMPETENZE');
+  allQuestions.forEach(q => {
+    const lvCode = answers[q.comp.id] || '—';
+    lines.push(`  ${q.comp.id}: ${lvCode}  — ${q.comp.label}`);
+  });
+
+  lines.push('', '─'.repeat(40));
+  lines.push('Fonte: formazione-digitale.it · Framework: DigCompEdu JRC 2017');
+
+  navigator.clipboard.writeText(lines.join('\n')).then(() => {
+    const btn = document.querySelector('.btn-export-copy');
+    btn.textContent = '✓ Copiato!';
+    setTimeout(() => { btn.innerHTML = '📋 Copia testo'; }, 2000);
+  }).catch(() => {
+    alert('Copia non supportata — usa Stampa / PDF.');
+  });
+}
+
+// ── UTILITÀ ───────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (id === 'screen-report') {
+    document.getElementById(id).classList.add('report-enter');
+  }
+}
+
+function restartQuiz() {
+  answers    = {};
+  currentIdx = 0;
+  document.getElementById('unanswered-warning').style.display = 'none';
+  document.getElementById('progress-fill').style.width = '0';
+  document.getElementById('header-area-label').textContent = '';
+  showScreen('screen-intro');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── BACK TO TOP ─────────────────────────────────────────────────
+const btt = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => {
+  btt.classList.toggle('visible', window.scrollY > 300);
+}, { passive: true });
+
+// ── INIT ─────────────────────────────────────────────────────────
+loadData().catch(err => {
+  console.error('Errore caricamento dati:', err);
+  document.getElementById('screen-intro').innerHTML +=
+    '<p style="color:red;margin-top:1rem;">Errore nel caricamento dei dati. Aggiorna la pagina.</p>';
+});
+</script>
+
+<!-- ── BACK TO TOP ── -->
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Torna in cima alla pagina">↑</button>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>
