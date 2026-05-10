@@ -17,7 +17,7 @@
 <!-- Open Graph -->
 <meta property="og:title" content="Mappa Framework — Formazione Digitale">
 <meta property="og:description" content="Naviga le risorse per competenza DigComp 2.2 e DigCompEdu.">
-<meta property="og:url" content="https://formazione-digitale.it/mappa-framework/">
+<meta property="og:url" content="https://formazione-digitale.it/mappa-framework.html">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
 <meta property="og:locale" content="it_IT">
@@ -30,7 +30,7 @@
   "@type": "WebPage",
   "name": "Mappa Framework DigComp / DigCompEdu",
   "description": "Navigazione delle risorse di Formazione Digitale per competenza DigComp 2.2 e DigCompEdu.",
-  "url": "https://formazione-digitale.it/mappa-framework/",
+  "url": "https://formazione-digitale.it/mappa-framework.html",
   "inLanguage": "it",
   "isPartOf": {
     "@type": "WebSite",
@@ -61,8 +61,6 @@
   --amber-light: #FFF3CD;
   --purple-dark: #4A148C;
   --purple-light:#F3E5F5;
-  --red-dark:    #B71C1C;
-  --red-light:   #FFEBEE;
   --gray-dark:   #2C2C2C;
   --gray-mid:    #666;
   --gray-light:  #F5F5F5;
@@ -97,7 +95,7 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F0F6
 .fw-title { font-family: var(--font-display); font-size: 1rem; color: #fff; }
 .fw-sub   { font-size: .7rem; color: var(--blue-light); opacity: .8; }
 
-/* ── HERO STRIP ── */
+/* ── HERO ── */
 .fw-hero {
   background: linear-gradient(135deg, #1A3F63 0%, var(--blue-dark) 60%, #2A6099 100%);
   padding: 2rem 1.5rem 1.5rem;
@@ -123,8 +121,6 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F0F6
   position: sticky; top: 52px; z-index: 90;
   box-shadow: 0 2px 8px rgba(31,78,121,.06);
 }
-
-/* Tab framework */
 .fw-tabs { display: flex; gap: .4rem; }
 .fw-tab {
   padding: .45rem 1.1rem;
@@ -136,13 +132,9 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F0F6
   transition: all var(--transition);
 }
 .fw-tab:hover { border-color: var(--blue-mid); color: var(--blue-mid); }
-.fw-tab.active {
-  background: var(--blue-dark); border-color: var(--blue-dark);
-  color: #fff;
-}
+.fw-tab.active { background: var(--blue-dark); border-color: var(--blue-dark); color: #fff; }
 
-/* Toggle vista */
-.fw-toggle { display: flex; gap: 0; border: 1.5px solid var(--blue-light); border-radius: 8px; overflow: hidden; }
+.fw-toggle { display: flex; border: 1.5px solid var(--blue-light); border-radius: 8px; overflow: hidden; }
 .fw-toggle-btn {
   padding: .45rem .9rem;
   border: none; background: #fff;
@@ -155,219 +147,26 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F0F6
 .fw-toggle-btn:hover { background: var(--blue-pale); color: var(--blue-mid); }
 .fw-toggle-btn.active { background: var(--blue-pale); color: var(--blue-dark); font-weight: 600; }
 
-/* Legenda gap */
 .fw-legend {
   display: flex; align-items: center; gap: 1rem;
   font-size: .72rem; color: var(--gray-mid);
 }
 .fw-legend-item { display: flex; align-items: center; gap: .35rem; }
-.fw-legend-dot {
-  width: 10px; height: 10px; border-radius: 50%;
-  flex-shrink: 0;
-}
+.fw-legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 .fw-legend-dot.covered { background: var(--blue-mid); }
 .fw-legend-dot.gap     { background: #ddd; border: 1.5px dashed #bbb; }
 
-/* ── CONTENUTO ── */
-.fw-content { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
-
-/* ── VISTA ALBERO ── */
-.fw-area {
-  margin-bottom: 1.25rem;
-  border: 1px solid var(--blue-light);
-  border-radius: var(--radius);
-  background: #fff;
-  overflow: hidden;
-  box-shadow: 0 1px 8px rgba(31,78,121,.06);
+/* ── CONTENUTO ALBERO ── */
+.fw-content {
+  max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 4rem;
 }
 
-.fw-area-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: .9rem 1.2rem;
-  cursor: pointer;
-  user-select: none;
-  transition: background var(--transition);
-}
-.fw-area-header:hover { background: var(--blue-pale); }
-
-.fw-area-header-left { display: flex; align-items: center; gap: .75rem; }
-.fw-area-dot {
-  width: 12px; height: 12px; border-radius: 50%;
-  flex-shrink: 0;
-}
-.fw-area-label {
-  font-family: var(--font-display); font-size: 1rem; color: var(--blue-dark);
-}
-.fw-area-header-right { display: flex; align-items: center; gap: .75rem; }
-.fw-area-badge {
-  font-size: .7rem; font-weight: 600;
-  padding: .2rem .6rem; border-radius: 20px;
-  background: var(--blue-pale); color: var(--blue-mid);
-}
-.fw-area-badge.has-resources { background: var(--blue-mid); color: #fff; }
-.fw-area-chevron {
-  font-size: .75rem; color: var(--gray-mid);
-  transition: transform var(--transition);
-}
-.fw-area.collapsed .fw-area-chevron { transform: rotate(-90deg); }
-
-.fw-competences {
-  border-top: 1px solid var(--blue-light);
-}
-.fw-area.collapsed .fw-competences { display: none; }
-
-.fw-comp {
-  padding: .75rem 1.2rem .75rem 2.8rem;
-  border-bottom: 1px solid #F0F6FF;
-  transition: background var(--transition);
-}
-.fw-comp:last-child { border-bottom: none; }
-.fw-comp-header {
-  display: flex; align-items: flex-start; justify-content: space-between;
-  gap: 1rem;
-}
-.fw-comp-id {
-  font-size: .68rem; font-weight: 700; letter-spacing: .08em;
-  color: var(--gray-mid); white-space: nowrap;
-  padding: .15rem .4rem; border-radius: 4px;
-  background: var(--gray-light);
-  flex-shrink: 0; margin-top: .1rem;
-}
-.fw-comp-label {
-  font-size: .88rem; color: var(--gray-dark); flex: 1; line-height: 1.4;
-}
-.fw-comp.gap .fw-comp-label { color: #bbb; }
-.fw-comp.gap .fw-comp-id    { opacity: .5; }
-
-/* Risorse collegate */
-.fw-resources {
-  margin-top: .6rem;
-  display: flex; flex-wrap: wrap; gap: .4rem;
-}
-.fw-resource-chip {
-  display: inline-flex; align-items: center; gap: .3rem;
-  padding: .25rem .65rem;
-  border-radius: 20px;
-  font-size: .75rem; font-weight: 500;
-  text-decoration: none;
-  border: 1px solid transparent;
-  transition: all var(--transition);
-}
-.fw-resource-chip.cat-guide  { background: var(--blue-pale);   color: var(--blue-mid);   border-color: var(--blue-light); }
-.fw-resource-chip.cat-strumento { background: var(--green-light); color: var(--green-dark); border-color: #b2d8c0; }
-.fw-resource-chip.cat-pillola { background: var(--amber-light); color: var(--amber-dark); border-color: #f0d990; }
-.fw-resource-chip:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,.1); }
-
-.fw-gap-label {
-  font-size: .75rem; color: #ccc;
-  font-style: italic; margin-top: .4rem;
-  display: flex; align-items: center; gap: .35rem;
-}
-.fw-gap-label::before {
-  content: '';
-  display: inline-block;
-  width: 20px; height: 1px;
-  background: #ddd;
+/* ── CONTENUTO MATRICE (full width) ── */
+.fw-content-matrix {
+  padding: 2rem 1.5rem 4rem;
 }
 
-/* ── VISTA MATRICE ── */
-.fw-matrix-wrap {
-  overflow-x: auto;
-  border: 1px solid var(--blue-light);
-  border-radius: var(--radius);
-  background: #fff;
-  box-shadow: 0 1px 8px rgba(31,78,121,.06);
-}
-
-.fw-matrix {
-  border-collapse: collapse;
-  min-width: 100%;
-  font-size: .78rem;
-}
-
-.fw-matrix th, .fw-matrix td {
-  border: 1px solid #EBF3FC;
-  padding: 0;
-}
-
-/* Header colonne (risorse) */
-.fw-matrix thead th {
-  background: var(--blue-dark);
-  color: #fff; font-weight: 600;
-  padding: .5rem .4rem;
-  text-align: center;
-  min-width: 80px; max-width: 100px;
-  vertical-align: bottom;
-}
-.fw-matrix thead th:first-child {
-  text-align: left;
-  min-width: 200px;
-  padding: .5rem .75rem;
-  position: sticky; left: 0;
-  z-index: 10;
-}
-.fw-matrix-res-label {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  transform: rotate(180deg);
-  font-size: .7rem;
-  max-height: 120px;
-  overflow: hidden;
-  display: block;
-  padding: .25rem 0;
-}
-.fw-matrix-res-emoji { display: block; text-align: center; font-size: 1rem; margin-bottom: .2rem; }
-
-/* Righe area */
-.fw-matrix-area-row td {
-  background: var(--blue-dark);
-  color: #fff; font-weight: 700;
-  font-size: .72rem; letter-spacing: .06em;
-  text-transform: uppercase;
-  padding: .4rem .75rem;
-  position: sticky; left: 0;
-}
-
-/* Righe competenza */
-.fw-matrix tbody tr:not(.fw-matrix-area-row) td:first-child {
-  background: var(--blue-pale);
-  color: var(--gray-dark);
-  padding: .4rem .75rem;
-  position: sticky; left: 0;
-  z-index: 5;
-  font-size: .78rem;
-  line-height: 1.3;
-}
-.fw-matrix tbody tr:not(.fw-matrix-area-row) td:first-child .fw-matrix-comp-id {
-  display: block;
-  font-size: .65rem; font-weight: 700;
-  color: var(--blue-mid); letter-spacing: .06em;
-  margin-bottom: .15rem;
-}
-
-/* Celle copertura */
-.fw-matrix td.cell-covered {
-  background: var(--blue-mid);
-  text-align: center; vertical-align: middle;
-  cursor: pointer;
-  transition: background var(--transition);
-}
-.fw-matrix td.cell-covered:hover { background: var(--blue-dark); }
-.fw-matrix td.cell-covered a {
-  display: block; width: 100%; height: 100%;
-  padding: .5rem .3rem;
-  color: #fff; text-decoration: none;
-  font-size: .9rem;
-}
-.fw-matrix td.cell-gap {
-  background: #FAFAFA;
-}
-.fw-matrix tbody tr:hover td:not(.fw-matrix-area-row td) {
-  background-color: #F0F6FF;
-}
-.fw-matrix tbody tr:hover td.cell-covered { background: var(--blue-dark); }
-
-/* ── SUMMARY STRIP ── */
+/* ── SUMMARY ── */
 .fw-summary {
   display: flex; gap: 1rem; flex-wrap: wrap;
   margin-bottom: 1.5rem;
@@ -391,14 +190,242 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F0F6
 }
 .fw-summary-card.gap-card .fw-summary-num { color: #bbb; }
 
+/* ── VISTA ALBERO ── */
+.fw-area {
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 1px 8px rgba(31,78,121,.06);
+}
+.fw-area-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .9rem 1.2rem;
+  cursor: pointer; user-select: none;
+  transition: background var(--transition);
+}
+.fw-area-header:hover { background: var(--blue-pale); }
+.fw-area-header-left { display: flex; align-items: center; gap: .75rem; }
+.fw-area-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.fw-area-label { font-family: var(--font-display); font-size: 1rem; color: var(--blue-dark); }
+.fw-area-header-right { display: flex; align-items: center; gap: .75rem; }
+.fw-area-badge {
+  font-size: .7rem; font-weight: 600;
+  padding: .2rem .6rem; border-radius: 20px;
+  background: var(--blue-pale); color: var(--blue-mid);
+}
+.fw-area-badge.has-resources { background: var(--blue-mid); color: #fff; }
+.fw-area-chevron { font-size: .75rem; color: var(--gray-mid); transition: transform var(--transition); }
+.fw-area.collapsed .fw-area-chevron { transform: rotate(-90deg); }
+.fw-competences { border-top: 1px solid var(--blue-light); }
+.fw-area.collapsed .fw-competences { display: none; }
+
+.fw-comp {
+  padding: .75rem 1.2rem .75rem 2.8rem;
+  border-bottom: 1px solid #F0F6FF;
+}
+.fw-comp:last-child { border-bottom: none; }
+.fw-comp-header { display: flex; align-items: flex-start; gap: 1rem; }
+.fw-comp-id {
+  font-size: .68rem; font-weight: 700; letter-spacing: .08em;
+  color: var(--gray-mid); white-space: nowrap;
+  padding: .15rem .4rem; border-radius: 4px;
+  background: var(--gray-light); flex-shrink: 0; margin-top: .1rem;
+}
+.fw-comp-label { font-size: .88rem; color: var(--gray-dark); flex: 1; line-height: 1.4; }
+.fw-comp.gap .fw-comp-label { color: #bbb; }
+.fw-comp.gap .fw-comp-id    { opacity: .5; }
+
+.fw-resources { margin-top: .6rem; display: flex; flex-wrap: wrap; gap: .4rem; }
+.fw-resource-chip {
+  display: inline-flex; align-items: center; gap: .3rem;
+  padding: .25rem .65rem; border-radius: 20px;
+  font-size: .75rem; font-weight: 500;
+  text-decoration: none; border: 1px solid transparent;
+  transition: all var(--transition);
+}
+.fw-resource-chip.cat-guide     { background: var(--blue-pale);   color: var(--blue-mid);   border-color: var(--blue-light); }
+.fw-resource-chip.cat-strumento { background: var(--green-light); color: var(--green-dark); border-color: #b2d8c0; }
+.fw-resource-chip.cat-pillola   { background: var(--amber-light); color: var(--amber-dark); border-color: #f0d990; }
+.fw-resource-chip:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+
+.fw-gap-label {
+  font-size: .75rem; color: #ccc; font-style: italic; margin-top: .4rem;
+  display: flex; align-items: center; gap: .35rem;
+}
+.fw-gap-label::before { content: ''; display: inline-block; width: 20px; height: 1px; background: #ddd; }
+
+/* ── VISTA MATRICE HEATMAP ── */
+.fw-matrix-mobile-msg {
+  display: none;
+  padding: 2rem; text-align: center;
+  color: var(--gray-mid); font-size: .9rem;
+  background: #fff; border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+}
+
+.fw-heatmap-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: 0 1px 8px rgba(31,78,121,.06);
+}
+
+.fw-heatmap {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: .78rem;
+}
+
+/* Header risorse (emoji + nome breve) */
+.fw-heatmap thead th {
+  background: var(--blue-dark);
+  color: #fff;
+  padding: .5rem .3rem;
+  text-align: center;
+  min-width: 72px;
+  border-right: 1px solid rgba(255,255,255,.1);
+  vertical-align: middle;
+}
+.fw-heatmap thead th:first-child {
+  text-align: left;
+  min-width: 220px; max-width: 260px;
+  padding: .5rem .9rem;
+  position: sticky; left: 0; z-index: 10;
+  background: var(--blue-dark);
+  border-right: 2px solid rgba(255,255,255,.2);
+}
+.fw-heatmap-res-emoji { display: block; font-size: 1.2rem; line-height: 1; }
+.fw-heatmap-res-name  {
+  display: block; font-size: .62rem; font-weight: 500;
+  margin-top: .2rem; opacity: .85;
+  max-width: 68px; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* Riga separatore area */
+.fw-heatmap-area-row td {
+  padding: .35rem .9rem;
+  font-size: .68rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: #fff;
+  border-bottom: none;
+}
+.fw-heatmap-area-row td:first-child {
+  position: sticky; left: 0; z-index: 5;
+}
+
+/* Righe competenza */
+.fw-heatmap tbody tr:not(.fw-heatmap-area-row) td:first-child {
+  background: var(--blue-pale);
+  padding: .5rem .9rem;
+  position: sticky; left: 0; z-index: 5;
+  border-right: 2px solid var(--blue-light);
+  line-height: 1.3;
+}
+.fw-heatmap-comp-id {
+  display: block; font-size: .64rem; font-weight: 700;
+  color: var(--blue-mid); letter-spacing: .06em; margin-bottom: .15rem;
+}
+.fw-heatmap-comp-label { font-size: .76rem; color: var(--gray-dark); }
+.fw-heatmap tbody tr:not(.fw-heatmap-area-row):hover td:first-child { background: #deeaf8; }
+
+/* Celle */
+.fw-heatmap td {
+  border: 1px solid #EBF3FC;
+  text-align: center; vertical-align: middle;
+  padding: 0;
+}
+.fw-heatmap td.cell-guide {
+  background: var(--blue-pale);
+}
+.fw-heatmap td.cell-guide a {
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; height: 100%; min-height: 44px;
+  font-size: 1rem; text-decoration: none;
+  transition: background var(--transition);
+}
+.fw-heatmap td.cell-guide:hover { background: var(--blue-light); }
+
+.fw-heatmap td.cell-strumento {
+  background: var(--green-light);
+}
+.fw-heatmap td.cell-strumento a {
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; height: 100%; min-height: 44px;
+  font-size: 1rem; text-decoration: none;
+  transition: background var(--transition);
+}
+.fw-heatmap td.cell-strumento:hover { background: #c5e8d2; }
+
+.fw-heatmap td.cell-pillola {
+  background: var(--amber-light);
+}
+.fw-heatmap td.cell-pillola a {
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; height: 100%; min-height: 44px;
+  font-size: 1rem; text-decoration: none;
+  transition: background var(--transition);
+}
+.fw-heatmap td.cell-pillola:hover { background: #fce9a0; }
+
+.fw-heatmap td.cell-gap { background: #FAFAFA; min-height: 44px; }
+.fw-heatmap tbody tr:not(.fw-heatmap-area-row):hover td.cell-gap { background: #F0F6FF; }
+
+/* Legenda colori matrice */
+.fw-matrix-legend {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  margin-bottom: 1rem; font-size: .75rem; color: var(--gray-mid);
+  align-items: center;
+}
+.fw-matrix-legend-item {
+  display: flex; align-items: center; gap: .4rem;
+}
+.fw-matrix-legend-swatch {
+  width: 16px; height: 16px; border-radius: 4px; border: 1px solid rgba(0,0,0,.08);
+}
+
+/* ── BACK TO TOP ── */
+.back-to-top {
+  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
+  width: 40px; height: 40px;
+  background: var(--blue-dark); color: #fff;
+  border: none; border-radius: 50%;
+  font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 12px rgba(31,78,121,.3);
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--transition), transform var(--transition);
+}
+.back-to-top.visible { opacity: 1; pointer-events: all; }
+.back-to-top:hover { transform: translateY(-2px); background: var(--blue-mid); }
+
+/* ── FOOTER ── */
+.fw-footer {
+  background: var(--blue-dark);
+  color: rgba(255,255,255,.6);
+  text-align: center;
+  padding: 1.5rem;
+  font-size: .78rem;
+  line-height: 1.7;
+}
+.fw-footer a { color: rgba(255,255,255,.5); text-decoration: none; }
+.fw-footer a:hover { color: #fff; }
+.fw-footer strong { color: rgba(255,255,255,.85); }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 640px) {
   .fw-controls { flex-direction: column; align-items: flex-start; gap: .75rem; }
   .fw-legend { display: none; }
-  .fw-content { padding: 1.25rem 1rem 3rem; }
+  .fw-content, .fw-content-matrix { padding: 1.25rem 1rem 3rem; }
   .fw-comp { padding-left: 1.2rem; }
-  .fw-header { padding: 0 1rem; }
   .fw-sub { display: none; }
+  .fw-heatmap-wrap { display: none; }
+  .fw-matrix-legend { display: none; }
+  .fw-matrix-mobile-msg { display: block; }
+  .back-to-top { bottom: 1rem; right: 1rem; }
 }
 </style>
 </head>
@@ -431,27 +458,48 @@ body { font-family: var(--font-body); color: var(--gray-dark); background: #F0F6
     <button class="fw-tab" onclick="switchTab('digcompedu', this)">DigCompEdu</button>
   </div>
   <div class="fw-toggle">
-    <button class="fw-toggle-btn active" id="btn-tree" onclick="switchView('tree')">🌳 Albero</button>
-    <button class="fw-toggle-btn" id="btn-matrix" onclick="switchView('matrix')">⊞ Matrice</button>
+    <button class="fw-toggle-btn active" id="btn-tree"   onclick="switchView('tree')">🌳 Albero</button>
+    <button class="fw-toggle-btn"        id="btn-matrix" onclick="switchView('matrix')">⊞ Matrice</button>
   </div>
   <div class="fw-legend">
     <div class="fw-legend-item"><div class="fw-legend-dot covered"></div> Risorsa disponibile</div>
-    <div class="fw-legend-item"><div class="fw-legend-dot gap"></div> Gap — nessuna risorsa</div>
+    <div class="fw-legend-item"><div class="fw-legend-dot gap"></div> Gap</div>
   </div>
 </div>
 
 <!-- ── CONTENUTO ── -->
-<div class="fw-content">
-  <div id="fw-summary" class="fw-summary"></div>
-  <div id="fw-tree"></div>
-  <div id="fw-matrix" style="display:none;"></div>
+<div id="fw-wrapper">
+  <!-- Summary sempre visibile -->
+  <div class="fw-content">
+    <div id="fw-summary" class="fw-summary"></div>
+  </div>
+
+  <!-- Vista albero -->
+  <div class="fw-content" id="fw-tree"></div>
+
+  <!-- Vista matrice -->
+  <div class="fw-content-matrix" id="fw-matrix" style="display:none;"></div>
 </div>
+
+<!-- ── BACK TO TOP ── -->
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Torna su">↑</button>
+
+<!-- ── FOOTER ── -->
+<footer class="fw-footer">
+  <strong>Formazione Digitale</strong><br>
+  Guide pratiche, strumenti e pillole di alfabetizzazione digitale.<br>
+  <span style="margin-top:.4rem;display:inline-block;">
+    <a href="/">Home</a> &nbsp;·&nbsp;
+    <a href="/mappa.html">Mappa risorse</a> &nbsp;·&nbsp;
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </span>
+</footer>
 
 <script>
 /* ══════════════════════════════════════════════════════════════
-   MAPPA FRAMEWORK — Formazione Digitale
-   Legge manifest.json + framework.json e costruisce
-   vista albero e vista matrice per DigComp 2.2 / DigCompEdu
+   MAPPA FRAMEWORK v2 — Formazione Digitale
+   Albero collassabile + Heatmap per DigComp 2.2 / DigCompEdu
 ══════════════════════════════════════════════════════════════ */
 
 let activeTab  = 'digcomp';
@@ -475,10 +523,16 @@ async function init() {
   }
 }
 
-/* ── MAPPA RISORSA → COMPETENZE ── */
-function getRisorsePerComp(compId, fwKey) {
-  const campo = fwKey === 'digcomp' ? 'digcomp' : 'digcompedu';
+/* ── RISORSE PER COMPETENZA ── */
+function getRisorsePerComp(compId) {
+  const campo = activeTab === 'digcomp' ? 'digcomp' : 'digcompedu';
   return RISORSE.filter(r => Array.isArray(r[campo]) && r[campo].includes(compId));
+}
+
+/* ── PLURALE CORRETTO ── */
+function pluraleRisorse(n) {
+  if (n === 0) return 'gap';
+  return n === 1 ? '1 risorsa' : n + ' risorse';
 }
 
 /* ── RENDER PRINCIPALE ── */
@@ -499,10 +553,10 @@ function render() {
 /* ── SUMMARY ── */
 function renderSummary(fwData) {
   const allComps = fwData.areas.flatMap(a => a.competences);
-  const covered  = allComps.filter(c => getRisorsePerComp(c.id, activeTab).length > 0);
+  const covered  = allComps.filter(c => getRisorsePerComp(c.id).length > 0);
   const gaps     = allComps.length - covered.length;
   const risorse  = new Set(
-    allComps.flatMap(c => getRisorsePerComp(c.id, activeTab).map(r => r.path))
+    allComps.flatMap(c => getRisorsePerComp(c.id).map(r => r.path))
   ).size;
 
   document.getElementById('fw-summary').innerHTML = `
@@ -521,26 +575,22 @@ function renderSummary(fwData) {
     <div class="fw-summary-card">
       <div class="fw-summary-num" style="color:var(--green-dark)">${risorse}</div>
       <div class="fw-summary-label">Risorse mappate</div>
-    </div>
-  `;
+    </div>`;
 }
 
 /* ── VISTA ALBERO ── */
 function renderTree(fwData) {
   const container = document.getElementById('fw-tree');
   container.innerHTML = fwData.areas.map(area => {
-    const risPerArea = area.competences.reduce((acc, c) => {
-      return acc + getRisorsePerComp(c.id, activeTab).length;
-    }, 0);
+    const nRis = area.competences.reduce((acc, c) => acc + getRisorsePerComp(c.id).length, 0);
 
     const compsHtml = area.competences.map(comp => {
-      const risorse = getRisorsePerComp(comp.id, activeTab);
+      const risorse = getRisorsePerComp(comp.id);
       const hasRes  = risorse.length > 0;
-      const chipsHtml = hasRes
-        ? risorse.map(r => `
-            <a href="${r.path}" class="fw-resource-chip cat-${r.cat}" title="${r.label}">
-              ${r.emoji} ${r.short}
-            </a>`).join('')
+      const chips   = hasRes
+        ? risorse.map(r =>
+            `<a href="${r.path}" class="fw-resource-chip cat-${r.cat}" title="${r.label}">${r.emoji} ${r.short}</a>`
+          ).join('')
         : `<span class="fw-gap-label">Nessuna risorsa disponibile</span>`;
 
       return `
@@ -549,7 +599,7 @@ function renderTree(fwData) {
             <span class="fw-comp-id">${comp.id}</span>
             <span class="fw-comp-label">${comp.label}</span>
           </div>
-          <div class="fw-resources">${chipsHtml}</div>
+          <div class="fw-resources">${chips}</div>
         </div>`;
     }).join('');
 
@@ -561,9 +611,7 @@ function renderTree(fwData) {
             <span class="fw-area-label">${area.label}</span>
           </div>
           <div class="fw-area-header-right">
-            <span class="fw-area-badge${risPerArea > 0 ? ' has-resources' : ''}">
-              ${risPerArea > 0 ? risPerArea + ' risorsa' + (risPerArea > 1 ? 'e' : '') : 'gap'}
-            </span>
+            <span class="fw-area-badge${nRis > 0 ? ' has-resources' : ''}">${pluraleRisorse(nRis)}</span>
             <span class="fw-area-chevron">▾</span>
           </div>
         </div>
@@ -572,55 +620,75 @@ function renderTree(fwData) {
   }).join('');
 }
 
-/* ── VISTA MATRICE ── */
+/* ── VISTA MATRICE HEATMAP ── */
 function renderMatrix(fwData) {
   const container = document.getElementById('fw-matrix');
-
-  // Raccoglie risorse che hanno almeno una competenza nel framework attivo
   const campo = activeTab === 'digcomp' ? 'digcomp' : 'digcompedu';
+
+  // Risorse che coprono almeno una competenza nel framework attivo
   const risorseAttive = RISORSE.filter(r => Array.isArray(r[campo]) && r[campo].length > 0);
 
   // Header colonne
   const headerCols = risorseAttive.map(r => `
-    <th>
-      <span class="fw-matrix-res-emoji">${r.emoji}</span>
-      <span class="fw-matrix-res-label">${r.short}</span>
+    <th title="${r.label}">
+      <span class="fw-heatmap-res-emoji">${r.emoji}</span>
+      <span class="fw-heatmap-res-name">${r.short}</span>
     </th>`).join('');
 
   // Righe
   const righe = fwData.areas.flatMap(area => {
-    const areaRow = `<tr class="fw-matrix-area-row">
-      <td colspan="${risorseAttive.length + 1}" style="background:${area.color}">
-        ${area.short}
-      </td>
-    </tr>`;
+    const colspan = risorseAttive.length + 1;
+    const areaRow = `
+      <tr class="fw-heatmap-area-row">
+        <td colspan="${colspan}" style="background:${area.color}">${area.short}</td>
+      </tr>`;
 
     const compRows = area.competences.map(comp => {
       const celle = risorseAttive.map(r => {
         const coperto = Array.isArray(r[campo]) && r[campo].includes(comp.id);
         if (coperto) {
-          return `<td class="cell-covered" title="${r.label}">
-            <a href="${r.path}">✓</a>
+          return `<td class="cell-${r.cat}" title="${r.label} — ${comp.id}">
+            <a href="${r.path}">${r.emoji}</a>
           </td>`;
         }
         return `<td class="cell-gap"></td>`;
       }).join('');
 
-      return `<tr>
-        <td>
-          <span class="fw-matrix-comp-id">${comp.id}</span>
-          ${comp.label}
-        </td>
-        ${celle}
-      </tr>`;
+      return `
+        <tr>
+          <td>
+            <span class="fw-heatmap-comp-id">${comp.id}</span>
+            <span class="fw-heatmap-comp-label">${comp.label}</span>
+          </td>
+          ${celle}
+        </tr>`;
     }).join('');
 
     return areaRow + compRows;
   }).join('');
 
   container.innerHTML = `
-    <div class="fw-matrix-wrap">
-      <table class="fw-matrix">
+    <div class="fw-matrix-legend">
+      <span style="font-weight:600;color:var(--gray-dark);margin-right:.25rem;">Legenda:</span>
+      <div class="fw-matrix-legend-item">
+        <div class="fw-matrix-legend-swatch" style="background:var(--blue-pale);border-color:var(--blue-light)"></div> Guide
+      </div>
+      <div class="fw-matrix-legend-item">
+        <div class="fw-matrix-legend-swatch" style="background:var(--green-light);border-color:#b2d8c0"></div> Strumenti
+      </div>
+      <div class="fw-matrix-legend-item">
+        <div class="fw-matrix-legend-swatch" style="background:var(--amber-light);border-color:#f0d990"></div> Pillole
+      </div>
+      <div class="fw-matrix-legend-item">
+        <div class="fw-matrix-legend-swatch" style="background:#FAFAFA;border-color:#ddd"></div> Gap
+      </div>
+    </div>
+    <div class="fw-matrix-mobile-msg">
+      📊 La vista matrice è disponibile solo su schermi più grandi.<br>
+      <span style="font-size:.82rem;">Usa la vista Albero su mobile.</span>
+    </div>
+    <div class="fw-heatmap-wrap">
+      <table class="fw-heatmap">
         <thead>
           <tr>
             <th>Competenza</th>
@@ -638,7 +706,6 @@ function switchTab(tab, btn) {
   document.querySelectorAll('.fw-tab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   render();
-  // Aggiorna hash URL
   history.replaceState(null, '', '#' + tab);
 }
 
@@ -647,24 +714,28 @@ function switchView(view) {
   document.getElementById('btn-tree').classList.toggle('active',   view === 'tree');
   document.getElementById('btn-matrix').classList.toggle('active', view === 'matrix');
   render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function toggleArea(id) {
   document.getElementById(id).classList.toggle('collapsed');
 }
 
-/* ── GESTIONE HASH ── */
+/* ── BACK TO TOP ── */
+const btt = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => {
+  btt.classList.toggle('visible', window.scrollY > 300);
+});
+
+/* ── HASH ── */
 function applyHash() {
   const hash = location.hash.replace('#', '');
   if (hash === 'digcompedu') {
     activeTab = 'digcompedu';
-    document.querySelectorAll('.fw-tab').forEach((b, i) => {
-      b.classList.toggle('active', i === 1);
-    });
+    document.querySelectorAll('.fw-tab').forEach((b, i) => b.classList.toggle('active', i === 1));
   }
 }
 
-/* ── AVVIO ── */
 applyHash();
 init();
 </script>
