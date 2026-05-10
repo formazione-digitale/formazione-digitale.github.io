@@ -1301,11 +1301,10 @@ function generateReport() {
     <!-- Azioni -->
     <div class="report-actions">
       <button class="btn-action primary" onclick="window.print()">🖨 Stampa / Salva PDF</button>
-      <button class="btn-action" id="btn-copia" onclick="copyReport()">📋 Copia testo</button>
+      <button class="btn-action" id="btn-copia" onclick="copyReport()">📋 Copia testo</button><div id="copy-feedback" class="copy-feedback"></div>
       <button class="btn-action" onclick="resetTool()">🔄 Analizza un'altra fonte</button>
       <a class="btn-action" href="/competenze-digitali/pillola-valutazione-fonti/">← Torna alla pillola</a>
     </div>
-    <div id="copy-feedback" class="copy-feedback" style="margin-top:.5rem;"></div>
 
     <!-- Badge competenze -->
     <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--blue-light);display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;">
@@ -1315,12 +1314,74 @@ function generateReport() {
       <span style="font-size:.72rem;font-weight:700;background:var(--green-light);color:var(--green-dark);padding:.18rem .55rem;border-radius:20px;border:1px solid #9de0bb;">DCEdu 6.1</span>
       <span style="font-size:.72rem;font-weight:700;background:var(--green-light);color:var(--green-dark);padding:.18rem .55rem;border-radius:20px;border:1px solid #9de0bb;">DCEdu 4.1</span>
     </div>
+
+    <!-- Tabella allineamento framework -->
+    <div style="margin-top:1.5rem;">
+      <div class="report-detail-title" style="margin-bottom:.6rem;">Allineamento ai framework di competenza</div>
+      <table class="report-table" style="margin-bottom:0;">
+        <thead>
+          <tr>
+            <th style="width:28%;">Blocco</th>
+            <th style="width:24%;">DigComp 2.2</th>
+            <th style="width:24%;">DigCompEdu</th>
+            <th style="width:24%;">Cosa allena</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>CRAAP Test</strong></td>
+            <td>
+              <span style="display:inline-block;font-size:.7rem;font-weight:700;background:var(--blue-pale);color:var(--blue-dark);padding:.1rem .45rem;border-radius:20px;border:1px solid var(--blue-light);margin-bottom:.2rem;">DC 1.2</span><br>
+              <span style="font-size:.75rem;color:var(--gray-mid);">Valutare dati e contenuti</span>
+            </td>
+            <td>
+              <span style="display:inline-block;font-size:.7rem;font-weight:700;background:var(--green-light);color:var(--green-dark);padding:.1rem .45rem;border-radius:20px;border:1px solid #9de0bb;margin-bottom:.2rem;">DCEdu 6.1</span><br>
+              <span style="font-size:.75rem;color:var(--gray-mid);">Information literacy</span>
+            </td>
+            <td style="font-size:.8rem;color:var(--gray-dark);line-height:1.5;">Valutazione critica di autorevolezza, accuratezza e scopo di una fonte</td>
+          </tr>
+          <tr>
+            <td><strong>Lateral Reading</strong></td>
+            <td>
+              <span style="display:inline-block;font-size:.7rem;font-weight:700;background:var(--blue-pale);color:var(--blue-dark);padding:.1rem .45rem;border-radius:20px;border:1px solid var(--blue-light);margin-bottom:.2rem;">DC 1.1</span><br>
+              <span style="font-size:.75rem;color:var(--gray-mid);">Navigare e filtrare</span>
+            </td>
+            <td>
+              <span style="display:inline-block;font-size:.7rem;font-weight:700;background:var(--green-light);color:var(--green-dark);padding:.1rem .45rem;border-radius:20px;border:1px solid #9de0bb;margin-bottom:.2rem;">DCEdu 3.2</span><br>
+              <span style="font-size:.75rem;color:var(--gray-mid);">Guida all'apprendimento</span>
+            </td>
+            <td style="font-size:.8rem;color:var(--gray-dark);line-height:1.5;">Verifica incrociata tra fonti, analisi della reputazione esterna</td>
+          </tr>
+          <tr>
+            <td>
+              <strong>Verifica immagini</strong>
+              ${!analisi.imageBlock ? '<br><span style="font-size:.72rem;color:var(--gray-mid);font-style:italic;">Non applicato</span>' : ''}
+            </td>
+            <td>
+              <span style="display:inline-block;font-size:.7rem;font-weight:700;background:var(--blue-pale);color:var(--blue-dark);padding:.1rem .45rem;border-radius:20px;border:1px solid var(--blue-light);margin-bottom:.2rem;">DC 1.2</span><br>
+              <span style="font-size:.75rem;color:var(--gray-mid);">Valutare contenuti visivi</span>
+            </td>
+            <td>
+              <span style="display:inline-block;font-size:.7rem;font-weight:700;background:var(--green-light);color:var(--green-dark);padding:.1rem .45rem;border-radius:20px;border:1px solid #9de0bb;margin-bottom:.2rem;">DCEdu 4.1</span><br>
+              <span style="font-size:.75rem;color:var(--gray-mid);">Strategie di valutazione</span>
+            </td>
+            <td style="font-size:.8rem;color:var(--gray-dark);line-height:1.5;">Riconoscimento di immagini decontestualizzate o manipolate</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   `;
-  
-  /* salva dati report per copyReport() */
-	window._reportData = { punteggio: score.finale, fascia: fasciaLabel, fonte: domLabel };
 
   document.getElementById('report-body').innerHTML = reportHTML;
+
+  // Salva i dati per copyReport() — evita il bug degli apostrofi
+  // nell'interpolazione inline degli onclick
+  window._reportData = {
+    punteggio: score.finale,
+    fascia:    fasciaLabel,
+    fonte:     domLabel
+  };
+
   showStep(4);
 }
 
@@ -1328,7 +1389,9 @@ function generateReport() {
    AZIONI POST REPORT
 ═══════════════════════════════════════════════════════ */
 function copyReport() {
-  const { punteggio, fascia, fonte } = window._reportData;
+  const { punteggio, fascia, fonte } = window._reportData || {};
+  if (!punteggio) return;
+
   const righe = Object.entries(analisi.risposte).map(([d, r]) =>
     `${DOMANDE_LABEL[d]}: ${r.colore.toUpperCase()}`
   ).join('\n');

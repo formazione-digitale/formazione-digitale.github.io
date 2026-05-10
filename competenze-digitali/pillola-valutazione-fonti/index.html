@@ -41,6 +41,7 @@
     "@type": "Person",
     "name": "Cristiano De Pasquale"
   },
+  "competencyRequired": ["DC 1.2", "DC 1.1", "DCEdu 6.1", "DCEdu 3.2"],
   "isPartOf": {
     "@type": "WebSite",
     "name": "Formazione Digitale",
@@ -60,22 +61,26 @@
   })();
 </script>
 
-<link rel="stylesheet" href="/css/shared.css?v=2">
+<link rel="stylesheet" href="/css/shared.css?v=1">
 
 <style>
 /* ═══════════════════════════════════════════════════════════
    RESET & ROOT
 ═══════════════════════════════════════════════════════════ */
-
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 /* variabili specifiche di questa pillola — le globali vengono da shared.css */
+
+/* glossario — triangolino rotante */
+details summary > span:first-child { display: inline-block; transition: transform .2s ease; }
+details[open] summary > span:first-child { transform: rotate(90deg); }
 :root {
   --pill-bg:     var(--amber-light);
   --pill-border: #f0d990;
   --pill-accent: var(--amber-dark);
 }
 
-
+html { font-size: 16px; scroll-behavior: smooth; }
 body {
   font-family: var(--font-body);
   color: var(--gray-dark);
@@ -482,25 +487,6 @@ body {
   color: var(--gray-dark);
   transition: color .2s ease;
 }
-.checklist-content {
-  display: flex; flex-direction: column; gap: 0;
-  flex: 1;
-}
-.checklist-detail {
-  max-height: 0;
-  overflow: hidden;
-  font-size: .82rem;
-  color: var(--amber-dark);
-  line-height: 1.6;
-  transition: max-height .35s ease, margin-top .35s ease, opacity .35s ease;
-  opacity: 0;
-  margin-top: 0;
-}
-.checklist-item.checked .checklist-detail {
-  max-height: 8rem;
-  opacity: 1;
-  margin-top: .4rem;
-}
 .checklist-footer {
   border-top: 1px solid var(--blue-light);
   padding: .85rem 1.25rem;
@@ -591,31 +577,21 @@ body {
 ═══════════════════════════════════════════════════════════ */
 .pdf-placeholder {
   display: flex; align-items: center; gap: 1rem;
-  background: var(--amber-light);
-  border: 1.5px solid var(--pill-border);
+  background: var(--gray-light);
+  border: 2px dashed #ccc;
   border-radius: var(--radius);
   padding: 1rem 1.25rem;
   margin: .75rem 0;
+  opacity: .7;
 }
 .pdf-placeholder .pdf-icon { font-size: 1.8rem; flex-shrink: 0; }
-.pdf-placeholder .pdf-text {
-  font-size: .85rem; color: var(--gray-dark);
-  line-height: 1.5; flex: 1;
-}
-.pdf-placeholder .pdf-text strong { color: var(--amber-dark); }
-.pdf-download-btn {
+.pdf-placeholder .pdf-text { font-size: .85rem; color: var(--gray-mid); line-height: 1.5; }
+.pdf-placeholder .pdf-badge {
   margin-left: auto; flex-shrink: 0;
-  display: inline-flex; align-items: center;
-  background: var(--amber-dark); color: #fff;
-  text-decoration: none; font-family: var(--font-body);
-  font-size: .8rem; font-weight: 600;
-  padding: .45rem 1.1rem; border-radius: 50px;
-  transition: background var(--transition), transform .15s ease;
-  white-space: nowrap;
-}
-.pdf-download-btn:hover {
-  background: #5C3800;
-  transform: translateY(-1px);
+  font-size: .68rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase;
+  background: #ddd; color: #888;
+  padding: .2rem .55rem; border-radius: 20px;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -751,8 +727,6 @@ body {
   </div>
 </div>
 
-
-
 <!-- ══════════════ MAIN ══════════════ -->
 <main class="pill-main">
 
@@ -793,93 +767,90 @@ body {
 
   <hr class="pill-divider">
 
-<!-- ══ SEZIONE 1 — CRAAP test ══ -->
-<section class="pill-section">
-  <div class="section-num">Metodo 1</div>
-  <h2 class="section-title">CRAAP test — 5 domande per qualsiasi fonte</h2>
-  <div class="section-body">
-    <p>Il CRAAP test è uno strumento sviluppato dalla California State University. Il nome è volutamente irriverente — è fatto per essere ricordato. Cinque criteri, una domanda operativa ciascuno.</p>
+  <!-- ══ SEZIONE 1 — CRAAP test ══ -->
+  <section class="pill-section">
+    <div class="section-num">Metodo 1</div>
+    <h2 class="section-title">CRAAP test — 5 domande per qualsiasi fonte</h2>
+    <div class="section-body">
+      <p>Il CRAAP test è uno strumento sviluppato dalla California State University. Il nome è volutamente irriverente — è fatto per essere ricordato. Cinque criteri, una domanda operativa ciascuno.</p>
 
-    <table class="craap-table">
-      <thead>
-        <tr>
-          <th>Lettera</th>
-          <th>Criterio</th>
-          <th>Domanda operativa</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="craap-letter">C</span></td>
-          <td><span class="craap-criterion">Currency — Attualità</span></td>
-          <td>Quando è stato pubblicato? È ancora valido oggi?</td>
-        </tr>
-        <tr>
-          <td><span class="craap-letter">R</span></td>
-          <td><span class="craap-criterion">Relevance — Rilevanza</span></td>
-          <td>Risponde davvero alla mia domanda specifica?</td>
-        </tr>
-        <tr>
-          <td><span class="craap-letter">A</span></td>
-          <td><span class="craap-criterion">Authority — Autorevolezza</span></td>
-          <td>Chi ha scritto? Quali credenziali ha?</td>
-        </tr>
-        <tr>
-          <td><span class="craap-letter">A</span></td>
-          <td><span class="craap-criterion">Accuracy — Accuratezza</span></td>
-          <td>Ci sono fonti citate? È verificabile altrove?</td>
-        </tr>
-        <tr>
-          <td><span class="craap-letter">P</span></td>
-          <td><span class="craap-criterion">Purpose — Scopo</span></td>
-          <td>Vuole informare, vendere, persuadere o provocare?</td>
-        </tr>
-      </tbody>
-    </table>
+      <table class="craap-table">
+        <thead>
+          <tr>
+            <th>Lettera</th>
+            <th>Criterio</th>
+            <th>Domanda operativa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="craap-letter">C</span></td>
+            <td><span class="craap-criterion">Currency — Attualità</span></td>
+            <td>Quando è stato pubblicato? È ancora valido oggi?</td>
+          </tr>
+          <tr>
+            <td><span class="craap-letter">R</span></td>
+            <td><span class="craap-criterion">Relevance — Rilevanza</span></td>
+            <td>Risponde davvero alla mia domanda specifica?</td>
+          </tr>
+          <tr>
+            <td><span class="craap-letter">A</span></td>
+            <td><span class="craap-criterion">Authority — Autorevolezza</span></td>
+            <td>Chi ha scritto? Quali credenziali ha?</td>
+          </tr>
+          <tr>
+            <td><span class="craap-letter">A</span></td>
+            <td><span class="craap-criterion">Accuracy — Accuratezza</span></td>
+            <td>Ci sono fonti citate? È verificabile altrove?</td>
+          </tr>
+          <tr>
+            <td><span class="craap-letter">P</span></td>
+            <td><span class="craap-criterion">Purpose — Scopo</span></td>
+            <td>Vuole informare, vendere, persuadere o provocare?</td>
+          </tr>
+        </tbody>
+      </table>
 
-    <!-- Esempio studente -->
-    <div class="diff-block" id="craap-student">
-      <div class="diff-label diff-label-student">👤 Esempio studente</div>
-      <div class="example-block">
-        <div class="example-block-title">Applicazione CRAAP — due fonti sul cambiamento climatico</div>
-        <div class="semaforo-rows">
-          <div class="semaforo-row">
-            <div class="semaforo-dot s-green"></div>
-            <span><strong>Fonte A (IPCC.ch):</strong> C ✓ 2023 · R ✓ risponde · A ✓ panel scientifico ONU · A ✓ mille citazioni · P ✓ informare — <em>usa questa</em></span>
-          </div>
-          <div class="semaforo-row">
-            <div class="semaforo-dot s-yellow"></div>
-            <span><strong>Fonte B (Blog senza autore):</strong> C ✓ recente · R ✓ · A ✗ anonimo · A ✗ nessuna fonte · P ? Agenda nascosta? — <em>approfondisci</em></span>
-          </div>
-          <div class="semaforo-row">
-            <div class="semaforo-dot s-red"></div>
-            <span><strong>Se 3+ criteri sono rossi:</strong> evita la fonte o citala solo come esempio di disinformazione</span>
+      <!-- Esempio studente -->
+      <div class="diff-block" id="craap-student">
+        <div class="diff-label diff-label-student">👤 Esempio studente</div>
+        <div class="example-block">
+          <div class="example-block-title">Applicazione CRAAP — due fonti sul cambiamento climatico</div>
+          <div class="semaforo-rows">
+            <div class="semaforo-row">
+              <div class="semaforo-dot s-green"></div>
+              <span><strong>Fonte A (IPCC.ch):</strong> C ✓ 2023 · R ✓ risponde · A ✓ panel scientifico ONU · A ✓ mille citazioni · P ✓ informare — <em>usa questa</em></span>
+            </div>
+            <div class="semaforo-row">
+              <div class="semaforo-dot s-yellow"></div>
+              <span><strong>Fonte B (Blog senza autore):</strong> C ✓ recente · R ✓ · A ✗ anonimo · A ✗ nessuna fonte · P ? Agenda nascosta? — <em>approfondisci</em></span>
+            </div>
+            <div class="semaforo-row">
+              <div class="semaforo-dot s-red"></div>
+              <span><strong>Se 3+ criteri sono rossi:</strong> evita la fonte o citala solo come esempio di disinformazione</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Esempio docente -->
-    <div class="diff-block" id="craap-teacher" hidden>
-      <div class="diff-label diff-label-teacher">🎓 Per la classe</div>
-      <div class="box-tip">
-        <div class="box-tip-label">💡 Suggerimento metodologico</div>
-        Fai scegliere agli studenti la fonte da analizzare — non sceglierla tu. Quando portano una fonte propria, l'investimento emotivo nel valutarla correttamente è molto più alto. Il CRAAP test applicato a una fonte esterna prescelta dal docente produce spesso risposte meccaniche.
-      </div>
-      <div class="pdf-placeholder">
-        <div class="pdf-icon">📄</div>
-        <div class="pdf-text">
-          <strong>Scheda CRAAP stampabile</strong><br>
-          Griglia docente + autovalutazione studente · Bilingue IT/EN · Formato A4
+      <!-- Esempio docente -->
+      <div class="diff-block" id="craap-teacher" hidden>
+        <div class="diff-label diff-label-teacher">🎓 Per la classe</div>
+        <div class="box-tip">
+          <div class="box-tip-label">💡 Suggerimento metodologico</div>
+          Fai scegliere agli studenti la fonte da analizzare — non sceglierla tu. Quando portano una fonte propria, l'investimento emotivo nel valutarla correttamente è molto più alto. Il CRAAP test applicato a una fonte esterna prescelta dal docente produce spesso risposte meccaniche.
         </div>
-        <a class="pdf-download-btn" href="CRAAP_test_griglia.pdf" download>
-          Scarica PDF →
-        </a>
+        <div class="pdf-placeholder">
+          <div class="pdf-icon">📄</div>
+          <div class="pdf-text">
+            <strong>Scheda CRAAP stampabile</strong><br>
+            Template A4 per gli studenti — una colonna per fonte, una riga per criterio.
+          </div>
+          <div class="pdf-badge">Prossimamente</div>
+        </div>
       </div>
     </div>
-
-  </div>
-</section>
+  </section>
 
   <hr class="pill-divider">
 
@@ -969,57 +940,38 @@ body {
 
       <div class="checklist-wrap">
         <div class="checklist-header">✅ Checklist rapida — verifica fonte</div>
-		<div class="checklist-items" id="checklist-items">
-		  <label class="checklist-item" onclick="toggleCheck(event, this)">
-			<input type="checkbox">
-			<div class="checklist-box"></div>
-			<div class="checklist-content">
-			  <span class="checklist-text">Ho verificato chi ha scritto questo contenuto e le sue credenziali</span>
-			  <div class="checklist-detail">Cerca il nome dell'autore su Google. Hai trovato un profilo LinkedIn, una pagina istituzionale, un curriculum? Se l'autore è anonimo o il nome non dà risultati verificabili, è un segnale di allerta.</div>
-			</div>
-		  </label>
-		  <label class="checklist-item" onclick="toggleCheck(event, this)">
-			<input type="checkbox">
-			<div class="checklist-box"></div>
-			<div class="checklist-content">
-			  <span class="checklist-text">Ho controllato la data di pubblicazione — il contenuto è ancora valido</span>
-			  <div class="checklist-detail">Cerca la data in fondo all'articolo o nell'URL. Per temi scientifici o di attualità, una fonte di 5+ anni fa può essere obsoleta. Per eventi storici o classici, la data conta meno.</div>
-			</div>
-		  </label>
-		  <label class="checklist-item" onclick="toggleCheck(event, this)">
-			<input type="checkbox">
-			<div class="checklist-box"></div>
-			<div class="checklist-content">
-			  <span class="checklist-text">Ci sono fonti citate, oppure è tutto opinion non verificabile</span>
-			  <div class="checklist-detail">Un contenuto affidabile cita le sue fonti — studi, dati, istituzioni. Se non c'è nessun link o riferimento verificabile, stai leggendo un'opinione, non un fatto documentato.</div>
-			</div>
-		  </label>
-		  <label class="checklist-item" onclick="toggleCheck(event, this)">
-			<input type="checkbox">
-			<div class="checklist-box"></div>
-			<div class="checklist-content">
-			  <span class="checklist-text">Ho cercato questa fonte su Google (<strong>lateral reading</strong>) e fonti indipendenti la confermano</span>
-			  <div class="checklist-detail">Apri una nuova scheda e cerca "[nome sito] affidabile" o "[nome sito] bias". Non cercare la notizia — cerca la fonte. Cosa dicono di lei fonti indipendenti? MediaBias/AllSides e Chi.it sono ottimi punti di partenza.</div>
-			</div>
-		  </label>
-		  <label class="checklist-item" onclick="toggleCheck(event, this)">
-			<input type="checkbox">
-			<div class="checklist-box"></div>
-			<div class="checklist-content">
-			  <span class="checklist-text">Immagini e video presenti sono nel contesto originale (ho verificato con reverse search)</span>
-			  <div class="checklist-detail">Clicca destro sull'immagine → "Cerca immagine con Google". Guarda dove è apparsa per la prima volta. Una foto reale usata fuori contesto è la forma più comune di disinformazione visiva.</div>
-			</div>
-		  </label>
-		</div>
+        <div class="checklist-items" id="checklist-items">
+          <label class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox">
+            <div class="checklist-box"></div>
+            <span class="checklist-text">Ho verificato chi ha scritto questo contenuto e le sue credenziali</span>
+          </label>
+          <label class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox">
+            <div class="checklist-box"></div>
+            <span class="checklist-text">Ho controllato la data di pubblicazione — il contenuto è ancora valido</span>
+          </label>
+          <label class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox">
+            <div class="checklist-box"></div>
+            <span class="checklist-text">Ci sono fonti citate, oppure è tutto opinion non verificabile</span>
+          </label>
+          <label class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox">
+            <div class="checklist-box"></div>
+            <span class="checklist-text">Ho cercato questa fonte su Google (lateral reading) e fonti indipendenti la confermano</span>
+          </label>
+          <label class="checklist-item" onclick="toggleCheck(this)">
+            <input type="checkbox">
+            <div class="checklist-box"></div>
+            <span class="checklist-text">Immagini e video presenti sono nel contesto originale (ho verificato con reverse search)</span>
+          </label>
+        </div>
         <div class="checklist-footer">
           <div class="checklist-score" id="checklist-score">0 / 5 verificati</div>
           <div class="checklist-verdict" id="checklist-verdict"></div>
         </div>
       </div>
-	    <a class="link-pill" href="/competenze-digitali/strumento-valutazione-fonti/">
-		  🧪 Vuoi una verifica guidata completa? Usa lo Strumento Verifica Fonti
-		  <span class="lp-arrow">→</span>
-		</a>
     </div>
   </section>
 
@@ -1036,8 +988,7 @@ body {
       <ul class="resource-list">
         <li><a href="https://pagellapolitica.it" target="_blank" rel="noopener">Pagella Politica — fact-checking italiano</a></li>
         <li><a href="https://www.ilpost.it/fact-checking/" target="_blank" rel="noopener">Il Post — sezione fact-checking</a></li>
-        <li><a href="https://www.open.online/author/davidpuente/" target="_blank" rel="noopener">David Puente — fact-checking su Open Online</a></li>
-		<li><a href="https://www.snopes.com" target="_blank" rel="noopener">Snopes — database internazionale di debunking (inglese)</a></li>
+        <li><a href="https://www.snopes.com" target="_blank" rel="noopener">Snopes — database internazionale di debunking (inglese)</a></li>
       </ul>
     </div>
 
@@ -1063,11 +1014,9 @@ body {
         <div class="pdf-icon">📄</div>
         <div class="pdf-text">
           <strong>Scheda attività — Caccia alla fonte</strong><br>
-          Griglia docente + autovalutazione studente · Bilingue IT/EN · Formato A4
+          Griglia di valutazione stampabile per docenti · Formato A4
         </div>
-        <a class="pdf-download-btn" href="Caccia_alla_fonte_griglia.pdf" download>
-          Scarica PDF →
-        </a>
+        <div class="pdf-badge">Prossimamente</div>
       </div>
 
       <ul class="resource-list" style="margin-top:1rem;">
@@ -1075,6 +1024,91 @@ body {
         <li><a href="https://mediabiasfactcheck.com" target="_blank" rel="noopener">Media Bias/Fact Check — database testate internazionali</a></li>
         <li><a href="https://weverify.eu" target="_blank" rel="noopener">WeVerify — estensione per verifica video (avanzato)</a></li>
       </ul>
+    </div>
+  </section>
+  <hr class="pill-divider">
+
+  <!-- ══ TABELLA FRAMEWORK ══ -->
+  <section class="pill-section">
+    <div class="section-num">Framework</div>
+    <h2 class="section-title">Quale competenza allena ogni metodo?</h2>
+    <div class="section-body">
+      <table class="craap-table">
+        <thead>
+          <tr>
+            <th>Metodo</th>
+            <th>DigComp 2.2</th>
+            <th>DigCompEdu</th>
+            <th>INDIRE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>CRAAP test</strong><br><span style="font-size:.8rem;color:var(--gray-mid);">Valutazione critica della fonte</span></td>
+            <td>DC 1.2 — Valutazione dati e fonti<br><span style="font-size:.78rem;color:var(--gray-mid);">DC 1.1 — Navigazione e ricerca</span></td>
+            <td>DCEdu 6.1 — Information literacy</td>
+            <td>A1 Progettazione<br>A3 Valutazione</td>
+          </tr>
+          <tr>
+            <td><strong>Lateral reading</strong><br><span style="font-size:.8rem;color:var(--gray-mid);">Verifica esterna della fonte</span></td>
+            <td>DC 1.2 — Valutazione dati e fonti</td>
+            <td>DCEdu 6.1 — Information literacy<br><span style="font-size:.78rem;color:var(--gray-mid);">DCEdu 3.2 — Guida all'apprendimento</span></td>
+            <td>A2 Gestione aula<br>C1 Sviluppo professionale</td>
+          </tr>
+          <tr>
+            <td><strong>Reverse image search</strong><br><span style="font-size:.8rem;color:var(--gray-mid);">Verifica immagini e video</span></td>
+            <td>DC 1.2 — Valutazione dati e fonti<br><span style="font-size:.78rem;color:var(--gray-mid);">DC 4.1 — Protezione dispositivi e contenuti</span></td>
+            <td>DCEdu 6.1 — Information literacy</td>
+            <td>A1 Progettazione<br>A4 Inclusione</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="pill-divider">
+
+  <!-- ══ GLOSSARIO ══ -->
+  <section class="pill-section">
+    <div class="section-num">Glossario</div>
+    <h2 class="section-title">Termini chiave</h2>
+    <div class="section-body">
+      <details style="margin-bottom:.6rem;">
+        <summary style="cursor:pointer;font-weight:600;color:var(--blue-dark);padding:.5rem 0;list-style:none;display:flex;align-items:center;gap:.5rem;">
+          <span style="font-size:.8rem;color:var(--amber-dark);">▶</span> CRAAP test
+        </summary>
+        <p style="padding:.5rem 0 .5rem 1.4rem;font-size:.88rem;line-height:1.65;color:var(--gray-dark);">Acronimo per Currency, Relevance, Authority, Accuracy, Purpose. Framework sviluppato dalla California State University per valutare l'affidabilità di una fonte su cinque criteri sistematici.</p>
+      </details>
+      <details style="margin-bottom:.6rem;">
+        <summary style="cursor:pointer;font-weight:600;color:var(--blue-dark);padding:.5rem 0;list-style:none;display:flex;align-items:center;gap:.5rem;">
+          <span style="font-size:.8rem;color:var(--amber-dark);">▶</span> Lateral reading
+        </summary>
+        <p style="padding:.5rem 0 .5rem 1.4rem;font-size:.88rem;line-height:1.65;color:var(--gray-dark);">Tecnica di verifica usata dai fact-checker professionisti: invece di leggere a fondo una fonte, si aprono subito altre schede per cercare cosa dicono fonti indipendenti di quella fonte. Studiata da Sam Wineburg e Sarah McGrew (Stanford, 2017).</p>
+      </details>
+      <details style="margin-bottom:.6rem;">
+        <summary style="cursor:pointer;font-weight:600;color:var(--blue-dark);padding:.5rem 0;list-style:none;display:flex;align-items:center;gap:.5rem;">
+          <span style="font-size:.8rem;color:var(--amber-dark);">▶</span> Reverse image search
+        </summary>
+        <p style="padding:.5rem 0 .5rem 1.4rem;font-size:.88rem;line-height:1.65;color:var(--gray-dark);">Ricerca per immagine inversa: si carica un'immagine (o il suo URL) in un motore di ricerca visuale per scoprire dove e quando è apparsa in precedenza, verificando che sia usata nel contesto originale.</p>
+      </details>
+      <details style="margin-bottom:.6rem;">
+        <summary style="cursor:pointer;font-weight:600;color:var(--blue-dark);padding:.5rem 0;list-style:none;display:flex;align-items:center;gap:.5rem;">
+          <span style="font-size:.8rem;color:var(--amber-dark);">▶</span> Bias (media bias)
+        </summary>
+        <p style="padding:.5rem 0 .5rem 1.4rem;font-size:.88rem;line-height:1.65;color:var(--gray-dark);">Tendenza sistematica di una fonte a presentare le informazioni con un orientamento parziale — politico, ideologico o commerciale. Non rende una fonte automaticamente falsa, ma richiede lettura consapevole.</p>
+      </details>
+      <details style="margin-bottom:.6rem;">
+        <summary style="cursor:pointer;font-weight:600;color:var(--blue-dark);padding:.5rem 0;list-style:none;display:flex;align-items:center;gap:.5rem;">
+          <span style="font-size:.8rem;color:var(--amber-dark);">▶</span> Fact-checking
+        </summary>
+        <p style="padding:.5rem 0 .5rem 1.4rem;font-size:.88rem;line-height:1.65;color:var(--gray-dark);">Processo di verifica sistematica dell'accuratezza di affermazioni pubbliche, notizie o contenuti digitali attraverso fonti primarie verificabili. Pratica svolta da organizzazioni specializzate come Pagella Politica o Snopes.</p>
+      </details>
+      <details style="margin-bottom:.6rem;">
+        <summary style="cursor:pointer;font-weight:600;color:var(--blue-dark);padding:.5rem 0;list-style:none;display:flex;align-items:center;gap:.5rem;">
+          <span style="font-size:.8rem;color:var(--amber-dark);">▶</span> WHOIS
+        </summary>
+        <p style="padding:.5rem 0 .5rem 1.4rem;font-size:.88rem;line-height:1.65;color:var(--gray-dark);">Protocollo e database pubblico che contiene informazioni di registrazione dei domini Internet: data di creazione, scadenza e — dove non oscurato dalla privacy — titolare. Utile per verificare l'anzianità e la provenienza di un sito web.</p>
+      </details>
     </div>
   </section>
 
@@ -1099,9 +1133,10 @@ body {
       <a class="footer-nav-link primary" href="/">
         🏠 Torna al portale →
       </a>
-		<a class="footer-nav-link" href="/competenze-digitali/strumento-valutazione-fonti/">
-		  🧪 Metti in pratica → Verifica Fonti
-		</a>
+      <!-- aggiornare href quando lo strumento sarà disponibile -->
+      <a class="footer-nav-link" href="/" aria-disabled="true" style="opacity:.5;pointer-events:none;">
+        Strumento Verifica Fonti → (prossimamente)
+      </a>
     </div>
 
     <div class="pill-footer-legal">
@@ -1155,8 +1190,7 @@ const savedMode = localStorage.getItem(MODE_KEY) || 'student';
 applyMode(savedMode);
 
 /* ── CHECKLIST ───────────────────────────────────────────── */
-function toggleCheck(e, label) {
-  e.preventDefault();
+function toggleCheck(label) {
   label.classList.toggle('checked');
   updateChecklist();
 }
