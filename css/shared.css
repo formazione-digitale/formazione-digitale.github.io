@@ -438,6 +438,7 @@ footer a { color: var(--blue-light); text-decoration: none; }
   }
   .header-downloads::-webkit-scrollbar { display: none; }
   .header-downloads .btn-download { flex-shrink: 0; }
+  .mode-toggle { display: none; }
 }
 body.aula-mode .header-downloads { display: none !important; }
 
