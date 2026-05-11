@@ -622,6 +622,15 @@ body {
 }
 .btn-restart:hover { border-color: var(--blue-mid); color: var(--blue-mid); }
 
+.btn-back-quiz {
+  background: none; border: 1px solid rgba(255,255,255,.35);
+  color: #fff; border-radius: 20px; padding: .45rem 1rem;
+  font-size: .82rem; font-weight: 500; font-family: var(--font-body);
+  cursor: pointer; transition: background .2s;
+}
+.btn-back-quiz:hover { background: rgba(255,255,255,.12); }
+
+
 /* ── NON RISPOSTO avviso ── */
 .unanswered-warning {
   background: var(--amber-light); border: 1px solid #f0d090;
@@ -895,7 +904,8 @@ body {
       <div class="export-btns">
         <button class="btn-export btn-export-print" onclick="window.print()">🖨 Stampa / PDF</button>
         <button class="btn-export btn-export-copy" onclick="copyReport()">📋 Copia testo</button>
-        <button class="btn-restart" onclick="restartQuiz()">↺ Ricomincia</button>
+        <button class="btn-back-quiz" onclick="backToQuiz()">← Modifica risposte</button>
+		<button class="btn-restart" onclick="restartQuiz()">↺ Ricomincia</button>
       </div>
     </div>
 
@@ -986,8 +996,6 @@ function nextQuestion() {
     const unanswered = allQuestions.filter(q => !answers[q.comp.id]).length;
     if (unanswered > 0) {
       document.getElementById('unanswered-warning').style.display = 'block';
-      // Mostra il report comunque dopo 1s
-      setTimeout(generateReport, 800);
     } else {
       generateReport();
     }
@@ -1441,6 +1449,15 @@ function showScreen(id) {
   if (id === 'screen-report') {
     document.getElementById(id).classList.add('report-enter');
   }
+}
+
+function backToQuiz() {
+  // Va alla prima domanda senza risposta, altrimenti all'ultima
+  const firstUnanswered = allQuestions.findIndex(q => !answers[q.comp.id]);
+  currentIdx = firstUnanswered >= 0 ? firstUnanswered : allQuestions.length - 1;
+  showScreen('screen-quiz');
+  renderQuestion();
+  updateProgress();
 }
 
 function restartQuiz() {
