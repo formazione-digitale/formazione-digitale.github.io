@@ -623,13 +623,12 @@ body {
 .btn-restart:hover { border-color: var(--blue-mid); color: var(--blue-mid); }
 
 .btn-back-quiz {
-  background: none; border: 1px solid rgba(255,255,255,.35);
-  color: #fff; border-radius: 20px; padding: .45rem 1rem;
+  background: none; border: 1px solid var(--blue-mid);
+  color: var(--blue-mid); border-radius: 20px; padding: .45rem 1rem;
   font-size: .82rem; font-weight: 500; font-family: var(--font-body);
-  cursor: pointer; transition: background .2s;
+  cursor: pointer; transition: background .2s, color .2s;
 }
-.btn-back-quiz:hover { background: rgba(255,255,255,.12); }
-
+.btn-back-quiz:hover { background: var(--blue-pale); }
 
 /* ── NON RISPOSTO avviso ── */
 .unanswered-warning {
@@ -994,12 +993,13 @@ function nextQuestion() {
   // Ultima domanda → genera report
   if (currentIdx >= allQuestions.length - 1) {
     const unanswered = allQuestions.filter(q => !answers[q.comp.id]).length;
-    if (unanswered > 0) {
-      document.getElementById('unanswered-warning').style.display = 'block';
-    } else {
-      generateReport();
-    }
-    return;
+	const warning = document.getElementById('unanswered-warning');
+	if (unanswered > 0 && warning.style.display === 'none' || warning.style.display === '') {
+	  warning.style.display = 'block';
+	} else {
+	  generateReport();
+	}
+	return;
   }
   currentIdx++;
   renderQuestion();
@@ -1452,7 +1452,7 @@ function showScreen(id) {
 }
 
 function backToQuiz() {
-  // Va alla prima domanda senza risposta, altrimenti all'ultima
+  document.getElementById('unanswered-warning').style.display = 'none';
   const firstUnanswered = allQuestions.findIndex(q => !answers[q.comp.id]);
   currentIdx = firstUnanswered >= 0 ? firstUnanswered : allQuestions.length - 1;
   showScreen('screen-quiz');
