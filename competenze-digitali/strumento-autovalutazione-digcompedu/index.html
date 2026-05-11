@@ -790,7 +790,7 @@ body {
     </div>
 
     <div style="display:flex; gap:1rem; flex-wrap:wrap;">
-      <button class="btn-primary" onclick="startQuiz()">
+      <button class="btn-primary" id="btn-start" onclick="startQuiz()" disabled style="opacity:.5;cursor:not-allowed;">
         Inizia l'autovalutazione <span class="arrow">→</span>
       </button>
     </div>
@@ -1460,7 +1460,10 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 // ── INIT ─────────────────────────────────────────────────────────
-loadData().catch(err => {
+loadData().then(() => {
+  const btn = document.getElementById('btn-start');
+  if (btn) { btn.disabled = false; btn.style.opacity = ''; btn.style.cursor = ''; }
+}).catch(err => {
   console.error('Errore caricamento dati:', err);
   document.getElementById('screen-intro').innerHTML +=
     '<p style="color:red;margin-top:1rem;">Errore nel caricamento dei dati. Aggiorna la pagina.</p>';
