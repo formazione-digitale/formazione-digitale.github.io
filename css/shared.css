@@ -417,17 +417,13 @@ footer a { color: var(--blue-light); text-decoration: none; }
 .btn-download:hover { background: rgba(255,255,255,.22); }
 .btn-dl-label { display: none; }
 @media(min-width:600px) { .btn-dl-label { display: inline; } }
-@media(max-width:480px) { .btn-download { display: none; } }
 
 /* ── DOWNLOAD BAR MOBILE ─────────────────────────────────────────── */
-/* Su desktop i .btn-download restano nell'header-right come sempre.  */
-/* Su mobile (<600px) vengono nascosti dall'header e mostrati in una  */
-/* barra fissa sotto l'header, scrollabile orizzontalmente.           */
-.header-downloads { display: contents; } /* trasparente su desktop */
-
+.header-downloads {
+  display: flex; align-items: center; gap: .5rem;
+}
 @media(max-width:599px) {
   .header-downloads {
-    display: flex;
     position: fixed; top: var(--header-h); left: 0; right: 0; z-index: 99;
     background: #17406A;
     border-bottom: 1px solid rgba(255,255,255,.12);
@@ -439,11 +435,7 @@ footer a { color: var(--blue-light); text-decoration: none; }
   }
   .header-downloads::-webkit-scrollbar { display: none; }
   .header-downloads .btn-download { flex-shrink: 0; }
-  /* Nasconde i btn-download dall'header-right su mobile */
-  .header-right .btn-download { display: none; }
 }
-
-/* Aula mode: nasconde la barra anche su mobile */
 body.aula-mode .header-downloads { display: none !important; }
 
 .mode-toggle {
