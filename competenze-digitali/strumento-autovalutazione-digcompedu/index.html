@@ -595,20 +595,6 @@ body {
 .export-bar-text p { font-size: .8rem; color: var(--gray-mid); }
 .export-btns { display: flex; gap: .5rem; flex-wrap: wrap; }
 
-.btn-secondary {
-  padding: .5rem 1.1rem;
-  border: 1.5px solid var(--blue-light);
-  border-radius: 8px;
-  background: #fff;
-  color: var(--blue-mid);
-  font-family: var(--font-body);
-  font-size: .85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition);
-}
-.btn-secondary:hover { background: var(--blue-pale); }
-
 .btn-export {
   display: inline-flex; align-items: center; gap: .4rem;
   font-size: .82rem; font-weight: 600;
@@ -907,7 +893,6 @@ body {
         <p>Stampa o copia un riepilogo testuale da incollare nel portfolio INDIRE.</p>
       </div>
       <div class="export-btns">
-        <button class="btn-secondary" onclick="backToQuiz()">&#8592; Modifica risposte</button>
         <button class="btn-export btn-export-print" onclick="window.print()">🖨 Stampa / PDF</button>
         <button class="btn-export btn-export-copy" onclick="copyReport()">📋 Copia testo</button>
         <button class="btn-restart" onclick="restartQuiz()">↺ Ricomincia</button>
@@ -998,15 +983,14 @@ function prevQuestion() {
 function nextQuestion() {
   // Ultima domanda → genera report
   if (currentIdx >= allQuestions.length - 1) {
-    const missing = allQuestions.filter(q => !answers[q.comp.id]);
-    if (missing.length > 0) {
-      const lista = missing.map(q => '\u2022 ' + q.comp.id + ' \u2014 ' + q.comp.label).join('\n');
-      const conferma = confirm(
-        'Hai ' + missing.length + (missing.length > 1 ? ' domande' : ' domanda') + ' senza risposta:\n\n' + lista + '\n\nVuoi generare il report comunque?'
-      );
-      if (!conferma) return;
+    const unanswered = allQuestions.filter(q => !answers[q.comp.id]).length;
+    if (unanswered > 0) {
+      document.getElementById('unanswered-warning').style.display = 'block';
+      // Mostra il report comunque dopo 1s
+      setTimeout(generateReport, 800);
+    } else {
+      generateReport();
     }
-    generateReport();
     return;
   }
   currentIdx++;
@@ -1132,14 +1116,7 @@ function updateProgress() {
 }
 
 // ── GENERAZIONE REPORT ────────────────────────────────────────────
-function backToQuiz() {
-  showScreen('screen-quiz');
-  renderQuestion();
-  updateProgress();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function generateReport() {) {
+function generateReport() {
   showScreen('screen-report');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
