@@ -75,15 +75,10 @@
   background: linear-gradient(160deg, var(--icdl-blue) 0%, #1a3a6e 50%, var(--blue-dark) 100%);
   padding: 3.5rem 3rem 3rem;
   position: relative; overflow: hidden;
-  margin-left: 260px;
-  margin-top: 56px;
+  /* Nessun margin-left: la cover sta dentro .icdl-main, già nella colonna giusta */
 }
 @media(max-width: 900px) {
-  .cover-block { margin-left: 0; margin-top: 56px; padding: 2.5rem 1.5rem 2.5rem; }
-}
-/* guide-layout non deve aggiungere margin-top quando c'è il cover sopra */
-.cover-block + .guide-layout {
-  margin-top: 0;
+  .cover-block { padding: 2.5rem 1.5rem 2.5rem; }
 }
 .cover-block::before {
   content: '';
@@ -323,15 +318,50 @@
   .cover-cta-ghost { margin-left: 0; margin-top: .5rem; display: block; text-align: center; }
 }
 
-/* ── OVERRIDE guide-main per pagina ICDL ────────────────────────── */
-.guide-layout > .guide-main {
-  max-width: none !important;
-  min-width: 0 !important;
-  padding: 2.5rem 3rem 4rem;
+/* ── LAYOUT ICDL ────────────────────────────────────────────────── */
+
+/* Sidebar: fissa a sinistra, sotto l'header */
+.icdl-sidebar {
+  position: fixed;
+  top: 56px; left: 0; bottom: 0;
+  width: 260px; z-index: 90;
+  overflow-y: auto;
+  background: var(--white);
+  border-right: 1px solid var(--blue-light);
+  padding: 1.25rem 0 2rem;
 }
 @media(max-width:900px) {
-  .guide-layout > .guide-main { padding: 1.5rem 1.5rem 3rem; }
+  .icdl-sidebar {
+    transform: translateX(-100%);
+    transition: transform var(--transition);
+    box-shadow: 2px 0 20px rgba(31,78,121,.12);
+  }
+  .icdl-sidebar.is-open { transform: translateX(0); }
 }
+
+/* Wrapper inutilizzato — tenuto per compatibilità struttura HTML */
+.icdl-layout {
+  margin-top: 56px;
+}
+
+/* Tutto il contenuto principale scorre a destra della sidebar */
+.icdl-main {
+  margin-left: 260px;
+  min-width: 0;
+}
+@media(max-width:900px) { .icdl-main { margin-left: 0; } }
+
+/* Cover: full-width nella colonna di destra, nessun padding laterale extra */
+.icdl-main .cover-block {
+  /* eredita gli stili da .cover-block — nessun override necessario */
+}
+
+/* Contenuto testuale sotto la cover */
+.icdl-main .icdl-content {
+  max-width: 860px;
+  padding: 2.5rem 3rem 4rem;
+}
+@media(max-width:900px) { .icdl-main .icdl-content { padding: 1.5rem 1.5rem 3rem; } }
 
 </style>
 </head>
@@ -355,39 +385,17 @@
 <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
 
 <!-- LAYOUT -->
-<!-- COVER — full width, fuori dal layout a griglia -->
-<div class="cover-block">
-  <div class="cover-inner">
-    <div class="cover-eyebrow">IIS L. Einaudi · Chiari (BS) · Test Center ALZD0001</div>
-    <h1>Certificazione <em>ICDL</em></h1>
-    <p class="cover-desc">
-      L'ICDL è lo standard internazionale per le competenze digitali.
-      Il nostro istituto è Test Center accreditato — puoi sostenere gli esami
-      direttamente qui, senza doverti spostare.
-    </p>
-    <div class="cover-badges">
-      <span class="cover-badge">🌍 Riconosciuta in oltre 100 paesi</span>
-      <span class="cover-badge">🎓 Valida per crediti universitari</span>
-      <span class="cover-badge">📋 Spendibile nei concorsi pubblici</span>
-      <span class="cover-badge">✅ Accreditata ACCREDIA</span>
-    </div>
-    <a href="statistiche/" class="cover-cta">📊 Vedi le statistiche del nostro centro</a>
-    <a href="#moduli" class="cover-cta-ghost">Scopri i moduli ↓</a>
-  </div>
-</div>
-
-<div class="guide-layout">
+<div class="icdl-layout">
 
   <!-- SIDEBAR -->
-  <aside class="guide-sidebar" id="sidebar">
+  <aside class="icdl-sidebar" id="sidebar">
     <div class="sidebar-label">Contenuti</div>
     <ul class="sidebar-nav">
       <li><a class="nav-item" href="#cos-e"><span class="nav-num">1</span>Cos'è l'ICDL</a></li>
       <li><a class="nav-item" href="#perche"><span class="nav-num">2</span>Perché vale</a></li>
       <li><a class="nav-item" href="#moduli"><span class="nav-num">3</span>I 7 moduli</a></li>
       <li><a class="nav-item" href="#come-si-ottiene"><span class="nav-num">4</span>Come si ottiene</a></li>
-      <li><a class="nav-item" href="#test-center"><span class="nav-num">5</span>Il nostro Test Center</a></li>
-      <li><a class="nav-item" href="#accreditatori"><span class="nav-num">6</span>AICA e ACCREDIA</a></li>
+      <li><a class="nav-item" href="#accreditatori"><span class="nav-num">5</span>AICA e ACCREDIA</a></li>
     </ul>
     <hr class="sidebar-divider">
     <ul class="sidebar-nav">
@@ -403,7 +411,30 @@
   </aside>
 
   <!-- MAIN -->
-  <main class="guide-main">
+  <main class="icdl-main">
+
+    <!-- COVER — dentro main, si estende solo nella colonna di destra -->
+    <div class="cover-block">
+      <div class="cover-inner">
+        <div class="cover-eyebrow">IIS L. Einaudi · Chiari (BS) · Test Center ALZD0001</div>
+        <h1>Certificazione <em>ICDL</em></h1>
+        <p class="cover-desc">
+          L'ICDL è lo standard internazionale per le competenze digitali.
+          Il nostro istituto è Test Center accreditato — puoi sostenere gli esami
+          direttamente qui, senza doverti spostare.
+        </p>
+        <div class="cover-badges">
+          <span class="cover-badge">🌍 Riconosciuta in oltre 100 paesi</span>
+          <span class="cover-badge">🎓 Valida per crediti universitari</span>
+          <span class="cover-badge">📋 Spendibile nei concorsi pubblici</span>
+          <span class="cover-badge">✅ Accreditata ACCREDIA</span>
+        </div>
+        <a href="statistiche/" class="cover-cta">📊 Vedi le statistiche del nostro centro</a>
+        <a href="#moduli" class="cover-cta-ghost">Scopri i moduli ↓</a>
+      </div>
+    </div>
+
+    <div class="icdl-content">
 
     <!-- SEZ 1: COS'È -->
     <section class="guide-section" id="cos-e">
@@ -426,7 +457,9 @@
         (Council of European Professional Informatics Societies); in Italia
         è gestito da <strong>AICA</strong> (Associazione Italiana per l'Informatica
         e il Calcolo Automatico), che seleziona e accredita i Test Center abilitati
-        all'erogazione degli esami.
+        all'erogazione degli esami. La qualità del programma è garantita da
+        <strong>ACCREDIA</strong>, l'ente unico nazionale di accreditamento
+        riconosciuto dalla Commissione Europea.
       </p>
       <p style="margin-top:.85rem;">
         La certificazione si consegue superando esami pratici al computer,
@@ -468,7 +501,7 @@
         </div>
       </div>
 
-      <div class="box-tip">
+      <div class="box-tip" style="margin-top:1.25rem;">
         <strong>💡 Lo sapevi?</strong> Il Quadro Europeo delle Qualifiche (EQF) e l'Agenda Digitale
         della Commissione Europea riconoscono le certificazioni di competenza digitale come
         elemento chiave per l'occupabilità e la cittadinanza attiva.
@@ -497,7 +530,7 @@
           <div class="modulo-head">
             <span class="modulo-num">01</span>
             <span class="modulo-nome">Computer Essentials</span>
-            <span class="modulo-tag corso">Corso attivo</span>
+            
             <span class="modulo-chevron">▼</span>
           </div>
           <div class="modulo-body">
@@ -517,7 +550,7 @@
           <div class="modulo-head">
             <span class="modulo-num">02</span>
             <span class="modulo-nome">Online Essentials</span>
-            <span class="modulo-tag corso">Corso attivo</span>
+            
             <span class="modulo-chevron">▼</span>
           </div>
           <div class="modulo-body">
@@ -573,7 +606,7 @@
           <div class="modulo-head">
             <span class="modulo-num">05</span>
             <span class="modulo-nome">IT Security</span>
-            <span class="modulo-tag corso">Corso attivo</span>
+            
             <span class="modulo-chevron">▼</span>
           </div>
           <div class="modulo-body">
@@ -610,7 +643,7 @@
           <div class="modulo-head">
             <span class="modulo-num">07</span>
             <span class="modulo-nome">Online Collaboration</span>
-            <span class="modulo-tag corso">Corso attivo</span>
+            
             <span class="modulo-chevron">▼</span>
           </div>
           <div class="modulo-body">
@@ -628,11 +661,6 @@
 
       </div>
 
-      <div class="box-note" style="margin-top:1rem;">
-        <strong>📌 Corso attivo</strong> = il nostro istituto attiva corsi di preparazione gratuiti per quel modulo.
-        I moduli senza etichetta (Word Processing, Spreadsheets, Presentation) sono considerati
-        più accessibili per lo studio autonomo.
-      </div>
     </section>
 
     <!-- SEZ 4: COME SI OTTIENE -->
@@ -662,9 +690,8 @@
         </li>
         <li>
           <div>
-            <strong>Prenota l'esame</strong> — almeno <strong>20 giorni prima</strong>
-            della data fissata. Le date delle sessioni sono pubblicate sul sito della scuola.
-            Contatta il referente del Test Center per informazioni.
+            <strong>Prenota l'esame</strong> — contatta il Test Center di riferimento
+            per verificare le modalità di prenotazione e le date disponibili.
           </div>
         </li>
         <li>
@@ -685,71 +712,14 @@
       <div class="nota-box">
         <strong>⚠️ Importante:</strong> per sostenere gli esami è obbligatorio presentarsi
         con carta d'identità o documento equipollente e con la Skills Card.
-        La prenotazione va effettuata almeno 20 giorni prima della sessione.
+        Verifica le tempistiche di prenotazione con il tuo Test Center di riferimento.
       </div>
     </section>
 
-    <!-- SEZ 5: TEST CENTER -->
-    <section class="guide-section" id="test-center">
-      <div class="section-header">
-        <div class="section-num">5</div>
-        <div class="section-titles">
-          <div class="section-title">Il nostro Test Center</div>
-          <div class="section-sub">Dove, chi contattare e come prenotare</div>
-        </div>
-      </div>
-
-      <div class="tc-box">
-        <div class="tc-box-title">🏫 IIS L. Einaudi — Chiari (BS)</div>
-        <div class="tc-grid">
-          <div class="tc-row">
-            <span class="tc-label">Codice Test Center:</span>
-            <span class="tc-value"><strong>ALZD0001</strong></span>
-          </div>
-          <div class="tc-row">
-            <span class="tc-label">Istituto:</span>
-            <span class="tc-value">IIS "L. Einaudi"</span>
-          </div>
-          <div class="tc-row">
-            <span class="tc-label">Città:</span>
-            <span class="tc-value">Chiari (BS)</span>
-          </div>
-          <div class="tc-row">
-            <span class="tc-label">Referente:</span>
-            <span class="tc-value">Prof. Cristiano De Pasquale</span>
-          </div>
-          <div class="tc-row">
-            <span class="tc-label">Ruolo:</span>
-            <span class="tc-value">F.S. Innovazione Digitale</span>
-          </div>
-          <div class="tc-row">
-            <span class="tc-label">Email:</span>
-            <span class="tc-value">
-              <a href="mailto:fsinnovazionedigitale@iisleinaudi.edu.it">fsinnovazionedigitale@iisleinaudi.edu.it</a>
-            </span>
-          </div>
-        </div>
-        <p style="font-size:.83rem;color:var(--gray-mid);">
-          Per informazioni sulle date degli esami, sui corsi di preparazione o sull'acquisto
-          della Skills Card, contatta direttamente il referente via email.
-        </p>
-      </div>
-
-      <!-- CTA statistiche -->
-      <div class="stats-cta">
-        <div class="stats-cta-text">
-          <h3>📊 Vuoi vedere i dati reali del nostro centro?</h3>
-          <p>Tassi di superamento, punteggi medi e distribuzione per modulo —
-             dati aggregati e anonimizzati, aggiornati ad ogni sessione.</p>
-        </div>
-        <a href="statistiche/" class="stats-cta-btn">Apri le statistiche →</a>
-      </div>
-    </section>
-
-    <!-- SEZ 6: ACCREDITATORI -->
+    <!-- SEZ 5: ACCREDITATORI -->
     <section class="guide-section" id="accreditatori">
       <div class="section-header">
-        <div class="section-num">6</div>
+        <div class="section-num">5</div>
         <div class="section-titles">
           <div class="section-title">AICA e ACCREDIA</div>
           <div class="section-sub">Gli enti che garantiscono la certificazione</div>
@@ -790,13 +760,25 @@
 
       <div class="box-tip" style="margin-top:1rem;">
         <strong>💡 Cosa significa per te:</strong> la catena ACCREDIA → AICA → Test Center accreditato
-        garantisce che l'esame che sostieni qui abbia lo stesso valore di uno sostenuto
-        in qualsiasi altro Test Center in Italia o in Europa.
+        garantisce che l'esame che sostieni abbia lo stesso valore in qualsiasi
+        Test Center in Italia o in Europa.
+      </div>
+
+      <!-- CTA link al nostro centro -->
+      <div class="stats-cta" style="margin-top:1.5rem;">
+        <div class="stats-cta-text">
+          <h3>📊 Il nostro Test Center</h3>
+          <p>Consulta le statistiche reali del Test Center ALZD0001 — dati aggregati
+             e anonimizzati su esami, punteggi e tassi di superamento.</p>
+        </div>
+        <a href="statistiche/" class="stats-cta-btn">Apri le statistiche →</a>
       </div>
     </section>
 
+    </div><!-- /.icdl-content -->
+
   </main>
-</div><!-- /.guide-layout -->
+</div><!-- /.icdl-layout -->
 
 <footer>
   <strong>Formazione Digitale</strong> · <a href="/">Torna alla home</a><br>
