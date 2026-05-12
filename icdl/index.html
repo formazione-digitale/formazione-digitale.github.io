@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificazione ICDL — IIS L. Einaudi Chiari · Test Center ALZD0001</title>
+<meta name="description" content="Tutto sulla certificazione ICDL presso il Test Center ALZD0001 dell'IIS L. Einaudi di Chiari (BS): cos'è, i 7 moduli, come si ottiene, statistiche reali del nostro centro.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://formazione-digitale.it/icdl/">
+<link rel="icon" type="image/png" href="/img/favicon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#1F4E79">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Certificazione ICDL — Test Center ALZD0001 · IIS Einaudi Chiari">
+<meta property="og:description" content="Cos'è l'ICDL, i 7 moduli, come si ottiene la certificazione e le statistiche reali del nostro Test Center.">
+<meta property="og:url" content="https://formazione-digitale.it/icdl/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+
+<!-- Twitter/X -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Certificazione ICDL — Test Center ALZD0001">
+<meta name="twitter:description" content="Cos'è l'ICDL, i 7 moduli, come si ottiene la certificazione e le statistiche reali del nostro Test Center.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "IIS L. Einaudi — Test Center ICDL ALZD0001",
+  "description": "Test Center ICDL accreditato presso l'IIS L. Einaudi di Chiari (BS). Eroga esami ICDL e DigComp 2.2.",
+  "url": "https://formazione-digitale.it/icdl/",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Chiari",
+    "addressRegion": "BS",
+    "addressCountry": "IT"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Cristiano De Pasquale",
+    "jobTitle": "Docente di Informatica"
+  },
+  "keywords": "ICDL, certificazione digitale, ECDL, test center, IIS Einaudi Chiari, patente europea computer, competenze digitali, AICA, moduli ICDL"
+}
+</script>
+
+<!-- GoatCounter -->
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="//gc.zgo.at">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- shared.css -->
+<link rel="stylesheet" href="/css/shared.css?v=2">
+
+<style>
+/* ── VARIABILI ICDL ─────────────────────────────────────────────── */
+:root {
+  --icdl-blue:   #003087;
+  --icdl-accent: #0066CC;
+  --icdl-light:  #E8F0FB;
+}
+
+/* ── COVER BLOCK ────────────────────────────────────────────────── */
+.cover-block {
+  background: linear-gradient(160deg, var(--icdl-blue) 0%, #1a3a6e 50%, var(--blue-dark) 100%);
+  padding: 3.5rem 3rem 3rem;
+  position: relative; overflow: hidden;
+  margin-left: 260px;
+  margin-top: 56px;
+}
+@media(max-width: 900px) {
+  .cover-block { margin-left: 0; margin-top: 56px; padding: 2.5rem 1.5rem 2.5rem; }
+}
+/* guide-layout non deve aggiungere margin-top quando c'è il cover sopra */
+.cover-block + .guide-layout {
+  margin-top: 0;
+}
+.cover-block::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 90% 50%, rgba(0,102,204,.25) 0%, transparent 60%);
+}
+.cover-inner { position: relative; z-index: 1; }
+.cover-eyebrow {
+  font-size: .7rem; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; color: rgba(255,255,255,.55);
+  margin-bottom: .6rem;
+}
+.cover-block h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+  color: #fff; line-height: 1.15; margin-bottom: .75rem;
+}
+.cover-block h1 em { color: #7FB3F5; font-style: normal; }
+.cover-desc {
+  font-size: .95rem; color: rgba(255,255,255,.72);
+  max-width: 560px; line-height: 1.7; margin-bottom: 1.25rem;
+}
+.cover-badges { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.5rem; }
+.cover-badge {
+  font-size: .75rem; background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.22); color: rgba(255,255,255,.85);
+  padding: .28rem .75rem; border-radius: 20px;
+}
+.cover-cta {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: #fff; color: var(--icdl-blue);
+  font-weight: 700; font-size: .88rem;
+  padding: .6rem 1.4rem; border-radius: 8px;
+  text-decoration: none;
+  transition: transform .2s, box-shadow .2s;
+  box-shadow: 0 2px 12px rgba(0,0,0,.15);
+}
+.cover-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.2); }
+.cover-cta-ghost {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: rgba(255,255,255,.12); color: #fff;
+  border: 1px solid rgba(255,255,255,.3);
+  font-weight: 600; font-size: .88rem;
+  padding: .6rem 1.4rem; border-radius: 8px;
+  text-decoration: none;
+  transition: background .2s;
+  margin-left: .75rem;
+}
+.cover-cta-ghost:hover { background: rgba(255,255,255,.2); }
+
+/* ── SECTION HEADER (riciclo shared) già disponibile ── */
+
+/* ── MODULI GRID ────────────────────────────────────────────────── */
+.moduli-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem; margin: 1.25rem 0;
+}
+.modulo-card {
+  background: var(--white); border: 1px solid var(--blue-light);
+  border-radius: var(--radius); overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+  cursor: pointer;
+}
+.modulo-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(31,78,121,.12); }
+.modulo-head {
+  display: flex; align-items: center; gap: .85rem;
+  padding: 1rem 1.1rem; border-bottom: 1px solid var(--blue-light);
+  background: var(--blue-pale);
+}
+.modulo-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 28px; height: 28px;
+  background: var(--icdl-blue); color: #fff;
+  border-radius: 6px; font-size: .78rem; font-weight: 700; flex-shrink: 0;
+}
+.modulo-nome {
+  font-family: var(--font-display); font-size: 1rem; color: var(--blue-dark);
+  line-height: 1.2;
+}
+.modulo-tag {
+  margin-left: auto; font-size: .65rem; font-weight: 700;
+  padding: .2rem .55rem; border-radius: 20px; flex-shrink: 0;
+  background: var(--green-light); color: var(--green-dark);
+  border: 1px solid #b2dfc3;
+}
+.modulo-tag.corso { background: var(--icdl-light); color: var(--icdl-blue); border-color: #b3cdf5; }
+.modulo-body { padding: 1rem 1.1rem; }
+.modulo-desc { font-size: .83rem; color: var(--gray-mid); line-height: 1.6; margin-bottom: .85rem; }
+.modulo-obiettivi {
+  list-style: none; padding: 0; margin: 0;
+}
+.modulo-obiettivi li {
+  font-size: .78rem; color: var(--gray-dark); line-height: 1.55;
+  padding: .25rem 0 .25rem 1.1rem;
+  position: relative; border-top: 1px solid var(--blue-light);
+}
+.modulo-obiettivi li:first-child { border-top: none; }
+.modulo-obiettivi li::before {
+  content: '›'; position: absolute; left: 0;
+  color: var(--icdl-accent); font-weight: 700;
+}
+.modulo-toggle {
+  display: none; /* obiettivi nascosti di default */
+}
+.modulo-card.is-open .modulo-toggle { display: block; }
+.modulo-chevron {
+  margin-left: auto; font-size: .75rem; color: var(--icdl-accent);
+  transition: transform .2s; flex-shrink: 0;
+}
+.modulo-card.is-open .modulo-chevron { transform: rotate(180deg); }
+
+/* ── COME SI OTTIENE ────────────────────────────────────────────── */
+.steps-list { list-style: none; padding: 0; margin: 1.25rem 0; counter-reset: step; }
+.steps-list li {
+  counter-increment: step;
+  display: flex; gap: 1rem; align-items: flex-start;
+  padding: .85rem 0; border-bottom: 1px solid var(--blue-light);
+  font-size: .88rem; line-height: 1.65;
+}
+.steps-list li:last-child { border-bottom: none; }
+.steps-list li::before {
+  content: counter(step);
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 28px; height: 28px; flex-shrink: 0;
+  background: var(--icdl-blue); color: #fff;
+  border-radius: 50%; font-size: .78rem; font-weight: 700; margin-top: .1rem;
+}
+
+/* ── TEST CENTER BOX ────────────────────────────────────────────── */
+.tc-box {
+  background: linear-gradient(135deg, var(--icdl-light) 0%, #f0f6ff 100%);
+  border: 1px solid #b3cdf5; border-radius: 12px;
+  padding: 1.5rem 1.75rem; margin: 1.25rem 0;
+}
+.tc-box-title {
+  font-family: var(--font-display); font-size: 1.1rem;
+  color: var(--icdl-blue); margin-bottom: .75rem;
+  display: flex; align-items: center; gap: .5rem;
+}
+.tc-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: .5rem 2rem; font-size: .85rem;
+  margin-bottom: 1rem;
+}
+@media(max-width:520px) { .tc-grid { grid-template-columns: 1fr; } }
+.tc-row { display: flex; gap: .5rem; align-items: baseline; }
+.tc-label { color: var(--gray-mid); font-size: .78rem; white-space: nowrap; flex-shrink: 0; }
+.tc-value { color: var(--gray-dark); font-weight: 500; }
+.tc-value a { color: var(--icdl-accent); text-decoration: none; }
+.tc-value a:hover { text-decoration: underline; }
+
+/* ── ACCREDITATORI ──────────────────────────────────────────────── */
+.accr-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1rem; margin: 1.25rem 0;
+}
+@media(max-width:520px) { .accr-grid { grid-template-columns: 1fr; } }
+.accr-card {
+  background: var(--white); border: 1px solid var(--blue-light);
+  border-radius: var(--radius); padding: 1.1rem 1.25rem;
+  display: flex; flex-direction: column; gap: .4rem;
+}
+.accr-name {
+  font-weight: 700; font-size: .9rem; color: var(--blue-dark);
+  display: flex; align-items: center; gap: .4rem;
+}
+.accr-desc { font-size: .8rem; color: var(--gray-mid); line-height: 1.55; }
+.accr-link {
+  font-size: .78rem; color: var(--icdl-accent); text-decoration: none;
+  display: inline-flex; align-items: center; gap: .3rem; margin-top: .2rem;
+}
+.accr-link:hover { text-decoration: underline; }
+
+/* ── STATISTICHE CTA ────────────────────────────────────────────── */
+.stats-cta {
+  background: linear-gradient(135deg, var(--icdl-blue) 0%, #1a3a6e 100%);
+  border-radius: 12px; padding: 2rem 2.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1.5rem; flex-wrap: wrap; margin: 1.25rem 0;
+}
+.stats-cta-text h3 {
+  font-family: var(--font-display); font-size: 1.2rem;
+  color: #fff; margin-bottom: .35rem;
+}
+.stats-cta-text p { font-size: .85rem; color: rgba(255,255,255,.7); line-height: 1.5; }
+.stats-cta-btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: #fff; color: var(--icdl-blue);
+  font-weight: 700; font-size: .88rem;
+  padding: .65rem 1.5rem; border-radius: 8px;
+  text-decoration: none; white-space: nowrap;
+  transition: transform .2s, box-shadow .2s;
+  box-shadow: 0 2px 12px rgba(0,0,0,.15);
+  flex-shrink: 0;
+}
+.stats-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.2); }
+
+/* ── BACK TO TOP ────────────────────────────────────────────────── */
+#back-top {
+  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--icdl-blue); color: #fff; border: none;
+  font-size: 1.1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(0,0,51,.25);
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s, transform .25s;
+}
+#back-top.visible { opacity: 1; pointer-events: auto; }
+#back-top:hover { transform: translateY(-3px); }
+
+/* ── HIGHLIGHT GRID 4 colonne ───────────────────────────────────── */
+.highlight-grid-4 {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: .85rem; margin: 1.25rem 0;
+}
+@media(max-width:720px) { .highlight-grid-4 { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width:420px) { .highlight-grid-4 { grid-template-columns: 1fr; } }
+
+/* ── NOTA PRENOTAZIONE ──────────────────────────────────────────── */
+.nota-box {
+  background: var(--amber-light); border: 1px solid #f0d080;
+  border-radius: var(--radius); padding: .9rem 1.1rem;
+  font-size: .84rem; color: var(--amber-dark); line-height: 1.6;
+  margin: 1rem 0;
+}
+.nota-box strong { font-weight: 700; }
+
+/* ── RESPONSIVE ─────────────────────────────────────────────────── */
+@media(max-width:900px) {
+  .cover-block { padding: 2.5rem 1.5rem 2.5rem; }
+  .stats-cta { padding: 1.5rem; }
+}
+@media(max-width:640px) {
+  .cover-block h1 { font-size: 1.8rem; }
+  .cover-cta-ghost { margin-left: 0; margin-top: .5rem; display: block; text-align: center; }
+}
+
+/* ── OVERRIDE guide-main per pagina ICDL ────────────────────────── */
+.guide-layout > .guide-main {
+  max-width: none !important;
+  min-width: 0 !important;
+  padding: 2.5rem 3rem 4rem;
+}
+@media(max-width:900px) {
+  .guide-layout > .guide-main { padding: 1.5rem 1.5rem 3rem; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- HEADER con hamburger -->
+<header class="guide-header">
+  <div style="display:flex;align-items:center;gap:.75rem;">
+    <button class="hamburger" id="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="/" class="guide-header-back">← Portale</a>
+  </div>
+  <div class="guide-header-center">Certificazione ICDL</div>
+  <div class="guide-header-right" style="font-size:.72rem;color:rgba(255,255,255,.5);">
+    Test Center ALZD0001
+  </div>
+</header>
+
+<!-- OVERLAY mobile -->
+<div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<!-- LAYOUT -->
+<!-- COVER — full width, fuori dal layout a griglia -->
+<div class="cover-block">
+  <div class="cover-inner">
+    <div class="cover-eyebrow">IIS L. Einaudi · Chiari (BS) · Test Center ALZD0001</div>
+    <h1>Certificazione <em>ICDL</em></h1>
+    <p class="cover-desc">
+      L'ICDL è lo standard internazionale per le competenze digitali.
+      Il nostro istituto è Test Center accreditato — puoi sostenere gli esami
+      direttamente qui, senza doverti spostare.
+    </p>
+    <div class="cover-badges">
+      <span class="cover-badge">🌍 Riconosciuta in oltre 100 paesi</span>
+      <span class="cover-badge">🎓 Valida per crediti universitari</span>
+      <span class="cover-badge">📋 Spendibile nei concorsi pubblici</span>
+      <span class="cover-badge">✅ Accreditata ACCREDIA</span>
+    </div>
+    <a href="statistiche/" class="cover-cta">📊 Vedi le statistiche del nostro centro</a>
+    <a href="#moduli" class="cover-cta-ghost">Scopri i moduli ↓</a>
+  </div>
+</div>
+
+<div class="guide-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="guide-sidebar" id="sidebar">
+    <div class="sidebar-label">Contenuti</div>
+    <ul class="sidebar-nav">
+      <li><a class="nav-item" href="#cos-e"><span class="nav-num">1</span>Cos'è l'ICDL</a></li>
+      <li><a class="nav-item" href="#perche"><span class="nav-num">2</span>Perché vale</a></li>
+      <li><a class="nav-item" href="#moduli"><span class="nav-num">3</span>I 7 moduli</a></li>
+      <li><a class="nav-item" href="#come-si-ottiene"><span class="nav-num">4</span>Come si ottiene</a></li>
+      <li><a class="nav-item" href="#test-center"><span class="nav-num">5</span>Il nostro Test Center</a></li>
+      <li><a class="nav-item" href="#accreditatori"><span class="nav-num">6</span>AICA e ACCREDIA</a></li>
+    </ul>
+    <hr class="sidebar-divider">
+    <ul class="sidebar-nav">
+      <li><a class="nav-item" href="statistiche/" style="color:var(--icdl-accent);font-weight:600;">
+        📊 Statistiche del centro
+      </a></li>
+    </ul>
+    <div class="sidebar-meta">
+      Test Center <strong>ALZD0001</strong><br>
+      IIS L. Einaudi<br>
+      Chiari (BS)
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="guide-main">
+
+    <!-- SEZ 1: COS'È -->
+    <section class="guide-section" id="cos-e">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div class="section-titles">
+          <div class="section-title">Cos'è l'ICDL</div>
+          <div class="section-sub">International Certification of Digital Literacy</div>
+        </div>
+      </div>
+
+      <p>
+        L'<strong>ICDL</strong> (già nota come ECDL — European Computer Driving Licence)
+        è il percorso di certificazione delle competenze digitali più diffuso al mondo,
+        riconosciuto in oltre 100 paesi. Attesta che chi la possiede sa usare
+        strumenti digitali in modo competente, sicuro e consapevole.
+      </p>
+      <p style="margin-top:.85rem;">
+        A livello europeo il programma è coordinato dal <strong>CEPIS</strong>
+        (Council of European Professional Informatics Societies); in Italia
+        è gestito da <strong>AICA</strong> (Associazione Italiana per l'Informatica
+        e il Calcolo Automatico), che seleziona e accredita i Test Center abilitati
+        all'erogazione degli esami.
+      </p>
+      <p style="margin-top:.85rem;">
+        La certificazione si consegue superando esami pratici al computer,
+        su moduli specifici. Non è un corso obbligatorio: chiunque può
+        prepararsi autonomamente e presentarsi agli esami.
+      </p>
+    </section>
+
+    <!-- SEZ 2: PERCHÉ VALE -->
+    <section class="guide-section" id="perche">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div class="section-titles">
+          <div class="section-title">Perché vale</div>
+          <div class="section-sub">Riconoscimenti concreti in quattro ambiti</div>
+        </div>
+      </div>
+
+      <div class="highlight-grid-4">
+        <div class="highlight-card">
+          <div class="hc-emoji">💼</div>
+          <div class="hc-title">Mondo del lavoro</div>
+          <div class="hc-body">Arricchisce il curriculum e attesta competenze digitali verificabili da qualsiasi datore di lavoro.</div>
+        </div>
+        <div class="highlight-card">
+          <div class="hc-emoji">🎓</div>
+          <div class="hc-title">Esami di Stato</div>
+          <div class="hc-body">Riconosciuta per il credito formativo scolastico, in particolare per gli Esami di Maturità.</div>
+        </div>
+        <div class="highlight-card">
+          <div class="hc-emoji">🏛️</div>
+          <div class="hc-title">Università</div>
+          <div class="hc-body">Molti atenei riconoscono crediti formativi (CFU) agli studenti in possesso della certificazione ICDL.</div>
+        </div>
+        <div class="highlight-card">
+          <div class="hc-emoji">📜</div>
+          <div class="hc-title">Concorsi pubblici</div>
+          <div class="hc-body">Riconosciuta in concorsi pubblici e protocolli di Regioni, Ministeri, Carabinieri, Guardia di Finanza.</div>
+        </div>
+      </div>
+
+      <div class="box-tip">
+        <strong>💡 Lo sapevi?</strong> Il Quadro Europeo delle Qualifiche (EQF) e l'Agenda Digitale
+        della Commissione Europea riconoscono le certificazioni di competenza digitale come
+        elemento chiave per l'occupabilità e la cittadinanza attiva.
+      </div>
+    </section>
+
+    <!-- SEZ 3: MODULI -->
+    <section class="guide-section" id="moduli">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div class="section-titles">
+          <div class="section-title">I 7 moduli</div>
+          <div class="section-sub">Clicca su un modulo per vedere gli obiettivi di apprendimento</div>
+        </div>
+      </div>
+
+      <p style="margin-bottom:1rem;">
+        La certificazione <strong>ICDL Full Standard</strong> si consegue superando
+        tutti e 7 i moduli. È possibile sostenerli in qualsiasi ordine e anche
+        in sessioni separate — la Skills Card registra ogni esame superato.
+      </p>
+
+      <div class="moduli-grid" id="moduli-grid">
+
+        <div class="modulo-card" onclick="toggleModulo(this)">
+          <div class="modulo-head">
+            <span class="modulo-num">01</span>
+            <span class="modulo-nome">Computer Essentials</span>
+            <span class="modulo-tag corso">Corso attivo</span>
+            <span class="modulo-chevron">▼</span>
+          </div>
+          <div class="modulo-body">
+            <p class="modulo-desc">Concetti fondamentali per l'uso dei dispositivi, la gestione dei file, le reti e la sicurezza dei dati.</p>
+            <ul class="modulo-obiettivi modulo-toggle">
+              <li>Comprendere i concetti fondamentali di ICT, hardware e software</li>
+              <li>Operare efficacemente sul desktop (icone, finestre, impostazioni)</li>
+              <li>Creare, salvare e organizzare file e cartelle</li>
+              <li>Comprendere i concetti di rete e connettività</li>
+              <li>Backup, protezione dati e difesa dal malware</li>
+              <li>Green computing, accessibilità e salute dell'utente</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="modulo-card" onclick="toggleModulo(this)">
+          <div class="modulo-head">
+            <span class="modulo-num">02</span>
+            <span class="modulo-nome">Online Essentials</span>
+            <span class="modulo-tag corso">Corso attivo</span>
+            <span class="modulo-chevron">▼</span>
+          </div>
+          <div class="modulo-body">
+            <p class="modulo-desc">Navigazione sicura, ricerca efficace delle informazioni, comunicazione online e posta elettronica.</p>
+            <ul class="modulo-obiettivi modulo-toggle">
+              <li>Navigazione su Internet e sicurezza informatica di base</li>
+              <li>Uso del browser, preferiti e impostazioni</li>
+              <li>Ricerca efficace e valutazione critica dei contenuti web</li>
+              <li>Copyright, protezione dei dati e privacy</li>
+              <li>Reti sociali, comunicazione e posta elettronica</li>
+              <li>Gestione della casella email e del calendario</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="modulo-card" onclick="toggleModulo(this)">
+          <div class="modulo-head">
+            <span class="modulo-num">03</span>
+            <span class="modulo-nome">Word Processing</span>
+            <span class="modulo-chevron">▼</span>
+          </div>
+          <div class="modulo-body">
+            <p class="modulo-desc">Elaborazione testi con programmi come Word: creazione, formattazione e stampa di documenti professionali.</p>
+            <ul class="modulo-obiettivi modulo-toggle">
+              <li>Lavorare con documenti in diversi formati</li>
+              <li>Creare e modificare documenti pronti per la condivisione</li>
+              <li>Applicare formattazioni per migliorare l'aspetto</li>
+              <li>Inserire tabelle, immagini e oggetti grafici</li>
+              <li>Stampa unione e gestione delle impostazioni di pagina</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="modulo-card" onclick="toggleModulo(this)">
+          <div class="modulo-head">
+            <span class="modulo-num">04</span>
+            <span class="modulo-nome">Spreadsheets</span>
+            <span class="modulo-chevron">▼</span>
+          </div>
+          <div class="modulo-body">
+            <p class="modulo-desc">Fogli elettronici con Excel: dati, formule, funzioni e grafici per analisi e presentazione delle informazioni.</p>
+            <ul class="modulo-obiettivi modulo-toggle">
+              <li>Inserire dati, creare elenchi e gestire fogli</li>
+              <li>Formule matematiche e logiche con funzioni standard</li>
+              <li>Gestione di righe, colonne e fogli di calcolo</li>
+              <li>Formattazione di numeri e contenuti testuali</li>
+              <li>Creazione e formattazione di grafici</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="modulo-card" onclick="toggleModulo(this)">
+          <div class="modulo-head">
+            <span class="modulo-num">05</span>
+            <span class="modulo-nome">IT Security</span>
+            <span class="modulo-tag corso">Corso attivo</span>
+            <span class="modulo-chevron">▼</span>
+          </div>
+          <div class="modulo-body">
+            <p class="modulo-desc">Uso sicuro dell'ICT: protezione dei dati, malware, reti sicure, comunicazione protetta e backup.</p>
+            <ul class="modulo-obiettivi modulo-toggle">
+              <li>Protezione di informazioni, dati e privacy</li>
+              <li>Difesa da malware e accessi non autorizzati</li>
+              <li>Reti e problemi di sicurezza (firewall, VPN)</li>
+              <li>Navigazione e comunicazione sicura</li>
+              <li>Backup e ripristino corretto dei dati</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="modulo-card" onclick="toggleModulo(this)">
+          <div class="modulo-head">
+            <span class="modulo-num">06</span>
+            <span class="modulo-nome">Presentation</span>
+            <span class="modulo-chevron">▼</span>
+          </div>
+          <div class="modulo-body">
+            <p class="modulo-desc">Strumenti di presentazione come PowerPoint: diapositive, animazioni, grafici e preparazione alla presentazione.</p>
+            <ul class="modulo-obiettivi modulo-toggle">
+              <li>Lavorare con presentazioni in diversi formati</li>
+              <li>Layout, viste e modifica delle diapositive</li>
+              <li>Inserimento e formattazione di testo e grafici</li>
+              <li>Figure, immagini e disegni</li>
+              <li>Animazioni, transizioni e revisione finale</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="modulo-card" onclick="toggleModulo(this)">
+          <div class="modulo-head">
+            <span class="modulo-num">07</span>
+            <span class="modulo-nome">Online Collaboration</span>
+            <span class="modulo-tag corso">Corso attivo</span>
+            <span class="modulo-chevron">▼</span>
+          </div>
+          <div class="modulo-body">
+            <p class="modulo-desc">Strumenti per la collaborazione online: cloud, app web, calendari, reti sociali e riunioni virtuali.</p>
+            <ul class="modulo-obiettivi modulo-toggle">
+              <li>Cloud computing e collaborazione online</li>
+              <li>Memorie di massa remote e app di produttività web</li>
+              <li>Calendari online e su dispositivi mobili</li>
+              <li>Reti sociali, blog e wiki</li>
+              <li>Riunioni online e ambienti di apprendimento virtuale</li>
+              <li>Tecnologie mobili e sincronizzazione</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="box-note" style="margin-top:1rem;">
+        <strong>📌 Corso attivo</strong> = il nostro istituto attiva corsi di preparazione gratuiti per quel modulo.
+        I moduli senza etichetta (Word Processing, Spreadsheets, Presentation) sono considerati
+        più accessibili per lo studio autonomo.
+      </div>
+    </section>
+
+    <!-- SEZ 4: COME SI OTTIENE -->
+    <section class="guide-section" id="come-si-ottiene">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div class="section-titles">
+          <div class="section-title">Come si ottiene</div>
+          <div class="section-sub">Skills Card, esami e certificazione</div>
+        </div>
+      </div>
+
+      <ol class="steps-list">
+        <li>
+          <div>
+            <strong>Acquista la Skills Card</strong> — è il "libretto degli esami" ICDL.
+            Riporta i tuoi dati e registra ogni esame superato. Non ha scadenza ed è un documento digitale virtuale.
+            Si acquista tramite il Test Center.
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Scegli i moduli</strong> — puoi sostenere gli esami in qualsiasi ordine
+            e in sessioni separate. Non è obbligatorio seguire un corso:
+            puoi studiare autonomamente e presentarti direttamente agli esami.
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Prenota l'esame</strong> — almeno <strong>20 giorni prima</strong>
+            della data fissata. Le date delle sessioni sono pubblicate sul sito della scuola.
+            Contatta il referente del Test Center per informazioni.
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Sostieni l'esame</strong> — presentati con un documento d'identità valido
+            e la tua Skills Card. L'esame è pratico, al computer, con tempo definito dal syllabus.
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Ottieni la certificazione</strong> — superando tutti e 7 i moduli
+            ottieni l'<strong>ICDL Full Standard</strong>. Puoi anche fermarti a un sottoinsieme
+            di moduli per certificazioni parziali riconosciute.
+          </div>
+        </li>
+      </ol>
+
+      <div class="nota-box">
+        <strong>⚠️ Importante:</strong> per sostenere gli esami è obbligatorio presentarsi
+        con carta d'identità o documento equipollente e con la Skills Card.
+        La prenotazione va effettuata almeno 20 giorni prima della sessione.
+      </div>
+    </section>
+
+    <!-- SEZ 5: TEST CENTER -->
+    <section class="guide-section" id="test-center">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div class="section-titles">
+          <div class="section-title">Il nostro Test Center</div>
+          <div class="section-sub">Dove, chi contattare e come prenotare</div>
+        </div>
+      </div>
+
+      <div class="tc-box">
+        <div class="tc-box-title">🏫 IIS L. Einaudi — Chiari (BS)</div>
+        <div class="tc-grid">
+          <div class="tc-row">
+            <span class="tc-label">Codice Test Center:</span>
+            <span class="tc-value"><strong>ALZD0001</strong></span>
+          </div>
+          <div class="tc-row">
+            <span class="tc-label">Istituto:</span>
+            <span class="tc-value">IIS "L. Einaudi"</span>
+          </div>
+          <div class="tc-row">
+            <span class="tc-label">Città:</span>
+            <span class="tc-value">Chiari (BS)</span>
+          </div>
+          <div class="tc-row">
+            <span class="tc-label">Referente:</span>
+            <span class="tc-value">Prof. Cristiano De Pasquale</span>
+          </div>
+          <div class="tc-row">
+            <span class="tc-label">Ruolo:</span>
+            <span class="tc-value">F.S. Innovazione Digitale</span>
+          </div>
+          <div class="tc-row">
+            <span class="tc-label">Email:</span>
+            <span class="tc-value">
+              <a href="mailto:fsinnovazionedigitale@iisleinaudi.edu.it">fsinnovazionedigitale@iisleinaudi.edu.it</a>
+            </span>
+          </div>
+        </div>
+        <p style="font-size:.83rem;color:var(--gray-mid);">
+          Per informazioni sulle date degli esami, sui corsi di preparazione o sull'acquisto
+          della Skills Card, contatta direttamente il referente via email.
+        </p>
+      </div>
+
+      <!-- CTA statistiche -->
+      <div class="stats-cta">
+        <div class="stats-cta-text">
+          <h3>📊 Vuoi vedere i dati reali del nostro centro?</h3>
+          <p>Tassi di superamento, punteggi medi e distribuzione per modulo —
+             dati aggregati e anonimizzati, aggiornati ad ogni sessione.</p>
+        </div>
+        <a href="statistiche/" class="stats-cta-btn">Apri le statistiche →</a>
+      </div>
+    </section>
+
+    <!-- SEZ 6: ACCREDITATORI -->
+    <section class="guide-section" id="accreditatori">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <div class="section-titles">
+          <div class="section-title">AICA e ACCREDIA</div>
+          <div class="section-sub">Gli enti che garantiscono la certificazione</div>
+        </div>
+      </div>
+
+      <p>
+        La credibilità dell'ICDL dipende dalla catena di accreditamento che ne garantisce
+        la qualità e il riconoscimento internazionale. In Italia operano due enti chiave:
+      </p>
+
+      <div class="accr-grid" style="margin-top:1rem;">
+        <div class="accr-card">
+          <div class="accr-name">🇮🇹 AICA</div>
+          <div class="accr-desc">
+            L'<strong>Associazione Italiana per l'Informatica e il Calcolo Automatico</strong>
+            è il rappresentante nazionale di ICDL in Italia. Seleziona e accredita i Test Center,
+            definisce il syllabus degli esami e garantisce l'uniformità degli standard
+            su tutto il territorio nazionale.
+          </div>
+          <a class="accr-link" href="https://www.aicanet.it/" target="_blank" rel="noopener">
+            🔗 aicanet.it ↗
+          </a>
+        </div>
+        <div class="accr-card">
+          <div class="accr-name">🏛️ ACCREDIA</div>
+          <div class="accr-desc">
+            <strong>ACCREDIA</strong> è l'ente unico nazionale di accreditamento riconosciuto
+            dal governo italiano e dalla Commissione Europea. Accredita gli organismi di
+            certificazione — tra cui AICA — garantendo che gli esami ICDL rispettino
+            gli standard internazionali di qualità e imparzialità.
+          </div>
+          <a class="accr-link" href="https://www.accredia.it/" target="_blank" rel="noopener">
+            🔗 accredia.it ↗
+          </a>
+        </div>
+      </div>
+
+      <div class="box-tip" style="margin-top:1rem;">
+        <strong>💡 Cosa significa per te:</strong> la catena ACCREDIA → AICA → Test Center accreditato
+        garantisce che l'esame che sostieni qui abbia lo stesso valore di uno sostenuto
+        in qualsiasi altro Test Center in Italia o in Europa.
+      </div>
+    </section>
+
+  </main>
+</div><!-- /.guide-layout -->
+
+<footer>
+  <strong>Formazione Digitale</strong> · <a href="/">Torna alla home</a><br>
+  Test Center ALZD0001 · IIS L. Einaudi, Chiari (BS)<br>
+  <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="/cookie-policy.html">Cookie Policy</a>
+</footer>
+
+<!-- BACK TO TOP -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Torna su">↑</button>
+
+<script>
+// ── Sidebar hamburger ────────────────────────────────────────────
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('is-open');
+  document.getElementById('overlay').classList.toggle('is-open');
+  document.getElementById('hamburger').classList.toggle('is-open');
+}
+
+// ── Moduli toggle ────────────────────────────────────────────────
+function toggleModulo(card) {
+  card.classList.toggle('is-open');
+}
+
+// ── Back to top ──────────────────────────────────────────────────
+const backTop = document.getElementById('back-top');
+window.addEventListener('scroll', () => {
+  backTop.classList.toggle('visible', window.scrollY > 400);
+});
+
+// ── Sidebar active link on scroll ────────────────────────────────
+const sections = document.querySelectorAll('.guide-section');
+const navItems = document.querySelectorAll('.sidebar-nav .nav-item[href^="#"]');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navItems.forEach(n => n.classList.remove('active'));
+      const active = document.querySelector(`.sidebar-nav .nav-item[href="#${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>

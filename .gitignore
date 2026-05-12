@@ -12,3 +12,6 @@ Thumbs.db
 # Python
 __pycache__/
 *.pyc
+
+# Sorgenti Excel ICDL — mai pubblicare
+data-src/

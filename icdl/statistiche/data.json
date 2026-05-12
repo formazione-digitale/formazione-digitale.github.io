@@ -1,0 +1,509 @@
+{
+  "generato_il": "2026-05-12",
+  "esami": [
+    {
+      "certificazione": "ICDL",
+      "modulo": "Online Essentials",
+      "punteggio": 300,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-01-27"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Spreadsheets",
+      "punteggio": 220,
+      "punteggio_minimo": 270,
+      "esito": "Non superato",
+      "data": "2026-01-27"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Word Processing",
+      "punteggio": 240,
+      "punteggio_minimo": 270,
+      "esito": "Non superato",
+      "data": "2026-01-27"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Online Collaboration",
+      "punteggio": 320,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-01-27"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Computer Essentials",
+      "punteggio": 310,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-02-24"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Cyber Security",
+      "punteggio": 290,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-02-24"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Presentation",
+      "punteggio": 305,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-02-24"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Presentation",
+      "punteggio": 315,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-02-24"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Word Processing",
+      "punteggio": 240,
+      "punteggio_minimo": 270,
+      "esito": "Non superato",
+      "data": "2026-02-24"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Online Essentials",
+      "punteggio": 290,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-02-24"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Computer Essentials",
+      "punteggio": 320,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-02-24"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Computer Essentials",
+      "punteggio": 300,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-02-24"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Computer Essentials",
+      "punteggio": 300,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-02-24"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Online Essentials",
+      "punteggio": 280,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-02-24"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Computer Essentials",
+      "punteggio": 300,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Online Essentials",
+      "punteggio": 330,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Online Essentials",
+      "punteggio": 340,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Online Essentials",
+      "punteggio": 310,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Word Processing",
+      "punteggio": 280,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Word Processing",
+      "punteggio": 270,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Word Processing",
+      "punteggio": 230,
+      "punteggio_minimo": 270,
+      "esito": "Non superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Computer Essentials",
+      "punteggio": 300,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Computer Essentials",
+      "punteggio": 340,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Computer Essentials",
+      "punteggio": 270,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Computer Essentials",
+      "punteggio": 280,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Presentation",
+      "punteggio": 330,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Online Collaboration",
+      "punteggio": 350,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Computer Essentials",
+      "punteggio": 330,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Computer Essentials",
+      "punteggio": 320,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Computer Essentials",
+      "punteggio": 250,
+      "punteggio_minimo": 270,
+      "esito": "Non superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Computer Essentials",
+      "punteggio": 320,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Presentation",
+      "punteggio": 310,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Word Processing",
+      "punteggio": 220,
+      "punteggio_minimo": 270,
+      "esito": "Non superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Presentation",
+      "punteggio": 330,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Word Processing",
+      "punteggio": 340,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Word Processing",
+      "punteggio": 270,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Online Essentials",
+      "punteggio": 330,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Word Processing",
+      "punteggio": 310,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Word Processing",
+      "punteggio": 250,
+      "punteggio_minimo": 270,
+      "esito": "Non superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Spreadsheets",
+      "punteggio": 310,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Word Processing",
+      "punteggio": 290,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Word Processing",
+      "punteggio": 340,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Word Processing",
+      "punteggio": 310,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Word Processing",
+      "punteggio": 250,
+      "punteggio_minimo": 270,
+      "esito": "Non superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Spreadsheets",
+      "punteggio": 280,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-04-16"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Presentation",
+      "punteggio": 320,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-05-12"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Presentation",
+      "punteggio": 210,
+      "punteggio_minimo": 270,
+      "esito": "Non superato",
+      "data": "2026-05-12"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Presentation",
+      "punteggio": 300,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-05-12"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Presentation",
+      "punteggio": 300,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-05-12"
+    },
+    {
+      "certificazione": "DigComp 2.2",
+      "modulo": "Esame DigComp 2.2 (nessun prerequisito)",
+      "punteggio": 310,
+      "punteggio_minimo": 0,
+      "esito": "Livello 2",
+      "data": "2026-05-12"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Word Processing",
+      "punteggio": 330,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-05-12"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Cyber Security",
+      "punteggio": 280,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-05-12"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Presentation",
+      "punteggio": 340,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-05-12"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Spreadsheets",
+      "punteggio": 240,
+      "punteggio_minimo": 270,
+      "esito": "Non superato",
+      "data": "2026-05-12"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Online Essentials",
+      "punteggio": 310,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-05-12"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Online Essentials",
+      "punteggio": 330,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-05-12"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Online Essentials",
+      "punteggio": 320,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-05-12"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Spreadsheets",
+      "punteggio": 260,
+      "punteggio_minimo": 270,
+      "esito": "Non superato",
+      "data": "2026-05-12"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Spreadsheets",
+      "punteggio": 280,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-05-12"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Online Collaboration",
+      "punteggio": 300,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-05-12"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Spreadsheets",
+      "punteggio": 310,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-05-12"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Presentation",
+      "punteggio": 210,
+      "punteggio_minimo": 270,
+      "esito": "Non superato",
+      "data": "2026-05-12"
+    },
+    {
+      "certificazione": "ICDL",
+      "modulo": "Online Collaboration",
+      "punteggio": 360,
+      "punteggio_minimo": 270,
+      "esito": "Superato",
+      "data": "2026-05-12"
+    }
+  ]
+}
