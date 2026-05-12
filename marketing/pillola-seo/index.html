@@ -284,7 +284,7 @@ footer strong { color: rgba(255,255,255,.9); }
       <div class="step-dot">3</div>
       <div class="step-body">
         <strong>Ranking — l'ordine dei risultati</strong>
-        <span>Quando un utente cerca qualcosa, Google interroga il suo indice e ordina i risultati in base a oltre 200 fattori di ranking. L'ordine cambia continuamente — Google aggiorna il suo algoritmo migliaia di volte l'anno.</span>
+        <span>Quando un utente cerca qualcosa, Google interroga il suo indice e ordina i risultati in base a centinaia di segnali di ranking. L'ordine cambia continuamente — Google aggiorna il suo algoritmo migliaia di volte l'anno.</span>
       </div>
     </div>
   </div>
@@ -361,7 +361,7 @@ footer strong { color: rgba(255,255,255,.9); }
     </div>
   </div>
 
-  <p>Google usa oltre 200 fattori per ordinare i risultati. Ecco i principali, suddivisi per impatto:</p>
+  <p>Google usa centinaia di segnali per ordinare i risultati. Ecco i principali, suddivisi per impatto:</p>
 
   <div class="factors-grid">
     <div class="factor-card high">
@@ -380,7 +380,7 @@ footer strong { color: rgba(255,255,255,.9); }
       <div class="factor-badge high">Impatto alto</div>
       <div class="factor-icon">⚡</div>
       <div class="factor-title">Core Web Vitals</div>
-      <div class="factor-desc">LCP, FID, CLS — metriche di velocità e stabilità della pagina. Fattore ufficiale dal 2021.</div>
+      <div class="factor-desc">LCP, INP, CLS — metriche di velocità, interattività e stabilità della pagina. Fattore ufficiale dal 2021.</div>
     </div>
     <div class="factor-card high">
       <div class="factor-badge high">Impatto alto</div>
@@ -446,14 +446,15 @@ footer strong { color: rgba(255,255,255,.9); }
       </div>
     </div>
     <div class="vital-card">
-      <div class="vital-metric">FID</div>
-      <div class="vital-name">First Input Delay</div>
-      <div class="vital-desc">Tempo tra il primo clic dell'utente e la risposta del browser. Misura l'interattività della pagina.</div>
+      <div class="vital-metric">INP</div>
+      <div class="vital-name">Interaction to Next Paint</div>
+      <div class="vital-desc">Misura il tempo di risposta del browser a qualsiasi interazione dell'utente (clic, tap, tastiera). Ha sostituito FID a marzo 2024.</div>
       <div class="vital-range">
-        <span class="vr-good">≤ 100ms ✓</span>
-        <span class="vr-medium">≤ 300ms ⚠</span>
-        <span class="vr-bad">&gt; 300ms ✗</span>
+        <span class="vr-good">≤ 200ms ✓</span>
+        <span class="vr-medium">≤ 500ms ⚠</span>
+        <span class="vr-bad">&gt; 500ms ✗</span>
       </div>
+    </div>
     </div>
     <div class="vital-card">
       <div class="vital-metric">CLS</div>
