@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calcolatore di Sottorete & Guida — Formazione Digitale</title>
 
-
 <meta name="description" content="Calcolatore di sottoreti IPv4 con analisi AND logico binario, calcolo range host e guida teorica integrata. Report esportabile. Livello intermedio.">
 <meta name="author" content="Cristiano De Pasquale">
 <meta name="robots" content="index, follow">
@@ -56,13 +55,12 @@
 }
 </script>
 
-
 <!-- GoatCounter tracking -->
 <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
-<link rel="stylesheet" href="/css/shared.css?v=1">
+<link rel="stylesheet" href="/css/shared.css?v=2">
 <style>
-:root {
+    :root {
         --blue-dark: #1F4E79;
         --blue-mid: #2E75B6;
         --blue-pale: #EBF3FC;
@@ -82,10 +80,10 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: var(--font-body); background: #fdfdfd; color: var(--gray-dark); padding-top: var(--nav-height); scroll-behavior: smooth; }
 
-    /* ── STICKY NAV BAR ────────────────────────────────────── */
+    /* ── STICKY NAV BAR ── */
     nav.sticky-bar {
         position: fixed; top: 0; left: 0; right: 0; height: var(--nav-height);
-        background: var(--blue-dark); display: flex; align-items: center; 
+        background: var(--blue-dark); display: flex; align-items: center;
         justify-content: space-between; padding: 0 1.5rem; z-index: 1000;
         box-shadow: 0 2px 10px rgba(0,0,0,0.15);
     }
@@ -94,21 +92,22 @@
     .nav-back:hover { color: white; }
     .nav-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.2); }
     .nav-title { font-family: var(--font-display); color: white; font-size: 1.1rem; }
+    @media(max-width:600px) { .nav-title, .nav-divider { display: none; } }
 
-    /* ── LAYOUT ───────────────────────────────────────────── */
+    /* ── LAYOUT ── */
     .page-container {
         display: flex;
-        max-width: 1350px; /* Incrementato per evitare il wrapping degli ottetti */
+        max-width: 1350px;
         margin: 0 auto;
         gap: 3rem;
         padding: 3rem 1.5rem;
     }
-    
+
     aside.sidebar { width: 240px; position: sticky; top: calc(var(--nav-height) + 2rem); height: fit-content; flex-shrink: 0; }
     .sidebar-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--blue-mid); margin-bottom: 1rem; }
     .sidebar-nav { display: flex; flex-direction: column; gap: 0.5rem; }
-    .sidebar-nav a { 
-        text-decoration: none; color: var(--gray-mid); font-size: 0.9rem; padding: 0.5rem 0.8rem; 
+    .sidebar-nav a {
+        text-decoration: none; color: var(--gray-mid); font-size: 0.9rem; padding: 0.5rem 0.8rem;
         border-radius: 6px; transition: all 0.2s; border-left: 3px solid transparent;
     }
     .sidebar-nav a.active { border-left-color: var(--blue-mid); background: var(--blue-pale); color: var(--blue-dark); font-weight: 600; }
@@ -118,26 +117,26 @@
     .content-header .eyebrow { color: var(--amber-dark); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; display: block; }
     .content-header h1 { font-family: var(--font-display); font-size: 3rem; color: var(--blue-dark); line-height: 1.1; }
 
-    /* ── TOOL CARD ───────────────────────────────────────── */
-    .tool-card { 
+    /* ── TOOL CARD ── */
+    .tool-card {
         background: linear-gradient(180deg, var(--white) 0%, var(--accent-light) 100%);
         border: 2px solid var(--accent-border);
         border-radius: 20px; padding: 2.5rem;
         box-shadow: 0 10px 30px rgba(31, 78, 121, 0.08);
         margin-bottom: 4rem; scroll-margin-top: 100px;
-        overflow: visible; /* Necessario per i popup */
+        overflow: visible;
     }
     .tool-grid {
         display: grid;
-        grid-template-columns: 1.3fr 0.7fr; /* Bilanciamento ottimale per bit e risultati */
+        grid-template-columns: 1.3fr 0.7fr;
         gap: 2.5rem;
     }
 
     .input-group label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--blue-mid); text-transform: uppercase; margin-bottom: 0.5rem; }
     input[type=text] { width: 100%; padding: 0.8rem; border: 1.5px solid var(--accent-border); border-radius: 8px; font-family: monospace; font-size: 1.1rem; outline: none; }
-    
+
     .presets { display: flex; gap: 0.5rem; margin-top: 0.8rem; flex-wrap: wrap; }
-    .btn-preset { 
+    .btn-preset {
         background: var(--white); border: 1px solid var(--blue-mid); color: var(--blue-mid);
         padding: 4px 12px; border-radius: 15px; font-size: 0.72rem; cursor: pointer; transition: all 0.2s;
     }
@@ -146,13 +145,13 @@
     .cidr-display { font-size: 2.4rem; font-weight: 700; color: var(--blue-dark); text-align: center; margin: 0.5rem 0; }
     input[type=range] { width: 100%; accent-color: var(--blue-mid); cursor: pointer; }
 
-    .logic-box { 
-        background: #212121; color: #eceff1; padding: 1.2rem; border-radius: 12px; 
+    .logic-box {
+        background: #212121; color: #eceff1; padding: 1.2rem; border-radius: 12px;
         font-family: monospace; font-size: 0.82rem; margin-top: 1.5rem; line-height: 1.6;
-        box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); 
-        overflow-x: auto; 
-        white-space: nowrap; /* Impedisce il wrapping dei bit */
-        letter-spacing: -0.01em; 
+        box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+        overflow-x: auto;
+        white-space: nowrap;
+        letter-spacing: -0.01em;
     }
     .logic-line { display: flex; justify-content: space-between; border-bottom: 1px solid #444; padding: 4px 0; gap: 10px; }
     .logic-line:last-child { border-bottom: none; font-weight: 700; }
@@ -163,116 +162,65 @@
     .legend span { display: flex; align-items: center; gap: 6px; }
     .dot { width: 10px; height: 10px; border-radius: 2px; }
 
-    /* ── RISULTATI E POPUP ───────────────────────────────── */
-    .tool-results {
-        margin-top: 2rem; /* Spazio extra per il popup della riga 1 */
-    }
+    /* ── RISULTATI E POPUP ── */
+    .tool-results { margin-top: 2rem; }
 
     .res-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.85rem 0;
-        border-bottom: 1px solid rgba(0,0,0,0.05);
-        gap: 12px;
-        position: relative;
-        overflow: visible; 
-        z-index: 1;
-        transition: z-index 0s;
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 0.85rem 0; border-bottom: 1px solid rgba(0,0,0,0.05);
+        gap: 12px; position: relative; overflow: visible;
+        z-index: 1; transition: z-index 0s;
     }
+    .res-item:hover { z-index: 999; }
 
-    .res-item:hover {
-        z-index: 999; /* Porta la riga attiva sopra le altre */
-    }
-
-    .res-label-group {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        flex-shrink: 0;
-        font-size: 0.88rem;
-        color: var(--gray-mid);
-        white-space: nowrap;
-    }
+    .res-label-group { display: flex; align-items: center; gap: 6px; flex-shrink: 0; font-size: 0.88rem; color: var(--gray-mid); white-space: nowrap; }
 
     .res-val {
-        font-weight: 700;
-        color: var(--blue-dark);
+        font-weight: 700; color: var(--blue-dark);
         font-family: 'JetBrains Mono', 'Roboto Mono', monospace;
-        font-size: 1.1rem;
-        text-align: right;
-        white-space: nowrap;
+        font-size: 1.1rem; text-align: right; white-space: nowrap;
     }
-
-    #res-range {
-        font-size: 0.98rem;
-        letter-spacing: -0.02em;
-    }
+    #res-range { font-size: 0.98rem; letter-spacing: -0.02em; }
 
     .btn-copy { background: var(--blue-dark); color: white; border: none; padding: 1rem; width: 100%; border-radius: 50px; font-weight: 600; cursor: pointer; margin-top: 1.5rem; transition: transform 0.1s; }
 
-    /* ── TEORIA UI ──────────────────────────────────────── */
+    /* Help Popup */
+    .help-icon { width: 18px; height: 18px; background: var(--blue-mid); color: white; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; cursor: help; position: relative; margin-left: 5px; }
+    .help-popup {
+        visibility: hidden; width: 250px; background: #212121; color: #fff;
+        text-align: left; border-radius: 8px; padding: 12px; position: absolute;
+        z-index: 1000; bottom: 160%; left: 50%;
+        transform: translateX(-50%) translateY(10px); opacity: 0;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        font-size: 0.82rem; line-height: 1.4; pointer-events: none;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);
+        white-space: normal;
+    }
+    .help-popup::after {
+        content: ""; position: absolute; top: 100%; left: 50%; margin-left: -6px;
+        border-width: 6px; border-style: solid; border-color: #212121 transparent transparent transparent;
+    }
+    .help-icon:hover .help-popup { visibility: visible; opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── TEORIA UI ── */
     section { margin-bottom: 4rem; scroll-margin-top: 100px; }
     .section-title { display: flex; align-items: center; margin-bottom: 1.5rem; }
     .section-num { background: var(--blue-dark); color: white; width: 42px; height: 42px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.4rem; margin-right: 1rem; }
     .section-title h2 { font-family: var(--font-display); font-size: 1.8rem; color: var(--blue-dark); }
-    
+
     .theory-step { background: var(--blue-pale); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--blue-mid); margin: 1.5rem 0; }
     .callout-dark { background: #1a1a1a; color: white; padding: 2rem; border-radius: 12px; margin: 2rem 0; }
     .callout-dark ul { list-style: none; margin-top: 1rem; }
     .callout-dark li { margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative; font-size: 0.95rem; }
     .callout-dark li::before { content: '•'; color: var(--bit-net); position: absolute; left: 0; font-weight: 800; }
 
-    /* Help Popup Corretto */
-    .help-icon { width: 18px; height: 18px; background: var(--blue-mid); color: white; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; cursor: help; position: relative; margin-left: 5px; }
-    
-    .help-popup {
-        visibility: hidden;
-        width: 250px;
-        background: #212121;
-        color: #fff;
-        text-align: left;
-        border-radius: 8px;
-        padding: 12px;
-        position: absolute;
-        z-index: 1000;
-        bottom: 160%; 
-        left: 50%;
-        transform: translateX(-50%) translateY(10px);
-        opacity: 0;
-        transition: opacity 0.2s ease, transform 0.2s ease;
-        font-size: 0.82rem;
-        line-height: 1.4;
-        pointer-events: none;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        border: 1px solid rgba(255,255,255,0.1);
-        white-space: normal; /* Permette il wrap del testo interno */
-    }
-
-    .help-popup::after {
-        content: "";
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        margin-left: -6px;
-        border-width: 6px;
-        border-style: solid;
-        border-color: #212121 transparent transparent transparent;
-    }
-
-    .help-icon:hover .help-popup {
-        visibility: visible;
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-    }
-
-    @media (max-width: 1100px) { 
-        .page-container { flex-direction: column; } 
-        aside.sidebar { display: none; } 
-        .tool-grid { grid-template-columns: 1fr; } 
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+        .page-container { flex-direction: column; }
+        aside.sidebar { display: none; }
+        .tool-grid { grid-template-columns: 1fr; }
         .logic-box { font-size: 0.75rem; }
     }
-
     @media (max-width: 600px) {
         .page-container { padding: 1.5rem 1rem; gap: 1.5rem; }
         .tool-card { padding: 1.25rem; border-radius: 12px; }
@@ -286,15 +234,30 @@
 </head>
 <body>
 
+<!-- STICKY NAV -->
 <nav class="sticky-bar">
     <div class="nav-left">
         <a href="../../index.html" class="nav-back">← Portale</a>
         <div class="nav-divider"></div>
         <div class="nav-title">Laboratorio Networking</div>
     </div>
+    <!-- Hamburger visibile solo su mobile -->
+    <button class="nav-menu-btn" id="nav-menu-btn" onclick="toggleNavMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
 </nav>
 
+<!-- DROPDOWN MENU MOBILE -->
+<div class="nav-dropdown" id="nav-dropdown">
+    <div class="nav-dropdown-label">Sezioni</div>
+    <a href="#calcolatore" onclick="closeNavMenu()">00 Calcolatore</a>
+    <a href="#intro" onclick="closeNavMenu()">01 Cos'è una sottorete</a>
+    <a href="#and-logico" onclick="closeNavMenu()">02 AND Logico</a>
+    <a href="#indirizzi" onclick="closeNavMenu()">03 Indirizzi riservati</a>
+</div>
+
 <div class="page-container">
+    <!-- SIDEBAR (desktop) -->
     <aside class="sidebar">
         <div class="sidebar-label">Indice</div>
         <nav class="sidebar-nav">
@@ -338,51 +301,46 @@
                             <span><div class="dot" style="background:var(--bit-host)"></div> Host</span>
                         </div>
                     </div>
-                    
-					<!-- PATH: networking/subnet-calculator.html -->
-					<div class="tool-results">
-						<div class="res-item">
-							<div class="res-label-group">
-								<span>Indirizzo di Rete</span>
-								<span class="help-icon">?<span class="help-popup">Il primo indirizzo della rete. Identifica la sottorete stessa.</span></span>
-							</div>
-							<span class="res-val" id="res-net">-</span>
-						</div>
 
-						<div class="res-item">
-							<div class="res-label-group">
-								<span>Subnet Mask</span>
-								<span class="help-icon">?<span class="help-popup">Filtro binario che separa la parte rete dalla parte host.</span></span>
-							</div>
-							<span class="res-val" id="res-mask">-</span>
-						</div>
-
-						<div class="res-item">
-							<div class="res-label-group">
-								<span>Broadcast</span>
-								<span class="help-icon">?<span class="help-popup">Indirizzo per parlare con tutti gli host della rete.</span></span>
-							</div>
-							<span class="res-val" id="res-broad">-</span>
-						</div>
-
-						<div class="res-item">
-							<div class="res-label-group">
-								<span>Range Host</span>
-								<span class="help-icon">?<span class="help-popup">Intervallo di IP assegnabili ai dispositivi (esclude rete e broadcast).</span></span>
-							</div>
-							<span class="res-val" id="res-range">-</span>
-						</div>
-
-						<div class="res-item">
-							<div class="res-label-group">
-								<span>Host Totali</span>
-								<span class="help-icon">?<span class="help-popup">Indirizzi utilizzabili (2^n - 2).</span></span>
-							</div>
-							<span class="res-val" id="res-count">-</span>
-						</div>
-
-						<button class="btn-copy" onclick="copyResults()">📋 Copia Report Tecnico</button>
-					</div>
+                    <!-- PATH: networking/subnet-calculator.html -->
+                    <div class="tool-results">
+                        <div class="res-item">
+                            <div class="res-label-group">
+                                <span>Indirizzo di Rete</span>
+                                <span class="help-icon">?<span class="help-popup">Il primo indirizzo della rete. Identifica la sottorete stessa.</span></span>
+                            </div>
+                            <span class="res-val" id="res-net">-</span>
+                        </div>
+                        <div class="res-item">
+                            <div class="res-label-group">
+                                <span>Subnet Mask</span>
+                                <span class="help-icon">?<span class="help-popup">Filtro binario che separa la parte rete dalla parte host.</span></span>
+                            </div>
+                            <span class="res-val" id="res-mask">-</span>
+                        </div>
+                        <div class="res-item">
+                            <div class="res-label-group">
+                                <span>Broadcast</span>
+                                <span class="help-icon">?<span class="help-popup">Indirizzo per parlare con tutti gli host della rete.</span></span>
+                            </div>
+                            <span class="res-val" id="res-broad">-</span>
+                        </div>
+                        <div class="res-item">
+                            <div class="res-label-group">
+                                <span>Range Host</span>
+                                <span class="help-icon">?<span class="help-popup">Intervallo di IP assegnabili ai dispositivi (esclude rete e broadcast).</span></span>
+                            </div>
+                            <span class="res-val" id="res-range">-</span>
+                        </div>
+                        <div class="res-item">
+                            <div class="res-label-group">
+                                <span>Host Totali</span>
+                                <span class="help-icon">?<span class="help-popup">Indirizzi utilizzabili (2^n - 2).</span></span>
+                            </div>
+                            <span class="res-val" id="res-count">-</span>
+                        </div>
+                        <button class="btn-copy" onclick="copyResults()">📋 Copia Report Tecnico</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -391,7 +349,6 @@
         <section id="intro">
             <div class="section-title"><div class="section-num">1</div><h2>Cos'è una sottorete?</h2></div>
             <p>Una sottorete (subnet) è una partizione logica di una rete IP. Dividere una rete grande in reti più piccole permette di ridurre il traffico di broadcast e migliorare la sicurezza isolando i segmenti.</p>
-            
             <div class="callout-dark">
                 <span style="color:var(--bit-net); font-weight:700; font-family:monospace;">// Perché dividere le reti:</span>
                 <ul>
@@ -406,9 +363,6 @@
         <section id="and-logico">
             <div class="section-title"><div class="section-num">2</div><h2>L'operazione di AND Logico</h2></div>
             <p>Il computer determina l'appartenenza di un IP a una rete eseguendo un <strong>AND binario</strong> tra l'IP host e la Subnet Mask. È l'operazione booleana fondamentale per il routing.</p>
-            
-            
-
             <div class="theory-step">
                 <strong>La regola:</strong> Il bit risultante è 1 solo se entrambi i bit di input sono 1. Se la maschera presenta uno 0, il bit host dell'indirizzo IP viene "azzerato" nel calcolo della rete.
             </div>
@@ -418,23 +372,21 @@
         <section id="indirizzi">
             <div class="section-title"><div class="section-num">3</div><h2>Indirizzi riservati</h2></div>
             <p>In ogni sottorete, due indirizzi sono riservati e non possono essere assegnati a PC, server o altri terminali host:</p>
-            
             <ul>
                 <li><strong>Network ID:</strong> Identifica la rete. Tutti i bit host (rossi) sono a 0.</li>
                 <li><strong>Broadcast Address:</strong> Usato per comunicazioni "uno-a-tutti". Tutti i bit host (rossi) sono a 1.</li>
             </ul>
-
-			<div class="theory-step">
-				<strong>Formula Host:</strong> Il numero di host utilizzabili è calcolato come <code style="background: rgba(0,0,0,0.05); padding: 2px 6px; border-radius: 4px; font-family: monospace; font-weight: 700;">2<sup>n</sup> - 2</code>, dove <span style="color: var(--bit-host); font-weight: 700;">n</span> è il numero di bit host (rossi).
-			</div>
+            <div class="theory-step">
+                <strong>Formula Host:</strong> Il numero di host utilizzabili è calcolato come <code style="background: rgba(0,0,0,0.05); padding: 2px 6px; border-radius: 4px; font-family: monospace; font-weight: 700;">2<sup>n</sup> - 2</code>, dove <span style="color: var(--bit-host); font-weight: 700;">n</span> è il numero di bit host (rossi).
+            </div>
         </section>
 
         <footer style="margin-top: 5rem; padding-top: 2rem; border-top: 1px solid #eee; color: #999; font-size: 0.8rem; text-align: center;">
             Risorsa didattica parte del portale Formazione Digitale — 2026.
-          <p style="margin-top:.5rem;font-size:.78rem;">
-    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="/cookie-policy.html">Cookie Policy</a>
-  </p>
-</footer>
+            <p style="margin-top:.5rem;font-size:.78rem;">
+                <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="/cookie-policy.html">Cookie Policy</a>
+            </p>
+        </footer>
     </main>
 </div>
 
@@ -462,16 +414,16 @@
         const cidr = parseInt(cidrSlider.value);
         cidrLabel.textContent = `/${cidr}`;
         if(!/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/.test(ip)) return;
-        
+
         const ipLong = ipToLong(ip);
         const maskLong = (cidr === 0 ? 0 : (0xFFFFFFFF << (32 - cidr))) >>> 0;
         const netLong = (ipLong & maskLong) >>> 0;
         const broadLong = (netLong | ~maskLong) >>> 0;
-        
+
         document.getElementById('res-net').textContent = longToIp(netLong);
         document.getElementById('res-mask').textContent = longToIp(maskLong);
         document.getElementById('res-broad').textContent = longToIp(broadLong);
-        
+
         if (cidr >= 31) {
             document.getElementById('res-range').textContent = "N/A";
             document.getElementById('res-count').textContent = "0";
@@ -498,22 +450,18 @@
     ipIn.addEventListener('input', update);
     cidrSlider.addEventListener('input', update);
     update();
-	
-	
-	// PATH: networking/subnet-calculator.html
 
-	function copyResults() {
-		// Recupero dinamico dei valori calcolati dal DOM
-		const ip = document.getElementById('ip-input').value;
-		const cidr = document.getElementById('cidr-slider').value;
-		const net = document.getElementById('res-net').textContent;
-		const mask = document.getElementById('res-mask').textContent;
-		const broad = document.getElementById('res-broad').textContent;
-		const range = document.getElementById('res-range').textContent;
-		const count = document.getElementById('res-count').textContent;
+    // PATH: networking/subnet-calculator.html
+    function copyResults() {
+        const ip = document.getElementById('ip-input').value;
+        const cidr = document.getElementById('cidr-slider').value;
+        const net = document.getElementById('res-net').textContent;
+        const mask = document.getElementById('res-mask').textContent;
+        const broad = document.getElementById('res-broad').textContent;
+        const range = document.getElementById('res-range').textContent;
+        const count = document.getElementById('res-count').textContent;
 
-		// Generazione del template testuale del report
-		const reportTemplate = `--- REPORT TECNICO NETWORKING ---
+        const reportTemplate = `--- REPORT TECNICO NETWORKING ---
 	Indirizzo Host:  ${ip}/${cidr}
 	Indirizzo Rete:  ${net}
 	Subnet Mask:     ${mask}
@@ -523,45 +471,48 @@
 	---------------------------------
 	Generato via Portale Formazione Digitale`;
 
-		// API Clipboard con fallback per compatibilità browser
-		if (navigator.clipboard && navigator.clipboard.writeText) {
-			navigator.clipboard.writeText(reportTemplate).then(() => {
-				handleCopyFeedback();
-			}).catch(err => {
-				console.error('Errore durante la copia:', err);
-			});
-		} else {
-			// Fallback per browser datati o contesti non-secure
-			const textArea = document.createElement("textarea");
-			textArea.value = reportTemplate;
-			document.body.appendChild(textArea);
-			textArea.select();
-			try {
-				document.execCommand('copy');
-				handleCopyFeedback();
-			} catch (err) {
-				alert("Errore durante la copia manuale.");
-			}
-			document.body.removeChild(textArea);
-		}
-	}
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(reportTemplate).then(() => {
+                handleCopyFeedback();
+            }).catch(err => { console.error('Errore durante la copia:', err); });
+        } else {
+            const textArea = document.createElement("textarea");
+            textArea.value = reportTemplate;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try { document.execCommand('copy'); handleCopyFeedback(); }
+            catch (err) { alert("Errore durante la copia manuale."); }
+            document.body.removeChild(textArea);
+        }
+    }
 
-	// Gestione feedback visivo sul pulsante
-	function handleCopyFeedback() {
-		const btn = document.querySelector('.btn-copy');
-		const originalText = btn.innerHTML;
-		
-		btn.innerHTML = "✅ Report Copiato!";
-		btn.style.background = "var(--green-dark, #1E6B3C)";
-		
-		setTimeout(() => {
-			btn.innerHTML = originalText;
-			btn.style.background = "var(--blue-dark)";
-		}, 2000);
-	}
+    function handleCopyFeedback() {
+        const btn = document.querySelector('.btn-copy');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = "✅ Report Copiato!";
+        btn.style.background = "var(--green-dark, #1E6B3C)";
+        setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.style.background = "var(--blue-dark)";
+        }, 2000);
+    }
 
-
+    // ── NAV DROPDOWN ──
+    function toggleNavMenu() {
+        const btn = document.getElementById('nav-menu-btn');
+        const dd  = document.getElementById('nav-dropdown');
+        btn.classList.toggle('is-open');
+        dd.classList.toggle('is-open');
+    }
+    function closeNavMenu() {
+        document.getElementById('nav-menu-btn').classList.remove('is-open');
+        document.getElementById('nav-dropdown').classList.remove('is-open');
+    }
+    document.addEventListener('click', e => {
+        if (!e.target.closest('nav.sticky-bar') && !e.target.closest('#nav-dropdown')) closeNavMenu();
+    });
 </script>
-</body><script src="/scripts/ui.js" defer></script>
 
+<script src="/scripts/ui.js" defer></script>
+</body>
 </html>
