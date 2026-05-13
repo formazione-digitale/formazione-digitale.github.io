@@ -682,7 +682,7 @@
     "meta": "5 sezioni · Test Center ALZD0001 · Livello base",
     "description": "Cos'è l'ICDL, i 7 moduli, come si ottiene la certificazione e i vantaggi riconosciuti in Italia e in Europa.",
     "featured": false,
-    "active": true,
+    "active": false,
     "digcomp": [
       "DC 5.4"
     ],
@@ -713,7 +713,7 @@
     "meta": "Dati reali · Aggiornati periodicamente · Test Center ALZD0001",
     "description": "Statistiche aggregate e anonimizzate sugli esami ICDL del Test Center ALZD0001. Tassi di superamento, punteggi medi e distribuzione per modulo.",
     "featured": false,
-    "active": true,
+    "active": false,
     "digcomp": [
       "DC 5.4"
     ],
