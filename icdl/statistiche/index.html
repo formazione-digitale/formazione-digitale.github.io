@@ -283,10 +283,10 @@ header {
 }
 .chart-subtitle { font-size: .78rem; color: var(--gray-mid); margin-bottom: 1.25rem; }
 .chart-wrap { position: relative; }
-.chart-wrap.radar { height: 320px; }
-.chart-wrap.donut { height: 240px; }
-.chart-wrap.bar   { height: 280px; }
-.chart-wrap.hist  { height: 220px; }
+.chart-wrap.radar { height:	360px; }
+.chart-wrap.donut { height: 300px; }
+.chart-wrap.bar   { height: 360px; }
+.chart-wrap.hist  { height: 360px; }
 
 /* ── TABELLA MODULI ─────────────────────────────────────────────── */
 .moduli-table-wrap { overflow-x: auto; }
@@ -487,7 +487,7 @@ table.moduli tbody td:last-child { text-align: right; }
 
     <!-- RADAR -->
     <div class="chart-card">
-      <div class="chart-title">Radar per modulo</div>
+      <div class="chart-title">Distribuzione per modulo</div>
       <div class="chart-subtitle">Punteggio medio per modulo vs soglia minima (270)</div>
       <div class="chart-wrap radar">
         <canvas id="chartRadar"></canvas>
@@ -826,11 +826,11 @@ function renderRadar(esami) {
       responsive: true, maintainAspectRatio: false,
       scales: {
         r: {
-          min: 200, max: 360,
+          min: 180, max: 360,
           ticks: { stepSize: 40, font: { family: 'JetBrains Mono', size: 10 } },
           pointLabels: { font: { family: 'DM Sans', size: 11, weight: '600' }, color: '#2C2C2C' },
-          grid: { color: 'rgba(31,78,121,.1)' },
-          angleLines: { color: 'rgba(31,78,121,.1)' },
+          grid: { color: 'rgba(31,78,121,.2)' },
+		  angleLines: { color: 'rgba(31,78,121,.2)' },
         }
       },
       plugins: {
