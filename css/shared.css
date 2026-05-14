@@ -1,13 +1,41 @@
 /* ════════════════════════════════════════════════════════════════
-   FORMAZIONE DIGITALE — shared.css  v1
+   FORMAZIONE DIGITALE — shared.css  v2
    Aggiornare ?v=N nel <link> di ogni pagina ad ogni modifica.
    NON modificare questo file per stili specifici di pagina.
+
+   INDICE SEZIONI
+   ──────────────────────────────────────────────────────────────
+    1.  RESET
+    2.  VARIABILI          (palette, font, layout token)
+    3.  BASE               (html, body)
+    4.  HEADER homepage    (#header, #hamburger, nav links, pill buttons)
+    5.  HEADER guide       (.guide-header, .hamburger, .header-downloads, .mode-toggle)
+    6.  HEADER nav custom  (.nav-menu-btn, .nav-dropdown) ← subnet-calculator, hfs-server
+    7.  SIDEBAR homepage   (#sidebar, #overlay, .nav-item, .nav-num)
+    8.  SIDEBAR guide      (.guide-layout, .guide-sidebar, .sidebar-overlay, .sidebar-nav)
+    9.  MAIN CONTENT       (#main, p, hr, liste)
+   10.  STRUTTURA SEZIONI  (.section-header, .cover-block, .cover-extras)
+   11.  COMPONENTI GUIDE   (.part-header, .highlight-grid, .dodont, .two-col)
+   12.  BOX CALLOUT        (.box-tip, .box-warn, .box-note, .box-info, .box-red)
+   13.  FOOTER             (footer, .fw-footer, .footer-nav-link)
+   14.  AUTH UI            (#auth-btn, .auth-overlay, .auth-panel, .btn-bookmark)
+   15.  ABOUT MODAL        (.about-trigger, .about-overlay)
+   16.  LETTURA & UTILITÀ  (#reading-bar, .nav-part-label)
+   17.  [PLACEHOLDER] DARK MODE
    ════════════════════════════════════════════════════════════════ */
 
-/* ── 1. RESET ────────────────────────────────────────────────────── */
+
+/* ══════════════════════════════════════════════════════════════
+   1. RESET
+   ══════════════════════════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── 2. VARIABILI ────────────────────────────────────────────────── */
+
+/* ══════════════════════════════════════════════════════════════
+   2. VARIABILI
+   Palette principale, tipografia, token di layout.
+   Usare sempre le variabili — mai hardcodare i colori nelle pagine.
+   ══════════════════════════════════════════════════════════════ */
 :root {
   /* Palette principale */
   --blue-dark:    #1F4E79;
@@ -32,14 +60,17 @@
   --font-body:    'DM Sans', system-ui, sans-serif;
 
   /* Layout */
-  --header-h:  56px;
-  --nav-w:     260px;
-  --radius:    8px;
-  --shadow:    0 2px 12px rgba(31,78,121,.10);
+  --header-h:   56px;
+  --nav-w:      260px;
+  --radius:     8px;
+  --shadow:     0 2px 12px rgba(31,78,121,.10);
   --transition: .22s cubic-bezier(.4,0,.2,1);
 }
 
-/* ── 3. BASE ─────────────────────────────────────────────────────── */
+
+/* ══════════════════════════════════════════════════════════════
+   3. BASE
+   ══════════════════════════════════════════════════════════════ */
 html { scroll-behavior: smooth; font-size: 16px; }
 body {
   font-family: var(--font-body);
@@ -48,7 +79,14 @@ body {
   line-height: 1.7;
 }
 
-/* ── 4. HEADER ───────────────────────────────────────────────────── */
+
+/* ══════════════════════════════════════════════════════════════
+   4. HEADER — homepage
+   Usato da index.html e dalle pagine con sidebar verticale (#sidebar).
+   ID #header per distinguerlo da .guide-header delle sottopagine.
+   Contiene: back-link, logo, sottotitolo, hamburger (#hamburger),
+   nav links, pill buttons, about modal trigger.
+   ══════════════════════════════════════════════════════════════ */
 #header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   height: var(--header-h);
@@ -60,7 +98,7 @@ body {
 .header-left  { display: flex; align-items: center; gap: .75rem; }
 .header-right { display: flex; align-items: center; gap: .5rem; }
 
-/* Back-link */
+/* Back-link ← */
 .header-back {
   font-size: .78rem; color: rgba(255,255,255,.65);
   text-decoration: none;
@@ -81,14 +119,16 @@ body {
 }
 @media(min-width:600px) { .header-logo { max-width: none; } }
 
-/* Sottotitolo (visibile da 600px) */
+/* Sottotitolo — nascosto su mobile, visibile da 600px */
 .header-sub {
   font-size: .72rem; color: var(--blue-light);
   font-weight: 300; display: none;
 }
 @media(min-width:600px) { .header-sub { display: block; } }
 
-/* Hamburger — usato nelle pagine con sidebar */
+/* Hamburger homepage — #hamburger (ID).
+   NOTA: diverso da .hamburger (classe) usato nelle guide.
+   Nascosto da 900px — a quella larghezza la sidebar è sempre visibile. */
 #hamburger {
   display: flex; flex-direction: column; justify-content: center; gap: 5px;
   width: 36px; height: 36px; cursor: pointer; padding: 6px;
@@ -102,18 +142,19 @@ body {
 #hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 @media(min-width:900px) { #hamburger { display: none; } }
 
-/* ── HEADER NAV LINKS ── */
+/* Nav links orizzontali nell'header homepage */
 .header-nav { display: flex; align-items: center; gap: 1.5rem; }
 .header-nav-link {
   font-size: .85rem; font-weight: 700;
   color: #fff;
-  opacity: 1;
   text-shadow: 0 1px 3px rgba(0,0,0,.2);
   transition: opacity .2s;
+  text-decoration: none;
 }
-.header-nav-link:hover { opacity: 1; }
+/* FIX: hover aveva opacity:1 identica al valore base — ora riduce per dare feedback visivo */
+.header-nav-link:hover { opacity: .75; }
 
-/* ── HEADER PILL BUTTONS (Chi sono / Contatti / Accedi) ── */
+/* Pill buttons (Chi sono / Contatti / Accedi) */
 .header-pill-btn {
   background: rgba(255,255,255,.15);
   border: 1px solid rgba(255,255,255,.4);
@@ -126,43 +167,177 @@ body {
   transition: background .2s, color .2s;
   white-space: nowrap;
 }
-.header-pill-btn:hover {
-  background: rgba(255,255,255,.2);
-  color: #fff;
+.header-pill-btn:hover { background: rgba(255,255,255,.28); }
+
+
+/* ══════════════════════════════════════════════════════════════
+   5. HEADER — guide (sottopagine standard)
+   Usato da tutte le guide/strumenti/pillole con sidebar laterale.
+   Classe .guide-header (non ID) — può coesistere con #header in pagine ibride.
+   Contiene: back-link SVG, titolo centrato, hamburger (.hamburger),
+   bottoni download (.header-downloads), mode toggle (.mode-toggle).
+   ══════════════════════════════════════════════════════════════ */
+.guide-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 56px;
+  background: var(--blue-dark);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.25rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,.18);
+}
+.guide-header-back {
+  display: flex; align-items: center; gap: .4rem;
+  font-size: .78rem; color: rgba(255,255,255,.65);
+  text-decoration: none; transition: color .2s;
+  flex-shrink: 0;
+}
+.guide-header-back svg {
+  width: 16px; height: 16px; stroke: currentColor;
+  stroke-width: 2; fill: none;
+}
+.guide-header-back:hover { color: #fff; }
+.guide-header-center {
+  font-size: .85rem; color: rgba(255,255,255,.85);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+  max-width: 40%;
+}
+.guide-header-right {
+  display: flex; align-items: center; gap: .5rem;
+  flex-shrink: 0;
 }
 
-/* ── ABOUT BUTTONS MODAL ── */
-.about-trigger {
-  font-size: 0.82rem;
-  color: rgba(255,255,255,0.75);
-  text-decoration: none;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  transition: color 0.2s;
-  background: rgba(255,255,255,.15);
-  border: 1px solid rgba(255,255,255,.4);
-  font-family: inherit;
-  padding: 0;
+/* Hamburger guide — .hamburger (classe).
+   NOTA: diverso da #hamburger (ID) usato nella homepage.
+   Stesso aspetto visivo, selettori separati per evitare collisioni. */
+.hamburger {
+  display: flex; flex-direction: column; justify-content: center; gap: 5px;
+  width: 36px; height: 36px; cursor: pointer; padding: 6px;
+  border-radius: 6px; background: none; border: none;
+  transition: background var(--transition);
 }
-.about-trigger:hover { color: white; }
+.hamburger:hover { background: rgba(255,255,255,.12); }
+.hamburger span {
+  display: block; height: 2px; background: #fff;
+  border-radius: 2px; transition: all var(--transition);
+}
+.hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.is-open span:nth-child(2) { opacity: 0; }
+.hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+@media(min-width:900px) { .hamburger { display: none; } }
 
-.about-overlay {
+/* Bottoni download nell'header guide */
+.btn-download {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25);
+  color: #fff; text-decoration: none; border-radius: 20px;
+  padding: .35rem .9rem; font-size: .78rem; font-weight: 500;
+  font-family: var(--font-body); white-space: nowrap;
+  transition: background .2s;
+}
+.btn-download:hover { background: rgba(255,255,255,.22); }
+.btn-dl-label { display: none; }
+@media(min-width:600px) { .btn-dl-label { display: inline; } }
+
+/* Barra download mobile — su mobile (<600px) diventa barra fissa
+   sotto l'header, scrollabile orizzontalmente */
+.header-downloads {
+  display: flex; align-items: center; gap: .5rem;
+}
+@media(max-width:599px) {
+  .header-downloads {
+    position: fixed; top: var(--header-h); left: 0; right: 0; z-index: 99;
+    background: #17406A;
+    border-bottom: 1px solid rgba(255,255,255,.12);
+    padding: .4rem .75rem;
+    gap: .5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .header-downloads::-webkit-scrollbar { display: none; }
+  .header-downloads .btn-download { flex-shrink: 0; }
+  .mode-toggle { display: none; }
+}
+/* Nasconde la barra download in modalità presentazione */
+body.aula-mode .header-downloads { display: none !important; }
+
+/* Mode toggle (Aula / Normal) — nascosto su mobile (<600px) */
+.mode-toggle {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25);
+  color: #fff; border-radius: 20px; padding: .35rem .9rem;
+  font-size: .78rem; font-weight: 500; font-family: var(--font-body);
+  cursor: pointer; white-space: nowrap; transition: background .2s;
+}
+.mode-toggle:hover { background: rgba(255,255,255,.22); }
+
+/* Responsive guide header — nasconde il titolo centrato su mobile */
+@media(max-width:640px) {
+  .guide-header-center { display: none; }
+  .guide-header { padding: 0 .75rem; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   6. HEADER — nav custom (dropdown mobile)
+   Hamburger a tendina per pagine con nav propria (subnet-calculator,
+   hfs-server). Non usa sidebar — apre un dropdown sotto la nav.
+   ══════════════════════════════════════════════════════════════ */
+
+/* Bottone hamburger — visibile solo su mobile (<600px) */
+.nav-menu-btn {
   display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 9999;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  backdrop-filter: blur(4px);
-  pointer-events: all;
+  flex-direction: column; justify-content: center; gap: 5px;
+  width: 36px; height: 36px; padding: 6px;
+  background: none; border: none; cursor: pointer;
+  border-radius: 6px; transition: background var(--transition);
+  flex-shrink: 0;
+}
+.nav-menu-btn:hover { background: rgba(255,255,255,.12); }
+.nav-menu-btn span  { display: block; height: 2px; background: #fff; border-radius: 2px; transition: all var(--transition); }
+.nav-menu-btn.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-menu-btn.is-open span:nth-child(2) { opacity: 0; }
+.nav-menu-btn.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+@media(max-width:600px) { .nav-menu-btn { display: flex; } }
+
+/* Dropdown menu — overlay a tutto schermo sotto la nav */
+.nav-dropdown {
+  display: none;
+  position: fixed; top: 58px; left: 0; right: 0; z-index: 190;
+  background: var(--blue-dark);
+  border-top: 1px solid rgba(255,255,255,.1);
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+  padding: .5rem 0;
+}
+.nav-dropdown.is-open { display: block; }
+.nav-dropdown a {
+  display: block;
+  padding: .7rem 1.5rem;
+  font-size: .88rem; color: rgba(255,255,255,.8);
+  text-decoration: none;
+  transition: background var(--transition), color var(--transition);
+  border-left: 3px solid transparent;
+}
+.nav-dropdown a:hover { background: rgba(255,255,255,.08); color: #fff; border-left-color: var(--blue-light); }
+.nav-dropdown .nav-dropdown-divider {
+  border: none; border-top: 1px solid rgba(255,255,255,.1);
+  margin: .35rem 0;
+}
+.nav-dropdown .nav-dropdown-label {
+  font-size: .65rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(255,255,255,.35);
+  padding: .5rem 1.5rem .2rem;
 }
 
 
-/* ── 5. SIDEBAR ──────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   7. SIDEBAR — homepage
+   Pannello laterale sinistro per index.html e pagine con #sidebar.
+   ID #sidebar + #overlay. Sempre visibile da 900px.
+   Nav items: .nav-item, .nav-num, .nav-section-label, .nav-divider.
+   ══════════════════════════════════════════════════════════════ */
 #sidebar {
   position: fixed; top: var(--header-h); left: 0; bottom: 0; z-index: 90;
   width: var(--nav-w); background: var(--white);
@@ -175,6 +350,7 @@ body {
 #sidebar.open { transform: translateX(0); }
 @media(min-width:900px) { #sidebar { transform: translateX(0); } }
 
+/* Overlay scuro dietro la sidebar su mobile */
 #overlay {
   display: none; position: fixed; inset: 0; z-index: 80;
   background: rgba(0,0,0,.35); backdrop-filter: blur(2px);
@@ -182,11 +358,15 @@ body {
 #overlay.open { display: block; }
 @media(min-width:900px) { #overlay { display: none !important; } }
 
+/* Label di sezione nella sidebar */
 .nav-section-label {
   font-size: .68rem; font-weight: 600; letter-spacing: .1em;
   text-transform: uppercase; color: var(--blue-mid);
   padding: .75rem 1.25rem .35rem; opacity: .7;
 }
+
+/* Voce di navigazione sidebar — usato sia in #sidebar che in .guide-sidebar
+   tramite selettore .sidebar-nav .nav-item (sezione 8) */
 .nav-item {
   display: flex; align-items: center; gap: .6rem;
   padding: .55rem 1.25rem; font-size: .84rem; color: var(--gray-mid);
@@ -196,15 +376,98 @@ body {
 }
 .nav-item:hover  { color: var(--blue-dark); background: var(--blue-pale); border-left-color: var(--blue-light); }
 .nav-item.active { color: var(--blue-dark); background: var(--blue-pale); border-left-color: var(--blue-mid); font-weight: 500; }
+
+/* Badge numerato accanto alla voce */
 .nav-num {
   display: inline-flex; align-items: center; justify-content: center;
   min-width: 22px; height: 22px; background: var(--blue-dark); color: #fff;
   border-radius: 4px; font-size: .72rem; font-weight: 600; flex-shrink: 0;
 }
 .nav-item.active .nav-num { background: var(--blue-mid); }
+
+/* Separatore orizzontale nella sidebar */
 .nav-divider { border: none; border-top: 1px solid var(--blue-light); margin: .75rem 1.25rem; }
 
-/* ── 6. MAIN CONTENT (layout con sidebar) ────────────────────────── */
+
+/* ══════════════════════════════════════════════════════════════
+   8. SIDEBAR — guide (sottopagine standard)
+   Layout griglia a due colonne: sidebar fissa + contenuto principale.
+   Classe .guide-sidebar (non ID) — coesiste con #sidebar.
+   Su mobile (<900px) la sidebar diventa un drawer dal lato sinistro.
+   ══════════════════════════════════════════════════════════════ */
+
+/* Griglia principale: sidebar 260px + resto */
+.guide-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  max-width: 1200px;
+  margin: 56px auto 0;
+  min-height: calc(100vh - 56px);
+}
+@media(max-width:900px) { .guide-layout { grid-template-columns: 1fr; } }
+
+/* Sidebar laterale — sticky su desktop, drawer su mobile */
+.guide-sidebar {
+  position: sticky; top: 56px;
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+  background: var(--white);
+  border-right: 1px solid var(--blue-light);
+  padding: 1.25rem 0 2rem;
+}
+@media(max-width:900px) {
+  .guide-sidebar {
+    position: fixed; top: 56px; left: 0; bottom: 0; z-index: 90;
+    width: 260px;
+    transform: translateX(-100%);
+    transition: transform var(--transition);
+    box-shadow: 2px 0 20px rgba(31,78,121,.12);
+  }
+  .guide-sidebar.is-open { transform: translateX(0); }
+}
+
+/* Overlay scuro dietro la sidebar guide su mobile */
+.sidebar-overlay {
+  display: none; position: fixed; inset: 0; z-index: 80;
+  background: rgba(0,0,0,.35); backdrop-filter: blur(2px);
+}
+.sidebar-overlay.is-open { display: block; }
+@media(min-width:900px) { .sidebar-overlay { display: none !important; } }
+
+/* Nav interna alla sidebar guide.
+   NOTA: .sidebar-nav .nav-item ridefinisce .nav-item con selettore più specifico
+   per isolare eventuali override futuri. I valori sono attualmente identici. */
+.sidebar-label {
+  font-size: .68rem; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--blue-mid);
+  padding: .75rem 1.25rem .35rem; opacity: .7;
+}
+.sidebar-nav { list-style: none; padding: 0; margin: 0; }
+.sidebar-nav .nav-item {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .55rem 1.25rem; font-size: .84rem; color: var(--gray-mid);
+  text-decoration: none; cursor: pointer;
+  transition: all var(--transition); border-left: 3px solid transparent;
+}
+.sidebar-nav .nav-item:hover  { color: var(--blue-dark); background: var(--blue-pale); border-left-color: var(--blue-light); }
+.sidebar-nav .nav-item.active { color: var(--blue-dark); background: var(--blue-pale); border-left-color: var(--blue-mid); font-weight: 500; }
+.sidebar-divider { border: none; border-top: 1px solid var(--blue-light); margin: .75rem 1.25rem; }
+.sidebar-meta { padding: .75rem 1.25rem; font-size: .78rem; color: var(--gray-mid); line-height: 1.8; }
+
+/* Contenuto principale della guida */
+.guide-main {
+  padding: 2.5rem 3rem 4rem;
+  max-width: 860px;
+  width: 100%; min-width: 0;
+}
+@media(max-width:900px) { .guide-main { padding: 1.5rem 1.5rem 3rem; } }
+
+
+/* ══════════════════════════════════════════════════════════════
+   9. MAIN CONTENT
+   Layout del contenuto principale (#main) con sidebar homepage.
+   Margine sinistro per lasciare spazio a #sidebar da 900px.
+   ══════════════════════════════════════════════════════════════ */
 #main {
   margin-top: var(--header-h);
   transition: margin-left var(--transition);
@@ -214,7 +477,20 @@ body {
 @media(min-width:900px)  { #main { margin-left: var(--nav-w); padding: 2.5rem 2.5rem 4rem; } }
 @media(min-width:1200px) { #main { margin-left: var(--nav-w); max-width: 860px; padding: 3rem 3rem 4rem; } }
 
-/* ── 7. STRUTTURA SEZIONI ────────────────────────────────────────── */
+/* Tipografia di base nelle guide */
+p { margin-bottom: .85rem; font-size: .95rem; line-height: 1.75; color: #3a3a3a; }
+hr.section-divider { border: none; border-top: 2px solid var(--blue-light); margin: 3rem 0; }
+ul.guide-list, ol.guide-list { padding-left: 1.5rem; margin-bottom: .85rem; }
+ul.guide-list li, ol.guide-list li { font-size: .95rem; line-height: 1.75; color: #3a3a3a; margin-bottom: .3rem; }
+
+
+/* ══════════════════════════════════════════════════════════════
+   10. STRUTTURA SEZIONI
+   Header di sezione numerato, cover block, elementi cover.
+   Usati nelle guide standard e nelle pillole.
+   ══════════════════════════════════════════════════════════════ */
+
+/* Header di sezione con numero e titolo affiancati */
 .guide-section { margin-bottom: 3.5rem; }
 .section-header {
   display: flex; align-items: stretch; border-radius: var(--radius);
@@ -233,13 +509,7 @@ body {
 .section-subtitle { font-size: .82rem; color: var(--blue-mid); font-style: italic; margin-top: .2rem; }
 .sub-title        { font-size: 1.05rem; font-weight: 600; color: var(--blue-mid); margin: 1.5rem 0 .6rem; }
 
-p { margin-bottom: .85rem; font-size: .95rem; line-height: 1.75; color: #3a3a3a; }
-hr.section-divider { border: none; border-top: 2px solid var(--blue-light); margin: 3rem 0; }
-
-ul.guide-list, ol.guide-list { padding-left: 1.5rem; margin-bottom: .85rem; }
-ul.guide-list li, ol.guide-list li { font-size: .95rem; line-height: 1.75; color: #3a3a3a; margin-bottom: .3rem; }
-
-/* ── 8. COVER BLOCK ──────────────────────────────────────────────── */
+/* Cover block — hero colorato in cima alle guide/pillole */
 .cover-block {
   background: linear-gradient(135deg, var(--blue-dark) 0%, #2A6099 100%);
   border-radius: var(--radius); padding: 2.5rem 2rem 2rem;
@@ -251,7 +521,105 @@ ul.guide-list li, ol.guide-list li { font-size: .95rem; line-height: 1.75; color
 .cover-divider { border: none; border-top: 1px solid rgba(255,255,255,.2); margin: 1rem 0; }
 .cover-intro   { font-size: .9rem; color: rgba(255,255,255,.82); line-height: 1.7; }
 
-/* ── 9. BOX CALLOUT ──────────────────────────────────────────────── */
+/* Cover extras — eyebrow e badge chip sopra il titolo */
+.cover-eyebrow { font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--blue-light); margin-bottom: .5rem; }
+.cover-badges  { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .85rem; }
+.cover-badge   { font-size: .78rem; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.85); padding: .3rem .75rem; border-radius: 20px; }
+
+
+/* ══════════════════════════════════════════════════════════════
+   11. COMPONENTI GUIDE
+   Blocchi riutilizzabili dentro le guide: part header, highlight grid,
+   do/don't, two-col, footer nav link, nav part label.
+   ══════════════════════════════════════════════════════════════ */
+
+/* Part header — intestazione di parte/capitolo con numero grande */
+.part-header {
+  display: flex; align-items: stretch;
+  background: linear-gradient(135deg, var(--blue-dark) 0%, #2A6099 100%);
+  border-radius: var(--radius); overflow: hidden;
+  margin: 2.5rem 0 1.5rem; box-shadow: var(--shadow);
+}
+.part-num {
+  display: flex; align-items: center; justify-content: center;
+  min-width: 72px; background: rgba(0,0,0,.2);
+  font-family: var(--font-display); font-size: 2.5rem; color: #fff; padding: 1rem;
+}
+.part-titles   { flex: 1; padding: 1rem 1.25rem; }
+.part-title    { font-family: var(--font-display); font-size: 1.4rem; color: #fff; line-height: 1.2; }
+.part-subtitle { font-size: .82rem; color: var(--blue-light); font-style: italic; margin-top: .2rem; }
+
+/* Highlight grid — griglia 3 card con emoji, titolo, testo */
+.highlight-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: .85rem; margin: 1.25rem 0;
+}
+@media(max-width:600px) { .highlight-grid { grid-template-columns: 1fr; } }
+.highlight-card {
+  background: var(--blue-pale); border: 1px solid var(--blue-light);
+  border-radius: var(--radius); padding: 1rem .9rem; text-align: center;
+}
+.hc-emoji { font-size: 1.6rem; margin-bottom: .4rem; }
+.hc-title { font-weight: 700; font-size: .88rem; color: var(--blue-dark); margin-bottom: .3rem; }
+.hc-body  { font-size: .8rem; color: var(--gray-mid); line-height: 1.55; }
+
+/* Do/Don't — due colonne verde/ambra */
+.dodont { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; margin: 1.25rem 0; }
+@media(max-width:520px) { .dodont { grid-template-columns: 1fr; } }
+.do-col   { background: var(--green-light); border: 1px solid #b2dfc3; border-radius: var(--radius); padding: .9rem 1rem; }
+.dont-col { background: var(--amber-light); border: 1px solid #f0d080; border-radius: var(--radius); padding: .9rem 1rem; }
+.dodont-title { font-size: .8rem; font-weight: 700; margin-bottom: .5rem; }
+.do-col   .dodont-title { color: var(--green-dark); }
+.dont-col .dodont-title { color: var(--amber-dark); }
+.dodont ul { padding-left: 1.1rem; font-size: .82rem; line-height: 1.65; }
+.do-col   ul { color: var(--green-dark); }
+.dont-col ul { color: var(--amber-dark); }
+
+/* Two-col — due elementi affiancati, colonna su mobile */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin: 1.25rem 0;
+}
+@media(max-width:640px) { .two-col { grid-template-columns: 1fr; } }
+
+/* Footer nav link — bottoni navigazione tra risorse correlate nel footer */
+.footer-nav-link {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-size: .82rem; color: rgba(255,255,255,.7);
+  text-decoration: none;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 8px;
+  padding: .55rem .95rem;
+  transition: all var(--transition);
+}
+.footer-nav-link:hover {
+  background: rgba(255,255,255,.16);
+  border-color: rgba(255,255,255,.3);
+  color: #fff;
+}
+.footer-nav-link.primary {
+  background: var(--blue-mid);
+  border-color: var(--blue-mid);
+  color: #fff;
+}
+.footer-nav-link.primary:hover { background: #3d88cc; }
+
+/* Nav part label — etichetta di sezione nella sidebar */
+.nav-part-label {
+  font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--blue-mid);
+  padding: .75rem 1.25rem .35rem; opacity: .7;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   12. BOX CALLOUT
+   Box colorati per tip, warning, note, info, errore.
+   Usare .box + modificatore: .box-tip / .box-warn / .box-note / .box-info / .box-red
+   ══════════════════════════════════════════════════════════════ */
 .box {
   border-radius: var(--radius);
   padding: .9rem 1.1rem; margin: 1rem 0;
@@ -261,6 +629,7 @@ ul.guide-list li, ol.guide-list li { font-size: .95rem; line-height: 1.75; color
   font-size: .72rem; font-weight: 600;
   letter-spacing: .08em; text-transform: uppercase; margin-bottom: .35rem;
 }
+
 .box-tip  { background: var(--green-light); border-left: 4px solid var(--green-dark); }
 .box-tip  .box-label { color: var(--green-dark); }
 .box-tip  p { color: var(--green-dark); margin: 0; }
@@ -280,7 +649,13 @@ ul.guide-list li, ol.guide-list li { font-size: .95rem; line-height: 1.75; color
 .box-red  .box-label { color: var(--red-dark); }
 .box-red  p { color: var(--red-dark); margin: 0; }
 
-/* ── 10. FOOTER ──────────────────────────────────────────────────── */
+
+/* ══════════════════════════════════════════════════════════════
+   13. FOOTER
+   footer — footer standard di tutte le pagine
+   .fw-footer — footer fisso in basso per mappa.html e mappa-framework.html
+   .footer-nav-link — in sezione 11 (componenti guide)
+   ══════════════════════════════════════════════════════════════ */
 footer {
   background: var(--blue-dark);
   color: rgba(255,255,255,.6);
@@ -290,7 +665,27 @@ footer {
 footer strong { color: rgba(255,255,255,.9); }
 footer a { color: var(--blue-light); text-decoration: none; }
 
-/* ── 11. AUTH — bottone header + modal ───────────────────────────── */
+/* Footer mappe — fisso in basso, sovrascrive footer generico */
+.fw-footer {
+  background: var(--blue-dark);
+  color: rgba(255,255,255,.6);
+  text-align: center;
+  padding: .55rem 1rem;
+  font-size: .75rem; line-height: 1.7;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.fw-footer a { color: rgba(255,255,255,.5); text-decoration: none; }
+.fw-footer a:hover { color: #fff; }
+.fw-footer strong { color: rgba(255,255,255,.85); }
+
+
+/* ══════════════════════════════════════════════════════════════
+   14. AUTH UI
+   Bottone Accedi nell'header, modal login/profilo, segnalibri.
+   Attivo solo nelle pagine che caricano auth.js.
+   ══════════════════════════════════════════════════════════════ */
+
+/* Bottone Accedi / avatar nell'header */
 #auth-btn {
   font-family: var(--font-body);
   font-size: .8rem; font-weight: 600;
@@ -311,7 +706,7 @@ footer a { color: var(--blue-light); text-decoration: none; }
   font-size: .82rem; font-weight: 700;
 }
 
-/* Bottone segnalibro sulle card */
+/* Bottone segnalibro sulle card — compare al hover della card */
 .btn-bookmark {
   position: absolute; top: .6rem; right: .6rem;
   background: rgba(255,255,255,.9); border: 1px solid var(--blue-light);
@@ -326,7 +721,7 @@ footer a { color: var(--blue-light); text-decoration: none; }
 .btn-bookmark.bookmarked::after { content: '🔖'; }
 .btn-bookmark:not(.bookmarked)::after { content: '🔖'; filter: grayscale(1); }
 
-/* Modal auth */
+/* Overlay e panel modal login */
 .auth-overlay {
   position: fixed; inset: 0; z-index: 500;
   background: rgba(15,35,60,.65);
@@ -344,6 +739,7 @@ footer a { color: var(--blue-light); text-decoration: none; }
   box-shadow: 0 24px 64px rgba(15,35,60,.35);
   width: 100%; max-width: 400px;
   padding: 2rem;
+  position: relative;
   transform: translateY(28px);
   transition: transform .32s cubic-bezier(.34,1.56,.64,1);
 }
@@ -390,8 +786,8 @@ footer a { color: var(--blue-light); text-decoration: none; }
 }
 .auth-close:hover { background: var(--blue-light); color: var(--blue-dark); }
 
-/* Modal profilo */
-.profile-info { margin-bottom: 1.25rem; }
+/* Modal profilo utente */
+.profile-info  { margin-bottom: 1.25rem; }
 .profile-email { font-size: .9rem; color: var(--gray-dark); font-weight: 500; }
 .profile-stat  { font-size: .82rem; color: var(--gray-mid); margin-top: .25rem; }
 
@@ -404,309 +800,58 @@ footer a { color: var(--blue-light); text-decoration: none; }
 }
 .btn-logout:hover { background: var(--red-light); border-color: var(--red-dark); color: var(--red-dark); }
 
-/* ── 12. READING BAR ─────────────────────────────────────────────── */
+
+/* ══════════════════════════════════════════════════════════════
+   15. ABOUT MODAL
+   Modal "Chi siamo" / info portale — trigger nell'header homepage.
+   FIX: rimosso pointer-events:all su display:none (era ininfluente).
+   ══════════════════════════════════════════════════════════════ */
+.about-trigger {
+  font-size: .82rem;
+  color: rgba(255,255,255,.75);
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: color .2s;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.4);
+  font-family: inherit;
+  padding: 0;
+}
+.about-trigger:hover { color: white; }
+
+/* FIX: rimosso pointer-events:all — inutile con display:none.
+   L'overlay va aperto via JS aggiungendo display:flex o una classe .is-open. */
+.about-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  backdrop-filter: blur(4px);
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   16. LETTURA & UTILITÀ
+   Barra di avanzamento lettura, label di sezione nav.
+   ══════════════════════════════════════════════════════════════ */
+
+/* Barra di avanzamento lettura — sottile striscia sotto l'header */
 #reading-bar  { position: fixed; top: var(--header-h); left: 0; right: 0; height: 3px; background: rgba(255,255,255,.1); z-index: 99; }
 #reading-fill { height: 100%; background: var(--blue-mid); width: 0; transition: width .2s; }
 
-/* ── 13. HEADER ACTIONS (download, mode toggle) ──────────────────── */
-.btn-download {
-  display: inline-flex; align-items: center; gap: .4rem;
-  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25);
-  color: #fff; text-decoration: none; border-radius: 20px;
-  padding: .35rem .9rem; font-size: .78rem; font-weight: 500;
-  font-family: var(--font-body); white-space: nowrap;
-  transition: background .2s;
-}
-.btn-download:hover { background: rgba(255,255,255,.22); }
-.btn-dl-label { display: none; }
-@media(min-width:600px) { .btn-dl-label { display: inline; } }
 
-/* ── DOWNLOAD BAR MOBILE ─────────────────────────────────────────── */
-.mode-toggle {
-  display: inline-flex; align-items: center; gap: .4rem;
-  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25);
-  color: #fff; border-radius: 20px; padding: .35rem .9rem;
-  font-size: .78rem; font-weight: 500; font-family: var(--font-body);
-  cursor: pointer; white-space: nowrap; transition: background .2s;
-}
-.mode-toggle:hover { background: rgba(255,255,255,.22); }
-
-.header-downloads {
-  display: flex; align-items: center; gap: .5rem;
-}
-@media(max-width:599px) {
-  .header-downloads {
-    position: fixed; top: var(--header-h); left: 0; right: 0; z-index: 99;
-    background: #17406A;
-    border-bottom: 1px solid rgba(255,255,255,.12);
-    padding: .4rem .75rem;
-    gap: .5rem;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .header-downloads::-webkit-scrollbar { display: none; }
-  .header-downloads .btn-download { flex-shrink: 0; }
-  .mode-toggle { display: none; }
-}
-body.aula-mode .header-downloads { display: none !important; }
-
-/* ── 14. NAV PART LABEL ──────────────────────────────────────────── */
-.nav-part-label {
-  font-size: .68rem; font-weight: 700; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--blue-mid);
-  padding: .75rem 1.25rem .35rem; opacity: .7;
-}
-
-/* ── 15. COVER EXTRAS ────────────────────────────────────────────── */
-.cover-eyebrow { font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--blue-light); margin-bottom: .5rem; }
-.cover-badges  { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .85rem; }
-.cover-badge   { font-size: .78rem; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.85); padding: .3rem .75rem; border-radius: 20px; }
-
-/* ── 16. PART HEADER ─────────────────────────────────────────────── */
-.part-header {
-  display: flex; align-items: stretch;
-  background: linear-gradient(135deg, var(--blue-dark) 0%, #2A6099 100%);
-  border-radius: var(--radius); overflow: hidden;
-  margin: 2.5rem 0 1.5rem; box-shadow: var(--shadow);
-}
-.part-num {
-  display: flex; align-items: center; justify-content: center;
-  min-width: 72px; background: rgba(0,0,0,.2);
-  font-family: var(--font-display); font-size: 2.5rem; color: #fff; padding: 1rem;
-}
-.part-titles   { flex: 1; padding: 1rem 1.25rem; }
-.part-title    { font-family: var(--font-display); font-size: 1.4rem; color: #fff; line-height: 1.2; }
-.part-subtitle { font-size: .82rem; color: var(--blue-light); font-style: italic; margin-top: .2rem; }
-
-/* ── 17. HIGHLIGHT GRID ──────────────────────────────────────────── */
-.highlight-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: .85rem; margin: 1.25rem 0;
-}
-@media(max-width:600px) { .highlight-grid { grid-template-columns: 1fr; } }
-.highlight-card {
-  background: var(--blue-pale); border: 1px solid var(--blue-light);
-  border-radius: var(--radius); padding: 1rem .9rem; text-align: center;
-}
-.hc-emoji { font-size: 1.6rem; margin-bottom: .4rem; }
-.hc-title { font-weight: 700; font-size: .88rem; color: var(--blue-dark); margin-bottom: .3rem; }
-.hc-body  { font-size: .8rem; color: var(--gray-mid); line-height: 1.55; }
-
-/* ── 18. DO/DON'T ────────────────────────────────────────────────── */
-.dodont { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; margin: 1.25rem 0; }
-@media(max-width:520px) { .dodont { grid-template-columns: 1fr; } }
-.do-col   { background: var(--green-light); border: 1px solid #b2dfc3; border-radius: var(--radius); padding: .9rem 1rem; }
-.dont-col { background: var(--amber-light); border: 1px solid #f0d080; border-radius: var(--radius); padding: .9rem 1rem; }
-.dodont-title { font-size: .8rem; font-weight: 700; margin-bottom: .5rem; }
-.do-col   .dodont-title { color: var(--green-dark); }
-.dont-col .dodont-title { color: var(--amber-dark); }
-.dodont ul { padding-left: 1.1rem; font-size: .82rem; line-height: 1.65; }
-.do-col   ul { color: var(--green-dark); }
-.dont-col ul { color: var(--amber-dark); }
-
-
-/* ═══════════════════════════════════════════════════════════
-   GUIDE LAYOUT — header, sidebar, hamburger
-   Condiviso tra tutte le sottopagine standard
-   v1.0 — migrato da inline a shared
-═══════════════════════════════════════════════════════════ */
-
-/* Header sottopagine */
-.guide-header {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  height: 56px;
-  background: var(--blue-dark);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 1.25rem;
-  box-shadow: 0 2px 16px rgba(0,0,0,.18);
-}
-.guide-header-back {
-  display: flex; align-items: center; gap: .4rem;
-  font-size: .78rem; color: rgba(255,255,255,.65);
-  text-decoration: none; transition: color .2s;
-  flex-shrink: 0;
-}
-.guide-header-back svg {
-  width: 16px; height: 16px; stroke: currentColor;
-  stroke-width: 2; fill: none;
-}
-.guide-header-back:hover { color: #fff; }
-.guide-header-center {
-  font-size: .85rem; color: rgba(255,255,255,.85);
-  font-weight: 500;
-  /* Su mobile: nascosto per fare spazio */
-  white-space: nowrap;
-  overflow: hidden; text-overflow: ellipsis;
-  max-width: 40%;
-}
-.guide-header-right {
-  display: flex; align-items: center; gap: .5rem;
-  flex-shrink: 0;
-}
-
-/* Hamburger */
-.hamburger {
-  display: flex; flex-direction: column; justify-content: center; gap: 5px;
-  width: 36px; height: 36px; cursor: pointer; padding: 6px;
-  border-radius: 6px; background: none; border: none;
-  transition: background var(--transition);
-}
-.hamburger:hover { background: rgba(255,255,255,.12); }
-.hamburger span {
-  display: block; height: 2px; background: #fff;
-  border-radius: 2px; transition: all var(--transition);
-}
-.hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.hamburger.is-open span:nth-child(2) { opacity: 0; }
-.hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-@media(min-width:900px) { .hamburger { display: none; } }
-
-/* Layout griglia */
-.guide-layout {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  max-width: 1200px;
-  margin: 56px auto 0;
-  min-height: calc(100vh - 56px);
-}
-@media(max-width:900px) { .guide-layout { grid-template-columns: 1fr; } }
-
-/* Sidebar */
-.guide-sidebar {
-  position: sticky; top: 56px;
-  height: calc(100vh - 56px);
-  overflow-y: auto;
-  background: var(--white);
-  border-right: 1px solid var(--blue-light);
-  padding: 1.25rem 0 2rem;
-}
-@media(max-width:900px) {
-  .guide-sidebar {
-    position: fixed; top: 56px; left: 0; bottom: 0; z-index: 90;
-    width: 260px;
-    transform: translateX(-100%);
-    transition: transform var(--transition);
-    box-shadow: 2px 0 20px rgba(31,78,121,.12);
-  }
-  .guide-sidebar.is-open { transform: translateX(0); }
-}
-.sidebar-overlay {
-  display: none; position: fixed; inset: 0; z-index: 80;
-  background: rgba(0,0,0,.35); backdrop-filter: blur(2px);
-}
-.sidebar-overlay.is-open { display: block; }
-@media(min-width:900px) { .sidebar-overlay { display: none !important; } }
-
-/* Sidebar nav */
-.sidebar-label {
-  font-size: .68rem; font-weight: 600; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--blue-mid);
-  padding: .75rem 1.25rem .35rem; opacity: .7;
-}
-.sidebar-nav { list-style: none; padding: 0; margin: 0; }
-.sidebar-nav .nav-item {
-  display: flex; align-items: center; gap: .6rem;
-  padding: .55rem 1.25rem; font-size: .84rem; color: var(--gray-mid);
-  text-decoration: none; cursor: pointer;
-  transition: all var(--transition); border-left: 3px solid transparent;
-}
-.sidebar-nav .nav-item:hover  { color: var(--blue-dark); background: var(--blue-pale); border-left-color: var(--blue-light); }
-.sidebar-nav .nav-item.active { color: var(--blue-dark); background: var(--blue-pale); border-left-color: var(--blue-mid); font-weight: 500; }
-.sidebar-divider { border: none; border-top: 1px solid var(--blue-light); margin: .75rem 1.25rem; }
-.sidebar-meta { padding: .75rem 1.25rem; font-size: .78rem; color: var(--gray-mid); line-height: 1.8; }
-
-/* Contenuto principale */
-.guide-main {
-  padding: 2.5rem 3rem 4rem;
-  max-width: 860px;
-  width: 100%; min-width: 0;
-}
-@media(max-width:900px) { .guide-main { padding: 1.5rem 1.5rem 3rem; } }
-
-/* ── RESPONSIVE MOBILE < 640px ── */
-@media(max-width:640px) {
-  .guide-header-center { display: none; }
-  .guide-header { padding: 0 .75rem; }
-}
-
-
-/* ── TWO-COL — due elementi affiancati, colonna su mobile ── */
-.two-col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  margin: 1.25rem 0;
-}
-@media(max-width:640px) {
-  .two-col { grid-template-columns: 1fr; }
-}
-
-
-/* ── FOOTER NAV LINK — navigazione tra risorse collegate ── */
-.footer-nav-link {
-  display: inline-flex; align-items: center; gap: .4rem;
-  font-size: .82rem; color: rgba(255,255,255,.7);
-  text-decoration: none;
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.15);
-  border-radius: 8px;
-  padding: .55rem .95rem;
-  transition: all var(--transition);
-}
-.footer-nav-link:hover {
-  background: rgba(255,255,255,.16);
-  border-color: rgba(255,255,255,.3);
-  color: #fff;
-}
-.footer-nav-link.primary {
-  background: var(--blue-mid);
-  border-color: var(--blue-mid);
-  color: #fff;
-}
-
-.footer-nav-link.primary:hover { background: #3d88cc; }
-
-/* ── NAV DROPDOWN — hamburger a tendina (subnet-calculator, hfs-server) ── */
-.nav-menu-btn {
-  display: none;
-  flex-direction: column; justify-content: center; gap: 5px;
-  width: 36px; height: 36px; padding: 6px;
-  background: none; border: none; cursor: pointer;
-  border-radius: 6px; transition: background var(--transition);
-  flex-shrink: 0;
-}
-.nav-menu-btn:hover { background: rgba(255,255,255,.12); }
-.nav-menu-btn span  { display: block; height: 2px; background: #fff; border-radius: 2px; transition: all var(--transition); }
-.nav-menu-btn.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.nav-menu-btn.is-open span:nth-child(2) { opacity: 0; }
-.nav-menu-btn.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-@media(max-width:600px) { .nav-menu-btn { display: flex; } }
-
-.nav-dropdown {
-  display: none;
-  position: fixed; top: 58px; left: 0; right: 0; z-index: 190;
-  background: var(--blue-dark);
-  border-top: 1px solid rgba(255,255,255,.1);
-  box-shadow: 0 8px 24px rgba(0,0,0,.25);
-  padding: .5rem 0;
-}
-.nav-dropdown.is-open { display: block; }
-.nav-dropdown a {
-  display: block;
-  padding: .7rem 1.5rem;
-  font-size: .88rem; color: rgba(255,255,255,.8);
-  text-decoration: none;
-  transition: background var(--transition), color var(--transition);
-  border-left: 3px solid transparent;
-}
-.nav-dropdown a:hover { background: rgba(255,255,255,.08); color: #fff; border-left-color: var(--blue-light); }
-.nav-dropdown .nav-dropdown-divider {
-  border: none; border-top: 1px solid rgba(255,255,255,.1);
-  margin: .35rem 0;
-}
-.nav-dropdown .nav-dropdown-label {
-  font-size: .65rem; font-weight: 700; letter-spacing: .1em;
-  text-transform: uppercase; color: rgba(255,255,255,.35);
-  padding: .5rem 1.5rem .2rem;
-}
+/* ══════════════════════════════════════════════════════════════
+   17. DARK MODE — PLACEHOLDER
+   Da implementare in agosto 2026.
+   Prerequisiti: variabilizzare colori semantici hardcoded,
+   risolvere colori inline Tier 2.
+   Pattern: [data-theme="dark"] { ... }
+   ══════════════════════════════════════════════════════════════ */
+/* [data-theme="dark"] { } */
