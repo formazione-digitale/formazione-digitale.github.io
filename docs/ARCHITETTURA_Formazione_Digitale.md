@@ -261,14 +261,44 @@ Consumato da: `stats.js` (GoatCounter + Schema.org), `mappa.html` (grafo), `mapp
 | Keep-alive | GitHub Actions (`supabase-keep-alive.yml`) — ogni giorno alle 08:00 UTC |
 | **Sicurezza** | **ATTENZIONE:** anon key in `supabase.js` (file pubblico). Migrazione a Vercel env variables — settembre 2026. |
 
+**URL Configuration (aggiornata 22/05/2026):**
+
+| Campo | Valore |
+|---|---|
+| Site URL | `https://formazione-digitale.it` |
+| Redirect URLs | `https://formazione-digitale.it/**` · `https://formazione-digitale.github.io/*` (compatibilità fino a settembre 2026) |
+
+**SMTP (Resend):**
+
+| Campo | Valore |
+|---|---|
+| Host | `smtp.resend.com` |
+| Port | `465` |
+| Username | `resend` |
+| Sender email | `info@formazione-digitale.it` |
+| Sender name | `Formazione Digitale` |
+| Minimum interval | 60 secondi per utente |
+
 ## Resend (email transazionale)
 
 | Campo | Valore |
 |---|---|
 | Scopo | SMTP per magic link Supabase |
 | Piano | Free (3.000 email/mese) |
-| Mittente attuale | onboarding@resend.dev (temporaneo — email in spam) |
-| Mittente futuro | info@formazione-digitale.it (dominio da verificare) |
+| Mittente | `info@formazione-digitale.it` |
+| Sender name | `Formazione Digitale` |
+| Dominio verificato | `formazione-digitale.it` — verificato il 22/05/2026 |
+| Regione | Ireland (eu-west-1) |
+
+**Record DNS aggiunti su Aruba (22/05/2026):**
+
+| Tipo | Nome host | Valore | TTL | Priorità |
+|---|---|---|---|---|
+| TXT | `resend._domainkey` | `p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC3rIaxKDJYcfgTTnfZ8Iz9MpB4GlAJAdUs5UqvdPKAcINGbg9borhQY6ntG2w+f3576wmz2qlh/FXSgMjAm02zTHg98GJuLOET+2+iH1fXZ2oEHm/YwXsyHXpoLs5HX8pSB49RiSsJFtRlq//84wMJ0K+fh5YVmcaw6jZT6SwbqQIDAQAB` | 1 Ora | — |
+| MX | `send` | `feedback-smtp.eu-west-1.amazonses.com` | 1 Ora | 10 |
+| TXT | `send` | `v=spf1 include:amazonses.com ~all` | 1 Ora | — |
+
+> **Test end-to-end superato (22/05/2026):** magic link arrivato in inbox da `Formazione Digitale <info@formazione-digitale.it>` — non in spam.
 
 ## GoatCounter (analytics)
 
@@ -499,6 +529,8 @@ Il nome è generico per design — può essere usato da qualsiasi guida con iden
 - [OK] Pillola Netiquette — DC 2.2–2.4 · DCEdu 6.4 · INDIRE A4 (20/05/2026)
 - [OK] `genera_sitemap.py` — `<lastmod>` da Git invece della data odierna (20/05/2026)
 - [OK] `shared-extended.css` — CSS proprietario estratto da `guida-libreoffice-base-query`, nome generico (20/05/2026)
+- [OK] Supabase URL Configuration aggiornata — Site URL e Redirect URLs migrati su formazione-digitale.it (22/05/2026)
+- [OK] Resend — dominio `formazione-digitale.it` verificato, SMTP collegato a Supabase, test end-to-end superato (22/05/2026)
 
 ---
 
@@ -531,8 +563,8 @@ Il nome è generico per design — può essere usato da qualsiasi guida con iden
 
 Completare **in questo ordine**:
 
-1. Aggiornare Redirect URL Supabase → formazione-digitale.it
-2. Configurare dominio verificato su Resend (email magic link in spam)
+1. ~~Aggiornare Redirect URL Supabase → formazione-digitale.it~~ **[OK — 22/05/2026]**
+2. ~~Configurare dominio verificato su Resend (email magic link in spam)~~ **[OK — 22/05/2026]**
 3. Login Google OAuth
 4. Aggiornare Privacy Policy con sezione autenticazione + cookie sessione
 5. Aggiungere banner cookie
@@ -549,6 +581,21 @@ Completare **in questo ordine**:
 | [OK] | Pillola netiquette / cittadinanza digitale | DC 2.2–2.4 · DCEdu 6.4 · INDIRE A4 |
 | [~] 1 | Guida/strumento collaborazione scolastica | INDIRE B1·B2 · DCEdu 1.2·2.3 |
 | [?] 2 | Risorsa valutazione digitale (rubric builder) | DCEdu 4.1·4.2·4.3 · INDIRE A3 |
+
+---
+
+## Pannelli di controllo infrastruttura
+
+Accessi amministrativi ai servizi del progetto, in ordine di ruolo nel sistema.
+
+| Servizio | Ruolo | URL admin |
+|---|---|---|
+| **Aruba** | Registrar dominio — DNS, record MX/TXT/CNAME | https://admin.aruba.it/PannelloAdmin/UI/Pages/Index.aspx |
+| **Vercel** | Hosting statico, deploy automatico, preview branch | https://vercel.com/cristianodepas-projects/formazione-digitale |
+| **GitHub** | Versioning, repository sorgente, GitHub Actions | https://github.com/formazione-digitale/formazione-digitale.github.io |
+| **Supabase** | Database PostgreSQL, Auth, API REST, keep-alive | https://supabase.com/dashboard/org/tyzvvkqjjnijuvxltdfm |
+| **Resend** | Email transazionale SMTP per magic link | https://resend.com/domains/1b4141d0-0578-4427-8b1b-86786e78c0ea |
+| **GoatCounter** | Analytics privacy-first, statistiche pageview | https://formazionedigitale.goatcounter.com/ |
 
 ---
 
