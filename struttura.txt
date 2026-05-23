@@ -1,5 +1,5 @@
 Elenco del percorso delle cartelle per il volume Acer
-Numero di serie del volume: 000000C9-544D:3F7C
+Numero di serie del volume: 000000AF-544D:3F7C
 C:.
 |   .gitignore
 |   .nojekyll
@@ -58,6 +58,10 @@ C:.
 |   +---guida-database
 |   |   |   index.html
 |   |   |   
+|   |   +---download
+|   |   |       database_intro.pdf
+|   |   |       dbms_modelli_relazionali.pptx
+|   |   |       
 |   |   \---img
 |   |           
 |   \---guida-libreoffice-base-query
@@ -118,13 +122,18 @@ C:.
 |   |       index.html
 |   |       
 |   +---break-even-point-tool
+|   |       BEP_Tool_Setup.exe
 |   |       calcolo-break-even-point.xlsx
 |   |       index.html
+|   |       index_.html
 |   |       
 |   +---guida-marketing
 |   |       index.html
 |   |       Introduzione_emarketing_2026_parte1.pptx
 |   |       Introduzione_emarketing_2026_parte2.pptx
+|   |       
+|   +---kanban-tool
+|   |       index.html
 |   |       
 |   \---pillola-seo
 |           index.html

@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanban Board — Formazione Digitale</title>
+<meta name="description" content="Strumento Kanban interattivo per organizzare le attività in colonne personalizzabili. Salvataggio automatico, export e import JSON.">
+<meta name="author" content="Cristiano De Pasquale">
+<link rel="canonical" href="https://formazione-digitale.it/marketing/kanban-tool/">
+<meta property="og:title" content="Kanban Board — Formazione Digitale">
+<meta property="og:description" content="Organizza le tue attività con un Kanban interattivo. Colonne configurabili, salvataggio automatico, export/import JSON.">
+<meta property="og:url" content="https://formazione-digitale.it/marketing/kanban-tool/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kanban Board — Formazione Digitale">
+<meta name="twitter:description" content="Organizza le tue attività con un Kanban interattivo.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Kanban Board",
+  "description": "Strumento Kanban interattivo per organizzare le attività in colonne personalizzabili.",
+  "url": "https://formazione-digitale.it/marketing/kanban-tool/",
+  "inLanguage": "it",
+  "educationalLevel": "Beginner",
+  "learningResourceType": "Strumento interattivo",
+  "author": { "@type": "Person", "name": "Cristiano De Pasquale" },
+  "isPartOf": { "@type": "WebSite", "name": "Formazione Digitale", "url": "https://formazione-digitale.it" }
+}
+</script>
+
+<script>(function(){const t=localStorage.getItem('fd-theme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="stylesheet" href="/css/shared.css?v=2">
+
+<style>
+/* ══════════════════════════════════════════════════════════
+   KANBAN TOOL — CSS specifico pagina
+══════════════════════════════════════════════════════════ */
+body { font-family:var(--font-body); color:var(--gray-dark); background:#F0F6FF; min-height:100vh; display:flex; flex-direction:column; }
+.page-wrap { flex:1; }
+
+/* ── HEADER ── */
+header {
+  background:var(--blue-dark); padding:0 2rem; height:58px;
+  display:flex; align-items:center; justify-content:space-between;
+  box-shadow:0 2px 16px rgba(0,0,0,.2); position:sticky; top:0; z-index:200;
+}
+.header-left { display:flex; align-items:center; gap:.75rem; }
+.header-back { font-size:.78rem; color:rgba(255,255,255,.65); text-decoration:none; transition:color .2s; }
+.header-back:hover { color:#fff; }
+.header-sep { width:1px; height:20px; background:rgba(255,255,255,.2); }
+.header-logo { font-family:var(--font-display); font-size:1.05rem; color:#fff; }
+.header-sub { font-size:.72rem; color:var(--blue-light); display:none; }
+@media(min-width:600px){ .header-sub { display:block; } }
+
+/* ── HERO ── */
+.hero {
+  background:linear-gradient(135deg,#1A3F63 0%,var(--blue-dark) 40%,#2A6099 100%);
+  padding:1.5rem 2.5rem;
+}
+.hero-inner {
+  max-width:1100px; margin:0 auto;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:2rem; flex-wrap:wrap;
+}
+.hero-left { display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; }
+.hero-eyebrow { font-size:.68rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--blue-light); margin-bottom:.25rem; }
+.hero-title { font-family:var(--font-display); font-size:clamp(1.3rem,2.5vw,1.9rem); color:#fff; line-height:1.1; white-space:nowrap; }
+.hero-title em { font-style:italic; color:var(--blue-light); }
+.hero-divider { width:1px; height:48px; background:rgba(255,255,255,.2); flex-shrink:0; }
+.hero-sub { font-size:.82rem; color:rgba(255,255,255,.72); max-width:400px; line-height:1.55; }
+.hero-right { display:flex; align-items:center; gap:.75rem; flex-shrink:0; flex-wrap:wrap; }
+
+.btn-hero {
+  display:inline-flex; align-items:center; gap:.4rem;
+  font-family:var(--font-body); font-size:.78rem; font-weight:600;
+  border-radius:50px; padding:.42rem 1.1rem; cursor:pointer;
+  transition:all .15s; text-decoration:none; border:none; white-space:nowrap;
+}
+.btn-manuale {
+  color:var(--blue-dark); background:#fff;
+}
+.btn-manuale:hover { background:var(--blue-light); }
+.btn-esporta {
+  color:#1E6B3C; background:#E8F5EE; border:1.5px solid #b2d8c0;
+}
+.btn-esporta:hover { background:#d0edda; }
+.btn-importa {
+  color:var(--gray-dark); background:rgba(255,255,255,.15); border:1.5px solid rgba(255,255,255,.3);
+  color:rgba(255,255,255,.9);
+}
+.btn-importa:hover { background:rgba(255,255,255,.25); }
+
+/* ── TAB BAR STICKY ── */
+.tab-sticky {
+  position:sticky; top:58px; z-index:150;
+  background:#E8F2FC; border-bottom:1px solid var(--blue-light);
+  padding:.6rem 1.5rem;
+}
+.tab-sticky-inner {
+  max-width:1100px; margin:0 auto;
+  display:flex; gap:.5rem; flex-wrap:wrap; align-items:center;
+}
+.tab-btn {
+  font-family:var(--font-body); font-size:.8rem; font-weight:500;
+  padding:.38rem .9rem; border-radius:20px;
+  border:1.5px solid var(--blue-light); background:#fff;
+  color:var(--gray-mid); cursor:pointer; transition:all .15s;
+}
+.tab-btn:hover { border-color:var(--blue-mid); color:var(--blue-mid); }
+.tab-btn.active { background:var(--blue-dark); color:#fff; border-color:var(--blue-dark); }
+.tab-divider { width:1px; height:22px; background:var(--blue-light); margin:0 .25rem; }
+.tab-stats { font-size:.78rem; color:var(--gray-mid); margin-left:.5rem; }
+.tab-stats strong { color:var(--blue-dark); }
+
+/* ── WRAP PAGINA ── */
+.page-wrap { max-width:1100px; margin:0 auto; padding:1.5rem 1.5rem 5rem; }
+
+/* ── TAB CONTENT ── */
+.tab-content { display:none; }
+.tab-content.active { display:block; }
+
+/* ════════════════════════════════════
+   TAB BOARD
+════════════════════════════════════ */
+.board-toolbar {
+  display:flex; align-items:center; gap:.5rem;
+  margin-bottom:1rem; flex-wrap:wrap;
+}
+.board-area {
+  display:flex; gap:1rem;
+  align-items:flex-start;
+  overflow-x:auto;
+  padding-bottom:.5rem;
+}
+
+/* colonna */
+.kb-column {
+  background:#fff; border:1.5px solid var(--blue-light);
+  border-radius:var(--radius); min-width:240px; flex:1 1 240px; max-width:320px;
+  display:flex; flex-direction:column;
+  box-shadow:0 2px 8px rgba(31,78,121,.07);
+  transition:border-color .15s, box-shadow .15s;
+}
+.kb-column.drag-over {
+  border-color:var(--green-dark);
+  box-shadow:0 0 0 2px rgba(30,107,60,.2), 0 4px 16px rgba(30,107,60,.1);
+}
+.kb-col-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:.75rem 1rem .6rem; border-bottom:1px solid var(--blue-light); gap:.5rem;
+}
+.kb-col-header-left { display:flex; align-items:center; gap:.5rem; min-width:0; }
+.kb-col-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+.kb-col-name { font-weight:700; font-size:.88rem; color:var(--gray-dark); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.kb-col-count { background:var(--blue-pale); color:var(--blue-mid); border-radius:12px; padding:1px 8px; font-size:.72rem; font-weight:700; flex-shrink:0; }
+.kb-col-actions { display:flex; gap:.15rem; flex-shrink:0; }
+.kb-icon-btn { background:none; border:none; cursor:pointer; font-size:.78rem; padding:3px 5px; border-radius:4px; opacity:.4; transition:opacity .15s; line-height:1; }
+.kb-icon-btn:hover { opacity:1; background:var(--gray-light); }
+
+/* task list */
+.kb-task-list { padding:.65rem .75rem; display:flex; flex-direction:column; gap:.55rem; flex:1; min-height:60px; }
+
+/* task card */
+.kb-task {
+  border-radius:7px; padding:.65rem .8rem;
+  cursor:grab; user-select:none;
+  box-shadow:0 1px 4px rgba(0,0,0,.07);
+  transition:transform .1s, box-shadow .1s, opacity .1s;
+  border-left:4px solid transparent;
+}
+.kb-task:active { cursor:grabbing; }
+.kb-task.is-dragging { opacity:.35; transform:rotate(1.5deg) scale(.97); }
+.kb-task-title { font-size:.87rem; font-weight:600; color:var(--gray-dark); line-height:1.35; margin-bottom:.2rem; }
+.kb-task-desc { font-size:.78rem; color:var(--gray-mid); line-height:1.45; margin-bottom:.45rem; }
+.kb-task-footer { display:flex; align-items:center; justify-content:space-between; }
+.kb-task-dot { width:8px; height:8px; border-radius:50%; }
+.kb-task-btns { display:flex; gap:.1rem; opacity:0; transition:opacity .15s; }
+.kb-task:hover .kb-task-btns { opacity:1; }
+.kb-task-btn { background:none; border:none; cursor:pointer; font-size:.72rem; padding:2px 4px; border-radius:3px; opacity:.55; transition:opacity .15s; }
+.kb-task-btn:hover { opacity:1; }
+
+/* colori task */
+.task-blue   { background:#EBF3FC; border-left-color:#2E75B6; }
+.task-green  { background:#E8F5EE; border-left-color:#1E6B3C; }
+.task-amber  { background:#FFF3CD; border-left-color:#7D4E00; }
+.task-red    { background:#FEE2E2; border-left-color:#B91C1C; }
+.task-purple { background:#F3E5F5; border-left-color:#6A1B9A; }
+.task-gray   { background:#F5F5F5; border-left-color:#999; }
+
+/* colonna vuota */
+.kb-empty {
+  text-align:center; padding:1.25rem .5rem;
+  font-size:.8rem; color:#aaa; font-style:italic;
+  border:1.5px dashed #ddd; border-radius:7px;
+}
+.kb-column.drag-over .kb-empty { border-color:var(--green-dark); color:var(--green-dark); background:var(--green-light); }
+
+/* add task */
+.kb-add-task-btn {
+  margin:0 .65rem .65rem; padding:.45rem;
+  background:none; border:1.5px dashed var(--blue-light);
+  border-radius:7px; color:var(--blue-mid);
+  font-size:.82rem; font-weight:600; cursor:pointer;
+  transition:background .15s, border-color .15s; font-family:var(--font-body);
+}
+.kb-add-task-btn:hover { background:var(--blue-pale); border-color:var(--blue-mid); }
+
+/* ── BOTTONI TOOLBAR BOARD ── */
+.btn-board {
+  display:inline-flex; align-items:center; gap:.3rem;
+  padding:.4rem .85rem; border-radius:6px; font-size:.8rem; font-weight:600;
+  cursor:pointer; font-family:var(--font-body); border:1.5px solid var(--blue-light);
+  background:#fff; color:var(--gray-dark); transition:all .15s; white-space:nowrap;
+}
+.btn-board:hover { background:var(--blue-pale); border-color:var(--blue-mid); }
+.btn-board-primary { background:var(--blue-dark); color:#fff; border-color:var(--blue-dark); }
+.btn-board-primary:hover { background:#183D5F; }
+.btn-board-danger { color:#B91C1C; border-color:#fca5a5; }
+.btn-board-danger:hover { background:#FEE2E2; }
+
+/* ════════════════════════════════════
+   TAB MANUALE
+════════════════════════════════════ */
+.manual-wrap { max-width:760px; }
+
+.man-section { padding:1.75rem 0; border-bottom:1px solid var(--blue-light); }
+.man-section:last-child { border-bottom:none; }
+.man-header { display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.1rem; }
+.man-num {
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:34px; height:34px; background:var(--blue-dark); color:#fff;
+  border-radius:7px; font-size:.82rem; font-weight:700; flex-shrink:0;
+}
+.man-titles { flex:1; }
+.man-title { font-family:var(--font-display); font-size:1.15rem; color:var(--blue-dark); line-height:1.2; }
+.man-subtitle { font-size:.8rem; color:var(--gray-mid); margin-top:.15rem; }
+
+/* flow */
+.flow-diagram {
+  display:flex; align-items:center; gap:.4rem; flex-wrap:wrap;
+  margin:1rem 0; padding:.9rem 1.1rem;
+  background:var(--blue-pale); border-radius:var(--radius); border:1px solid var(--blue-light);
+}
+.flow-step {
+  background:#fff; border:1.5px solid var(--blue-mid); color:var(--blue-dark);
+  border-radius:7px; padding:.4rem .9rem; font-size:.84rem; font-weight:600; white-space:nowrap;
+}
+.flow-arrow { font-size:1.1rem; color:var(--blue-mid); font-weight:700; }
+
+/* tabella definizioni */
+.def-table { width:100%; border-collapse:collapse; font-size:.88rem; margin:1rem 0; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); }
+.def-table th { background:var(--blue-dark); color:#fff; padding:.6rem 1rem; text-align:left; font-weight:600; font-size:.8rem; }
+.def-table td { padding:.6rem 1rem; border-bottom:1px solid var(--blue-light); vertical-align:top; line-height:1.5; }
+.def-table tr:last-child td { border-bottom:none; }
+.def-table tr:nth-child(even) td { background:var(--blue-pale); }
+
+/* step list */
+.step-list { display:flex; flex-direction:column; gap:.5rem; margin:1rem 0; }
+.step-item { display:flex; align-items:flex-start; gap:.85rem; background:#fff; border:1px solid var(--blue-light); border-radius:var(--radius); padding:.7rem 1rem; box-shadow:0 1px 3px rgba(0,0,0,.05); }
+.step-num-b { min-width:26px; height:26px; background:var(--blue-dark); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.78rem; font-weight:700; flex-shrink:0; }
+.step-text { font-size:.88rem; line-height:1.55; }
+.step-text strong { color:var(--blue-dark); }
+
+/* use-case */
+.usecase-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:.75rem; margin:1rem 0; }
+.usecase-card { background:var(--blue-pale); border:1px solid var(--blue-light); border-radius:var(--radius); padding:.85rem 1rem; }
+.usecase-emoji { font-size:1.4rem; margin-bottom:.35rem; }
+.usecase-title { font-weight:700; font-size:.88rem; color:var(--blue-dark); margin-bottom:.2rem; }
+.usecase-desc { font-size:.8rem; color:var(--gray-mid); line-height:1.5; }
+
+/* tips */
+.tips-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:.75rem; margin:1rem 0; }
+.tip-card { border-radius:var(--radius); padding:.9rem 1rem; }
+.tip-green { background:var(--green-light); border:1px solid #b2d8c0; }
+.tip-amber { background:var(--amber-light); border:1px solid #f0d080; }
+.tip-label { font-size:.7rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; margin-bottom:.35rem; }
+.tip-green .tip-label { color:var(--green-dark); }
+.tip-amber .tip-label { color:var(--amber-dark); }
+.tip-text { font-size:.84rem; line-height:1.55; }
+.tip-green .tip-text { color:var(--green-dark); }
+.tip-amber .tip-text { color:var(--amber-dark); }
+
+/* ════════════════════════════════════
+   MODAL
+════════════════════════════════════ */
+.kb-overlay {
+  position:fixed; inset:0; background:rgba(0,0,0,.45);
+  display:flex; align-items:center; justify-content:center;
+  z-index:500; padding:1rem;
+}
+.kb-modal {
+  background:#fff; border-radius:12px; padding:1.5rem;
+  width:100%; max-width:440px;
+  box-shadow:0 8px 40px rgba(0,0,0,.2);
+  display:flex; flex-direction:column; gap:.65rem;
+}
+.kb-modal-sm { max-width:360px; }
+.kb-modal-title { font-family:var(--font-display); font-size:1.1rem; color:var(--blue-dark); margin-bottom:.1rem; }
+.kb-label { font-size:.75rem; font-weight:700; color:var(--gray-mid); text-transform:uppercase; letter-spacing:.05em; }
+.kb-input {
+  width:100%; padding:.5rem .75rem;
+  border:1.5px solid var(--blue-light); border-radius:7px;
+  font-size:.9rem; font-family:var(--font-body); color:var(--gray-dark);
+  background:#fafcff; outline:none; transition:border-color .15s;
+}
+.kb-input:focus { border-color:var(--blue-mid); }
+.kb-color-picker { display:flex; gap:.4rem; flex-wrap:wrap; }
+.kb-color-swatch { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; border:2px solid #ddd; transition:transform .1s, border-color .1s; }
+.kb-color-swatch.selected { transform:scale(1.2); }
+.kb-color-dot { width:12px; height:12px; border-radius:50%; }
+.kb-modal-actions { display:flex; gap:.5rem; justify-content:flex-end; margin-top:.35rem; }
+.kb-btn-modal {
+  display:inline-flex; align-items:center; gap:.3rem;
+  padding:.45rem .95rem; border-radius:6px; font-size:.84rem; font-weight:600;
+  cursor:pointer; font-family:var(--font-body); border:1.5px solid transparent; transition:all .15s;
+}
+.kb-btn-cancel { background:#fff; color:var(--gray-dark); border-color:var(--blue-light); }
+.kb-btn-cancel:hover { background:var(--gray-light); }
+.kb-btn-ok { background:var(--blue-dark); color:#fff; }
+.kb-btn-ok:hover { background:#183D5F; }
+.kb-btn-del { background:#fff; color:#B91C1C; border-color:#fca5a5; }
+.kb-btn-del:hover { background:#FEE2E2; }
+
+/* ── TOAST ── */
+.kb-toast {
+  position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%);
+  background:var(--green-dark); color:#fff;
+  padding:.55rem 1.25rem; border-radius:8px;
+  font-size:.84rem; font-weight:600; box-shadow:0 4px 16px rgba(0,0,0,.2);
+  z-index:1000; white-space:nowrap; pointer-events:none;
+  opacity:1; transition:opacity .3s;
+}
+.kb-toast.error { background:#B91C1C; }
+.kb-toast.hiding { opacity:0; }
+
+/* ── MODAL MANUALE (stile BEP tool) ── */
+.man-overlay {
+  display:none; position:fixed; inset:0; z-index:400;
+  background:rgba(10,20,40,.55); backdrop-filter:blur(2px);
+  align-items:center; justify-content:center; padding:1rem;
+}
+.man-overlay.open { display:flex; }
+.man-modal {
+  background:#fff; border-radius:14px;
+  width:100%; max-width:720px; max-height:88vh;
+  display:flex; flex-direction:column;
+  box-shadow:0 16px 64px rgba(0,0,0,.35);
+  overflow:hidden;
+}
+.man-modal-head {
+  background:var(--blue-dark); padding:1.1rem 1.4rem;
+  display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-shrink:0;
+}
+.man-modal-head-left { display:flex; align-items:center; gap:.75rem; }
+.man-modal-icon { font-size:1.4rem; }
+.man-modal-title { font-family:var(--font-display); font-size:1.2rem; color:#fff; }
+.man-modal-sub { font-size:.72rem; color:rgba(255,255,255,.55); margin-top:.1rem; }
+.man-modal-close {
+  background:rgba(255,255,255,.15); border:none; color:#fff; border-radius:50%;
+  width:30px; height:30px; font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:background .15s; flex-shrink:0;
+}
+.man-modal-close:hover { background:rgba(255,255,255,.3); }
+.man-modal-nav {
+  display:flex; gap:.4rem; padding:.65rem 1.2rem; flex-wrap:wrap;
+  background:#EBF3FC; border-bottom:1px solid var(--blue-light); flex-shrink:0; overflow-x:auto;
+}
+.man-nav-btn {
+  font-family:var(--font-body); font-size:.75rem; font-weight:500;
+  padding:.28rem .75rem; border-radius:20px;
+  border:1.5px solid var(--blue-light); background:#fff;
+  color:var(--gray-mid); cursor:pointer; white-space:nowrap; transition:all .15s;
+}
+.man-nav-btn:hover { border-color:var(--blue-mid); color:var(--blue-mid); }
+.man-nav-btn.active { background:var(--blue-dark); color:#fff; border-color:var(--blue-dark); }
+.man-modal-body {
+  overflow-y:auto; padding:1.4rem 1.6rem 2rem; flex:1;
+  scroll-behavior:smooth;
+}
+
+/* ── FOOTER ── */
+footer { background:var(--blue-dark); color:rgba(255,255,255,.6); text-align:center; padding:2rem 1.5rem; font-size:.8rem; line-height:1.7; }
+footer strong { color:rgba(255,255,255,.9); }
+footer a { color:var(--blue-light); text-decoration:none; }
+footer a:hover { color:#fff; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:640px){
+  .hero { padding:1rem 1.25rem; }
+  .hero-divider { display:none; }
+  .hero-sub { max-width:100%; }
+  .page-wrap { padding:1rem 1rem 4rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══════════════════════════════════════════════════════ -->
+<header>
+  <div class="header-left">
+    <a href="/" class="header-back">← Portale</a>
+    <div class="header-sep"></div>
+    <span class="header-logo">Marketing e Digital Marketing</span>
+    <span class="header-sub">Formazione Digitale</span>
+  </div>
+</header>
+
+<!-- ══ HERO ════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div>
+        <div class="hero-eyebrow">Strumento interattivo · Organizzazione</div>
+        <h1 class="hero-title">📋 <em>Kanban</em> Board</h1>
+      </div>
+      <div class="hero-divider"></div>
+      <p class="hero-sub">Organizza le attività in colonne, trascina le card tra gli stati, personalizza il flusso di lavoro. Salvataggio automatico nel browser.</p>
+    </div>
+    <div class="hero-right">
+      <button class="btn-hero btn-manuale" onclick="openManuale()">📖 Manuale</button>
+      <label class="btn-hero btn-importa" style="cursor:pointer;">
+        📂 Importa
+        <input type="file" accept=".json" onchange="importBoard(event)" style="display:none">
+      </label>
+      <button class="btn-hero btn-esporta" onclick="exportBoard()">⬇ Esporta</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TAB BAR ══════════════════════════════════════════════════════ -->
+<div class="tab-sticky">
+  <div class="tab-sticky-inner">
+    <button class="tab-btn active" id="tab-btn-board" onclick="switchTab('board', this)">📋 Board</button>
+    <div class="tab-divider"></div>
+    <span class="tab-stats" id="kb-stats"><strong>0</strong> attività · <strong>0</strong> completate</span>
+  </div>
+</div>
+
+<!-- ══ MAIN ════════════════════════════════════════════════════════ -->
+<div class="page-wrap">
+
+  <!-- ── TAB BOARD (unico tab visibile) ──────────────────────────── -->
+  <div id="tab-board" class="tab-content active">
+
+    <!-- toolbar -->
+    <div class="board-toolbar">
+      <button class="btn-board btn-board-primary" onclick="openAddCol()">+ Colonna</button>
+      <button class="btn-board btn-board-danger"  onclick="askReset()">↺ Reset</button>
+    </div>
+
+    <!-- board -->
+    <div class="board-area" id="board-area">
+      <!-- colonne generate via JS -->
+    </div>
+
+  </div><!-- /tab-board -->
+
+</div><!-- /page-wrap -->
+
+<!-- ── FOOTER ── -->
+<footer>
+  <strong>Formazione Digitale</strong> · <a href="/">Torna alla home</a><br>
+  Strumento didattico libero e gratuito. I dati inseriti non vengono salvati né trasmessi.
+  <p style="margin-top:.5rem;font-size:.78rem;">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<!-- ══ MODAL MANUALE ════════════════════════════════════════════════ -->
+<div class="man-overlay" id="man-overlay" onclick="manOverlayClick(event)">
+  <div class="man-modal">
+    <div class="man-modal-head">
+      <div class="man-modal-head-left">
+        <div class="man-modal-icon">📖</div>
+        <div>
+          <div class="man-modal-title">Manuale d'uso</div>
+          <div class="man-modal-sub">Kanban Board · Formazione Digitale</div>
+        </div>
+      </div>
+      <button class="man-modal-close" onclick="closeManuale()">✕</button>
+    </div>
+    <div class="man-modal-nav">
+      <button class="man-nav-btn active" onclick="manScrollTo('man-s1', this)">1. Cos'è il Kanban</button>
+      <button class="man-nav-btn" onclick="manScrollTo('man-s2', this)">2. Come si usa</button>
+      <button class="man-nav-btn" onclick="manScrollTo('man-s3', this)">3. Esempi pratici</button>
+      <button class="man-nav-btn" onclick="manScrollTo('man-s4', this)">4. Consigli</button>
+    </div>
+    <div class="man-modal-body" id="man-modal-body">
+
+      <!-- 1 — Cos'è il Kanban -->
+      <div class="man-section" id="man-s1">
+        <div class="man-header">
+          <div class="man-num">1</div>
+          <div class="man-titles">
+            <div class="man-title">Cos'è il metodo Kanban</div>
+            <div class="man-subtitle">Origine, principi e a cosa serve</div>
+          </div>
+        </div>
+        <p>Il <strong>Kanban</strong> (看板, in giapponese "cartello visivo") è un metodo di gestione del lavoro nato negli anni '50 in Toyota per ottimizzare la produzione. Oggi è usato in tutto il mondo per organizzare qualsiasi tipo di attività: studio, lavoro di gruppo, progetti personali, sviluppo software.</p>
+        <p style="margin-top:.75rem;">Il principio è semplice: <strong>rendere visibile il lavoro</strong>. Ogni attività è una scheda che si sposta tra colonne che indicano il suo stato.</p>
+        <div class="flow-diagram">
+          <div class="flow-step">📝 Da fare</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">⚙️ In corso</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">✅ Completato</div>
+        </div>
+        <table class="def-table">
+          <thead><tr><th>Termine</th><th>Significato</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Board</strong></td><td>La bacheca che contiene tutte le colonne e le attività.</td></tr>
+            <tr><td><strong>Colonna</strong></td><td>Rappresenta uno stato del flusso (es. "Da fare", "In corso").</td></tr>
+            <tr><td><strong>Card</strong></td><td>Una singola attività, con titolo, descrizione e colore etichetta.</td></tr>
+            <tr><td><strong>Flusso</strong></td><td>Il movimento delle card da sinistra (in attesa) a destra (completato).</td></tr>
+            <tr><td><strong>WIP</strong></td><td>Work in Progress — le attività in lavorazione. Meno WIP = più concentrazione.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 2 — Come si usa -->
+      <div class="man-section" id="man-s2">
+        <div class="man-header">
+          <div class="man-num">2</div>
+          <div class="man-titles">
+            <div class="man-title">Come usare lo strumento</div>
+            <div class="man-subtitle">Guida operativa passo per passo</div>
+          </div>
+        </div>
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-num-b">1</div>
+            <div class="step-text"><strong>Aggiungi un'attività</strong> — Clicca su <strong>"+ Aggiungi attività"</strong> in fondo a qualsiasi colonna. Inserisci titolo (obbligatorio), descrizione opzionale e colore etichetta.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num-b">2</div>
+            <div class="step-text"><strong>Sposta le card</strong> — Trascina una card da una colonna all'altra. La colonna di destinazione si evidenzia quando puoi rilasciare.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num-b">3</div>
+            <div class="step-text"><strong>Modifica o elimina</strong> — Passa il mouse su una card per vedere le icone ✏️ (modifica) e 🗑 (elimina).</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num-b">4</div>
+            <div class="step-text"><strong>Gestisci le colonne</strong> — Usa ✏️ e 🗑 nell'intestazione di ogni colonna. Il pulsante <strong>+ Colonna</strong> ne aggiunge una nuova.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num-b">5</div>
+            <div class="step-text"><strong>Esporta / Importa</strong> — I bottoni nell'hero scaricano un file JSON (backup) o caricano una board salvata in precedenza.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num-b">6</div>
+            <div class="step-text"><strong>Reset</strong> — Il pulsante ↺ riporta la board ai valori predefiniti. Viene chiesta conferma prima di eliminare tutto.</div>
+          </div>
+        </div>
+        <div class="box box-warn" style="margin-top:.75rem;">
+          <div class="box-label">⚠️ Attenzione</div>
+          <p>I dati sono salvati nel <strong>browser locale</strong>. Se cancelli la cronologia o usi un altro dispositivo, la board non sarà disponibile. Esporta regolarmente il file JSON come backup.</p>
+        </div>
+      </div>
+
+      <!-- 3 — Esempi pratici -->
+      <div class="man-section" id="man-s3">
+        <div class="man-header">
+          <div class="man-num">3</div>
+          <div class="man-titles">
+            <div class="man-title">Esempi pratici</div>
+            <div class="man-subtitle">Come adattare il Kanban a diversi contesti</div>
+          </div>
+        </div>
+        <div class="usecase-grid">
+          <div class="usecase-card">
+            <div class="usecase-emoji">📚</div>
+            <div class="usecase-title">Studio</div>
+            <div class="usecase-desc">Da studiare → In studio → Verificato. Ogni materia o argomento è una card.</div>
+          </div>
+          <div class="usecase-card">
+            <div class="usecase-emoji">🎯</div>
+            <div class="usecase-title">Progetto di gruppo</div>
+            <div class="usecase-desc">Idee → Assegnato → In lavorazione → Consegnato. Una card per compito.</div>
+          </div>
+          <div class="usecase-card">
+            <div class="usecase-emoji">🛒</div>
+            <div class="usecase-title">Piano marketing</div>
+            <div class="usecase-desc">Idee → Da approvare → In produzione → Pubblicato. Per campagne social.</div>
+          </div>
+          <div class="usecase-card">
+            <div class="usecase-emoji">💼</div>
+            <div class="usecase-title">Attività personali</div>
+            <div class="usecase-desc">Da fare → In corso → In attesa → Fatto. Sostituisce le liste tradizionali.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 — Consigli -->
+      <div class="man-section" id="man-s4">
+        <div class="man-header">
+          <div class="man-num">4</div>
+          <div class="man-titles">
+            <div class="man-title">Consigli per usarlo bene</div>
+            <div class="man-subtitle">Errori comuni e buone pratiche</div>
+          </div>
+        </div>
+        <div class="tips-grid">
+          <div class="tip-card tip-green">
+            <div class="tip-label">✅ Fai così</div>
+            <div class="tip-text">Tieni <strong>poche card "In corso"</strong>: lavorare su troppe cose insieme riduce l'efficienza. Meglio finire qualcosa che iniziarne di nuove.</div>
+          </div>
+          <div class="tip-card tip-amber">
+            <div class="tip-label">⚠️ Evita questo</div>
+            <div class="tip-text">Non creare troppe colonne: con più di 5–6 la board diventa confusa. Meglio poche colonne chiare.</div>
+          </div>
+          <div class="tip-card tip-green">
+            <div class="tip-label">✅ Fai così</div>
+            <div class="tip-text">Usa i <strong>colori</strong> per categorizzare: rosso = urgente, verde = in attesa di risposta, blu = compito scolastico.</div>
+          </div>
+          <div class="tip-card tip-amber">
+            <div class="tip-label">⚠️ Evita questo</div>
+            <div class="tip-text">Non dimenticare di <strong>esportare il JSON</strong> come backup. Se cambi browser o dispositivo, la board locale non è disponibile.</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /man-modal-body -->
+  </div><!-- /man-modal -->
+</div><!-- /man-overlay -->
+
+<!-- ══ MODAL TASK ═══════════════════════════════════════════════════ -->
+<div class="kb-overlay" id="modal-task" style="display:none" onclick="overlayClick(event,'modal-task')">
+  <div class="kb-modal">
+    <div class="kb-modal-title" id="modal-task-title">Nuova attività</div>
+    <div class="kb-label">Titolo *</div>
+    <input class="kb-input" id="task-input-title" placeholder="Descrivi l'attività..." maxlength="120">
+    <div class="kb-label">Descrizione (opzionale)</div>
+    <textarea class="kb-input" id="task-input-desc" placeholder="Note aggiuntive..." maxlength="400" style="height:72px;resize:vertical;"></textarea>
+    <div class="kb-label">Colonna</div>
+    <select class="kb-input" id="task-input-col"></select>
+    <div class="kb-label">Etichetta colore</div>
+    <div class="kb-color-picker" id="task-color-picker"></div>
+    <div class="kb-modal-actions">
+      <button class="kb-btn-modal kb-btn-cancel" onclick="closeModal('modal-task')">Annulla</button>
+      <button class="kb-btn-modal kb-btn-ok" id="modal-task-save" onclick="saveTask()">Aggiungi</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL COLONNA ════════════════════════════════════════════════ -->
+<div class="kb-overlay" id="modal-col" style="display:none" onclick="overlayClick(event,'modal-col')">
+  <div class="kb-modal">
+    <div class="kb-modal-title" id="modal-col-title">Nuova colonna</div>
+    <div class="kb-label">Nome colonna</div>
+    <input class="kb-input" id="col-input-name" placeholder="Es. In revisione..." maxlength="40"
+      onkeydown="if(event.key==='Enter') saveColumn()">
+    <div id="col-position-wrap">
+      <div class="kb-label">Inserisci dopo</div>
+      <select class="kb-input" id="col-input-after"></select>
+    </div>
+    <div class="kb-modal-actions">
+      <button class="kb-btn-modal kb-btn-cancel" onclick="closeModal('modal-col')">Annulla</button>
+      <button class="kb-btn-modal kb-btn-ok" onclick="saveColumn()">Salva</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL CONFERMA ═══════════════════════════════════════════════ -->
+<div class="kb-overlay" id="modal-confirm" style="display:none" onclick="overlayClick(event,'modal-confirm')">
+  <div class="kb-modal kb-modal-sm">
+    <div class="kb-modal-title">Conferma</div>
+    <p id="confirm-msg" style="font-size:.9rem;color:var(--gray-dark);line-height:1.55;"></p>
+    <div class="kb-modal-actions">
+      <button class="kb-btn-modal kb-btn-cancel" onclick="closeModal('modal-confirm')">Annulla</button>
+      <button class="kb-btn-modal kb-btn-del" id="confirm-ok-btn">Conferma</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TOAST ════════════════════════════════════════════════════════ -->
+<div class="kb-toast" id="kb-toast" style="display:none"></div>
+
+<!-- ══ SCRIPT ══════════════════════════════════════════════════════ -->
+<script src="/scripts/ui.js" defer></script>
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   KANBAN BOARD — vanilla JS
+   Salvataggio: localStorage  |  Export/Import: JSON
+═══════════════════════════════════════════════════════════════ */
+
+const STORAGE_KEY  = 'fd-kanban-v1';
+const DEFAULT_COLS = ['Da fare', 'In corso', 'Completato'];
+const TASK_COLORS  = [
+  { id:'blue',   bg:'#EBF3FC', border:'#2E75B6' },
+  { id:'green',  bg:'#E8F5EE', border:'#1E6B3C' },
+  { id:'amber',  bg:'#FFF3CD', border:'#7D4E00' },
+  { id:'red',    bg:'#FEE2E2', border:'#B91C1C' },
+  { id:'purple', bg:'#F3E5F5', border:'#6A1B9A' },
+  { id:'gray',   bg:'#F5F5F5', border:'#999999' },
+];
+const COLOR_LABELS = { blue:'Blu', green:'Verde', amber:'Giallo', red:'Rosso', purple:'Viola', gray:'Grigio' };
+const COL_DOT_COLOR = (i, total) =>
+  i === 0 ? '#2E75B6' : i === total - 1 ? '#1E6B3C' : '#7D4E00';
+
+/* ── STATO ── */
+let state = { columns: [...DEFAULT_COLS], tasks: [] };
+let dragTaskId   = null;
+let editTaskId   = null;
+let editColMode  = null;
+let confirmCb    = null;
+let selectedColor = 'blue';
+
+/* ── INIT ── */
+(function init() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    try { state = JSON.parse(saved); } catch {}
+  } else {
+    state.tasks = [
+      { id:'t_001', title:'Esempio: pianifica un obiettivo', desc:'Modifica o elimina questa card.', column:'Da fare',    color:'blue',  createdAt:new Date().toISOString() },
+      { id:'t_002', title:'Esempio: attività in corso',      desc:'Trascinami in un\'altra colonna!', column:'In corso',  color:'green', createdAt:new Date().toISOString() },
+      { id:'t_003', title:'Esempio: attività completata',    desc:'',                                 column:'Completato',color:'gray',  createdAt:new Date().toISOString() },
+    ];
+  }
+  renderBoard();
+})();
+
+function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+function uid()  { return 't_' + Date.now() + '_' + Math.random().toString(36).slice(2,6); }
+
+/* ════════════════════════════════════════════════════════════
+   MODAL MANUALE
+════════════════════════════════════════════════════════════ */
+function openManuale() {
+  document.getElementById('man-overlay').classList.add('open');
+  document.getElementById('man-modal-body').scrollTop = 0;
+  /* reset nav */
+  document.querySelectorAll('.man-nav-btn').forEach((b,i) => b.classList.toggle('active', i===0));
+}
+function closeManuale() {
+  document.getElementById('man-overlay').classList.remove('open');
+}
+function manOverlayClick(e) {
+  if (e.target === e.currentTarget) closeManuale();
+}
+function manScrollTo(id, btn) {
+  const el = document.getElementById(id);
+  if (el) {
+    document.getElementById('man-modal-body').scrollTo({ top: el.offsetTop - 16, behavior:'smooth' });
+  }
+  document.querySelectorAll('.man-nav-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+/* chiudi manuale con Escape */
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeManuale(); });
+
+/* ════════════════════════════════════════════════════════════
+   TAB SWITCH (solo board ora)
+════════════════════════════════════════════════════════════ */
+function switchTab(name, btn, fromHero) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  /* attiva il btn corrispondente nella tab bar */
+  const tabBarBtn = document.getElementById('tab-btn-' + name);
+  if (tabBarBtn) tabBarBtn.classList.add('active');
+  if (fromHero) window.scrollTo({ top: document.querySelector('.tab-sticky').offsetTop, behavior:'smooth' });
+}
+
+/* ════════════════════════════════════════════════════════════
+   RENDER BOARD
+════════════════════════════════════════════════════════════ */
+function renderBoard() {
+  const area = document.getElementById('board-area');
+  area.innerHTML = '';
+
+  state.columns.forEach((col, ci) => {
+    const colTasks = state.tasks.filter(t => t.column === col);
+    const el = document.createElement('div');
+    el.className = 'kb-column';
+    el.dataset.col = col;
+
+    el.addEventListener('dragover', e => { e.preventDefault(); el.classList.add('drag-over'); });
+    el.addEventListener('dragleave', () => el.classList.remove('drag-over'));
+    el.addEventListener('drop', () => onDrop(col, el));
+
+    el.innerHTML = `
+      <div class="kb-col-header">
+        <div class="kb-col-header-left">
+          <div class="kb-col-dot" style="background:${COL_DOT_COLOR(ci, state.columns.length)}"></div>
+          <span class="kb-col-name">${escHtml(col)}</span>
+          <span class="kb-col-count">${colTasks.length}</span>
+        </div>
+        <div class="kb-col-actions">
+          <button class="kb-icon-btn" title="Rinomina" onclick="openRenameCol('${escAttr(col)}')">✏️</button>
+          ${state.columns.length > 1
+            ? `<button class="kb-icon-btn" title="Elimina" onclick="askDeleteCol('${escAttr(col)}')">🗑</button>`
+            : ''}
+        </div>
+      </div>
+      <div class="kb-task-list">
+        ${colTasks.length === 0
+          ? '<div class="kb-empty">Nessuna attività</div>'
+          : colTasks.map(renderTask).join('')}
+      </div>
+      <button class="kb-add-task-btn" onclick="openAddTask('${escAttr(col)}')">+ Aggiungi attività</button>
+    `;
+    area.appendChild(el);
+  });
+
+  updateStats();
+}
+
+function renderTask(t) {
+  const c = TASK_COLORS.find(x => x.id === t.color) || TASK_COLORS[0];
+  return `
+    <div class="kb-task task-${t.color}" id="task-${t.id}"
+         draggable="true"
+         ondragstart="onDragStart('${t.id}')"
+         ondragend="onDragEnd()">
+      <div class="kb-task-title">${escHtml(t.title)}</div>
+      ${t.desc ? `<div class="kb-task-desc">${escHtml(t.desc)}</div>` : ''}
+      <div class="kb-task-footer">
+        <div class="kb-task-dot" style="background:${c.border}"></div>
+        <div class="kb-task-btns">
+          <button class="kb-task-btn" onclick="openEditTask('${t.id}')">✏️</button>
+          <button class="kb-task-btn" onclick="askDeleteTask('${t.id}')">🗑</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function updateStats() {
+  const total = state.tasks.length;
+  const last  = state.columns[state.columns.length - 1];
+  const done  = state.tasks.filter(t => t.column === last).length;
+  document.getElementById('kb-stats').innerHTML =
+    `<strong>${total}</strong> attività &nbsp;·&nbsp; <strong>${done}</strong> completate`;
+}
+
+/* ════════════════════════════════════════════════════════════
+   DRAG & DROP
+════════════════════════════════════════════════════════════ */
+function onDragStart(id) {
+  dragTaskId = id;
+  setTimeout(() => { const el = document.getElementById('task-' + id); if (el) el.classList.add('is-dragging'); }, 0);
+}
+function onDragEnd() {
+  if (dragTaskId) { const el = document.getElementById('task-' + dragTaskId); if (el) el.classList.remove('is-dragging'); }
+  dragTaskId = null;
+  document.querySelectorAll('.kb-column').forEach(c => c.classList.remove('drag-over'));
+}
+function onDrop(colName, colEl) {
+  colEl.classList.remove('drag-over');
+  if (!dragTaskId) return;
+  const task = state.tasks.find(t => t.id === dragTaskId);
+  if (task && task.column !== colName) { task.column = colName; save(); renderBoard(); }
+  dragTaskId = null;
+}
+
+/* ════════════════════════════════════════════════════════════
+   MODAL TASK
+════════════════════════════════════════════════════════════ */
+function openAddTask(col) {
+  editTaskId = null; selectedColor = 'blue';
+  document.getElementById('modal-task-title').textContent = 'Nuova attività';
+  document.getElementById('modal-task-save').textContent  = 'Aggiungi';
+  document.getElementById('task-input-title').value = '';
+  document.getElementById('task-input-desc').value  = '';
+  populateColSelect(col); renderColorPicker();
+  openModal('modal-task');
+  setTimeout(() => document.getElementById('task-input-title').focus(), 80);
+}
+function openEditTask(id) {
+  const t = state.tasks.find(t => t.id === id); if (!t) return;
+  editTaskId = id; selectedColor = t.color || 'blue';
+  document.getElementById('modal-task-title').textContent = 'Modifica attività';
+  document.getElementById('modal-task-save').textContent  = 'Salva';
+  document.getElementById('task-input-title').value = t.title;
+  document.getElementById('task-input-desc').value  = t.desc || '';
+  populateColSelect(t.column); renderColorPicker();
+  openModal('modal-task');
+  setTimeout(() => document.getElementById('task-input-title').focus(), 80);
+}
+function populateColSelect(sel) {
+  document.getElementById('task-input-col').innerHTML =
+    state.columns.map(c => `<option value="${escAttr(c)}" ${c===sel?'selected':''}>${escHtml(c)}</option>`).join('');
+}
+function renderColorPicker() {
+  document.getElementById('task-color-picker').innerHTML = TASK_COLORS.map(c => `
+    <button class="kb-color-swatch ${selectedColor===c.id?'selected':''}"
+            style="background:${c.bg};border-color:${selectedColor===c.id?c.border:'#ddd'}"
+            title="${COLOR_LABELS[c.id]}" onclick="selectColor('${c.id}')">
+      <div class="kb-color-dot" style="background:${c.border}"></div>
+    </button>`).join('');
+}
+function selectColor(id) { selectedColor = id; renderColorPicker(); }
+function saveTask() {
+  const title = document.getElementById('task-input-title').value.trim();
+  if (!title) { document.getElementById('task-input-title').focus(); return; }
+  const desc = document.getElementById('task-input-desc').value.trim();
+  const col  = document.getElementById('task-input-col').value;
+  if (editTaskId) {
+    const t = state.tasks.find(t => t.id === editTaskId);
+    if (t) { t.title = title; t.desc = desc; t.color = selectedColor; t.column = col; }
+    showToast('Attività aggiornata ✓');
+  } else {
+    state.tasks.push({ id:uid(), title, desc, color:selectedColor, column:col, createdAt:new Date().toISOString() });
+    showToast('Attività aggiunta ✓');
+  }
+  save(); renderBoard(); closeModal('modal-task');
+}
+
+/* ════════════════════════════════════════════════════════════
+   MODAL COLONNA
+════════════════════════════════════════════════════════════ */
+function openAddCol() {
+  editColMode = null;
+  document.getElementById('modal-col-title').textContent = 'Nuova colonna';
+  document.getElementById('col-input-name').value = '';
+  document.getElementById('col-position-wrap').style.display = 'block';
+  /* popola select "Inserisci dopo" — default: penultima colonna */
+  const sel = document.getElementById('col-input-after');
+  sel.innerHTML = state.columns.map((c, i) =>
+    `<option value="${i}" ${i === state.columns.length - 2 ? 'selected' : ''}>${escHtml(c)}</option>`
+  ).join('');
+  openModal('modal-col');
+  setTimeout(() => document.getElementById('col-input-name').focus(), 80);
+}
+function openRenameCol(col) {
+  editColMode = col;
+  document.getElementById('modal-col-title').textContent = `Rinomina "${col}"`;
+  document.getElementById('col-input-name').value = col;
+  document.getElementById('col-position-wrap').style.display = 'none'; /* rinomina: no posizione */
+  openModal('modal-col');
+  setTimeout(() => document.getElementById('col-input-name').focus(), 80);
+}
+function saveColumn() {
+  const name = document.getElementById('col-input-name').value.trim();
+  if (!name) return;
+  if (editColMode === null) {
+    if (state.columns.includes(name)) { showToast('Colonna già esistente', true); return; }
+    const afterIdx = parseInt(document.getElementById('col-input-after').value, 10);
+    state.columns.splice(afterIdx + 1, 0, name); /* inserisce DOPO l'indice scelto */
+    showToast(`Colonna "${name}" aggiunta ✓`);
+  } else {
+    const old = editColMode;
+    if (name !== old && state.columns.includes(name)) { showToast('Colonna già esistente', true); return; }
+    state.columns = state.columns.map(c => c === old ? name : c);
+    state.tasks.forEach(t => { if (t.column === old) t.column = name; });
+    showToast('Colonna rinominata ✓');
+  }
+  save(); renderBoard(); closeModal('modal-col');
+}
+
+/* ════════════════════════════════════════════════════════════
+   CONFERME
+════════════════════════════════════════════════════════════ */
+function askDeleteTask(id) {
+  document.getElementById('confirm-msg').textContent = "Eliminare questa attività? L'operazione non è reversibile.";
+  confirmCb = () => { state.tasks = state.tasks.filter(t => t.id !== id); save(); renderBoard(); showToast('Attività eliminata'); };
+  openModal('modal-confirm');
+}
+function askDeleteCol(col) {
+  const n = state.tasks.filter(t => t.column === col).length;
+  document.getElementById('confirm-msg').textContent =
+    `Eliminare la colonna "${col}"${n > 0 ? ` e le sue ${n} attività` : ''}? L'operazione non è reversibile.`;
+  confirmCb = () => {
+    state.columns = state.columns.filter(c => c !== col);
+    state.tasks   = state.tasks.filter(t => t.column !== col);
+    save(); renderBoard(); showToast(`Colonna "${col}" eliminata`);
+  };
+  openModal('modal-confirm');
+}
+function askReset() {
+  document.getElementById('confirm-msg').textContent = 'Reimpostare la board ai valori predefiniti? Tutti i dati saranno persi.';
+  confirmCb = () => { state = { columns:[...DEFAULT_COLS], tasks:[] }; save(); renderBoard(); showToast('Board reimpostata'); };
+  openModal('modal-confirm');
+}
+document.getElementById('confirm-ok-btn').addEventListener('click', () => {
+  if (confirmCb) { confirmCb(); confirmCb = null; }
+  closeModal('modal-confirm');
+});
+
+/* ════════════════════════════════════════════════════════════
+   EXPORT / IMPORT
+════════════════════════════════════════════════════════════ */
+function exportBoard() {
+  const payload = { version:1, appName:'Formazione Digitale — Kanban Board', exportedAt:new Date().toISOString(), columns:state.columns, tasks:state.tasks };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type:'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = `kanban-${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); URL.revokeObjectURL(url);
+  showToast('Board esportata ✓');
+}
+function importBoard(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (!data.columns || !data.tasks) throw new Error();
+      state = { columns:data.columns, tasks:data.tasks };
+      save(); renderBoard(); showToast('Board importata ✓');
+    } catch { showToast('File non valido', true); }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+/* ════════════════════════════════════════════════════════════
+   MODAL HELPERS
+════════════════════════════════════════════════════════════ */
+function openModal(id)  { document.getElementById(id).style.display = 'flex'; }
+function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+function overlayClick(e, id) { if (e.target === e.currentTarget) closeModal(id); }
+
+/* ════════════════════════════════════════════════════════════
+   TOAST
+════════════════════════════════════════════════════════════ */
+let toastTimer = null;
+function showToast(msg, isError) {
+  const el = document.getElementById('kb-toast');
+  el.textContent = msg;
+  el.className = 'kb-toast' + (isError ? ' error' : '');
+  el.style.display = 'block'; el.classList.remove('hiding');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    el.classList.add('hiding');
+    setTimeout(() => { el.style.display = 'none'; }, 300);
+  }, 2600);
+}
+
+/* ════════════════════════════════════════════════════════════
+   ESCAPE HELPERS
+════════════════════════════════════════════════════════════ */
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function escAttr(s) { return String(s).replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
+</script>
+
+</body>
+</html>

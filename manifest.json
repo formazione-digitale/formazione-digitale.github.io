@@ -784,5 +784,31 @@
     "digcompedu": [
       "DCEdu 6.4"
     ]
-  }
+  },
+{
+  "path": "/marketing/kanban-tool/",
+  "label": "Kanban Board",
+  "short": "Kanban Board",
+  "cat": "strumento",
+  "emoji": "📋",
+  "tags": [
+    "kanban",
+    "board",
+    "organizzazione",
+    "attività",
+    "task",
+    "progetto",
+    "management",
+    "collaborazione",
+    "flusso di lavoro"
+  ],
+  "meta": "Interattivo · Salvataggio locale · Export/Import JSON · Livello base",
+  "description": "Organizza le tue attività con una board Kanban interattiva. Colonne configurabili, drag & drop, salvataggio automatico ed export JSON.",
+  "featured": false,
+  "active": true,
+  "digcomp": ["DC 2.4", "DC 3.1"],
+  "digcomp_level": "foundation",
+  "digcomp_areas": ["comunicazione", "creazione"],
+  "digcompedu": ["DCEdu 3.4"]
+}
 ]
