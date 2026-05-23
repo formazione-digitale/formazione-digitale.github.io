@@ -489,6 +489,103 @@ Il nome è generico per design — può essere usato da qualsiasi guida con iden
 
 ---
 
+# App Desktop — Neutralino
+
+## BEP Tool (Calcolatore Break-Even Point)
+
+Versione desktop standalone del tool web `marketing/break-even-point-tool/`. Distribuita come installer Windows tramite Inno Setup.
+
+### Architettura
+
+| File | Ruolo |
+|---|---|
+| `resources/index.html` | Markup puro — nessun CSS o JS inline |
+| `resources/bep.css` | CSS standalone completo — non dipende da `shared.css` |
+| `resources/bep.js` | JS completo — logica tool + API Neutralino filesystem |
+| `resources/chart.umd.js` | Chart.js 4.4.1 locale — nessuna CDN |
+| `resources/neutralino.js` | Bridge Neutralino — API native |
+| `resources/icons/icona.png` | Icona app (PNG per Neutralino) |
+| `resources/icons/icona.ico` | Icona app (ICO per Inno Setup) |
+| `resources/default-data/scenari_default.json` | 6 scenari dimostrativi precaricati |
+| `neutralino.config.json` | Configurazione app Neutralino |
+| `bep_tool_setup.iss` | Script Inno Setup per installer Windows |
+
+### Configurazione Neutralino
+
+| Campo | Valore |
+|---|---|
+| `applicationId` | `it.formazionedigitale.bep-tool` |
+| `binaryName` | `BEP-Tool` |
+| `title` | `Calcolatore Break-Even Point` |
+| `version` | `1.0.0` |
+| `minWidth` | `1000px` |
+| `nativeAllowList` | `filesystem.readFile`, `filesystem.writeFile`, `filesystem.createDirectory`, `os.getPath`, `window.setTitle` |
+
+### Dati utente
+
+I file JSON sono salvati in `Documenti\BEP Tool\` tramite `Neutralino.os.getPath('documents')` — path corretto in qualsiasi ambiente, compatibile con OneDrive.
+
+| File | Contenuto | Quando |
+|---|---|---|
+| `parametri.json` | Ultimo stato completo (autosave) | Ad ogni `calc()` |
+| `scenari.json` | Libreria scenari salvati dall'utente | Al salvataggio esplicito |
+
+Al primo install, `scenari.json` viene popolato con 6 scenari dimostrativi (Inno Setup flag `onlyifdoesntexist`).
+
+### Scenari dimostrativi inclusi
+
+| Scenario | CF Iniziali | Prezzo | CV Totali |
+|---|---|---|---|
+| Maglietta stampata | € 8.000 | € 24 | € 10 |
+| Hamburgeria | € 45.000 | € 13 | € 6 |
+| App in abbonamento | € 35.000 | € 9,99 | € 2,17 |
+| E-commerce abbigliamento | € 12.000 | € 59 | € 29 |
+| Boutique hotel (per notte) | € 280.000 | € 120 | € 64 |
+| Libreria indipendente | € 25.000 | € 16 | € 9,20 |
+
+### Doppia linea di sviluppo — nota importante
+
+La versione web (`marketing/break-even-point-tool/index.html`) e la versione desktop (`bep-tool/resources/`) sono **file separati**. Ogni modifica funzionale va replicata manualmente su entrambe le versioni.
+
+**Differenze versione desktop vs web:**
+
+| Elemento | Web | Desktop |
+|---|---|---|
+| Chart.js | CDN | Locale (`chart.umd.js`) |
+| Google Fonts | Sì | No — font di sistema |
+| GoatCounter | Sì | No |
+| Meta SEO/OG/Schema.org | Sì | No |
+| Bottone Excel | Sì | No |
+| Footer web | Sì | No |
+| Barra scenari | No | Sì |
+| Salvataggio JSON | No | Sì (autosave + esplicito) |
+| Titolo finestra dinamico | No | Sì |
+| `ui.js` | Sì | No |
+
+### Percorso progetto desktop
+
+```
+MATERIALE_DIDATTICO\NEUTRALINO\bep-tool\
+|-- neutralino.config.json
+|-- bep_tool_setup.iss
+|-- resources\
+|   |-- index.html
+|   |-- bep.css
+|   |-- bep.js
+|   |-- chart.umd.js
+|   |-- neutralino.js
+|   |-- neutralino.d.ts
+|   |-- icons\
+|   |   |-- icona.png
+|   |   \-- icona.ico
+|   \-- default-data\
+|       \-- scenari_default.json
+|-- bin\          <- binari Neutralino v6.7.0
+\-- dist\         <- output neu build + installer
+```
+
+---
+
 # Roadmap
 
 ## Completato
@@ -531,6 +628,10 @@ Il nome è generico per design — può essere usato da qualsiasi guida con iden
 - [OK] `shared-extended.css` — CSS proprietario estratto da `guida-libreoffice-base-query`, nome generico (20/05/2026)
 - [OK] Supabase URL Configuration aggiornata — Site URL e Redirect URLs migrati su formazione-digitale.it (22/05/2026)
 - [OK] Resend — dominio `formazione-digitale.it` verificato, SMTP collegato a Supabase, test end-to-end superato (22/05/2026)
+- [OK] BEP tool web — CV dinamici (min 1, max 10), barre incidenza, warning prezzo < CV, contatore voci, animazioni, aria-label, fix BEP con `Math.ceil()`, terminologia Payback Period (22/05/2026)
+- [OK] BEP tool — app desktop Neutralino: `bep.css` standalone, `bep.js` esterno, gestione scenari JSON, autosave parametri, titolo finestra dinamico, manuale d'uso modale, 6 scenari dimostrativi precaricati (22/05/2026)
+- [OK] BEP tool desktop — dati salvati in `Documenti\BEP Tool\` via `Neutralino.os.getPath('documents')`, sincronizzazione automatica OneDrive (22/05/2026)
+- [OK] BEP tool desktop — installer `BEP_Tool_Setup.exe` generato con Inno Setup (22/05/2026)
 
 ---
 
@@ -539,6 +640,8 @@ Il nome è generico per design — può essere usato da qualsiasi guida con iden
 - Cancellare 16 PNG orfani in `guida-libreoffice-base-query/img/` dopo verifica manuale (`find_orphan_png.py --delete`)
 - `index.html` riga 1578 — `formazione-digitale-logo.png` → `.webp`
 - Footer standard unificato — definire template e propagare con script
+- BEP tool web — aggiungere bottone Manuale (modale) e bottone download app desktop nell'hero
+- BEP tool web — deploy su Vercel dopo aggiornamenti
 
 ---
 
