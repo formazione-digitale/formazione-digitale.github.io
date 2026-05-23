@@ -79,18 +79,16 @@ header{background:var(--blue-dark);padding:0 2rem;height:58px;display:flex;align
 .header-logo { font-family: var(--font-display); font-size: 1.05rem; color: #fff; }
 .header-sub { font-size: .72rem; color: var(--blue-light); font-weight: 300; display: none; }
 
-/* ── HERO ── */
+/* ── HERO — compatto, una riga ── */
 .hero{background:linear-gradient(135deg,#1A3F63 0%,var(--blue-dark) 40%,#2A6099 100%);padding:1.5rem 2.5rem;}
-.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:auto 1fr auto;gap:2.5rem;align-items:center;}
-.hero-left{display:flex;flex-direction:column;gap:.25rem;flex-shrink:0;}
+.hero-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;}
+.hero-left{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;}
 .hero-eyebrow{font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-light);margin-bottom:.25rem;}
 .hero-title{font-family:var(--font-display);font-size:clamp(1.3rem,2.5vw,1.9rem);color:#fff;line-height:1.1;white-space:nowrap;}
 .hero-title em{font-style:italic;color:var(--blue-light);}
-.hero-center{display:flex;flex-direction:column;align-items:center;gap:.85rem;text-align:center;}
-.hero-sub{font-size:.82rem;color:rgba(255,255,255,.72);max-width:280px;line-height:1.6;}
-.hero-actions{display:flex;gap:.5rem;justify-content:center;}
-.hero-right{display:flex;flex-direction:column;gap:.5rem;flex-shrink:0;align-items:flex-end;}
-@media(max-width:860px){.hero-inner{grid-template-columns:1fr;gap:1.25rem;}.hero-center{align-items:flex-start;text-align:left;}.hero-right{align-items:flex-start;flex-direction:row;flex-wrap:wrap;}.hero-title{white-space:normal;}}
+.hero-divider{width:1px;height:48px;background:rgba(255,255,255,.2);flex-shrink:0;}
+.hero-sub{font-size:.82rem;color:rgba(255,255,255,.72);max-width:360px;line-height:1.55;}
+.hero-right{display:flex;align-items:center;gap:.75rem;flex-shrink:0;}
 
 /* Bottone Excel */
 .btn-excel{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--font-body);font-size:.78rem;font-weight:600;color:#1E6B3C;background:#E8F5EE;border:1.5px solid #b2d8c0;border-radius:50px;padding:.4rem 1rem;text-decoration:none;cursor:pointer;transition:background var(--transition),transform .15s;position:relative;}
@@ -333,46 +331,17 @@ footer a{color:var(--blue-light);text-decoration:none;}
   </div>
 </header>
 
-<!-- HERO 3 colonne -->
+<!-- HERO compatto -->
 <section class="hero">
   <div class="hero-inner">
-
-    <!-- SX: identità -->
     <div class="hero-left">
-      <div class="hero-eyebrow">Strumento interattivo · Marketing &amp; Economia</div>
-      <h1 class="hero-title">Calcolatore <em>Break-Even Point</em></h1>
-    </div>
-
-    <!-- CENTRO: descrizione + azioni cognitive -->
-    <div class="hero-center">
-      <p class="hero-sub">Modifica i parametri e osserva in tempo reale come cambia il punto di pareggio, il grafico e il tempo di rientro dell'investimento.</p>
-      <div class="hero-actions">
-        <button class="btn-formule" onclick="toggleManuale()">📖 Manuale</button>
-        <div style="position:relative;">
-          <button class="btn-formule" id="btn-formule" onclick="toggleFormule(event)">📐 Formule</button>
-          <div class="formule-popup" id="formule-popup">
-            <div class="fp-item">
-              <div class="fp-label">Formula BEP</div>
-              <div class="fp-eq">BEP = CF Iniziali ÷ MC Effettivo</div>
-            </div>
-            <div class="fp-item">
-              <div class="fp-label">Margine di Contribuzione</div>
-              <div class="fp-eq">MC = Prezzo − CV unitari</div>
-            </div>
-            <div class="fp-item">
-              <div class="fp-label">MC Effettivo</div>
-              <div class="fp-eq">MC_eff = MC − (CF mens. / V mens.)</div>
-            </div>
-            <div class="fp-item">
-              <div class="fp-label">Tempo di rientro</div>
-              <div class="fp-eq">T = CF iniziali ÷ (V mens. × MC_eff)</div>
-            </div>
-          </div>
-        </div>
+      <div>
+        <div class="hero-eyebrow">Strumento interattivo · Marketing &amp; Economia</div>
+        <h1 class="hero-title">Calcolatore <em>Break-Even Point</em></h1>
       </div>
+      <div class="hero-divider"></div>
+      <p class="hero-sub">Modifica i parametri e osserva in tempo reale come cambia il punto di pareggio, il grafico e il tempo di rientro dell'investimento.</p>
     </div>
-
-    <!-- DX: download -->
     <div class="hero-right">
       <div style="position:relative;">
         <a href="calcolo-break-even-point.xlsx" download
@@ -391,8 +360,29 @@ footer a{color:var(--blue-light);text-decoration:none;}
           <span id="app-tip" class="xl-tip">Scarica l'app desktop per Windows — salvataggio scenari incluso!</span>
         </a>
       </div>
+      <button class="btn-formule" onclick="toggleManuale()">📖 Manuale</button>
+      <div style="position:relative;">
+        <button class="btn-formule" id="btn-formule" onclick="toggleFormule(event)">📐 Formule</button>
+        <div class="formule-popup" id="formule-popup">
+          <div class="fp-item">
+            <div class="fp-label">Formula BEP</div>
+            <div class="fp-eq">BEP = CF Iniziali ÷ MC Effettivo</div>
+          </div>
+          <div class="fp-item">
+            <div class="fp-label">Margine di Contribuzione</div>
+            <div class="fp-eq">MC = Prezzo − CV unitari</div>
+          </div>
+          <div class="fp-item">
+            <div class="fp-label">MC Effettivo</div>
+            <div class="fp-eq">MC_eff = MC − (CF mens. / V mens.)</div>
+          </div>
+          <div class="fp-item">
+            <div class="fp-label">Tempo di rientro</div>
+            <div class="fp-eq">T = CF iniziali ÷ (V mens. × MC_eff)</div>
+          </div>
+        </div>
+      </div>
     </div>
-
   </div>
 </section>
 
