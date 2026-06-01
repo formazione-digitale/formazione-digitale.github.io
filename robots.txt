@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
+Disallow: /*.odb
+Disallow: /*.pdf
+Disallow: /*.zip
+Disallow: /*.xlsx
+Disallow: /*.xls
+Disallow: /*.csv
+Disallow: /*.json
 Sitemap: https://formazione-digitale.it/sitemap.xml
-
