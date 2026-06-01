@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistiche — Formazione Digitale</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Classifica delle pagine più visitate su Formazione Digitale.">
+<link rel="canonical" href="https://formazione-digitale.it/stats/">
+<link rel="icon" href="/img/favicon.ico">
+
+<!-- GoatCounter -->
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+/* ── VARIABILI ──────────────────────────────────────────────────── */
+:root {
+  --blue-dark:  #1F4E79;
+  --blue-mid:   #2E75B6;
+  --blue-light: #D6E8F7;
+  --blue-pale:  #EBF3FC;
+  --gray-dark:  #2C2C2C;
+  --gray-mid:   #666;
+  --gray-light: #F5F5F5;
+  --green-dark: #1E6B3C;
+  --green-light:#E8F5EE;
+  --amber-dark: #7D4E00;
+  --amber-light:#FFF3CD;
+  --font-display:'DM Serif Display', Georgia, serif;
+  --font-body:   'DM Sans', system-ui, sans-serif;
+  --radius: 10px;
+  --shadow: 0 2px 16px rgba(31,78,121,.10);
+}
+
+/* ── RESET ──────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: var(--font-body);
+  background: var(--gray-light);
+  color: var(--gray-dark);
+  min-height: 100vh;
+}
+
+/* ── HEADER ─────────────────────────────────────────────────────── */
+header {
+  background: linear-gradient(135deg, var(--blue-dark) 0%, #2E75B6 100%);
+  padding: 0 2rem;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 12px rgba(31,78,121,.25);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-back {
+  font-size: .82rem;
+  color: rgba(255,255,255,.75);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  transition: color .2s;
+}
+.header-back:hover { color: #fff; }
+.header-title {
+  font-family: var(--font-display);
+  color: #fff;
+  font-size: 1.1rem;
+  letter-spacing: .01em;
+}
+
+/* ── MAIN ───────────────────────────────────────────────────────── */
+main {
+  max-width: 860px;
+  margin: 2.5rem auto;
+  padding: 0 1.25rem 4rem;
+}
+
+/* ── HERO ───────────────────────────────────────────────────────── */
+.hero {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--blue-dark);
+  margin-bottom: .4rem;
+}
+.hero p {
+  color: var(--gray-mid);
+  font-size: .92rem;
+}
+
+/* ── KPI BAR ────────────────────────────────────────────────────── */
+.kpi-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+.kpi-card {
+  flex: 1;
+  min-width: 140px;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem 1.5rem;
+  border-top: 4px solid var(--blue-mid);
+  text-align: center;
+}
+.kpi-value {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--blue-dark);
+  line-height: 1;
+  margin-bottom: .3rem;
+}
+.kpi-label {
+  font-size: .78rem;
+  color: var(--gray-mid);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/* ── CLASSIFICA ─────────────────────────────────────────────────── */
+.classifica-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+.classifica-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--blue-dark);
+}
+.last-update {
+  font-size: .78rem;
+  color: var(--gray-mid);
+}
+
+/* ── RIGHE CLASSIFICA ───────────────────────────────────────────── */
+.rank-list {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.rank-item {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .85rem 1.25rem;
+  transition: transform .15s, box-shadow .15s;
+  border-left: 4px solid transparent;
+}
+.rank-item:hover {
+  transform: translateX(3px);
+  box-shadow: 0 4px 20px rgba(31,78,121,.13);
+}
+.rank-item.rank-1 { border-left-color: #F5A623; }
+.rank-item.rank-2 { border-left-color: #9B9B9B; }
+.rank-item.rank-3 { border-left-color: #C87941; }
+.rank-item.rank-top { border-left-color: var(--blue-mid); }
+
+.rank-pos {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--gray-mid);
+  min-width: 2rem;
+  text-align: center;
+}
+.rank-item.rank-1 .rank-pos { color: #F5A623; }
+.rank-item.rank-2 .rank-pos { color: #9B9B9B; }
+.rank-item.rank-3 .rank-pos { color: #C87941; }
+
+.rank-medal {
+  font-size: 1.3rem;
+  min-width: 1.8rem;
+  text-align: center;
+}
+
+.rank-info {
+  flex: 1;
+  min-width: 0;
+}
+.rank-label {
+  font-weight: 600;
+  font-size: .95rem;
+  color: var(--gray-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rank-cat {
+  font-size: .75rem;
+  color: var(--gray-mid);
+  margin-top: .1rem;
+}
+
+.rank-bar-wrap {
+  flex: 1;
+  max-width: 200px;
+  height: 6px;
+  background: var(--blue-light);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.rank-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue-mid), var(--blue-dark));
+  border-radius: 99px;
+  transition: width .6s cubic-bezier(.4,0,.2,1);
+  width: 0;
+}
+
+.rank-count {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--blue-dark);
+  min-width: 3.5rem;
+  text-align: right;
+}
+.rank-count small {
+  display: block;
+  font-family: var(--font-body);
+  font-size: .68rem;
+  color: var(--gray-mid);
+  font-weight: 400;
+}
+
+/* ── LOADING / ERROR ────────────────────────────────────────────── */
+.stato {
+  text-align: center;
+  padding: 3rem;
+  color: var(--gray-mid);
+  font-size: .95rem;
+}
+.stato .spinner {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--blue-light);
+  border-top-color: var(--blue-mid);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+  margin-bottom: .75rem;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── FOOTER ─────────────────────────────────────────────────────── */
+.page-footer {
+  text-align: center;
+  margin-top: 3rem;
+  font-size: .78rem;
+  color: var(--gray-mid);
+}
+.page-footer a {
+  color: var(--blue-mid);
+  text-decoration: none;
+}
+.page-footer a:hover { text-decoration: underline; }
+
+/* ── RESPONSIVE ─────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .rank-bar-wrap { display: none; }
+  .hero h1 { font-size: 1.5rem; }
+  .kpi-value { font-size: 1.6rem; }
+  header { padding: 0 1rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="/" class="header-back">← Formazione Digitale</a>
+  <span class="header-title">Statistiche</span>
+</header>
+
+<main>
+  <div class="hero">
+    <h1>Classifica risorse</h1>
+    <p>Pageview aggregate — dati GoatCounter (privacy-first, senza cookie)</p>
+  </div>
+
+  <div class="kpi-bar">
+    <div class="kpi-card">
+      <div class="kpi-value" id="kpi-totale">—</div>
+      <div class="kpi-label">Pageview totali</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value" id="kpi-risorse">—</div>
+      <div class="kpi-label">Risorse attive</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value" id="kpi-top">—</div>
+      <div class="kpi-label">Risorsa più visitata</div>
+    </div>
+  </div>
+
+  <div class="classifica-header">
+    <span class="classifica-title">Tutte le risorse</span>
+    <span class="last-update" id="last-update"></span>
+  </div>
+
+  <div class="rank-list" id="rank-list">
+    <div class="stato">
+      <div class="spinner"></div>
+      <div>Caricamento statistiche…</div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer">
+  Formazione Digitale &middot; <a href="/">Torna alla home</a>
+</footer>
+
+<script>
+// ── LEGACY PATHS (stesso elenco di stats.js) ─────────────────────
+const gcLegacy = [
+  { path: '/',           label: 'Home', isHome: true },
+  { path: '/index.html', label: 'Home', isHome: true },
+  { path: '/intelligenza-artificiale/Guida_Prompting.html',                   mergeWith: '/intelligenza-artificiale/guida-prompting/' },
+  { path: '/intelligenza-artificiale/prompt-builder.html',                    mergeWith: '/intelligenza-artificiale/prompt-builder/' },
+  { path: '/intelligenza-artificiale/prompt-builder',                         mergeWith: '/intelligenza-artificiale/prompt-builder/' },
+  { path: '/intelligenza-artificiale/Guida_PeerReview_IA.html',               mergeWith: '/intelligenza-artificiale/guida-peer-review-ia/' },
+  { path: '/database/LibreOfficeBase_Query/Guida_LibreOfficeBase_Query.html', mergeWith: '/database/guida-libreoffice-base-query/' },
+  { path: '/database/LibreOfficeBase_Query',                                  mergeWith: '/database/guida-libreoffice-base-query/' },
+  { path: '/marketing/Guida_Marketing.html',                                  mergeWith: '/marketing/guida-marketing/' },
+  { path: '/marketing/guida-marketing',                                       mergeWith: '/marketing/guida-marketing/' },
+  { path: '/marketing/bep-tool.html',                                         mergeWith: '/marketing/break-even-point-tool/' },
+  { path: '/sicurezza/cybersicurezza-personale/',                             mergeWith: '/sicurezza/pillola-cybersicurezza/' },
+];
+
+// ── CATEGORIA da path ────────────────────────────────────────────
+function categoriaFromPath(path) {
+  if (path.includes('/intelligenza-artificiale/')) return 'Intelligenza Artificiale';
+  if (path.includes('/marketing/'))               return 'Marketing';
+  if (path.includes('/database/'))                return 'Database';
+  if (path.includes('/elaborazione-testi/'))      return 'Elaborazione Testi';
+  if (path.includes('/sicurezza/'))               return 'Sicurezza';
+  if (path.includes('/networking/'))              return 'Networking';
+  if (path.includes('/sistemi/'))                 return 'Sistemi';
+  if (path.includes('/competenze-digitali/'))     return 'Competenze Digitali';
+  return '';
+}
+
+// ── MEDAGLIA ─────────────────────────────────────────────────────
+function medaglia(pos) {
+  if (pos === 1) return '🥇';
+  if (pos === 2) return '🥈';
+  if (pos === 3) return '🥉';
+  return '';
+}
+
+// ── CARICA STATS ─────────────────────────────────────────────────
+async function caricaStats() {
+  const base = 'https://formazionedigitale.goatcounter.com/counter/';
+  const elList = document.getElementById('rank-list');
+
+  try {
+    // 1. Manifest
+    const manifestRes = await fetch('/manifest.json');
+    const manifest    = manifestRes.ok ? await manifestRes.json() : [];
+    const active      = manifest.filter(r => r.active);
+
+    // 2. Lista completa
+    const allPaths = [
+      ...active.map(r => ({ path: r.path, label: r.short, isHome: false })),
+      ...gcLegacy,
+    ];
+
+    // 3. Fetch parallelo
+    const risposte = await Promise.all(
+      allPaths.map(p =>
+        fetch(base + p.path.replace(/^\//, '').replace(/\/$/, '') + '.json')
+          .then(r => r.ok ? r.json() : { count: 0 })
+          .catch(() => ({ count: 0 }))
+      )
+    );
+
+    // 4. Aggrega (stessa logica di stats.js)
+    let homeCount = 0;
+    const pageMap = {};
+    active.forEach(r => {
+      pageMap[r.path] = { label: r.short, path: r.path, count: 0 };
+    });
+
+    risposte.forEach((d, i) => {
+      const pv   = parseInt(d.count || 0);
+      const item = allPaths[i];
+      if (item.isHome) { homeCount += pv; return; }
+      if (item.mergeWith) {
+        if (pageMap[item.mergeWith]) pageMap[item.mergeWith].count += pv;
+        else homeCount += pv;
+        return;
+      }
+      if (pageMap[item.path]) pageMap[item.path].count += pv;
+    });
+
+    const pages  = Object.values(pageMap).sort((a, b) => b.count - a.count);
+    const totale = pages.reduce((s, p) => s + p.count, 0) + homeCount;
+    const maxPv  = pages[0]?.count || 1;
+
+    // 5. KPI
+    document.getElementById('kpi-totale').textContent =
+      totale >= 1000 ? (totale / 1000).toFixed(1) + 'k' : totale.toLocaleString('it-IT');
+    document.getElementById('kpi-risorse').textContent = active.length;
+    document.getElementById('kpi-top').textContent     = pages[0]?.label || '—';
+    document.getElementById('last-update').textContent =
+      'Aggiornato: ' + new Date().toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' });
+
+    // 6. Render classifica
+    elList.innerHTML = pages.map((p, i) => {
+      const pos     = i + 1;
+      const pct     = Math.round((p.count / maxPv) * 100);
+      const catStr  = categoriaFromPath(p.path);
+      const rankCls = pos <= 3 ? `rank-${pos}` : pos <= 10 ? 'rank-top' : '';
+      return `
+        <div class="rank-item ${rankCls}">
+          <span class="rank-pos">${pos}</span>
+          <span class="rank-medal">${medaglia(pos)}</span>
+          <div class="rank-info">
+            <div class="rank-label">${p.label}</div>
+            ${catStr ? `<div class="rank-cat">${catStr}</div>` : ''}
+          </div>
+          <div class="rank-bar-wrap">
+            <div class="rank-bar" data-pct="${pct}"></div>
+          </div>
+          <div class="rank-count">
+            ${p.count.toLocaleString('it-IT')}
+            <small>pageview</small>
+          </div>
+        </div>`;
+    }).join('');
+
+    // 7. Anima le barre con piccolo ritardo
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.rank-bar').forEach(bar => {
+        bar.style.width = bar.dataset.pct + '%';
+      });
+    });
+
+  } catch(e) {
+    elList.innerHTML = '<div class="stato">Impossibile caricare le statistiche. Riprova più tardi.</div>';
+  }
+}
+
+caricaStats();
+</script>
+
+</body>
+</html>

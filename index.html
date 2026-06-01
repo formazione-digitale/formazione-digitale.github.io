@@ -251,6 +251,15 @@ header {
 .gc-top-label { font-size: .78rem; color: var(--gray-dark); }
 .gc-top-count { font-family: var(--font-display); font-size: .95rem; color: var(--blue-mid); font-weight: 600; }
 
+.gc-top-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: color .2s;
+}
+.gc-top-link:hover {
+  color: var(--blue-mid);
+}
 
 /* ── MAIN ───────────────────────────────────────────────── */
 main { max-width: 1040px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
@@ -854,7 +863,8 @@ body.modal-open { overflow: hidden; }
   <div class="stat"><div class="stat-num" id="gc-total">—</div><div class="stat-label">Pageview totali</div></div>
   <div style="width:1px;height:40px;background:var(--blue-light);align-self:center;flex-shrink:0;"></div>
   <div class="stat stat-top">
-    <div class="stat-label" style="margin-bottom:.4rem;">Pagine più visitate</div>
+    <a href="/stats/" class="gc-top-header gc-top-link" title="Vedi classifica completa →">PAGINE PIÙ VISITATE ↗</a>
+
     <div id="gc-top" class="gc-top-list">
       <div class="gc-top-item"><span class="gc-top-label">—</span><span class="gc-top-count">—</span></div>
     </div>
