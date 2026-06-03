@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modello Logico Relazionale — Formazione Digitale</title>
+  <meta name="description" content="Dal diagramma E-R alle tabelle relazionali: chiavi primarie, chiavi esterne, relazioni 1:N e N:M con esercizi interattivi.">
+  <link rel="stylesheet" href="/css/shared-extended.css?v=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── VARIABILI LOCALI ── */
+    :root {
+      --db-blue:    #1c4f8a;
+      --db-blue-lt: #d4e6f8;
+      --db-green:   #1a6b3a;
+      --db-green-lt:#d4f0e0;
+      --db-red:     #b02020;
+      --db-red-lt:  #fde8e8;
+      --db-amber:   #7a4800;
+      --db-amber-lt:#fff0cc;
+      --db-purple:  #5a1a8a;
+      --db-purple-lt:#f0e0ff;
+      --pk-color:   #d64f2a;
+      --fk-color:   #2a6dd6;
+      --radius-sm:  6px;
+    }
+
+    /* ── TOC ── */
+    .toc-wrap {
+      background: var(--ink);
+      border-bottom: 1px solid #333;
+      position: sticky; top: 0; z-index: 50;
+    }
+    nav.toc {
+      padding: 0.6rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.2rem 0.1rem;
+      align-items: center;
+      justify-content: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    nav.toc a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: #888;
+      text-decoration: none;
+      padding: 3px 8px;
+      border-radius: 3px;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+    nav.toc a:hover, nav.toc a.active {
+      color: var(--accent);
+      background: rgba(214,79,42,0.12);
+    }
+    nav.toc span { color: #444; font-size: 0.7rem; }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.5rem 5rem;
+    }
+
+    /* ── SEZIONI ── */
+    section {
+      padding: 3rem 0 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    section:last-child { border-bottom: none; }
+
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .section-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 3rem;
+      font-weight: 700;
+      color: rgba(214,79,42,0.12);
+      line-height: 1;
+      display: block;
+      margin-bottom: -0.5rem;
+    }
+    h2 {
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--db-blue);
+      margin: 1.5rem 0 0.5rem;
+    }
+    p { margin-bottom: 0.9rem; font-size: 0.95rem; color: #3a3835; line-height: 1.75; }
+
+    /* ── TABELLA DB (componente visuale) ── */
+    .db-table {
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+      margin: 1.2rem 0;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      display: inline-block;
+      min-width: 220px;
+    }
+    .db-table-header {
+      background: var(--db-blue);
+      color: white;
+      padding: 6px 14px;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+    }
+    .db-table-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      border-top: 1px solid var(--border);
+      background: var(--paper);
+      color: var(--ink);
+    }
+    .db-table-row:hover { background: var(--db-blue-lt); }
+    .key-badge {
+      font-size: 0.6rem;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      flex-shrink: 0;
+    }
+    .badge-pk { background: var(--pk-color); color: white; }
+    .badge-fk { background: var(--fk-color); color: white; }
+    .badge-pkfk { background: linear-gradient(90deg, var(--pk-color) 50%, var(--fk-color) 50%); color: white; }
+    .field-type {
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    /* Griglia di tabelle DB affiancate */
+    .db-tables-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      align-items: flex-start;
+      margin: 1.5rem 0;
+    }
+
+    /* Freccia relazione */
+    .rel-arrow {
+      align-self: center;
+      font-size: 1.4rem;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    /* ── CALLOUT BOX ── */
+    .callout {
+      display: flex;
+      gap: 0.8rem;
+      padding: 0.9rem 1rem;
+      border-radius: var(--radius-sm);
+      margin: 1.2rem 0;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+    .callout-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+    .callout-body { color: #3a3835; }
+    .callout-body strong { display: block; margin-bottom: 0.2rem; }
+    .callout.tip    { background: var(--db-green-lt); border-left: 3px solid var(--db-green); }
+    .callout.warn   { background: var(--db-amber-lt); border-left: 3px solid var(--db-amber); }
+    .callout.info   { background: var(--db-blue-lt);  border-left: 3px solid var(--db-blue); }
+    .callout.error  { background: var(--db-red-lt);   border-left: 3px solid var(--db-red); }
+
+    /* ── SCHEMA LOGICO (notazione Campo/Tipo/Chiave) ── */
+    .schema-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      margin: 1rem 0;
+    }
+    .schema-table th {
+      background: var(--ink);
+      color: #ccc;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      text-align: left;
+    }
+    .schema-table td {
+      padding: 6px 12px;
+      border-bottom: 1px solid var(--border);
+      background: var(--paper);
+      vertical-align: middle;
+    }
+    .schema-table tr:hover td { background: var(--db-blue-lt); }
+    .schema-table .td-pk { color: var(--pk-color); font-weight: 700; }
+    .schema-table .td-fk { color: var(--fk-color); font-weight: 700; }
+    .schema-table .td-pkfk { color: var(--pk-color); font-weight: 700; }
+
+    /* ── ESERCIZIO INTERATTIVO ── */
+    .exercise-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: none;
+      border: 1.5px solid var(--accent);
+      color: var(--accent);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      margin: 1.5rem 0 0;
+      transition: background 0.2s, color 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .exercise-toggle:hover {
+      background: var(--accent);
+      color: white;
+    }
+    .exercise-toggle .toggle-arrow { transition: transform 0.25s; }
+    .exercise-toggle.open .toggle-arrow { transform: rotate(90deg); }
+
+    .exercise-panel {
+      display: none;
+      background: #faf8f4;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.4rem;
+      margin-top: 0.5rem;
+    }
+    .exercise-panel.visible { display: block; }
+    .exercise-panel h4 {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    /* Simulatore inserimento dati (s02) */
+    .sim-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      margin-bottom: 0.8rem;
+    }
+    .sim-table th {
+      background: var(--db-blue);
+      color: white;
+      padding: 6px 10px;
+      text-align: left;
+      font-size: 0.72rem;
+    }
+    .sim-table td {
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+      background: var(--paper);
+    }
+    .sim-table .row-fixed { color: var(--muted); }
+    .sim-table .row-new td { background: #fffbe6; }
+    .sim-table .row-error td { background: #fde8e8; color: var(--db-red); }
+    .sim-table .row-ok td { background: #e8f7ed; }
+
+    .sim-input-row {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 0.8rem;
+    }
+    .sim-input-row input {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      padding: 6px 10px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--paper);
+      width: 100px;
+    }
+    .sim-input-row input:focus { outline: none; border-color: var(--accent); }
+    .sim-btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      padding: 7px 14px;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .sim-btn:hover { opacity: 0.85; }
+    .sim-btn-add  { background: var(--db-green); color: white; }
+    .sim-btn-reset{ background: var(--border); color: var(--ink); }
+    .sim-feedback {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      margin-top: 0.6rem;
+      display: none;
+    }
+    .sim-feedback.err { display: block; background: var(--db-red-lt); color: var(--db-red); }
+    .sim-feedback.ok  { display: block; background: var(--db-green-lt); color: var(--db-green); }
+
+    /* Drag & drop classificazione tipi (s03) */
+    .drag-area {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 0.8rem;
+      background: var(--db-blue-lt);
+      border-radius: var(--radius-sm);
+      min-height: 50px;
+      margin-bottom: 0.8rem;
+      border: 2px dashed transparent;
+      transition: border-color 0.2s;
+    }
+    .drag-area.drag-over { border-color: var(--accent); }
+    .drag-chip {
+      background: var(--ink);
+      color: var(--paper);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: grab;
+      user-select: none;
+      transition: transform 0.15s, opacity 0.15s;
+    }
+    .drag-chip:active { cursor: grabbing; opacity: 0.7; }
+    .drag-chip.correct { background: var(--db-green); }
+    .drag-chip.wrong   { background: var(--db-red); }
+
+    .drop-zones {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0.8rem;
+      margin-top: 0.5rem;
+    }
+    .drop-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem;
+      min-height: 80px;
+    }
+    .drop-zone-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+    .drop-zone.drag-over { border-color: var(--accent2); background: var(--db-blue-lt); }
+
+    /* Scelta FK (s04) */
+    .fk-choice {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+    }
+    .fk-option {
+      flex: 1;
+      min-width: 200px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+    }
+    .fk-option:hover { border-color: var(--accent2); background: var(--db-blue-lt); }
+    .fk-option.selected-ok  { border-color: var(--db-green); background: var(--db-green-lt); }
+    .fk-option.selected-err { border-color: var(--db-red);   background: var(--db-red-lt); }
+    .fk-option-label {
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Simulatore N:M senza ponte (s05) */
+    .nm-sim-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      margin-bottom: 0.6rem;
+    }
+    .nm-sim-table th { background: var(--db-blue); color: white; padding: 5px 10px; text-align: left; }
+    .nm-sim-table td { border: 1px solid var(--border); padding: 5px 10px; background: var(--paper); }
+    .nm-sim-table .cell-problem { background: #fde8e8; color: var(--db-red); font-weight: 700; }
+
+    /* Drag & drop schema finale (s08) */
+    .schema-builder {
+      margin: 1rem 0;
+    }
+    .schema-pool {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      padding: 0.8rem;
+      background: var(--db-amber-lt);
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.8rem;
+      min-height: 44px;
+    }
+    .schema-chip {
+      background: var(--ink);
+      color: var(--paper);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      padding: 4px 9px;
+      border-radius: 3px;
+      cursor: grab;
+      user-select: none;
+    }
+    .schema-chip[data-key="pk"] { background: var(--pk-color); }
+    .schema-chip[data-key="fk"] { background: var(--fk-color); }
+
+    .schema-drop-table {
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-bottom: 0.8rem;
+    }
+    .schema-drop-header {
+      background: var(--db-blue);
+      color: white;
+      padding: 6px 12px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .schema-drop-zone {
+      min-height: 48px;
+      padding: 6px 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      background: var(--paper);
+      border-top: 1px solid var(--border);
+    }
+    .schema-drop-zone.drag-over { background: var(--db-blue-lt); }
+
+    /* Punteggio e feedback finale */
+    .score-bar {
+      margin-top: 1rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .score-bar strong { color: var(--ink); }
+    .check-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      padding: 8px 18px;
+      cursor: pointer;
+      margin-top: 0.6rem;
+      transition: opacity 0.2s;
+    }
+    .check-btn:hover { opacity: 0.85; }
+
+    /* Esercizio ponte (s06) — griglia inserimento */
+    .ponte-input {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem;
+      margin: 0.6rem 0;
+    }
+    .ponte-input input {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      padding: 6px 10px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--paper);
+    }
+    .ponte-input input:focus { outline: none; border-color: var(--accent); }
+
+    /* Drag attributo relazione (s07) */
+    .attr-rel-zones {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
+      margin-top: 0.8rem;
+    }
+    @media(max-width:560px) { .attr-rel-zones { grid-template-columns: 1fr; } }
+    .attr-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.7rem;
+      min-height: 70px;
+    }
+    .attr-zone.drag-over { border-color: var(--accent2); background: var(--db-blue-lt); }
+    .attr-zone-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      color: #777;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-size: 0.8rem;
+      margin-top: 2rem;
+    }
+    footer a { color: #999; text-decoration: none; }
+    footer a:hover { color: white; }
+
+    /* ── BACK TO TOP ── */
+    .back-to-top {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px; height: 40px;
+      font-size: 1rem;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      z-index: 200;
+    }
+    .back-to-top.visible { opacity: 1; pointer-events: auto; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:600px) {
+      main { padding: 0 1rem 4rem; }
+      .db-tables-row { flex-direction: column; }
+      .rel-arrow { transform: rotate(90deg); }
+      .fk-choice { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ HEADER ══════════════════ -->
+<header>
+  <a href="/database/guida-database/" class="header-back-link">← Basi di Dati</a>
+  <div class="badge">Database · AFM · RIM</div>
+  <h1>Modello Logico <span>Relazionale</span></h1>
+  <p>Dal diagramma E-R alle tabelle: chiavi primarie, chiavi esterne, relazioni 1:N e N:M — con esercizi interattivi.</p>
+  <div class="db-pill">8 sezioni · Livello base–intermedio</div>
+</header>
+
+<!-- ══════════════════ TOC ══════════════════ -->
+<div style="height:3px; background:linear-gradient(to right, var(--accent), var(--accent2), var(--accent3));"></div>
+<div style="background:var(--ink); padding:0.25rem 1.5rem 0; font-family:'Space Mono',monospace; font-size:0.6rem; color:#555; letter-spacing:0.1em; text-transform:uppercase; text-align:center;">Sezioni →</div>
+<div class="toc-wrap">
+  <nav class="toc">
+    <a href="#s01">Da E-R a tabelle</a><span>·</span>
+    <a href="#s02">La chiave primaria</a><span>·</span>
+    <a href="#s03">Tipi di dato</a><span>·</span>
+    <a href="#s04">Relazione 1:N</a><span>·</span>
+    <a href="#s05">Relazione N:M</a><span>·</span>
+    <a href="#s06">Tabella ponte</a><span>·</span>
+    <a href="#s07">Attributi di relazione</a><span>·</span>
+    <a href="#s08">Schema finale</a>
+  </nav>
+</div>
+
+<!-- ══════════════════ MAIN ══════════════════ -->
+<main>
+
+<!-- ─── S01 · DA E-R A TABELLE ─── -->
+<section id="s01">
+  <div class="section-label">Punto di partenza</div>
+  <span class="section-num">01</span>
+  <h2>Da E-R a tabelle</h2>
+
+  <p>Il diagramma E-R (Entità-Relazione) descrive la realtà in modo grafico. Il <strong>modello logico</strong> è il passo successivo: trasforma ogni entità in una <strong>tabella</strong> e ogni attributo in una <strong>colonna</strong>.</p>
+
+  <div class="callout info">
+    <div class="callout-icon">ℹ️</div>
+    <div class="callout-body">
+      <strong>La regola base</strong>
+      Ogni entità del diagramma E-R diventa una tabella. Ogni attributo dell'entità diventa una colonna di quella tabella.
+    </div>
+  </div>
+
+  <h3>Esempio — Entità PERSONA</h3>
+  <p>Nel diagramma E-R abbiamo un'entità <em>Persona</em> con gli attributi: CF, Cognome, Nome, Telefono. Nel modello logico diventa:</p>
+
+  <div class="db-tables-row">
+    <div class="db-table">
+      <div class="db-table-header">PERSONA</div>
+      <div class="db-table-row">
+        <span class="key-badge badge-pk">PK</span>
+        CF
+        <span class="field-type">Testo</span>
+      </div>
+      <div class="db-table-row">Cognome <span class="field-type">Testo</span></div>
+      <div class="db-table-row">Nome <span class="field-type">Testo</span></div>
+      <div class="db-table-row">Telefono <span class="field-type">Testo</span></div>
+    </div>
+  </div>
+
+  <p>Nella notazione che userai, ogni tabella si scrive così:</p>
+
+  <table class="schema-table">
+    <thead>
+      <tr><th>Campo</th><th>Tipo</th><th>Chiave</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="td-pk">CF</td><td>Testo</td><td class="td-pk">PK</td></tr>
+      <tr><td>Cognome</td><td>Testo</td><td></td></tr>
+      <tr><td>Nome</td><td>Testo</td><td></td></tr>
+      <tr><td>Telefono</td><td>Testo</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body">
+      <strong>Cosa sono PK e FK?</strong>
+      <strong>PK</strong> (Primary Key, chiave primaria) identifica in modo univoco ogni riga della tabella — non ci possono essere due righe con lo stesso valore di PK. <strong>FK</strong> (Foreign Key, chiave esterna) è un campo che punta alla PK di un'altra tabella, creando un collegamento tra le due.
+    </div>
+  </div>
+</section>
+
+<!-- ─── S02 · LA CHIAVE PRIMARIA ─── -->
+<section id="s02">
+  <div class="section-label">Concetto fondamentale</div>
+  <span class="section-num">02</span>
+  <h2>La chiave primaria</h2>
+
+  <p>Ogni tabella deve avere una <strong>chiave primaria (PK)</strong>: un campo (o combinazione di campi) il cui valore identifica in modo univoco ogni riga. Due righe non possono avere la stessa PK — e la PK non può mai essere vuota.</p>
+
+  <h3>Tre regole della PK</h3>
+  <div class="callout error">
+    <div class="callout-icon">🚫</div>
+    <div class="callout-body">
+      <strong>Regola 1 — Unicità:</strong> non ci possono essere due righe con lo stesso valore di PK.<br>
+      <strong>Regola 2 — Non nulla:</strong> la PK non può mai essere vuota (NULL).<br>
+      <strong>Regola 3 — Stabilità:</strong> il valore della PK non dovrebbe cambiare nel tempo.
+    </div>
+  </div>
+
+  <h3>Perché il Cognome non va bene come PK?</h3>
+  <p>Immagina di usare il Cognome come chiave primaria della tabella PERSONA. Cosa succede se hai due persone con il cognome "Verdi"? Il database rifiuterebbe il secondo inserimento. Il <strong>CF</strong> invece è perfetto: è unico per ogni cittadino italiano e non cambia.</p>
+
+  <button class="exercise-toggle" onclick="toggleExercise('ex02')">
+    <span>▶</span> <span class="toggle-arrow">›</span> Metti alla prova — Prova a inserire un duplicato
+  </button>
+  <div class="exercise-panel" id="ex02">
+    <h4>⬡ Simulatore — tabella PERSONA</h4>
+    <p style="font-size:0.82rem; color:var(--muted); margin-bottom:0.8rem;">Prova ad aggiungere righe alla tabella. Cosa succede se inserisci un CF già esistente o lasci il CF vuoto?</p>
+
+    <table class="sim-table" id="sim02-table">
+      <thead>
+        <tr><th>CF (PK)</th><th>Cognome</th><th>Nome</th></tr>
+      </thead>
+      <tbody id="sim02-body">
+        <tr class="row-fixed"><td>XXX</td><td>Rossi</td><td>Mario</td></tr>
+        <tr class="row-fixed"><td>YYY</td><td>Verdi</td><td>Antonio</td></tr>
+        <tr class="row-fixed"><td>ZZZ</td><td>Martini</td><td>Silvia</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sim-input-row">
+      <input type="text" id="sim02-cf" placeholder="CF" maxlength="10">
+      <input type="text" id="sim02-cognome" placeholder="Cognome" maxlength="20">
+      <input type="text" id="sim02-nome" placeholder="Nome" maxlength="20">
+      <button class="sim-btn sim-btn-add" onclick="sim02Insert()">Inserisci riga</button>
+      <button class="sim-btn sim-btn-reset" onclick="sim02Reset()">Reset</button>
+    </div>
+    <div class="sim-feedback" id="sim02-feedback"></div>
+  </div>
+</section>
+
+<!-- ─── S03 · TIPI DI DATO ─── -->
+<section id="s03">
+  <div class="section-label">Attributi</div>
+  <span class="section-num">03</span>
+  <h2>Attributi e tipi di dato</h2>
+
+  <p>Ogni colonna di una tabella ha un <strong>tipo di dato</strong>: indica al database che tipo di valore può contenere quel campo. Scegliere il tipo sbagliato causa problemi nelle operazioni (es. non puoi fare la somma di un campo Testo).</p>
+
+  <table class="schema-table">
+    <thead><tr><th>Tipo</th><th>Contiene</th><th>Esempi</th></tr></thead>
+    <tbody>
+      <tr><td>Testo</td><td>Caratteri alfanumerici</td><td>CF, Nome, Cognome, Targa</td></tr>
+      <tr><td>Intero</td><td>Numeri senza decimali</td><td>ID, Quantità, Età</td></tr>
+      <tr><td>Decimale</td><td>Numeri con virgola</td><td>Prezzo, Peso, Percentuale</td></tr>
+      <tr><td>Data</td><td>Giorno/Mese/Anno</td><td>Data_Nascita, Data_Ordine</td></tr>
+      <tr><td>Booleano</td><td>Vero o Falso</td><td>Attivo, Verificato, Spedito</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body">
+      <strong>Attenzione — il numero di telefono è Testo, non Intero!</strong>
+      I numeri di telefono iniziano spesso con 0 (es. 030123456) e possono contenere il + (es. +39). Come Intero, lo 0 iniziale verrebbe eliminato e il + sarebbe un errore. Usa sempre Testo per i codici che non richiedono calcoli.
+    </div>
+  </div>
+
+  <button class="exercise-toggle" onclick="toggleExercise('ex03')">
+    <span>▶</span> <span class="toggle-arrow">›</span> Metti alla prova — Classifica gli attributi
+  </button>
+  <div class="exercise-panel" id="ex03">
+    <h4>⬡ Trascina ogni attributo nel tipo corretto</h4>
+    <div class="drag-area" id="pool03">
+      <div class="drag-chip" draggable="true" data-val="Prezzo" data-correct="Decimale">Prezzo</div>
+      <div class="drag-chip" draggable="true" data-val="Quantità" data-correct="Intero">Quantità</div>
+      <div class="drag-chip" draggable="true" data-val="Cognome" data-correct="Testo">Cognome</div>
+      <div class="drag-chip" draggable="true" data-val="Data_Ordine" data-correct="Data">Data_Ordine</div>
+      <div class="drag-chip" draggable="true" data-val="Telefono" data-correct="Testo">Telefono</div>
+      <div class="drag-chip" draggable="true" data-val="ID_Articolo" data-correct="Intero">ID_Articolo</div>
+    </div>
+    <div class="drop-zones" id="zones03">
+      <div class="drop-zone" data-type="Testo">
+        <div class="drop-zone-label">Testo</div>
+      </div>
+      <div class="drop-zone" data-type="Intero">
+        <div class="drop-zone-label">Intero</div>
+      </div>
+      <div class="drop-zone" data-type="Decimale">
+        <div class="drop-zone-label">Decimale</div>
+      </div>
+      <div class="drop-zone" data-type="Data">
+        <div class="drop-zone-label">Data</div>
+      </div>
+    </div>
+    <button class="check-btn" onclick="check03()">Verifica</button>
+    <div class="sim-feedback" id="fb03"></div>
+    <button class="sim-btn sim-btn-reset" style="margin-top:0.5rem" onclick="reset03()">Ricomincia</button>
+  </div>
+</section>
+
+<!-- ─── S04 · RELAZIONE 1:N ─── -->
+<section id="s04">
+  <div class="section-label">Tra due tabelle</div>
+  <span class="section-num">04</span>
+  <h2>Relazione 1:N</h2>
+
+  <p>Una <strong>relazione 1:N</strong> (uno-a-molti) si verifica quando un record della tabella A può essere collegato a <em>molti</em> record della tabella B, ma ogni record di B è collegato a <em>uno solo</em> di A.</p>
+
+  <p><strong>Esempio:</strong> Una persona può possedere più automobili, ma ogni automobile ha un solo proprietario. È una relazione 1:N tra PERSONA e AUTOMOBILE.</p>
+
+  <p>Per implementarla nel modello logico, si aggiunge la <strong>chiave esterna (FK)</strong> nella tabella del lato "molti" (AUTOMOBILE), che punta alla PK della tabella del lato "uno" (PERSONA).</p>
+
+  <div class="db-tables-row">
+    <div class="db-table">
+      <div class="db-table-header">PERSONA</div>
+      <div class="db-table-row"><span class="key-badge badge-pk">PK</span> CF <span class="field-type">Testo</span></div>
+      <div class="db-table-row">Cognome <span class="field-type">Testo</span></div>
+      <div class="db-table-row">Nome <span class="field-type">Testo</span></div>
+    </div>
+    <div class="rel-arrow">1 ──→ N</div>
+    <div class="db-table">
+      <div class="db-table-header">AUTOMOBILE</div>
+      <div class="db-table-row"><span class="key-badge badge-pk">PK</span> Targa <span class="field-type">Testo</span></div>
+      <div class="db-table-row">Modello <span class="field-type">Testo</span></div>
+      <div class="db-table-row"><span class="key-badge badge-fk">FK</span> CF_Persona <span class="field-type">Testo</span></div>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body">
+      <strong>Dove va la FK?</strong>
+      Sempre nel lato "molti". AUTOMOBILE è il lato molti (una persona ha <em>molte</em> auto), quindi la FK va in AUTOMOBILE. Il valore di CF_Persona in ogni riga di AUTOMOBILE deve corrispondere a un CF esistente in PERSONA.
+    </div>
+  </div>
+
+  <button class="exercise-toggle" onclick="toggleExercise('ex04')">
+    <span>▶</span> <span class="toggle-arrow">›</span> Metti alla prova — Dove va la chiave esterna?
+  </button>
+  <div class="exercise-panel" id="ex04">
+    <h4>⬡ Scenario: un ufficio ha molti dipendenti. Dove metti la FK?</h4>
+    <p style="font-size:0.82rem; color:var(--muted); margin-bottom:1rem;">Hai due tabelle: UFFICIO (ID_Ufficio, Nome) e DIPENDENTE (CF, Nome, Cognome). Un ufficio ha molti dipendenti; ogni dipendente lavora in un solo ufficio.</p>
+    <div class="fk-choice" id="fk04-choices">
+      <div class="fk-option" onclick="checkFK04(this, false)">
+        <div class="fk-option-label">Opzione A</div>
+        <strong>FK in UFFICIO</strong><br>
+        <small style="color:var(--muted)">Aggiungo CF_Dipendente alla tabella UFFICIO</small>
+      </div>
+      <div class="fk-option" onclick="checkFK04(this, true)">
+        <div class="fk-option-label">Opzione B</div>
+        <strong>FK in DIPENDENTE</strong><br>
+        <small style="color:var(--muted)">Aggiungo ID_Ufficio alla tabella DIPENDENTE</small>
+      </div>
+    </div>
+    <div class="sim-feedback" id="fb04"></div>
+  </div>
+</section>
+
+<!-- ─── S05 · RELAZIONE N:M ─── -->
+<section id="s05">
+  <div class="section-label">Il problema</div>
+  <span class="section-num">05</span>
+  <h2>Relazione N:M — il problema</h2>
+
+  <p>Una <strong>relazione N:M</strong> (molti-a-molti) si verifica quando molti record di A possono essere collegati a molti record di B e viceversa.</p>
+
+  <p><strong>Esempio:</strong> una persona può possedere più automobili <em>e</em> un'automobile può essere posseduta da più persone (es. auto cointestata). È N:M.</p>
+
+  <p>Non si può implementare direttamente con una sola FK: se una persona possiede 3 auto, dove metto le 3 targhe nella riga della persona?</p>
+
+  <button class="exercise-toggle" onclick="toggleExercise('ex05')">
+    <span>▶</span> <span class="toggle-arrow">›</span> Metti alla prova — Vedi il problema in azione
+  </button>
+  <div class="exercise-panel" id="ex05">
+    <h4>⬡ Tentativo sbagliato: tre colonne Targa nella tabella PERSONA</h4>
+    <p style="font-size:0.82rem; color:var(--muted); margin-bottom:0.8rem;">Proviamo ad aggiungere una quarta auto alla persona XXX. Cosa succede?</p>
+    <table class="nm-sim-table">
+      <thead>
+        <tr><th>CF (PK)</th><th>Nome</th><th>Targa1</th><th>Targa2</th><th>Targa3</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>XXX</td><td>Mario Rossi</td><td>XY123AD</td><td>AB123QC</td><td class="cell-problem">???</td></tr>
+        <tr><td>YYY</td><td>Antonio Verdi</td><td>AA122BB</td><td></td><td></td></tr>
+        <tr><td>ZZZ</td><td>Silvia Martini</td><td>XY123AC</td><td></td><td></td></tr>
+      </tbody>
+    </table>
+    <div class="callout error" style="margin-top:0.5rem">
+      <div class="callout-icon">🚫</div>
+      <div class="callout-body">
+        <strong>Questo approccio non funziona:</strong> quante colonne Targa aggiungiamo? 3? 10? 100? E se qualcuno ha 0 auto, le altre due colonne sono vuote sprecando spazio. La soluzione è la <strong>tabella ponte</strong> →
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── S06 · TABELLA PONTE ─── -->
+<section id="s06">
+  <div class="section-label">La soluzione</div>
+  <span class="section-num">06</span>
+  <h2>La tabella ponte</h2>
+
+  <p>Per risolvere una relazione N:M si crea una <strong>tabella ponte</strong> (o tabella di associazione): una terza tabella che contiene due FK — una che punta alla PK della prima tabella, una che punta alla PK della seconda.</p>
+
+  <p>La chiave primaria della tabella ponte è <strong>composta</strong>: la coppia delle due FK insieme è unica (stessa coppia non può ripetersi).</p>
+
+  <div class="db-tables-row">
+    <div class="db-table">
+      <div class="db-table-header">PERSONA</div>
+      <div class="db-table-row"><span class="key-badge badge-pk">PK</span> CF <span class="field-type">Testo</span></div>
+      <div class="db-table-row">Cognome <span class="field-type">Testo</span></div>
+    </div>
+    <div class="rel-arrow">1 ─→</div>
+    <div class="db-table">
+      <div class="db-table-header">POSSESSO</div>
+      <div class="db-table-row"><span class="key-badge badge-pkfk">PK·FK</span> CF <span class="field-type">Testo</span></div>
+      <div class="db-table-row"><span class="key-badge badge-pkfk">PK·FK</span> Targa <span class="field-type">Testo</span></div>
+    </div>
+    <div class="rel-arrow">←─ 1</div>
+    <div class="db-table">
+      <div class="db-table-header">AUTOMOBILE</div>
+      <div class="db-table-row"><span class="key-badge badge-pk">PK</span> Targa <span class="field-type">Testo</span></div>
+      <div class="db-table-row">Modello <span class="field-type">Testo</span></div>
+    </div>
+  </div>
+
+  <p>Così ogni combinazione persona–automobile è una riga distinta in POSSESSO. Mario (XXX) possiede 3 auto? Tre righe in POSSESSO con CF=XXX e Targa diversa.</p>
+
+  <button class="exercise-toggle" onclick="toggleExercise('ex06')">
+    <span>▶</span> <span class="toggle-arrow">›</span> Metti alla prova — Compila la tabella POSSESSO
+  </button>
+  <div class="exercise-panel" id="ex06">
+    <h4>⬡ Aggiungi le associazioni persona–automobile</h4>
+    <p style="font-size:0.82rem; color:var(--muted); margin-bottom:0.8rem;">
+      Persone: XXX (Rossi), YYY (Verdi), ZZZ (Martini) &nbsp;|&nbsp; Auto: XY123AD, AA122BB, AB123QC<br>
+      Inserisci alcune combinazioni. Prova a ripetere la stessa coppia!
+    </p>
+    <table class="sim-table" id="sim06-table">
+      <thead><tr><th>CF (PK·FK)</th><th>Targa (PK·FK)</th></tr></thead>
+      <tbody id="sim06-body"></tbody>
+    </table>
+    <div class="ponte-input">
+      <input type="text" id="p06-cf" placeholder="CF (XXX/YYY/ZZZ)" maxlength="6">
+      <input type="text" id="p06-targa" placeholder="Targa" maxlength="10">
+    </div>
+    <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+      <button class="sim-btn sim-btn-add" onclick="sim06Insert()">Inserisci</button>
+      <button class="sim-btn sim-btn-reset" onclick="sim06Reset()">Reset</button>
+    </div>
+    <div class="sim-feedback" id="fb06"></div>
+  </div>
+</section>
+
+<!-- ─── S07 · ATTRIBUTI DI RELAZIONE ─── -->
+<section id="s07">
+  <div class="section-label">Dato della relazione</div>
+  <span class="section-num">07</span>
+  <h2>Attributi di relazione</h2>
+
+  <p>A volte un'informazione non appartiene né a una tabella né all'altra, ma alla <strong>relazione tra le due</strong>. Si chiama <em>attributo di relazione</em> e va nella tabella ponte.</p>
+
+  <p><strong>Esempio:</strong> negli ordini di un negozio, la <em>Quantità</em> di un articolo ordinato non appartiene all'ARTICOLO (è uguale per tutti gli ordini di quell'articolo?) né all'ORDINE (un ordine ha molti articoli, ognuno con quantità diversa). La Quantità appartiene alla relazione ORDINE–ARTICOLO, quindi va nella tabella ponte DETTAGLIO_ORDINI.</p>
+
+  <div class="db-tables-row">
+    <div class="db-table">
+      <div class="db-table-header">ORDINI</div>
+      <div class="db-table-row"><span class="key-badge badge-pk">PK</span> ID_Ordine <span class="field-type">Intero</span></div>
+      <div class="db-table-row">Data <span class="field-type">Data</span></div>
+      <div class="db-table-row">Cliente <span class="field-type">Testo</span></div>
+    </div>
+    <div class="rel-arrow">1 ─→</div>
+    <div class="db-table">
+      <div class="db-table-header">DETTAGLIO_ORDINI</div>
+      <div class="db-table-row"><span class="key-badge badge-pkfk">PK·FK</span> ID_Ordine <span class="field-type">Intero</span></div>
+      <div class="db-table-row"><span class="key-badge badge-pkfk">PK·FK</span> ID_Articolo <span class="field-type">Intero</span></div>
+      <div class="db-table-row" style="background:#fffbe6;">Quantità <span class="field-type">Intero</span></div>
+    </div>
+    <div class="rel-arrow">←─ 1</div>
+    <div class="db-table">
+      <div class="db-table-header">ARTICOLI</div>
+      <div class="db-table-row"><span class="key-badge badge-pk">PK</span> ID_Articolo <span class="field-type">Intero</span></div>
+      <div class="db-table-row">Nome_Articolo <span class="field-type">Testo</span></div>
+      <div class="db-table-row">Prezzo <span class="field-type">Decimale</span></div>
+    </div>
+  </div>
+
+  <button class="exercise-toggle" onclick="toggleExercise('ex07')">
+    <span>▶</span> <span class="toggle-arrow">›</span> Metti alla prova — Dove metti la Quantità?
+  </button>
+  <div class="exercise-panel" id="ex07">
+    <h4>⬡ Trascina "Quantità" nella tabella corretta</h4>
+    <p style="font-size:0.82rem; color:var(--muted); margin-bottom:0.8rem;">Hai tre tabelle: ORDINI, DETTAGLIO_ORDINI (ponte), ARTICOLI. La Quantità ordinata di un certo articolo in un certo ordine dove appartiene?</p>
+    <div class="drag-area" id="pool07">
+      <div class="drag-chip" draggable="true" data-val="Quantità" data-correct="DETTAGLIO_ORDINI">Quantità</div>
+    </div>
+    <div class="attr-rel-zones" id="zones07">
+      <div class="attr-zone" data-type="ORDINI">
+        <div class="attr-zone-label">ORDINI</div>
+      </div>
+      <div class="attr-zone" data-type="DETTAGLIO_ORDINI">
+        <div class="attr-zone-label">DETTAGLIO_ORDINI</div>
+      </div>
+      <div class="attr-zone" data-type="ARTICOLI">
+        <div class="attr-zone-label">ARTICOLI</div>
+      </div>
+    </div>
+    <div class="sim-feedback" id="fb07"></div>
+    <button class="sim-btn sim-btn-reset" style="margin-top:0.5rem" onclick="reset07()">Ricomincia</button>
+  </div>
+</section>
+
+<!-- ─── S08 · SCHEMA FINALE ─── -->
+<section id="s08">
+  <div class="section-label">Esercizio di sintesi</div>
+  <span class="section-num">08</span>
+  <h2>Schema finale</h2>
+
+  <p>Lo <strong>schema logico completo</strong> è la descrizione formale di tutte le tabelle del database: per ogni tabella, ogni campo con il suo tipo e il suo ruolo come chiave. È il documento di riferimento per chiunque debba costruire o interrogare il database.</p>
+
+  <h3>Schema completo — esempio Articoli/Ordini</h3>
+  <p>Ecco il modello logico completo dell'esempio che abbiamo costruito insieme:</p>
+
+  <div style="display:flex; flex-wrap:wrap; gap:1.5rem; margin:1rem 0;">
+    <div>
+      <p style="font-family:'Space Mono',monospace; font-size:0.72rem; color:var(--accent); margin-bottom:0.3rem;">ARTICOLI</p>
+      <table class="schema-table" style="min-width:280px;">
+        <thead><tr><th>Campo</th><th>Tipo</th><th>Chiave</th></tr></thead>
+        <tbody>
+          <tr><td class="td-pk">ID_Articolo</td><td>Intero</td><td class="td-pk">PK</td></tr>
+          <tr><td>Nome_Articolo</td><td>Testo</td><td></td></tr>
+          <tr><td>Prezzo</td><td>Decimale</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <p style="font-family:'Space Mono',monospace; font-size:0.72rem; color:var(--accent); margin-bottom:0.3rem;">ORDINI</p>
+      <table class="schema-table" style="min-width:280px;">
+        <thead><tr><th>Campo</th><th>Tipo</th><th>Chiave</th></tr></thead>
+        <tbody>
+          <tr><td class="td-pk">ID_Ordine</td><td>Intero</td><td class="td-pk">PK</td></tr>
+          <tr><td>Data</td><td>Data</td><td></td></tr>
+          <tr><td>Cliente</td><td>Testo</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <p style="font-family:'Space Mono',monospace; font-size:0.72rem; color:var(--accent); margin-bottom:0.3rem;">DETTAGLIO_ORDINI</p>
+      <table class="schema-table" style="min-width:280px;">
+        <thead><tr><th>Campo</th><th>Tipo</th><th>Chiave</th></tr></thead>
+        <tbody>
+          <tr><td class="td-pkfk">ID_Ordine</td><td>Intero</td><td class="td-pkfk">PK, FK</td></tr>
+          <tr><td class="td-pkfk">ID_Articolo</td><td>Intero</td><td class="td-pkfk">PK, FK</td></tr>
+          <tr><td>Quantità</td><td>Intero</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <button class="exercise-toggle" onclick="toggleExercise('ex08')">
+    <span>▶</span> <span class="toggle-arrow">›</span> Esercizio finale — Componi lo schema di Studenti/Corsi
+  </button>
+  <div class="exercise-panel" id="ex08">
+    <h4>⬡ Trascina ogni attributo nella tabella corretta</h4>
+    <p style="font-size:0.82rem; color:var(--muted); margin-bottom:0.8rem;">
+      Scenario: uno studente può iscriversi a molti corsi; un corso può avere molti studenti (N:M).<br>
+      Attributi disponibili: CF_Stud, Cognome, Nome, ID_Corso, Denominazione, Data_Inizio, Docente, Data_Iscrizione.
+    </p>
+
+    <div class="schema-pool" id="pool08">
+      <div class="schema-chip" draggable="true" data-val="CF_Stud" data-correct="STUDENTI" data-key="pk">CF_Stud</div>
+      <div class="schema-chip" draggable="true" data-val="Cognome" data-correct="STUDENTI">Cognome</div>
+      <div class="schema-chip" draggable="true" data-val="Nome" data-correct="STUDENTI">Nome</div>
+      <div class="schema-chip" draggable="true" data-val="ID_Corso" data-correct="CORSI" data-key="pk">ID_Corso</div>
+      <div class="schema-chip" draggable="true" data-val="Denominazione" data-correct="CORSI">Denominazione</div>
+      <div class="schema-chip" draggable="true" data-val="Data_Inizio" data-correct="CORSI">Data_Inizio</div>
+      <div class="schema-chip" draggable="true" data-val="Docente" data-correct="CORSI">Docente</div>
+      <div class="schema-chip" draggable="true" data-val="Data_Iscrizione" data-correct="ISCRIZIONI">Data_Iscrizione</div>
+    </div>
+
+    <div class="schema-builder">
+      <div class="schema-drop-table">
+        <div class="schema-drop-header">STUDENTI</div>
+        <div class="schema-drop-zone" data-table="STUDENTI" id="drop08-STUDENTI"></div>
+      </div>
+      <div class="schema-drop-table">
+        <div class="schema-drop-header">CORSI</div>
+        <div class="schema-drop-zone" data-table="CORSI" id="drop08-CORSI"></div>
+      </div>
+      <div class="schema-drop-table">
+        <div class="schema-drop-header">ISCRIZIONI (tabella ponte)</div>
+        <div class="schema-drop-zone" data-table="ISCRIZIONI" id="drop08-ISCRIZIONI"></div>
+      </div>
+    </div>
+
+    <button class="check-btn" onclick="check08()">Verifica schema</button>
+    <div class="sim-feedback" id="fb08"></div>
+    <button class="sim-btn sim-btn-reset" style="margin-top:0.5rem" onclick="reset08()">Ricomincia</button>
+  </div>
+</section>
+
+</main>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer>
+  <p>Modello Logico Relazionale · AFM · RIM · Formazione Digitale</p>
+  <p style="margin-top:0.3rem;">
+    <a href="/database/guida-database/">← Basi di Dati — Dal dato al modello E-R</a>
+    &nbsp;·&nbsp;
+    <a href="/database/guida-libreoffice-base-query/">Query in LibreOffice Base →</a>
+  </p>
+  <p style="margin-top:0.5rem; font-size:0.75rem;">
+    <a href="/">Formazione Digitale</a> &nbsp;·&nbsp;
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Torna su">↑</button>
+
+<!-- ══════════════════ JS ══════════════════ -->
+<script>
+
+/* ── TOC active on scroll ── */
+const navLinks = document.querySelectorAll('nav.toc a[href^="#"]');
+const sections = document.querySelectorAll('main section[id]');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(a => a.classList.remove('active'));
+      const active = document.querySelector('nav.toc a[href="#' + entry.target.id + '"]');
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-10% 0px -80% 0px', threshold: 0 });
+sections.forEach(s => observer.observe(s));
+
+/* Back to top */
+const btt = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => btt.classList.toggle('visible', window.scrollY > 300));
+
+/* Smooth scroll */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+/* ── Toggle esercizi ── */
+function toggleExercise(id) {
+  const panel = document.getElementById(id);
+  const btn = panel.previousElementSibling;
+  panel.classList.toggle('visible');
+  btn.classList.toggle('open');
+}
+
+/* ═══ S02 — Simulatore PK duplicata ═══ */
+let sim02rows = [
+  { cf: 'XXX', cognome: 'Rossi', nome: 'Mario' },
+  { cf: 'YYY', cognome: 'Verdi', nome: 'Antonio' },
+  { cf: 'ZZZ', cognome: 'Martini', nome: 'Silvia' }
+];
+const sim02fixed = sim02rows.length;
+
+function sim02Render() {
+  const tbody = document.getElementById('sim02-body');
+  tbody.innerHTML = '';
+  sim02rows.forEach((r, i) => {
+    const tr = document.createElement('tr');
+    tr.className = i < sim02fixed ? 'row-fixed' : 'row-ok';
+    tr.innerHTML = `<td>${r.cf}</td><td>${r.cognome}</td><td>${r.nome}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function sim02Insert() {
+  const cf  = document.getElementById('sim02-cf').value.trim().toUpperCase();
+  const cog = document.getElementById('sim02-cognome').value.trim();
+  const nom = document.getElementById('sim02-nome').value.trim();
+  const fb  = document.getElementById('sim02-feedback');
+
+  if (!cf) {
+    fb.className = 'sim-feedback err';
+    fb.textContent = '❌ Errore: il CF (chiave primaria) non può essere vuoto. Regola 2 — Non nulla.';
+    return;
+  }
+  if (sim02rows.some(r => r.cf === cf)) {
+    fb.className = 'sim-feedback err';
+    fb.textContent = `❌ Errore: CF "${cf}" già presente. Violazione Regola 1 — Unicità. Il database rifiuta l'inserimento.`;
+    return;
+  }
+  sim02rows.push({ cf, cognome: cog || '–', nome: nom || '–' });
+  sim02Render();
+  fb.className = 'sim-feedback ok';
+  fb.textContent = `✅ Riga inserita correttamente. CF "${cf}" è unico — nessuna violazione.`;
+  document.getElementById('sim02-cf').value = '';
+  document.getElementById('sim02-cognome').value = '';
+  document.getElementById('sim02-nome').value = '';
+}
+
+function sim02Reset() {
+  sim02rows = [
+    { cf: 'XXX', cognome: 'Rossi', nome: 'Mario' },
+    { cf: 'YYY', cognome: 'Verdi', nome: 'Antonio' },
+    { cf: 'ZZZ', cognome: 'Martini', nome: 'Silvia' }
+  ];
+  sim02Render();
+  const fb = document.getElementById('sim02-feedback');
+  fb.className = 'sim-feedback';
+  fb.textContent = '';
+}
+
+/* ═══ S03 — Drag & drop tipi di dato ═══ */
+let dragged03 = null;
+
+function init03() {
+  document.querySelectorAll('#pool03 .drag-chip').forEach(chip => {
+    chip.addEventListener('dragstart', e => {
+      dragged03 = chip;
+      e.dataTransfer.effectAllowed = 'move';
+    });
+  });
+  document.querySelectorAll('#zones03 .drop-zone').forEach(zone => {
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      zone.classList.remove('drag-over');
+      if (dragged03) {
+        zone.appendChild(dragged03);
+        dragged03 = null;
+      }
+    });
+  });
+  // Permetti di rimettere nel pool
+  document.getElementById('pool03').addEventListener('dragover', e => { e.preventDefault(); document.getElementById('pool03').classList.add('drag-over'); });
+  document.getElementById('pool03').addEventListener('dragleave', () => document.getElementById('pool03').classList.remove('drag-over'));
+  document.getElementById('pool03').addEventListener('drop', e => {
+    e.preventDefault();
+    document.getElementById('pool03').classList.remove('drag-over');
+    if (dragged03) { document.getElementById('pool03').appendChild(dragged03); dragged03 = null; }
+  });
+}
+
+function check03() {
+  const fb = document.getElementById('fb03');
+  let correct = 0, total = 0;
+  document.querySelectorAll('#zones03 .drop-zone').forEach(zone => {
+    const tipo = zone.dataset.type;
+    zone.querySelectorAll('.drag-chip').forEach(chip => {
+      total++;
+      if (chip.dataset.correct === tipo) {
+        chip.classList.add('correct'); chip.classList.remove('wrong'); correct++;
+      } else {
+        chip.classList.add('wrong'); chip.classList.remove('correct');
+      }
+    });
+  });
+  if (total === 0) {
+    fb.className = 'sim-feedback err'; fb.textContent = '⚠️ Trascina prima gli attributi nelle zone.'; return;
+  }
+  if (correct === total) {
+    fb.className = 'sim-feedback ok'; fb.textContent = `✅ Perfetto! Tutti gli attributi sono nel tipo corretto (${correct}/${total}).`;
+  } else {
+    fb.className = 'sim-feedback err'; fb.textContent = `❌ ${correct}/${total} corretti. Gli elementi rossi sono nel tipo sbagliato — riprova!`;
+  }
+}
+
+function reset03() {
+  const pool = document.getElementById('pool03');
+  document.querySelectorAll('#zones03 .drag-chip').forEach(chip => {
+    chip.classList.remove('correct', 'wrong');
+    pool.appendChild(chip);
+  });
+  const fb = document.getElementById('fb03');
+  fb.className = 'sim-feedback'; fb.textContent = '';
+}
+
+/* ═══ S04 — Scelta FK ═══ */
+function checkFK04(el, correct) {
+  const fb = document.getElementById('fb04');
+  document.querySelectorAll('#fk04-choices .fk-option').forEach(o => {
+    o.classList.remove('selected-ok', 'selected-err');
+    o.onclick = null; // blocca ulteriori click
+  });
+  if (correct) {
+    el.classList.add('selected-ok');
+    fb.className = 'sim-feedback ok';
+    fb.textContent = '✅ Esatto! La FK va in DIPENDENTE (il lato "molti"): ogni dipendente ha un solo ufficio, quindi aggiungo ID_Ufficio in DIPENDENTE. Un ufficio ha molti dipendenti — non si può mettere un\'infinità di CF nell\'ufficio!';
+  } else {
+    el.classList.add('selected-err');
+    fb.className = 'sim-feedback err';
+    fb.textContent = '❌ Non corretto. La FK va sempre nel lato "molti". Un ufficio ha molti dipendenti: non possiamo mettere tutti i CF dei dipendenti in una singola riga di UFFICIO. La FK ID_Ufficio va nella tabella DIPENDENTE.';
+  }
+}
+
+/* ═══ S06 — Tabella ponte POSSESSO ═══ */
+let sim06rows = [];
+const sim06valid = {
+  cf: ['XXX','YYY','ZZZ'],
+  targa: ['XY123AD','AA122BB','AB123QC','XY123AC']
+};
+
+function sim06Render() {
+  const tbody = document.getElementById('sim06-body');
+  tbody.innerHTML = '';
+  sim06rows.forEach(r => {
+    const tr = document.createElement('tr');
+    tr.className = 'row-ok';
+    tr.innerHTML = `<td>${r.cf}</td><td>${r.targa}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function sim06Insert() {
+  const cf = document.getElementById('p06-cf').value.trim().toUpperCase();
+  const targa = document.getElementById('p06-targa').value.trim().toUpperCase();
+  const fb = document.getElementById('fb06');
+
+  if (!cf || !targa) {
+    fb.className = 'sim-feedback err';
+    fb.textContent = '❌ Inserisci sia il CF che la Targa — sono entrambi PK·FK, non possono essere vuoti.';
+    return;
+  }
+  if (sim06rows.some(r => r.cf === cf && r.targa === targa)) {
+    fb.className = 'sim-feedback err';
+    fb.textContent = `❌ La coppia (${cf}, ${targa}) esiste già! La PK composta richiede unicità della coppia — stesso possesso non può essere inserito due volte.`;
+    return;
+  }
+  if (!sim06valid.cf.includes(cf)) {
+    fb.className = 'sim-feedback err';
+    fb.textContent = `❌ CF "${cf}" non esiste nella tabella PERSONA. La FK deve puntare a un valore esistente — usa XXX, YYY o ZZZ.`;
+    return;
+  }
+  sim06rows.push({ cf, targa });
+  sim06Render();
+  fb.className = 'sim-feedback ok';
+  fb.textContent = `✅ Associazione (${cf} → ${targa}) inserita. La PK composta è unica: questa coppia non esisteva ancora.`;
+  document.getElementById('p06-cf').value = '';
+  document.getElementById('p06-targa').value = '';
+}
+
+function sim06Reset() {
+  sim06rows = [];
+  sim06Render();
+  const fb = document.getElementById('fb06');
+  fb.className = 'sim-feedback'; fb.textContent = '';
+}
+
+/* ═══ S07 — Drag attributo relazione ═══ */
+let dragged07 = null;
+
+function init07() {
+  document.querySelectorAll('#pool07 .drag-chip').forEach(chip => {
+    chip.addEventListener('dragstart', e => { dragged07 = chip; e.dataTransfer.effectAllowed = 'move'; });
+  });
+  document.querySelectorAll('#zones07 .attr-zone').forEach(zone => {
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault(); zone.classList.remove('drag-over');
+      if (!dragged07) return;
+      // Rimuovi da eventuali zone precedenti
+      document.querySelectorAll('#zones07 .drag-chip').forEach(c => c.remove());
+      zone.appendChild(dragged07);
+      dragged07 = null;
+      // Feedback immediato
+      const correct = zone.dataset.type === 'DETTAGLIO_ORDINI';
+      const fb = document.getElementById('fb07');
+      if (correct) {
+        fb.className = 'sim-feedback ok';
+        fb.textContent = '✅ Esatto! La Quantità è un attributo della relazione ORDINE–ARTICOLO: non appartiene all\'ordine (ogni articolo nell\'ordine ha una quantità diversa) né all\'articolo (lo stesso articolo può avere quantità diverse in ordini diversi). Va nella tabella ponte DETTAGLIO_ORDINI.';
+      } else {
+        fb.className = 'sim-feedback err';
+        fb.textContent = `❌ Non corretto. La Quantità non appartiene a ${zone.dataset.type}. Pensa: la Quantità descrive quante unità di UN articolo specifico sono state ordinate IN quell'ordine specifico. È un'informazione sulla relazione, non sull'entità.`;
+      }
+    });
+  });
+  // Rimetti nel pool
+  document.getElementById('pool07').addEventListener('dragover', e => { e.preventDefault(); });
+  document.getElementById('pool07').addEventListener('drop', e => {
+    e.preventDefault();
+    if (dragged07) { document.getElementById('pool07').appendChild(dragged07); dragged07 = null; }
+  });
+}
+
+function reset07() {
+  document.querySelectorAll('#zones07 .drag-chip').forEach(c => {
+    document.getElementById('pool07').appendChild(c);
+  });
+  const fb = document.getElementById('fb07'); fb.className = 'sim-feedback'; fb.textContent = '';
+}
+
+/* ═══ S08 — Drag & drop schema finale ═══ */
+let dragged08 = null;
+
+function init08() {
+  document.querySelectorAll('#pool08 .schema-chip').forEach(chip => {
+    chip.addEventListener('dragstart', e => { dragged08 = chip; e.dataTransfer.effectAllowed = 'move'; });
+  });
+  const allZones = [...document.querySelectorAll('.schema-drop-zone'), document.getElementById('pool08')];
+  allZones.forEach(zone => {
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault(); zone.classList.remove('drag-over');
+      if (dragged08) { zone.appendChild(dragged08); dragged08 = null; }
+    });
+  });
+}
+
+function check08() {
+  const fb = document.getElementById('fb08');
+  const correct08 = {
+    STUDENTI:    ['CF_Stud','Cognome','Nome'],
+    CORSI:       ['ID_Corso','Denominazione','Data_Inizio','Docente'],
+    ISCRIZIONI:  ['Data_Iscrizione']
+  };
+  let ok = 0, tot = 0, errors = [];
+
+  ['STUDENTI','CORSI','ISCRIZIONI'].forEach(tbl => {
+    const zone = document.getElementById('drop08-' + tbl);
+    zone.querySelectorAll('.schema-chip').forEach(chip => {
+      tot++;
+      if (correct08[tbl].includes(chip.dataset.val)) {
+        chip.style.outline = '2px solid var(--db-green)'; ok++;
+      } else {
+        chip.style.outline = '2px solid var(--db-red)';
+        errors.push(`"${chip.dataset.val}" non appartiene a ${tbl}`);
+      }
+    });
+  });
+
+  // Attributi rimasti nel pool
+  document.querySelectorAll('#pool08 .schema-chip').forEach(chip => {
+    chip.style.outline = '2px solid var(--db-amber)';
+  });
+
+  const inPool = document.querySelectorAll('#pool08 .schema-chip').length;
+
+  if (inPool > 0) {
+    fb.className = 'sim-feedback err';
+    fb.textContent = `⚠️ Hai ancora ${inPool} attributo/i non posizionato/i nel pool. Trascina tutto nelle tabelle.`;
+    return;
+  }
+  if (ok === tot && errors.length === 0) {
+    fb.className = 'sim-feedback ok';
+    fb.textContent = `✅ Schema perfetto! ${ok}/${tot} attributi nella posizione corretta. Nota: CF_Stud e ID_Corso sono anche FK in ISCRIZIONI — si aggiungono automaticamente come PK·FK nella tabella ponte.`;
+  } else {
+    fb.className = 'sim-feedback err';
+    fb.textContent = `❌ ${ok}/${tot} corretti. Errori: ${errors.join('; ')}.`;
+  }
+}
+
+function reset08() {
+  const pool = document.getElementById('pool08');
+  document.querySelectorAll('.schema-drop-zone .schema-chip').forEach(chip => {
+    chip.style.outline = '';
+    pool.appendChild(chip);
+  });
+  const fb = document.getElementById('fb08'); fb.className = 'sim-feedback'; fb.textContent = '';
+}
+
+/* ── Init drag al caricamento ── */
+document.addEventListener('DOMContentLoaded', () => {
+  sim02Render();
+  init03();
+  init07();
+  init08();
+});
+
+</script>
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>

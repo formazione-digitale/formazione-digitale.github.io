@@ -1,5 +1,5 @@
 Elenco del percorso delle cartelle per il volume Acer
-Numero di serie del volume: 000000AF-544D:3F7C
+Numero di serie del volume: 000000CE-544D:3F7C
 C:.
 |   .gitignore
 |   .nojekyll
@@ -64,14 +64,16 @@ C:.
 |   |   |       
 |   |   \---img
 |   |           
-|   \---guida-libreoffice-base-query
-|       |   index - Copia.html
-|       |   index.html
-|       |   mapping-query.csv
-|       |   NERD-HERD.odb
-|       |   
-|       \---img
-|               
+|   +---guida-libreoffice-base-query
+|   |   |   index - Copia.html
+|   |   |   index.html
+|   |   |   mapping-query.csv
+|   |   |   NERD-HERD.odb
+|   |   |   
+|   |   \---img
+|   |           
+|           index.html
+|           
 +---docs
 |   |   ARCHITETTURA_Formazione_Digitale.md
 |   |   ARCHITETTURA_Formazione_Digitale.pdf
@@ -174,7 +176,10 @@ C:.
 |   |       index.html
 |   |       
 |   \---pillola-triade-cia
-\---sistemi
-    \---codifica-binaria
-            index.html
-            
++---sistemi
+|   \---codifica-binaria
+|           index.html
+|           
+\---stats
+        index.html
+        

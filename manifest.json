@@ -36,6 +36,22 @@
     ]
   },
   {
+  "path": "/database/guida-modello-logico/",
+  "label": "Modello Logico Relazionale",
+  "short": "Modello Logico",
+  "cat": "guide",
+  "emoji": "🔗",
+  "tags": ["database", "modello logico", "chiave primaria", "chiave esterna", "relazioni", "tabelle", "1:N", "N:M", "tabella associativa", "afm", "rim"],
+  "meta": "8 sezioni · Esercizi interattivi · Livello base–intermedio",
+  "description": "Dal diagramma E-R alle tabelle relazionali: chiavi primarie, chiavi esterne, relazioni 1:N e N:M con tabella associativa. Con esercizi interattivi.",
+  "featured": false,
+  "active": true,
+  "digcomp": ["DC 5.1", "DC 5.2"],
+  "digcomp_level": "intermediate",
+  "digcomp_areas": ["problem-solving"],
+  "digcompedu": ["DCEdu 2.2", "DCEdu 6.5"]
+	},
+  {
     "path": "/database/guida-libreoffice-base-query/",
     "label": "LibreOffice Base — Le Query",
     "short": "LibreOffice Base",
