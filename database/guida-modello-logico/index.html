@@ -1267,7 +1267,6 @@ function checkFK04(el, correct) {
   const fb = document.getElementById('fb04');
   document.querySelectorAll('#fk04-choices .fk-option').forEach(o => {
     o.classList.remove('selected-ok', 'selected-err');
-    o.onclick = null; // blocca ulteriori click
   });
   if (correct) {
     el.classList.add('selected-ok');
