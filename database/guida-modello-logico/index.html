@@ -567,7 +567,7 @@
   <p>Immagina di usare il Cognome come chiave primaria della tabella PERSONA. Cosa succede se hai due persone con il cognome "Verdi"? Il database rifiuterebbe il secondo inserimento. Il <strong>CF</strong> invece è perfetto: è unico per ogni cittadino italiano e non cambia.</p>
 
   <button class="exercise-toggle" onclick="toggleExercise('ex02')">
-    <span>▶</span> <span class="toggle-arrow">›</span> Metti alla prova — Prova a inserire un duplicato
+    <span>▶</span> <span class="toggle-arrow">›</span> Mettiti alla prova — Prova a inserire un duplicato
   </button>
   <div class="exercise-panel" id="ex02">
     <h4>⬡ Simulatore — tabella PERSONA</h4>
@@ -615,7 +615,7 @@
   </div>
 
   <button class="exercise-toggle" onclick="toggleExercise('ex03')">
-    <span>▶</span> <span class="toggle-arrow">›</span> Metti alla prova — Classifica gli attributi
+    <span>▶</span> <span class="toggle-arrow">›</span> Mettiti alla prova — Classifica gli attributi
   </button>
   <div class="exercise-panel" id="ex03">
     <h4>⬡ Trascina ogni attributo nel tipo corretto</h4>
@@ -626,12 +626,15 @@
       <div class="drag-chip" draggable="true" data-val="Data_Ordine" data-correct="Data">Data_Ordine</div>
       <div class="drag-chip" draggable="true" data-val="Telefono" data-correct="Testo">Telefono</div>
       <div class="drag-chip" draggable="true" data-val="ID_Articolo" data-correct="Intero">ID_Articolo</div>
+	  <div class="drag-chip" draggable="true" data-val="Peso" data-correct="Decimale">Peso</div>
+	  <div class="drag-chip" draggable="true" data-val="Spedito" data-correct="Booleano">Spedito</div>
     </div>
     <div class="drop-zones" id="zones03">
       <div class="drop-zone" data-type="Testo"><div class="drop-zone-label">Testo</div></div>
       <div class="drop-zone" data-type="Intero"><div class="drop-zone-label">Intero</div></div>
       <div class="drop-zone" data-type="Decimale"><div class="drop-zone-label">Decimale</div></div>
       <div class="drop-zone" data-type="Data"><div class="drop-zone-label">Data</div></div>
+	  <div class="drop-zone" data-type="Booleano"><div class="drop-zone-label">Booleano</div></div>
     </div>
     <button class="check-btn" onclick="check03()">Verifica</button>
     <div class="sim-feedback" id="fb03"></div>
@@ -676,7 +679,7 @@
   </div>
 
   <button class="exercise-toggle" onclick="toggleExercise('ex04')">
-    <span>▶</span> <span class="toggle-arrow">›</span> Metti alla prova — Dove va la chiave esterna?
+    <span>▶</span> <span class="toggle-arrow">›</span> Mettiti alla prova — Dove va la chiave esterna?
   </button>
   <div class="exercise-panel" id="ex04">
     <h4>⬡ Scenario: un ufficio ha molti dipendenti. Dove metti la FK?</h4>
@@ -709,27 +712,29 @@
 
   <p>Non si può implementare direttamente con una sola FK: se una persona possiede 3 auto, dove metto le 3 targhe nella riga della persona?</p>
 
-  <button class="exercise-toggle" onclick="toggleExercise('ex05')">
-    <span>▶</span> <span class="toggle-arrow">›</span> Metti alla prova — Vedi il problema in azione
-  </button>
-  <div class="exercise-panel" id="ex05">
-    <h4>⬡ Tentativo sbagliato: tre colonne Targa nella tabella PERSONA</h4>
-    <p style="font-size:0.82rem; color:var(--muted); margin-bottom:0.8rem;">Proviamo ad aggiungere una quarta auto alla persona XXX. Cosa succede?</p>
-    <table class="nm-sim-table">
-      <thead><tr><th>CF (PK)</th><th>Nome</th><th>Targa1</th><th>Targa2</th><th>Targa3</th></tr></thead>
-      <tbody>
-        <tr><td>XXX</td><td>Mario Rossi</td><td>XY123AD</td><td>AB123QC</td><td class="cell-problem">???</td></tr>
-        <tr><td>YYY</td><td>Antonio Verdi</td><td>AA122BB</td><td></td><td></td></tr>
-        <tr><td>ZZZ</td><td>Silvia Martini</td><td>XY123AC</td><td></td><td></td></tr>
-      </tbody>
-    </table>
-    <div class="callout error" style="margin-top:0.5rem">
-      <div class="callout-icon">🚫</div>
-      <div class="callout-body">
-        <strong>Questo approccio non funziona:</strong> quante colonne Targa aggiungiamo? 3? 10? 100? E se qualcuno ha 0 auto, le altre colonne sono vuote sprecando spazio. La soluzione è la <strong>tabella associativa</strong> →
-      </div>
-    </div>
-  </div>
+	<button class="exercise-toggle" onclick="toggleExercise('ex05')">
+		<span>▶</span> <span class="toggle-arrow">›</span> Mettiti alla prova — Prova ad aggiungere una 4ª auto
+	  </button>
+	  <div class="exercise-panel" id="ex05">
+		<h4>⬡ Tentativo sbagliato: colonne Targa nella tabella PERSONA</h4>
+		<p style="font-size:0.82rem; color:var(--muted); margin-bottom:0.8rem;">Mario Rossi (XXX) ha già 3 auto. Prova ad aggiungerne una quarta.</p>
+
+		<table class="nm-sim-table" id="sim05-table">
+		  <thead><tr><th>CF (PK)</th><th>Nome</th><th id="sim05-col1">Targa1</th><th id="sim05-col2">Targa2</th><th id="sim05-col3">Targa3</th></tr></thead>
+		  <tbody id="sim05-body">
+			<tr><td>XXX</td><td>Mario Rossi</td><td>XY123AD</td><td>AB123QC</td><td>ZZ999XX</td></tr>
+			<tr><td>YYY</td><td>Antonio Verdi</td><td>AA122BB</td><td></td><td></td></tr>
+			<tr><td>ZZZ</td><td>Silvia Martini</td><td>XY123AC</td><td></td><td></td></tr>
+		  </tbody>
+		</table>
+
+		<div class="sim-input-row" id="sim05-input">
+		  <input type="text" id="sim05-targa" placeholder="Nuova targa" maxlength="10" style="width:130px;">
+		  <button class="sim-btn sim-btn-add" onclick="sim05Add()">Aggiungi auto</button>
+		  <button class="sim-btn sim-btn-reset" onclick="sim05Reset()">Reset</button>
+		</div>
+		<div class="sim-feedback" id="fb05"></div>
+	  </div>
 </section>
 
 <!-- ─── S06 · TABELLA ASSOCIATIVA ─── -->
@@ -773,7 +778,7 @@
   </div>
 
   <button class="exercise-toggle" onclick="toggleExercise('ex06')">
-    <span>▶</span> <span class="toggle-arrow">›</span> Metti alla prova — Compila la tabella POSSESSO
+    <span>▶</span> <span class="toggle-arrow">›</span> Mettiti alla prova — Compila la tabella POSSESSO
   </button>
   <div class="exercise-panel" id="ex06">
     <h4>⬡ Aggiungi le associazioni persona–automobile con date</h4>
@@ -832,7 +837,7 @@
   </div>
 
   <button class="exercise-toggle" onclick="toggleExercise('ex07')">
-    <span>▶</span> <span class="toggle-arrow">›</span> Metti alla prova — Dove metti il Voto?
+    <span>▶</span> <span class="toggle-arrow">›</span> Mettiti alla prova — Dove metti il Voto?
   </button>
   <div class="exercise-panel" id="ex07">
     <h4>⬡ Scenario: studenti e materie. Dove metti il Voto?</h4>
@@ -1087,6 +1092,62 @@ function checkFK04(el, correct) {
   }
 }
 
+
+/* ═══ S05 — Simulatore N:M problema ═══ */
+let sim05cols = 3;
+
+function sim05Add() {
+  const targa = document.getElementById('sim05-targa').value.trim().toUpperCase();
+  const fb = document.getElementById('fb05');
+  if (!targa) {
+    fb.className = 'sim-feedback err';
+    fb.textContent = '❌ Inserisci una targa.';
+    return;
+  }
+  sim05cols++;
+  // Aggiungi intestazione nuova colonna
+  const thead = document.querySelector('#sim05-table thead tr');
+  const th = document.createElement('th');
+  th.textContent = 'Targa' + sim05cols;
+  th.style.background = '#b02020';
+  thead.appendChild(th);
+  // Aggiungi cella a XXX con la nuova targa
+  const rows = document.querySelectorAll('#sim05-body tr');
+  rows.forEach((row, i) => {
+    const td = document.createElement('td');
+    if (i === 0) {
+      td.textContent = targa;
+      td.style.background = '#fde8e8';
+      td.style.color = '#b02020';
+      td.style.fontWeight = '700';
+    }
+    row.appendChild(td);
+  });
+  document.getElementById('sim05-targa').value = '';
+  fb.className = 'sim-feedback err';
+  fb.textContent = `❌ Colonna "Targa${sim05cols}" aggiunta. Quante ne aggiungiamo ancora? E YYY e ZZZ hanno celle vuote che sprecano spazio. Il database non può crescere così.`;
+  if (sim05cols >= 5) {
+    fb.textContent += ' La tabella sta diventando ingestibile — questa struttura non funziona!';
+  }
+}
+
+function sim05Reset() {
+  sim05cols = 3;
+  const table = document.getElementById('sim05-table');
+  const thead = table.querySelector('thead tr');
+  const tbody = document.getElementById('sim05-body');
+  // Ripristina intestazioni
+  thead.innerHTML = '<th>CF (PK)</th><th>Nome</th><th>Targa1</th><th>Targa2</th><th>Targa3</th>';
+  // Ripristina righe
+  tbody.innerHTML = `
+    <tr><td>XXX</td><td>Mario Rossi</td><td>XY123AD</td><td>AB123QC</td><td>ZZ999XX</td></tr>
+    <tr><td>YYY</td><td>Antonio Verdi</td><td>AA122BB</td><td></td><td></td></tr>
+    <tr><td>ZZZ</td><td>Silvia Martini</td><td>XY123AC</td><td></td><td></td></tr>`;
+  const fb = document.getElementById('fb05');
+  fb.className = 'sim-feedback'; fb.textContent = '';
+}
+
+
 /* ═══ S06 — Tabella associativa POSSESSO ═══ */
 let sim06rows = [];
 const sim06validCF = ['XXX','YYY','ZZZ'];
@@ -1240,6 +1301,9 @@ function reset08() {
   const fb = document.getElementById('fb08'); fb.className = 'sim-feedback'; fb.textContent = '';
 }
 
+
+
+
 /* ── Init al caricamento ── */
 document.addEventListener('DOMContentLoaded', () => {
   sim02Render();
@@ -1247,6 +1311,8 @@ document.addEventListener('DOMContentLoaded', () => {
   init07();
   init08();
 });
+
+
 
 </script>
 <script src="/scripts/ui.js" defer></script>
