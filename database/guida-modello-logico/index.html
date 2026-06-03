@@ -352,7 +352,7 @@
     .nm-sim-table .cell-problem { background: #fde8e8; color: var(--db-red); font-weight: 700; }
 
     /* Esercizio ponte (s06) */
-    .ponte-input { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.4rem; margin: 0.6rem 0; }
+    .ponte-input { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.4rem; margin: 0.6rem 0; }
     .ponte-input input {
       font-family: 'Space Mono', monospace;
       font-size: 0.8rem;
@@ -786,15 +786,16 @@
       Persone: XXX (Rossi), YYY (Verdi), ZZZ (Martini) &nbsp;|&nbsp; Auto: XY123AD, AA122BB, AB123QC<br>
       Inserisci alcune combinazioni. Prova a ripetere la stessa coppia CF+Targa!
     </p>
-    <table class="sim-table" id="sim06-table">
-      <thead><tr><th>CF (PK·FK)</th><th>Targa (PK·FK)</th><th>Data_Inizio</th></tr></thead>
-      <tbody id="sim06-body"></tbody>
-    </table>
-    <div class="ponte-input">
-      <input type="text" id="p06-cf" placeholder="CF (XXX/YYY/ZZZ)" maxlength="6">
-      <input type="text" id="p06-targa" placeholder="Targa" maxlength="10">
-      <input type="text" id="p06-data" placeholder="es. 2022-01-15" maxlength="12">
-    </div>
+	<table class="sim-table" id="sim06-table">
+	  <thead><tr><th>CF (PK·FK)</th><th>Targa (PK·FK)</th><th>Data_Inizio *</th><th>Data_Fine</th></tr></thead>
+	  <tbody id="sim06-body"></tbody>
+	</table>
+	<div class="ponte-input">
+	  <input type="text" id="p06-cf" placeholder="CF (XXX/YYY/ZZZ)" maxlength="6">
+	  <input type="text" id="p06-targa" placeholder="Targa" maxlength="10">
+	  <input type="text" id="p06-data" placeholder="Data_Inizio *" maxlength="12">
+	  <input type="text" id="p06-datafine" placeholder="Data_Fine (opz.)" maxlength="12">
+	</div>
     <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
       <button class="sim-btn sim-btn-add" onclick="sim06Insert()">Inserisci</button>
       <button class="sim-btn sim-btn-reset" onclick="sim06Reset()">Reset</button>
@@ -1099,11 +1100,22 @@ let sim05cols = 3;
 function sim05Add() {
   const targa = document.getElementById('sim05-targa').value.trim().toUpperCase();
   const fb = document.getElementById('fb05');
+
   if (!targa) {
     fb.className = 'sim-feedback err';
     fb.textContent = '❌ Inserisci una targa.';
     return;
   }
+
+  // Controlla duplicati nelle celle di XXX (prima riga)
+  const primaRiga = document.querySelectorAll('#sim05-body tr')[0];
+  const targeEsistenti = [...primaRiga.querySelectorAll('td')].slice(2).map(td => td.textContent.trim());
+  if (targeEsistenti.includes(targa)) {
+    fb.className = 'sim-feedback err';
+    fb.textContent = `❌ La targa "${targa}" è già presente per XXX — ma nota che il database non può nemmeno rilevare facilmente questo errore con questa struttura!`;
+    return;
+  }
+
   sim05cols++;
   // Aggiungi intestazione nuova colonna
   const thead = document.querySelector('#sim05-table thead tr');
@@ -1111,7 +1123,8 @@ function sim05Add() {
   th.textContent = 'Targa' + sim05cols;
   th.style.background = '#b02020';
   thead.appendChild(th);
-  // Aggiungi cella a XXX con la nuova targa
+
+  // Aggiungi cella a tutte le righe
   const rows = document.querySelectorAll('#sim05-body tr');
   rows.forEach((row, i) => {
     const td = document.createElement('td');
@@ -1123,6 +1136,7 @@ function sim05Add() {
     }
     row.appendChild(td);
   });
+
   document.getElementById('sim05-targa').value = '';
   fb.className = 'sim-feedback err';
   fb.textContent = `❌ Colonna "Targa${sim05cols}" aggiunta. Quante ne aggiungiamo ancora? E YYY e ZZZ hanno celle vuote che sprecano spazio. Il database non può crescere così.`;
@@ -1158,7 +1172,7 @@ function sim06Render() {
   sim06rows.forEach(r => {
     const tr = document.createElement('tr');
     tr.className = 'row-ok';
-    tr.innerHTML = `<td>${r.cf}</td><td>${r.targa}</td><td>${r.data || '—'}</td>`;
+    tr.innerHTML = `<td>${r.cf}</td><td>${r.targa}</td><td>${r.data}</td><td>${r.datafine || '—'}</td>`;
     tbody.appendChild(tr);
   });
 }
@@ -1167,10 +1181,11 @@ function sim06Insert() {
   const cf    = document.getElementById('p06-cf').value.trim().toUpperCase();
   const targa = document.getElementById('p06-targa').value.trim().toUpperCase();
   const data  = document.getElementById('p06-data').value.trim();
+  const datafine = document.getElementById('p06-datafine').value.trim();
   const fb    = document.getElementById('fb06');
-  if (!cf || !targa) {
+  if (!cf || !targa || !data) {
     fb.className = 'sim-feedback err';
-    fb.textContent = '❌ CF e Targa sono PK·FK — non possono essere vuoti.';
+    fb.textContent = '❌ CF, Targa e Data_Inizio sono obbligatori. La data di fine possesso può essere vuota (auto ancora posseduta).';
     return;
   }
   if (sim06rows.some(r => r.cf === cf && r.targa === targa)) {
@@ -1183,13 +1198,14 @@ function sim06Insert() {
     fb.textContent = `❌ CF "${cf}" non esiste in PERSONA. La FK deve puntare a un valore esistente — usa XXX, YYY o ZZZ.`;
     return;
   }
-  sim06rows.push({ cf, targa, data });
-  sim06Render();
-  fb.className = 'sim-feedback ok';
-  fb.textContent = `✅ Inserita: ${cf} possiede ${targa}${data ? ' dal ' + data : ''}. PK composta unica — nessuna violazione.`;
-  document.getElementById('p06-cf').value = '';
-  document.getElementById('p06-targa').value = '';
-  document.getElementById('p06-data').value = '';
+	sim06rows.push({ cf, targa, data, datafine });
+	  sim06Render();
+	  fb.className = 'sim-feedback ok';
+	  fb.textContent = `✅ Inserita: ${cf} possiede ${targa} dal ${data}${datafine ? ' al ' + datafine : ' (ancora in possesso)'}. PK composta unica — nessuna violazione.`;
+	  document.getElementById('p06-cf').value = '';
+	  document.getElementById('p06-targa').value = '';
+	  document.getElementById('p06-data').value = '';
+	  document.getElementById('p06-datafine').value = '';
 }
 
 function sim06Reset() {
