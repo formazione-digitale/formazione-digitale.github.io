@@ -826,5 +826,21 @@
   "digcomp_level": "foundation",
   "digcomp_areas": ["comunicazione", "creazione"],
   "digcompedu": ["DCEdu 3.4"]
+},
+{
+  "path": "/competenze-digitali/pillola-deepfake/",
+  "label": "Riconoscere i Deepfake",
+  "short": "Deepfake",
+  "cat": "pillola",
+  "emoji": "🎭",
+  "tags": ["deepfake", "intelligenza artificiale", "disinformazione", "immagini false", "video falsi", "legge 132 2025", "privacy", "cittadinanza digitale", "verifica contenuti"],
+  "meta": "4 tipi · Strumenti gratuiti · Legge italiana · ~12 min",
+  "description": "Cos'è un deepfake, come riconoscerlo con un approccio a strati, strumenti gratuiti di verifica e cosa prevede la Legge 132/2025. Per studenti e docenti.",
+  "featured": false,
+  "active": true,
+  "digcomp": ["DC 1.2", "DC 2.3", "DC 4.2"],
+  "digcomp_level": "foundation",
+  "digcomp_areas": ["informazioni", "comunicazione", "sicurezza"],
+  "digcompedu": ["DCEdu 6.1"]
 }
 ]

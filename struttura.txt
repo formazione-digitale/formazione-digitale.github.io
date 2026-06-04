@@ -1,11 +1,10 @@
 Elenco del percorso delle cartelle per il volume Acer
-Numero di serie del volume: 000000CE-544D:3F7C
+Numero di serie del volume: 0000005A-544D:3F7C
 C:.
 |   .gitignore
 |   .nojekyll
 |   404.html
 |   auth.js
-|   colori.txt
 |   cookie-policy.html
 |   framework.json
 |   index.html
@@ -27,6 +26,9 @@ C:.
 |           
 +---competenze-digitali
 |   +---pillola-aggiornamento-digitale
+|   |       index.html
+|   |       
+|   +---pillola-deepfake
 |   |       index.html
 |   |       
 |   +---pillola-netiquette
@@ -65,7 +67,6 @@ C:.
 |   |   \---img
 |   |           
 |   +---guida-libreoffice-base-query
-|   |   |   index - Copia.html
 |   |   |   index.html
 |   |   |   mapping-query.csv
 |   |   |   NERD-HERD.odb
@@ -157,6 +158,8 @@ C:.
 |       aggiorna_dominio.py
 |       aggiungi_footer_index.py
 |       aggiungi_link_footer.py
+|       cerca_vecchio_dominio.ps1
+|       cerca_vecchio_dominio.py
 |       check_site_links.bat
 |       genera_sitemap.py
 |       httpserver.bat
