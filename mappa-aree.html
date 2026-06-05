@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mappa per Aree — Formazione Digitale</title>
+
+<meta name="description" content="Esplora le risorse di Formazione Digitale per area tematica: intelligenza artificiale, database, marketing, sicurezza e molto altro.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://formazione-digitale.it/mappa-aree.html">
+<link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#1F4E79">
+
+<meta property="og:title" content="Mappa per Aree — Formazione Digitale">
+<meta property="og:description" content="Naviga le risorse del portale per area tematica in un grafo interattivo.">
+<meta property="og:url" content="https://formazione-digitale.it/mappa-aree.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+<style>
+/* ── VARIABILI ── */
+:root {
+  --blue-dark:   #1F4E79;
+  --blue-mid:    #2E75B6;
+  --blue-light:  #D6E8F7;
+  --blue-pale:   #EBF3FC;
+  --gray-dark:   #2C2C2C;
+  --gray-mid:    #666666;
+  --gray-light:  #F5F5F5;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --panel-width: 320px;
+}
+
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  font-family: var(--font-body);
+  background: #F0F5FB;
+  color: var(--gray-dark);
+  overflow: hidden;
+}
+
+/* ── HEADER ── */
+.ma-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 52px;
+  background: var(--blue-dark);
+  display: flex;
+  align-items: center;
+  padding: 0 1.25rem;
+  gap: 1rem;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,.2);
+}
+
+.ma-header-back {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  color: rgba(255,255,255,.7);
+  text-decoration: none;
+  font-size: .8rem;
+  font-weight: 500;
+  transition: color .2s;
+  flex-shrink: 0;
+}
+.ma-header-back:hover { color: #fff; }
+.ma-header-back svg {
+  width: 16px; height: 16px;
+  stroke: currentColor; fill: none; stroke-width: 2.5;
+}
+
+.ma-header-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: #fff;
+  flex: 1;
+}
+
+.ma-header-hint {
+  font-size: .72rem;
+  color: rgba(255,255,255,.45);
+  flex-shrink: 0;
+}
+
+/* ── CANVAS ── */
+#graph-container {
+  position: fixed;
+  top: 52px; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+}
+
+#graph-svg {
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+#graph-svg:active { cursor: grabbing; }
+
+/* ── LEGENDA ── */
+.ma-legend {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--blue-light);
+  border-radius: 10px;
+  padding: .75rem 1rem;
+  font-size: .72rem;
+  color: var(--gray-mid);
+  z-index: 50;
+  box-shadow: 0 2px 12px rgba(31,78,121,.1);
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+.ma-legend-item {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.ma-legend-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.ma-legend-dot.hub { background: var(--blue-dark); }
+.ma-legend-dot.area { background: #888; border: 2px solid #888; }
+.ma-legend-dot.risorsa { background: #fff; border: 2px solid #888; width: 8px; height: 8px; }
+
+/* ── CONTATORE ── */
+.ma-counter {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--blue-light);
+  border-radius: 10px;
+  padding: .6rem 1rem;
+  font-size: .72rem;
+  color: var(--gray-mid);
+  z-index: 50;
+  box-shadow: 0 2px 12px rgba(31,78,121,.1);
+  text-align: center;
+  line-height: 1.5;
+}
+.ma-counter strong {
+  display: block;
+  font-size: 1.2rem;
+  color: var(--blue-dark);
+  font-weight: 700;
+}
+
+/* ── PANNELLO LATERALE ── */
+.ma-panel {
+  position: fixed;
+  top: 52px; right: 0; bottom: 0;
+  width: var(--panel-width);
+  background: #fff;
+  border-left: 1px solid var(--blue-light);
+  box-shadow: -4px 0 24px rgba(31,78,121,.1);
+  transform: translateX(100%);
+  transition: transform .3s cubic-bezier(.4,0,.2,1);
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.ma-panel.open {
+  transform: translateX(0);
+}
+
+.ma-panel-close {
+  position: absolute;
+  top: .75rem; right: .75rem;
+  width: 28px; height: 28px;
+  background: var(--gray-light);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .9rem;
+  color: var(--gray-mid);
+  transition: background .2s;
+  z-index: 2;
+}
+.ma-panel-close:hover { background: var(--blue-light); color: var(--blue-dark); }
+
+.ma-panel-header {
+  padding: 1.5rem 1.25rem 1rem;
+  border-bottom: 1px solid var(--blue-light);
+  flex-shrink: 0;
+}
+
+.ma-panel-emoji {
+  font-size: 2.5rem;
+  line-height: 1;
+  margin-bottom: .6rem;
+}
+
+.ma-panel-cat {
+  display: inline-block;
+  font-size: .65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  padding: .2rem .6rem;
+  border-radius: 20px;
+  margin-bottom: .6rem;
+}
+.ma-panel-cat.guide   { background: #EBF3FC; color: var(--blue-dark); }
+.ma-panel-cat.strumento { background: #E8F5EE; color: #1E6B3C; }
+.ma-panel-cat.pillola  { background: #FFF3CD; color: #7D4E00; }
+
+.ma-panel-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--blue-dark);
+  line-height: 1.3;
+}
+
+.ma-panel-body {
+  padding: 1rem 1.25rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.ma-panel-area {
+  font-size: .75rem;
+  color: var(--gray-mid);
+  margin-bottom: .75rem;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+.ma-panel-area-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.ma-panel-desc {
+  font-size: .875rem;
+  color: var(--gray-dark);
+  line-height: 1.65;
+  margin-bottom: 1rem;
+}
+
+.ma-panel-meta {
+  font-size: .75rem;
+  color: var(--gray-mid);
+  padding: .6rem .75rem;
+  background: var(--gray-light);
+  border-radius: 8px;
+  margin-bottom: 1.25rem;
+}
+
+.ma-panel-footer {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--blue-light);
+  flex-shrink: 0;
+}
+
+.ma-panel-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--blue-dark);
+  color: #fff;
+  text-decoration: none;
+  padding: .85rem 1.1rem;
+  border-radius: 10px;
+  font-size: .875rem;
+  font-weight: 600;
+  transition: background .2s, transform .15s;
+}
+.ma-panel-cta:hover {
+  background: var(--blue-mid);
+  transform: translateY(-1px);
+}
+.ma-panel-cta .arrow {
+  font-size: 1rem;
+  transition: transform .2s;
+}
+.ma-panel-cta:hover .arrow { transform: translateX(4px); }
+
+/* ── OVERLAY mobile ── */
+.ma-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.3);
+  z-index: 70;
+}
+.ma-overlay.open { display: block; }
+
+/* ── TOOLTIP AREA (hover nodo area) ── */
+.ma-tooltip {
+  position: fixed;
+  background: rgba(255,255,255,.96);
+  border: 1px solid var(--blue-light);
+  border-radius: 8px;
+  padding: .5rem .8rem;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--blue-dark);
+  pointer-events: none;
+  z-index: 60;
+  box-shadow: 0 2px 12px rgba(31,78,121,.12);
+  opacity: 0;
+  transition: opacity .15s;
+}
+.ma-tooltip.visible { opacity: 1; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  :root { --panel-width: 100vw; }
+  .ma-header-hint { display: none; }
+  .ma-legend { display: none; }
+  .ma-panel { top: 52px; }
+}
+
+/* ── NODI SVG ── */
+.node-hub circle { cursor: default; }
+.node-area circle { cursor: pointer; transition: opacity .2s; }
+.node-area:hover circle { opacity: .85; }
+.node-risorsa circle { cursor: pointer; transition: opacity .2s, r .2s; }
+.node-risorsa:hover circle { opacity: .85; }
+
+.node-area text, .node-risorsa text {
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Link SVG */
+.link-area { stroke-opacity: .25; }
+.link-risorsa { stroke-opacity: .18; }
+
+/* Stato highlight */
+.node-area.dimmed circle { opacity: .2; }
+.node-area.dimmed text { opacity: .2; }
+.node-risorsa.dimmed circle { opacity: .15; }
+.node-risorsa.dimmed text { opacity: .15; }
+.link-area.dimmed { stroke-opacity: .05; }
+.link-risorsa.dimmed { stroke-opacity: .05; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="ma-header">
+  <a class="ma-header-back" href="/">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Portale
+  </a>
+  <div class="ma-header-title">Mappa per Aree</div>
+  <div class="ma-header-hint">Clicca una risorsa per i dettagli · Trascina per esplorare</div>
+</header>
+
+<!-- GRAFO -->
+<div id="graph-container">
+  <svg id="graph-svg"></svg>
+</div>
+
+<!-- LEGENDA -->
+<div class="ma-legend">
+  <div class="ma-legend-item">
+    <div class="ma-legend-dot hub"></div>
+    <span>Hub centrale</span>
+  </div>
+  <div class="ma-legend-item">
+    <div class="ma-legend-dot area"></div>
+    <span>Area tematica</span>
+  </div>
+  <div class="ma-legend-item">
+    <div class="ma-legend-dot risorsa"></div>
+    <span>Risorsa</span>
+  </div>
+</div>
+
+<!-- CONTATORE -->
+<div class="ma-counter" id="ma-counter">
+  <strong>—</strong>
+  risorse
+</div>
+
+<!-- OVERLAY mobile -->
+<div class="ma-overlay" id="ma-overlay" onclick="closePanel()"></div>
+
+<!-- PANNELLO LATERALE -->
+<div class="ma-panel" id="ma-panel">
+  <button class="ma-panel-close" onclick="closePanel()" aria-label="Chiudi">✕</button>
+  <div class="ma-panel-header">
+    <div class="ma-panel-emoji" id="panel-emoji"></div>
+    <div class="ma-panel-cat" id="panel-cat"></div>
+    <div class="ma-panel-title" id="panel-title"></div>
+  </div>
+  <div class="ma-panel-body">
+    <div class="ma-panel-area">
+      <div class="ma-panel-area-dot" id="panel-area-dot"></div>
+      <span id="panel-area-label"></span>
+    </div>
+    <div class="ma-panel-desc" id="panel-desc"></div>
+    <div class="ma-panel-meta" id="panel-meta"></div>
+  </div>
+  <div class="ma-panel-footer">
+    <a class="ma-panel-cta" id="panel-cta" href="#" target="_blank">
+      <span id="panel-cta-label">Apri la risorsa</span>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+</div>
+
+<!-- TOOLTIP -->
+<div class="ma-tooltip" id="ma-tooltip"></div>
+
+<!-- D3.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   MAPPA AREE — Formazione Digitale
+   Grafo force-directed D3.js v7
+   Lettura da manifest.json + aree.json
+══════════════════════════════════════════════════════════════ */
+
+/* ── STATO ── */
+let AREE    = null;
+let RISORSE = null;
+let selectedArea = null;
+
+/* ── CARICAMENTO DATI ── */
+async function init() {
+  try {
+    const [aree, manifest] = await Promise.all([
+      fetch('/aree.json').then(r => r.json()),
+      fetch('/manifest.json').then(r => r.json())
+    ]);
+    AREE    = aree;
+    RISORSE = manifest.filter(r => r.active !== false);
+
+    // Aggiorna contatore
+    const el = document.getElementById('ma-counter');
+    el.innerHTML = `<strong>${RISORSE.length}</strong> risorse`;
+
+    buildGraph();
+  } catch(e) {
+    console.error('Errore caricamento dati:', e);
+    document.getElementById('graph-container').innerHTML =
+      '<p style="padding:3rem;text-align:center;color:#999;">Errore nel caricamento dei dati.</p>';
+  }
+}
+
+/* ── COSTRUZIONE GRAFO ── */
+function buildGraph() {
+  const container = document.getElementById('graph-container');
+  const W = container.clientWidth;
+  const H = container.clientHeight;
+
+  const svg = d3.select('#graph-svg')
+    .attr('viewBox', `0 0 ${W} ${H}`);
+
+  // Layer per zoom/pan
+  const g = svg.append('g').attr('class', 'graph-layer');
+
+  // Zoom
+  const zoom = d3.zoom()
+    .scaleExtent([0.3, 3])
+    .on('zoom', e => g.attr('transform', e.transform));
+  svg.call(zoom);
+
+  // Click su sfondo → deseleziona
+  svg.on('click', function(e) {
+    if (e.target === this || e.target.tagName === 'svg') {
+      clearHighlight();
+      closePanel();
+    }
+  });
+
+  /* ── NODI ── */
+  // Hub centrale
+  const hubNode = { id: '__hub__', type: 'hub', label: 'Formazione\nDigitale', x: W/2, y: H/2, fx: W/2, fy: H/2 };
+
+  // Nodi area
+  const areaNodes = AREE.map(a => ({
+    id: a.id,
+    type: 'area',
+    label: a.label,
+    emoji: a.emoji,
+    color: a.color,
+    count: RISORSE.filter(r => r.path.replace(/^\//, '').split('/')[0] === a.id).length
+  }));
+
+  // Nodi risorsa
+  const risorsaNodes = RISORSE.map(r => {
+    const areaId = r.path.replace(/^\//, '').split('/')[0];
+    const area = AREE.find(a => a.id === areaId);
+    return {
+      id: r.path,
+      type: 'risorsa',
+      areaId,
+      label: r.short,
+      emoji: r.emoji,
+      cat: r.cat,
+      color: area ? area.color : '#888',
+      path: r.path,
+      description: r.description || '',
+      meta: r.meta || '',
+      areaLabel: area ? area.label : areaId
+    };
+  });
+
+  const nodes = [hubNode, ...areaNodes, ...risorsaNodes];
+
+  /* ── LINK ── */
+  // Hub → area
+  const areaLinks = areaNodes.map(a => ({ source: '__hub__', target: a.id, type: 'area' }));
+  // Area → risorsa
+  const risorsaLinks = risorsaNodes.map(r => ({ source: r.areaId, target: r.id, type: 'risorsa' }));
+  const links = [...areaLinks, ...risorsaLinks];
+
+  /* ── SIMULAZIONE ── */
+  const sim = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(links)
+      .id(d => d.id)
+      .distance(d => d.type === 'area' ? 160 : 80)
+      .strength(d => d.type === 'area' ? 0.8 : 0.6)
+    )
+    .force('charge', d3.forceManyBody()
+      .strength(d => d.type === 'hub' ? -800 : d.type === 'area' ? -400 : -120)
+    )
+    .force('collision', d3.forceCollide()
+      .radius(d => d.type === 'hub' ? 60 : d.type === 'area' ? 58 : 38)
+    )
+    .force('center', d3.forceCenter(W/2, H/2).strength(0.05))
+    .alphaDecay(0.025);
+
+  /* ── RENDER LINK ── */
+  const linkSel = g.append('g').attr('class', 'links')
+    .selectAll('line')
+    .data(links)
+    .join('line')
+    .attr('class', d => `link-${d.type}`)
+    .attr('stroke', d => {
+      if (d.type === 'area') return '#1F4E79';
+      const rNode = risorsaNodes.find(r => r.id === (typeof d.target === 'object' ? d.target.id : d.target));
+      return rNode ? rNode.color : '#888';
+    })
+    .attr('stroke-width', d => d.type === 'area' ? 1.5 : 1);
+
+  /* ── RENDER NODI AREA ── */
+  const areaSel = g.append('g').attr('class', 'nodes-area')
+    .selectAll('g')
+    .data(areaNodes)
+    .join('g')
+    .attr('class', 'node-area')
+    .attr('data-id', d => d.id)
+    .call(d3.drag()
+      .on('start', dragStart)
+      .on('drag', dragging)
+      .on('end', dragEnd)
+    )
+    .on('click', function(e, d) {
+      e.stopPropagation();
+      toggleAreaHighlight(d.id);
+    })
+    .on('mouseover', function(e, d) {
+      showTooltip(e, `${d.emoji} ${d.label} (${d.count})`);
+    })
+    .on('mouseout', hideTooltip);
+
+  areaSel.append('circle')
+    .attr('r', 36)
+    .attr('fill', d => d.color)
+    .attr('stroke', '#fff')
+    .attr('stroke-width', 2.5)
+    .attr('filter', 'drop-shadow(0 3px 8px rgba(0,0,0,.18))');
+
+  areaSel.append('text')
+    .attr('text-anchor', 'middle')
+    .attr('dy', '0.4em')
+    .attr('font-size', '1.4rem')
+    .text(d => d.emoji);
+
+  areaSel.append('text')
+    .attr('text-anchor', 'middle')
+    .attr('y', 36 + 14)
+    .attr('font-size', '10px')
+    .attr('font-weight', '700')
+    .attr('fill', d => d.color)
+    .attr('font-family', 'DM Sans, system-ui, sans-serif')
+    .text(d => d.label);
+
+  /* ── RENDER HUB ── */
+  const hubSel = g.append('g').attr('class', 'node-hub');
+
+  hubSel.append('circle')
+    .attr('r', 48)
+    .attr('fill', '#1F4E79')
+    .attr('stroke', '#fff')
+    .attr('stroke-width', 3)
+    .attr('filter', 'drop-shadow(0 4px 16px rgba(31,78,121,.35))');
+
+  hubSel.append('text')
+    .attr('text-anchor', 'middle')
+    .attr('dy', '-0.6em')
+    .attr('font-size', '1.5rem')
+    .text('🌐');
+
+  hubSel.append('text')
+    .attr('text-anchor', 'middle')
+    .attr('dy', '0.9em')
+    .attr('font-size', '9.5px')
+    .attr('font-weight', '700')
+    .attr('fill', '#fff')
+    .attr('font-family', 'DM Serif Display, Georgia, serif')
+    .text('Formazione');
+
+  hubSel.append('text')
+    .attr('text-anchor', 'middle')
+    .attr('dy', '2.2em')
+    .attr('font-size', '9.5px')
+    .attr('font-weight', '700')
+    .attr('fill', '#fff')
+    .attr('font-family', 'DM Serif Display, Georgia, serif')
+    .text('Digitale');
+
+  /* ── RENDER NODI RISORSA ── */
+  const risorsaSel = g.append('g').attr('class', 'nodes-risorsa')
+    .selectAll('g')
+    .data(risorsaNodes)
+    .join('g')
+    .attr('class', 'node-risorsa')
+    .attr('data-id', d => d.id)
+    .attr('data-area', d => d.areaId)
+    .call(d3.drag()
+      .on('start', dragStart)
+      .on('drag', dragging)
+      .on('end', dragEnd)
+    )
+    .on('click', function(e, d) {
+      e.stopPropagation();
+      openPanel(d);
+    })
+    .on('mouseover', function(e, d) {
+      showTooltip(e, `${d.emoji} ${d.label}`);
+    })
+    .on('mouseout', hideTooltip);
+
+  risorsaSel.append('circle')
+    .attr('r', 16)
+    .attr('fill', '#fff')
+    .attr('stroke', d => d.color)
+    .attr('stroke-width', 2)
+    .attr('filter', 'drop-shadow(0 2px 6px rgba(0,0,0,.12))');
+
+  risorsaSel.append('text')
+    .attr('text-anchor', 'middle')
+    .attr('dy', '0.35em')
+    .attr('font-size', '0.8rem')
+    .text(d => d.emoji);
+
+  /* ── LABEL RISORSA (sotto il nodo) ── */
+  risorsaSel.append('text')
+    .attr('text-anchor', 'middle')
+    .attr('dy', '3.2em')
+    .attr('font-size', '9px')
+    .attr('fill', '#444')
+    .attr('font-weight', '500')
+    .attr('font-family', 'DM Sans, system-ui, sans-serif')
+    .text(d => d.label.length > 16 ? d.label.slice(0, 15) + '…' : d.label);
+
+  /* ── TICK ── */
+  sim.on('tick', () => {
+    linkSel
+      .attr('x1', d => d.source.x)
+      .attr('y1', d => d.source.y)
+      .attr('x2', d => d.target.x)
+      .attr('y2', d => d.target.y);
+
+    areaSel.attr('transform', d => `translate(${d.x},${d.y})`);
+    hubSel.attr('transform', d => `translate(${hubNode.x},${hubNode.y})`);
+    risorsaSel.attr('transform', d => `translate(${d.x},${d.y})`);
+  });
+
+  /* ── DRAG ── */
+  function dragStart(e, d) {
+    if (!e.active) sim.alphaTarget(0.3).restart();
+    d.fx = d.x; d.fy = d.y;
+  }
+  function dragging(e, d) {
+    d.fx = e.x; d.fy = e.y;
+  }
+  function dragEnd(e, d) {
+    if (!e.active) sim.alphaTarget(0);
+    if (d.type !== 'hub') { d.fx = null; d.fy = null; }
+  }
+
+  /* ── HIGHLIGHT AREA ── */
+  window.toggleAreaHighlight = function(areaId) {
+    if (selectedArea === areaId) {
+      clearHighlight();
+      return;
+    }
+    selectedArea = areaId;
+
+    // Dimma tutto
+    areaSel.classed('dimmed', d => d.id !== areaId);
+    risorsaSel.classed('dimmed', d => d.areaId !== areaId);
+    linkSel.classed('dimmed', d => {
+      const src = typeof d.source === 'object' ? d.source.id : d.source;
+      const tgt = typeof d.target === 'object' ? d.target.id : d.target;
+      return src !== areaId && tgt !== areaId && src !== '__hub__';
+    });
+  };
+
+  window.clearHighlight = function() {
+    selectedArea = null;
+    areaSel.classed('dimmed', false);
+    risorsaSel.classed('dimmed', false);
+    linkSel.classed('dimmed', false);
+  };
+}
+
+/* ── PANNELLO ── */
+function openPanel(d) {
+  const panel  = document.getElementById('ma-panel');
+  const overlay = document.getElementById('ma-overlay');
+
+  document.getElementById('panel-emoji').textContent  = d.emoji;
+  document.getElementById('panel-title').textContent  = d.label || '';
+  document.getElementById('panel-desc').textContent   = d.description || '';
+  document.getElementById('panel-meta').textContent   = d.meta || '';
+
+  // Badge categoria
+  const catEl = document.getElementById('panel-cat');
+  const catMap = { guide: 'Guida', strumento: 'Strumento', pillola: 'Pillola' };
+  catEl.textContent  = catMap[d.cat] || d.cat;
+  catEl.className    = 'ma-panel-cat ' + (d.cat || '');
+
+  // Area
+  document.getElementById('panel-area-dot').style.background = d.color;
+  document.getElementById('panel-area-label').textContent    = d.areaLabel || '';
+
+  // CTA
+  const ctaEl = document.getElementById('panel-cta');
+  ctaEl.href = d.path;
+  const ctaLabel = { guide: 'Apri la guida', strumento: 'Apri lo strumento', pillola: 'Apri la pillola' };
+  document.getElementById('panel-cta-label').textContent = ctaLabel[d.cat] || 'Apri la risorsa';
+
+  panel.classList.add('open');
+  overlay.classList.add('open');
+}
+
+window.closePanel = function() {
+  document.getElementById('ma-panel').classList.remove('open');
+  document.getElementById('ma-overlay').classList.remove('open');
+};
+
+/* ── TOOLTIP ── */
+function showTooltip(e, text) {
+  const t = document.getElementById('ma-tooltip');
+  t.textContent = text;
+  t.style.left = (e.clientX + 12) + 'px';
+  t.style.top  = (e.clientY - 10) + 'px';
+  t.classList.add('visible');
+}
+function hideTooltip() {
+  document.getElementById('ma-tooltip').classList.remove('visible');
+}
+
+/* ── RESIZE ── */
+window.addEventListener('resize', () => {
+  const container = document.getElementById('graph-container');
+  const svg = document.getElementById('graph-svg');
+  svg.setAttribute('viewBox', `0 0 ${container.clientWidth} ${container.clientHeight}`);
+});
+
+/* ── AVVIO ── */
+init();
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>

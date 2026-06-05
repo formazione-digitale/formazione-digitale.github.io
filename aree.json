@@ -1,0 +1,50 @@
+[
+  {
+    "id": "intelligenza-artificiale",
+    "label": "Intelligenza Artificiale",
+    "emoji": "🤖",
+    "color": "#1F4E79"
+  },
+  {
+    "id": "database",
+    "label": "Database",
+    "emoji": "🗄️",
+    "color": "#4A148C"
+  },
+  {
+    "id": "marketing",
+    "label": "Marketing",
+    "emoji": "🛒",
+    "color": "#1E6B3C"
+  },
+  {
+    "id": "competenze-digitali",
+    "label": "Competenze Digitali",
+    "emoji": "💡",
+    "color": "#2E75B6"
+  },
+  {
+    "id": "sicurezza",
+    "label": "Sicurezza",
+    "emoji": "🔒",
+    "color": "#B71C1C"
+  },
+  {
+    "id": "elaborazione-testi",
+    "label": "Elaborazione Testi",
+    "emoji": "📝",
+    "color": "#00695C"
+  },
+  {
+    "id": "networking",
+    "label": "Networking",
+    "emoji": "🌐",
+    "color": "#7D4E00"
+  },
+  {
+    "id": "sistemi",
+    "label": "Sistemi",
+    "emoji": "⚙️",
+    "color": "#37474F"
+  }
+]
