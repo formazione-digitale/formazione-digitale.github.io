@@ -454,6 +454,17 @@ async function init() {
     AREE    = aree;
     RISORSE = manifest.filter(r => r.active !== false);
 
+    // ── CONTROLLO AREE MANCANTI ──
+    const areeIds = new Set(aree.map(a => a.id));
+    const mancanti = [...new Set(
+      RISORSE
+        .map(r => r.path.replace(/^\//, '').split('/')[0])
+        .filter(id => !areeIds.has(id))
+    )];
+    if (mancanti.length > 0) {
+      throw new Error(`Aree mancanti in aree.json: ${mancanti.join(', ')}`);
+    }
+
     // Aggiorna contatore
     const el = document.getElementById('ma-counter');
     el.innerHTML = `<strong>${RISORSE.length}</strong> risorse`;
@@ -462,7 +473,7 @@ async function init() {
   } catch(e) {
     console.error('Errore caricamento dati:', e);
     document.getElementById('graph-container').innerHTML =
-      '<p style="padding:3rem;text-align:center;color:#999;">Errore nel caricamento dei dati.</p>';
+      `<p style="padding:3rem;text-align:center;color:#999;">${e.message}</p>`;
   }
 }
 
