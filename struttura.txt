@@ -1,14 +1,17 @@
 Elenco del percorso delle cartelle per il volume Acer
-Numero di serie del volume: 0000005A-544D:3F7C
+Numero di serie del volume: 000000ED-544D:3F7C
 C:.
 |   .gitignore
 |   .nojekyll
 |   404.html
+|   aree.json
 |   auth.js
 |   cookie-policy.html
 |   framework.json
 |   index.html
 |   manifest.json
+|   manifest_.json
+|   mappa-aree.html
 |   mappa-framework.html
 |   mappa.html
 |   privacy-policy.html
@@ -101,6 +104,14 @@ C:.
 |       |   
 |       \---img
 |               
++---foglio-di-calcolo
+|   \---guida-funzioni-excel
+|           files (3).zip
+|           funzioni-excel-.js
+|           funzioni-excel.js
+|           index-.html
+|           index.html
+|           
 +---icdl
 |   |   index.html
 |   |   
