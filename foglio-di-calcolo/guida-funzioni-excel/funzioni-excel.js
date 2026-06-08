@@ -494,7 +494,7 @@ function renderTabellaFormule(tbodyId) {
   const tbody = document.getElementById(tbodyId);
   if (!tbody) return;
   tbody.innerHTML = DATI_FORMULE.map(f => `
-    <tr><td class="cella-num">${f.cella}</td><td>${f.mostra}</td></tr>`).join("");
+    <tr><td class="cella-num">${f.cella}</td><td class="cella-fx"><span class="fx-badge">fx</span>&nbsp;${f.mostra}</td></tr>`).join("");
 }
 
 function aggiornaTestoFormula(cella) {
