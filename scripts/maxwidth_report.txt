@@ -1,0 +1,99 @@
+﻿FILE:   404.html
+VALORI: 400px, 520px, 620px
+
+FILE:   cookie-policy.html
+VALORI: 780px
+
+FILE:   index.html
+VALORI: 1040px, 420px, 480px, 520px, 540px, 560px, 700px
+
+FILE:   mappa-aree.html
+VALORI: 600px
+
+FILE:   mappa-framework.html
+VALORI: 260px, 640px, 68px, 960px
+
+FILE:   mappa.html
+VALORI: 600px, 768px
+
+FILE:   privacy-policy.html
+VALORI: 780px
+
+FILE:   competenze-digitali\pillola-aggiornamento-digitale\index.html
+VALORI: 420px, 500px, 600px, 820px
+
+FILE:   competenze-digitali\pillola-deepfake\index.html
+VALORI: 420px, 500px, 600px, 820px
+
+FILE:   competenze-digitali\pillola-netiquette\index.html
+VALORI: 480px, 680px
+
+FILE:   competenze-digitali\pillola-valutazione-fonti\index.html
+VALORI: 500px, 600px, 820px
+
+FILE:   competenze-digitali\strumento-autovalutazione-digcompedu\index.html
+VALORI: 380px, 520px, 540px, 600px, 780px
+
+FILE:   competenze-digitali\strumento-valutazione-fonti\index.html
+VALORI: 520px, 600px, 680px
+
+FILE:   database\guida-database\index.html
+VALORI: 560px, 600px, 860px, 900px
+
+FILE:   database\guida-modello-logico\index.html
+VALORI: 560px, 600px, 860px
+
+FILE:   elaborazione-testi\guida-word\index.html
+VALORI: 600px, 960px
+
+FILE:   foglio-di-calcolo\guida-funzioni-excel\index.html
+VALORI: 280px
+
+FILE:   icdl\index.html
+VALORI: 420px, 520px, 560px, 640px, 720px, 860px, 900px
+
+FILE:   icdl\statistiche\index.html
+VALORI: 1100px, 260px, 600px, 768px, 860px
+
+FILE:   intelligenza-artificiale\guida-peer-review-ia\index.html
+VALORI: 600px
+
+FILE:   intelligenza-artificiale\guida-prompting\index.html
+VALORI: 600px, 800px, 820px, 860px
+
+FILE:   intelligenza-artificiale\prompt-builder\index.html
+VALORI: 460px, 540px, 600px, 860px
+
+FILE:   marketing\analizzatore-seo\index.html
+VALORI: 480px, 800px
+
+FILE:   marketing\break-even-point-tool\index.html
+VALORI: 1100px, 280px, 380px, 520px, 600px, 700px, 860px
+
+FILE:   marketing\guida-marketing\index.html
+VALORI: 1060px, 520px, 760px
+
+FILE:   marketing\kanban-tool\index.html
+VALORI: 1100px, 320px, 360px, 400px, 440px, 640px, 720px, 760px
+
+FILE:   marketing\pillola-seo\index.html
+VALORI: 520px
+
+FILE:   networking\hfs-server\index.html
+VALORI: 560px, 600px, 720px, 820px
+
+FILE:   networking\subnet-calculator\index.html
+VALORI: 1100px, 1350px, 600px
+
+FILE:   sicurezza\guida-cybersicurezza\index.html
+VALORI: 1200px, 600px, 650px, 860px, 900px
+
+FILE:   sicurezza\pillola-cybersicurezza\index.html
+VALORI: 480px, 680px
+
+FILE:   sistemi\codifica-binaria\index.html
+VALORI: 1000px, 1100px, 480px, 520px
+
+FILE:   stats\index.html
+VALORI: 200px, 600px, 860px
+

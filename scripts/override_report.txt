@@ -1,0 +1,24 @@
+﻿â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+FILE:     database\guida-database\index.html
+OVERRIDE: guide-layout, guide-main, guide-sidebar
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+FILE:     elaborazione-testi\guida-word\index.html
+OVERRIDE: #main, #sidebar
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+FILE:     icdl\statistiche\index.html
+OVERRIDE: #main
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+FILE:     intelligenza-artificiale\guida-prompting\index.html
+OVERRIDE: #main, #sidebar
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+FILE:     marketing\guida-marketing\index.html
+OVERRIDE: #main, #sidebar
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+FILE:     sicurezza\guida-cybersicurezza\index.html
+OVERRIDE: guide-layout, guide-main, guide-sidebar
+

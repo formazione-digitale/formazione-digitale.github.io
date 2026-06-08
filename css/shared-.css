@@ -396,33 +396,40 @@ body.aula-mode .header-downloads { display: none !important; }
 
 /* ══════════════════════════════════════════════════════════════
    8. SIDEBAR — guide (sottopagine standard)
-   Layout block: sidebar fixed (come #sidebar homepage) + guide-main con margin-left.
+   Layout griglia a due colonne: sidebar fissa + contenuto principale.
    Classe .guide-sidebar (non ID) — coesiste con #sidebar.
-   Su mobile (<900px) la sidebar è nascosta, drawer dal lato sinistro via .is-open.
+   Su mobile (<900px) la sidebar diventa un drawer dal lato sinistro.
    ══════════════════════════════════════════════════════════════ */
 
-/* Contenitore principale — block, non griglia */
+/* Griglia principale: sidebar 260px + resto */
 .guide-layout {
-  display: block;
-  margin-top: 56px;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  max-width: 1200px;
+  margin: 56px auto 0;
   min-height: calc(100vh - 56px);
 }
+@media(max-width:900px) { .guide-layout { grid-template-columns: 1fr; } }
 
-/* Sidebar laterale — fixed su desktop (come #sidebar homepage),
-   drawer dal lato sinistro su mobile */
+/* Sidebar laterale — sticky su desktop, drawer su mobile */
 .guide-sidebar {
-  position: fixed; top: 56px; left: 0; bottom: 0; z-index: 90;
-  width: var(--nav-w);
+  position: sticky; top: 56px;
+  height: calc(100vh - 56px);
   overflow-y: auto;
   background: var(--white);
   border-right: 1px solid var(--blue-light);
   padding: 1.25rem 0 2rem;
-  transform: translateX(-100%);
-  transition: transform var(--transition);
-  box-shadow: 2px 0 20px rgba(31,78,121,.08);
 }
-@media(min-width:900px) { .guide-sidebar { transform: translateX(0); } }
-.guide-sidebar.is-open { transform: translateX(0); }
+@media(max-width:900px) {
+  .guide-sidebar {
+    position: fixed; top: 56px; left: 0; bottom: 0; z-index: 90;
+    width: 260px;
+    transform: translateX(-100%);
+    transition: transform var(--transition);
+    box-shadow: 2px 0 20px rgba(31,78,121,.12);
+  }
+  .guide-sidebar.is-open { transform: translateX(0); }
+}
 
 /* Overlay scuro dietro la sidebar guide su mobile */
 .sidebar-overlay {
@@ -455,11 +462,10 @@ body.aula-mode .header-downloads { display: none !important; }
 /* Contenuto principale della guida */
 .guide-main {
   padding: 2.5rem 3rem 4rem;
-  max-width: 1060px;
+  max-width: 860px;
   width: 100%; min-width: 0;
 }
-@media(min-width:900px)  { .guide-main { margin-left: var(--nav-w); } }
-@media(max-width:900px)  { .guide-main { padding: 1.5rem 1.5rem 3rem; } }
+@media(max-width:900px) { .guide-main { padding: 1.5rem 1.5rem 3rem; } }
 
 
 /* ══════════════════════════════════════════════════════════════
@@ -471,10 +477,10 @@ body.aula-mode .header-downloads { display: none !important; }
   margin-top: var(--header-h);
   transition: margin-left var(--transition);
   padding: 2rem 1.25rem 4rem;
-  max-width: 1060px;
+  max-width: 800px;
 }
 @media(min-width:900px)  { #main { margin-left: var(--nav-w); padding: 2.5rem 2.5rem 4rem; } }
-@media(min-width:1200px) { #main { margin-left: var(--nav-w); max-width: 1060px; padding: 3rem 3rem 4rem; } }
+@media(min-width:1200px) { #main { margin-left: var(--nav-w); max-width: 860px; padding: 3rem 3rem 4rem; } }
 
 /* Tipografia di base nelle guide */
 p { margin-bottom: .85rem; font-size: .95rem; line-height: 1.75; color: #3a3a3a; }
