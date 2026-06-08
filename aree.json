@@ -36,6 +36,12 @@
     "color": "#00695C"
   },
   {
+	  "id": "foglio-di-calcolo",
+	  "label": "Foglio di Calcolo",
+	  "emoji": "📊",
+	  "color": "#2E7D32"
+	},
+  {
     "id": "networking",
     "label": "Networking",
     "emoji": "🌐",
