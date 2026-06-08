@@ -573,25 +573,34 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   PDF PLACEHOLDER
+   PDF DOWNLOAD
 ═══════════════════════════════════════════════════════════ */
-.pdf-placeholder {
+.pdf-download {
   display: flex; align-items: center; gap: 1rem;
-  background: var(--gray-light);
-  border: 2px dashed #ccc;
+  background: var(--blue-pale);
+  border: 1.5px solid var(--blue-light);
   border-radius: var(--radius);
   padding: 1rem 1.25rem;
   margin: .75rem 0;
-  opacity: .7;
+  text-decoration: none;
+  transition: all var(--transition);
+  cursor: pointer;
 }
-.pdf-placeholder .pdf-icon { font-size: 1.8rem; flex-shrink: 0; }
-.pdf-placeholder .pdf-text { font-size: .85rem; color: var(--gray-mid); line-height: 1.5; }
-.pdf-placeholder .pdf-badge {
+.pdf-download:hover {
+  background: var(--blue-light);
+  border-color: var(--blue-mid);
+  transform: translateX(3px);
+}
+.pdf-download .pdf-icon { font-size: 1.8rem; flex-shrink: 0; }
+.pdf-download .pdf-text { font-size: .85rem; color: var(--gray-dark); line-height: 1.5; }
+.pdf-download .pdf-text strong { color: var(--blue-dark); }
+.pdf-badge-ready {
   margin-left: auto; flex-shrink: 0;
   font-size: .68rem; font-weight: 700; letter-spacing: .08em;
   text-transform: uppercase;
-  background: #ddd; color: #888;
+  background: var(--blue-dark); color: #fff;
   padding: .2rem .55rem; border-radius: 20px;
+  white-space: nowrap;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -831,14 +840,14 @@ body {
           <div class="box-tip-label">💡 Suggerimento metodologico</div>
           Fai scegliere agli studenti la fonte da analizzare — non sceglierla tu. Quando portano una fonte propria, l'investimento emotivo nel valutarla correttamente è molto più alto. Il CRAAP test applicato a una fonte esterna prescelta dal docente produce spesso risposte meccaniche.
         </div>
-        <div class="pdf-placeholder">
-          <div class="pdf-icon">📄</div>
-          <div class="pdf-text">
-            <strong>Scheda CRAAP stampabile</strong><br>
-            Template A4 per gli studenti — una colonna per fonte, una riga per criterio.
-          </div>
-          <div class="pdf-badge">Prossimamente</div>
-        </div>
+		 <a class="pdf-download" href="CRAAP_test_griglia.pdf" download>
+		  <div class="pdf-icon">📄</div>
+		  <div class="pdf-text">
+			<strong>Scheda CRAAP stampabile</strong><br>
+			Template A4 — autovalutazione studente + griglia docente · Bilingue IT/EN
+		  </div>
+		  <div class="pdf-badge pdf-badge-ready">⬇ Scarica PDF</div>
+		</a>
       </div>
     </div>
   </section>
@@ -1001,14 +1010,14 @@ body {
         </div>
       </div>
 
-      <div class="pdf-placeholder">
-        <div class="pdf-icon">📄</div>
-        <div class="pdf-text">
-          <strong>Scheda attività — Caccia alla fonte</strong><br>
-          Griglia di valutazione stampabile per docenti · Formato A4
-        </div>
-        <div class="pdf-badge">Prossimamente</div>
-      </div>
+	<a class="pdf-download" href="Caccia_alla_fonte_griglia.pdf" download>
+	  <div class="pdf-icon">📄</div>
+	  <div class="pdf-text">
+		<strong>Scheda attività — Caccia alla fonte</strong><br>
+		Rubrica docente + autovalutazione studente · 4 livelli · Bilingue IT/EN
+	  </div>
+	  <div class="pdf-badge pdf-badge-ready">⬇ Scarica PDF</div>
+	</a>
 
       <ul class="resource-list" style="margin-top:1rem;">
         <li><a href="https://pagellapolitica.it" target="_blank" rel="noopener">Pagella Politica — esempi italiani da usare in classe</a></li>
@@ -1124,10 +1133,9 @@ body {
       <a class="footer-nav-link primary" href="/">
         🏠 Torna al portale →
       </a>
-      <!-- aggiornare href quando lo strumento sarà disponibile -->
-      <a class="footer-nav-link" href="/" aria-disabled="true" style="opacity:.5;pointer-events:none;">
-        Strumento Verifica Fonti → (prossimamente)
-      </a>
+		<a class="footer-nav-link" href="/competenze-digitali/strumento-valutazione-fonti/">
+		  Strumento Verifica Fonti →
+		</a>
     </div>
 
     <div class="pill-footer-legal">
