@@ -36,6 +36,26 @@
     ]
   },
   {
+  "path": "/foglio-di-calcolo/guida-funzioni-excel/",
+  "label": "Microsoft Excel — Guida alle funzioni",
+  "short": "Funzioni Excel",
+  "cat": "guide",
+  "emoji": "📊",
+  "tags": [
+    "excel", "funzioni", "somma.se", "conta.se", "cerca.vert", "se",
+    "rango", "stringa.estrai", "testo.formula", "foglio di calcolo",
+    "fatturato", "afm", "rim"
+  ],
+  "meta": "10 funzioni · Simulatori interattivi · Livello intermedio",
+  "description": "Dieci funzioni medio-avanzate di Excel — SOMMA.SE, CERCA.VERT, SE, RANGO e altre — ciascuna con un simulatore interattivo sugli stessi dati di vendita.",
+  "featured": false,
+  "active": true,
+  "digcomp": ["DC 1.3", "DC 3.1"],
+  "digcomp_level": "intermediate",
+  "digcomp_areas": ["informazioni", "creazione"],
+  "digcompedu": ["DCEdu 2.2", "DCEdu 3.4", "DCEdu 6.3"]
+  },
+  {
     "path": "/database/guida-modello-logico/",
     "label": "Modello Logico Relazionale",
     "short": "Modello Logico",

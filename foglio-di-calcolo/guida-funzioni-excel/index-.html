@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Funzioni di Excel — Guida pratica interattiva | Formazione Digitale</title>
+<meta name="description" content="Guida interattiva alle funzioni di Excel per AFM/RIM: SOMMA.SE, CERCA.VERT, SE, RANGO e altre. Simulatori live, nessuna installazione.">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Funzioni di Excel — Guida pratica interattiva">
+<meta property="og:description" content="Impara le funzioni di Excel con simulatori interattivi: cambia i criteri e vedi la formula ricalcolarsi in tempo reale.">
+<meta property="og:url" content="https://formazione-digitale.it/foglio-di-calcolo/guida-funzioni-excel/">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Funzioni di Excel — Guida pratica interattiva",
+  "description": "Guida interattiva alle principali funzioni di Excel (SOMMA.SE, CERCA.VERT, SE, RANGO, STRINGA.ESTRAI) con simulatori live, pensata per gli indirizzi AFM/RIM.",
+  "url": "https://formazione-digitale.it/foglio-di-calcolo/guida-funzioni-excel/",
+  "inLanguage": "it",
+  "author": {
+    "@type": "Person",
+    "name": "Cristiano De Pasquale",
+    "jobTitle": "Docente di Informatica"
+  },
+  "provider": {
+    "@type": "WebSite",
+    "name": "Formazione Digitale",
+    "url": "https://formazione-digitale.it"
+  },
+  "educationalLevel": "Scuola secondaria di secondo grado",
+  "keywords": "excel, funzioni, somma.se, cerca.vert, se, rango, foglio di calcolo, afm, rim"
+}
+</script>
+
+<!-- GoatCounter tracking -->
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+<!-- CSS condiviso del portale (standard). NON caricare shared-extended.css. -->
+<link rel="stylesheet" href="/css/shared.css?v=2">
+
+<!-- ════════════════════════════════════════════════════════════
+     STILI SPECIFICI DI PAGINA
+     Solo i componenti dei widget (foglio simulato, formula, risultato).
+     Si appoggiano alle variabili di shared.css — niente colori hardcoded.
+     ════════════════════════════════════════════════════════════ -->
+<style>
+/* ---- Blocco simulatore: contenitore del widget interattivo ---- */
+.sim {
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  background: var(--white);
+  box-shadow: var(--shadow);
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+}
+.sim-titolo {
+  font-size: .72rem; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--blue-mid);
+  margin-bottom: .9rem;
+}
+
+/* ---- Controlli del simulatore ---- */
+.sim-controlli {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .6rem;
+  margin-bottom: 1rem;
+}
+.sim-controlli label { font-size: .9rem; color: var(--gray-dark); font-weight: 500; }
+.sim-controlli select {
+  font-family: var(--font-body); font-size: .92rem;
+  padding: .4rem .65rem; border: 1px solid var(--blue-mid);
+  border-radius: 6px; background: var(--white); color: var(--blue-dark);
+  cursor: pointer;
+}
+
+/* ---- Tabella "stile foglio di calcolo" ---- */
+.foglio {
+  border-collapse: collapse; width: 100%;
+  font-size: .85rem; margin-bottom: 1rem;
+}
+.foglio th, .foglio td {
+  border: 1px solid #d4dde6; padding: .4rem .6rem; text-align: left;
+}
+.foglio thead .riga-lettere th {
+  background: var(--gray-light); color: var(--gray-mid);
+  text-align: center; font-weight: 600; width: auto;
+}
+.foglio thead .riga-intest td {
+  background: var(--blue-pale); color: var(--blue-dark); font-weight: 600;
+}
+.foglio .cella-rownum {
+  background: var(--gray-light); color: var(--gray-mid);
+  text-align: center; font-weight: 600; width: 34px;
+}
+.foglio .cella-num { text-align: right; font-variant-numeric: tabular-nums; }
+/* Riga evidenziata = riga che soddisfa il criterio */
+.foglio tbody tr.riga-match td,
+.foglio tbody tr.riga-match th {
+  background: var(--amber-light);
+  transition: background var(--transition);
+}
+
+/* ---- Riquadro formula (monospace, argomenti colorati) ---- */
+.formula-box {
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  font-size: 1rem; background: var(--gray-dark); color: #fff;
+  padding: .7rem 1rem; border-radius: 6px; overflow-x: auto;
+  white-space: nowrap; margin-bottom: .75rem;
+}
+.arg-int   { color: var(--blue-light); }   /* intervallo */
+.arg-crit  { color: var(--amber-mid); }    /* criterio   */
+.arg-somma { color: var(--green-accent); } /* int_somma  */
+
+/* ---- Legenda colori argomenti ---- */
+.legenda { display: flex; flex-wrap: wrap; gap: 1rem; font-size: .8rem; color: var(--gray-mid); margin-bottom: 1rem; }
+.legenda span { display: inline-flex; align-items: center; gap: .35rem; }
+.legenda i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+
+/* ---- Riquadro risultato ---- */
+.risultato-box {
+  display: flex; align-items: baseline; gap: .6rem;
+  background: var(--green-light); border: 1px solid var(--green-mid);
+  border-radius: 6px; padding: .7rem 1rem;
+}
+.risultato-box .et { font-size: .85rem; color: var(--green-dark); font-weight: 600; }
+.risultato-box .val { font-size: 1.3rem; font-weight: 700; color: var(--green-dark); font-variant-numeric: tabular-nums; }
+
+/* Codice inline nelle spiegazioni */
+code.fx {
+  font-family: ui-monospace, Consolas, monospace; font-size: .88em;
+  background: var(--blue-pale); color: var(--blue-dark);
+  padding: .1rem .35rem; border-radius: 4px;
+}
+
+/* ---- Cella restituita da CERCA.VERT ---- */
+.foglio td.cella-result {
+  outline: 2px solid var(--blue-mid); outline-offset: -2px;
+  font-weight: 700; color: var(--blue-dark);
+}
+
+/* ---- Colonna Esito (SE) ---- */
+.cella-esito { font-weight: 600; text-align: center; }
+.esito-si { color: var(--green-dark); }
+.esito-no { color: var(--gray-mid); }
+
+/* ---- Slider e checkbox dei simulatori ---- */
+.sim-controlli input[type="range"] { flex: 1 1 160px; max-width: 280px; cursor: pointer; accent-color: var(--blue-mid); }
+.sim-controlli input[type="checkbox"] { accent-color: var(--blue-mid); width: 16px; height: 16px; cursor: pointer; }
+.slider-val { font-weight: 700; color: var(--blue-dark); font-variant-numeric: tabular-nums; min-width: 3ch; }
+
+/* ---- Voce "Introduzione" in sidebar (più evidenza) ---- */
+.nav-item.nav-intro { font-weight: 600; color: var(--blue-dark); }
+.nav-intro .nav-ico { margin-right: .25rem; }
+
+/* ---- Traccia sequenziale (SE annidata) ---- */
+.traccia { display: flex; flex-direction: column; gap: .5rem; margin: 1rem 0; }
+.traccia-step {
+  display: flex; align-items: center; gap: .6rem; flex-wrap: wrap;
+  background: var(--gray-light); border: 1px solid #e2e8ef;
+  border-radius: 8px; padding: .55rem .8rem; transition: all var(--transition);
+}
+.step-num { font-weight: 700; color: var(--gray-mid); }
+.step-test { font-weight: 600; color: var(--gray-dark); }
+.step-esito { color: var(--gray-mid); font-size: .88rem; margin-left: auto; }
+.cond-badge {
+  font-size: .72rem; font-weight: 700; letter-spacing: .05em;
+  padding: .15rem .6rem; border-radius: 999px; color: #fff; background: var(--gray-mid);
+}
+.cond-vero   { background: var(--green-dark); }
+.cond-falso  { background: #b03030; } /* nessun token rosso nella palette */
+.cond-neutro { background: var(--gray-mid); }
+.traccia-step.step-vince { background: var(--blue-pale); border-color: var(--blue-mid); }
+.traccia-step.step-vince .step-esito { color: var(--blue-dark); font-weight: 600; }
+.traccia-step.step-spento { opacity: .45; }
+.traccia-risultato { font-size: 1.05rem; font-weight: 600; color: var(--gray-dark); padding-top: .3rem; }
+.traccia-badge { font-weight: 700; padding: .2rem .7rem; border-radius: 8px; color: #fff; background: var(--gray-mid); }
+.fascia-alto  { background: var(--green-dark); }
+.fascia-medio { background: var(--blue-mid); }
+.fascia-basso { background: var(--amber-dark); }
+
+/* ---- Caselle carattere (STRINGA.ESTRAI) ---- */
+.caratteri { display: flex; flex-wrap: wrap; gap: 4px; margin: 1rem 0; }
+.carattere {
+  display: flex; flex-direction: column; align-items: center;
+  border: 1px solid #d4dde6; border-radius: 6px; background: var(--white);
+  min-width: 30px; transition: all var(--transition);
+}
+.car-ch {
+  font-family: ui-monospace, Consolas, monospace; font-weight: 700;
+  font-size: 1rem; color: var(--gray-dark); padding: .35rem .4rem .15rem;
+}
+.car-pos { font-size: .6rem; color: var(--gray-mid); padding-bottom: .2rem; }
+.carattere.car-attivo { background: var(--amber-light); border-color: var(--amber-dark); }
+.carattere.car-attivo .car-ch { color: var(--amber-dark); }
+</style>
+</head>
+
+<body>
+
+<!-- ════════════════════ HEADER GUIDA (standard) ════════════════════ -->
+<header class="guide-header">
+  <a href="/" class="guide-header-back">← Portale</a>
+  <div class="guide-header-center">Funzioni di Excel</div>
+  <button class="hamburger" id="hamburger" onclick="toggleSidebar()" aria-label="Menu sezioni">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- ════════════════════ LAYOUT GUIDA ════════════════════ -->
+<div class="guide-layout">
+
+  <!-- Sidebar di navigazione -->
+  <aside class="guide-sidebar" id="guide-sidebar">
+    <div class="sidebar-label">Guida</div>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li><a class="nav-item nav-intro" href="#intro" onclick="closeSidebar()"><span class="nav-ico">📘</span><span class="nav-text">Introduzione</span></a></li>
+      <li><a class="nav-item active" href="#sec-sommase" onclick="closeSidebar()"><span class="nav-num">1</span><span class="nav-text">SOMMA.SE</span></a></li>
+      <li><a class="nav-item" href="#sec-sommapiuse" onclick="closeSidebar()"><span class="nav-num">2</span><span class="nav-text">SOMMA.PIÙ.SE</span></a></li>
+      <li><a class="nav-item" href="#sec-contase" onclick="closeSidebar()"><span class="nav-num">3</span><span class="nav-text">CONTA.SE</span></a></li>
+      <li><a class="nav-item" href="#sec-contapiuse" onclick="closeSidebar()"><span class="nav-num">4</span><span class="nav-text">CONTA.PIÙ.SE</span></a></li>
+      <li><a class="nav-item" href="#sec-cercavert" onclick="closeSidebar()"><span class="nav-num">5</span><span class="nav-text">CERCA.VERT</span></a></li>
+      <li><a class="nav-item" href="#sec-se" onclick="closeSidebar()"><span class="nav-num">6</span><span class="nav-text">SE</span></a></li>
+      <li><a class="nav-item" href="#sec-seannidata" onclick="closeSidebar()"><span class="nav-num">7</span><span class="nav-text">SE annidata</span></a></li>
+      <li><a class="nav-item" href="#sec-rango" onclick="closeSidebar()"><span class="nav-num">8</span><span class="nav-text">RANGO</span></a></li>
+      <li><a class="nav-item" href="#sec-stringaestrai" onclick="closeSidebar()"><span class="nav-num">9</span><span class="nav-text">STRINGA.ESTRAI</span></a></li>
+      <li><a class="nav-item" href="#sec-testoformula" onclick="closeSidebar()"><span class="nav-num">10</span><span class="nav-text">TESTO.FORMULA</span></a></li>
+    </ul>
+    <hr class="sidebar-divider">
+    <div class="sidebar-meta">
+      <strong>Funzioni di Excel</strong><br>
+      📖 Guida interattiva<br>
+      🧪 Versione pilota<br>
+      🔄 In espansione
+    </div>
+  </aside>
+  <div class="sidebar-overlay" id="guide-overlay" onclick="closeSidebar()"></div>
+
+  <!-- Contenuto principale -->
+  <main class="guide-main">
+
+    <!-- COVER / HERO -->
+    <section class="cover-block" id="intro">
+      <div class="cover-eyebrow">Foglio di calcolo · AFM / RIM</div>
+      <h1 class="cover-title">Funzioni di Excel</h1>
+      <p class="cover-sub">Le funzioni che servono davvero, spiegate provandole.</p>
+      <hr class="cover-divider">
+      <p class="cover-intro">
+        Niente screenshot da guardare: in questa guida i fogli di calcolo sono
+        <strong>vivi</strong>. Cambi un criterio e vedi la formula ricalcolarsi
+        sotto i tuoi occhi, sugli stessi dati di vendita che useremo in tutta la guida.
+        Sono funzioni <strong>medio-avanzate</strong>: do per scontato che tu sappia già
+        usare le funzioni base (SOMMA, MEDIA, MAX, MIN).
+      </p>
+      <div class="cover-badges">
+        <span class="cover-badge">Esempi interattivi</span>
+        <span class="cover-badge">Nessuna installazione</span>
+        <span class="cover-badge">Dati unici di esempio</span>
+      </div>
+    </section>
+
+    <!-- PRELIMINARI: come leggere le formule -->
+    <div class="box box-info">
+      <div class="box-label">Prima di iniziare — tre cose sulla sintassi</div>
+      <ul class="guide-list">
+        <li>Ogni funzione inizia con il segno <code class="fx">=</code> e racchiude gli argomenti tra parentesi tonde.</li>
+        <li>Gli argomenti si separano con il <strong>punto e virgola</strong> <code class="fx">;</code> (in alcune versioni internazionali è la virgola).</li>
+        <li>Il segno <code class="fx">$</code> blocca un riferimento: <code class="fx">$B$3</code> non si sposta quando trascini la formula. Lo vedremo dove serve.</li>
+      </ul>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ════════════════ SEZIONE 1 — SOMMA.SE ════════════════ -->
+    <section class="guide-section" id="sec-sommase">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div class="section-titles">
+          <div class="section-title">La funzione SOMMA.SE</div>
+          <div class="section-subtitle">Sommare solo i valori che rispettano una condizione</div>
+        </div>
+      </div>
+
+      <p>
+        <code class="fx">SOMMA.SE</code> somma i valori di un intervallo, ma
+        <strong>solo nelle righe che soddisfano un criterio</strong>. È perfetta per
+        rispondere a domande come «quanto ha fatturato in totale un singolo venditore?».
+      </p>
+
+      <p>La sintassi è:</p>
+      <div class="formula-box">
+        =SOMMA.SE(<span class="arg-int">intervallo</span>;<span class="arg-crit">criterio</span>;<span class="arg-somma">int_somma</span>)
+      </div>
+
+      <ul class="guide-list">
+        <li><span style="color:var(--blue-mid);font-weight:600">intervallo</span>: la colonna in cui cercare il criterio (qui i venditori, colonna A).</li>
+        <li><span style="color:var(--amber-dark);font-weight:600">criterio</span>: la condizione da cercare, tra doppi apici (es. <code class="fx">"Rossi"</code>).</li>
+        <li><span style="color:var(--green-dark);font-weight:600">int_somma</span>: la colonna i cui valori vanno sommati (qui il fatturato, colonna D).</li>
+      </ul>
+
+      <div class="box box-tip">
+        <div class="box-label">Suggerimento</div>
+        <p>Indicando <code class="fx">A:A</code> e <code class="fx">D:D</code> fai riferimento
+        all'<strong>intera colonna</strong>: la formula funziona anche se aggiungi nuove righe in fondo.</p>
+      </div>
+
+      <p class="sub-title">Provala tu</p>
+      <p>Scegli un venditore: le righe corrispondenti si illuminano, la formula si aggiorna e in basso compare il totale del suo fatturato.</p>
+
+      <!-- WIDGET INTERATTIVO SOMMA.SE -->
+      <div class="sim">
+        <div class="sim-titolo">Simulatore · SOMMA.SE</div>
+
+        <div class="sim-controlli">
+          <label for="ss-criterio">Venditore (criterio):</label>
+          <select id="ss-criterio"><!-- popolato da funzioni-excel.js --></select>
+        </div>
+
+        <table class="foglio">
+          <thead>
+            <tr class="riga-lettere">
+              <th></th><th>A</th><th>B</th><th>C</th><th>D</th>
+            </tr>
+            <tr class="riga-intest">
+              <th class="cella-rownum">1</th>
+              <td>Venditore</td><td>Regione</td><td>Settore</td><td>Fatturato</td>
+            </tr>
+          </thead>
+          <tbody id="ss-tabella-body"><!-- righe popolate da funzioni-excel.js --></tbody>
+        </table>
+
+        <div class="formula-box" id="ss-formula"><!-- formula ricomposta da JS --></div>
+
+        <div class="legenda">
+          <span><i style="background:var(--blue-mid)"></i> intervallo</span>
+          <span><i style="background:var(--amber-mid)"></i> criterio</span>
+          <span><i style="background:var(--green-accent)"></i> int_somma</span>
+        </div>
+
+        <div class="risultato-box">
+          <span class="et">Totale fatturato:</span>
+          <span class="val" id="ss-risultato">—</span>
+        </div>
+      </div>
+
+      <div class="box box-note">
+        <p>Se ometti <code class="fx">int_somma</code>, Excel somma direttamente i valori
+        dell'<code class="fx">intervallo</code> su cui hai applicato il criterio. Qui lo
+        teniamo esplicito perché cerchiamo nei venditori ma sommiamo i fatturati: due colonne diverse.</p>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ════════════════ SEZIONE 2 — SOMMA.PIÙ.SE ════════════════ -->
+    <section class="guide-section" id="sec-sommapiuse">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div class="section-titles">
+          <div class="section-title">La funzione SOMMA.PIÙ.SE</div>
+          <div class="section-subtitle">Sommare quando servono più condizioni insieme</div>
+        </div>
+      </div>
+
+      <p><code class="fx">SOMMA.PIÙ.SE</code> è la sorella di SOMMA.SE quando le condizioni sono
+      più di una: somma i valori solo nelle righe che soddisfano <strong>tutti</strong> i criteri
+      contemporaneamente. Esempio: «quanto ha fatturato Rossi <em>nella sola</em> Lombardia?».</p>
+
+      <p>La sintassi è:</p>
+      <div class="formula-box">
+        =SOMMA.PIÙ.SE(<span class="arg-somma">int_somma</span>;<span class="arg-int">int_criteri1</span>;<span class="arg-crit">criteri1</span>;<span class="arg-int">int_criteri2</span>;<span class="arg-crit">criteri2</span>)
+      </div>
+
+      <div class="box box-warn">
+        <div class="box-label">Attenzione all'ordine</div>
+        <p>In SOMMA.PIÙ.SE l'<strong>intervallo da sommare va per primo</strong> — l'opposto di
+        SOMMA.SE, dove veniva per ultimo. Dopo si elencano le coppie intervallo-criterio.</p>
+      </div>
+
+      <p class="sub-title">Provala tu</p>
+      <p>Scegli venditore e regione: si illuminano solo le righe che rispettano <strong>entrambe</strong> le condizioni.</p>
+
+      <!-- WIDGET INTERATTIVO SOMMA.PIÙ.SE -->
+      <div class="sim">
+        <div class="sim-titolo">Simulatore · SOMMA.PIÙ.SE</div>
+        <div class="sim-controlli">
+          <label for="sps-venditore">Venditore:</label>
+          <select id="sps-venditore"></select>
+          <label for="sps-regione">Regione:</label>
+          <select id="sps-regione"></select>
+        </div>
+        <table class="foglio">
+          <thead>
+            <tr class="riga-lettere"><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr>
+            <tr class="riga-intest"><th class="cella-rownum">1</th><td>Venditore</td><td>Regione</td><td>Settore</td><td>Fatturato</td></tr>
+          </thead>
+          <tbody id="sps-tabella-body"></tbody>
+        </table>
+        <div class="formula-box" id="sps-formula"></div>
+        <div class="legenda">
+          <span><i style="background:var(--green-accent)"></i> int_somma</span>
+          <span><i style="background:var(--blue-mid)"></i> intervalli criterio</span>
+          <span><i style="background:var(--amber-mid)"></i> criteri</span>
+        </div>
+        <div class="risultato-box">
+          <span class="et">Totale fatturato:</span>
+          <span class="val" id="sps-risultato">—</span>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ════════════════ SEZIONE 3 — CONTA.SE ════════════════ -->
+    <section class="guide-section" id="sec-contase">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div class="section-titles">
+          <div class="section-title">La funzione CONTA.SE</div>
+          <div class="section-subtitle">Contare quante righe rispettano una condizione</div>
+        </div>
+      </div>
+
+      <p><code class="fx">CONTA.SE</code> non somma: <strong>conta</strong> quante celle di un
+      intervallo soddisfano un criterio. Esempio: «quante operazioni di vendita ha fatto Rossi?».</p>
+
+      <p>La sintassi è:</p>
+      <div class="formula-box">
+        =CONTA.SE(<span class="arg-int">intervallo</span>;<span class="arg-crit">criterio</span>)
+      </div>
+
+      <ul class="guide-list">
+        <li><span style="color:var(--blue-mid);font-weight:600">intervallo</span>: la colonna in cui contare (qui i venditori, colonna A).</li>
+        <li><span style="color:var(--amber-dark);font-weight:600">criterio</span>: la condizione, tra doppi apici (es. <code class="fx">"Rossi"</code>).</li>
+      </ul>
+
+      <div class="box box-tip">
+        <div class="box-label">Suggerimento</div>
+        <p>Nel criterio puoi usare i caratteri jolly: <code class="fx">?</code> sostituisce un
+        carattere qualsiasi, <code class="fx">*</code> una sequenza qualsiasi. Es. <code class="fx">"Ro*"</code> conta tutto ciò che inizia per «Ro».</p>
+      </div>
+
+      <p class="sub-title">Provala tu</p>
+      <p>Scegli un venditore: le sue righe si illuminano e in basso compare quante volte compare nell'elenco.</p>
+
+      <!-- WIDGET INTERATTIVO CONTA.SE -->
+      <div class="sim">
+        <div class="sim-titolo">Simulatore · CONTA.SE</div>
+        <div class="sim-controlli">
+          <label for="cs-criterio">Venditore (criterio):</label>
+          <select id="cs-criterio"></select>
+        </div>
+        <table class="foglio">
+          <thead>
+            <tr class="riga-lettere"><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr>
+            <tr class="riga-intest"><th class="cella-rownum">1</th><td>Venditore</td><td>Regione</td><td>Settore</td><td>Fatturato</td></tr>
+          </thead>
+          <tbody id="cs-tabella-body"></tbody>
+        </table>
+        <div class="formula-box" id="cs-formula"></div>
+        <div class="legenda">
+          <span><i style="background:var(--blue-mid)"></i> intervallo</span>
+          <span><i style="background:var(--amber-mid)"></i> criterio</span>
+        </div>
+        <div class="risultato-box">
+          <span class="et">Conteggio:</span>
+          <span class="val" id="cs-risultato">—</span>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ════════════════ SEZIONE 4 — CONTA.PIÙ.SE ════════════════ -->
+    <section class="guide-section" id="sec-contapiuse">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div class="section-titles">
+          <div class="section-title">La funzione CONTA.PIÙ.SE</div>
+          <div class="section-subtitle">Contare con più condizioni in «E»</div>
+        </div>
+      </div>
+
+      <p><code class="fx">CONTA.PIÙ.SE</code> conta le righe che soddisfano <strong>tutte</strong>
+      le condizioni indicate. Esempio: «quante volte Rossi ha venduto in Lombardia?».</p>
+
+      <p>La sintassi è:</p>
+      <div class="formula-box">
+        =CONTA.PIÙ.SE(<span class="arg-int">int_criteri1</span>;<span class="arg-crit">criteri1</span>;<span class="arg-int">int_criteri2</span>;<span class="arg-crit">criteri2</span>)
+      </div>
+
+      <div class="box box-note">
+        <p>Ogni condizione in più <em>restringe</em> il conteggio: aggiungendo la regione, il numero
+        può solo restare uguale o diminuire rispetto al solo CONTA.SE sul venditore.</p>
+      </div>
+
+      <p class="sub-title">Provala tu</p>
+      <p>Confronta col simulatore di CONTA.SE qui sopra: scegli lo stesso venditore e aggiungi una regione — vedrai il conteggio scendere.</p>
+
+      <!-- WIDGET INTERATTIVO CONTA.PIÙ.SE -->
+      <div class="sim">
+        <div class="sim-titolo">Simulatore · CONTA.PIÙ.SE</div>
+        <div class="sim-controlli">
+          <label for="cps-venditore">Venditore:</label>
+          <select id="cps-venditore"></select>
+          <label for="cps-regione">Regione:</label>
+          <select id="cps-regione"></select>
+        </div>
+        <table class="foglio">
+          <thead>
+            <tr class="riga-lettere"><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr>
+            <tr class="riga-intest"><th class="cella-rownum">1</th><td>Venditore</td><td>Regione</td><td>Settore</td><td>Fatturato</td></tr>
+          </thead>
+          <tbody id="cps-tabella-body"></tbody>
+        </table>
+        <div class="formula-box" id="cps-formula"></div>
+        <div class="legenda">
+          <span><i style="background:var(--blue-mid)"></i> intervalli criterio</span>
+          <span><i style="background:var(--amber-mid)"></i> criteri</span>
+        </div>
+        <div class="risultato-box">
+          <span class="et">Conteggio:</span>
+          <span class="val" id="cps-risultato">—</span>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ════════════════ SEZIONE 5 — CERCA.VERT ════════════════ -->
+    <section class="guide-section" id="sec-cercavert">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div class="section-titles">
+          <div class="section-title">La funzione CERCA.VERT</div>
+          <div class="section-subtitle">Trovare un dato in una tabella partendo da un codice</div>
+        </div>
+      </div>
+
+      <p><code class="fx">CERCA.VERT</code> cerca un valore nella prima colonna di una tabella e
+      restituisce un dato sulla <strong>stessa riga</strong>, preso dalla colonna che indichi.
+      È lo strumento per collegare due tabelle: «dato il codice prodotto, qual è il prezzo?».</p>
+
+      <p>La sintassi è:</p>
+      <div class="formula-box">
+        =CERCA.VERT(<span class="arg-crit">valore</span>;<span class="arg-int">matrice</span>;<span class="arg-somma">indice</span>;<span class="arg-int">corrispondenza</span>)
+      </div>
+
+      <ul class="guide-list">
+        <li><span style="color:var(--amber-dark);font-weight:600">valore</span>: cosa cercare (il codice), nella <em>prima</em> colonna della matrice.</li>
+        <li><span style="color:var(--blue-mid);font-weight:600">matrice</span>: la tabella in cui cercare (qui <code class="fx">A:D</code>).</li>
+        <li><span style="color:var(--green-dark);font-weight:600">indice</span>: quale colonna restituire, contando da 1 (2 = Categoria, 3 = Prodotto, 4 = Prezzo).</li>
+        <li><strong>corrispondenza</strong>: <code class="fx">FALSO</code> = esatta, <code class="fx">VERO</code> = approssimativa (richiede la matrice ordinata).</li>
+      </ul>
+
+      <div class="box box-warn">
+        <div class="box-label">Quasi sempre FALSO</div>
+        <p>Con <code class="fx">FALSO</code> Excel trova solo la corrispondenza esatta e dà
+        <code class="fx">#N/D</code> se il codice non esiste. Con <code class="fx">VERO</code> trova
+        il valore più vicino per difetto — utile solo su dati ordinati (es. fasce, scaglioni).</p>
+      </div>
+
+      <p class="sub-title">Provala tu</p>
+      <p>Scegli un codice, scegli quale colonna restituire, e prova a togliere la corrispondenza esatta. Il codice <code class="fx">I210</code> non esiste: guarda cosa succede con FALSO e con VERO.</p>
+
+      <!-- WIDGET INTERATTIVO CERCA.VERT -->
+      <div class="sim">
+        <div class="sim-titolo">Simulatore · CERCA.VERT</div>
+        <div class="sim-controlli">
+          <label for="cv-valore">Codice cercato:</label>
+          <select id="cv-valore"></select>
+          <label for="cv-indice">Colonna (indice):</label>
+          <select id="cv-indice">
+            <option value="2">2 · Categoria</option>
+            <option value="3">3 · Prodotto</option>
+            <option value="4">4 · Prezzo</option>
+          </select>
+          <label><input type="checkbox" id="cv-esatta" checked> Corrispondenza esatta (FALSO)</label>
+        </div>
+        <table class="foglio">
+          <thead>
+            <tr class="riga-lettere"><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr>
+            <tr class="riga-intest"><th class="cella-rownum">1</th><td>Codice</td><td>Categoria</td><td>Prodotto</td><td>Prezzo</td></tr>
+          </thead>
+          <tbody id="cv-tabella-body"></tbody>
+        </table>
+        <div class="formula-box" id="cv-formula"></div>
+        <div class="legenda">
+          <span><i style="background:var(--amber-mid)"></i> valore</span>
+          <span><i style="background:var(--blue-mid)"></i> matrice</span>
+          <span><i style="background:var(--green-accent)"></i> indice</span>
+        </div>
+        <div class="risultato-box">
+          <span class="et">Risultato:</span>
+          <span class="val" id="cv-risultato">—</span>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ════════════════ SEZIONE 6 — SE ════════════════ -->
+    <section class="guide-section" id="sec-se">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <div class="section-titles">
+          <div class="section-title">La funzione SE</div>
+          <div class="section-subtitle">Decidere un risultato in base a una condizione</div>
+        </div>
+      </div>
+
+      <p><code class="fx">SE</code> valuta una condizione e restituisce un risultato se è vera,
+      un altro se è falsa. È il «bivio» del foglio di calcolo: «se il fatturato supera la soglia,
+      allora Premio, altrimenti Standard».</p>
+
+      <p>La sintassi è:</p>
+      <div class="formula-box">
+        =SE(<span class="arg-int">test</span>;<span class="arg-somma">se_vero</span>;<span class="arg-crit">se_falso</span>)
+      </div>
+
+      <p class="sub-title">Provala tu</p>
+      <p>Sposta la soglia: la colonna «Esito» ricalcola riga per riga, e si illuminano le vendite che ottengono il premio.</p>
+
+      <!-- WIDGET INTERATTIVO SE -->
+      <div class="sim">
+        <div class="sim-titolo">Simulatore · SE</div>
+        <div class="sim-controlli">
+          <label for="se-soglia">Soglia premio:</label>
+          <input type="range" id="se-soglia" min="0" max="11000" step="250" value="1000">
+          <span class="slider-val" id="se-soglia-val">—</span>
+        </div>
+        <table class="foglio">
+          <thead>
+            <tr class="riga-lettere"><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr>
+            <tr class="riga-intest"><th class="cella-rownum">1</th><td>Venditore</td><td>Regione</td><td>Settore</td><td>Fatturato</td><td>Esito</td></tr>
+          </thead>
+          <tbody id="se-tabella-body"></tbody>
+        </table>
+        <div class="formula-box" id="se-formula"></div>
+        <div class="legenda">
+          <span><i style="background:var(--blue-mid)"></i> test</span>
+          <span><i style="background:var(--green-accent)"></i> se_vero</span>
+          <span><i style="background:var(--amber-mid)"></i> se_falso</span>
+        </div>
+        <div class="risultato-box">
+          <span class="et">Premiati:</span>
+          <span class="val" id="se-conteggio">—</span>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ════════════════ SEZIONE 7 — SE annidata ════════════════ -->
+    <section class="guide-section" id="sec-seannidata">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <div class="section-titles">
+          <div class="section-title">SE annidata</div>
+          <div class="section-subtitle">Più bivi in cascata per classificare in fasce</div>
+        </div>
+      </div>
+
+      <p>Quando i casi sono più di due, si mette un <code class="fx">SE</code> dentro l'altro: il
+      «se_falso» del primo diventa un nuovo <code class="fx">SE</code>. Così si classifica un valore
+      in fasce — Alto, Medio, Basso.</p>
+
+      <p>La formula a fasce:</p>
+      <div class="formula-box" id="sea-formula"></div>
+
+      <div class="box box-note">
+        <p>Si legge dall'alto: la prima condizione vera «vince» e ferma la catena. Per questo le
+        soglie vanno messe dalla più alta alla più bassa.</p>
+      </div>
+
+      <p class="sub-title">Provala tu</p>
+      <p>Sposta il valore: vedi quale condizione diventa vera e quale fascia viene scelta. Se la prima è vera, la seconda non viene nemmeno valutata (si attenua).</p>
+
+      <!-- WIDGET INTERATTIVO SE annidata -->
+      <div class="sim">
+        <div class="sim-titolo">Simulatore · SE annidata</div>
+        <div class="sim-controlli">
+          <label for="sea-valore">Fatturato di prova:</label>
+          <input type="range" id="sea-valore" min="0" max="11000" step="100" value="3000">
+          <span class="slider-val" id="sea-valore-val">—</span>
+        </div>
+        <div class="traccia">
+          <div class="traccia-step" id="sea-step1">
+            <span class="step-num">①</span>
+            <span class="step-test">Fatturato ≥ 5.000 ?</span>
+            <span class="cond-badge" id="sea-cond1">—</span>
+            <span class="step-esito" id="sea-esito1"></span>
+          </div>
+          <div class="traccia-step" id="sea-step2">
+            <span class="step-num">②</span>
+            <span class="step-test">Fatturato ≥ 1.000 ?</span>
+            <span class="cond-badge" id="sea-cond2">—</span>
+            <span class="step-esito" id="sea-esito2"></span>
+          </div>
+          <div class="traccia-risultato">Risultato: <span class="traccia-badge" id="sea-risultato">—</span></div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ════════════════ SEZIONE 8 — RANGO ════════════════ -->
+    <section class="guide-section" id="sec-rango">
+      <div class="section-header">
+        <div class="section-num">8</div>
+        <div class="section-titles">
+          <div class="section-title">La funzione RANGO</div>
+          <div class="section-subtitle">Assegnare una posizione in classifica</div>
+        </div>
+      </div>
+
+      <p><code class="fx">RANGO</code> dice in che posizione si trova un valore rispetto a un gruppo.
+      Qui costruiamo la classifica dei venditori per fatturato totale.</p>
+
+      <p>La sintassi è:</p>
+      <div class="formula-box">
+        =RANGO(<span class="arg-crit">valore</span>;<span class="arg-int">intervallo</span>;<span class="arg-somma">ordine</span>)
+      </div>
+
+      <ul class="guide-list">
+        <li><span style="color:var(--amber-dark);font-weight:600">valore</span>: il numero di cui vuoi la posizione.</li>
+        <li><span style="color:var(--blue-mid);font-weight:600">intervallo</span>: il gruppo di confronto, bloccato con <code class="fx">$</code> per poter trascinare la formula.</li>
+        <li><span style="color:var(--green-dark);font-weight:600">ordine</span>: <code class="fx">0</code> = decrescente (1° = più alto), <code class="fx">1</code> = crescente.</li>
+      </ul>
+
+      <p class="sub-title">Provala tu</p>
+      <p>Cambia l'ordine: la classifica si riordina e il 1° posto cambia.</p>
+
+      <!-- WIDGET INTERATTIVO RANGO -->
+      <div class="sim">
+        <div class="sim-titolo">Simulatore · RANGO</div>
+        <div class="sim-controlli">
+          <label for="rg-ordine">Ordine:</label>
+          <select id="rg-ordine">
+            <option value="0">0 · Decrescente (1° = più alto)</option>
+            <option value="1">1 · Crescente (1° = più basso)</option>
+          </select>
+        </div>
+        <table class="foglio">
+          <thead>
+            <tr class="riga-lettere"><th></th><th>A</th><th>B</th><th>C</th></tr>
+            <tr class="riga-intest"><th class="cella-rownum">1</th><td>Venditore</td><td>Totale fatturato</td><td>Posizione</td></tr>
+          </thead>
+          <tbody id="rg-tabella-body"></tbody>
+        </table>
+        <div class="formula-box" id="rg-formula"></div>
+        <div class="legenda">
+          <span><i style="background:var(--amber-mid)"></i> valore</span>
+          <span><i style="background:var(--blue-mid)"></i> intervallo</span>
+          <span><i style="background:var(--green-accent)"></i> ordine</span>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ════════════════ SEZIONE 9 — STRINGA.ESTRAI ════════════════ -->
+    <section class="guide-section" id="sec-stringaestrai">
+      <div class="section-header">
+        <div class="section-num">9</div>
+        <div class="section-titles">
+          <div class="section-title">La funzione STRINGA.ESTRAI</div>
+          <div class="section-subtitle">Ritagliare una parte di testo da una cella</div>
+        </div>
+      </div>
+
+      <p><code class="fx">STRINGA.ESTRAI</code> estrae un pezzo di testo a partire da una posizione,
+      per un certo numero di caratteri. Serve per «spacchettare» codici strutturati: da
+      <code class="fx">AFM-VE-2024-017</code> puoi tirare fuori la sigla regione, l'anno, il progressivo.</p>
+
+      <p>La sintassi è:</p>
+      <div class="formula-box">
+        =STRINGA.ESTRAI(<span class="arg-int">testo</span>;<span class="arg-crit">inizio</span>;<span class="arg-somma">num_caratteri</span>)
+      </div>
+
+      <p class="sub-title">Provala tu</p>
+      <p>Sposta i due cursori: <strong>inizio</strong> sceglie da dove partire, <strong>num_caratteri</strong> quanti prenderne. La parte estratta si illumina.</p>
+
+      <!-- WIDGET INTERATTIVO STRINGA.ESTRAI -->
+      <div class="sim">
+        <div class="sim-titolo">Simulatore · STRINGA.ESTRAI</div>
+        <div class="sim-controlli">
+          <label for="st-inizio">Inizio:</label>
+          <input type="range" id="st-inizio" min="1" max="15" step="1" value="5">
+          <span class="slider-val" id="st-inizio-val">—</span>
+          <label for="st-num">N° caratteri:</label>
+          <input type="range" id="st-num" min="1" max="15" step="1" value="2">
+          <span class="slider-val" id="st-num-val">—</span>
+        </div>
+        <div class="caratteri" id="st-caratteri"></div>
+        <div class="formula-box" id="st-formula"></div>
+        <div class="legenda">
+          <span><i style="background:var(--blue-mid)"></i> testo</span>
+          <span><i style="background:var(--amber-mid)"></i> inizio</span>
+          <span><i style="background:var(--green-accent)"></i> num_caratteri</span>
+        </div>
+        <div class="risultato-box">
+          <span class="et">Estratto:</span>
+          <span class="val" id="st-risultato">—</span>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ════════════════ SEZIONE 10 — TESTO.FORMULA ════════════════ -->
+    <section class="guide-section" id="sec-testoformula">
+      <div class="section-header">
+        <div class="section-num">10</div>
+        <div class="section-titles">
+          <div class="section-title">La funzione TESTO.FORMULA</div>
+          <div class="section-subtitle">Vedere la formula scritta dentro una cella, come testo</div>
+        </div>
+      </div>
+
+      <p><code class="fx">TESTO.FORMULA</code> restituisce, come testo, la formula contenuta in
+      un'altra cella. Serve a documentare, controllare o spiegare un foglio: una cella mostra il
+      <em>risultato</em>, questa funzione rivela la <em>formula</em> che c'è dietro.</p>
+
+      <p>La sintassi è:</p>
+      <div class="formula-box">
+        =TESTO.FORMULA(<span class="arg-int">riferimento</span>)
+      </div>
+
+      <div class="box box-note">
+        <p>È una funzione di <strong>ispezione</strong>: se la cella contiene un valore digitato a
+        mano e non una formula, restituisce <code class="fx">#N/D</code>.</p>
+      </div>
+
+      <p class="sub-title">Provala tu</p>
+      <p>Scegli una cella: vedi cosa <em>mostra</em> nel foglio e quale <em>formula</em> nasconde.</p>
+
+      <!-- WIDGET INTERATTIVO TESTO.FORMULA -->
+      <div class="sim">
+        <div class="sim-titolo">Simulatore · TESTO.FORMULA</div>
+        <div class="sim-controlli">
+          <label for="tf-cella">Cella da ispezionare:</label>
+          <select id="tf-cella"></select>
+        </div>
+        <table class="foglio">
+          <thead>
+            <tr class="riga-intest"><td>Cella</td><td>Valore visualizzato</td></tr>
+          </thead>
+          <tbody id="tf-tabella-body"></tbody>
+        </table>
+        <div class="formula-box" id="tf-formula"></div>
+        <div class="risultato-box">
+          <span class="et">Formula (come testo):</span>
+          <span class="val" id="tf-risultato">—</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ════════════════════ FOOTER (standard) ════════════════════ -->
+<footer>
+  <strong>Formazione Digitale</strong> · <a href="/">Torna alla home</a><br>
+  <p style="margin-top:.5rem;font-size:.78rem;">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<!-- Motore dei widget interattivi -->
+<script src="funzioni-excel.js"></script>
+
+<!-- Chrome di pagina: toggle sidebar + scroll-spy (come le altre guide;
+     ui.js gestisce SOLO il pulsante "Torna su") -->
+<script>
+  // Apertura/chiusura sidebar su mobile
+  function toggleSidebar() {
+    document.getElementById('guide-sidebar').classList.toggle('is-open');
+    document.getElementById('guide-overlay').classList.toggle('is-open');
+    document.getElementById('hamburger').classList.toggle('is-open');
+  }
+  function closeSidebar() {
+    document.getElementById('guide-sidebar').classList.remove('is-open');
+    document.getElementById('guide-overlay').classList.remove('is-open');
+    document.getElementById('hamburger').classList.remove('is-open');
+  }
+
+  // Scroll-spy: evidenzia nella sidebar la sezione corrente
+  (function () {
+    const sezioni = document.querySelectorAll('.guide-section');
+    const voci = document.querySelectorAll('.sidebar-nav .nav-item');
+    function aggiorna() {
+      let attiva = null;
+      sezioni.forEach(s => { if (s.getBoundingClientRect().top <= 90) attiva = s.id; });
+      voci.forEach(v => v.classList.toggle('active', v.getAttribute('href') === '#' + attiva));
+    }
+    window.addEventListener('scroll', aggiorna, { passive: true });
+    aggiorna();
+  })();
+</script>
+
+<!-- Pulsante "Torna su" globale -->
+<script src="/scripts/ui.js" defer></script>
+
+</body>
+</html>
