@@ -766,7 +766,7 @@ body.modal-open { overflow: hidden; }
 /* ── HERO MAP BTN ───────────────────────────────────────────── */
 .hero-search-row {
   display: flex; align-items: center; gap: .75rem;
-  max-width: 560px; margin: 0 auto;
+  max-width: 900px; margin: 0 auto;
   justify-content: center;
 }
 .hero-search-row .hero-search {
@@ -817,14 +817,11 @@ body.modal-open { overflow: hidden; }
 	<div style="flex:1;"></div>
 	<div class="header-right">
 	  <nav class="header-nav">
-		<a class="header-nav-link" href="#guide">Guide</a>
-		<a class="header-nav-link" href="#strumenti">Strumenti</a>
-		<a class="header-nav-link" href="#pillole">Pillole</a>
+		  <a class="header-nav-link" href="#guide">Guide</a>
+		  <a class="header-nav-link" href="#strumenti">Strumenti</a>
+		  <a class="header-nav-link" href="#pillole">Pillole</a>
 		  <div class="header-sep"></div>
-		<a class="header-nav-link" href="mappa.html">Mappa</a>
-		<a class="header-nav-link" href="mappa-framework.html">Framework</a>
 	  </nav>
-	  <div class="header-sep"></div>
 	  <button class="header-pill-btn" onclick="openAbout()">👤 Chi sono</button>
 	  <button class="header-pill-btn" onclick="openModal()">✉ Contatti</button>
 	  <button class="header-pill-btn" onclick="openAuthModal()">🔒 Accedi</button>
@@ -841,7 +838,8 @@ body.modal-open { overflow: hidden; }
       <button onclick="filterAll()">Cerca</button>
     </div>
     <a href="mappa.html" class="hero-map-btn">🗺 Mappa risorse <span class="arrow">→</span></a>
-	<a href="mappa-framework.html" class="hero-map-btn">🧭 Mappa framework <span class="arrow">→</span></a>
+	  <a href="mappa-framework.html" class="hero-map-btn">🧭 Mappa framework <span class="arrow">→</span></a>
+    <a href="mappa-aree.html" class="hero-map-btn">🔵 Mappa per aree <span class="arrow">→</span></a>
   </div>
 </section>
 
