@@ -194,6 +194,22 @@
     ]
   },
   {
+	  "path": "/project-management/guida-gestione-progetti/",
+	  "label": "Gestione Digitale di un Progetto",
+	  "short": "Gestione Progetti",
+	  "cat": "guide",
+	  "emoji": "📋",
+	  "tags": ["project management", "gpoi", "gantt", "kanban", "progetto", "pianificazione", "collaborazione", "sal", "capitolato", "afm", "rim"],
+	  "meta": "8 sezioni · ~35 min",
+	  "description": "Ciclo di vita, Gantt, Kanban board, SAL e Capitolato. Guida completa alla gestione digitale dei progetti per AFM e RIM.",
+	  "featured": false,
+	  "active": true,
+	  "digcomp": ["DC 2.4", "DC 3.1"],
+	  "digcomp_level": "intermediate",
+	  "digcompedu": ["DCEdu 2.1", "DCEdu 3.4"],
+	  "digcomp_areas": ["Comunicazione e collaborazione", "Creazione di contenuti digitali"]
+	},
+  {
     "path": "/intelligenza-artificiale/guida-prompting/",
     "label": "Guida al Prompting con l'IA",
     "short": "Guida Prompting",
@@ -824,7 +840,7 @@
     ]
   },
   {
-    "path": "/marketing/kanban-tool/",
+    "path": "/project-management/kanban-tool/",
     "label": "Kanban Board",
     "short": "Kanban Board",
     "cat": "strumento",

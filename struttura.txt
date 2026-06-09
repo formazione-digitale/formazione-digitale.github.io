@@ -1,5 +1,5 @@
 Elenco del percorso delle cartelle per il volume Acer
-Numero di serie del volume: 000000ED-544D:3F7C
+Numero di serie del volume: 0000009B-544D:3F7C
 C:.
 |   .gitignore
 |   .nojekyll
@@ -10,7 +10,6 @@ C:.
 |   framework.json
 |   index.html
 |   manifest.json
-|   manifest_.json
 |   mappa-aree.html
 |   mappa-framework.html
 |   mappa-risorse.html
@@ -52,16 +51,17 @@ C:.
 |           index.html
 |           
 +---css
+|       shared-.css
 |       shared-extended.css
 |       shared.css
 |       
 +---data-src
 |       export_singoli_esami_20260127-20260527.xlsx
-|       formazione-digitale_20260512_0933.zip
 |       
 +---database
 |   +---guida-database
 |   |   |   index.html
+|   |   |   index_OLD.html
 |   |   |   
 |   |   +---download
 |   |   |       database_intro.pdf
@@ -100,16 +100,12 @@ C:.
 |   \---guida-word
 |       |   Guida_Word.pdf
 |       |   index.html
-|       |   index.html.bak
 |       |   
 |       \---img
 |               
 +---foglio-di-calcolo
 |   \---guida-funzioni-excel
-|           files (3).zip
-|           funzioni-excel-.js
 |           funzioni-excel.js
-|           index-.html
 |           index.html
 |           
 +---icdl
@@ -139,15 +135,11 @@ C:.
 |   |       BEP_Tool_Setup.exe
 |   |       calcolo-break-even-point.xlsx
 |   |       index.html
-|   |       index_.html
 |   |       
 |   +---guida-marketing
 |   |       index.html
 |   |       Introduzione_emarketing_2026_parte1.pptx
 |   |       Introduzione_emarketing_2026_parte2.pptx
-|   |       
-|   +---kanban-tool
-|   |       index.html
 |   |       
 |   \---pillola-seo
 |           index.html
@@ -157,28 +149,43 @@ C:.
 |   |   |   hfs-windows-x64-3.0.8.zip
 |   |   |   hfs2.0.zip
 |   |   |   index.html
-|   |   |   index.html.bak
-|   |   |   mapping-hfs.csv
 |   |   |   
 |   |   \---img
 |   |           
 |   \---subnet-calculator
 |           index.html
 |           
++---project-management
+|   +---guida-gestione-progetti
+|   |       index.html
+|   |       
+|   \---kanban-tool
+|           index.html
+|           
 +---scripts
 |       aggiorna_dominio.py
-|       aggiungi_footer_index.py
-|       aggiungi_link_footer.py
+|       catalogo_scripts.md
 |       cerca_vecchio_dominio.ps1
 |       cerca_vecchio_dominio.py
 |       check_site_links.bat
+|       estrai_footer.bat
+|       estrai_footer.ps1
 |       genera_sitemap.py
 |       httpserver.bat
 |       icdl_to_json.py
 |       inject_after.py
+|       normalizza_footer.bat
+|       normalizza_footer.ps1
 |       replace_in_files.py
+|       rinomina_mappa.bat
+|       rinomina_mappa.py
 |       struttura.bat
-|       supabase-keep-alive.yml
+|       trova_anomali.bat
+|       trova_anomali.ps1
+|       trova_maxwidth.bat
+|       trova_maxwidth.ps1
+|       trova_override_layout.bat
+|       trova_override_layout.ps1
 |       ui.js
 |       zip_risorse.py
 |       

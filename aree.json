@@ -52,5 +52,11 @@
     "label": "Sistemi",
     "emoji": "⚙️",
     "color": "#37474F"
-  }
+  },
+  {
+	  "id": "project-management",
+	  "label": "Project Management",
+	  "emoji": "📋",
+	  "color": "#1565C0"
+	}
 ]

@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestione Digitale di un Progetto — Guida pratica · Formazione Digitale</title>
+<meta name="description" content="Ciclo di vita di un progetto, Gantt, Kanban, SAL e Capitolato. Guida completa alla gestione digitale dei progetti per indirizzi AFM e RIM.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://formazione-digitale.it/gestione-progetti/guida-gestione-progetti/">
+<link rel="icon" type="image/png" href="/img/favicon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="dns-prefetch" href="//gc.zgo.at">
+<meta property="og:title" content="Gestione Digitale di un Progetto · Formazione Digitale">
+<meta property="og:description" content="Ciclo di vita, Gantt, Kanban, SAL e Capitolato. Guida completa per AFM e RIM.">
+<meta property="og:url" content="https://formazione-digitale.it/gestione-progetti/guida-gestione-progetti/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="stylesheet" href="/css/shared.css?v=3">
+
+<style>
+/* ── VARIABILI LOCALI ── */
+:root {
+  --proj-blue:   #1F4E79;
+  --proj-green:  #1E6B3C;
+  --proj-amber:  #7D4E00;
+  --proj-purple: #4A148C;
+  --proj-red:    #8B1A1A;
+}
+
+/* ── TIMELINE FASI PROGETTO ── */
+.phase-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 1.5rem 0;
+  position: relative;
+}
+.phase-timeline::before {
+  content: '';
+  position: absolute;
+  left: 28px;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: var(--blue-light);
+  z-index: 0;
+}
+.phase-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: .75rem 0;
+  position: relative;
+  z-index: 1;
+}
+.phase-num {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+.phase-body { flex: 1; padding-top: .3rem; }
+.phase-title { font-weight: 700; font-size: 1rem; color: var(--blue-dark); margin-bottom: .2rem; }
+.phase-desc  { font-size: .88rem; color: var(--gray-mid); line-height: 1.6; margin-bottom: .4rem; }
+.phase-output {
+  font-size: .78rem;
+  background: var(--blue-pale);
+  border: 1px solid var(--blue-light);
+  border-radius: 4px;
+  padding: .25rem .6rem;
+  color: var(--blue-dark);
+  display: inline-block;
+}
+
+/* ── COMPARAZIONE GANTT/KANBAN ── */
+.scenario-selector {
+  background: var(--gray-light);
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin: 1.25rem 0;
+}
+.scenario-selector h4 {
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--gray-dark);
+  margin-bottom: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.scenario-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-bottom: 1rem;
+}
+.scenario-btn {
+  background: white;
+  border: 1.5px solid var(--blue-light);
+  border-radius: 20px;
+  padding: .4rem .9rem;
+  font-size: .82rem;
+  cursor: pointer;
+  transition: all .2s;
+  color: var(--gray-dark);
+}
+.scenario-btn:hover { border-color: var(--blue-mid); color: var(--blue-mid); }
+.scenario-btn.active {
+  background: var(--blue-mid);
+  border-color: var(--blue-mid);
+  color: white;
+  font-weight: 600;
+}
+.scenario-result {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid var(--blue-mid);
+  font-size: .9rem;
+  line-height: 1.65;
+  display: none;
+}
+.scenario-result.visible { display: block; }
+.scenario-result strong { color: var(--blue-dark); }
+.scenario-result .rec-badge {
+  display: inline-block;
+  background: var(--blue-mid);
+  color: white;
+  border-radius: 12px;
+  padding: .2rem .7rem;
+  font-size: .78rem;
+  font-weight: 700;
+  margin-right: .4rem;
+}
+.scenario-result .rec-badge.green { background: var(--green-dark); }
+.scenario-result .rec-badge.both  { background: var(--proj-purple); }
+
+/* ── CHECKLIST COLLABORAZIONE ── */
+.collab-checklist {
+  background: var(--gray-light);
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin: 1.25rem 0;
+}
+.collab-section-title {
+  font-size: .78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--gray-mid);
+  margin: 1rem 0 .5rem;
+}
+.collab-section-title:first-child { margin-top: 0; }
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: .6rem;
+  padding: .4rem 0;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  cursor: pointer;
+  transition: background .15s;
+  border-radius: 4px;
+  padding: .4rem .5rem;
+}
+.checklist-item:hover { background: rgba(46,117,182,.06); }
+.checklist-item input[type="checkbox"] {
+  margin-top: 2px;
+  accent-color: var(--blue-mid);
+  width: 16px; height: 16px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.checklist-item label {
+  font-size: .88rem;
+  line-height: 1.5;
+  cursor: pointer;
+  color: var(--gray-dark);
+}
+.checklist-item.done label {
+  text-decoration: line-through;
+  color: var(--gray-mid);
+}
+.checklist-progress {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-top: 1rem;
+}
+.progress-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--blue-light);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--blue-mid);
+  border-radius: 3px;
+  transition: width .3s;
+  width: 0%;
+}
+.progress-label {
+  font-size: .8rem;
+  color: var(--gray-mid);
+  white-space: nowrap;
+}
+.checklist-actions {
+  display: flex;
+  gap: .5rem;
+  margin-top: .75rem;
+  flex-wrap: wrap;
+}
+.checklist-btn {
+  background: white;
+  border: 1.5px solid var(--blue-light);
+  border-radius: 6px;
+  padding: .35rem .85rem;
+  font-size: .8rem;
+  cursor: pointer;
+  transition: all .2s;
+  color: var(--blue-mid);
+  font-weight: 500;
+}
+.checklist-btn:hover { background: var(--blue-pale); border-color: var(--blue-mid); }
+.checklist-btn.primary {
+  background: var(--blue-mid);
+  color: white;
+  border-color: var(--blue-mid);
+}
+.checklist-btn.primary:hover { background: var(--blue-dark); border-color: var(--blue-dark); }
+
+/* ── TOOL CARD ── */
+.tool-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .85rem;
+  margin: 1.25rem 0;
+}
+@media(max-width:560px) { .tool-cards { grid-template-columns: 1fr; } }
+.tool-card {
+  background: white;
+  border: 1.5px solid var(--blue-light);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  text-decoration: none;
+  transition: all .2s;
+  display: block;
+}
+.tool-card:hover {
+  border-color: var(--blue-mid);
+  box-shadow: 0 4px 16px rgba(31,78,121,.12);
+  transform: translateY(-2px);
+}
+.tool-card-icon { font-size: 1.6rem; margin-bottom: .4rem; }
+.tool-card-title { font-weight: 700; color: var(--blue-dark); font-size: .95rem; margin-bottom: .2rem; }
+.tool-card-desc  { font-size: .82rem; color: var(--gray-mid); line-height: 1.5; }
+.tool-card-badge {
+  display: inline-block;
+  font-size: .7rem;
+  padding: .15rem .5rem;
+  border-radius: 10px;
+  margin-top: .5rem;
+  font-weight: 600;
+}
+.badge-live    { background: var(--green-light); color: var(--green-dark); }
+.badge-coming  { background: var(--amber-light); color: var(--amber-dark); }
+
+/* ── TABELLA CONFRONTO ── */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  font-size: .88rem;
+}
+.compare-table th {
+  background: var(--blue-dark);
+  color: white;
+  padding: .6rem 1rem;
+  text-align: left;
+  font-size: .8rem;
+  letter-spacing: .04em;
+}
+.compare-table th:first-child { border-radius: 6px 0 0 0; }
+.compare-table th:last-child  { border-radius: 0 6px 0 0; }
+.compare-table td {
+  padding: .6rem 1rem;
+  border-bottom: 1px solid var(--blue-light);
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: var(--blue-pale); }
+.compare-table .cat { font-weight: 700; color: var(--blue-dark); font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; }
+
+/* ── STEP LIST ── */
+.step-list { list-style: none; padding: 0; margin: 1.25rem 0; counter-reset: steps; }
+.step-item {
+  counter-increment: steps;
+  display: flex;
+  gap: .85rem;
+  align-items: flex-start;
+  padding: .65rem 0;
+  border-bottom: 1px solid var(--blue-light);
+  font-size: .9rem;
+  line-height: 1.6;
+}
+.step-item:last-child { border-bottom: none; }
+.step-num {
+  min-width: 28px; height: 28px;
+  background: var(--blue-mid);
+  color: white;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .8rem; font-weight: 700;
+  flex-shrink: 0; margin-top: .1rem;
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════════ -->
+<header class="guide-header">
+  <a class="guide-header-back" href="/">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+    Portale
+  </a>
+  <div class="guide-header-center">
+    <span class="guide-header-title">Gestione Digitale di un Progetto</span>
+    <span class="guide-header-sub">Guida completa · AFM e RIM</span>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════
+     LAYOUT PRINCIPALE
+══════════════════════════════════════════════ -->
+<div class="guide-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="guide-sidebar" id="guide-sidebar">
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <span class="sidebar-label">SEZIONI</span>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li><a class="nav-item active" href="#s0"><span class="nav-num">0</span> Introduzione</a></li>
+      <li><a class="nav-item" href="#s1"><span class="nav-num">1</span> Cos'è un progetto</a></li>
+      <li><a class="nav-item" href="#s2"><span class="nav-num">2</span> Ciclo di vita</a></li>
+      <li><a class="nav-item" href="#s3"><span class="nav-num">3</span> Il Diagramma di Gantt</a></li>
+      <li><a class="nav-item" href="#s4"><span class="nav-num">4</span> La Kanban board</a></li>
+      <li><a class="nav-item" href="#s5"><span class="nav-num">5</span> Gantt vs Kanban</a></li>
+      <li><a class="nav-item" href="#s6"><span class="nav-num">6</span> Documenti di progetto</a></li>
+      <li><a class="nav-item" href="#s7"><span class="nav-num">7</span> Collaborare in digitale</a></li>
+    </ul>
+    <div class="sidebar-meta">
+      <div>📋 Guida completa</div>
+      <div>⏱ ~35 min di lettura</div>
+      <div>📊 Livello base–intermedio</div>
+      <div>🗓 Aggiornata giugno 2026</div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="guide-main">
+
+    <!-- ─── S0 · COVER ─── -->
+    <section id="s0">
+      <div class="cover-block">
+        <div class="cover-extras">
+          <span>📋 GPOI</span>
+          <span>AFM · RIM</span>
+          <span>DC 2.4 · DCEdu 2.1</span>
+        </div>
+        <h1 class="cover-title">Gestione Digitale<br><em>di un Progetto</em></h1>
+        <p class="cover-desc">Dal ciclo di vita alla Kanban board, dal Gantt al SAL: tutto quello che serve per pianificare, coordinare e portare a termine un progetto — con gli strumenti digitali giusti.</p>
+      </div>
+
+      <div class="box box-note" style="margin-top:1.5rem;">
+        <span class="box-label">🎯 A chi serve questa guida</span>
+        <p>Studenti e professionisti degli indirizzi AFM e RIM che vogliono capire come si gestisce un progetto in modo strutturato, usando strumenti digitali per la pianificazione e la collaborazione.</p>
+      </div>
+
+      <div class="tool-cards" style="margin-top:1.5rem;">
+        <a class="tool-card" href="/project-management/kanban-tool/">
+          <div class="tool-card-icon">📋</div>
+          <div class="tool-card-title">Kanban Board</div>
+          <div class="tool-card-desc">Organizza le attività del tuo progetto con colonne e card trascinabili.</div>
+          <span class="tool-card-badge badge-live">✅ Disponibile</span>
+        </a>
+        <div class="tool-card" style="cursor:default; opacity:.8;">
+          <div class="tool-card-icon">📅</div>
+          <div class="tool-card-title">Gantt Planner</div>
+          <div class="tool-card-desc">Pianifica le attività del progetto su una timeline visuale con dipendenze.</div>
+          <span class="tool-card-badge badge-coming">🔜 In arrivo</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── S1 · COS'È UN PROGETTO ─── -->
+    <section id="s1" style="margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--blue-light);">
+      <div class="section-header">
+        <span class="section-num" style="color:var(--blue-dark);font-size:2.5rem;font-weight:700;opacity:.15;line-height:1;">01</span>
+        <h2>Cos'è un progetto</h2>
+      </div>
+
+      <p>Nella vita di un'azienda si svolgono due tipi di attività: quelle <strong>ordinarie</strong> (ripetute ogni giorno, come gestire gli ordini o rispondere ai clienti) e quelle <strong>straordinarie</strong>, che hanno un inizio e una fine definiti, un obiettivo preciso e un budget. Quest'ultime si chiamano <strong>progetti</strong>.</p>
+
+      <div class="highlight-grid">
+        <div class="highlight-item">
+          <div class="highlight-icon">🎯</div>
+          <div class="highlight-title">Obiettivo definito</div>
+          <div class="highlight-desc">Un progetto ha un risultato preciso da raggiungere, non un'attività generica da svolgere.</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">📅</div>
+          <div class="highlight-title">Durata limitata</div>
+          <div class="highlight-desc">Ha una data di inizio e una di fine. Non è un'attività che si ripete all'infinito.</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">💶</div>
+          <div class="highlight-title">Budget assegnato</div>
+          <div class="highlight-desc">Le risorse economiche e umane sono definite e limitate: non si può spendere senza limite.</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">👥</div>
+          <div class="highlight-title">Team dedicato</div>
+          <div class="highlight-desc">Coinvolge persone con ruoli precisi che collaborano verso l'obiettivo comune.</div>
+        </div>
+      </div>
+
+      <div class="dodont">
+        <div class="do-col">
+          <div class="dodont-title">✅ Esempi di PROGETTO</div>
+          <ul>
+            <li>Sviluppare un nuovo sito web aziendale</li>
+            <li>Organizzare una fiera commerciale</li>
+            <li>Implementare un nuovo software gestionale</li>
+            <li>Costruire un edificio</li>
+            <li>Lanciare un nuovo prodotto sul mercato</li>
+          </ul>
+        </div>
+        <div class="dont-col">
+          <div class="dodont-title">❌ NON è un progetto</div>
+          <ul>
+            <li>Gestire gli ordini quotidiani</li>
+            <li>Rispondere alle email dei clienti</li>
+            <li>Preparare le buste paga ogni mese</li>
+            <li>Aggiornare il magazzino ogni giorno</li>
+            <li>Ricevere i fornitori settimanalmente</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="box box-info">
+        <span class="box-label">📌 I vincoli di un progetto</span>
+        <p>Ogni progetto è soggetto a tre vincoli fondamentali — il cosiddetto <strong>triangolo di progetto</strong>: <strong>tempo</strong> (quando deve essere finito), <strong>costo</strong> (quanto si può spendere) e <strong>qualità/scope</strong> (cosa deve includere). Questi tre elementi sono in equilibrio: modificare uno impatta sugli altri.</p>
+      </div>
+    </section>
+
+    <!-- ─── S2 · CICLO DI VITA ─── -->
+    <section id="s2" style="margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--blue-light);">
+      <div class="section-header">
+        <span class="section-num" style="color:var(--blue-dark);font-size:2.5rem;font-weight:700;opacity:.15;line-height:1;">02</span>
+        <h2>Il ciclo di vita del progetto</h2>
+      </div>
+
+      <p>Un progetto non nasce e non finisce da un momento all'altro. Attraversa <strong>6 fasi distinte</strong>, ognuna con attività, responsabili e documenti precisi. Conoscerle significa non improvvisare — e ridurre drasticamente i rischi di fallimento.</p>
+
+      <div class="phase-timeline">
+
+        <div class="phase-item">
+          <div class="phase-num" style="background:#1F4E79;">1</div>
+          <div class="phase-body">
+            <div class="phase-title">Studio di Fattibilità</div>
+            <div class="phase-desc">Si verifica se il progetto è realizzabile dal punto di vista tecnico, economico e organizzativo. Si analizzano i requisiti, si stimano i costi e si identificano i rischi principali.</div>
+            <span class="phase-output">📄 Output: Documento di fattibilità · Capitolato Preliminare · Gantt iniziale</span>
+          </div>
+        </div>
+
+        <div class="phase-item">
+          <div class="phase-num" style="background:#2E75B6;">2</div>
+          <div class="phase-body">
+            <div class="phase-title">Progetto Esecutivo</div>
+            <div class="phase-desc">Si pianifica nei dettagli come il progetto verrà realizzato. Si assegnano le risorse, si fissano le scadenze e si formalizzano i requisiti definitivi.</div>
+            <span class="phase-output">📄 Output: Documentazione tecnica · Capitolato d'Appalto · Gantt definitivo</span>
+          </div>
+        </div>
+
+        <div class="phase-item">
+          <div class="phase-num" style="background:#1E6B3C;">3</div>
+          <div class="phase-body">
+            <div class="phase-title">Realizzazione</div>
+            <div class="phase-desc">La fase operativa: il progetto viene implementato. Si coordinano le attività, si monitorano gli avanzamenti e si gestiscono gli imprevisti.</div>
+            <span class="phase-output">📄 Output: SAL periodici · Report di avanzamento · Gantt aggiornato</span>
+          </div>
+        </div>
+
+        <div class="phase-item">
+          <div class="phase-num" style="background:#7D4E00;">4</div>
+          <div class="phase-body">
+            <div class="phase-title">Test</div>
+            <div class="phase-desc">Si verifica che il risultato soddisfi i requisiti del Capitolato. Si eseguono test tecnici e funzionali, si correggono le anomalie riscontrate.</div>
+            <span class="phase-output">📄 Output: Report di test · Eventuali modifiche</span>
+          </div>
+        </div>
+
+        <div class="phase-item">
+          <div class="phase-num" style="background:#4A148C;">5</div>
+          <div class="phase-body">
+            <div class="phase-title">Avviamento</div>
+            <div class="phase-desc">Il progetto viene messo in funzione. Si forma il personale, si effettua l'implementazione in produzione e si redige il SAL finale di chiusura.</div>
+            <span class="phase-output">📄 Output: Report di avviamento · SAL finale · Approvazione</span>
+          </div>
+        </div>
+
+        <div class="phase-item">
+          <div class="phase-num" style="background:#8B1A1A;">6</div>
+          <div class="phase-body">
+            <div class="phase-title">Esercizio</div>
+            <div class="phase-desc">Il sistema è operativo. Si garantisce il funzionamento nel tempo tramite manutenzione correttiva, evolutiva e adattiva.</div>
+            <span class="phase-output">📄 Output: Report di monitoraggio · Log interventi · Roadmap evoluzioni</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="box box-tip">
+        <span class="box-label">💡 Perché le fasi contano</span>
+        <p>Saltare una fase non accelera il progetto — lo mette a rischio. Lo studio di fattibilità sembra inutile finché non si scopre che un requisito era impossibile da soddisfare dopo mesi di lavoro.</p>
+      </div>
+    </section>
+
+    <!-- ─── S3 · GANTT ─── -->
+    <section id="s3" style="margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--blue-light);">
+      <div class="section-header">
+        <span class="section-num" style="color:var(--blue-dark);font-size:2.5rem;font-weight:700;opacity:.15;line-height:1;">03</span>
+        <h2>Il Diagramma di Gantt</h2>
+      </div>
+
+      <p>Il <strong>Diagramma di Gantt</strong> è lo strumento grafico più diffuso per la pianificazione di un progetto. Mostra le attività su una <strong>timeline orizzontale</strong>: ogni riga è un'attività, ogni barra indica la sua durata e il suo posizionamento nel tempo.</p>
+
+      <div class="highlight-grid">
+        <div class="highlight-item">
+          <div class="highlight-icon">📊</div>
+          <div class="highlight-title">Barre orizzontali</div>
+          <div class="highlight-desc">Ogni attività è una barra. La lunghezza indica la durata, la posizione indica quando inizia e finisce.</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">🔗</div>
+          <div class="highlight-title">Dipendenze</div>
+          <div class="highlight-desc">Le frecce collegano attività correlate: alcune non possono iniziare prima che un'altra finisca.</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">🚩</div>
+          <div class="highlight-title">Milestone</div>
+          <div class="highlight-desc">Punti chiave del progetto (consegne, approvazioni) segnati con un simbolo specifico sulla timeline.</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">🛤️</div>
+          <div class="highlight-title">Percorso critico</div>
+          <div class="highlight-desc">La sequenza di attività che determina la durata minima del progetto. Un ritardo qui è un ritardo totale.</div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:1.5rem;">Quando si usa il Gantt</h3>
+      <p>Il Gantt viene prodotto in tre momenti del ciclo di vita del progetto:</p>
+      <ul class="step-list">
+        <li class="step-item"><span class="step-num">1</span><div><strong>Studio di fattibilità</strong> — Gantt preliminare con stime di massima, per valutare i tempi complessivi.</div></li>
+        <li class="step-item"><span class="step-num">2</span><div><strong>Progetto esecutivo</strong> — Gantt definitivo con tutte le attività, dipendenze, responsabili e milestone.</div></li>
+        <li class="step-item"><span class="step-num">3</span><div><strong>Realizzazione</strong> — Gantt aggiornato per monitorare l'avanzamento e gestire eventuali slittamenti.</div></li>
+      </ul>
+
+      <div class="box box-note" style="margin-top:1rem;">
+        <span class="box-label">🔜 Strumento disponibile a breve</span>
+        <p>Il <strong>Gantt Planner</strong> di Formazione Digitale è in fase di sviluppo. Permette di creare, modificare ed esportare diagrammi di Gantt direttamente nel browser, senza installare nulla.</p>
+      </div>
+    </section>
+
+    <!-- ─── S4 · KANBAN ─── -->
+    <section id="s4" style="margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--blue-light);">
+      <div class="section-header">
+        <span class="section-num" style="color:var(--blue-dark);font-size:2.5rem;font-weight:700;opacity:.15;line-height:1;">04</span>
+        <h2>La Kanban board</h2>
+      </div>
+
+      <p>Il metodo <strong>Kanban</strong> nasce nell'industria automobilistica Toyota negli anni '50 e arriva alla gestione dei progetti digitali negli anni 2000. Il principio è semplice: le attività sono <strong>card</strong> che si spostano tra colonne che rappresentano lo stato del lavoro.</p>
+
+      <div class="highlight-grid">
+        <div class="highlight-item">
+          <div class="highlight-icon">📌</div>
+          <div class="highlight-title">Card = attività</div>
+          <div class="highlight-desc">Ogni task è una card con titolo, descrizione e responsabile. Si crea in un secondo.</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">➡️</div>
+          <div class="highlight-title">Colonne = stati</div>
+          <div class="highlight-desc">Le colonne tipiche sono: Da fare · In corso · Completato. Personalizzabili a piacere.</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">👁️</div>
+          <div class="highlight-title">Visibilità totale</div>
+          <div class="highlight-desc">In un colpo d'occhio si vede cosa sta facendo il team, cosa è bloccato, cosa è fatto.</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">🔄</div>
+          <div class="highlight-title">Flusso continuo</div>
+          <div class="highlight-desc">Non serve pianificare tutto in anticipo. Si aggiungono card quando emergono nuove attività.</div>
+        </div>
+      </div>
+
+      <div class="box box-tip" style="margin-top:1rem;">
+        <span class="box-label">📋 Prova subito la Kanban Board</span>
+        <p>Il tool Kanban di Formazione Digitale è disponibile gratuitamente, senza login, direttamente nel browser. Salvataggio automatico, drag &amp; drop, export JSON.</p>
+      </div>
+
+      <div style="margin-top:1rem;">
+        <a class="tool-card" href="/project-management/kanban-tool/" style="max-width:340px;">
+          <div class="tool-card-icon">📋</div>
+          <div class="tool-card-title">Kanban Board →</div>
+          <div class="tool-card-desc">Apri lo strumento e inizia subito a organizzare le attività del tuo progetto.</div>
+          <span class="tool-card-badge badge-live">✅ Disponibile ora</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ─── S5 · GANTT VS KANBAN ─── -->
+    <section id="s5" style="margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--blue-light);">
+      <div class="section-header">
+        <span class="section-num" style="color:var(--blue-dark);font-size:2.5rem;font-weight:700;opacity:.15;line-height:1;">05</span>
+        <h2>Gantt vs Kanban</h2>
+      </div>
+
+      <p>Gantt e Kanban non sono in competizione — sono <strong>strumenti complementari</strong> che rispondono a domande diverse. Il Gantt risponde a <em>"quando finirà?"</em>, il Kanban risponde a <em>"su cosa stiamo lavorando adesso?"</em>.</p>
+
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Aspetto</th>
+            <th>📅 Gantt</th>
+            <th>📋 Kanban</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="cat">Focus</td><td>Pianificazione temporale</td><td>Gestione del flusso di lavoro</td></tr>
+          <tr><td class="cat">Visione</td><td>Lungo periodo (settimane/mesi)</td><td>Breve periodo (giorni/settimane)</td></tr>
+          <tr><td class="cat">Struttura</td><td>Rigida — cambiare richiede aggiornamento</td><td>Flessibile — si adatta in tempo reale</td></tr>
+          <tr><td class="cat">Dipendenze</td><td>Esplicite e visibili</td><td>Non rappresentate direttamente</td></tr>
+          <tr><td class="cat">Ideale per</td><td>Progetti con scadenze fisse</td><td>Lavoro continuo e iterativo</td></tr>
+          <tr><td class="cat">Usato da</td><td>Project manager, direzione</td><td>Team operativi, sviluppatori</td></tr>
+          <tr><td class="cat">Esempio</td><td>Costruire un edificio, organizzare una fiera</td><td>Gestire le attività di un team marketing</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top:1.5rem;">Quale strumento fa per te?</h3>
+      <p>Descrivi il tuo scenario e scopri quale strumento si adatta meglio.</p>
+
+      <div class="scenario-selector">
+        <h4>Qual è la tua situazione?</h4>
+        <div class="scenario-options">
+          <button class="scenario-btn" onclick="showScenario('scadenza')">Ho una scadenza fissa da rispettare</button>
+          <button class="scenario-btn" onclick="showScenario('team')">Devo coordinare un team su più attività</button>
+          <button class="scenario-btn" onclick="showScenario('iterativo')">Il lavoro cambia spesso e non è pianificabile</button>
+          <button class="scenario-btn" onclick="showScenario('entrambi')">Ho un progetto lungo con un team operativo</button>
+          <button class="scenario-btn" onclick="showScenario('scolastico')">Sto gestendo un progetto scolastico di gruppo</button>
+        </div>
+        <div class="scenario-result" id="scenario-result"></div>
+      </div>
+    </section>
+
+    <!-- ─── S6 · DOCUMENTI ─── -->
+    <section id="s6" style="margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--blue-light);">
+      <div class="section-header">
+        <span class="section-num" style="color:var(--blue-dark);font-size:2.5rem;font-weight:700;opacity:.15;line-height:1;">06</span>
+        <h2>Documenti di progetto</h2>
+      </div>
+
+      <p>Ogni fase del ciclo di vita produce documenti ufficiali. I più importanti da conoscere sono il <strong>Capitolato</strong> e il <strong>SAL</strong>.</p>
+
+      <div class="part-header" style="margin-top:1.5rem;">
+        <span class="part-num">A</span>
+        <span>Il Capitolato</span>
+      </div>
+
+      <p>Il <strong>Capitolato</strong> è il documento ufficiale che definisce i requisiti, le condizioni e le specifiche del progetto. Funge da contratto di riferimento tra committente e fornitore.</p>
+
+      <div class="two-col">
+        <div>
+          <p><strong>Capitolato Preliminare</strong> — prodotto nella fase di studio di fattibilità. Contiene una prima descrizione del progetto, gli obiettivi generali e le caratteristiche di massima.</p>
+        </div>
+        <div>
+          <p><strong>Capitolato d'Appalto (Definitivo)</strong> — prodotto nella fase di progetto esecutivo. Specifica in dettaglio requisiti tecnici, standard di qualità, tempistiche, modalità di collaudo e penali per ritardi.</p>
+        </div>
+      </div>
+
+      <div class="part-header" style="margin-top:1.5rem;">
+        <span class="part-num">B</span>
+        <span>Il SAL — Stato di Avanzamento Lavori</span>
+      </div>
+
+      <p>Il <strong>SAL</strong> è il documento periodico che fotografa lo stato reale del progetto rispetto al piano. Risponde a una domanda semplice: <em>"siamo in linea con il Gantt?"</em></p>
+
+      <div class="highlight-grid">
+        <div class="highlight-item">
+          <div class="highlight-icon">📊</div>
+          <div class="highlight-title">Percentuale completamento</div>
+          <div class="highlight-desc">Quanto lavoro è stato fatto rispetto al totale pianificato.</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">⚖️</div>
+          <div class="highlight-title">Pianificato vs Reale</div>
+          <div class="highlight-desc">Confronto tra ciò che era previsto e ciò che è stato effettivamente completato.</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">⚠️</div>
+          <div class="highlight-title">Criticità aperte</div>
+          <div class="highlight-desc">Ritardi, problemi tecnici o risorse insufficienti che richiedono attenzione.</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">💶</div>
+          <div class="highlight-title">Spese vs Budget</div>
+          <div class="highlight-desc">Costi sostenuti fino ad oggi rispetto al budget approvato.</div>
+        </div>
+      </div>
+
+      <div class="box box-warn">
+        <span class="box-label">⚠️ Il SAL nei contratti a pagamento</span>
+        <p>In molti contratti di fornitura, i pagamenti sono collegati ai SAL intermedi: si paga una percentuale al raggiungimento di ogni SAL approvato. Per questo motivo il SAL ha anche rilevanza economica e legale, non solo gestionale.</p>
+      </div>
+    </section>
+
+    <!-- ─── S7 · COLLABORARE IN DIGITALE ─── -->
+    <section id="s7" style="margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--blue-light);">
+      <div class="section-header">
+        <span class="section-num" style="color:var(--blue-dark);font-size:2.5rem;font-weight:700;opacity:.15;line-height:1;">07</span>
+        <h2>Collaborare in digitale</h2>
+      </div>
+
+      <p>Gestire un progetto oggi significa coordinare persone che lavorano spesso da luoghi e orari diversi. Gli strumenti digitali non sostituiscono la comunicazione — la rendono più efficace se usati con metodo.</p>
+
+      <h3>Ruoli in un progetto</h3>
+      <div class="highlight-grid">
+        <div class="highlight-item">
+          <div class="highlight-icon">🏢</div>
+          <div class="highlight-title">Committente (Sponsor)</div>
+          <div class="highlight-desc">Chi finanzia e approva il progetto. Stabilisce gli obiettivi e accetta i risultati finali.</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">👷</div>
+          <div class="highlight-title">Project Manager</div>
+          <div class="highlight-desc">Coordina il team, gestisce il Gantt, produce i SAL e risponde al committente sull'avanzamento.</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">👨‍💻</div>
+          <div class="highlight-title">Team operativo</div>
+          <div class="highlight-desc">Realizza le attività del progetto. Aggiorna la Kanban board e segnala impedimenti al PM.</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">🤝</div>
+          <div class="highlight-title">Stakeholder</div>
+          <div class="highlight-desc">Tutti i soggetti interessati al progetto (clienti, fornitori, uffici interni) che possono influenzarne l'esito.</div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:1.5rem;">Strumenti per la collaborazione</h3>
+      <table class="compare-table">
+        <thead>
+          <tr><th>Strumento</th><th>Uso tipico nel progetto</th><th>Esempi</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="cat">Documenti condivisi</td><td>Capitolato, SAL, verbali di riunione</td><td>Google Docs, Microsoft 365</td></tr>
+          <tr><td class="cat">Fogli di calcolo</td><td>Budget, tracciamento attività, SAL</td><td>Google Sheets, Excel Online</td></tr>
+          <tr><td class="cat">Task board</td><td>Gestione attività operative del team</td><td>Kanban Board (questo portale), Trello</td></tr>
+          <tr><td class="cat">Pianificazione</td><td>Timeline, Gantt, milestone</td><td>Gantt Planner (in arrivo), MS Project</td></tr>
+          <tr><td class="cat">Comunicazione</td><td>Aggiornamenti rapidi, domande, avvisi</td><td>Teams, Slack, email</td></tr>
+          <tr><td class="cat">Archiviazione</td><td>Documentazione tecnica, versioni</td><td>Google Drive, SharePoint</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top:1.5rem;">Checklist — Il mio progetto è pronto?</h3>
+      <p>Usa questa checklist per verificare se hai coperto tutti gli aspetti fondamentali prima di avviare un progetto.</p>
+
+      <div class="collab-checklist" id="collab-checklist">
+
+        <div class="collab-section-title">📋 Pianificazione</div>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox"> <span>L'obiettivo del progetto è chiaro e condiviso con tutti i membri del team</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox"> <span>È stato redatto (o abbozzato) un Gantt con le principali attività e scadenze</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox"> <span>Le risorse necessarie (tempo, persone, budget) sono state identificate</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox"> <span>I rischi principali sono stati discussi e documentati</span>
+        </label>
+
+        <div class="collab-section-title">👥 Team e ruoli</div>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox"> <span>Ogni membro del team conosce il proprio ruolo e le proprie responsabilità</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox"> <span>È stato designato un responsabile (Project Manager o referente)</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox"> <span>Gli stakeholder principali sono stati identificati e informati</span>
+        </label>
+
+        <div class="collab-section-title">🛠️ Strumenti</div>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox"> <span>Il team ha accesso agli strumenti condivisi (Drive, documenti, cartelle)</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox"> <span>È stata creata una Kanban board con le prime attività operative</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox"> <span>È stato definito il canale di comunicazione principale (email, chat, riunioni)</span>
+        </label>
+
+        <div class="collab-section-title">📄 Documentazione</div>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox"> <span>Esiste un documento (anche informale) che descrive l'obiettivo e il perimetro del progetto</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox"> <span>È stata pianificata la prima verifica di avanzamento (SAL)</span>
+        </label>
+
+        <div class="checklist-progress">
+          <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+          <span class="progress-label" id="progress-label">0 / 12 completati</span>
+        </div>
+        <div class="checklist-actions">
+          <button class="checklist-btn primary" onclick="exportChecklist()">⬇️ Esporta come testo</button>
+          <button class="checklist-btn" onclick="resetChecklist()">↺ Azzera</button>
+        </div>
+      </div>
+
+      <div class="box box-tip" style="margin-top:1.5rem;">
+        <span class="box-label">💡 La regola d'oro della collaborazione digitale</span>
+        <p>Le informazioni importanti vanno sempre scritte. Una decisione presa a voce in riunione che non viene documentata non esiste. Verbali brevi, aggiornamenti su Drive, commenti sulle card Kanban: ogni parola scritta vale dieci parole dette.</p>
+      </div>
+
+      <div class="tool-cards" style="margin-top:1.5rem;">
+        <a class="tool-card" href="/project-management/kanban-tool/">
+          <div class="tool-card-icon">📋</div>
+          <div class="tool-card-title">Kanban Board</div>
+          <div class="tool-card-desc">Inizia subito a organizzare le attività del tuo progetto con la board interattiva.</div>
+          <span class="tool-card-badge badge-live">✅ Disponibile ora</span>
+        </a>
+        <div class="tool-card" style="cursor:default; opacity:.8;">
+          <div class="tool-card-icon">📅</div>
+          <div class="tool-card-title">Gantt Planner</div>
+          <div class="tool-card-desc">Pianifica le attività su una timeline visuale. Disponibile a breve.</div>
+          <span class="tool-card-badge badge-coming">🔜 In arrivo</span>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+</div><!-- fine .guide-layout -->
+
+<!-- ── FOOTER ── -->
+<footer>
+  <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
+  Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem;">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<button class="back-to-top" id="back-top" aria-label="Torna su"
+  onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* ── SCROLL SPY ── */
+const navItems = document.querySelectorAll('.sidebar-nav .nav-item');
+const sections = document.querySelectorAll('section[id]');
+
+window.addEventListener('scroll', () => {
+  document.getElementById('back-top').classList.toggle('visible', window.scrollY > 400);
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 80) current = s.id;
+  });
+  navItems.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+}, { passive: true });
+
+/* ── HAMBURGER ── */
+const sidebar  = document.getElementById('guide-sidebar');
+const overlay  = document.getElementById('sidebar-overlay');
+function toggleSidebar() {
+  sidebar.classList.toggle('is-open');
+  overlay.classList.toggle('is-open');
+}
+if (overlay) overlay.addEventListener('click', toggleSidebar);
+
+/* ── SCENARIO SELECTOR ── */
+const scenarios = {
+  scadenza: {
+    badge: 'Gantt', color: '',
+    text: 'Con una scadenza fissa, il <strong>Gantt</strong> è lo strumento giusto. Ti permette di pianificare ogni attività sulla timeline, identificare il percorso critico e monitorare gli slittamenti rispetto al piano.'
+  },
+  team: {
+    badge: 'Entrambi', color: 'both',
+    text: 'Per coordinare un team su più attività conviene usare <strong>entrambi</strong>: il Gantt per avere una visione temporale d\'insieme, la <strong>Kanban board</strong> per il lavoro quotidiano del team. Il PM lavora sul Gantt, il team lavora sulla board.'
+  },
+  iterativo: {
+    badge: 'Kanban', color: 'green',
+    text: 'Se il lavoro cambia spesso e non è completamente pianificabile, la <strong>Kanban board</strong> è la scelta giusta. Non richiede una pianificazione completa in anticipo: le card si aggiungono, spostano e modificano in tempo reale.'
+  },
+  entrambi: {
+    badge: 'Entrambi', color: 'both',
+    text: 'Un progetto lungo con un team operativo è il caso d\'uso classico per <strong>entrambi gli strumenti</strong>. Usa il Gantt per la pianificazione complessiva e i SAL, usa la Kanban board per la gestione quotidiana delle attività del team.'
+  },
+  scolastico: {
+    badge: 'Kanban', color: 'green',
+    text: 'Per un progetto scolastico di gruppo la <strong>Kanban board</strong> è immediata e visiva: crea le colonne "Da fare / In corso / Fatto", aggiungi una card per ogni attività e assegna i responsabili. Se il docente richiede un piano formale, abbina un Gantt semplice.'
+  }
+};
+
+function showScenario(key) {
+  document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  const s = scenarios[key];
+  const result = document.getElementById('scenario-result');
+  result.innerHTML = `<span class="rec-badge ${s.color}">${s.badge}</span> ${s.text}`;
+  result.classList.add('visible');
+}
+
+/* ── CHECKLIST ── */
+const TOTAL = 12;
+
+function toggleCheck(label) {
+  const cb = label.querySelector('input[type="checkbox"]');
+  cb.checked = !cb.checked;
+  label.classList.toggle('done', cb.checked);
+  updateProgress();
+}
+
+function updateProgress() {
+  const checked = document.querySelectorAll('.checklist-item input:checked').length;
+  const pct = Math.round((checked / TOTAL) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = checked + ' / ' + TOTAL + ' completati';
+}
+
+function resetChecklist() {
+  document.querySelectorAll('.checklist-item').forEach(item => {
+    item.querySelector('input').checked = false;
+    item.classList.remove('done');
+  });
+  updateProgress();
+}
+
+function exportChecklist() {
+  const items = document.querySelectorAll('.checklist-item');
+  let lines = ['CHECKLIST — Il mio progetto è pronto?\n'];
+  let section = '';
+  document.querySelectorAll('.collab-section-title, .checklist-item').forEach(el => {
+    if (el.classList.contains('collab-section-title')) {
+      lines.push('\n' + el.textContent.trim());
+    } else {
+      const cb  = el.querySelector('input');
+      const txt = el.querySelector('span').textContent.trim();
+      lines.push((cb.checked ? '✅ ' : '⬜ ') + txt);
+    }
+  });
+  const blob = new Blob([lines.join('\n')], { type: 'text/plain;charset=utf-8' });
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(blob);
+  a.download = 'checklist-progetto.txt';
+  a.click();
+}
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>
