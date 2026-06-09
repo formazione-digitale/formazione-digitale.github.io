@@ -23,7 +23,7 @@ OUTPUT     = os.path.join(ROOT, "sitemap.xml")
 # ── PAGINE FISSE (non nel manifest) ─────────────────────────────
 PAGINE_FISSE = [
     {"loc": "/",                     "file": "index.html",        "priority": "1.0", "changefreq": "weekly"},
-    {"loc": "/mappa.html",           "file": "mappa.html",        "priority": "0.5", "changefreq": "monthly"},
+    {"loc": "/mappa-risorse.html",           "file": "mappa-risorse.html",        "priority": "0.5", "changefreq": "monthly"},
     {"loc": "/mappa-framework.html", "file": "mappa-framework.html", "priority": "0.5", "changefreq": "monthly"},
 ]
 

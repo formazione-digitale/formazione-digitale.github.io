@@ -37,7 +37,7 @@ La root contiene i file di configurazione e i JS condivisi. Ogni risorsa vive ne
 ```
 formazione-digitale/
 |--- index.html
-|--- mappa.html
+|--- mappa-risorse.html
 |--- mappa-aree.html
 |--- mappa-framework.html
 |--- 404.html
@@ -251,7 +251,7 @@ File JSON unica fonte di verità per tutte le risorse del portale. Include anche
 | `digcompedu` | Array competenze DigCompEdu (es. `["DCEdu 6.4"]`) |
 | `digcomp_areas` | Array aree tematiche DigComp |
 
-Consumato da: `stats.js` (GoatCounter + Schema.org), `mappa.html` (grafo), `mappa-aree.html` (grafo D3 per aree), `mappa-framework.html` (navigazione per competenza), `sitemap.xml` tramite `genera_sitemap.py`.
+Consumato da: `stats.js` (GoatCounter + Schema.org), `mappa-risorse.html` (grafo), `mappa-aree.html` (grafo D3 per aree), `mappa-framework.html` (navigazione per competenza), `sitemap.xml` tramite `genera_sitemap.py`.
 
 > **Regola:** quando aggiungi una risorsa, aggiorna **manifest.json** + **index.html** (card) + rilancia `genera_sitemap.py`.
 
@@ -325,7 +325,7 @@ Il dark mode è raccomandato. Il costo reale non è tecnico — è di manutenzio
 
 | Tier | Pagine | Strategia |
 |---|---|---|
-| **Tier 1 — Risposta automatica** | index.html, mappa.html, guide IA, Subnet, BEP | Variabili dark in `shared.css` |
+| **Tier 1 — Risposta automatica** | index.html, mappa-risorse.html, guide IA, Subnet, BEP | Variabili dark in `shared.css` |
 | **Tier 2 — Intervento mirato** | guida-marketing, hfs-server, codifica-binaria | Revisione colori hardcoded inline |
 | **Tier 3 — Escludere** | guida-libreoffice-base-query, guida-modello-logico, guida-database (usano `shared-extended.css`) · guida-word (tema Microsoft) | `data-theme-lock="true"` — il bottone toggle non appare |
 

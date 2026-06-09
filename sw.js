@@ -12,7 +12,7 @@ const PRECACHE = [
   '/index.html',
   '/css/shared.css',
   '/manifest.json',
-  '/mappa.html',
+  '/mappa-risorse.html',
   '/404.html',
   '/img/formazione-digitale-logo.png',
 ];

@@ -90,10 +90,17 @@ html, body {
   flex: 1;
 }
 
+.ma-header-left  { display: flex; align-items: center; gap: .75rem; }
+.ma-header-right { display: flex; align-items: center; gap: .75rem; margin-left: auto; }
+.ma-sep          { width: 1px; height: 20px; background: rgba(255,255,255,.2); }
+
+
 .ma-header-hint {
-  font-size: .72rem;
-  color: rgba(255,255,255,.45);
-  flex-shrink: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: .82rem;
+  color: rgba(255,255,255,.6);
 }
 
 /* ── CANVAS ── */
@@ -369,12 +376,19 @@ html, body {
 
 <!-- HEADER -->
 <header class="ma-header">
-  <a class="ma-header-back" href="/">
-    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-    Portale
-  </a>
-  <div class="ma-header-title">Mappa per Aree</div>
+  <div class="ma-header-left">
+    <a class="ma-header-back" href="/">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Portale
+    </a>
+    <div class="ma-header-title">Mappa per Aree</div>
+  </div>
   <div class="ma-header-hint">Clicca una risorsa per i dettagli · Trascina per esplorare</div>
+  <div class="ma-header-right">
+    <a class="ma-header-back" href="/mappa-risorse.html">🗺 Mappa risorse</a>
+    <div class="ma-sep"></div>
+    <a class="ma-header-back" href="/mappa-framework.html">🧭 Mappa framework</a>
+  </div>
 </header>
 
 <!-- GRAFO -->

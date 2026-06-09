@@ -27,7 +27,7 @@ Pagine che usano `shared.css` come fonte principale di stile. Risponderanno alle
 | Pagina | Note |
 |--------|-------|
 | `index.html` | CSS inline + shared.css — target principale |
-| `mappa.html` | CSS inline + shared.css |
+| `mappa-risorse.html` | CSS inline + shared.css |
 | Guide IA (prompting, peer-review) | Struttura shared, pochi override inline |
 | Subnet calculator, BEP tool | Idem |
 

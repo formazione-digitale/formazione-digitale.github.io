@@ -13,7 +13,7 @@ C:.
 |   manifest_.json
 |   mappa-aree.html
 |   mappa-framework.html
-|   mappa.html
+|   mappa-risorse.html
 |   privacy-policy.html
 |   robots.txt
 |   site.webmanifest
