@@ -9,6 +9,10 @@
 Sostituisce `formazione-digitale.github.io` → `formazione-digitale.it` in tutti gli HTML/XML.
 > 🟡 Usa unica — già eseguito, conservare per emergenze
 
+### `cerca_vecchio_dominio.py`
+Cerca occorrenze di `formazione-digitale.github.io` in tutti i file del repo (HTML, XML, JS, CSS, JSON, MD, TXT, PY). Mostra file e numero di riga.
+> 🟡 Utility diagnosi — usare prima di `aggiorna_dominio.py` per verificare
+
 ### `delete_converted_png.py`
 Cancella i PNG originali già convertiti in WebP, leggendo i CSV di mapping generati da `png_to_webp.py`.
 > ✅ Attivo — usare dopo aver verificato `png_to_webp.py`
@@ -45,6 +49,10 @@ Genera ZIP del progetto escludendo binari, immagini e `.git`. Utile per passare 
 
 ## PowerShell
 
+### `cerca_vecchio_dominio.ps1`
+Versione PowerShell di `cerca_vecchio_dominio.py`. Cerca occorrenze del vecchio dominio in tutti i file del repo.
+> 🟡 Utility diagnosi — alternativa PowerShell per utenti Windows
+
 ### `estrai_footer.ps1` + `estrai_footer.bat`
 Estrae il blocco `<footer>` da tutti gli HTML. Output: `footer_report.txt` in `scripts/`.
 > ✅ Attivo — utility diagnosi
@@ -69,6 +77,14 @@ Trova pagine con override CSS inline su classi di layout (`.guide-main`, `.guide
 
 ## Batch
 
+### `check_site_links.bat`
+Avvia una verifica dei link del sito in locale. Controlla che tutti i link interni non siano broken.
+> ✅ Attivo — utility diagnosi, lanciare periodicamente
+
+### `httpserver.bat`
+Avvia un server HTTP locale per testare il portale senza dover installare nulla. Usa Python http.server.
+> ✅ Attivo — uso quotidiano in sviluppo
+
 ### `struttura.bat`
 Genera `struttura.txt` con l'albero delle cartelle del repo.
 > 🟡 Utility occasionale — tenere
@@ -80,3 +96,11 @@ Genera `struttura.txt` con l'albero delle cartelle del repo.
 ### `ui.js`
 Logica UI condivisa: hamburger, scroll-spy, back-to-top, overlay sidebar. Caricato da tutte le pagine via `<script src="/scripts/ui.js" defer>`.
 > ✅ Attivo — non è uno script di manutenzione
+
+---
+
+## GitHub Actions
+
+### `supabase-keep-alive.yml`
+Workflow GitHub Actions che esegue un ping a Supabase ogni giorno alle 08:00 UTC per evitare la pausa automatica del piano free (dopo 7 giorni di inattività). Configurabile anche manualmente dal tab Actions su GitHub.
+> ✅ Attivo — non toccare (gestito da GitHub, non da scripts/)
