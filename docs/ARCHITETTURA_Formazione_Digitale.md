@@ -1,7 +1,7 @@
 ---
 title: "Formazione Digitale — Architettura del Progetto"
 author: "Cristiano De Pasquale"
-date: "Maggio 2026"
+date: "Giugno 2026"
 geometry: "margin=2.5cm"
 fontsize: 11pt
 toc: true
@@ -38,11 +38,14 @@ La root contiene i file di configurazione e i JS condivisi. Ogni risorsa vive ne
 formazione-digitale/
 |--- index.html
 |--- mappa.html
+|--- mappa-aree.html
 |--- mappa-framework.html
 |--- 404.html
 |--- privacy-policy.html
 |--- cookie-policy.html
 |--- manifest.json                   <- Catalogo risorse — unica fonte di verità
+|--- aree.json
+|--- framework.json
 |--- site.webmanifest
 |--- robots.txt
 |--- sitemap.xml
@@ -52,24 +55,40 @@ formazione-digitale/
 |--- auth.js
 |--- .gitignore
 |--- css/
-|   |--- shared.css
+|   |--- shared.css                  <- Layout standard (v3)
 |   \--- shared-extended.css         <- CSS proprietario per guide con layout custom
 |--- img/
 |--- docs/
 |--- scripts/
-|   |--- genera_sitemap.py
 |   |--- aggiorna_dominio.py
-|   |--- aggiungi_footer_index.py
-|   |--- aggiungi_link_footer.py
-|   |--- replace_in_files.py
-|   |--- inject_after.py
-|   |--- icdl_to_json.py
-|   |--- png_to_webp.py
+|   |--- catalogo_scripts.md
+|   |--- cerca_vecchio_dominio.ps1
+|   |--- cerca_vecchio_dominio.py
+|   |--- check_site_links.bat
 |   |--- delete_converted_png.py
+|   |--- estrai_footer.bat
+|   |--- estrai_footer.ps1
 |   |--- find_orphan_png.py
-|   |--- zip_risorse.py
+|   |--- genera_sitemap.py
+|   |--- httpserver.bat
+|   |--- icdl_to_json.py
+|   |--- inject_after.py
+|   |--- normalizza_footer.bat
+|   |--- normalizza_footer.ps1
+|   |--- png_to_webp.py
+|   |--- replace_in_files.py
+|   |--- struttura.bat
+|   |--- trova_anomali.bat
+|   |--- trova_anomali.ps1
+|   |--- trova_maxwidth.bat
+|   |--- trova_maxwidth.ps1
+|   |--- trova_override_layout.bat
+|   |--- trova_override_layout.ps1
 |   |--- ui.js
-|   \--- struttura.bat
+|   \--- zip_risorse.py
+|--- .github/
+|   \--- workflows/
+|       \--- supabase-keep-alive.yml
 |--- sicurezza/
 |   |--- pillola-cybersicurezza/
 |   \--- guida-cybersicurezza/
@@ -86,8 +105,12 @@ formazione-digitale/
 |   \--- prompt-builder/
 |--- elaborazione-testi/
 |   \--- guida-word/
+|--- foglio-di-calcolo/
+|   \--- guida-funzioni-excel/
 |--- database/
-|   \--- guida-libreoffice-base-query/   <- Usa shared-extended.css — NON shared.css
+|   |--- guida-database/             <- Usa shared-extended.css — NON shared.css
+|   |--- guida-libreoffice-base-query/  <- Usa shared-extended.css — NON shared.css
+|   \--- guida-modello-logico/       <- Usa shared-extended.css — NON shared.css
 |--- marketing/
 |   |--- guida-marketing/
 |   |--- pillola-seo/
@@ -98,7 +121,7 @@ formazione-digitale/
 |   \--- hfs-server/
 |--- sistemi/
 |   \--- codifica-binaria/
-\--- icdl/                               <- Pagine istituzionali — noindex, active:false
+\--- icdl/                           <- Pagine istituzionali — noindex, active:false
     |--- index.html
     \--- statistiche/
             index.html
@@ -110,7 +133,7 @@ formazione-digitale/
 
 ## shared.css
 
-File CSS condiviso caricato da tutte le pagine tramite path assoluto. Versione attuale: v2 (riorganizzato 14/05/2026).
+File CSS condiviso caricato da tutte le pagine tramite path assoluto. Versione attuale: **v3** (aggiornato 08/06/2026).
 
 Contiene 17 sezioni numerate e commentate:
 
@@ -133,10 +156,19 @@ Contiene 17 sezioni numerate e commentate:
 17. [Placeholder] Dark mode
 
 ```html
-<link rel="stylesheet" href="/css/shared.css?v=2">
+<link rel="stylesheet" href="/css/shared.css?v=3">
 ```
 
-> **Nota:** incrementare `?v=N` ad ogni modifica significativa per invalidare la cache. Versione corrente: v2.
+> **Nota:** incrementare `?v=N` ad ogni modifica significativa per invalidare la cache. Versione corrente: v3.
+
+### Layout guide standard (aggiornato 08/06/2026)
+
+La sezione 8 usa ora un layout **block** con sidebar fixed, allineato al pattern `#sidebar`/`#main` della homepage:
+
+- `.guide-layout` → `display: block` (non più grid)
+- `.guide-sidebar` → `position: fixed; top: 56px; left: 0; bottom: 0` — arriva sempre al footer
+- `.guide-main` → `margin-left: var(--nav-w); max-width: 1060px`
+- `#main` → `max-width: 1060px` (allineato a `.guide-main`)
 
 ### Palette colori (`:root`)
 
@@ -162,6 +194,11 @@ CSS per guide con layout proprietario, completamente scollegato da `shared.css`.
 Prima risorsa che lo usa: `database/guida-libreoffice-base-query/` (20/05/2026).
 
 Il nome è volutamente generico — non è legato a LibreOffice. Qualsiasi guida con layout molto custom (es. simulatori UI, guide tecniche con palette propria) può usarlo come base.
+
+**Pagine che usano shared-extended.css (Tier 3 dark mode):**
+- `database/guida-libreoffice-base-query/` — prima risorsa, mock UI LibreOffice
+- `database/guida-modello-logico/` — aggiunta maggio 2026
+- `database/guida-database/` — refactored 08/06/2026
 
 > **Regola:** NON caricare `shared.css` nelle pagine che usano `shared-extended.css` — i due sistemi non sono compatibili (reset `body`, `h2`, `h3` e `.section-num` in conflitto).
 
@@ -195,7 +232,7 @@ Ogni pagina mantiene un `<style>` inline per componenti non condivisi.
 
 # manifest.json — catalogo risorse
 
-File JSON unica fonte di verità per tutte le risorse del portale.
+File JSON unica fonte di verità per tutte le risorse del portale. Include anche i mapping DigComp e DigCompEdu (manifest_digcomp.json eliminato — merge completato maggio 2026).
 
 | Campo | Descrizione |
 |---|---|
@@ -214,7 +251,7 @@ File JSON unica fonte di verità per tutte le risorse del portale.
 | `digcompedu` | Array competenze DigCompEdu (es. `["DCEdu 6.4"]`) |
 | `digcomp_areas` | Array aree tematiche DigComp |
 
-Consumato da: `stats.js` (GoatCounter + Schema.org), `mappa.html` (grafo), `mappa-framework.html` (navigazione per competenza), `sitemap.xml` tramite `genera_sitemap.py`.
+Consumato da: `stats.js` (GoatCounter + Schema.org), `mappa.html` (grafo), `mappa-aree.html` (grafo D3 per aree), `mappa-framework.html` (navigazione per competenza), `sitemap.xml` tramite `genera_sitemap.py`.
 
 > **Regola:** quando aggiungi una risorsa, aggiorna **manifest.json** + **index.html** (card) + rilancia `genera_sitemap.py`.
 
@@ -222,194 +259,31 @@ Consumato da: `stats.js` (GoatCounter + Schema.org), `mappa.html` (grafo), `mapp
 
 ---
 
-# Integrazioni esterne
+# Script di manutenzione
 
-## Vercel (hosting principale)
+Documentazione completa in `scripts/catalogo_scripts.md`. Riepilogo principale:
 
-| Campo | Valore |
-|---|---|
-| Scopo | Hosting statico + Serverless Functions + Preview Deployments |
-| Piano | Hobby (gratuito) |
-| URL produzione | https://formazione-digitale.it |
-| Deploy | Automatico da push su branch main GitHub |
-| Preview | Ogni branch genera URL preview univoco |
-| Configurazione domini | formazione-digitale.it → Production · www → 301 redirect a non-www |
-
-> **NOTA:** Non esiste `vercel.json` nel progetto. I redirect www→non-www sono configurati nel dashboard Vercel. HTTP→HTTPS gestito automaticamente da Vercel.
-
-## Aruba (registrar dominio)
-
-| Campo | Valore |
-|---|---|
-| Dominio | formazione-digitale.it |
-| Registrato | Maggio 2026 |
-| Scadenza | Maggio 2027 |
-| Rinnovo automatico | Attivo |
-| Email attiva | info@formazione-digitale.it |
-| DNS | Record A: `@` → 216.198.79.1 · CNAME: `www` → Vercel |
-
-## Supabase
-
-| Campo | Valore |
-|---|---|
-| Scopo | Database PostgreSQL + Auth + API REST |
-| Piano | Free (pausa dopo 7gg inattività) |
-| Auth attiva | Magic link (OTP via email) |
-| Auth in arrivo | OAuth Google |
-| Tabelle | `profiles` · `bookmarks` |
-| RLS | Attiva — ogni utente vede solo i propri dati |
-| Keep-alive | GitHub Actions (`supabase-keep-alive.yml`) — ogni giorno alle 08:00 UTC |
-| **Sicurezza** | **ATTENZIONE:** anon key in `supabase.js` (file pubblico). Migrazione a Vercel env variables — settembre 2026. |
-
-**URL Configuration (aggiornata 22/05/2026):**
-
-| Campo | Valore |
-|---|---|
-| Site URL | `https://formazione-digitale.it` |
-| Redirect URLs | `https://formazione-digitale.it/**` · `https://formazione-digitale.github.io/*` (compatibilità fino a settembre 2026) |
-
-**SMTP (Resend):**
-
-| Campo | Valore |
-|---|---|
-| Host | `smtp.resend.com` |
-| Port | `465` |
-| Username | `resend` |
-| Sender email | `info@formazione-digitale.it` |
-| Sender name | `Formazione Digitale` |
-| Minimum interval | 60 secondi per utente |
-
-## Resend (email transazionale)
-
-| Campo | Valore |
-|---|---|
-| Scopo | SMTP per magic link Supabase |
-| Piano | Free (3.000 email/mese) |
-| Mittente | `info@formazione-digitale.it` |
-| Sender name | `Formazione Digitale` |
-| Dominio verificato | `formazione-digitale.it` — verificato il 22/05/2026 |
-| Regione | Ireland (eu-west-1) |
-
-**Record DNS aggiunti su Aruba (22/05/2026):**
-
-| Tipo | Nome host | Valore | TTL | Priorità |
-|---|---|---|---|---|
-| TXT | `resend._domainkey` | `p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC3rIaxKDJYcfgTTnfZ8Iz9MpB4GlAJAdUs5UqvdPKAcINGbg9borhQY6ntG2w+f3576wmz2qlh/FXSgMjAm02zTHg98GJuLOET+2+iH1fXZ2oEHm/YwXsyHXpoLs5HX8pSB49RiSsJFtRlq//84wMJ0K+fh5YVmcaw6jZT6SwbqQIDAQAB` | 1 Ora | — |
-| MX | `send` | `feedback-smtp.eu-west-1.amazonses.com` | 1 Ora | 10 |
-| TXT | `send` | `v=spf1 include:amazonses.com ~all` | 1 Ora | — |
-
-> **Test end-to-end superato (22/05/2026):** magic link arrivato in inbox da `Formazione Digitale <info@formazione-digitale.it>` — non in spam.
-
-## GoatCounter (analytics)
-
-| Campo | Valore |
-|---|---|
-| Scopo | Analytics privacy-friendly, senza cookie, GDPR compliant |
-| Account | formazionedigitale.goatcounter.com |
-| Integrazione | Script asincrono in `<head>` di ogni pagina |
-| API | Usata da `stats.js` per pageview e top 3 pagine |
-
-## Google Search Console
-
-| Campo | Valore |
-|---|---|
-| Proprietà attiva | formazione-digitale.it |
-| Cambio indirizzo | Completato il 09/05/2026: github.io → formazione-digitale.it |
-| Sitemap inviata | https://formazione-digitale.it/sitemap.xml |
-| Stato indicizzazione | In corso — crawl completo atteso entro 2-6 settimane |
-
-## Google Fonts
-
-| Campo | Valore |
-|---|---|
-| Font usati | DM Serif Display (titoli) · DM Sans (corpo testo) |
-| Caricamento | Da `shared.css` |
-| Preconnect | `fonts.googleapis.com` + `fonts.gstatic.com crossorigin` in ogni pagina |
-| Note | Principale causa del LCP mobile (4.8s). `font-display: swap` non ancora implementato. |
-
----
-
-# GDPR e Privacy
-
-| Documento | URL | Note |
+| Script | Tipo | Funzione |
 |---|---|---|
-| Privacy Policy | `/privacy-policy.html` | Copre GoatCounter, Formspree, Google Fonts, Vercel |
-| Cookie Policy | `/cookie-policy.html` | Nessun cookie di profilazione — banner non necessario |
-
----
-
-# Progressive Web App (PWA)
-
-| Componente | Dettaglio |
-|---|---|
-| `site.webmanifest` | Nome, icone, colori, display standalone, lingua it |
-| `sw.js` | Cache First per assets, Network First per HTML/JSON |
-| `CACHE_VERSION` | Da incrementare ad ogni deploy significativo |
-| Offline | Pagine già visitate disponibili offline. Fallback alla homepage. |
-
----
-
-# SEO
-
-| Metrica | Valore |
-|---|---|
-| PageSpeed SEO (desktop) | 100 / 100 |
-| PageSpeed Prestazioni (desktop) | 99 / 100 |
-| PageSpeed Accessibilità | 94 / 100 |
-| PageSpeed Best Practice | 96 / 100 |
-| PageSpeed Prestazioni (mobile) | 79 / 100 — LCP 4.8s (Google Fonts) |
-
-**Elementi SEO implementati:**
-
-- Title tag, meta description, canonical, robots, author in ogni pagina
-- Open Graph completo + Twitter/X Card
-- Schema.org WebSite con SearchAction in `index.html`
-- Schema.org ItemList dinamico — generato da `stats.js` via `manifest.json`
-- Schema.org LearningResource nelle sottopagine guide
-- `sitemap.xml` inviata a GSC
-- `lang="it"` su tutti gli HTML
-- `<h1>` semantico in ogni pagina
-
----
-
-# Immagini — gestione WebP
-
-Conversione PNG → WebP completata (14/05/2026) su 3 cartelle principali:
-
-| Cartella | Risparmio | CSV mapping |
-|---|---|---|
-| `elaborazione-testi/guida-word/` | -28% | — |
-| `database/guida-libreoffice-base-query/` | -25% | `mapping-query.csv` |
-| `networking/hfs-server/` | -39% | `mapping-hfs.csv` |
-
-**Script di manutenzione immagini:**
-
-| Script | Funzione |
-|---|---|
-| `png_to_webp.py` | Converte PNG → WebP seguendo l'ordine nell'HTML, rinomina con prefisso+progressivo, aggiorna path HTML, salva CSV mapping. Supporta `--dry-run`, `--quality`, `--prefix`, `--report`. |
-| `delete_converted_png.py` | Cancella i PNG originali già convertiti leggendo i CSV di mapping. Supporta `--dry-run`. |
-| `find_orphan_png.py` | Trova PNG in `img/` non referenziati nell'HTML. Supporta `--delete`. |
-
-> **16 PNG orfani** identificati in `guida-libreoffice-base-query/img/` — da cancellare dopo verifica manuale con `find_orphan_png.py --delete`.
-
----
-
-# Script di manutenzione locale
-
-| Script | Funzione |
-|---|---|
-| `genera_sitemap.py` | Genera `sitemap.xml` da `manifest.json`. La data `<lastmod>` viene letta dall'ultimo commit Git del file — non usa la data odierna. Lanciare dopo ogni nuova risorsa. |
-| `aggiorna_dominio.py` | Sostituisce un dominio in tutti i file HTML e XML. |
-| `aggiungi_footer_index.py` | Aggiunge `<footer>` con link legali ai file della root. |
-| `aggiungi_link_footer.py` | Aggiunge link Privacy/Cookie ai footer di tutte le sottocartelle. |
-| `replace_in_files.py` | Trova e sostituisce una stringa in tutti gli HTML. |
-| `inject_after.py` | Inietta una stringa dopo un'occorrenza in tutti gli HTML. Idempotente. |
-| `icdl_to_json.py` | Anonimizza export Excel ICDL → JSON per la dashboard statistiche. Calcola certificazioni per candidato (Essentials, Base, Cyber Security, Full Standard). |
-| `png_to_webp.py` | Converte PNG → WebP con rinomina progressiva e aggiornamento HTML. |
-| `delete_converted_png.py` | Cancella PNG originali già convertiti in WebP. |
-| `find_orphan_png.py` | Trova/cancella PNG orfani non referenziati nell'HTML. |
-| `struttura.bat` | Genera `struttura.txt` con albero cartelle. |
-| `zip_risorse.py` | Genera ZIP del progetto escludendo binari, immagini, `.git`. Usare per passare contesto alle IA. |
+| `genera_sitemap.py` | Python | Genera `sitemap.xml` da `manifest.json`. Usa date Git per `<lastmod>`. |
+| `cerca_vecchio_dominio.py/.ps1` | Python/PS | Cerca occorrenze del vecchio dominio github.io. |
+| `aggiorna_dominio.py` | Python | Sostituisce github.io → formazione-digitale.it in tutti i file. |
+| `replace_in_files.py` | Python | Trova e sostituisce una stringa in tutti gli HTML. |
+| `inject_after.py` | Python | Inietta una stringa dopo un pattern in tutti gli HTML. Idempotente. |
+| `icdl_to_json.py` | Python | Anonimizza export Excel ICDL → `data.json`. |
+| `png_to_webp.py` | Python | Converte PNG → WebP con rinomina progressiva e aggiornamento HTML. |
+| `delete_converted_png.py` | Python | Cancella PNG originali già convertiti in WebP. |
+| `find_orphan_png.py` | Python | Trova/cancella PNG orfani non referenziati. |
+| `zip_risorse.py` | Python | Genera ZIP del progetto per passare contesto alle IA. |
+| `normalizza_footer.ps1` | PowerShell | Sostituisce i footer con il template canonico. |
+| `estrai_footer.ps1` | PowerShell | Estrae il `<footer>` da tutti gli HTML. Utility diagnosi. |
+| `trova_anomali.ps1` | PowerShell | Trova file anomali nel repo. |
+| `trova_override_layout.ps1` | PowerShell | Trova pagine con override CSS inline su classi di layout. |
+| `trova_maxwidth.ps1` | PowerShell | Trova valori `max-width` nei blocchi `<style>` inline. |
+| `struttura.bat` | Batch | Genera `struttura.txt` con albero cartelle. |
+| `httpserver.bat` | Batch | Avvia server HTTP locale per test (Python http.server). |
+| `check_site_links.bat` | Batch | Verifica link del sito in locale. |
+| `ui.js` | JavaScript | Logica UI condivisa. Caricato da tutte le pagine. |
 
 ---
 
@@ -436,7 +310,7 @@ Conversione PNG → WebP completata (14/05/2026) su 3 cartelle principali:
 
 # Dark Mode — Analisi Architetturale
 
-Analisi prodotta in maggio 2026. Implementazione pianificata luglio/agosto 2026. Documento completo: `docs/DARK_MODE_architettura.md`.
+Implementazione pianificata luglio/agosto 2026. Documento completo: `docs/DARK_MODE_architettura.md`.
 
 ## Valutazione
 
@@ -453,7 +327,7 @@ Il dark mode è raccomandato. Il costo reale non è tecnico — è di manutenzio
 |---|---|---|
 | **Tier 1 — Risposta automatica** | index.html, mappa.html, guide IA, Subnet, BEP | Variabili dark in `shared.css` |
 | **Tier 2 — Intervento mirato** | guida-marketing, hfs-server, codifica-binaria | Revisione colori hardcoded inline |
-| **Tier 3 — Escludere** | guida-libreoffice-base-query (usa `shared-extended.css`), guida-word | `data-theme-lock="true"` — il bottone toggle non appare |
+| **Tier 3 — Escludere** | guida-libreoffice-base-query, guida-modello-logico, guida-database (usano `shared-extended.css`) · guida-word (tema Microsoft) | `data-theme-lock="true"` — il bottone toggle non appare |
 
 ## Pattern scelto
 
@@ -485,7 +359,7 @@ CSS per guide con layout proprietario completamente diverso da `shared.css`. Il 
 
 Il nome è generico per design — può essere usato da qualsiasi guida con identità visiva custom, non solo LibreOffice.
 
-**Prima risorsa:** `database/guida-libreoffice-base-query/` (estratto 20/05/2026).
+**Pagine che lo usano:** `guida-libreoffice-base-query`, `guida-modello-logico`, `guida-database`.
 
 ---
 
@@ -495,57 +369,7 @@ Il nome è generico per design — può essere usato da qualsiasi guida con iden
 
 Versione desktop standalone del tool web `marketing/break-even-point-tool/`. Distribuita come installer Windows tramite Inno Setup.
 
-### Architettura
-
-| File | Ruolo |
-|---|---|
-| `resources/index.html` | Markup puro — nessun CSS o JS inline |
-| `resources/bep.css` | CSS standalone completo — non dipende da `shared.css` |
-| `resources/bep.js` | JS completo — logica tool + API Neutralino filesystem |
-| `resources/chart.umd.js` | Chart.js 4.4.1 locale — nessuna CDN |
-| `resources/neutralino.js` | Bridge Neutralino — API native |
-| `resources/icons/icona.png` | Icona app (PNG per Neutralino) |
-| `resources/icons/icona.ico` | Icona app (ICO per Inno Setup) |
-| `resources/default-data/scenari_default.json` | 6 scenari dimostrativi precaricati |
-| `neutralino.config.json` | Configurazione app Neutralino |
-| `bep_tool_setup.iss` | Script Inno Setup per installer Windows |
-
-### Configurazione Neutralino
-
-| Campo | Valore |
-|---|---|
-| `applicationId` | `it.formazionedigitale.bep-tool` |
-| `binaryName` | `BEP-Tool` |
-| `title` | `Calcolatore Break-Even Point` |
-| `version` | `1.0.0` |
-| `minWidth` | `1000px` |
-| `nativeAllowList` | `filesystem.readFile`, `filesystem.writeFile`, `filesystem.createDirectory`, `os.getPath`, `window.setTitle` |
-
-### Dati utente
-
-I file JSON sono salvati in `Documenti\BEP Tool\` tramite `Neutralino.os.getPath('documents')` — path corretto in qualsiasi ambiente, compatibile con OneDrive.
-
-| File | Contenuto | Quando |
-|---|---|---|
-| `parametri.json` | Ultimo stato completo (autosave) | Ad ogni `calc()` |
-| `scenari.json` | Libreria scenari salvati dall'utente | Al salvataggio esplicito |
-
-Al primo install, `scenari.json` viene popolato con 6 scenari dimostrativi (Inno Setup flag `onlyifdoesntexist`).
-
-### Scenari dimostrativi inclusi
-
-| Scenario | CF Iniziali | Prezzo | CV Totali |
-|---|---|---|---|
-| Maglietta stampata | € 8.000 | € 24 | € 10 |
-| Hamburgeria | € 45.000 | € 13 | € 6 |
-| App in abbonamento | € 35.000 | € 9,99 | € 2,17 |
-| E-commerce abbigliamento | € 12.000 | € 59 | € 29 |
-| Boutique hotel (per notte) | € 280.000 | € 120 | € 64 |
-| Libreria indipendente | € 25.000 | € 16 | € 9,20 |
-
-### Doppia linea di sviluppo — nota importante
-
-La versione web (`marketing/break-even-point-tool/index.html`) e la versione desktop (`bep-tool/resources/`) sono **file separati**. Ogni modifica funzionale va replicata manualmente su entrambe le versioni.
+Ogni modifica funzionale va replicata manualmente su entrambe le versioni.
 
 **Differenze versione desktop vs web:**
 
@@ -601,79 +425,50 @@ MATERIALE_DIDATTICO\NEUTRALINO\bep-tool\
 - [OK] `zip_risorse.py` — tool contesto per IA (11/05/2026)
 - [OK] Redirect www→non-www configurato su Vercel dashboard (11/05/2026)
 - [OK] Guida ICDL + Dashboard statistiche ICDL — aggiunte al portale (maggio 2026)
-- [OK] Script `icdl_to_json.py` per anonimizzazione export Excel ICDL + calcolo certificazioni (maggio 2026)
-- [OK] Audit SEO completo (13/05/2026): `<br>` in H1 (4 file), `cover-title` → `<h1>` (5 file), `404.html` meta/OG, `mappa.html` footer + H1, `strumento-valutazione-fonti` footer + H1 + `ui.js`, `mappa-framework.html` `ui.js`
-- [OK] Broken links risolti — tutti i link interni ed esterni (13/05/2026)
-- [OK] Hamburger mobile Subnet Calculator e HFS Server — pattern `.nav-menu-btn` + `.nav-dropdown` in `shared.css` (13/05/2026)
-- [OK] `mappa.html` — footer visibile, H1 nascosto per SEO (13/05/2026)
-- [OK] Pagine ICDL — `noindex, nofollow` + `active: false` in manifest (13/05/2026)
-- [OK] `shared.css` v2 — riorganizzato con 17 sezioni commentate, 3 fix minori (14/05/2026)
-- [OK] `fw-footer` — rimosso `position:fixed` da `shared.css`, inline solo su `mappa.html` (14/05/2026)
-- [OK] `analizzatore-seo` — fix JS rotto + `ui.js` corretto (14/05/2026)
-- [OK] Risorse correlate IA — label corrette + `target="_blank"` rimossi su link interni (14/05/2026)
-- [OK] Footer IA — `Formazione Digitale · Torna alla home` aggiunto su guida-prompting, prompt-builder, guida-peer-review-ia (14/05/2026)
-- [OK] Conversione PNG → WebP: guida-word (-28%), guida-libreoffice-base-query (-25%), hfs-server (-39%) — totale ~29% risparmio (14/05/2026)
-- [OK] Script `png_to_webp.py`, `delete_converted_png.py`, `find_orphan_png.py` (14/05/2026)
-- [OK] 96 PNG originali cancellati dopo conversione (14/05/2026)
-- [OK] `pillola-valutazione-fonti` e `pillola-aggiornamento-digitale` — eyebrow rimosso, icona inline, meta nel badge, padding hero ridotto (14/05/2026)
-- [OK] `strumento-autovalutazione-digcompedu` — H2 corretti, bug animazione report risolto, bug warning domande saltate risolto (14/05/2026)
-- [OK] Dashboard ICDL — certificazioni rilasciate (3/4 card dinamiche), tabella sortable (14/05/2026)
-- [OK] Dashboard ICDL standalone — versione self-contained senza dipendenza da `shared.css` (14/05/2026)
-- [OK] `preconnect fonts.gstatic.com crossorigin` — aggiunto in 19 file (14/05/2026)
-- [OK] Variabili colori semantici in `shared.css`: `--red-mid`, `--red-accent`, `--green-mid`, `--green-accent`, `--amber-mid` (14/05/2026)
-- [OK] 14 sostituzioni colori hardcoded → variabili CSS con `replace_in_files.py` (14/05/2026)
-- [OK] `cover-title` → `<h1>` in `guida-marketing` (19/05/2026)
-- [OK] Pillola Netiquette — DC 2.2–2.4 · DCEdu 6.4 · INDIRE A4 (20/05/2026)
-- [OK] `genera_sitemap.py` — `<lastmod>` da Git invece della data odierna (20/05/2026)
-- [OK] `shared-extended.css` — CSS proprietario estratto da `guida-libreoffice-base-query`, nome generico (20/05/2026)
-- [OK] Supabase URL Configuration aggiornata — Site URL e Redirect URLs migrati su formazione-digitale.it (22/05/2026)
-- [OK] Resend — dominio `formazione-digitale.it` verificato, SMTP collegato a Supabase, test end-to-end superato (22/05/2026)
-- [OK] BEP tool web — CV dinamici (min 1, max 10), barre incidenza, warning prezzo < CV, contatore voci, animazioni, aria-label, fix BEP con `Math.ceil()`, terminologia Payback Period (22/05/2026)
-- [OK] BEP tool — app desktop Neutralino: `bep.css` standalone, `bep.js` esterno, gestione scenari JSON, autosave parametri, titolo finestra dinamico, manuale d'uso modale, 6 scenari dimostrativi precaricati (22/05/2026)
-- [OK] BEP tool desktop — dati salvati in `Documenti\BEP Tool\` via `Neutralino.os.getPath('documents')`, sincronizzazione automatica OneDrive (22/05/2026)
+- [OK] GitHub Pages disabilitato (25/05/2026) — formazione-digitale.github.io → 404
+- [OK] GSC indicizzazione migliorata significativamente dopo disabilitazione GitHub Pages
+- [OK] Tutti i broken links risolti (14/05/2026)
+- [OK] Footer canonico normalizzato su tutte le pagine (08/06/2026)
+- [OK] Layout guide standard allineato al pattern marketing: sidebar fixed, max-width 1060px (08/06/2026)
+- [OK] guida-database refactored al layout scuro shared-extended.css (08/06/2026)
+- [OK] BEP tool desktop — dati salvati in `Documenti\BEP Tool\` via `Neutralino.os.getPath('documents')` (22/05/2026)
 - [OK] BEP tool desktop — installer `BEP_Tool_Setup.exe` generato con Inno Setup (22/05/2026)
+- [OK] Supabase Auth + magic link + Resend SMTP configurati (22/05/2026)
 
 ---
 
 ## In sospeso immediato
 
-- Cancellare 16 PNG orfani in `guida-libreoffice-base-query/img/` dopo verifica manuale (`find_orphan_png.py --delete`)
-- `index.html` riga 1578 — `formazione-digitale-logo.png` → `.webp`
-- Footer standard unificato — definire template e propagare con script
+- Cancellare PNG orfani in `guida-libreoffice-base-query/img/` dopo verifica manuale (`find_orphan_png.py --delete`)
+- `index.html` — verificare se `formazione-digitale-logo.png` è ancora presente o già convertito in WebP
+- `genera_sitemap.py` — aggiungere `mappa-aree.html` alle pagine fisse
 - BEP tool web — aggiungere bottone Manuale (modale) e bottone download app desktop nell'hero
-- BEP tool web — deploy su Vercel dopo aggiornamenti
 
 ---
 
 ## Miglioramenti strutturali — luglio/agosto 2026
 
 - **Dark mode** — prerequisiti completati; implementazione rimandata a luglio/agosto (vedere `docs/DARK_MODE_architettura.md`)
-- **`font-display: swap`** — da aggiungere al tag Google Fonts per migliorare LCP mobile (attuale 4.8s); fare con `replace_in_files.py`
-- **Migrazione JS in `/js/`** — spostare `scripts/ui.js`, `stats.js`, `auth.js`, `supabase.js` in `/js/`; aggiornare 27+ riferimenti HTML con `replace_in_files.py` (stima 3-4 ore)
-- **`icdl/statistiche/`** — valutare migrazione su WordPress scolastico (standalone già pronto)
+- **`font-display: swap`** — da aggiungere al tag Google Fonts per migliorare LCP mobile; fare con `replace_in_files.py`
+- **Migrazione JS in `/js/`** — spostare `scripts/ui.js`, `stats.js`, `auth.js`, `supabase.js` in `/js/`; aggiornare riferimenti HTML con `replace_in_files.py`
+- **TOC normalizzazione** — portare TOC in `shared-extended.css` e migrare JS
 
 ---
 
-## Bassa urgenza — quando disponibile
+## Settembre 2026 — badge DigComp e Supabase
 
-- Disabilitazione GitHub Pages (dopo settembre 2026 — branch redirect necessario fino ad allora)
-- `role="heading" aria-level="1"` sui `cover-title` con `replace_in_files.py`
-- Nuovi contenuti: Pillola PageSpeed · Pillola Triade CIA
+> **ATTENZIONE:** eseguire tassativamente in questo ordine. La protezione del token Supabase è prerequisito per tutto il resto.
 
----
-
-## Prima di aprire l'auth agli utenti reali
-
-Completare **in questo ordine**:
-
-1. ~~Aggiornare Redirect URL Supabase → formazione-digitale.it~~ **[OK — 22/05/2026]**
-2. ~~Configurare dominio verificato su Resend (email magic link in spam)~~ **[OK — 22/05/2026]**
-3. Login Google OAuth
-4. Aggiornare Privacy Policy con sezione autenticazione + cookie sessione
-5. Aggiungere banner cookie
-6. Auth in tutte le sottopagine
-7. Segnalibri sulle card
-8. Checklist persistenti via Supabase
+1. Migrazione Vercel come unico hosting
+2. Configurazione variabili d'ambiente Vercel (`SUPABASE_URL`, `SUPABASE_KEY`)
+3. Creazione Serverless Function `/api/competenze.js` (proxy sicuro Supabase)
+4. Creazione tabella Supabase `risorse_competenze` (`slug`, `digcomp[]`, `digcompedu[]`, `indire[]`) — applicare pattern GRANT da `NOTA_Supabase_default_grants.md`
+5. Sviluppo `competenze.js` client — chiama `/api/` non Supabase direttamente
+6. Badge competenze nelle card-footer
+7. Login Google OAuth
+8. Aggiornare Privacy Policy con sezione autenticazione
+9. Aggiungere banner cookie (Cookiebot — valutare se necessario con auth)
+10. Vercel Cron Job keep-alive (sostituisce GitHub Actions)
 
 ---
 
@@ -682,14 +477,112 @@ Completare **in questo ordine**:
 | Priorità | Risorsa | Standard attivati |
 |---|---|---|
 | [OK] | Pillola netiquette / cittadinanza digitale | DC 2.2–2.4 · DCEdu 6.4 · INDIRE A4 |
-| [~] 1 | Guida/strumento collaborazione scolastica | INDIRE B1·B2 · DCEdu 1.2·2.3 |
-| [?] 2 | Risorsa valutazione digitale (rubric builder) | DCEdu 4.1·4.2·4.3 · INDIRE A3 |
+| 1 | Strumento/guida collaborazione scolastica | INDIRE B1·B2 · DCEdu 1.2·2.3 |
+| 2 | Rubric builder (valutazione digitale) | DCEdu 4.1·4.2·4.3 · INDIRE A3 |
+
+---
+
+## Desktop suite (estate 2026)
+
+- Monolithic Neutralinojs app: BEP calculator + Kanban + Gantt planner
+- iframe-based routing; CSS separato per tool; dati in `Documenti\Formazione Digitale\[tool]\`
+- Packaged con Inno Setup; caveat antivirus (unsigned) documentato
+
+---
+
+## Bassa urgenza — quando disponibile
+
+- `role="heading" aria-level="1"` sui `cover-title` con `replace_in_files.py`
+- Nuovi contenuti: Pillola PageSpeed · Pillola Triade CIA
+
+---
+
+# Integrazioni esterne
+
+## Vercel (hosting principale)
+
+| Campo | Valore |
+|---|---|
+| Scopo | Hosting statico + Serverless Functions + Preview Deployments |
+| Piano | Hobby (gratuito) |
+| URL produzione | https://formazione-digitale.it |
+| Deploy | Automatico da push su branch main GitHub |
+| Preview | Ogni branch genera URL preview univoco |
+| Configurazione domini | formazione-digitale.it → Production · www → 301 redirect a non-www |
+
+## Aruba (registrar dominio)
+
+| Campo | Valore |
+|---|---|
+| Dominio | formazione-digitale.it |
+| Registrato | Maggio 2026 |
+| Scadenza | Maggio 2027 |
+| Rinnovo automatico | Attivo |
+| Email attiva | info@formazione-digitale.it |
+| DNS | Record A: `@` → 216.198.79.1 · CNAME: `www` → Vercel |
+
+## Supabase
+
+| Campo | Valore |
+|---|---|
+| Scopo | Database PostgreSQL + Auth + API REST |
+| Piano | Free (pausa dopo 7gg inattività) |
+| Auth attiva | Magic link (OTP via email) |
+| Auth in arrivo | OAuth Google |
+| Tabelle | `profiles` · `bookmarks` |
+| RLS | Attiva — ogni utente vede solo i propri dati |
+| Keep-alive | GitHub Actions (`supabase-keep-alive.yml`) — ogni giorno alle 08:00 UTC |
+| **Sicurezza** | **ATTENZIONE:** anon key in `supabase.js` (file pubblico). Migrazione a Vercel env variables — settembre 2026. |
+
+**URL Configuration:**
+
+| Campo | Valore |
+|---|---|
+| Site URL | `https://formazione-digitale.it` |
+| Redirect URLs | `https://formazione-digitale.it/**` · `https://formazione-digitale.github.io/*` (compatibilità fino a settembre 2026) |
+
+## Resend (email transazionale)
+
+| Campo | Valore |
+|---|---|
+| Scopo | SMTP per magic link Supabase |
+| Piano | Free (3.000 email/mese) |
+| Mittente | `info@formazione-digitale.it` |
+| Dominio verificato | `formazione-digitale.it` — verificato il 22/05/2026 |
+| Regione | Ireland (eu-west-1) |
+
+## GoatCounter (analytics)
+
+| Campo | Valore |
+|---|---|
+| Scopo | Analytics privacy-friendly, senza cookie, GDPR compliant |
+| Account | formazionedigitale.goatcounter.com |
+| Integrazione | Script asincrono in `<head>` di ogni pagina |
+| API | Usata da `stats.js` per pageview e top 3 pagine |
+
+## Google Search Console
+
+| Campo | Valore |
+|---|---|
+| Proprietà attiva | formazione-digitale.it |
+| Cambio indirizzo | Completato il 09/05/2026: github.io → formazione-digitale.it |
+| GitHub Pages disabilitato | 25/05/2026 — risolto problema canonical duplicato |
+| Sitemap inviata | https://formazione-digitale.it/sitemap.xml |
+| Stato indicizzazione | Migliorato significativamente dopo disabilitazione GitHub Pages |
+
+## Google Fonts
+
+| Campo | Valore |
+|---|---|
+| Font usati in shared.css | DM Serif Display (titoli) · DM Sans (corpo testo) |
+| Font usati in shared-extended.css | Sora (testo) · Space Mono (codice/monospace) |
+| Caricamento | Da `<link>` in `<head>` di ogni pagina |
+| Preconnect | `fonts.googleapis.com` + `fonts.gstatic.com crossorigin` |
+| Note | `font-display: swap` non ancora implementato — migrazione luglio/agosto 2026 |
 
 ---
 
 ## Pannelli di controllo infrastruttura
-
-Accessi amministrativi ai servizi del progetto, in ordine di ruolo nel sistema.
 
 | Servizio | Ruolo | URL admin |
 |---|---|---|
@@ -702,15 +595,4 @@ Accessi amministrativi ai servizi del progetto, in ordine di ruolo nel sistema.
 
 ---
 
-## Settembre 2026 — badge DigComp (ordine obbligatorio)
-
-> **ATTENZIONE:** eseguire tassativamente in questo ordine. La protezione del token Supabase è prerequisito per tutto il resto.
-
-1. Migrazione Vercel come unico hosting (GitHub Pages dismesso)
-2. Configurazione variabili d'ambiente Vercel (`SUPABASE_URL`, `SUPABASE_KEY`)
-3. Creazione Serverless Function `/api/competenze.js` (proxy sicuro Supabase)
-4. Creazione tabella Supabase `risorse_competenze` (`slug`, `digcomp[]`, `digcompedu[]`, `indire[]`)
-5. Sviluppo `competenze.js` client — chiama `/api/` non Supabase direttamente
-6. Badge competenze nelle card-footer
-7. Profilo competenze utente
-8. Vercel Cron Job keep-alive (sostituisce GitHub Actions)
+*Documento aggiornato 09/06/2026 · Formazione Digitale*

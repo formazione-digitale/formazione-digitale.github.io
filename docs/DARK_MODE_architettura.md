@@ -1,5 +1,5 @@
 # Dark Mode — Analisi Architetturale
-**Formazione Digitale · Maggio 2026**
+**Formazione Digitale · Maggio 2026 · Aggiornato 09/06/2026**
 
 ---
 
@@ -41,11 +41,13 @@ Pagine con `<style>` inline esteso che usa variabili proprie o colori hardcoded.
 | `sistemi/codifica-binaria/` | Componenti interattivi con colori fissi |
 
 ### Tier 3 — Escludere con data-theme-lock
-Pagine con design system proprietario, parzialmente o totalmente scollegato da `shared.css`.
+Pagine con design system proprietario, scollegato da `shared.css`. Usano `shared-extended.css` (palette scura propria) o hanno identità cromatica vincolata.
 
 | Pagina | Situazione | Strategia |
 |--------|------------|-----------|
-| `database/guida-libreoffice-base-query/` | Usa `shared-extended.css` — sistema completamente autonomo, già prevalentemente scuro | Escludere con `data-theme-lock="true"` |
+| `database/guida-libreoffice-base-query/` | Usa `shared-extended.css` — sistema autonomo, già prevalentemente scuro | Escludere con `data-theme-lock="true"` |
+| `database/guida-modello-logico/` | Usa `shared-extended.css` | Escludere con `data-theme-lock="true"` |
+| `database/guida-database/` | Usa `shared-extended.css` (refactored 08/06/2026) | Escludere con `data-theme-lock="true"` |
 | `elaborazione-testi/guida-word/` | Identità cromatica Microsoft (blu #0078D4) | Valutare se il toggle ha senso — potrebbe rompersi |
 
 > **Esclusione onesta:** aggiungere `data-theme-lock="true"` sull'`<html>` delle pagine Tier 3 e ignorarle nel JS del toggle. L'utente non vede il bottone su quelle pagine. Comportamento trasparente, zero rework.
@@ -108,8 +110,6 @@ Aggiungere in fondo a `shared.css`, dopo tutte le regole esistenti (sezione 17 �
    Disattivato da: data-theme="light" (override manuale)
    ════════════════════════════════════════════════════════════════ */
 
-/* Preferenza di sistema — si attiva solo se l'utente
-   non ha sovrascritta manualmente con data-theme="light" */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --blue-dark:    #90CAF9;
@@ -125,13 +125,9 @@ Aggiungere in fondo a `shared.css`, dopo tutte le regole esistenti (sezione 17 �
     --gray-light:   #1E1E1E;
     --white:        #1A1A2E;
   }
-  :root:not([data-theme="light"]) body {
-    background: #0F1624;
-  }
+  :root:not([data-theme="light"]) body { background: #0F1624; }
 }
 
-/* Override manuale — si attiva quando il JS scrive data-theme="dark"
-   indipendentemente dalla preferenza di sistema */
 [data-theme="dark"] {
   --blue-dark:    #90CAF9;
   --blue-mid:     #64B5F6;
@@ -146,211 +142,14 @@ Aggiungere in fondo a `shared.css`, dopo tutte le regole esistenti (sezione 17 �
   --gray-light:   #1E1E1E;
   --white:        #1A1A2E;
 }
-[data-theme="dark"] body {
-  background: #0F1624;
-}
-
-/* Componenti che non seguono le variabili e richiedono override esplicito */
-[data-theme="dark"] .card {
-  border-color: var(--blue-light);
-}
-[data-theme="dark"] .card-footer {
-  background: #151F2E;
-  border-color: var(--blue-light);
-}
-[data-theme="dark"] .stats-bar {
-  background: #131C2B;
-  border-color: var(--blue-light);
-}
-[data-theme="dark"] .hero-search {
-  background: #1E2D42;
-}
-[data-theme="dark"] .hero-search input {
-  color: var(--gray-dark);
-  background: transparent;
-}
-[data-theme="dark"] .filter-btn {
-  background: #131C2B;
-  color: var(--gray-mid);
-  border-color: var(--blue-light);
-}
-[data-theme="dark"] .filter-btn.active {
-  background: var(--blue-mid);
-  color: #fff;
-}
-[data-theme="dark"] .modal-panel,
-[data-theme="dark"] .auth-panel {
-  background: #1A2638;
-}
-[data-theme="dark"] .cf-input {
-  background: #131C2B;
-  border-color: var(--blue-light);
-  color: var(--gray-dark);
-}
+[data-theme="dark"] body { background: #0F1624; }
 ```
 
-> **Nota sui colori dark:** Le variabili dark non sono semplici inversioni. Il `--blue-dark` originale (#1F4E79) era usato come colore di sfondo scuro — in dark mode diventa un colore chiaro (#90CAF9) per testo e accenti su sfondi molto scuri. Testare sempre su ogni componente prima del deploy.
+> **Nota sui colori dark:** Le variabili dark non sono semplici inversioni — sono bilanciate per leggibilità e contrasto.
 
 ---
 
-### 4.3 `scripts/ui.js` — file JS condiviso
-
-> **Nota sul path:** il file è attualmente in `/scripts/ui.js`. La migrazione in `/js/ui.js` è pianificata per luglio/agosto 2026 insieme agli altri JS condivisi. Aggiornare i riferimenti qui sotto quando avviene la migrazione.
-
-Il file gestisce:
-- Theme toggle (dark/light mode)
-- Back-to-top button
-
-```javascript
-/* ════════════════════════════════════════════════════════════════
-   ui.js — Comportamenti UI condivisi
-   Formazione Digitale · v1.0
-   
-   Responsabilità:
-   - Theme toggle (dark/light mode)
-   - Back-to-top button
-   - Espandibile con altri comportamenti UI futuri
-   
-   Non modificare per aggiungere logica di contenuto.
-   ════════════════════════════════════════════════════════════════ */
-
-// ── THEME TOGGLE ────────────────────────────────────────────────
-
-function initThemeToggle() {
-  const btn = document.getElementById('theme-toggle');
-  
-  // Pagine con data-theme-lock: nessun toggle
-  if (document.documentElement.hasAttribute('data-theme-lock')) return;
-  if (!btn) return;
-
-  /**
-   * Determina il tema corrente:
-   * 1. localStorage (scelta esplicita dell'utente)
-   * 2. prefers-color-scheme (preferenza del sistema)
-   * 3. fallback: light
-   */
-  function getEffectiveTheme() {
-    const saved = localStorage.getItem('fd-theme');
-    if (saved) return saved;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
-  }
-
-  function applyTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('fd-theme', theme);
-    updateButton(theme);
-  }
-
-  function updateButton(theme) {
-    if (theme === 'dark') {
-      btn.textContent = '☀️';
-      btn.title = 'Passa al tema chiaro';
-      btn.setAttribute('aria-label', 'Passa al tema chiaro');
-    } else {
-      btn.textContent = '🌙';
-      btn.title = 'Passa al tema scuro';
-      btn.setAttribute('aria-label', 'Passa al tema scuro');
-    }
-  }
-
-  btn.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme')
-                    || getEffectiveTheme();
-    applyTheme(current === 'dark' ? 'light' : 'dark');
-  });
-
-  // Sincronizza il bottone con il tema già applicato dall'anti-flash
-  updateButton(getEffectiveTheme());
-
-  // Ascolta i cambiamenti di sistema operativo (es. auto dark al tramonto)
-  window.matchMedia('(prefers-color-scheme: dark)')
-    .addEventListener('change', e => {
-      // Rispetta solo se l'utente non ha scelto manualmente
-      if (!localStorage.getItem('fd-theme')) {
-        applyTheme(e.matches ? 'dark' : 'light');
-      }
-    });
-}
-
-document.addEventListener('DOMContentLoaded', initThemeToggle);
-```
-
----
-
-### 4.4 Bottone nell'header
-
-In ogni pagina, dentro l'`<header>`, aggiungere il bottone toggle. La classe `.mode-toggle` è già definita in `shared.css`.
-
-```html
-<button
-  id="theme-toggle"
-  class="mode-toggle"
-  title="Passa al tema scuro"
-  aria-label="Passa al tema scuro">
-  🌙
-</button>
-```
-
-E prima di `</body>` in ogni pagina:
-
-```html
-<script src="/scripts/ui.js" defer></script>
-```
-
-> `defer` è corretto qui — `ui.js` può aspettare il DOM. Solo l'anti-flash in `<head>` deve essere sincrono.
-
----
-
-### 4.5 Esclusione pagine Tier 3
-
-Per le pagine che non devono rispondere al toggle (LibreOffice Base, Word):
-
-```html
-<html lang="it" data-theme-lock="true">
-```
-
-Il JS di `ui.js` controlla questo attributo e non inizializza il toggle. Il bottone nell'header può essere omesso o nascosto via CSS:
-
-```css
-/* In shared.css, solo per pagine locked */
-[data-theme-lock] #theme-toggle {
-  display: none;
-}
-```
-
----
-
-## 5. Checklist di deploy
-
-Per ogni pagina che aggiungi al sistema dark mode:
-
-- [ ] Script anti-flash aggiunto in `<head>` prima dei CSS
-- [ ] `<script src="/scripts/ui.js" defer></script>` aggiunto prima di `</body>`
-- [ ] Bottone `#theme-toggle` aggiunto nell'header
-- [ ] Testato in dark mode su desktop Chrome
-- [ ] Testato in dark mode su mobile (Safari iOS + Chrome Android)
-- [ ] Testato il flash al reload in dark mode (deve essere assente)
-- [ ] Testato il cambio preferenza sistema operativo (deve seguire automaticamente se non c'è scelta manuale)
-- [ ] Colori hardcoded nel `<style>` inline della pagina convertiti in variabili CSS dove possibile
-
----
-
-## 6. Cosa NON fare
-
-| ❌ Da evitare | Motivo |
-|---|---|
-| Script del tema in fondo alla pagina | Causa flash bianco→nero visibile |
-| `class="dark"` su `<body>` | Interferisce con le animazioni `.card` e le classi di stato |
-| Variabili dark duplicate in ogni pagina | Impossibile da mantenere — tutto in `shared.css` |
-| Salvare il tema su Supabase | Richiede login, latenza di rete, attrito inutile per una preferenza visuale |
-| Invertire semplicemente i colori | I ruoli semantici cambiano in dark mode — non è una semplice inversione |
-| Applicare dark mode a pagine con `shared-extended.css` | Sistema CSS autonomo — escludere con `data-theme-lock` |
-
----
-
-## 7. Stima del lavoro
+## 5. Stima del lavoro
 
 | Attività | Tempo stimato |
 |---|---|
@@ -359,11 +158,11 @@ Per ogni pagina che aggiungi al sistema dark mode:
 | Anti-flash in tutte le pagine (con `replace_in_files.py`) | 15 min |
 | Test Tier 1 (index, mappa, guide IA) | 1–2 ore |
 | Revisione Tier 2 (pagine con CSS inline custom) | 2–4 ore |
-| Decisione e lock Tier 3 (LibreOffice, Word) | 30 min |
+| Decisione e lock Tier 3 (database, Word) | 30 min |
 | **Totale** | **5–9 ore** |
 
 La parte più lunga non è il codice — è verificare che ogni componente specifico di pagina (hero, sidebar, box callout, tabelle, componenti interattivi) risponda correttamente alle variabili dark.
 
 ---
 
-*Documento aggiornato 20/05/2026 · Formazione Digitale*
+*Documento aggiornato 09/06/2026 · Formazione Digitale*
