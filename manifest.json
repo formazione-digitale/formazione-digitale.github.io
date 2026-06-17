@@ -1,939 +1,1055 @@
 [
-  {
-    "path": "/elaborazione-testi/guida-word/",
-    "label": "Microsoft Word — Guida pratica",
-    "short": "Word",
-    "cat": "guide",
-    "emoji": "📝",
-    "tags": [
-      "word",
-      "microsoft",
-      "office",
-      "documento",
-      "testo",
-      "formattazione",
-      "stili",
-      "tabelle",
-      "indice",
-      "stampa unione"
-    ],
-    "meta": "61 screenshot · PDF scaricabile · Livello base",
-    "description": "Stili, tabelle, indice automatico, stampa unione e molto altro. Con 61 screenshot e PDF scaricabile.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 3.1",
-      "DC 3.2"
-    ],
-    "digcomp_level": "foundation",
-    "digcomp_areas": [
-      "creazione"
-    ],
-    "digcompedu": [
-      "DCEdu 2.2",
-      "DCEdu 6.2",
-      "DCEdu 6.3"
-    ]
-  },
-  {
-  "path": "/foglio-di-calcolo/guida-funzioni-excel/",
-  "label": "Microsoft Excel — Guida alle funzioni",
-  "short": "Funzioni Excel",
-  "cat": "guide",
-  "emoji": "📊",
-  "tags": [
-    "excel", "funzioni", "somma.se", "conta.se", "cerca.vert", "se",
-    "rango", "stringa.estrai", "testo.formula", "foglio di calcolo",
-    "fatturato", "afm", "rim"
-  ],
-  "meta": "10 funzioni · Simulatori interattivi · Livello intermedio",
-  "description": "Dieci funzioni medio-avanzate di Excel — SOMMA.SE, CERCA.VERT, SE, RANGO e altre — ciascuna con un simulatore interattivo sugli stessi dati di vendita.",
-  "featured": false,
-  "active": true,
-  "digcomp": ["DC 1.3", "DC 3.1"],
-  "digcomp_level": "intermediate",
-  "digcomp_areas": ["informazioni", "creazione"],
-  "digcompedu": ["DCEdu 2.2", "DCEdu 3.4", "DCEdu 6.3"]
-  },
-  {
-    "path": "/database/guida-modello-logico/",
-    "label": "Modello Logico Relazionale",
-    "short": "Modello Logico",
-    "cat": "guide",
-    "emoji": "🔗",
-    "tags": [
-      "database",
-      "modello logico",
-      "chiave primaria",
-      "chiave esterna",
-      "relazioni",
-      "tabelle",
-      "1:N",
-      "N:M",
-      "tabella associativa",
-      "afm",
-      "rim"
-    ],
-    "meta": "8 sezioni · Esercizi interattivi · Livello base–intermedio",
-    "description": "Dal diagramma E-R alle tabelle relazionali: chiavi primarie, chiavi esterne, relazioni 1:N e N:M con tabella associativa. Con esercizi interattivi.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 5.1",
-      "DC 5.2"
-    ],
-    "digcomp_level": "intermediate",
-    "digcomp_areas": [
-      "problem-solving"
-    ],
-    "digcompedu": [
-      "DCEdu 2.2",
-      "DCEdu 6.5"
-    ]
-  },
-  {
-    "path": "/database/guida-libreoffice-base-query/",
-    "label": "LibreOffice Base — Le Query",
-    "short": "LibreOffice Base",
-    "cat": "guide",
-    "emoji": "🗄️",
-    "tags": [
-      "libreoffice",
-      "base",
-      "query",
-      "database",
-      "sql",
-      "odb"
-    ],
-    "meta": "Con DB di esempio · Livello intermedio",
-    "description": "Guida pratica alle query in LibreOffice Base. Include database di esempio scaricabile e immagini passo per passo.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 2.1",
-      "DC 5.1",
-      "DC 5.2"
-    ],
-    "digcomp_level": "intermediate",
-    "digcomp_areas": [
-      "comunicazione",
-      "problem-solving"
-    ],
-    "digcompedu": [
-      "DCEdu 2.2",
-      "DCEdu 6.5"
-    ]
-  },
-  {
-    "path": "/database/guida-database/",
-    "label": "Basi di Dati — Dal dato al modello E-R",
-    "short": "Basi di Dati",
-    "cat": "guide",
-    "emoji": "🗃️",
-    "tags": [
-      "database",
-      "basi di dati",
-      "dbms",
-      "modello er",
-      "entità relazione",
-      "cardinalità",
-      "chiave primaria",
-      "chiave esterna",
-      "progettazione logica",
-      "afm",
-      "rim"
-    ],
-    "meta": "10 sezioni · Modello E-R · Livello base–intermedio",
-    "description": "Dato vs informazione, DBMS, progettazione concettuale e logica, diagrammi E-R, cardinalità e chiavi esterne.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 5.1",
-      "DC 5.2"
-    ],
-    "digcomp_level": "foundation",
-    "digcomp_areas": [
-      "problem-solving"
-    ],
-    "digcompedu": [
-      "DCEdu 2.2",
-      "DCEdu 6.5"
-    ]
-  },
-  {
-    "path": "/marketing/guida-marketing/",
-    "label": "Marketing & E-Commerce",
-    "short": "Marketing",
-    "cat": "guide",
-    "emoji": "🛒",
-    "tags": [
-      "marketing",
-      "e-commerce",
-      "digital marketing",
-      "leva",
-      "comunicazione",
-      "mix commerciale"
-    ],
-    "meta": "Aggiornata · Livello intermedio",
-    "description": "Dalle leve del marketing mix alle strategie di vendita online. Guida pratica per orientarsi nel mercato digitale.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 3.1",
-      "DC 5.2"
-    ],
-    "digcomp_level": "intermediate",
-    "digcomp_areas": [
-      "informazioni",
-      "creazione",
-      "problem-solving"
-    ],
-    "digcompedu": [
-      "DCEdu 6.1",
-      "DCEdu 6.3"
-    ]
-  },
-  {
-	  "path": "/project-management/guida-gestione-progetti/",
-	  "label": "Gestione Digitale di un Progetto",
-	  "short": "Gestione Progetti",
-	  "cat": "guide",
-	  "emoji": "📋",
-	  "tags": ["project management", "gpoi", "gantt", "kanban", "progetto", "pianificazione", "collaborazione", "sal", "capitolato", "afm", "rim"],
-	  "meta": "8 sezioni · ~35 min",
-	  "description": "Ciclo di vita, Gantt, Kanban board, SAL e Capitolato. Guida completa alla gestione digitale dei progetti per AFM e RIM.",
-	  "featured": false,
-	  "active": true,
-	  "digcomp": ["DC 2.4", "DC 3.1"],
-	  "digcomp_level": "intermediate",
-	  "digcompedu": ["DCEdu 2.1", "DCEdu 3.4"],
-	  "digcomp_areas": ["Comunicazione e collaborazione", "Creazione di contenuti digitali"]
-	},
-  {
-    "path": "/intelligenza-artificiale/guida-prompting/",
-    "label": "Guida al Prompting con l'IA",
-    "short": "Guida Prompting",
-    "cat": "guide",
-    "emoji": "🤖",
-    "tags": [
-      "ia",
-      "prompting",
-      "didattica",
-      "docenti",
-      "meta-prompt",
-      "chatgpt",
-      "intelligenza artificiale"
-    ],
-    "meta": "Aggiornata · Livello base–intermedio",
-    "description": "Dal prompt semplice al meta-prompt. Anatomia di un prompt efficace, template editabili e modalità presentazione per l'aula.",
-    "featured": true,
-    "active": true,
-    "digcomp": [
-      "DC 3.2",
-      "DC 5.3"
-    ],
-    "digcomp_level": "intermediate",
-    "digcomp_areas": [
-      "creazione",
-      "problem-solving"
-    ],
-    "digcompedu": [
-      "DCEdu 3.1",
-      "DCEdu 6.3",
-      "DCEdu 6.5"
-    ]
-  },
-  {
-    "path": "/intelligenza-artificiale/guida-peer-review-ia/",
-    "label": "Peer-review tra IA",
-    "short": "Peer-review IA",
-    "cat": "guide",
-    "emoji": "🔍",
-    "tags": [
-      "peer review",
-      "ia",
-      "intelligenza artificiale",
-      "valutazione",
-      "prompt",
-      "handoff",
-      "modelli",
-      "claude",
-      "gemini",
-      "gpt"
-    ],
-    "meta": "Template pronti · Checklist interattiva · Livello base–intermedio",
-    "description": "Far valutare l'output di un modello da un altro. Quale combinazione usare, come strutturare il prompt di handoff e quando evitarlo.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 1.2",
-      "DC 5.3"
-    ],
-    "digcomp_level": "intermediate",
-    "digcomp_areas": [
-      "informazioni",
-      "problem-solving"
-    ],
-    "digcompedu": [
-      "DCEdu 2.1",
-      "DCEdu 3.3",
-      "DCEdu 4.1"
-    ]
-  },
-  {
-    "path": "/sicurezza/guida-cybersicurezza/",
-    "label": "Guida alla Cybersicurezza Personale",
-    "short": "Guida Cybersicurezza",
-    "cat": "guide",
-    "emoji": "🔒",
-    "tags": [
-      "cybersicurezza",
-      "sicurezza informatica",
-      "password",
-      "phishing",
-      "2fa",
-      "autenticazione",
-      "backup",
-      "privacy",
-      "vpn",
-      "passkey",
-      "deepfake",
-      "ransomware",
-      "wi-fi",
-      "sim swapping"
-    ],
-    "meta": "10 sezioni · Piano d'azione · Livello base · ~35 min",
-    "description": "Phishing, 2FA, VPN, passkey e backup: percorso completo per proteggerti online. Aggiornata al 2026 con piano d'azione immediato.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 4.1",
-      "DC 4.2",
-      "DC 2.6"
-    ],
-    "digcomp_level": "intermediate",
-    "digcomp_areas": [
-      "sicurezza"
-    ],
-    "digcompedu": [
-      "DCEdu 6.4",
-      "DCEdu 6.1"
-    ]
-  },
-  {
-    "path": "/networking/hfs-server/",
-    "label": "HFS: Server HTTP Persistente",
-    "short": "HFS Server",
-    "cat": "pillola",
-    "emoji": "⚙️",
-    "tags": [
-      "hfs",
-      "networking",
-      "server",
-      "http",
-      "lan",
-      "sharing",
-      "windows",
-      "web server"
-    ],
-    "meta": "Include HFS 2 e 3 · Livello intermedio-avanzato · 15 min",
-    "description": "Crea un web server locale con gestione persistente. Zero installazione, interfaccia moderna e download diretto del pacchetto v3.0.8 per Windows.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 2.2",
-      "DC 5.1"
-    ],
-    "digcomp_level": "advanced",
-    "digcomp_areas": [
-      "comunicazione",
-      "problem-solving"
-    ],
-    "digcompedu": [
-      "DCEdu 2.3",
-      "DCEdu 3.1",
-      "DCEdu 6.2"
-    ]
-  },
-  {
-    "path": "/marketing/pillola-seo/",
-    "label": "SEO — Ottimizzazione per i Motori di Ricerca",
-    "short": "Pillola SEO",
-    "cat": "pillola",
-    "emoji": "🔍",
-    "tags": [
-      "seo",
-      "ottimizzazione",
-      "motori di ricerca",
-      "google",
-      "pagespeed",
-      "core web vitals",
-      "ranking",
-      "backlink",
-      "serp",
-      "meta tag"
-    ],
-    "meta": "Con strumento integrato · Livello base–intermedio · 15 min",
-    "description": "Cos'è la SEO, come funzionano i motori di ricerca, i fattori di ranking, Core Web Vitals e gli strumenti per migliorare la visibilità online.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 1.1",
-      "DC 1.2",
-      "DC 5.2"
-    ],
-    "digcomp_level": "intermediate",
-    "digcomp_areas": [
-      "informazioni",
-      "problem-solving"
-    ],
-    "digcompedu": [
-      "DCEdu 6.1"
-    ]
-  },
-  {
-    "path": "/sicurezza/pillola-cybersicurezza/",
-    "label": "Cybersicurezza in 5 Minuti — Le mosse essenziali",
-    "short": "Cybersicurezza 5 min",
-    "cat": "pillola",
-    "emoji": "🔒",
-    "tags": [
-      "cybersicurezza",
-      "sicurezza informatica",
-      "password",
-      "phishing",
-      "2fa",
-      "autenticazione",
-      "backup",
-      "vpn",
-      "deepfake",
-      "wi-fi",
-      "ransomware",
-      "truffa online"
-    ],
-    "meta": "6 mosse · Checklist · Livello base · ~5 min",
-    "description": "Le 6 mosse essenziali per proteggerti online. Password, phishing, 2FA e backup: solo quello che conta davvero.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 4.1",
-      "DC 4.2"
-    ],
-    "digcomp_level": "foundation",
-    "digcomp_areas": [
-      "sicurezza"
-    ],
-    "digcompedu": [
-      "DCEdu 6.4"
-    ]
-  },
-  {
-    "path": "/competenze-digitali/pillola-wikipedia-speedrun/",
-    "label": "Wikipedia Speedrun — Naviga il Web come un Pro",
-    "short": "Wikipedia Speedrun",
-    "cat": "pillola",
-    "emoji": "⚡",
-    "tags": [
-      "wikipedia",
-      "speedrun",
-      "navigazione",
-      "link ipertestuali",
-      "gamification",
-      "web",
-      "competenze digitali",
-      "informazione",
-      "fonti",
-      "didattica"
-    ],
-    "meta": "Gamification · DigComp 1.1 · 2.1 · Livello base · ~10 min",
-    "description": "Un gioco per navigare Wikipedia seguendo solo i link: allena filtraggio delle informazioni, lettura selettiva e comprensione della struttura del web.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 1.1",
-      "DC 2.1"
-    ],
-    "digcomp_level": "foundation",
-    "digcomp_areas": [
-      "informazione",
-      "comunicazione"
-    ],
-    "digcompedu": [
-      "DCEdu 3.1"
-    ]
-  },
-  {
-    "path": "/competenze-digitali/pillola-valutazione-fonti/",
-    "label": "Valutare le Fonti Online",
-    "short": "Valutazione Fonti",
-    "cat": "pillola",
-    "emoji": "🔎",
-    "tags": [
-      "fonti",
-      "verifica",
-      "craap test",
-      "lateral reading",
-      "fact checking",
-      "disinformazione",
-      "media literacy",
-      "competenze digitali"
-    ],
-    "meta": "3 metodi · Checklist interattiva · Livello base",
-    "description": "Tre metodi per valutare qualsiasi fonte online in 5 minuti: CRAAP test, lateral reading e reverse image search.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 1.2",
-      "DC 1.1"
-    ],
-    "digcomp_level": "foundation",
-    "digcomp_areas": [
-      "informazioni"
-    ],
-    "digcompedu": [
-      "DCEdu 6.1",
-      "DCEdu 3.2"
-    ]
-  },
-  {
-    "path": "/competenze-digitali/pillola-aggiornamento-digitale/",
-    "label": "Come Tenersi Aggiornati nel Digitale",
-    "short": "Aggiornamento Digitale",
-    "cat": "pillola",
-    "emoji": "📡",
-    "tags": [
-      "aggiornamento",
-      "newsletter",
-      "podcast",
-      "rss",
-      "community",
-      "competenze digitali",
-      "digcompedu"
-    ],
-    "meta": "Newsletter · Podcast · RSS · Livello base · ~15 min",
-    "description": "Newsletter, podcast, community e RSS: costruisci il tuo flusso personale di aggiornamento digitale senza perdere ore.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 5.4"
-    ],
-    "digcomp_level": "foundation",
-    "digcomp_areas": [
-      "problem-solving"
-    ],
-    "digcompedu": [
-      "DCEdu 1.4",
-      "DCEdu 6.1"
-    ]
-  },
-  {
-    "path": "/competenze-digitali/pillola-netiquette/",
-    "label": "Netiquette — Comunicare bene online",
-    "short": "Netiquette",
-    "cat": "pillola",
-    "emoji": "💬",
-    "tags": [
-      "netiquette",
-      "comunicazione digitale",
-      "email",
-      "messaggistica",
-      "social network",
-      "forum",
-      "cittadinanza digitale",
-      "competenze digitali"
-    ],
-    "meta": "5 regole · Checklist · Livello base · ~7 min",
-    "description": "Le 5 regole fondamentali della comunicazione digitale: email, messaggistica, social, forum e gruppi.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 2.2",
-      "DC 2.3",
-      "DC 2.4"
-    ],
-    "digcomp_level": "foundation",
-    "digcomp_areas": [
-      "comunicazione"
-    ],
-    "digcompedu": [
-      "DCEdu 6.4"
-    ]
-  },
-  {
-    "path": "/competenze-digitali/pillola-deepfake/",
-    "label": "Riconoscere i Deepfake",
-    "short": "Deepfake",
-    "cat": "pillola",
-    "emoji": "🎭",
-    "tags": [
-      "deepfake",
-      "intelligenza artificiale",
-      "disinformazione",
-      "immagini false",
-      "video falsi",
-      "legge 132 2025",
-      "privacy",
-      "cittadinanza digitale",
-      "verifica contenuti"
-    ],
-    "meta": "4 tipi · Strumenti gratuiti · Legge italiana · ~12 min",
-    "description": "Cos'è un deepfake, come riconoscerlo con un approccio a strati, strumenti gratuiti di verifica e cosa prevede la Legge 132/2025. Per studenti e docenti.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 1.2",
-      "DC 2.3",
-      "DC 4.2"
-    ],
-    "digcomp_level": "foundation",
-    "digcomp_areas": [
-      "informazioni",
-      "comunicazione",
-      "sicurezza"
-    ],
-    "digcompedu": [
-      "DCEdu 6.1"
-    ]
-  },
-  {
-    "path": "/intelligenza-artificiale/prompt-builder/",
-    "label": "Prompt Builder",
-    "short": "Prompt Builder",
-    "cat": "strumento",
-    "emoji": "📋",
-    "tags": [
-      "prompt",
-      "builder",
-      "ia",
-      "intelligenza artificiale",
-      "chatgpt",
-      "claude",
-      "gemini",
-      "docenti",
-      "generatore"
-    ],
-    "meta": "Interattivo · Salvataggio locale · Livello base",
-    "description": "Costruisci prompt strutturati passo per passo. Preset pronti, ottimizzazione per modello e libreria personale con export/import.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 3.2",
-      "DC 5.3"
-    ],
-    "digcomp_level": "foundation",
-    "digcomp_areas": [
-      "creazione",
-      "problem-solving"
-    ],
-    "digcompedu": [
-      "DCEdu 2.2",
-      "DCEdu 3.4"
-    ]
-  },
-  {
-    "path": "/marketing/break-even-point-tool/",
-    "label": "Calcolatore Break-Even Point",
-    "short": "BEP Tool",
-    "cat": "strumento",
-    "emoji": "📊",
-    "tags": [
-      "break even",
-      "bep",
-      "point",
-      "calcolo",
-      "costi",
-      "ricavi",
-      "marketing",
-      "economia",
-      "aziendale",
-      "excel"
-    ],
-    "meta": "Interattivo · Calcolo in tempo reale · Livello intermedio",
-    "description": "Calcola il punto di pareggio inserendo costi fissi, costi variabili e prezzo di vendita. Grafico interattivo e analisi immediata.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 5.2",
-      "DC 1.3"
-    ],
-    "digcomp_level": "intermediate",
-    "digcomp_areas": [
-      "informazioni",
-      "problem-solving"
-    ],
-    "digcompedu": [
-      "DCEdu 5.3",
-      "DCEdu 6.5"
-    ]
-  },
-  {
-    "path": "/networking/subnet-calculator/",
-    "label": "Calcolatore di Sottorete & Guida",
-    "short": "Subnet Calculator",
-    "cat": "strumento",
-    "emoji": "🌐",
-    "tags": [
-      "subnetting",
-      "ip",
-      "calcolatore",
-      "reti",
-      "networking",
-      "cidr",
-      "ipv4",
-      "binario"
-    ],
-    "meta": "Interattivo · Report esportabile · Livello intermedio",
-    "description": "Strumento dinamico con analisi dell'AND logico binario, calcolo range host e guida teorica integrata per la segmentazione delle reti.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 3.4",
-      "DC 5.1"
-    ],
-    "digcomp_level": "intermediate",
-    "digcomp_areas": [
-      "creazione",
-      "problem-solving"
-    ],
-    "digcompedu": [
-      "DCEdu 6.5"
-    ]
-  },
-  {
-    "path": "/sistemi/codifica-binaria/",
-    "label": "Bin-Digit Decoder Pro",
-    "short": "Bin-Digit Decoder",
-    "cat": "strumento",
-    "emoji": "🔢",
-    "tags": [
-      "binario",
-      "decimale",
-      "sistemi",
-      "codifica",
-      "algoritmo",
-      "informatica"
-    ],
-    "meta": "Interattivo · Step-by-step",
-    "description": "Visualizzatore dinamico dell'algoritmo delle divisioni successive e calcolo delle potenze di 2.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 3.4",
-      "DC 5.1"
-    ],
-    "digcomp_level": "foundation",
-    "digcomp_areas": [
-      "creazione",
-      "problem-solving"
-    ],
-    "digcompedu": [
-      "DCEdu 5.3",
-      "DCEdu 6.5"
-    ]
-  },
-  {
-    "path": "/marketing/analizzatore-seo/",
-    "label": "Analizzatore SEO <head>",
-    "short": "Analizzatore SEO",
-    "cat": "strumento",
-    "emoji": "🧪",
-    "tags": [
-      "seo",
-      "analizzatore",
-      "head",
-      "html",
-      "meta tag",
-      "open graph",
-      "twitter card",
-      "schema.org",
-      "canonical",
-      "report"
-    ],
-    "meta": "Interattivo · Analisi locale · Report immediato",
-    "description": "Incolla il tag head HTML del tuo sito e ricevi un report SEO completo: title, meta description, Open Graph, Twitter Card, Schema.org e canonical.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 1.2",
-      "DC 5.2"
-    ],
-    "digcomp_level": "intermediate",
-    "digcomp_areas": [
-      "informazioni",
-      "problem-solving"
-    ],
-    "digcompedu": [
-      "DCEdu 6.1",
-      "DCEdu 6.5"
-    ]
-  },
-  {
-    "path": "/competenze-digitali/strumento-autovalutazione-digcompedu/",
-    "label": "Autovalutazione DigCompEdu",
-    "short": "Autovalut. DigCompEdu",
-    "cat": "strumento",
-    "emoji": "🎯",
-    "tags": [
-      "digcompedu",
-      "autovalutazione",
-      "framework",
-      "competenze digitali",
-      "docenti",
-      "portfolio",
-      "indire",
-      "livelli",
-      "a1",
-      "c2",
-      "europeo",
-      "educatori"
-    ],
-    "meta": "22 competenze · Scala A1–C2 · Report esportabile · ~10 min",
-    "description": "Strumento di autovalutazione delle competenze digitali del docente secondo il framework europeo DigCompEdu. 22 domande, scala A1–C2 ufficiale, report con profilo per area e risorse consigliate.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 5.4"
-    ],
-    "digcomp_level": "intermediate",
-    "digcomp_areas": [
-      "problem-solving"
-    ],
-    "digcompedu": [
-      "DCEdu 1.3",
-      "DCEdu 1.4"
-    ]
-  },
-  {
-    "path": "/competenze-digitali/strumento-valutazione-fonti/",
-    "label": "Verifica Fonti Online",
-    "short": "Verifica Fonti",
-    "cat": "strumento",
-    "emoji": "🧪",
-    "tags": [
-      "fonti",
-      "verifica",
-      "craap test",
-      "lateral reading",
-      "reverse image search",
-      "affidabilità",
-      "fact checking",
-      "disinformazione",
-      "media literacy",
-      "competenze digitali",
-      "checklist"
-    ],
-    "meta": "Checklist guidata · Report affidabilità · Livello base",
-    "description": "Strumento guidato per valutare l'affidabilità di qualsiasi fonte online. CRAAP test, lateral reading e verifica immagini in un unico flusso interattivo. Tutto client-side.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 1.2",
-      "DC 1.1"
-    ],
-    "digcomp_level": "foundation",
-    "digcomp_areas": [
-      "informazioni"
-    ],
-    "digcompedu": [
-      "DCEdu 6.1",
-      "DCEdu 4.1"
-    ]
-  },
-  {
-    "path": "/project-management/kanban-tool/",
-    "label": "Kanban Board",
-    "short": "Kanban Board",
-    "cat": "strumento",
-    "emoji": "📋",
-    "tags": [
-      "kanban",
-      "board",
-      "organizzazione",
-      "attività",
-      "task",
-      "progetto",
-      "management",
-      "collaborazione",
-      "flusso di lavoro"
-    ],
-    "meta": "Interattivo · Salvataggio locale · Export/Import JSON · Livello base",
-    "description": "Organizza le tue attività con una board Kanban interattiva. Colonne configurabili, drag & drop, salvataggio automatico ed export JSON.",
-    "featured": false,
-    "active": true,
-    "digcomp": [
-      "DC 2.4",
-      "DC 3.1"
-    ],
-    "digcomp_level": "foundation",
-    "digcomp_areas": [
-      "comunicazione",
-      "creazione"
-    ],
-    "digcompedu": [
-      "DCEdu 3.4"
-    ]
-  },
-  {
-    "path": "/icdl/",
-    "label": "Certificazione ICDL — Guida completa",
-    "short": "Guida ICDL",
-    "cat": "guide",
-    "emoji": "🎓",
-    "tags": [
-      "icdl",
-      "ecdl",
-      "certificazione",
-      "competenze digitali",
-      "aica",
-      "accredia",
-      "test center",
-      "moduli",
-      "skills card"
-    ],
-    "meta": "5 sezioni · Test Center ALZD0001 · Livello base",
-    "description": "Cos'è l'ICDL, i 7 moduli, come si ottiene la certificazione e i vantaggi riconosciuti in Italia e in Europa.",
-    "featured": false,
-    "active": false,
-    "digcomp": [
-      "DC 5.4"
-    ],
-    "digcomp_level": "foundation",
-    "digcomp_areas": [
-      "problem-solving"
-    ],
-    "digcompedu": [
-      "DCEdu 1.4"
-    ]
-  },
-  {
-    "path": "/icdl/statistiche/",
-    "label": "Statistiche ICDL — Test Center ALZD0001",
-    "short": "Statistiche ICDL",
-    "cat": "strumento",
-    "emoji": "📊",
-    "tags": [
-      "icdl",
-      "statistiche",
-      "test center",
-      "punteggi",
-      "superamento",
-      "moduli",
-      "chiari",
-      "einaudi"
-    ],
-    "meta": "Dati reali · Aggiornati periodicamente · Test Center ALZD0001",
-    "description": "Statistiche aggregate e anonimizzate sugli esami ICDL del Test Center ALZD0001. Tassi di superamento, punteggi medi e distribuzione per modulo.",
-    "featured": false,
-    "active": false,
-    "digcomp": [
-      "DC 5.4"
-    ],
-    "digcomp_level": "foundation",
-    "digcomp_areas": [
-      "problem-solving"
-    ],
-    "digcompedu": [
-      "DCEdu 1.4"
-    ]
-  }
+    {
+        "path": "/elaborazione-testi/guida-word/",
+        "label": "Microsoft Word — Guida pratica",
+        "short": "Word",
+        "cat": "guide",
+        "emoji": "📝",
+        "tags": [
+            "word",
+            "microsoft",
+            "office",
+            "documento",
+            "testo",
+            "formattazione",
+            "stili",
+            "tabelle",
+            "indice",
+            "stampa unione"
+        ],
+        "meta": "61 screenshot · PDF scaricabile · Livello base",
+        "description": "Stili, tabelle, indice automatico, stampa unione e molto altro. Con 61 screenshot e PDF scaricabile.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 3.1",
+            "DC 3.2"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "creazione"
+        ],
+        "digcompedu": [
+            "DCEdu 2.2",
+            "DCEdu 6.2",
+            "DCEdu 6.3"
+        ]
+    },
+    {
+        "path": "/foglio-di-calcolo/guida-funzioni-excel/",
+        "label": "Microsoft Excel — Guida alle funzioni",
+        "short": "Funzioni Excel",
+        "cat": "guide",
+        "emoji": "📊",
+        "tags": [
+            "excel",
+            "funzioni",
+            "somma.se",
+            "conta.se",
+            "cerca.vert",
+            "se",
+            "rango",
+            "stringa.estrai",
+            "testo.formula",
+            "foglio di calcolo",
+            "fatturato",
+            "afm",
+            "rim"
+        ],
+        "meta": "10 funzioni · Simulatori interattivi · Livello intermedio",
+        "description": "Dieci funzioni medio-avanzate di Excel — SOMMA.SE, CERCA.VERT, SE, RANGO e altre — ciascuna con un simulatore interattivo sugli stessi dati di vendita.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 1.3",
+            "DC 3.1"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "informazioni",
+            "creazione"
+        ],
+        "digcompedu": [
+            "DCEdu 2.2",
+            "DCEdu 3.4",
+            "DCEdu 6.3"
+        ]
+    },
+    {
+        "path": "/database/guida-modello-logico/",
+        "label": "Modello Logico Relazionale",
+        "short": "Modello Logico",
+        "cat": "guide",
+        "emoji": "🔗",
+        "tags": [
+            "database",
+            "modello logico",
+            "chiave primaria",
+            "chiave esterna",
+            "relazioni",
+            "tabelle",
+            "1:N",
+            "N:M",
+            "tabella associativa",
+            "afm",
+            "rim"
+        ],
+        "meta": "8 sezioni · Esercizi interattivi · Livello base–intermedio",
+        "description": "Dal diagramma E-R alle tabelle relazionali: chiavi primarie, chiavi esterne, relazioni 1:N e N:M con tabella associativa. Con esercizi interattivi.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 5.1",
+            "DC 5.2"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 2.2",
+            "DCEdu 6.5"
+        ],
+        "hub": "/database/",
+        "order": 2
+    },
+    {
+        "path": "/database/guida-libreoffice-base-query/",
+        "label": "LibreOffice Base — Le Query",
+        "short": "LibreOffice Base",
+        "cat": "guide",
+        "emoji": "🗄️",
+        "tags": [
+            "libreoffice",
+            "base",
+            "query",
+            "database",
+            "sql",
+            "odb"
+        ],
+        "meta": "Con DB di esempio · Livello intermedio",
+        "description": "Guida pratica alle query in LibreOffice Base. Include database di esempio scaricabile e immagini passo per passo.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 2.1",
+            "DC 5.1",
+            "DC 5.2"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "comunicazione",
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 2.2",
+            "DCEdu 6.5"
+        ],
+        "hub": "/database/",
+        "order": 3
+    },
+    {
+        "path": "/database/guida-database/",
+        "label": "Basi di Dati — Dal dato al modello E-R",
+        "short": "Basi di Dati",
+        "cat": "guide",
+        "emoji": "🗃️",
+        "tags": [
+            "database",
+            "basi di dati",
+            "dbms",
+            "modello er",
+            "entità relazione",
+            "cardinalità",
+            "chiave primaria",
+            "chiave esterna",
+            "progettazione logica",
+            "afm",
+            "rim"
+        ],
+        "meta": "10 sezioni · Modello E-R · Livello base–intermedio",
+        "description": "Dato vs informazione, DBMS, progettazione concettuale e logica, diagrammi E-R, cardinalità e chiavi esterne.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 5.1",
+            "DC 5.2"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 2.2",
+            "DCEdu 6.5"
+        ],
+        "hub": "/database/",
+        "order": 1
+    },
+    {
+        "path": "/marketing/guida-marketing/",
+        "label": "Marketing & E-Commerce",
+        "short": "Marketing",
+        "cat": "guide",
+        "emoji": "🛒",
+        "tags": [
+            "marketing",
+            "e-commerce",
+            "digital marketing",
+            "leva",
+            "comunicazione",
+            "mix commerciale"
+        ],
+        "meta": "Aggiornata · Livello intermedio",
+        "description": "Dalle leve del marketing mix alle strategie di vendita online. Guida pratica per orientarsi nel mercato digitale.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 3.1",
+            "DC 5.2"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "informazioni",
+            "creazione",
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 6.1",
+            "DCEdu 6.3"
+        ]
+    },
+    {
+        "path": "/project-management/guida-gestione-progetti/",
+        "label": "Gestione Digitale di un Progetto",
+        "short": "Gestione Progetti",
+        "cat": "guide",
+        "emoji": "📋",
+        "tags": [
+            "project management",
+            "gpoi",
+            "gantt",
+            "kanban",
+            "progetto",
+            "pianificazione",
+            "collaborazione",
+            "sal",
+            "capitolato",
+            "afm",
+            "rim"
+        ],
+        "meta": "8 sezioni · ~35 min",
+        "description": "Ciclo di vita, Gantt, Kanban board, SAL e Capitolato. Guida completa alla gestione digitale dei progetti per AFM e RIM.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 2.4",
+            "DC 3.1"
+        ],
+        "digcomp_level": "intermediate",
+        "digcompedu": [
+            "DCEdu 2.1",
+            "DCEdu 3.4"
+        ],
+        "digcomp_areas": [
+            "comunicazione",
+            "creazione"
+        ]
+    },
+    {
+        "path": "/intelligenza-artificiale/guida-prompting/",
+        "label": "Guida al Prompting con l'IA",
+        "short": "Guida Prompting",
+        "cat": "guide",
+        "emoji": "🤖",
+        "tags": [
+            "ia",
+            "prompting",
+            "didattica",
+            "docenti",
+            "meta-prompt",
+            "chatgpt",
+            "intelligenza artificiale"
+        ],
+        "meta": "Aggiornata · Livello base–intermedio",
+        "description": "Dal prompt semplice al meta-prompt. Anatomia di un prompt efficace, template editabili e modalità presentazione per l'aula.",
+        "featured": true,
+        "active": true,
+        "digcomp": [
+            "DC 3.2",
+            "DC 5.3"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "creazione",
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 3.1",
+            "DCEdu 6.3",
+            "DCEdu 6.5"
+        ]
+    },
+    {
+        "path": "/intelligenza-artificiale/guida-peer-review-ia/",
+        "label": "Peer-review tra IA",
+        "short": "Peer-review IA",
+        "cat": "guide",
+        "emoji": "🔍",
+        "tags": [
+            "peer review",
+            "ia",
+            "intelligenza artificiale",
+            "valutazione",
+            "prompt",
+            "handoff",
+            "modelli",
+            "claude",
+            "gemini",
+            "gpt"
+        ],
+        "meta": "Template pronti · Checklist interattiva · Livello base–intermedio",
+        "description": "Far valutare l'output di un modello da un altro. Quale combinazione usare, come strutturare il prompt di handoff e quando evitarlo.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 1.2",
+            "DC 5.3"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "informazioni",
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 2.1",
+            "DCEdu 3.3",
+            "DCEdu 4.1"
+        ]
+    },
+    {
+        "path": "/sicurezza/guida-cybersicurezza/",
+        "label": "Guida alla Cybersicurezza Personale",
+        "short": "Guida Cybersicurezza",
+        "cat": "guide",
+        "emoji": "🔒",
+        "tags": [
+            "cybersicurezza",
+            "sicurezza informatica",
+            "password",
+            "phishing",
+            "2fa",
+            "autenticazione",
+            "backup",
+            "privacy",
+            "vpn",
+            "passkey",
+            "deepfake",
+            "ransomware",
+            "wi-fi",
+            "sim swapping"
+        ],
+        "meta": "10 sezioni · Piano d'azione · Livello base · ~35 min",
+        "description": "Phishing, 2FA, VPN, passkey e backup: percorso completo per proteggerti online. Aggiornata al 2026 con piano d'azione immediato.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 4.1",
+            "DC 4.2",
+            "DC 2.6"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "sicurezza"
+        ],
+        "digcompedu": [
+            "DCEdu 6.4",
+            "DCEdu 6.1"
+        ]
+    },
+    {
+        "path": "/networking/hfs-server/",
+        "label": "HFS: Server HTTP Persistente",
+        "short": "HFS Server",
+        "cat": "pillola",
+        "emoji": "⚙️",
+        "tags": [
+            "hfs",
+            "networking",
+            "server",
+            "http",
+            "lan",
+            "sharing",
+            "windows",
+            "web server"
+        ],
+        "meta": "Include HFS 2 e 3 · Livello intermedio-avanzato · 15 min",
+        "description": "Crea un web server locale con gestione persistente. Zero installazione, interfaccia moderna e download diretto del pacchetto v3.0.8 per Windows.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 2.2",
+            "DC 5.1"
+        ],
+        "digcomp_level": "advanced",
+        "digcomp_areas": [
+            "comunicazione",
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 2.3",
+            "DCEdu 3.1",
+            "DCEdu 6.2"
+        ]
+    },
+    {
+        "path": "/marketing/pillola-seo/",
+        "label": "SEO — Ottimizzazione per i Motori di Ricerca",
+        "short": "Pillola SEO",
+        "cat": "pillola",
+        "emoji": "🔍",
+        "tags": [
+            "seo",
+            "ottimizzazione",
+            "motori di ricerca",
+            "google",
+            "pagespeed",
+            "core web vitals",
+            "ranking",
+            "backlink",
+            "serp",
+            "meta tag"
+        ],
+        "meta": "Con strumento integrato · Livello base–intermedio · 15 min",
+        "description": "Cos'è la SEO, come funzionano i motori di ricerca, i fattori di ranking, Core Web Vitals e gli strumenti per migliorare la visibilità online.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 1.1",
+            "DC 1.2",
+            "DC 5.2"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "informazioni",
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 6.1"
+        ]
+    },
+    {
+        "path": "/sicurezza/pillola-cybersicurezza/",
+        "label": "Cybersicurezza in 5 Minuti — Le mosse essenziali",
+        "short": "Cybersicurezza 5 min",
+        "cat": "pillola",
+        "emoji": "🔒",
+        "tags": [
+            "cybersicurezza",
+            "sicurezza informatica",
+            "password",
+            "phishing",
+            "2fa",
+            "autenticazione",
+            "backup",
+            "vpn",
+            "deepfake",
+            "wi-fi",
+            "ransomware",
+            "truffa online"
+        ],
+        "meta": "6 mosse · Checklist · Livello base · ~5 min",
+        "description": "Le 6 mosse essenziali per proteggerti online. Password, phishing, 2FA e backup: solo quello che conta davvero.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 4.1",
+            "DC 4.2"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "sicurezza"
+        ],
+        "digcompedu": [
+            "DCEdu 6.4"
+        ]
+    },
+    {
+        "path": "/competenze-digitali/pillola-wikipedia-speedrun/",
+        "label": "Wikipedia Speedrun — Naviga il Web come un Pro",
+        "short": "Wikipedia Speedrun",
+        "cat": "pillola",
+        "emoji": "⚡",
+        "tags": [
+            "wikipedia",
+            "speedrun",
+            "navigazione",
+            "link ipertestuali",
+            "gamification",
+            "web",
+            "competenze digitali",
+            "informazione",
+            "fonti",
+            "didattica"
+        ],
+        "meta": "Gamification · DigComp 1.1 · 2.1 · Livello base · ~10 min",
+        "description": "Un gioco per navigare Wikipedia seguendo solo i link: allena filtraggio delle informazioni, lettura selettiva e comprensione della struttura del web.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 1.1",
+            "DC 2.1"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "informazione",
+            "comunicazione"
+        ],
+        "digcompedu": [
+            "DCEdu 3.1"
+        ]
+    },
+    {
+        "path": "/competenze-digitali/pillola-valutazione-fonti/",
+        "label": "Valutare le Fonti Online",
+        "short": "Valutazione Fonti",
+        "cat": "pillola",
+        "emoji": "🔎",
+        "tags": [
+            "fonti",
+            "verifica",
+            "craap test",
+            "lateral reading",
+            "fact checking",
+            "disinformazione",
+            "media literacy",
+            "competenze digitali"
+        ],
+        "meta": "3 metodi · Checklist interattiva · Livello base",
+        "description": "Tre metodi per valutare qualsiasi fonte online in 5 minuti: CRAAP test, lateral reading e reverse image search.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 1.2",
+            "DC 1.1"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "informazioni"
+        ],
+        "digcompedu": [
+            "DCEdu 6.1",
+            "DCEdu 3.2"
+        ]
+    },
+    {
+        "path": "/competenze-digitali/pillola-aggiornamento-digitale/",
+        "label": "Come Tenersi Aggiornati nel Digitale",
+        "short": "Aggiornamento Digitale",
+        "cat": "pillola",
+        "emoji": "📡",
+        "tags": [
+            "aggiornamento",
+            "newsletter",
+            "podcast",
+            "rss",
+            "community",
+            "competenze digitali",
+            "digcompedu"
+        ],
+        "meta": "Newsletter · Podcast · RSS · Livello base · ~15 min",
+        "description": "Newsletter, podcast, community e RSS: costruisci il tuo flusso personale di aggiornamento digitale senza perdere ore.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 5.4"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 1.4",
+            "DCEdu 6.1"
+        ]
+    },
+    {
+        "path": "/competenze-digitali/pillola-netiquette/",
+        "label": "Netiquette — Comunicare bene online",
+        "short": "Netiquette",
+        "cat": "pillola",
+        "emoji": "💬",
+        "tags": [
+            "netiquette",
+            "comunicazione digitale",
+            "email",
+            "messaggistica",
+            "social network",
+            "forum",
+            "cittadinanza digitale",
+            "competenze digitali"
+        ],
+        "meta": "5 regole · Checklist · Livello base · ~7 min",
+        "description": "Le 5 regole fondamentali della comunicazione digitale: email, messaggistica, social, forum e gruppi.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 2.2",
+            "DC 2.3",
+            "DC 2.4"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "comunicazione"
+        ],
+        "digcompedu": [
+            "DCEdu 6.4"
+        ]
+    },
+    {
+        "path": "/competenze-digitali/pillola-deepfake/",
+        "label": "Riconoscere i Deepfake",
+        "short": "Deepfake",
+        "cat": "pillola",
+        "emoji": "🎭",
+        "tags": [
+            "deepfake",
+            "intelligenza artificiale",
+            "disinformazione",
+            "immagini false",
+            "video falsi",
+            "legge 132 2025",
+            "privacy",
+            "cittadinanza digitale",
+            "verifica contenuti"
+        ],
+        "meta": "4 tipi · Strumenti gratuiti · Legge italiana · ~12 min",
+        "description": "Cos'è un deepfake, come riconoscerlo con un approccio a strati, strumenti gratuiti di verifica e cosa prevede la Legge 132/2025. Per studenti e docenti.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 1.2",
+            "DC 2.3",
+            "DC 4.2"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "informazioni",
+            "comunicazione",
+            "sicurezza"
+        ],
+        "digcompedu": [
+            "DCEdu 6.1"
+        ]
+    },
+    {
+        "path": "/intelligenza-artificiale/prompt-builder/",
+        "label": "Prompt Builder",
+        "short": "Prompt Builder",
+        "cat": "strumento",
+        "emoji": "📋",
+        "tags": [
+            "prompt",
+            "builder",
+            "ia",
+            "intelligenza artificiale",
+            "chatgpt",
+            "claude",
+            "gemini",
+            "docenti",
+            "generatore"
+        ],
+        "meta": "Interattivo · Salvataggio locale · Livello base",
+        "description": "Costruisci prompt strutturati passo per passo. Preset pronti, ottimizzazione per modello e libreria personale con export/import.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 3.2",
+            "DC 5.3"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "creazione",
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 2.2",
+            "DCEdu 3.4"
+        ]
+    },
+    {
+        "path": "/marketing/break-even-point-tool/",
+        "label": "Calcolatore Break-Even Point",
+        "short": "BEP Tool",
+        "cat": "strumento",
+        "emoji": "📊",
+        "tags": [
+            "break even",
+            "bep",
+            "point",
+            "calcolo",
+            "costi",
+            "ricavi",
+            "marketing",
+            "economia",
+            "aziendale",
+            "excel"
+        ],
+        "meta": "Interattivo · Calcolo in tempo reale · Livello intermedio",
+        "description": "Calcola il punto di pareggio inserendo costi fissi, costi variabili e prezzo di vendita. Grafico interattivo e analisi immediata.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 5.2",
+            "DC 1.3"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "informazioni",
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 5.3",
+            "DCEdu 6.5"
+        ]
+    },
+    {
+        "path": "/networking/subnet-calculator/",
+        "label": "Calcolatore di Sottorete & Guida",
+        "short": "Subnet Calculator",
+        "cat": "strumento",
+        "emoji": "🌐",
+        "tags": [
+            "subnetting",
+            "ip",
+            "calcolatore",
+            "reti",
+            "networking",
+            "cidr",
+            "ipv4",
+            "binario"
+        ],
+        "meta": "Interattivo · Report esportabile · Livello intermedio",
+        "description": "Strumento dinamico con analisi dell'AND logico binario, calcolo range host e guida teorica integrata per la segmentazione delle reti.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 3.4",
+            "DC 5.1"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "creazione",
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 6.5"
+        ]
+    },
+    {
+        "path": "/sistemi/codifica-binaria/",
+        "label": "Bin-Digit Decoder Pro",
+        "short": "Bin-Digit Decoder",
+        "cat": "strumento",
+        "emoji": "🔢",
+        "tags": [
+            "binario",
+            "decimale",
+            "sistemi",
+            "codifica",
+            "algoritmo",
+            "informatica"
+        ],
+        "meta": "Interattivo · Step-by-step",
+        "description": "Visualizzatore dinamico dell'algoritmo delle divisioni successive e calcolo delle potenze di 2.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 3.4",
+            "DC 5.1"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "creazione",
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 5.3",
+            "DCEdu 6.5"
+        ]
+    },
+    {
+        "path": "/marketing/analizzatore-seo/",
+        "label": "Analizzatore SEO <head>",
+        "short": "Analizzatore SEO",
+        "cat": "strumento",
+        "emoji": "🧪",
+        "tags": [
+            "seo",
+            "analizzatore",
+            "head",
+            "html",
+            "meta tag",
+            "open graph",
+            "twitter card",
+            "schema.org",
+            "canonical",
+            "report"
+        ],
+        "meta": "Interattivo · Analisi locale · Report immediato",
+        "description": "Incolla il tag head HTML del tuo sito e ricevi un report SEO completo: title, meta description, Open Graph, Twitter Card, Schema.org e canonical.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 1.2",
+            "DC 5.2"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "informazioni",
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 6.1",
+            "DCEdu 6.5"
+        ]
+    },
+    {
+        "path": "/competenze-digitali/strumento-autovalutazione-digcompedu/",
+        "label": "Autovalutazione DigCompEdu",
+        "short": "Autovalut. DigCompEdu",
+        "cat": "strumento",
+        "emoji": "🎯",
+        "tags": [
+            "digcompedu",
+            "autovalutazione",
+            "framework",
+            "competenze digitali",
+            "docenti",
+            "portfolio",
+            "indire",
+            "livelli",
+            "a1",
+            "c2",
+            "europeo",
+            "educatori"
+        ],
+        "meta": "22 competenze · Scala A1–C2 · Report esportabile · ~10 min",
+        "description": "Strumento di autovalutazione delle competenze digitali del docente secondo il framework europeo DigCompEdu. 22 domande, scala A1–C2 ufficiale, report con profilo per area e risorse consigliate.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 5.4"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 1.3",
+            "DCEdu 1.4"
+        ]
+    },
+    {
+        "path": "/competenze-digitali/strumento-valutazione-fonti/",
+        "label": "Verifica Fonti Online",
+        "short": "Verifica Fonti",
+        "cat": "strumento",
+        "emoji": "🧪",
+        "tags": [
+            "fonti",
+            "verifica",
+            "craap test",
+            "lateral reading",
+            "reverse image search",
+            "affidabilità",
+            "fact checking",
+            "disinformazione",
+            "media literacy",
+            "competenze digitali",
+            "checklist"
+        ],
+        "meta": "Checklist guidata · Report affidabilità · Livello base",
+        "description": "Strumento guidato per valutare l'affidabilità di qualsiasi fonte online. CRAAP test, lateral reading e verifica immagini in un unico flusso interattivo. Tutto client-side.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 1.2",
+            "DC 1.1"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "informazioni"
+        ],
+        "digcompedu": [
+            "DCEdu 6.1",
+            "DCEdu 4.1"
+        ]
+    },
+    {
+        "path": "/project-management/kanban-tool/",
+        "label": "Kanban Board",
+        "short": "Kanban Board",
+        "cat": "strumento",
+        "emoji": "📋",
+        "tags": [
+            "kanban",
+            "board",
+            "organizzazione",
+            "attività",
+            "task",
+            "progetto",
+            "management",
+            "collaborazione",
+            "flusso di lavoro"
+        ],
+        "meta": "Interattivo · Salvataggio locale · Export/Import JSON · Livello base",
+        "description": "Organizza le tue attività con una board Kanban interattiva. Colonne configurabili, drag & drop, salvataggio automatico ed export JSON.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 2.4",
+            "DC 3.1"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "comunicazione",
+            "creazione"
+        ],
+        "digcompedu": [
+            "DCEdu 3.4"
+        ]
+    },
+    {
+        "path": "/icdl/",
+        "label": "Certificazione ICDL — Guida completa",
+        "short": "Guida ICDL",
+        "cat": "guide",
+        "emoji": "🎓",
+        "tags": [
+            "icdl",
+            "ecdl",
+            "certificazione",
+            "competenze digitali",
+            "aica",
+            "accredia",
+            "test center",
+            "moduli",
+            "skills card"
+        ],
+        "meta": "5 sezioni · Test Center ALZD0001 · Livello base",
+        "description": "Cos'è l'ICDL, i 7 moduli, come si ottiene la certificazione e i vantaggi riconosciuti in Italia e in Europa.",
+        "featured": false,
+        "active": false,
+        "digcomp": [
+            "DC 5.4"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 1.4"
+        ]
+    },
+    {
+        "path": "/icdl/statistiche/",
+        "label": "Statistiche ICDL — Test Center ALZD0001",
+        "short": "Statistiche ICDL",
+        "cat": "strumento",
+        "emoji": "📊",
+        "tags": [
+            "icdl",
+            "statistiche",
+            "test center",
+            "punteggi",
+            "superamento",
+            "moduli",
+            "chiari",
+            "einaudi"
+        ],
+        "meta": "Dati reali · Aggiornati periodicamente · Test Center ALZD0001",
+        "description": "Statistiche aggregate e anonimizzate sugli esami ICDL del Test Center ALZD0001. Tassi di superamento, punteggi medi e distribuzione per modulo.",
+        "featured": false,
+        "active": false,
+        "digcomp": [
+            "DC 5.4"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 1.4"
+        ]
+    },
+    {
+        "path": "/programmazione/algoritmi-ordinamento/",
+        "label": "Algoritmi di Ordinamento in C++",
+        "short": "Algoritmi Ordinamento",
+        "cat": "guide",
+        "emoji": "🔢",
+        "tags": [
+            "c++",
+            "algoritmi",
+            "ordinamento",
+            "bubble sort",
+            "selection sort",
+            "insertion sort",
+            "programmazione",
+            "sia"
+        ],
+        "meta": "3 algoritmi · Visualizzatore animato · Livello base",
+        "description": "Bubble Sort, Selection Sort, Insertion Sort in C++ con teoria, codice commentato e visualizzatore animato passo-passo.",
+        "featured": false,
+        "active": true,
+        "hub": "/programmazione/",
+        "order": 1,
+        "digcomp": [
+            "DC 5.1",
+            "DC 5.2"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 2.2",
+            "DCEdu 6.5"
+        ]
+    },
+    {
+        "path": "/programmazione/algoritmi-ricerca/",
+        "label": "Algoritmi di Ricerca in C++",
+        "short": "Algoritmi Ricerca",
+        "cat": "guide",
+        "emoji": "🔍",
+        "tags": [
+            "c++",
+            "algoritmi",
+            "ricerca",
+            "ricerca lineare",
+            "ricerca binaria",
+            "programmazione",
+            "sia"
+        ],
+        "meta": "2 algoritmi · Visualizzatore animato · Livello base",
+        "description": "Ricerca Lineare e Ricerca Binaria in C++ con teoria, codice commentato e visualizzatore animato passo-passo.",
+        "featured": false,
+        "active": true,
+        "hub": "/programmazione/",
+        "order": 2,
+        "digcomp": [
+            "DC 5.1",
+            "DC 5.2"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 2.2",
+            "DCEdu 6.5"
+        ]
+    }
 ]

@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Algoritmi di Ricerca in C++ — Formazione Digitale</title>
+
+  <meta name="description" content="Guida agli algoritmi di ricerca in C++: Ricerca Lineare e Ricerca Binaria. Teoria, codice commentato e visualizzatore animato passo-passo. Livello base.">
+  <meta name="author" content="Cristiano De Pasquale">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://formazione-digitale.it/programmazione/algoritmi-ricerca/">
+  <link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="//gc.zgo.at">
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#7c5cfc">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Algoritmi di Ricerca in C++ — Formazione Digitale">
+  <meta property="og:description" content="Ricerca Lineare e Ricerca Binaria con visualizzatore animato passo-passo. Codice C++ commentato e teoria. Gratis.">
+  <meta property="og:url" content="https://formazione-digitale.it/programmazione/algoritmi-ricerca/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Formazione Digitale">
+
+  <!-- Twitter/X Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Algoritmi di Ricerca in C++ — Formazione Digitale">
+  <meta name="twitter:description" content="Ricerca Lineare e Ricerca Binaria con visualizzatore animato passo-passo. Codice C++ commentato.">
+  <meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "Algoritmi di Ricerca in C++",
+    "description": "Guida agli algoritmi di ricerca in C++: Ricerca Lineare e Ricerca Binaria. Teoria, codice commentato e visualizzatore animato passo-passo.",
+    "url": "https://formazione-digitale.it/programmazione/algoritmi-ricerca/",
+    "inLanguage": "it",
+    "educationalLevel": "beginner",
+    "teaches": ["Ricerca Lineare", "Ricerca Binaria", "Complessità algoritmica", "Array ordinati"],
+    "author": {
+      "@type": "Person",
+      "name": "Cristiano De Pasquale"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Formazione Digitale",
+      "url": "https://formazione-digitale.it"
+    },
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Formazione Digitale",
+      "url": "https://formazione-digitale.it"
+    }
+  }
+  </script>
+
+  <!-- GoatCounter -->
+  <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+  <link rel="stylesheet" href="/css/shared-extended.css?v=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --prog-bg:      #0f1117;
+      --prog-surface: #1a1d27;
+      --prog-card:    #21253a;
+      --prog-border:  #2e3350;
+      --prog-accent:  #7c5cfc;
+      --prog-accent2: #56cfb2;
+      --prog-accent3: #f9a03f;
+      --prog-red:     #e05c5c;
+      --prog-text:    #d4d8f0;
+      --prog-muted:   #7a7f9a;
+      --prog-code-bg: #131620;
+      --kw-type:    #79b8ff;
+      --kw-keyword: #f97583;
+      --kw-comment: #6a737d;
+      --kw-string:  #9ecbff;
+      --kw-number:  #b392f0;
+      --kw-func:    #56cfb2;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body { font-family: 'Sora', sans-serif; background: var(--prog-bg); color: var(--prog-text); line-height: 1.75; }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--prog-surface);
+      border-bottom: 3px solid var(--prog-accent);
+      padding: 2.5rem 2rem 2rem;
+      position: relative; overflow: hidden;
+    }
+    header::before {
+      content: ''; position: absolute; top: -80px; right: -80px;
+      width: 320px; height: 320px; border-radius: 50%;
+      background: var(--prog-accent); opacity: 0.07; pointer-events: none;
+    }
+    .header-back-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.78rem; color: var(--prog-muted);
+      text-decoration: none; transition: color 0.2s;
+      position: absolute; top: 1rem; left: 1.5rem;
+    }
+    .header-back-link:hover { color: var(--prog-text); }
+    .header-badge {
+      display: inline-block; font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; background: var(--prog-accent); color: white;
+      padding: 3px 10px; border-radius: 3px; letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 1rem;
+    }
+    header h1 { font-size: clamp(1.7rem,4vw,2.6rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; color: #fff; }
+    header h1 span { color: var(--prog-accent); }
+    header p { margin-top: 0.75rem; color: var(--prog-muted); font-size: 0.95rem; max-width: 620px; }
+    .header-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; }
+    .header-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      padding: 4px 12px; border-radius: 20px;
+      font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--prog-muted);
+    }
+
+    /* ── TOC ── */
+    .toc-wrap { position: sticky; top: 0; z-index: 100; background: #1a1a18; border-bottom: 3px solid var(--prog-accent); }
+    nav.toc {
+      padding: 0.7rem 1.5rem; display: flex; flex-wrap: wrap; gap: 0.25rem;
+      align-items: center; justify-content: center; max-width: 980px; margin: 0 auto;
+    }
+    nav.toc a {
+      font-size: 0.82rem; font-family: 'Sora', sans-serif; font-weight: 500;
+      color: #aaa9a0; text-decoration: none; padding: 5px 13px; border-radius: 20px;
+      border: 1px solid transparent; transition: all 0.18s; white-space: nowrap; letter-spacing: 0.01em;
+    }
+    nav.toc a:hover { background: rgba(255,255,255,0.1); color: white; border-color: rgba(255,255,255,0.2); }
+    nav.toc a.active { background: var(--prog-accent); color: white; border-color: var(--prog-accent); font-weight: 700; }
+    @media (max-width:600px) { nav.toc { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; } nav.toc::-webkit-scrollbar { display: none; } }
+
+    /* ── LAYOUT ── */
+    main { max-width: 980px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+    section { margin-bottom: 4.5rem; scroll-margin-top: 70px; }
+    .section-label { font-family: 'Space Mono', monospace; font-size: 0.82rem; font-weight: 700; color: var(--prog-accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    h2 { font-size: 1.65rem; font-weight: 700; color: #fff; letter-spacing: -0.02em; border-bottom: 2px solid var(--prog-border); padding-bottom: 0.6rem; margin-bottom: 1.5rem; }
+    h3 { font-size: 1.1rem; font-weight: 600; color: var(--prog-accent2); margin: 2rem 0 0.8rem; }
+    p { margin-bottom: 1rem; color: var(--prog-text); font-size: 0.97rem; line-height: 1.85; letter-spacing: 0.01em; }
+
+    /* ── BOX ── */
+    .box { border-radius: 6px; padding: 1rem 1.25rem; margin: 1.25rem 0; font-size: 0.92rem; border-left: 3px solid; line-height: 1.75; }
+    .box-info { background: rgba(86,207,178,0.08); border-color: var(--prog-accent2); }
+    .box-warn { background: rgba(249,160,63,0.08); border-color: var(--prog-accent3); }
+    .box-tip  { background: rgba(124,92,252,0.08); border-color: var(--prog-accent); }
+    .box strong { display: block; margin-bottom: 0.35rem; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.8; }
+
+    /* ── CODICE ── */
+    .code-block { background: var(--prog-code-bg); border: 1px solid var(--prog-border); border-radius: 8px; margin: 1.5rem 0; overflow: hidden; }
+    .code-header { background: var(--prog-card); padding: 0.5rem 1rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--prog-border); }
+    .code-lang { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--prog-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    .code-dots { display: flex; gap: 5px; }
+    .code-dot  { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #e05c5c; } .dot-y { background: #f9a03f; } .dot-g { background: #56cfb2; }
+    pre { padding: 1.25rem 1.5rem; overflow-x: auto; font-family: 'Space Mono', monospace; font-size: 0.83rem; line-height: 1.65; tab-size: 4; color: var(--prog-text); }
+    .kw { color: var(--kw-keyword); font-weight: 700; }
+    .tp { color: var(--kw-type); }
+    .fn { color: var(--kw-func); }
+    .cm { color: var(--kw-comment); font-style: italic; }
+    .nm { color: var(--kw-number); }
+    .st { color: var(--kw-string); }
+    .pp { color: #ff9f43; }
+
+    /* ── TABELLA CONFRONTO ── */
+    .complexity-table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; font-size: 0.88rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--prog-border); }
+    .complexity-table th { background: var(--prog-card); color: var(--prog-accent); padding: 0.65rem 1rem; text-align: left; font-family: 'Space Mono', monospace; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; border-bottom: 2px solid var(--prog-border); }
+    .complexity-table td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--prog-border); vertical-align: middle; }
+    .complexity-table tr:last-child td { border-bottom: none; }
+    .complexity-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+    .o-good { color: var(--prog-accent2); font-family: 'Space Mono', monospace; font-weight: 700; }
+    .o-mid  { color: var(--prog-accent3); font-family: 'Space Mono', monospace; font-weight: 700; }
+    .o-bad  { color: var(--prog-red);     font-family: 'Space Mono', monospace; font-weight: 700; }
+
+    /* ════════════════════════════════════════════════════
+       VISUALIZZATORE RICERCA
+       Differenze rispetto all'ordinamento:
+       - Array sempre orizzontale (blocchi numerici)
+       - Elemento cercato evidenziato in giallo (found)
+       - Input per scegliere il valore da cercare
+       - Stato: esaminato / corrente / trovato / escluso
+    ════════════════════════════════════════════════════ */
+    .viz-section { background: var(--prog-surface); border: 1px solid var(--prog-border); border-radius: 12px; overflow: hidden; margin: 2rem 0; }
+    .viz-toolbar { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.25rem; background: var(--prog-card); border-bottom: 1px solid var(--prog-border); flex-wrap: wrap; }
+    .viz-btn { display: inline-flex; align-items: center; gap: 5px; padding: 6px 14px; border-radius: 6px; border: 1px solid var(--prog-border); background: var(--prog-surface); color: var(--prog-text); font-family: 'Sora', sans-serif; font-size: 0.82rem; font-weight: 500; cursor: pointer; transition: all 0.18s; }
+    .viz-btn:hover { border-color: var(--prog-accent); color: var(--prog-accent); }
+    .viz-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .viz-btn.primary { background: var(--prog-accent); border-color: var(--prog-accent); color: white; }
+    .viz-btn.primary:hover { background: #6a4ee0; }
+
+    /* Input valore cercato */
+    .viz-target-wrap {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.82rem; color: var(--prog-muted);
+    }
+    .viz-target-input {
+      width: 64px; padding: 5px 8px; border-radius: 6px;
+      border: 1px solid var(--prog-border);
+      background: var(--prog-surface); color: var(--prog-text);
+      font-family: 'Space Mono', monospace; font-size: 0.9rem;
+      text-align: center;
+    }
+    .viz-target-input:focus { outline: none; border-color: var(--prog-accent); }
+
+    .viz-speed { display: flex; align-items: center; gap: 0.5rem; margin-left: auto; font-size: 0.78rem; color: var(--prog-muted); }
+    .viz-speed input[type=range] { width: 80px; accent-color: var(--prog-accent); }
+
+    /* Canvas — blocchi orizzontali con indici */
+    .viz-canvas {
+      min-height: 160px; padding: 2rem 1.5rem 2.5rem;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow-x: auto;
+    }
+    .search-wrap {
+      display: flex; align-items: flex-end; gap: 6px;
+      position: relative;
+    }
+    .search-cell {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+    }
+    .search-block {
+      width: 52px; height: 52px; border-radius: 8px;
+      border: 2px solid var(--prog-border); background: var(--prog-card);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Mono', monospace; font-size: 1rem; font-weight: 700;
+      color: var(--prog-text); transition: all 0.25s cubic-bezier(.4,0,.2,1);
+      position: relative;
+    }
+    .search-index {
+      font-family: 'Space Mono', monospace; font-size: 0.65rem;
+      color: var(--prog-muted);
+    }
+    /* stati */
+    .search-block.current  { border-color: var(--prog-accent3); background: rgba(249,160,63,0.15); color: var(--prog-accent3); transform: translateY(-8px); }
+    .search-block.found    { border-color: var(--prog-accent2); background: rgba(86,207,178,0.2);  color: var(--prog-accent2); transform: translateY(-8px) scale(1.1); }
+    .search-block.excluded { border-color: #333; background: rgba(0,0,0,0.3); color: #444; }
+    .search-block.mid      { border-color: var(--prog-accent); background: rgba(124,92,252,0.15); color: var(--prog-accent); transform: translateY(-8px); }
+    .search-block.range    { border-color: rgba(124,92,252,0.4); }
+
+    /* pointer low/mid/high sopra i blocchi */
+    .ptr-row {
+      display: flex; gap: 6px; padding: 0 0 4px 0; min-height: 22px;
+    }
+    .ptr-cell {
+      width: 52px; display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Mono', monospace; font-size: 0.65rem; font-weight: 700;
+      min-height: 18px;
+    }
+    .ptr-lo  { color: var(--prog-accent3); }
+    .ptr-hi  { color: var(--prog-red); }
+    .ptr-mid { color: var(--prog-accent); }
+
+    /* status */
+    .viz-status { padding: 0.75rem 1.25rem; border-top: 1px solid var(--prog-border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+    .viz-status-msg { font-size: 0.85rem; color: var(--prog-accent2); font-family: 'Space Mono', monospace; }
+    .viz-counters   { display: flex; gap: 1rem; font-size: 0.78rem; color: var(--prog-muted); font-family: 'Space Mono', monospace; }
+    .viz-counters span b { color: var(--prog-text); }
+
+    /* legenda */
+    .viz-legend { display: flex; flex-wrap: wrap; gap: 0.75rem; padding: 0.6rem 1.25rem; border-top: 1px solid var(--prog-border); background: rgba(0,0,0,0.15); }
+    .legend-item { display: flex; align-items: center; gap: 5px; font-size: 0.75rem; color: var(--prog-muted); }
+    .legend-dot  { width: 10px; height: 10px; border-radius: 2px; }
+
+    /* footer / back to top */
+    footer { text-align: center; padding: 2.5rem 1rem; color: var(--prog-muted); font-size: 0.85rem; border-top: 1px solid var(--prog-border); margin-top: 2rem; }
+    footer a { color: var(--prog-accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .back-to-top { position: fixed; bottom: 1.5rem; right: 1.5rem; width: 40px; height: 40px; border-radius: 50%; background: var(--prog-accent); color: white; border: none; font-size: 1.1rem; cursor: pointer; opacity: 0; transform: translateY(10px); transition: all 0.25s; z-index: 200; }
+    .back-to-top.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width:600px) {
+      .viz-toolbar { gap: 0.4rem; }
+      .viz-speed { margin-left: 0; width: 100%; }
+      .search-block { width: 40px; height: 40px; font-size: 0.85rem; }
+      .ptr-cell { width: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <a href="/programmazione/index.html" class="header-back-link">← Programmazione</a>
+  <div class="header-badge">C++ · Programmazione</div>
+  <h1>Algoritmi di <span>Ricerca</span></h1>
+  <p>Ricerca Lineare e Ricerca Binaria — teoria, codice C++ commentato e visualizzatore animato passo-passo.</p>
+  <div class="header-pills">
+    <span class="header-pill">🎓 Terzo anno SIA</span>
+    <span class="header-pill">🎓 Programmazione I</span>
+    <span class="header-pill">⏱ ~30 min</span>
+    <span class="header-pill">🔍 Ricerca su array</span>
+  </div>
+</header>
+
+<!-- ══ TOC ══ -->
+<div class="toc-wrap">
+  <nav class="toc" id="toc">
+    <a href="#intro"    class="active">Introduzione</a>
+    <a href="#lineare">Ricerca Lineare</a>
+    <a href="#binaria">Ricerca Binaria</a>
+    <a href="#confronto">Confronto</a>
+  </nav>
+</div>
+
+<!-- ══ MAIN ══ -->
+<main>
+
+  <!-- ── 1. INTRODUZIONE ── -->
+  <section id="intro">
+    <div class="section-label">01 — Introduzione</div>
+    <h2>Cosa significa cercare?</h2>
+    <p>Cercare un elemento in un array significa determinare se un valore è presente e, in caso affermativo, restituire la sua posizione (indice). È una delle operazioni più frequenti in qualsiasi programma: ogni volta che cerchi un contatto, un prodotto o un record in un database, un algoritmo di ricerca sta lavorando.</p>
+    <p>Studieremo due approcci fondamentali: la <strong>ricerca lineare</strong>, che funziona su qualsiasi array, e la <strong>ricerca binaria</strong>, molto più veloce ma che richiede un array già ordinato.</p>
+    <div class="box box-info">
+      <strong>📌 Prerequisiti</strong>
+      Array monodimensionali in C++, cicli <code>for</code> e <code>while</code>, istruzione <code>return</code>. Per la ricerca binaria: concetto di array ordinato.
+    </div>
+    <div class="box box-tip">
+      <strong>💡 Convenzione di ritorno</strong>
+      Entrambi gli algoritmi restituiscono l'indice dell'elemento trovato, oppure <code>-1</code> se l'elemento non è presente. Questa convenzione è standard in C++.
+    </div>
+  </section>
+
+  <!-- ── 2. RICERCA LINEARE ── -->
+  <section id="lineare">
+    <div class="section-label">02 — Algoritmo</div>
+    <h2>Ricerca Lineare</h2>
+    <p>La ricerca lineare scansiona l'array dall'inizio alla fine, confrontando ogni elemento con il valore cercato. È l'algoritmo più semplice possibile: non richiede che l'array sia ordinato e funziona sempre.</p>
+    <h3>Idea visiva</h3>
+    <p>Con array <code>[15, 42, 8, 73, 27, 61, 4]</code> e target <code>27</code>: si esamina 15 (no), 42 (no), 8 (no), 73 (no), 27 — <strong>trovato all'indice 4</strong>. Nel caso peggiore si scansiona tutto l'array senza trovare nulla.</p>
+    <div class="box box-warn">
+      <strong>⚠ Caso peggiore</strong>
+      Se l'elemento non è presente, la ricerca lineare confronta tutti gli n elementi prima di restituire -1. Con array grandi (milioni di record) questo diventa inaccettabile.
+    </div>
+    <h3>Codice C++ commentato</h3>
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+        <span class="code-lang">C++ · ricerca_lineare.cpp</span>
+      </div>
+      <pre><span class="pp">#include &lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="cm">// Cerca target nell'array, restituisce l'indice o -1 se non trovato</span>
+<span class="tp">int</span> <span class="fn">ricercaLineare</span>(<span class="tp">int</span> arr[], <span class="tp">int</span> n, <span class="tp">int</span> target) {
+    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; n; i++) {
+        <span class="kw">if</span> (arr[i] == target)
+            <span class="kw">return</span> i;  <span class="cm">// trovato: restituisce l'indice</span>
+    }
+    <span class="kw">return</span> -<span class="nm">1</span>;  <span class="cm">// non trovato</span>
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> arr[] = {<span class="nm">15</span>, <span class="nm">42</span>, <span class="nm">8</span>, <span class="nm">73</span>, <span class="nm">27</span>, <span class="nm">61</span>, <span class="nm">4</span>};
+    <span class="tp">int</span> n = <span class="kw">sizeof</span>(arr) / <span class="kw">sizeof</span>(arr[<span class="nm">0</span>]);
+    <span class="tp">int</span> target = <span class="nm">27</span>;
+
+    <span class="tp">int</span> risultato = <span class="fn">ricercaLineare</span>(arr, n, target);
+
+    <span class="kw">if</span> (risultato != -<span class="nm">1</span>)
+        cout &lt;&lt; <span class="st">"Trovato "</span> &lt;&lt; target &lt;&lt; <span class="st">" all'indice "</span> &lt;&lt; risultato &lt;&lt; endl;
+    <span class="kw">else</span>
+        cout &lt;&lt; target &lt;&lt; <span class="st">" non trovato nell'array"</span> &lt;&lt; endl;
+
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+    </div>
+    <h3>Visualizzatore</h3>
+    <div class="viz-section" data-viz-id="lineare-viz">
+      <div class="viz-toolbar">
+        <button class="viz-btn primary btn-play">▶ Play</button>
+        <button class="viz-btn btn-step">⏭ Step</button>
+        <button class="viz-btn btn-reset">↺ Reset</button>
+        <div class="viz-target-wrap">
+          <span>Cerca:</span>
+          <input type="number" class="viz-target-input" value="27" min="1" max="99">
+        </div>
+        <div class="viz-speed">
+          <span>Velocità</span>
+          <input type="range" class="speed-slider" min="1" max="6" value="3">
+          <span class="speed-label">3x</span>
+        </div>
+      </div>
+      <div class="viz-canvas" id="lineare-canvas">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0;">
+          <div class="ptr-row" id="lineare-ptr-row"></div>
+          <div class="search-wrap" id="lineare-wrap"></div>
+        </div>
+      </div>
+      <div class="viz-status">
+        <span class="viz-status-msg" id="lineare-msg">Pronto. Imposta il valore e premi Play o Step.</span>
+        <div class="viz-counters">
+          <span>Confronti: <b class="cnt-compare">0</b></span>
+          <span>Indice corrente: <b class="cnt-idx">—</b></span>
+        </div>
+      </div>
+      <div class="viz-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--prog-card);border:2px solid var(--prog-border);"></div><span>Non esaminato</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--prog-accent3)"></div><span>Esaminato (no match)</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--prog-accent2)"></div><span>Trovato</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:#333"></div><span>Escluso</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3. RICERCA BINARIA ── -->
+  <section id="binaria">
+    <div class="section-label">03 — Algoritmo</div>
+    <h2>Ricerca Binaria</h2>
+    <p>La ricerca binaria sfrutta il fatto che l'array è <strong>già ordinato</strong> per eliminare metà degli elementi a ogni confronto. Confronta il valore cercato con l'elemento centrale: se è minore cerca nella metà sinistra, se è maggiore nella metà destra.</p>
+    <h3>Idea visiva</h3>
+    <p>Con array ordinato <code>[4, 8, 15, 27, 42, 61, 73]</code> e target <code>27</code>: centro = 27 — <strong>trovato subito</strong>. Se cercassimo 61: centro=27 (minore, vai a destra), centro=61 — trovato in 2 confronti invece di 5 con la lineare.</p>
+    <div class="box box-info">
+      <strong>📌 Prerequisito fondamentale</strong>
+      La ricerca binaria funziona solo su array ordinati. Se applichi la ricerca binaria a un array non ordinato otterrai risultati sbagliati senza errori a runtime — uno dei bug più insidiosi per i principianti.
+    </div>
+    <div class="box box-tip">
+      <strong>💡 Perché è così veloce?</strong>
+      A ogni passo dimezza lo spazio di ricerca. Con 1000 elementi bastano al massimo 10 confronti (log₂ 1000 ≈ 10). Con un milione di elementi: al massimo 20 confronti. La ricerca lineare ne richiederebbe fino a 1.000.000.
+    </div>
+    <h3>Codice C++ commentato</h3>
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+        <span class="code-lang">C++ · ricerca_binaria.cpp</span>
+      </div>
+      <pre><span class="pp">#include &lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="cm">// Cerca target in array ORDINATO, restituisce indice o -1</span>
+<span class="tp">int</span> <span class="fn">ricercaBinaria</span>(<span class="tp">int</span> arr[], <span class="tp">int</span> n, <span class="tp">int</span> target) {
+    <span class="tp">int</span> low  = <span class="nm">0</span>;      <span class="cm">// indice sinistro (inizio intervallo)</span>
+    <span class="tp">int</span> high = n - <span class="nm">1</span>;  <span class="cm">// indice destro  (fine intervallo)</span>
+
+    <span class="kw">while</span> (low &lt;= high) {
+        <span class="tp">int</span> mid = low + (high - low) / <span class="nm">2</span>;  <span class="cm">// indice centrale (evita overflow)</span>
+
+        <span class="kw">if</span> (arr[mid] == target)
+            <span class="kw">return</span> mid;           <span class="cm">// trovato</span>
+        <span class="kw">else if</span> (arr[mid] &lt; target)
+            low = mid + <span class="nm">1</span>;         <span class="cm">// target è a destra: sposta low</span>
+        <span class="kw">else</span>
+            high = mid - <span class="nm">1</span>;        <span class="cm">// target è a sinistra: sposta high</span>
+    }
+    <span class="kw">return</span> -<span class="nm">1</span>;  <span class="cm">// non trovato</span>
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="cm">// ATTENZIONE: l'array DEVE essere ordinato</span>
+    <span class="tp">int</span> arr[] = {<span class="nm">4</span>, <span class="nm">8</span>, <span class="nm">15</span>, <span class="nm">27</span>, <span class="nm">42</span>, <span class="nm">61</span>, <span class="nm">73</span>};
+    <span class="tp">int</span> n = <span class="kw">sizeof</span>(arr) / <span class="kw">sizeof</span>(arr[<span class="nm">0</span>]);
+    <span class="tp">int</span> target = <span class="nm">61</span>;
+
+    <span class="tp">int</span> risultato = <span class="fn">ricercaBinaria</span>(arr, n, target);
+
+    <span class="kw">if</span> (risultato != -<span class="nm">1</span>)
+        cout &lt;&lt; <span class="st">"Trovato "</span> &lt;&lt; target &lt;&lt; <span class="st">" all'indice "</span> &lt;&lt; risultato &lt;&lt; endl;
+    <span class="kw">else</span>
+        cout &lt;&lt; target &lt;&lt; <span class="st">" non trovato"</span> &lt;&lt; endl;
+
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+    </div>
+    <h3>Visualizzatore</h3>
+    <div class="viz-section" data-viz-id="binaria-viz">
+      <div class="viz-toolbar">
+        <button class="viz-btn primary btn-play">▶ Play</button>
+        <button class="viz-btn btn-step">⏭ Step</button>
+        <button class="viz-btn btn-reset">↺ Reset</button>
+        <div class="viz-target-wrap">
+          <span>Cerca:</span>
+          <input type="number" class="viz-target-input" value="61" min="1" max="99">
+        </div>
+        <div class="viz-speed">
+          <span>Velocità</span>
+          <input type="range" class="speed-slider" min="1" max="6" value="3">
+          <span class="speed-label">3x</span>
+        </div>
+      </div>
+      <div class="viz-canvas" id="binaria-canvas">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0;">
+          <div class="ptr-row" id="binaria-ptr-row"></div>
+          <div class="search-wrap" id="binaria-wrap"></div>
+        </div>
+      </div>
+      <div class="viz-status">
+        <span class="viz-status-msg" id="binaria-msg">Pronto. Imposta il valore e premi Play o Step.</span>
+        <div class="viz-counters">
+          <span>Confronti: <b class="cnt-compare">0</b></span>
+          <span>Intervallo: <b class="cnt-range">—</b></span>
+        </div>
+      </div>
+      <div class="viz-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--prog-card);border:2px solid var(--prog-border);"></div><span>Non esaminato</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(124,92,252,0.3);border:2px solid var(--prog-accent)"></div><span>Intervallo attivo</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--prog-accent)"></div><span>Elemento centrale (mid)</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--prog-accent2)"></div><span>Trovato</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:#333"></div><span>Escluso</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 4. CONFRONTO ── -->
+  <section id="confronto">
+    <div class="section-label">04 — Analisi</div>
+    <h2>Confronto tra algoritmi</h2>
+    <table class="complexity-table">
+      <thead>
+        <tr>
+          <th>Algoritmo</th>
+          <th>Caso migliore</th>
+          <th>Caso medio</th>
+          <th>Caso peggiore</th>
+          <th>Array ordinato?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Ricerca Lineare</strong></td>
+          <td class="o-good">O(1)</td>
+          <td class="o-bad">O(n)</td>
+          <td class="o-bad">O(n)</td>
+          <td>❌ Non richiesto</td>
+        </tr>
+        <tr>
+          <td><strong>Ricerca Binaria</strong></td>
+          <td class="o-good">O(1)</td>
+          <td class="o-good">O(log n)</td>
+          <td class="o-good">O(log n)</td>
+          <td>✅ Obbligatorio</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="box box-tip">
+      <strong>💡 Quando usare quale</strong>
+      Se l'array non è ordinato (e ordinarlo sarebbe costoso): usa la ricerca lineare. Se l'array è già ordinato o verrà cercato molte volte: ordina una volta e usa sempre la binaria — il costo di ordinamento è ammortizzato su tutte le ricerche successive.
+    </div>
+    <div class="box box-warn">
+      <strong>⚠ Il caso migliore O(1)</strong>
+      Entrambi hanno caso migliore O(1): la lineare se il target è in posizione 0, la binaria se è esattamente al centro. Nella pratica il caso migliore è irrilevante — si progetta sempre per il caso peggiore.
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <strong>Formazione Digitale</strong> &middot; <a href="/programmazione/index.html">← Programmazione</a> &middot; <a href="/index.html">Portale</a><br>
+  Guida libera e gratuita — C++ · Algoritmi di Ricerca
+  <p style="margin-top:0.4rem;font-size:0.78rem;">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Torna su">↑</button>
+
+<!-- ══════════════════════════════════════════════════════════════
+     VISUALIZZATORE RICERCA — factory parametrica
+     Due tipi: 'linear' e 'binary'
+     Array fisso ordinato per binaria, libero per lineare.
+════════════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  const DELAYS = [1200, 600, 400, 250, 120, 40];
+
+  /* array di default:
+     lineare — non ordinato, valori vari
+     binaria — ordinato, stessi valori */
+  const ARR_LINEAR = [15, 42, 8, 73, 27, 61, 4, 55, 19, 88, 33, 66];
+  const ARR_BINARY = [4, 8, 15, 19, 27, 33, 42, 55, 61, 66, 73, 88];
+
+  /* ══════════════════════════════════════════
+     GENERATORI DI PASSI
+  ══════════════════════════════════════════ */
+
+  function genLinear(arr, target) {
+    const steps = [];
+    const n = arr.length;
+    const examined = new Set();
+
+    for (let i = 0; i < n; i++) {
+      steps.push({
+        arr: [...arr], current: i, found: -1,
+        examined: [...examined],
+        message: `Confronto arr[${i}]=${arr[i]} con target=${target}`,
+        compare: true, idx: i,
+        low: -1, high: -1, mid: -1
+      });
+      if (arr[i] === target) {
+        steps.push({
+          arr: [...arr], current: -1, found: i,
+          examined: [...examined],
+          message: `✅ Trovato ${target} all'indice ${i}!`,
+          compare: false, idx: i,
+          low: -1, high: -1, mid: -1
+        });
+        return steps;
+      }
+      examined.add(i);
+    }
+    steps.push({
+      arr: [...arr], current: -1, found: -1,
+      examined: [...examined],
+      message: `❌ ${target} non trovato nell'array.`,
+      compare: false, idx: -1,
+      low: -1, high: -1, mid: -1
+    });
+    return steps;
+  }
+
+  function genBinary(arr, target) {
+    const steps = [];
+    const n = arr.length;
+    let low = 0, high = n - 1;
+    const excluded = new Set();
+
+    while (low <= high) {
+      const mid = Math.floor(low + (high - low) / 2);
+
+      steps.push({
+        arr: [...arr], current: mid, found: -1,
+        examined: [...excluded],
+        message: `low=${low}, high=${high}, mid=${mid} → arr[${mid}]=${arr[mid]}`,
+        compare: true, idx: mid,
+        low, high, mid
+      });
+
+      if (arr[mid] === target) {
+        steps.push({
+          arr: [...arr], current: -1, found: mid,
+          examined: [...excluded],
+          message: `✅ Trovato ${target} all'indice ${mid}!`,
+          compare: false, idx: mid,
+          low, high, mid
+        });
+        return steps;
+      } else if (arr[mid] < target) {
+        for (let k = low; k <= mid; k++) excluded.add(k);
+        steps.push({
+          arr: [...arr], current: -1, found: -1,
+          examined: [...excluded],
+          message: `arr[${mid}]=${arr[mid]} < ${target}: cerco a destra → low=${mid+1}`,
+          compare: false, idx: -1,
+          low: mid + 1, high, mid
+        });
+        low = mid + 1;
+      } else {
+        for (let k = mid; k <= high; k++) excluded.add(k);
+        steps.push({
+          arr: [...arr], current: -1, found: -1,
+          examined: [...excluded],
+          message: `arr[${mid}]=${arr[mid]} > ${target}: cerco a sinistra → high=${mid-1}`,
+          compare: false, idx: -1,
+          low, high: mid - 1, mid
+        });
+        high = mid - 1;
+      }
+    }
+    steps.push({
+      arr: [...arr], current: -1, found: -1,
+      examined: [...excluded],
+      message: `❌ ${target} non trovato nell'array.`,
+      compare: false, idx: -1,
+      low, high, mid: -1
+    });
+    return steps;
+  }
+
+  /* ══════════════════════════════════════════
+     FACTORY — createSearchViz(cfg)
+  ══════════════════════════════════════════ */
+  function createSearchViz(cfg) {
+    const sec         = cfg.section;
+    const wrapEl      = document.getElementById(cfg.wrapId);
+    const ptrRowEl    = document.getElementById(cfg.ptrRowId);
+    const msgEl       = document.getElementById(cfg.msgId);
+    const btnPlay     = sec.querySelector('.btn-play');
+    const btnStep     = sec.querySelector('.btn-step');
+    const btnReset    = sec.querySelector('.btn-reset');
+    const targetInput = sec.querySelector('.viz-target-input');
+    const speedSlider = sec.querySelector('.speed-slider');
+    const speedLabel  = sec.querySelector('.speed-label');
+    const cntCmpEl    = sec.querySelector('.cnt-compare');
+    const cntSecEl    = sec.querySelector(cfg.algo === 'linear' ? '.cnt-idx' : '.cnt-range');
+
+    let steps = [], stepIndex = 0, playing = false, playTimer = null;
+    let cntCompare = 0;
+
+    function getDelay() { return DELAYS[parseInt(speedSlider.value) - 1]; }
+
+    speedSlider.addEventListener('input', () => {
+      const v = parseInt(speedSlider.value);
+      speedLabel.textContent = v === 1 ? '0.5x' : (v-1) + 'x';
+      if (playing) { stopPlay(); startPlay(); }
+    });
+
+    /* ── RENDER ── */
+    function render(step) {
+      const { arr, current, found, examined, low, high, mid } = step;
+      const n = arr.length;
+
+      /* riga puntatori (solo binaria) */
+      if (ptrRowEl) {
+        ptrRowEl.innerHTML = '';
+        if (cfg.algo === 'binary') {
+          for (let i = 0; i < n; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'ptr-cell';
+            const labels = [];
+            if (i === low  && low >= 0)  labels.push('<span class="ptr-lo">lo</span>');
+            if (i === high && high >= 0) labels.push('<span class="ptr-hi">hi</span>');
+            if (i === mid  && mid >= 0)  labels.push('<span class="ptr-mid">mid</span>');
+            cell.innerHTML = labels.join(' ');
+            ptrRowEl.appendChild(cell);
+          }
+        }
+      }
+
+      /* blocchi */
+      wrapEl.innerHTML = '';
+      arr.forEach((val, i) => {
+        const cell  = document.createElement('div');
+        cell.className = 'search-cell';
+
+        const block = document.createElement('div');
+        block.className = 'search-block';
+        block.textContent = val;
+
+        if      (found === i)              block.classList.add('found');
+        else if (current === i)            block.classList.add('current');
+        else if (examined.includes(i))     block.classList.add('excluded');
+        else if (cfg.algo === 'binary' && step.low >= 0 && i >= step.low && i <= step.high)
+                                           block.classList.add('range');
+
+        const idx = document.createElement('div');
+        idx.className = 'search-index';
+        idx.textContent = `[${i}]`;
+
+        cell.appendChild(block);
+        cell.appendChild(idx);
+        wrapEl.appendChild(cell);
+      });
+
+      /* messaggio e contatori */
+      msgEl.textContent = step.message;
+      if (step.compare) cntCompare++;
+      cntCmpEl.textContent = cntCompare;
+
+      if (cfg.algo === 'linear') {
+        cntSecEl.textContent = step.idx >= 0 ? step.idx : '—';
+      } else {
+        cntSecEl.textContent = step.low >= 0 && step.high >= 0
+          ? `[${step.low}…${step.high}]` : '—';
+      }
+    }
+
+    function init() {
+      stopPlay();
+      cntCompare = 0;
+      cntCmpEl.textContent = '0';
+      if (cntSecEl) cntSecEl.textContent = '—';
+
+      const target = parseInt(targetInput.value) || (cfg.algo === 'linear' ? 27 : 61);
+      const arr = cfg.algo === 'linear' ? [...ARR_LINEAR] : [...ARR_BINARY];
+
+      steps = cfg.algo === 'linear' ? genLinear(arr, target) : genBinary(arr, target);
+      stepIndex = 0;
+      render(steps[0]);
+      msgEl.textContent = 'Pronto. Premi Play o Step.';
+      btnPlay.textContent = '▶ Play'; btnPlay.disabled = false; btnStep.disabled = false;
+    }
+
+    function advance() {
+      if (stepIndex >= steps.length - 1) {
+        stopPlay(); btnPlay.textContent = '▶ Play';
+        btnPlay.disabled = true; btnStep.disabled = true; return;
+      }
+      stepIndex++; render(steps[stepIndex]);
+    }
+
+    function startPlay() {
+      playing = true; btnPlay.textContent = '⏸ Pausa';
+      playTimer = setInterval(() => {
+        if (stepIndex >= steps.length - 1) {
+          stopPlay(); btnPlay.textContent = '▶ Play';
+          btnPlay.disabled = true; btnStep.disabled = true; return;
+        }
+        advance();
+      }, getDelay());
+    }
+
+    function stopPlay() {
+      playing = false; clearInterval(playTimer); playTimer = null;
+    }
+
+    btnPlay.addEventListener('click', () => {
+      if (playing) { stopPlay(); btnPlay.textContent = '▶ Play'; } else startPlay();
+    });
+    btnStep.addEventListener('click', () => { stopPlay(); btnPlay.textContent = '▶ Play'; advance(); });
+    btnReset.addEventListener('click', init);
+    targetInput.addEventListener('change', init);
+
+    init();
+  }
+
+  /* ══════════════════════════════════════════
+     ISTANZE
+  ══════════════════════════════════════════ */
+  createSearchViz({
+    algo: 'linear',
+    section:   document.querySelector('[data-viz-id="lineare-viz"]'),
+    wrapId:    'lineare-wrap',
+    ptrRowId:  'lineare-ptr-row',
+    msgId:     'lineare-msg'
+  });
+
+  createSearchViz({
+    algo: 'binary',
+    section:   document.querySelector('[data-viz-id="binaria-viz"]'),
+    wrapId:    'binaria-wrap',
+    ptrRowId:  'binaria-ptr-row',
+    msgId:     'binaria-msg'
+  });
+
+  /* ── TOC ── */
+  const tocLinks = document.querySelectorAll('#toc a');
+  const sections = document.querySelectorAll('section[id]');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        tocLinks.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector(`#toc a[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -80% 0px', threshold: 0 });
+  sections.forEach(s => observer.observe(s));
+
+  tocLinks.forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  const btt = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => { btt.classList.toggle('visible', window.scrollY > 300); });
+
+})();
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>

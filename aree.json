@@ -1,62 +1,68 @@
 [
-  {
-    "id": "intelligenza-artificiale",
-    "label": "Intelligenza Artificiale",
-    "emoji": "🤖",
-    "color": "#1F4E79"
-  },
-  {
-    "id": "database",
-    "label": "Database",
-    "emoji": "🗄️",
-    "color": "#4A148C"
-  },
-  {
-    "id": "marketing",
-    "label": "Marketing",
-    "emoji": "🛒",
-    "color": "#1E6B3C"
-  },
-  {
-    "id": "competenze-digitali",
-    "label": "Competenze Digitali",
-    "emoji": "💡",
-    "color": "#2E75B6"
-  },
-  {
-    "id": "sicurezza",
-    "label": "Sicurezza",
-    "emoji": "🔒",
-    "color": "#B71C1C"
-  },
-  {
-    "id": "elaborazione-testi",
-    "label": "Elaborazione Testi",
-    "emoji": "📝",
-    "color": "#00695C"
-  },
-  {
-	  "id": "foglio-di-calcolo",
-	  "label": "Foglio di Calcolo",
-	  "emoji": "📊",
-	  "color": "#2E7D32"
-	},
-  {
-    "id": "networking",
-    "label": "Networking",
-    "emoji": "🌐",
-    "color": "#7D4E00"
-  },
-  {
-    "id": "sistemi",
-    "label": "Sistemi",
-    "emoji": "⚙️",
-    "color": "#37474F"
-  },
-  {
-	  "id": "project-management",
-	  "label": "Project Management",
-	  "emoji": "📋",
-	  "color": "#1565C0"
-	}
+    {
+        "id": "intelligenza-artificiale",
+        "label": "Intelligenza Artificiale",
+        "emoji": "🤖",
+        "color": "#1F4E79"
+    },
+    {
+        "id": "database",
+        "label": "Database",
+        "emoji": "🗄️",
+        "color": "#4A148C"
+    },
+    {
+        "id": "marketing",
+        "label": "Marketing",
+        "emoji": "🛒",
+        "color": "#1E6B3C"
+    },
+    {
+        "id": "competenze-digitali",
+        "label": "Competenze Digitali",
+        "emoji": "💡",
+        "color": "#2E75B6"
+    },
+    {
+        "id": "sicurezza",
+        "label": "Sicurezza",
+        "emoji": "🔒",
+        "color": "#B71C1C"
+    },
+    {
+        "id": "elaborazione-testi",
+        "label": "Elaborazione Testi",
+        "emoji": "📝",
+        "color": "#00695C"
+    },
+    {
+        "id": "foglio-di-calcolo",
+        "label": "Foglio di Calcolo",
+        "emoji": "📊",
+        "color": "#2E7D32"
+    },
+    {
+        "id": "networking",
+        "label": "Networking",
+        "emoji": "🌐",
+        "color": "#7D4E00"
+    },
+    {
+        "id": "sistemi",
+        "label": "Sistemi",
+        "emoji": "⚙️",
+        "color": "#37474F"
+    },
+    {
+        "id": "project-management",
+        "label": "Project Management",
+        "emoji": "📋",
+        "color": "#1565C0"
+    },
+    {
+        "id": "programmazione",
+        "label": "Programmazione",
+        "emoji": "💻",
+        "color": "#7c5cfc"
+    }
 ]

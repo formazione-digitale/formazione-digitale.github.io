@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Algoritmi di Ordinamento in C++ — Formazione Digitale</title>
+
+  <meta name="description" content="Guida agli algoritmi di ordinamento in C++: Bubble Sort, Selection Sort, Insertion Sort. Teoria, codice commentato e visualizzatore animato passo-passo. Livello base.">
+  <meta name="author" content="Cristiano De Pasquale">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://formazione-digitale.it/programmazione/algoritmi-ordinamento/">
+  <link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="//gc.zgo.at">
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#7c5cfc">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Algoritmi di Ordinamento in C++ — Formazione Digitale">
+  <meta property="og:description" content="Bubble Sort, Selection Sort, Insertion Sort con visualizzatore animato passo-passo. Codice C++ commentato e teoria. Gratis.">
+  <meta property="og:url" content="https://formazione-digitale.it/programmazione/algoritmi-ordinamento/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Formazione Digitale">
+
+  <!-- Twitter/X Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Algoritmi di Ordinamento in C++ — Formazione Digitale">
+  <meta name="twitter:description" content="Bubble Sort, Selection Sort, Insertion Sort con visualizzatore animato passo-passo. Codice C++ commentato.">
+  <meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "Algoritmi di Ordinamento in C++",
+    "description": "Guida agli algoritmi di ordinamento in C++: Bubble Sort, Selection Sort, Insertion Sort. Teoria, codice commentato e visualizzatore animato passo-passo.",
+    "url": "https://formazione-digitale.it/programmazione/algoritmi-ordinamento/",
+    "inLanguage": "it",
+    "educationalLevel": "beginner",
+    "teaches": ["Bubble Sort", "Selection Sort", "Insertion Sort", "Complessità algoritmica"],
+    "author": {
+      "@type": "Person",
+      "name": "Cristiano De Pasquale"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Formazione Digitale",
+      "url": "https://formazione-digitale.it"
+    },
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Formazione Digitale",
+      "url": "https://formazione-digitale.it"
+    }
+  }
+  </script>
+
+  <!-- GoatCounter -->
+  <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+  <link rel="stylesheet" href="/css/shared-extended.css?v=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ══════════════════════════════════════════════════════════
+       PALETTE PROGRAMMAZIONE — override locale su shared-extended
+       Accent viola/indaco per distinguere dalla sezione database
+    ══════════════════════════════════════════════════════════ */
+    :root {
+      --prog-bg:      #0f1117;
+      --prog-surface: #1a1d27;
+      --prog-card:    #21253a;
+      --prog-border:  #2e3350;
+      --prog-accent:  #7c5cfc;
+      --prog-accent2: #56cfb2;
+      --prog-accent3: #f9a03f;
+      --prog-red:     #e05c5c;
+      --prog-text:    #d4d8f0;
+      --prog-muted:   #7a7f9a;
+      --prog-code-bg: #131620;
+      --kw-type:    #79b8ff;
+      --kw-keyword: #f97583;
+      --kw-comment: #6a737d;
+      --kw-string:  #9ecbff;
+      --kw-number:  #b392f0;
+      --kw-func:    #56cfb2;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Sora', sans-serif;
+      background: var(--prog-bg);
+      color: var(--prog-text);
+      line-height: 1.75;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--prog-surface);
+      border-bottom: 3px solid var(--prog-accent);
+      padding: 2.5rem 2rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: var(--prog-accent);
+      opacity: 0.07;
+      pointer-events: none;
+    }
+    .header-back-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.78rem; color: var(--prog-muted);
+      text-decoration: none; transition: color 0.2s;
+      position: absolute; top: 1rem; left: 1.5rem;
+    }
+    .header-back-link:hover { color: var(--prog-text); }
+    .header-badge {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      background: var(--prog-accent);
+      color: white;
+      padding: 3px 10px;
+      border-radius: 3px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    header h1 {
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: #ffffff;
+    }
+    header h1 span { color: var(--prog-accent); }
+    header p {
+      margin-top: 0.75rem;
+      color: var(--prog-muted);
+      font-size: 0.95rem;
+      max-width: 620px;
+    }
+    .header-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; }
+    .header-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 4px 12px; border-radius: 20px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem; color: var(--prog-muted);
+    }
+
+    /* ── TOC — palette da shared-extended (ink/accent) ── */
+    .toc-wrap {
+      position: sticky; top: 0; z-index: 100;
+      background: #1a1a18;                    /* --ink di shared-extended */
+      border-bottom: 3px solid var(--prog-accent);
+    }
+    nav.toc {
+      padding: 0.7rem 1.5rem;
+      display: flex; flex-wrap: wrap; gap: 0.25rem;
+      align-items: center; justify-content: center;
+      max-width: 980px; margin: 0 auto;
+    }
+    nav.toc a {
+      font-size: 0.82rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 500;
+      color: #aaa9a0;                          /* muted di shared-extended */
+      text-decoration: none;
+      padding: 5px 13px; border-radius: 20px;
+      border: 1px solid transparent;
+      transition: all 0.18s; white-space: nowrap;
+      letter-spacing: 0.01em;
+    }
+    nav.toc a:hover {
+      background: rgba(255,255,255,0.1);
+      color: white;
+      border-color: rgba(255,255,255,0.2);
+    }
+    nav.toc a.active {
+      background: var(--prog-accent);          /* accent viola sezione */
+      color: white;
+      border-color: var(--prog-accent);
+      font-weight: 700;
+    }
+    @media (max-width: 600px) {
+      nav.toc { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; }
+      nav.toc::-webkit-scrollbar { display: none; }
+    }
+
+    /* ── LAYOUT ── */
+    main { max-width: 980px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+
+    /* ── SEZIONI ── */
+    section { margin-bottom: 4.5rem; scroll-margin-top: 70px; }
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem; font-weight: 700;
+      color: var(--prog-accent);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    h2 {
+      font-size: 1.65rem; font-weight: 700;
+      color: #ffffff; letter-spacing: -0.02em;
+      border-bottom: 2px solid var(--prog-border);
+      padding-bottom: 0.6rem; margin-bottom: 1.5rem;
+    }
+    h3 { font-size: 1.1rem; font-weight: 600; color: var(--prog-accent2); margin: 2rem 0 0.8rem; }
+
+    /* ── PARAGRAFI — leggibilità migliorata ── */
+    p {
+      margin-bottom: 1rem;
+      color: var(--prog-text);
+      font-size: 0.97rem;
+      line-height: 1.85;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── CALLOUT BOX ── */
+    .box {
+      border-radius: 6px; padding: 1rem 1.25rem;
+      margin: 1.25rem 0; font-size: 0.92rem;
+      border-left: 3px solid;
+      line-height: 1.75;
+    }
+    .box-info { background: rgba(86,207,178,0.08); border-color: var(--prog-accent2); }
+    .box-warn { background: rgba(249,160,63,0.08);  border-color: var(--prog-accent3); }
+    .box-tip  { background: rgba(124,92,252,0.08);  border-color: var(--prog-accent); }
+    .box strong { display: block; margin-bottom: 0.35rem; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.8; }
+
+    /* ── BLOCCO CODICE ── */
+    .code-block {
+      background: var(--prog-code-bg);
+      border: 1px solid var(--prog-border);
+      border-radius: 8px; margin: 1.5rem 0; overflow: hidden;
+    }
+    .code-header {
+      background: var(--prog-card); padding: 0.5rem 1rem;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--prog-border);
+    }
+    .code-lang { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--prog-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    .code-dots { display: flex; gap: 5px; }
+    .code-dot  { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #e05c5c; }
+    .dot-y { background: #f9a03f; }
+    .dot-g { background: #56cfb2; }
+    pre {
+      padding: 1.25rem 1.5rem; overflow-x: auto;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.83rem; line-height: 1.65;
+      tab-size: 4; color: var(--prog-text);
+    }
+    .kw { color: var(--kw-keyword); font-weight: 700; }
+    .tp { color: var(--kw-type); }
+    .fn { color: var(--kw-func); }
+    .cm { color: var(--kw-comment); font-style: italic; }
+    .nm { color: var(--kw-number); }
+    .st { color: var(--kw-string); }
+    .pp { color: #ff9f43; }
+
+    /* ── TABELLA COMPLESSITÀ ── */
+    .complexity-table {
+      width: 100%; border-collapse: collapse;
+      margin: 1.25rem 0; font-size: 0.88rem;
+      border-radius: 8px; overflow: hidden;
+      border: 1px solid var(--prog-border);
+    }
+    .complexity-table th {
+      background: var(--prog-card); color: var(--prog-accent);
+      padding: 0.65rem 1rem; text-align: left;
+      font-family: 'Space Mono', monospace; font-size: 0.75rem;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      border-bottom: 2px solid var(--prog-border);
+    }
+    .complexity-table td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--prog-border); vertical-align: middle; }
+    .complexity-table tr:last-child td { border-bottom: none; }
+    .complexity-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+    .o-good { color: var(--prog-accent2); font-family: 'Space Mono', monospace; font-weight: 700; }
+    .o-mid  { color: var(--prog-accent3); font-family: 'Space Mono', monospace; font-weight: 700; }
+    .o-bad  { color: var(--prog-red);     font-family: 'Space Mono', monospace; font-weight: 700; }
+
+    /* ════════════════════════════════════════════════════════
+       VISUALIZZATORE — componente riutilizzabile
+       Ogni istanza è un .viz-section con data-viz-id univoco
+    ════════════════════════════════════════════════════════ */
+    .viz-section {
+      background: var(--prog-surface);
+      border: 1px solid var(--prog-border);
+      border-radius: 12px; overflow: hidden; margin: 2rem 0;
+    }
+    .viz-toolbar {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.75rem 1.25rem;
+      background: var(--prog-card);
+      border-bottom: 1px solid var(--prog-border);
+      flex-wrap: wrap;
+    }
+    .viz-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 14px; border-radius: 6px;
+      border: 1px solid var(--prog-border);
+      background: var(--prog-surface); color: var(--prog-text);
+      font-family: 'Sora', sans-serif; font-size: 0.82rem;
+      font-weight: 500; cursor: pointer; transition: all 0.18s;
+    }
+    .viz-btn:hover { border-color: var(--prog-accent); color: var(--prog-accent); }
+    .viz-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .viz-btn.primary { background: var(--prog-accent); border-color: var(--prog-accent); color: white; }
+    .viz-btn.primary:hover { background: #6a4ee0; }
+    .viz-style-tabs { display: flex; gap: 0.5rem; align-items: center; }
+    .viz-style-btn {
+      padding: 4px 12px; border-radius: 20px;
+      border: 1px solid var(--prog-border);
+      background: transparent; color: var(--prog-muted);
+      font-family: 'Sora', sans-serif; font-size: 0.78rem;
+      cursor: pointer; transition: all 0.18s;
+    }
+    .viz-style-btn.active { background: var(--prog-accent); color: white; border-color: var(--prog-accent); }
+    .viz-speed {
+      display: flex; align-items: center; gap: 0.5rem;
+      margin-left: auto; font-size: 0.78rem; color: var(--prog-muted);
+    }
+    .viz-speed input[type=range] { width: 80px; accent-color: var(--prog-accent); }
+
+    /* Canvas */
+    .viz-canvas {
+      min-height: 260px; padding: 1.5rem 1.5rem 2rem;
+      display: flex; align-items: flex-end;
+      justify-content: center; gap: 5px; position: relative;
+    }
+    .viz-canvas.blocks-mode { align-items: center; }
+
+    /* Barre */
+    .bar-wrap {
+      display: flex; align-items: flex-end; justify-content: center;
+      gap: 4px; width: 100%; height: 240px;   /* AUMENTATE da 160 a 240 */
+    }
+    .bar {
+      flex: 1; max-width: 48px;
+      border-radius: 4px 4px 0 0;
+      background: var(--prog-accent);
+      transition: height 0.28s cubic-bezier(.4,0,.2,1), background 0.18s;
+      position: relative;
+    }
+    .bar .bar-label {
+      position: absolute; bottom: -22px; left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Space Mono', monospace; font-size: 0.7rem;
+      color: var(--prog-muted);
+    }
+    .bar.comparing { background: var(--prog-accent3); }
+    .bar.swapping  { background: var(--prog-red); }
+    .bar.sorted    { background: var(--prog-accent2); }
+    .bar.pivot     { background: #f0c040; }
+
+    /* Blocchi numerici */
+    .blocks-wrap {
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: 8px; width: 100%; padding: 1rem 0;
+    }
+    .num-block {
+      width: 52px; height: 52px; border-radius: 8px;
+      border: 2px solid var(--prog-border);
+      background: var(--prog-card);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Mono', monospace; font-size: 1.1rem;
+      font-weight: 700; color: var(--prog-text);
+      transition: all 0.28s cubic-bezier(.4,0,.2,1);
+    }
+    .num-block.comparing { border-color: var(--prog-accent3); background: rgba(249,160,63,0.15); color: var(--prog-accent3); transform: translateY(-6px); }
+    .num-block.swapping  { border-color: var(--prog-red);     background: rgba(224,92,92,0.15);  color: var(--prog-red);     transform: translateY(-10px) scale(1.1); }
+    .num-block.sorted    { border-color: var(--prog-accent2); background: rgba(86,207,178,0.12); color: var(--prog-accent2); }
+    .num-block.pivot     { border-color: #f0c040; background: rgba(240,192,64,0.12); color: #f0c040; }
+    .compare-arrow { font-size: 1.2rem; color: var(--prog-accent3); opacity: 0; transition: opacity 0.2s; align-self: center; }
+    .compare-arrow.visible { opacity: 1; }
+
+    /* Status + legenda */
+    .viz-status {
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid var(--prog-border);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 0.5rem;
+    }
+    .viz-status-msg { font-size: 0.85rem; color: var(--prog-accent2); font-family: 'Space Mono', monospace; }
+    .viz-counters   { display: flex; gap: 1rem; font-size: 0.78rem; color: var(--prog-muted); font-family: 'Space Mono', monospace; }
+    .viz-counters span b { color: var(--prog-text); }
+    .viz-legend {
+      display: flex; flex-wrap: wrap; gap: 0.75rem;
+      padding: 0.6rem 1.25rem;
+      border-top: 1px solid var(--prog-border);
+      background: rgba(0,0,0,0.15);
+    }
+    .legend-item { display: flex; align-items: center; gap: 5px; font-size: 0.75rem; color: var(--prog-muted); }
+    .legend-dot  { width: 10px; height: 10px; border-radius: 2px; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2.5rem 1rem;
+      color: var(--prog-muted); font-size: 0.85rem;
+      border-top: 1px solid var(--prog-border); margin-top: 2rem;
+    }
+    footer a { color: var(--prog-accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── BACK TO TOP ── */
+    .back-to-top {
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--prog-accent); color: white; border: none;
+      font-size: 1.1rem; cursor: pointer;
+      opacity: 0; transform: translateY(10px);
+      transition: all 0.25s; z-index: 200;
+    }
+    .back-to-top.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .viz-toolbar { gap: 0.4rem; }
+      .viz-speed   { margin-left: 0; width: 100%; }
+      .num-block   { width: 42px; height: 42px; font-size: 0.95rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <a href="/index.html" class="header-back-link">← Portale</a>
+  <div class="header-badge">C++ · Programmazione</div>
+  <h1>Algoritmi di <span>Ordinamento</span></h1>
+  <p>Bubble Sort, Selection Sort, Insertion Sort — teoria, codice C++ commentato e visualizzatore animato passo-passo.</p>
+  <div class="header-pills">
+    <span class="header-pill">🎓 Terzo anno SIA</span>
+    <span class="header-pill">🎓 Programmazione I</span>
+    <span class="header-pill">⏱ ~45 min</span>
+    <span class="header-pill">📊 Complessità O(n²)</span>
+  </div>
+</header>
+
+<!-- ══ TOC ══ -->
+<div class="toc-wrap">
+  <nav class="toc" id="toc">
+    <a href="#intro"    class="active">Introduzione</a>
+    <a href="#bubble">Bubble Sort</a>
+    <a href="#selection">Selection Sort</a>
+    <a href="#insertion">Insertion Sort</a>
+    <a href="#confronto">Confronto</a>
+  </nav>
+</div>
+
+<!-- ══ MAIN ══ -->
+<main>
+
+  <!-- ── 1. INTRODUZIONE ── -->
+  <section id="intro">
+    <div class="section-label">01 — Introduzione</div>
+    <h2>Cosa significa ordinare?</h2>
+    <p>Ordinare un array significa disporre i suoi elementi secondo un criterio — di solito crescente o decrescente. È uno dei problemi fondamentali dell'informatica: quasi ogni applicazione reale (motori di ricerca, banche dati, giochi) ordina dati in continuazione.</p>
+    <p>In questo modulo studieremo i tre algoritmi elementari di ordinamento: tutti hanno complessità <strong>O(n²)</strong> nel caso peggiore, ma differiscono nel numero di confronti, scambi e nel comportamento con array già parzialmente ordinati.</p>
+    <div class="box box-info">
+      <strong>📌 Prerequisiti</strong>
+      Array monodimensionali in C++, cicli <code>for</code> annidati, funzione <code>swap()</code>.
+    </div>
+    <div class="box box-tip">
+      <strong>💡 Come usare questa guida</strong>
+      Leggi la teoria, studia il codice (ogni riga è commentata), poi usa il visualizzatore sotto ogni algoritmo per vederlo in azione passo-passo.
+    </div>
+  </section>
+
+  <!-- ── 2. BUBBLE SORT ── -->
+  <section id="bubble">
+    <div class="section-label">02 — Algoritmo</div>
+    <h2>Bubble Sort</h2>
+    <p>Il Bubble Sort confronta ogni coppia di elementi adiacenti e li scambia se sono nell'ordine sbagliato. Ogni passata completa porta l'elemento più grande in fondo all'array — come una bolla che sale in superficie.</p>
+    <h3>Idea visiva</h3>
+    <p>Con array <code>[5, 3, 8, 1, 2]</code>, la prima passata confronta 5↔3 (scambia), 5↔8 (no), 8↔1 (scambia), 8↔2 (scambia). Dopo la prima passata l'<strong>8 è in posizione finale</strong>. Si ripete finché tutto è ordinato.</p>
+    <div class="box box-warn">
+      <strong>⚠ Attenzione</strong>
+      Dopo k passate, gli ultimi k elementi sono già nella posizione corretta. L'ottimizzazione con flag <code>swapped</code> permette di uscire prima se l'array è già ordinato.
+    </div>
+    <h3>Codice C++ commentato</h3>
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+        <span class="code-lang">C++ · bubble_sort.cpp</span>
+      </div>
+      <pre><span class="pp">#include &lt;iostream&gt;</span>
+<span class="pp">#include &lt;algorithm&gt;</span>  <span class="cm">// per std::swap</span>
+<span class="kw">using namespace</span> std;
+
+<span class="cm">// Ordina l'array in senso crescente con Bubble Sort</span>
+<span class="tp">void</span> <span class="fn">bubbleSort</span>(<span class="tp">int</span> arr[], <span class="tp">int</span> n) {
+    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; n - <span class="nm">1</span>; i++) {
+        <span class="tp">bool</span> swapped = <span class="kw">false</span>;  <span class="cm">// ottimizzazione: uscita anticipata</span>
+        <span class="kw">for</span> (<span class="tp">int</span> j = <span class="nm">0</span>; j &lt; n - i - <span class="nm">1</span>; j++) {
+            <span class="kw">if</span> (arr[j] &gt; arr[j + <span class="nm">1</span>]) {
+                swap(arr[j], arr[j + <span class="nm">1</span>]);
+                swapped = <span class="kw">true</span>;
+            }
+        }
+        <span class="kw">if</span> (!swapped) <span class="kw">break</span>;  <span class="cm">// nessuno scambio → già ordinato</span>
+    }
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> arr[] = {<span class="nm">64</span>, <span class="nm">34</span>, <span class="nm">25</span>, <span class="nm">12</span>, <span class="nm">22</span>, <span class="nm">11</span>, <span class="nm">90</span>};
+    <span class="tp">int</span> n = <span class="kw">sizeof</span>(arr) / <span class="kw">sizeof</span>(arr[<span class="nm">0</span>]);
+    <span class="fn">bubbleSort</span>(arr, n);
+    cout &lt;&lt; <span class="st">"Array ordinato: "</span>;
+    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; n; i++) cout &lt;&lt; arr[i] &lt;&lt; <span class="st">" "</span>;
+    cout &lt;&lt; endl;
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+    </div>
+    <h3>Visualizzatore</h3>
+    <!-- VISUALIZZATORE BUBBLE SORT -->
+    <div class="viz-section" data-viz-id="bubble-viz">
+      <div class="viz-toolbar">
+        <button class="viz-btn primary btn-play">▶ Play</button>
+        <button class="viz-btn btn-step">⏭ Step</button>
+        <button class="viz-btn btn-reset">↺ Reset</button>
+        <button class="viz-btn btn-shuffle">🔀 Mescola</button>
+        <div style="display:flex;align-items:center;gap:0.4rem;margin-left:0.5rem;">
+          <span style="font-size:0.75rem;color:var(--prog-muted);">Stile:</span>
+          <div class="viz-style-tabs">
+            <button class="viz-style-btn active" data-style="bars">📊 Barre</button>
+            <button class="viz-style-btn" data-style="blocks">🔢 Blocchi</button>
+          </div>
+        </div>
+        <div class="viz-speed">
+          <span>Velocità</span>
+          <input type="range" class="speed-slider" min="1" max="6" value="3">
+          <span class="speed-label">3x</span>
+        </div>
+      </div>
+      <div class="viz-canvas" id="bubble-canvas-bars">
+        <div class="bar-wrap" id="bubble-bar-wrap"></div>
+      </div>
+      <div class="viz-canvas blocks-mode" id="bubble-canvas-blocks" style="display:none;">
+        <div class="blocks-wrap" id="bubble-blocks-wrap"></div>
+      </div>
+      <div class="viz-status">
+        <span class="viz-status-msg" id="bubble-msg">Pronto. Premi Play o Step.</span>
+        <div class="viz-counters">
+          <span>Confronti: <b class="cnt-compare">0</b></span>
+          <span>Scambi: <b class="cnt-swap">0</b></span>
+          <span>Passata: <b class="cnt-pass">0</b></span>
+        </div>
+      </div>
+      <div class="viz-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--prog-accent)"></div><span>Non esaminato</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--prog-accent3)"></div><span>In confronto</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--prog-red)"></div><span>In scambio</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--prog-accent2)"></div><span>Ordinato</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3. SELECTION SORT ── -->
+  <section id="selection">
+    <div class="section-label">03 — Algoritmo</div>
+    <h2>Selection Sort</h2>
+    <p>Il Selection Sort divide l'array in due parti: quella già ordinata (a sinistra) e quella non ancora ordinata (a destra). Ad ogni iterazione trova il <strong>minimo</strong> nella parte non ordinata e lo porta in testa, espandendo la parte ordinata di un elemento.</p>
+    <h3>Idea visiva</h3>
+    <p>Con <code>[5, 3, 8, 1, 2]</code>: scansiona tutta la lista, trova il minimo (1), lo porta in posizione 0 → <code>[1, 3, 8, 5, 2]</code>. Poi scansiona dal secondo elemento, trova il minimo (2), porta in posizione 1 → <code>[1, 2, 8, 5, 3]</code>. E così via.</p>
+    <div class="box box-info">
+      <strong>📌 Proprietà chiave</strong>
+      Il Selection Sort fa sempre esattamente n−1 scambi, indipendentemente dall'input. È vantaggioso quando gli scambi sono costosi (ad esempio con strutture dati su disco).
+    </div>
+    <h3>Codice C++ commentato</h3>
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+        <span class="code-lang">C++ · selection_sort.cpp</span>
+      </div>
+      <pre><span class="pp">#include &lt;iostream&gt;</span>
+<span class="pp">#include &lt;algorithm&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="cm">// Ordina trovando il minimo e portandolo in testa a ogni passata</span>
+<span class="tp">void</span> <span class="fn">selectionSort</span>(<span class="tp">int</span> arr[], <span class="tp">int</span> n) {
+    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; n - <span class="nm">1</span>; i++) {
+        <span class="tp">int</span> minIdx = i;  <span class="cm">// assume che il minimo sia il primo della parte non ordinata</span>
+        <span class="kw">for</span> (<span class="tp">int</span> j = i + <span class="nm">1</span>; j &lt; n; j++) {
+            <span class="kw">if</span> (arr[j] &lt; arr[minIdx])
+                minIdx = j;  <span class="cm">// aggiorna l'indice del minimo</span>
+        }
+        <span class="kw">if</span> (minIdx != i)
+            swap(arr[minIdx], arr[i]);  <span class="cm">// porta il minimo in posizione i</span>
+    }
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> arr[] = {<span class="nm">64</span>, <span class="nm">25</span>, <span class="nm">12</span>, <span class="nm">22</span>, <span class="nm">11</span>};
+    <span class="tp">int</span> n = <span class="kw">sizeof</span>(arr) / <span class="kw">sizeof</span>(arr[<span class="nm">0</span>]);
+    <span class="fn">selectionSort</span>(arr, n);
+    cout &lt;&lt; <span class="st">"Array ordinato: "</span>;
+    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; n; i++) cout &lt;&lt; arr[i] &lt;&lt; <span class="st">" "</span>;
+    cout &lt;&lt; endl;
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+    </div>
+    <h3>Visualizzatore</h3>
+    <!-- VISUALIZZATORE SELECTION SORT -->
+    <div class="viz-section" data-viz-id="selection-viz">
+      <div class="viz-toolbar">
+        <button class="viz-btn primary btn-play">▶ Play</button>
+        <button class="viz-btn btn-step">⏭ Step</button>
+        <button class="viz-btn btn-reset">↺ Reset</button>
+        <button class="viz-btn btn-shuffle">🔀 Mescola</button>
+        <div style="display:flex;align-items:center;gap:0.4rem;margin-left:0.5rem;">
+          <span style="font-size:0.75rem;color:var(--prog-muted);">Stile:</span>
+          <div class="viz-style-tabs">
+            <button class="viz-style-btn active" data-style="bars">📊 Barre</button>
+            <button class="viz-style-btn" data-style="blocks">🔢 Blocchi</button>
+          </div>
+        </div>
+        <div class="viz-speed">
+          <span>Velocità</span>
+          <input type="range" class="speed-slider" min="1" max="6" value="3">
+          <span class="speed-label">3x</span>
+        </div>
+      </div>
+      <div class="viz-canvas" id="selection-canvas-bars">
+        <div class="bar-wrap" id="selection-bar-wrap"></div>
+      </div>
+      <div class="viz-canvas blocks-mode" id="selection-canvas-blocks" style="display:none;">
+        <div class="blocks-wrap" id="selection-blocks-wrap"></div>
+      </div>
+      <div class="viz-status">
+        <span class="viz-status-msg" id="selection-msg">Pronto. Premi Play o Step.</span>
+        <div class="viz-counters">
+          <span>Confronti: <b class="cnt-compare">0</b></span>
+          <span>Scambi: <b class="cnt-swap">0</b></span>
+          <span>Passata: <b class="cnt-pass">0</b></span>
+        </div>
+      </div>
+      <div class="viz-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--prog-accent)"></div><span>Non esaminato</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--prog-accent3)"></div><span>In confronto</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--prog-red)"></div><span>In scambio</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--prog-accent2)"></div><span>Ordinato</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:#f0c040"></div><span>Minimo corrente</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 4. INSERTION SORT ── -->
+  <section id="insertion">
+    <div class="section-label">04 — Algoritmo</div>
+    <h2>Insertion Sort</h2>
+    <p>L'Insertion Sort costruisce l'array ordinato un elemento alla volta, inserendo ogni nuovo elemento nella posizione corretta tra quelli già ordinati. È il metodo che usiamo istintivamente quando ordiniamo le carte da gioco in mano.</p>
+    <h3>Idea visiva</h3>
+    <p>Prendi il secondo elemento, confrontalo con il primo e inseriscilo al posto giusto. Poi prendi il terzo e inseriscilo nella posizione corretta tra i primi due. Ogni elemento "scivola" verso sinistra finché trova il suo posto.</p>
+    <div class="box box-tip">
+      <strong>💡 Quando usarlo</strong>
+      L'Insertion Sort è O(n) su array quasi ordinati — il migliore dei tre per input reali parzialmente ordinati. Viene usato come fase finale in algoritmi ibridi come Timsort (Python) e introsort (STL C++).
+    </div>
+    <h3>Codice C++ commentato</h3>
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+        <span class="code-lang">C++ · insertion_sort.cpp</span>
+      </div>
+      <pre><span class="pp">#include &lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="cm">// Inserisce ogni elemento nella posizione corretta tra quelli già ordinati</span>
+<span class="tp">void</span> <span class="fn">insertionSort</span>(<span class="tp">int</span> arr[], <span class="tp">int</span> n) {
+    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">1</span>; i &lt; n; i++) {
+        <span class="tp">int</span> key = arr[i];  <span class="cm">// elemento da inserire</span>
+        <span class="tp">int</span> j = i - <span class="nm">1</span>;
+        <span class="kw">while</span> (j &gt;= <span class="nm">0</span> &amp;&amp; arr[j] &gt; key) {
+            arr[j + <span class="nm">1</span>] = arr[j];  <span class="cm">// scorrimento verso destra</span>
+            j--;
+        }
+        arr[j + <span class="nm">1</span>] = key;  <span class="cm">// inserisce nella posizione libera</span>
+    }
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> arr[] = {<span class="nm">12</span>, <span class="nm">11</span>, <span class="nm">13</span>, <span class="nm">5</span>, <span class="nm">6</span>};
+    <span class="tp">int</span> n = <span class="kw">sizeof</span>(arr) / <span class="kw">sizeof</span>(arr[<span class="nm">0</span>]);
+    <span class="fn">insertionSort</span>(arr, n);
+    cout &lt;&lt; <span class="st">"Array ordinato: "</span>;
+    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; n; i++) cout &lt;&lt; arr[i] &lt;&lt; <span class="st">" "</span>;
+    cout &lt;&lt; endl;
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+    </div>
+    <h3>Visualizzatore</h3>
+    <!-- VISUALIZZATORE INSERTION SORT -->
+    <div class="viz-section" data-viz-id="insertion-viz">
+      <div class="viz-toolbar">
+        <button class="viz-btn primary btn-play">▶ Play</button>
+        <button class="viz-btn btn-step">⏭ Step</button>
+        <button class="viz-btn btn-reset">↺ Reset</button>
+        <button class="viz-btn btn-shuffle">🔀 Mescola</button>
+        <div style="display:flex;align-items:center;gap:0.4rem;margin-left:0.5rem;">
+          <span style="font-size:0.75rem;color:var(--prog-muted);">Stile:</span>
+          <div class="viz-style-tabs">
+            <button class="viz-style-btn active" data-style="bars">📊 Barre</button>
+            <button class="viz-style-btn" data-style="blocks">🔢 Blocchi</button>
+          </div>
+        </div>
+        <div class="viz-speed">
+          <span>Velocità</span>
+          <input type="range" class="speed-slider" min="1" max="6" value="3">
+          <span class="speed-label">3x</span>
+        </div>
+      </div>
+      <div class="viz-canvas" id="insertion-canvas-bars">
+        <div class="bar-wrap" id="insertion-bar-wrap"></div>
+      </div>
+      <div class="viz-canvas blocks-mode" id="insertion-canvas-blocks" style="display:none;">
+        <div class="blocks-wrap" id="insertion-blocks-wrap"></div>
+      </div>
+      <div class="viz-status">
+        <span class="viz-status-msg" id="insertion-msg">Pronto. Premi Play o Step.</span>
+        <div class="viz-counters">
+          <span>Confronti: <b class="cnt-compare">0</b></span>
+          <span>Scambi: <b class="cnt-swap">0</b></span>
+          <span>Passata: <b class="cnt-pass">0</b></span>
+        </div>
+      </div>
+      <div class="viz-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--prog-accent)"></div><span>Non esaminato</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--prog-accent3)"></div><span>In confronto</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--prog-red)"></div><span>Scorrimento</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--prog-accent2)"></div><span>Ordinato</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:#f0c040"></div><span>Chiave corrente</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 5. CONFRONTO ── -->
+  <section id="confronto">
+    <div class="section-label">05 — Analisi</div>
+    <h2>Confronto tra algoritmi</h2>
+    <table class="complexity-table">
+      <thead>
+        <tr>
+          <th>Algoritmo</th>
+          <th>Caso migliore</th>
+          <th>Caso medio</th>
+          <th>Caso peggiore</th>
+          <th>Scambi</th>
+          <th>Stabile?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Bubble Sort</strong></td>
+          <td class="o-good">O(n)</td>
+          <td class="o-bad">O(n²)</td>
+          <td class="o-bad">O(n²)</td>
+          <td class="o-bad">O(n²)</td>
+          <td>✅ Sì</td>
+        </tr>
+        <tr>
+          <td><strong>Selection Sort</strong></td>
+          <td class="o-bad">O(n²)</td>
+          <td class="o-bad">O(n²)</td>
+          <td class="o-bad">O(n²)</td>
+          <td class="o-good">O(n)</td>
+          <td>❌ No</td>
+        </tr>
+        <tr>
+          <td><strong>Insertion Sort</strong></td>
+          <td class="o-good">O(n)</td>
+          <td class="o-bad">O(n²)</td>
+          <td class="o-bad">O(n²)</td>
+          <td class="o-mid">O(n²)*</td>
+          <td>✅ Sì</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="box box-info">
+      <strong>📌 Algoritmo stabile</strong>
+      Un algoritmo di ordinamento è definito <em style="color:var(--prog-accent2);font-style:normal;font-weight:700;">stabile</em> se preserva l'ordine relativo degli elementi con la stessa chiave. In altre parole, se due elementi identici si trovano in una certa posizione prima dell'ordinamento, l'algoritmo garantisce che non vengano invertiti tra loro nel risultato finale.
+      <p style="margin-top:0.75rem;margin-bottom:0;">Esempio: immagina di ordinare un elenco di studenti per voto medio. Se gli studenti con lo stesso voto erano elencati originariamente in ordine alfabetico, un algoritmo stabile manterrà questo sotto-ordine alfabetico anche dopo aver riordinato per voto.</p>
+      <p style="margin-top:0.75rem;margin-bottom:0;font-size:0.85rem;color:var(--prog-muted);">La stabilità è osservabile solo con record che hanno una chiave distinta dal resto del dato (come nell'esempio sopra). Con un array di numeri semplici — il caso più comune negli esercizi — due valori uguali sono indistinguibili tra loro, quindi il concetto di stabilità non si può osservare.</p>
+    </div>
+    <div class="box box-warn">
+      <strong>⚠ Insertion Sort e gli "scambi"</strong>
+      L'Insertion Sort non fa scambi ma scorrimenti (assegnamenti), che sono operazioni più veloci degli swap. Per questo in pratica è spesso più veloce degli altri due anche con complessità teorica uguale.
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <strong>Formazione Digitale</strong> &middot; <a href="/index.html">Torna al portale</a><br>
+  Guida libera e gratuita — C++ · Algoritmi di Ordinamento
+  <p style="margin-top:0.4rem;font-size:0.78rem;">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Torna su">↑</button>
+
+<!-- ══════════════════════════════════════════════════════════════
+     VISUALIZZATORE — factory parametrica
+     createViz(cfg) istanzia un visualizzatore indipendente.
+     Ogni istanza ha stato proprio: steps, stepIndex, playing.
+     Approccio B: un solo codice, tre chiamate.
+════════════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  const DEFAULT_ARRAY = [38, 17, 52, 9, 44, 6, 28, 73, 15, 61];
+
+  /* ── TABELLA VELOCITÀ — 6 livelli, il primo è 0.5x ── */
+  const DELAYS = [1200, 600, 400, 250, 120, 40];
+
+  /* ══════════════════════════════════════════
+     GENERATORI DI PASSI
+  ══════════════════════════════════════════ */
+
+  function genBubble(arr) {
+    const steps = []; const a = [...arr]; const n = a.length;
+    const sortedSet = new Set();
+    for (let i = 0; i < n - 1; i++) {
+      let swappedAny = false;
+      for (let j = 0; j < n - i - 1; j++) {
+        steps.push({ arr:[...a], comparing:[j,j+1], swapping:[], sorted:[...sortedSet], pivot:-1,
+          message:`Passata ${i+1}: confronto a[${j}]=${a[j]} e a[${j+1}]=${a[j+1]}`, pass:i+1, swapped:false });
+        if (a[j] > a[j+1]) {
+          [a[j],a[j+1]] = [a[j+1],a[j]]; swappedAny = true;
+          steps.push({ arr:[...a], comparing:[], swapping:[j,j+1], sorted:[...sortedSet], pivot:-1,
+            message:`Scambio: a[${j}] ↔ a[${j+1}]`, pass:i+1, swapped:true });
+        }
+      }
+      sortedSet.add(n-1-i);
+      if (!swappedAny) {
+        for (let k=0; k<n-1-i; k++) sortedSet.add(k);
+        steps.push({ arr:[...a], comparing:[], swapping:[], sorted:[...sortedSet], pivot:-1,
+          message:'Nessuno scambio: array già ordinato!', pass:i+1, swapped:false });
+        break;
+      }
+    }
+    sortedSet.add(0);
+    steps.push({ arr:[...a], comparing:[], swapping:[], sorted:Array.from({length:n},(_,i)=>i),
+      pivot:-1, message:'✅ Array ordinato!', pass:-1, swapped:false });
+    return steps;
+  }
+
+  function genSelection(arr) {
+    const steps = []; const a = [...arr]; const n = a.length;
+    const sortedSet = new Set();
+    for (let i = 0; i < n-1; i++) {
+      let minIdx = i;
+      steps.push({ arr:[...a], comparing:[i], swapping:[], sorted:[...sortedSet], pivot:i,
+        message:`Passata ${i+1}: cerco il minimo da posizione ${i}`, pass:i+1, swapped:false });
+      for (let j = i+1; j < n; j++) {
+        steps.push({ arr:[...a], comparing:[j,minIdx], swapping:[], sorted:[...sortedSet], pivot:minIdx,
+          message:`Confronto a[${j}]=${a[j]} con minimo a[${minIdx}]=${a[minIdx]}`, pass:i+1, swapped:false });
+        if (a[j] < a[minIdx]) {
+          minIdx = j;
+          steps.push({ arr:[...a], comparing:[], swapping:[], sorted:[...sortedSet], pivot:minIdx,
+            message:`Nuovo minimo: a[${minIdx}]=${a[minIdx]}`, pass:i+1, swapped:false });
+        }
+      }
+      if (minIdx !== i) {
+        [a[i],a[minIdx]] = [a[minIdx],a[i]];
+        steps.push({ arr:[...a], comparing:[], swapping:[i,minIdx], sorted:[...sortedSet], pivot:-1,
+          message:`Scambio: a[${i}] ↔ a[${minIdx}]`, pass:i+1, swapped:true });
+      }
+      sortedSet.add(i);
+    }
+    sortedSet.add(n-1);
+    steps.push({ arr:[...a], comparing:[], swapping:[], sorted:Array.from({length:n},(_,i)=>i),
+      pivot:-1, message:'✅ Array ordinato!', pass:-1, swapped:false });
+    return steps;
+  }
+
+  function genInsertion(arr) {
+    const steps = []; const a = [...arr]; const n = a.length;
+    const sortedSet = new Set([0]);
+    for (let i = 1; i < n; i++) {
+      const key = a[i];
+      steps.push({ arr:[...a], comparing:[], swapping:[], sorted:[...sortedSet], pivot:i,
+        message:`Passata ${i}: inserisco a[${i}]=${key}`, pass:i, swapped:false });
+      let j = i-1;
+      while (j >= 0 && a[j] > key) {
+        steps.push({ arr:[...a], comparing:[j,j+1], swapping:[], sorted:[...sortedSet], pivot:-1,
+          message:`a[${j}]=${a[j]} > ${key}: sposto a destra`, pass:i, swapped:false });
+        a[j+1] = a[j];
+        steps.push({ arr:[...a], comparing:[], swapping:[j,j+1], sorted:[...sortedSet], pivot:-1,
+          message:`Scorrimento: a[${j+1}] = ${a[j+1]}`, pass:i, swapped:true });
+        j--;
+      }
+      a[j+1] = key; sortedSet.add(i);
+      steps.push({ arr:[...a], comparing:[], swapping:[], sorted:[...sortedSet], pivot:j+1,
+        message:`Inserito ${key} in posizione ${j+1}`, pass:i, swapped:false });
+    }
+    steps.push({ arr:[...a], comparing:[], swapping:[], sorted:Array.from({length:n},(_,i)=>i),
+      pivot:-1, message:'✅ Array ordinato!', pass:-1, swapped:false });
+    return steps;
+  }
+
+  /* ══════════════════════════════════════════
+     FACTORY — createViz(cfg)
+     cfg: { algo, barWrapId, blocksWrapId,
+            canvasBarsId, canvasBlocksId, msgId,
+            section }   ← section = .viz-section DOM el
+  ══════════════════════════════════════════ */
+  function createViz(cfg) {
+    /* refs DOM interni alla sezione */
+    const sec         = cfg.section;
+    const barWrap     = document.getElementById(cfg.barWrapId);
+    const blocksWrap  = document.getElementById(cfg.blocksWrapId);
+    const canvasBars  = document.getElementById(cfg.canvasBarsId);
+    const canvasBlk   = document.getElementById(cfg.canvasBlocksId);
+    const msgEl       = document.getElementById(cfg.msgId);
+    const btnPlay     = sec.querySelector('.btn-play');
+    const btnStep     = sec.querySelector('.btn-step');
+    const btnReset    = sec.querySelector('.btn-reset');
+    const btnShuffle  = sec.querySelector('.btn-shuffle');
+    const speedSlider = sec.querySelector('.speed-slider');
+    const speedLabel  = sec.querySelector('.speed-label');
+    const cntCmpEl    = sec.querySelector('.cnt-compare');
+    const cntSwpEl    = sec.querySelector('.cnt-swap');
+    const cntPassEl   = sec.querySelector('.cnt-pass');
+
+    /* stato istanza */
+    let steps = [], stepIndex = 0, playing = false, playTimer = null;
+    let currentStyle = 'bars';
+    let cntCompare = 0, cntSwap = 0, cntPass = 0;
+    let currentArr = [...DEFAULT_ARRAY];
+
+    /* velocità */
+    function getDelay() { return DELAYS[parseInt(speedSlider.value) - 1]; }
+    speedSlider.addEventListener('input', () => {
+      const v = parseInt(speedSlider.value);
+      speedLabel.textContent = v === 1 ? '0.5x' : (v-1) + 'x';
+      if (playing) { stopPlay(); startPlay(); } /* aggiorna intervallo live */
+    });
+
+    /* rendering barre — altezza su 240px */
+    function renderBars(step) {
+      const { arr, comparing, swapping, sorted, pivot } = step;
+      const max = Math.max(...arr);
+      barWrap.innerHTML = '';
+      arr.forEach((val, i) => {
+        const bar = document.createElement('div');
+        bar.className = 'bar';
+        bar.style.height = Math.max(8, (val / max) * 240) + 'px';
+        if (swapping.includes(i))        bar.classList.add('swapping');
+        else if (comparing.includes(i))  bar.classList.add('comparing');
+        else if (i === pivot)            bar.classList.add('pivot');
+        else if (sorted.includes(i))     bar.classList.add('sorted');
+        const lbl = document.createElement('span');
+        lbl.className = 'bar-label'; lbl.textContent = val;
+        bar.appendChild(lbl); barWrap.appendChild(bar);
+      });
+    }
+
+    /* rendering blocchi numerici */
+    function renderBlocks(step) {
+      const { arr, comparing, swapping, sorted, pivot } = step;
+      blocksWrap.innerHTML = '';
+      arr.forEach((val, i) => {
+        if (i > 0 && comparing.includes(i) && comparing.includes(i-1)) {
+          const arrow = document.createElement('span');
+          arrow.className = 'compare-arrow visible'; arrow.textContent = '⇄';
+          blocksWrap.appendChild(arrow);
+        }
+        const block = document.createElement('div');
+        block.className = 'num-block'; block.textContent = val;
+        if (swapping.includes(i))        block.classList.add('swapping');
+        else if (comparing.includes(i))  block.classList.add('comparing');
+        else if (i === pivot)            block.classList.add('pivot');
+        else if (sorted.includes(i))     block.classList.add('sorted');
+        blocksWrap.appendChild(block);
+      });
+    }
+
+    function renderStep(step) {
+      if (currentStyle === 'bars') renderBars(step);
+      else renderBlocks(step);
+      msgEl.textContent = step.message;
+      if (step.swapped)               cntSwap++;
+      if (step.comparing.length > 0)  cntCompare++;
+      if (step.pass > 0 && step.pass !== cntPass) cntPass = step.pass;
+      cntCmpEl.textContent = cntCompare;
+      cntSwpEl.textContent = cntSwap;
+      cntPassEl.textContent = cntPass || 0;
+    }
+
+    function init(arr) {
+      stopPlay();
+      cntCompare = 0; cntSwap = 0; cntPass = 0;
+      cntCmpEl.textContent = '0'; cntSwpEl.textContent = '0'; cntPassEl.textContent = '0';
+      currentArr = [...arr];
+      if      (cfg.algo === 'bubble')    steps = genBubble(arr);
+      else if (cfg.algo === 'selection') steps = genSelection(arr);
+      else                               steps = genInsertion(arr);
+      stepIndex = 0;
+      renderStep(steps[0]);
+      msgEl.textContent = 'Pronto. Premi Play o Step.';
+      btnPlay.textContent = '▶ Play'; btnPlay.disabled = false; btnStep.disabled = false;
+    }
+
+    function advance() {
+      if (stepIndex >= steps.length - 1) {
+        stopPlay(); btnPlay.textContent = '▶ Play';
+        btnPlay.disabled = true; btnStep.disabled = true; return;
+      }
+      stepIndex++; renderStep(steps[stepIndex]);
+    }
+
+    function startPlay() {
+      playing = true; btnPlay.textContent = '⏸ Pausa';
+      playTimer = setInterval(() => {
+        if (stepIndex >= steps.length - 1) {
+          stopPlay(); btnPlay.textContent = '▶ Play';
+          btnPlay.disabled = true; btnStep.disabled = true; return;
+        }
+        advance();
+      }, getDelay());
+    }
+
+    function stopPlay() {
+      playing = false; clearInterval(playTimer); playTimer = null;
+    }
+
+    /* event listeners interni alla sezione */
+    btnPlay.addEventListener('click', () => {
+      if (playing) { stopPlay(); btnPlay.textContent = '▶ Play'; }
+      else startPlay();
+    });
+    btnStep.addEventListener('click', () => { stopPlay(); btnPlay.textContent = '▶ Play'; advance(); });
+    btnReset.addEventListener('click', () => init([...DEFAULT_ARRAY]));
+    btnShuffle.addEventListener('click', () => {
+      const arr = [...DEFAULT_ARRAY].sort(() => Math.random() - 0.5);
+      init(arr);
+    });
+
+    sec.querySelectorAll('.viz-style-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sec.querySelectorAll('.viz-style-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentStyle = btn.dataset.style;
+        if (currentStyle === 'bars') { canvasBars.style.display='flex'; canvasBlk.style.display='none'; }
+        else                         { canvasBars.style.display='none'; canvasBlk.style.display='flex'; }
+        renderStep(steps[stepIndex]);
+      });
+    });
+
+    /* avvio */
+    init([...DEFAULT_ARRAY]);
+  }
+
+  /* ══════════════════════════════════════════
+     ISTANZE — una per algoritmo
+  ══════════════════════════════════════════ */
+  createViz({
+    algo: 'bubble',
+    section:        document.querySelector('[data-viz-id="bubble-viz"]'),
+    barWrapId:      'bubble-bar-wrap',
+    blocksWrapId:   'bubble-blocks-wrap',
+    canvasBarsId:   'bubble-canvas-bars',
+    canvasBlocksId: 'bubble-canvas-blocks',
+    msgId:          'bubble-msg'
+  });
+
+  createViz({
+    algo: 'selection',
+    section:        document.querySelector('[data-viz-id="selection-viz"]'),
+    barWrapId:      'selection-bar-wrap',
+    blocksWrapId:   'selection-blocks-wrap',
+    canvasBarsId:   'selection-canvas-bars',
+    canvasBlocksId: 'selection-canvas-blocks',
+    msgId:          'selection-msg'
+  });
+
+  createViz({
+    algo: 'insertion',
+    section:        document.querySelector('[data-viz-id="insertion-viz"]'),
+    barWrapId:      'insertion-bar-wrap',
+    blocksWrapId:   'insertion-blocks-wrap',
+    canvasBarsId:   'insertion-canvas-bars',
+    canvasBlocksId: 'insertion-canvas-blocks',
+    msgId:          'insertion-msg'
+  });
+
+  /* ══════════════════════════════════════════
+     TOC — IntersectionObserver
+  ══════════════════════════════════════════ */
+  const tocLinks = document.querySelectorAll('#toc a');
+  const sections = document.querySelectorAll('section[id]');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        tocLinks.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector(`#toc a[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -80% 0px', threshold: 0 });
+  sections.forEach(s => observer.observe(s));
+
+  tocLinks.forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  /* back to top */
+  const btt = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => { btt.classList.toggle('visible', window.scrollY > 300); });
+
+})();
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>

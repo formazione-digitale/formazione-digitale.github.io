@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programmazione C++ — Formazione Digitale</title>
+
+  <meta name="description" content="Guide e visualizzatori interattivi per imparare la programmazione in C++. Algoritmi di ordinamento, ricerca e strutture dati per terzo e quarto anno SIA e Programmazione I universitaria.">
+  <meta name="author" content="Cristiano De Pasquale">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://formazione-digitale.it/programmazione/">
+  <link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="//gc.zgo.at">
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#7c5cfc">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Programmazione C++ — Formazione Digitale">
+  <meta property="og:description" content="Guide con visualizzatori interattivi per algoritmi di ordinamento, ricerca e strutture dati in C++. Gratis.">
+  <meta property="og:url" content="https://formazione-digitale.it/programmazione/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Formazione Digitale">
+
+  <!-- Twitter/X Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Programmazione C++ — Formazione Digitale">
+  <meta name="twitter:description" content="Guide con visualizzatori interattivi per algoritmi di ordinamento, ricerca e strutture dati in C++.">
+  <meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Programmazione C++",
+    "description": "Guide e visualizzatori interattivi per imparare la programmazione in C++. Algoritmi di ordinamento, ricerca e strutture dati per terzo e quarto anno SIA e Programmazione I universitaria.",
+    "url": "https://formazione-digitale.it/programmazione/",
+    "inLanguage": "it",
+    "author": {
+      "@type": "Person",
+      "name": "Cristiano De Pasquale"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Formazione Digitale",
+      "url": "https://formazione-digitale.it"
+    },
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Formazione Digitale",
+      "url": "https://formazione-digitale.it"
+    }
+  }
+  </script>
+
+  <!-- GoatCounter -->
+  <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/shared.css?v=3">
+
+  <style>
+    /* ══════════════════════════════════════════════════════════
+       HUB PROGRAMMAZIONE
+       CSS locale — non altera shared.css
+       Palette: viola --hub-accent + dark cards
+    ══════════════════════════════════════════════════════════ */
+    :root {
+      --hub-accent:   #7c5cfc;
+      --hub-accent2:  #56cfb2;
+      --hub-surface:  #1a1d27;
+      --hub-card:     #21253a;
+      --hub-border:   #2e3350;
+      --hub-text:     #d4d8f0;
+      --hub-muted:    #7a7f9a;
+    }
+
+    /* ── HEADER HUB — layout a due colonne ── */
+    .hub-header {
+      background: var(--hub-surface);
+      border-bottom: 4px solid var(--hub-accent);
+      padding: 2.5rem 2rem;
+      position: relative; overflow: hidden;
+    }
+    .hub-header::before {
+      content: ''; position: absolute;
+      top: -100px; right: -100px;
+      width: 400px; height: 400px; border-radius: 50%;
+      background: var(--hub-accent); opacity: 0.06;
+      pointer-events: none;
+    }
+    .hub-header-inner {
+      max-width: 960px; margin: 0 auto;
+      display: flex; align-items: center; gap: 2.5rem;
+      position: relative; z-index: 1;
+    }
+    .hub-header-text { flex: 1; min-width: 0; }
+    .hub-back {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.78rem; color: var(--hub-muted);
+      text-decoration: none; transition: color 0.2s;
+      position: absolute; top: 1rem; left: 1.5rem;
+      font-family: var(--font-body);
+    }
+    .hub-back:hover { color: white; }
+    .hub-badge {
+      display: inline-block;
+      font-size: 0.7rem; font-weight: 700;
+      background: var(--hub-accent); color: white;
+      padding: 3px 12px; border-radius: 3px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .hub-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      color: white; letter-spacing: -0.02em; line-height: 1.1;
+    }
+    .hub-header h1 span { color: var(--hub-accent); }
+    .hub-header p {
+      margin-top: 0.75rem; color: var(--hub-muted);
+      font-size: 0.95rem; max-width: 520px; line-height: 1.7;
+    }
+    .hub-pills {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem;
+    }
+    .hub-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 5px 14px; border-radius: 20px;
+      font-size: 0.78rem; color: var(--hub-muted);
+    }
+    .hub-pill strong { color: rgba(255,255,255,0.8); }
+
+    /* ── SNIPPET DECORATIVO (colonna destra hero) ── */
+    .hub-header-visual {
+      flex-shrink: 0; width: 320px;
+      display: none; /* nascosto su mobile, mostrato da media query */
+    }
+    .hub-code-card {
+      background: #0f1117;
+      border: 1px solid var(--hub-border);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+      transform: rotate(1.5deg);
+    }
+    .hub-code-bar {
+      background: var(--hub-card);
+      padding: 0.5rem 0.9rem;
+      display: flex; gap: 5px;
+      border-bottom: 1px solid var(--hub-border);
+    }
+    .hub-code-dot { width: 9px; height: 9px; border-radius: 50%; }
+    .hub-code-pre {
+      padding: 1rem 1.1rem;
+      font-family: 'Space Mono', 'Courier New', monospace;
+      font-size: 0.74rem; line-height: 1.7;
+      color: #d4d8f0; white-space: pre;
+      opacity: 0.92;
+    }
+    .hc-kw  { color: #f97583; font-weight: 700; }
+    .hc-tp  { color: #79b8ff; }
+    .hc-fn  { color: #56cfb2; }
+    .hc-cm  { color: #6a737d; font-style: italic; }
+    .hc-nm  { color: #b392f0; }
+
+    /* ── MAIN ── */
+    .hub-main {
+      max-width: 960px; margin: 0 auto;
+      padding: 2.5rem 1.5rem 5rem;
+    }
+
+    /* ── TITOLO SEZIONE ── */
+    .hub-section-title {
+      font-size: 0.72rem; font-weight: 700;
+      color: var(--hub-accent); letter-spacing: 0.14em;
+      text-transform: uppercase; margin-bottom: 1rem;
+      font-family: var(--font-body);
+    }
+
+    /* ── INTRODUZIONE DI SEZIONE ── */
+    .hub-intro { margin-bottom: 2.5rem; }
+    .hub-intro p {
+      color: var(--hub-text); font-size: 0.96rem;
+      line-height: 1.8; max-width: 100%;
+      margin-bottom: 1.25rem;
+    }
+    .hub-intro-points {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.9rem;
+    }
+    .hub-intro-point {
+      background: var(--hub-surface);
+      border: 1px solid var(--hub-border);
+      border-left: 3px solid var(--hub-accent);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      font-size: 0.84rem;
+      color: var(--hub-text);
+      line-height: 1.55;
+    }
+    .hub-intro-point strong {
+      display: block; color: white; font-size: 0.88rem;
+      margin-bottom: 0.2rem;
+    }
+
+    /* ── PERCORSO CONSIGLIATO ── */
+    .hub-path {
+      background: var(--hub-surface);
+      border: 1px solid var(--hub-border);
+      border-radius: 12px; overflow: hidden;
+      margin-top: 3rem;
+    }
+    .hub-path-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--hub-border);
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .hub-path-header span {
+      font-size: 0.82rem; font-weight: 600;
+      color: var(--hub-text);
+    }
+    .hub-path-header small {
+      font-size: 0.72rem; color: var(--hub-muted); margin-left: auto;
+    }
+    .hub-path-list {
+      list-style: none; padding: 1.25rem 1.5rem;
+      display: flex; flex-direction: column; gap: 0.75rem;
+    }
+    .hub-path-item {
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .hub-path-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--hub-accent); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; font-weight: 700; flex-shrink: 0;
+    }
+    .hub-path-label {
+      font-size: 0.9rem; color: var(--hub-text); font-weight: 500;
+    }
+    .hub-path-label small {
+      display: block; font-size: 0.75rem;
+      color: var(--hub-muted); font-weight: 400; margin-top: 1px;
+    }
+    .hub-path-arrow {
+      color: var(--hub-border); font-size: 1.2rem;
+      margin-left: 1.75rem;
+    }
+
+    /* ── TAB ── */
+    .hub-tabs {
+      display: flex; gap: 0;
+      border-bottom: 2px solid var(--hub-border);
+      margin-bottom: 2rem;
+    }
+    .hub-tab {
+      padding: 0.7rem 1.5rem;
+      border: none; background: transparent;
+      font-family: var(--font-body); font-size: 0.88rem; font-weight: 600;
+      color: var(--hub-muted); cursor: pointer;
+      border-bottom: 3px solid transparent; margin-bottom: -2px;
+      transition: all 0.18s;
+    }
+    .hub-tab:hover { color: white; }
+    .hub-tab.active {
+      color: var(--hub-accent);
+      border-bottom-color: var(--hub-accent);
+    }
+
+    /* ── PANNELLI TAB ── */
+    .hub-panel { display: none; }
+    .hub-panel.active { display: block; }
+
+    /* ── GRIGLIA CARD DARK ── */
+    .hub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .hub-card {
+      background: var(--hub-surface);
+      border: 1px solid var(--hub-border);
+      border-radius: 12px; overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      text-decoration: none; color: inherit;
+    }
+    .hub-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(124,92,252,0.18);
+      border-color: var(--hub-accent);
+    }
+    .hub-card-strip {
+      height: 4px; background: var(--hub-accent);
+      transition: height 0.2s;
+    }
+    .hub-card:hover .hub-card-strip { height: 6px; }
+    .hub-card-body { padding: 1.25rem 1.25rem 1rem; flex: 1; }
+    .hub-card-emoji { font-size: 1.75rem; margin-bottom: 0.75rem; }
+    .hub-card-cat {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--hub-accent);
+      margin-bottom: 0.4rem;
+    }
+    .hub-card-title {
+      font-size: 1rem; font-weight: 700; color: white;
+      line-height: 1.3; margin-bottom: 0.5rem;
+    }
+    .hub-card-desc {
+      font-size: 0.82rem; color: var(--hub-muted); line-height: 1.6;
+    }
+    .hub-card-footer {
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid var(--hub-border);
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(0,0,0,0.15);
+    }
+    .hub-card-meta { font-size: 0.72rem; color: var(--hub-muted); }
+    .hub-card-cta  {
+      font-size: 0.78rem; font-weight: 600; color: var(--hub-accent);
+      display: flex; align-items: center; gap: 4px;
+      white-space: nowrap;
+    }
+    .hub-card-cta .arrow { transition: transform 0.18s; display: inline-block; }
+    .hub-card:hover .hub-card-cta .arrow { transform: translateX(4px); }
+
+    /* card coming */
+    .hub-card.coming {
+      opacity: 0.5; pointer-events: none;
+      border-style: dashed; border-color: #333;
+    }
+    .hub-card.coming .hub-card-strip { background: #333; }
+
+    /* ── MAPPA D3 ── */
+    #hub-map-container {
+      background: var(--hub-surface);
+      border: 1px solid var(--hub-border);
+      border-radius: 12px; overflow: hidden;
+      height: 480px; position: relative;
+    }
+    #hub-map-svg { width: 100%; height: 100%; }
+
+    /* tooltip D3 */
+    .hub-tooltip {
+      position: absolute;
+      background: #0f1117;
+      border: 1px solid var(--hub-border);
+      border-radius: 8px;
+      padding: 0.6rem 0.9rem;
+      font-size: 0.78rem;
+      color: var(--hub-text);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+      max-width: 200px;
+      line-height: 1.4;
+      z-index: 10;
+    }
+    .hub-tooltip strong { color: white; display: block; margin-bottom: 2px; }
+    .hub-tooltip small  { color: var(--hub-muted); }
+
+    /* mappa hint */
+    .hub-map-hint {
+      position: absolute; bottom: 0.75rem; right: 1rem;
+      font-size: 0.7rem; color: var(--hub-muted);
+      pointer-events: none;
+    }
+
+    /* ── FOOTER ── */
+    .hub-footer {
+      text-align: center; padding: 2.5rem 1rem;
+      color: var(--hub-muted); font-size: 0.85rem;
+      border-top: 1px solid var(--hub-border);
+      margin-top: 1rem;
+      background: var(--hub-surface);
+    }
+    .hub-footer a { color: var(--hub-accent); text-decoration: none; }
+    .hub-footer a:hover { text-decoration: underline; }
+
+    /* ── RESPONSIVE ── */
+    @media (min-width: 860px) {
+      .hub-header-visual { display: block; }
+    }
+    @media (max-width: 600px) {
+      .hub-header { padding: 2.5rem 1rem 2rem; }
+      .hub-grid   { grid-template-columns: 1fr; }
+      #hub-map-container { height: 360px; }
+      .hub-tab    { padding: 0.6rem 1rem; font-size: 0.82rem; }
+    }
+  </style>
+</head>
+<body style="background:#0f1117; margin:0;">
+
+<!-- ══ HEADER ══ -->
+<header class="hub-header">
+  <a href="/index.html" class="hub-back">← Portale</a>
+  <div class="hub-header-inner">
+    <div class="hub-header-text">
+      <div class="hub-badge">Sezione · Programmazione</div>
+      <h1><span>C++</span> — Programmazione</h1>
+      <p>Guide pratiche per affrontare alcuni dei problemi informatici classici — ordinamento, ricerca, gestione delle strutture dati — usando il C++ come riferimento concreto.</p>
+      <div class="hub-pills">
+        <span class="hub-pill">🔧 <strong>Linguaggio:</strong> C++</span>
+        <span class="hub-pill">🎓 <strong>Livello:</strong> Base → Intermedio</span>
+        <span class="hub-pill" id="hub-pill-count">📚 <strong>Risorse:</strong> —</span>
+      </div>
+    </div>
+    <div class="hub-header-visual">
+      <div class="hub-code-card">
+        <div class="hub-code-bar">
+          <div class="hub-code-dot" style="background:#e05c5c;"></div>
+          <div class="hub-code-dot" style="background:#f9a03f;"></div>
+          <div class="hub-code-dot" style="background:#56cfb2;"></div>
+        </div>
+        <div class="hub-code-pre"><span class="hc-cm">// ricerca binaria</span>
+<span class="hc-tp">int</span> <span class="hc-fn">cerca</span>(<span class="hc-tp">int</span> a[], <span class="hc-tp">int</span> n, <span class="hc-tp">int</span> x) {
+  <span class="hc-tp">int</span> lo = <span class="hc-nm">0</span>, hi = n - <span class="hc-nm">1</span>;
+  <span class="hc-kw">while</span> (lo &lt;= hi) {
+    <span class="hc-tp">int</span> mid = (lo + hi) / <span class="hc-nm">2</span>;
+    <span class="hc-kw">if</span> (a[mid] == x)
+      <span class="hc-kw">return</span> mid;
+    <span class="hc-kw">else if</span> (a[mid] &lt; x)
+      lo = mid + <span class="hc-nm">1</span>;
+    <span class="hc-kw">else</span>
+      hi = mid - <span class="hc-nm">1</span>;
+  }
+  <span class="hc-kw">return</span> -<span class="hc-nm">1</span>;
+}</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ══ MAIN ══ -->
+<div class="hub-main">
+
+  <!-- INTRODUZIONE DI SEZIONE -->
+  <div class="hub-intro">
+    <p>Questa sezione raccoglie guide pratiche per affrontare alcuni dei problemi informatici classici — ordinamento, ricerca, gestione delle strutture dati — usando il linguaggio C++ come riferimento concreto. Ogni argomento unisce teoria chiara, codice commentato riga per riga e un visualizzatore animato che mostra esattamente cosa succede dentro l'algoritmo mentre viene eseguito.</p>
+    <div class="hub-intro-points">
+      <div class="hub-intro-point">
+        <strong>📖 Teoria chiara</strong>
+        Spiegazioni passo-passo, senza salti logici.
+      </div>
+      <div class="hub-intro-point">
+        <strong>💻 Codice C++ commentato</strong>
+        Ogni riga spiegata, pronto da copiare e studiare.
+      </div>
+      <div class="hub-intro-point">
+        <strong>🎬 Visualizzatore animato</strong>
+        Guarda l'algoritmo muoversi, non solo leggerlo.
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB -->
+  <div class="hub-section-title">Risorse disponibili</div>
+  <div class="hub-tabs">
+    <button class="hub-tab active" id="tab-map" data-panel="panel-map">🗺 Mappa</button>
+    <button class="hub-tab" id="tab-list" data-panel="panel-list">📋 Lista</button>
+  </div>
+
+  <!-- PANNELLO MAPPA -->
+  <div class="hub-panel active" id="panel-map">
+    <div id="hub-map-container">
+      <svg id="hub-map-svg"></svg>
+      <div class="hub-tooltip" id="hub-tooltip"></div>
+      <div class="hub-map-hint">Trascina i nodi · Hover per dettagli · Click per aprire</div>
+    </div>
+  </div>
+
+  <!-- PANNELLO LISTA -->
+  <div class="hub-panel" id="panel-list">
+    <div class="hub-grid" id="hub-grid">
+      <!-- card generate da JS leggendo manifest.json -->
+    </div>
+  </div>
+
+  <!-- PERCORSO CONSIGLIATO -->
+  <div class="hub-section-title">Percorso consigliato</div>
+  <div class="hub-path">
+    <div class="hub-path-header">
+      <span>🗺 Da dove partire</span>
+      <small>Segui l'ordine per una progressione ottimale</small>
+    </div>
+    <ol class="hub-path-list" id="hub-path-list">
+      <li class="hub-path-item">
+        <div class="hub-path-num">1</div>
+        <div class="hub-path-label">
+          Algoritmi di Ordinamento
+          <small>Array, confronti, scambi — la base di tutto</small>
+        </div>
+      </li>
+      <div class="hub-path-arrow">↓</div>
+      <li class="hub-path-item">
+        <div class="hub-path-num">2</div>
+        <div class="hub-path-label">
+          Algoritmi di Ricerca
+          <small>Lineare e binaria — trovare dati in modo efficiente</small>
+        </div>
+      </li>
+      <div class="hub-path-arrow">↓</div>
+      <li class="hub-path-item" style="opacity:0.5;">
+        <div class="hub-path-num" style="background:var(--hub-border);">3</div>
+        <div class="hub-path-label" style="color:var(--hub-muted);">
+          Strutture Dati
+          <small>Prossimamente — array, stack, liste concatenate</small>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="hub-footer">
+  <strong>Formazione Digitale</strong> &middot;
+  <a href="/index.html">← Torna al portale</a><br>
+  Sezione Programmazione C++ — guide libere e gratuite
+  <p style="margin-top:0.4rem;font-size:0.78rem;">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<!-- ══ D3 ══ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── PREFISSO AREA ── */
+  const AREA_PREFIX = '/programmazione/';
+
+  /* ── COLORI PER CAT ── */
+  const CAT_COLOR = {
+    guide:     '#7c5cfc',
+    strumento: '#56cfb2',
+    pillola:   '#f9a03f'
+  };
+
+  /* ══════════════════════════════════════════
+     FETCH MANIFEST + FILTRA AREA
+  ══════════════════════════════════════════ */
+  async function loadRisorse() {
+    try {
+      const res  = await fetch('/manifest.json');
+      const all  = await res.json();
+      return all.filter(r => r.active && r.path.startsWith(AREA_PREFIX));
+    } catch (e) {
+      /* fallback hardcoded per sviluppo locale */
+      return [
+        {
+          path: '/programmazione/algoritmi-ordinamento/',
+          label: 'Algoritmi di Ordinamento in C++',
+          short: 'Algoritmi Ordinamento',
+          cat: 'guide', emoji: '🔢',
+          meta: '3 algoritmi · Visualizzatore · C++',
+          description: 'Bubble Sort, Selection Sort, Insertion Sort con visualizzatore passo-passo.',
+          active: true
+        },
+        {
+          path: '/programmazione/algoritmi-ricerca/',
+          label: 'Algoritmi di Ricerca in C++',
+          short: 'Algoritmi Ricerca',
+          cat: 'guide', emoji: '🔍',
+          meta: '2 algoritmi · Visualizzatore · C++',
+          description: 'Ricerca Lineare e Ricerca Binaria con visualizzatore passo-passo.',
+          active: true
+        }
+      ];
+    }
+  }
+
+  /* ══════════════════════════════════════════
+     RENDER GRIGLIA CARD DARK
+  ══════════════════════════════════════════ */
+  function renderGrid(risorse) {
+    const grid = document.getElementById('hub-grid');
+    grid.innerHTML = '';
+
+    if (risorse.length === 0) {
+      grid.innerHTML = '<p style="color:var(--hub-muted);font-size:0.9rem;">Nessuna risorsa disponibile.</p>';
+      return;
+    }
+
+    risorse.forEach(r => {
+      const catLabel = { guide: 'Guida completa', strumento: 'Strumento', pillola: 'Pillola' }[r.cat] || r.cat;
+      const ctaLabel = { guide: 'Apri la guida', strumento: 'Apri lo strumento', pillola: 'Leggi la pillola' }[r.cat] || 'Apri';
+
+      const card = document.createElement('a');
+      card.className = 'hub-card';
+      card.href = r.path;
+      card.innerHTML = `
+        <div class="hub-card-strip"></div>
+        <div class="hub-card-body">
+          <div class="hub-card-emoji">${r.emoji || '📄'}</div>
+          <div class="hub-card-cat">${catLabel}</div>
+          <div class="hub-card-title">${r.label}</div>
+          <div class="hub-card-desc">${r.description || ''}</div>
+        </div>
+        <div class="hub-card-footer">
+          <div class="hub-card-meta">${r.meta || ''}</div>
+          <div class="hub-card-cta">${ctaLabel} <span class="arrow">→</span></div>
+        </div>`;
+      grid.appendChild(card);
+    });
+
+    /* card coming sempre in fondo */
+    const coming = document.createElement('div');
+    coming.className = 'hub-card coming';
+    coming.innerHTML = `
+      <div class="hub-card-strip"></div>
+      <div class="hub-card-body">
+        <div class="hub-card-emoji">🏗</div>
+        <div class="hub-card-cat">Prossimamente</div>
+        <div class="hub-card-title">Strutture Dati</div>
+        <div class="hub-card-desc">Array avanzati, stack, code e liste concatenate in C++.</div>
+      </div>
+      <div class="hub-card-footer">
+        <div class="hub-card-meta">In preparazione</div>
+        <div class="hub-card-cta">Disponibile presto</div>
+      </div>`;
+    grid.appendChild(coming);
+  }
+
+  /* ══════════════════════════════════════════
+     RENDER MAPPA D3 FORCE-DIRECTED
+  ══════════════════════════════════════════ */
+  function renderMap(risorse) {
+    const container = document.getElementById('hub-map-container');
+    const svg       = d3.select('#hub-map-svg');
+    const tooltip   = document.getElementById('hub-tooltip');
+    const W = container.clientWidth  || 900;
+    const H = container.clientHeight || 480;
+
+    svg.selectAll('*').remove();
+
+    /* nodo centrale hub — ancorato al centro, non si muove */
+    const nodes = [
+      { id: '__hub__', label: 'Programmazione\nC++', type: 'hub', r: 36,
+        x: W / 2, y: H / 2, fx: W / 2, fy: H / 2 },
+      ...risorse.map(r => ({
+        id:    r.path,
+        label: r.short,
+        emoji: r.emoji,
+        cat:   r.cat,
+        path:  r.path,
+        meta:  r.meta,
+        type:  'risorsa',
+        r:     28,
+        /* posizione iniziale vicino al centro per convergenza più rapida */
+        x: W / 2 + (Math.random() - 0.5) * 80,
+        y: H / 2 + (Math.random() - 0.5) * 80
+      }))
+    ];
+
+    const links = risorse.map(r => ({
+      source: '__hub__',
+      target: r.path
+    }));
+
+    /* simulazione */
+    const sim = d3.forceSimulation(nodes)
+      .force('link',   d3.forceLink(links).id(d => d.id).distance(140).strength(0.8))
+      .force('charge', d3.forceManyBody().strength(-320))
+      .force('center', d3.forceCenter(W / 2, H / 2))
+      .force('collide', d3.forceCollide(d => d.r + 18));
+
+    const g = svg.append('g');
+
+    /* zoom */
+    svg.call(d3.zoom()
+      .scaleExtent([0.4, 2.5])
+      .on('zoom', e => g.attr('transform', e.transform))
+    );
+
+    /* link */
+    const link = g.append('g')
+      .selectAll('line').data(links).join('line')
+      .attr('stroke', '#2e3350')
+      .attr('stroke-width', 2)
+      .attr('stroke-dasharray', '5,4');
+
+    /* nodi */
+    const node = g.append('g')
+      .selectAll('g').data(nodes).join('g')
+      .style('cursor', d => d.path ? 'pointer' : 'default')
+      .call(d3.drag()
+        .on('start', (e, d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+        .on('drag',  (e, d) => { d.fx = e.x; d.fy = e.y; })
+        .on('end',   (e, d) => {
+          if (!e.active) sim.alphaTarget(0);
+          /* il hub resta sempre ancorato (anche dopo drag); le risorse tornano libere */
+          if (d.type !== 'hub') { d.fx = null; d.fy = null; }
+        })
+      )
+      .on('click', (e, d) => { if (d.path) window.location.href = d.path; })
+      .on('mouseover', (e, d) => {
+        if (d.type === 'hub') return;
+        tooltip.style.opacity = '1';
+        tooltip.innerHTML = `<strong>${d.emoji} ${d.label}</strong><small>${d.meta || ''}</small>`;
+      })
+      .on('mousemove', e => {
+        const rect = container.getBoundingClientRect();
+        let x = e.clientX - rect.left + 12;
+        let y = e.clientY - rect.top  - 10;
+        if (x + 210 > W) x -= 220;
+        tooltip.style.left = x + 'px';
+        tooltip.style.top  = y + 'px';
+      })
+      .on('mouseout', () => { tooltip.style.opacity = '0'; });
+
+    /* cerchio */
+    node.append('circle')
+      .attr('r', d => d.r)
+      .attr('fill', d => {
+        if (d.type === 'hub') return '#7c5cfc';
+        return CAT_COLOR[d.cat] || '#7c5cfc';
+      })
+      .attr('fill-opacity', d => d.type === 'hub' ? 0.25 : 0.15)
+      .attr('stroke', d => {
+        if (d.type === 'hub') return '#7c5cfc';
+        return CAT_COLOR[d.cat] || '#7c5cfc';
+      })
+      .attr('stroke-width', d => d.type === 'hub' ? 3 : 2);
+
+    /* emoji nodi risorsa */
+    node.filter(d => d.type === 'risorsa')
+      .append('text')
+      .attr('text-anchor', 'middle')
+      .attr('dy', '-0.2em')
+      .attr('font-size', '1.2rem')
+      .text(d => d.emoji || '📄');
+
+    /* testo nodi */
+    node.append('text')
+      .attr('text-anchor', 'middle')
+      .attr('dy', d => d.type === 'hub' ? '0.35em' : '1.6em')
+      .attr('fill', '#d4d8f0')
+      .attr('font-size', d => d.type === 'hub' ? '0.72rem' : '0.65rem')
+      .attr('font-weight', d => d.type === 'hub' ? '700' : '500')
+      .attr('font-family', 'Sora, sans-serif')
+      .each(function(d) {
+        /* testo hub su due righe */
+        if (d.type === 'hub') {
+          const lines = d.label.split('\n');
+          d3.select(this).text('');
+          lines.forEach((line, i) => {
+            d3.select(this).append('tspan')
+              .attr('x', 0).attr('dy', i === 0 ? '-0.4em' : '1.2em')
+              .text(line);
+          });
+        } else {
+          /* etichetta sotto il nodo — tronca se troppo lunga */
+          const label = d.label.length > 22 ? d.label.slice(0, 20) + '…' : d.label;
+          d3.select(this).text(label);
+        }
+      });
+
+    /* tick */
+    sim.on('tick', () => {
+      link
+        .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+        .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+      node.attr('transform', d => `translate(${d.x},${d.y})`);
+    });
+  }
+
+  /* ══════════════════════════════════════════
+     TAB SWITCH
+  ══════════════════════════════════════════ */
+  document.querySelectorAll('.hub-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.hub-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.hub-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.panel).classList.add('active');
+    });
+  });
+
+  /* ══════════════════════════════════════════
+     AVVIO
+  ══════════════════════════════════════════ */
+  loadRisorse().then(risorse => {
+    /* pill conteggio */
+    const pill = document.getElementById('hub-pill-count');
+    if (pill) pill.innerHTML = `📚 <strong>Risorse:</strong> ${risorse.length} disponibili`;
+
+    renderGrid(risorse);
+    renderMap(risorse);
+  });
+
+})();
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>
