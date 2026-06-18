@@ -81,3 +81,30 @@ with open(OUTPUT, "w", encoding="utf-8") as f:
 
 print(f"sitemap.xml generata: {len(PAGINE_FISSE) + len(risorse_attive)} URL")
 print(f"Output: {OUTPUT}")
+
+# ── BUMP CACHE_VERSION IN sw.js ──────────────────────────────────
+# Aggiorna CACHE_VERSION con la data odierna ad ogni lancio dello script.
+# Quando sw.js verrà spostato in /scripts/, aggiorna SW_PATH di conseguenza.
+import re
+
+SW_PATH = os.path.join(ROOT, "sw.js")  # attuale: root — futuro: scripts/sw.js
+
+if os.path.exists(SW_PATH):
+    with open(SW_PATH, encoding="utf-8") as f:
+        sw_content = f.read()
+
+    nuova_versione = f"fd-v{date.today().isoformat()}"
+    sw_aggiornato = re.sub(
+        r"const CACHE_VERSION\s*=\s*'[^']*'",
+        f"const CACHE_VERSION = '{nuova_versione}'",
+        sw_content
+    )
+
+    if sw_aggiornato != sw_content:
+        with open(SW_PATH, "w", encoding="utf-8") as f:
+            f.write(sw_aggiornato)
+        print(f"sw.js aggiornato: CACHE_VERSION = '{nuova_versione}'")
+    else:
+        print(f"sw.js: CACHE_VERSION già aggiornata ({nuova_versione})")
+else:
+    print(f"ATTENZIONE: sw.js non trovato in {SW_PATH}")
