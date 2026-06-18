@@ -134,39 +134,6 @@ html, body {
 }
 #graph-svg:active { cursor: grabbing; }
 
-/* ── LEGENDA ── */
-.ma-legend {
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 1.25rem;
-  background: rgba(255,255,255,.92);
-  backdrop-filter: blur(8px);
-  border: 1px solid var(--blue-light);
-  border-radius: 10px;
-  padding: 1rem 1.25rem;
-  font-size: .82rem;
-  color: var(--gray-mid);
-  z-index: 50;
-  box-shadow: 0 2px 12px rgba(31,78,121,.1);
-  display: flex;
-  flex-direction: column;
-  gap: .6rem;
-}
-.ma-legend-item {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-}
-.ma-legend-dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.ma-legend-dot.hub { background: var(--blue-dark); }
-.ma-legend-dot.area { background: #888; border: 2px solid #888; }
-.ma-legend-dot.risorsa { background: #fff; border: 2px solid #888; width: 8px; height: 8px; }
-
 /* ── CONTATORE ── */
 .ma-counter {
   position: fixed;
@@ -383,7 +350,6 @@ html, body {
 @media (max-width: 600px) {
   :root { --panel-width: 100vw; }
   .ma-header-hint { display: none; }
-  .ma-legend { display: none; }
   .ma-panel { top: 52px; }
   .ma-breadcrumb span.bc-label { display: none; }
 }
@@ -471,21 +437,6 @@ html, body {
   <svg id="graph-svg"></svg>
 </div>
 
-<!-- LEGENDA -->
-<div class="ma-legend">
-  <div class="ma-legend-item">
-    <div class="ma-legend-dot hub"></div>
-    <span>Hub centrale</span>
-  </div>
-  <div class="ma-legend-item">
-    <div class="ma-legend-dot area"></div>
-    <span>Area tematica</span>
-  </div>
-  <div class="ma-legend-item">
-    <div class="ma-legend-dot risorsa"></div>
-    <span>Risorsa</span>
-  </div>
-</div>
 
 <!-- CONTATORE -->
 <div class="ma-counter" id="ma-counter">

@@ -115,8 +115,8 @@
     },
     {
         "path": "/database/guida-libreoffice-base-query/",
-        "label": "LibreOffice Base — Le Query",
-        "short": "LibreOffice Base",
+        "label": "LibreOffice Base — Guida alle query",
+        "short": "LibreOffice Base: Guida alle query",
         "cat": "guide",
         "emoji": "🗄️",
         "tags": [
@@ -128,7 +128,7 @@
             "odb"
         ],
         "meta": "Con DB di esempio · Livello intermedio",
-        "description": "Guida pratica alle query in LibreOffice Base. Include database di esempio scaricabile e immagini passo per passo.",
+        "description": "Query di selezione, calcoli e raggruppamenti GROUP BY in LibreOffice Base. Include database di esempio scaricabile e immagini passo per passo.",
         "featured": false,
         "active": true,
         "digcomp": [
