@@ -218,6 +218,85 @@ header {
 }
 .hero-search button:hover { background: var(--blue-dark); }
 
+/* ── RICERCA FEDERATA — overlay dropdown sotto la barra ── */
+.hero-search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  max-width: 640px;
+  margin: 0 auto;
+}
+/* Rimuovo margin dal hero-search originale ora che è dentro il wrap */
+.hero-search-wrap .hero-search { max-width: 100%; margin: 0; }
+
+.fed-overlay {
+  display: none;
+  position: fixed;
+  background: #fff;
+  border: 1px solid var(--blue-light);
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(31,78,121,.15);
+  z-index: 9000;
+  max-height: 380px;
+  overflow-y: auto;
+  font-family: var(--font-body);
+}
+.fed-overlay.open { display: block; }
+
+.fed-header {
+  padding: .55rem 1rem;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gray-mid);
+  border-bottom: 1px solid var(--blue-light);
+  position: sticky; top: 0;
+  background: #fff;
+}
+
+.fed-item {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .7rem 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: background .15s;
+  border-bottom: 1px solid var(--blue-pale);
+}
+.fed-item:last-child { border-bottom: none; }
+.fed-item:hover { background: var(--blue-pale); }
+
+.fed-item-emoji { font-size: 1.1rem; flex-shrink: 0; width: 1.5rem; text-align: center; }
+
+.fed-item-body { flex: 1; min-width: 0; }
+.fed-item-title {
+  font-size: .85rem; font-weight: 600;
+  color: var(--gray-dark);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.fed-item-meta {
+  font-size: .72rem; color: var(--gray-mid); margin-top: 1px;
+}
+
+.fed-item-badge {
+  font-size: .65rem; font-weight: 700;
+  padding: .15rem .55rem; border-radius: 10px;
+  white-space: nowrap; flex-shrink: 0;
+}
+.fed-badge-guide    { background: var(--blue-pale); color: var(--blue-dark); }
+.fed-badge-strumento { background: #E8F5EE; color: #1E6B3C; }
+.fed-badge-pillola  { background: #FFF3CD; color: #7D4E00; }
+
+.fed-empty {
+  padding: 1.25rem 1rem;
+  text-align: center;
+  font-size: .82rem;
+  color: var(--gray-mid);
+}
+
 /* ── STATS BAR ──────────────────────────────────────────── */
 .stats-bar {
   background: var(--white);
@@ -860,9 +939,11 @@ body.modal-open { overflow: hidden; }
 <h1 class="hero-title">Formazione <br><em id="hero-digitale">Digitale</em></h1>
   <div class="hero-eyebrow">Risorse libere · Aggiornate · Per tutti</div>
   <div class="hero-search-row">
-    <div class="hero-search">
-      <input type="text" id="search-input" placeholder="Cerca una risorsa..." oninput="filterAll()">
-      <button onclick="filterAll()">Cerca</button>
+    <div class="hero-search-wrap">
+      <div class="hero-search">
+        <input type="text" id="search-input" placeholder="Cerca una risorsa..." oninput="onSearchInput()" autocomplete="off">
+        <button onclick="onSearchBtn()">Cerca</button>
+      </div>
     </div>
     <a href="mappa-risorse.html" class="hero-map-btn">🗺 Mappa risorse <span class="arrow">→</span></a>
 	  <a href="mappa-framework.html" class="hero-map-btn">🧭 Mappa framework <span class="arrow">→</span></a>
@@ -1653,7 +1734,117 @@ function filterAll() {
 	if (show && !isComing) visible++;
   });
   document.getElementById('no-results').style.display = visible === 0 && q ? 'block' : 'none';
+
+  // Le card-area (hub) non hanno classe .card, filterAll non le tocca.
+  // Con una query attiva le nascondiamo: l'overlay federato mostra già
+  // le risorse rilevanti di ogni hub. Senza query, tornano visibili.
+  const wrap = document.querySelector('.card-area-wrap');
+  if (wrap) wrap.style.display = q ? 'none' : '';
 }
+
+// ── RICERCA FEDERATA ─────────────────────────────────────────────
+// Legge manifest.json e mostra un overlay dropdown con tutte le risorse
+// che corrispondono alla query — incluse quelle inside le hub (database,
+// programmazione) non visibili come card singole in home.
+// filterAll() continua a filtrare le card DOM visibili, invariato.
+
+let FED_MANIFEST = null;  // cache manifest, caricato una sola volta
+
+async function getManifest() {
+  if (FED_MANIFEST) return FED_MANIFEST;
+  try {
+    const res = await fetch('manifest.json');
+    FED_MANIFEST = (await res.json()).filter(r => r.active);
+  } catch (e) {
+    FED_MANIFEST = [];
+  }
+  return FED_MANIFEST;
+}
+
+function onSearchInput() {
+  filterAll();        // filtro DOM invariato
+  fedSearch();        // overlay federato
+}
+
+function onSearchBtn() {
+  filterAll();
+  fedSearch();
+  document.getElementById('search-input').focus();
+}
+
+async function fedSearch() {
+  const input = document.getElementById('search-input');
+  const overlay = document.getElementById('fed-overlay');
+  const q = input.value.toLowerCase().trim();
+
+  if (!q || q.length < 2) { closeFedOverlay(); return; }
+
+  const manifest = await getManifest();
+
+  // Rileggo la query dopo l'await per evitare risultati "stale"
+  // (l'utente può aver continuato a digitare durante il fetch)
+  const qNow = input.value.toLowerCase().trim();
+  if (qNow !== q) return;  // query cambiata, fedSearch verrà richiamata dal nuovo input
+
+  const results = manifest.filter(r => {
+    const hay = [r.label, r.short, r.description, r.meta, ...(r.tags || [])].join(' ').toLowerCase();
+    return hay.includes(qNow);
+  });
+
+  // ── Posizionamento fixed sotto la barra di ricerca ──
+  const wrap = document.querySelector('.hero-search-wrap');
+  const rect = wrap.getBoundingClientRect();
+  overlay.style.left   = rect.left + 'px';
+  overlay.style.top    = (rect.bottom + 6) + 'px';
+  overlay.style.width  = rect.width + 'px';
+
+  if (results.length === 0) {
+    overlay.innerHTML = `<div class="fed-empty">Nessuna risorsa trovata per "<strong>${escHtml(qNow)}</strong>"</div>`;
+    overlay.classList.add('open');
+    return;
+  }
+
+  const catLabel = { guide: 'Guida', strumento: 'Strumento', pillola: 'Pillola' };
+  const badgeCls = { guide: 'fed-badge-guide', strumento: 'fed-badge-strumento', pillola: 'fed-badge-pillola' };
+  const n = results.length;
+
+  overlay.innerHTML =
+    `<div class="fed-header">${n} ${n === 1 ? 'risorsa trovata' : 'risorse trovate'}</div>` +
+    results.map(r => `
+      <a class="fed-item" href="${escHtml(r.path)}">
+        <div class="fed-item-emoji">${r.emoji || '📄'}</div>
+        <div class="fed-item-body">
+          <div class="fed-item-title">${escHtml(r.label)}</div>
+          <div class="fed-item-meta">${escHtml(r.meta || '')}</div>
+        </div>
+        <span class="fed-item-badge ${badgeCls[r.cat] || ''}">${catLabel[r.cat] || r.cat}</span>
+      </a>`
+    ).join('');
+
+  overlay.classList.add('open');
+}
+
+function closeFedOverlay() {
+  document.getElementById('fed-overlay').classList.remove('open');
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Chiude l'overlay cliccando fuori dalla barra di ricerca
+document.addEventListener('click', function(e) {
+  const wrap = document.querySelector('.hero-search-wrap');
+  if (wrap && !wrap.contains(e.target)) closeFedOverlay();
+});
+
+// Chiude l'overlay con ESC
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeFedOverlay();
+    document.getElementById('search-input').blur();
+  }
+});
 
 // ── STATS ────────────────────────────────────────────────────────
 // I numeri nelle pillole (Guide/Strumenti/Pillole) rappresentano il TOTALE
@@ -1816,6 +2007,9 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAbout()
     <button class="btn-logout" onclick="logout(); closeProfileModal();">Esci dall'account</button>
   </div>
 </div>
+
+<!-- Overlay ricerca federata — posizionato via JS, fuori da overflow:hidden dell'hero -->
+<div class="fed-overlay" id="fed-overlay"></div>
 
 </body>
 
