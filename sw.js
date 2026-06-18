@@ -48,7 +48,7 @@ self.addEventListener('fetch', event => {
   if (request.method !== 'GET') return;
   if (url.origin !== location.origin) return;
 
-  // Cache First per CSS, font, immagini, JSON statici
+  // Cache First per CSS, immagini, JSON di configurazione (manifest, aree)
   if (
     url.pathname.startsWith('/css/') ||
     url.pathname.startsWith('/img/') ||
@@ -56,7 +56,9 @@ self.addEventListener('fetch', event => {
     url.pathname.endsWith('.png') ||
     url.pathname.endsWith('.jpg') ||
     url.pathname.endsWith('.svg') ||
-    url.pathname.endsWith('.webp')
+    url.pathname.endsWith('.webp') ||
+    url.pathname === '/manifest.json' ||
+    url.pathname === '/aree.json'
   ) {
     event.respondWith(cacheFirst(request));
     return;
