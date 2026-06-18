@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gantt Planner — Formazione Digitale</title>
+
+  <meta name="description" content="Scarica il Gantt Planner: foglio Excel/Google Fogli per pianificare le attività del tuo progetto su una timeline visuale. Gratis, compatibile con Excel e Google Fogli.">
+  <meta name="author" content="Cristiano De Pasquale">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://formazione-digitale.it/project-management/gantt-planner/">
+  <link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="//gc.zgo.at">
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1F4E79">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Gantt Planner — Formazione Digitale">
+  <meta property="og:description" content="Foglio Excel/Google Fogli per pianificare le attività del tuo progetto su una timeline visuale. Gratis.">
+  <meta property="og:url" content="https://formazione-digitale.it/project-management/gantt-planner/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Formazione Digitale">
+
+  <!-- Twitter/X Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Gantt Planner — Formazione Digitale">
+  <meta name="twitter:description" content="Foglio Excel/Google Fogli per pianificare le attività del tuo progetto su una timeline visuale.">
+  <meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Gantt Planner",
+    "description": "Foglio Excel/Google Fogli per pianificare le attività del progetto su una timeline visuale con fasi, avanzamento e barre colorate.",
+    "url": "https://formazione-digitale.it/project-management/gantt-planner/",
+    "applicationCategory": "ProductivityApplication",
+    "operatingSystem": "Microsoft Excel, Google Fogli",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+    "inLanguage": "it",
+    "author": {
+      "@type": "Person",
+      "name": "Cristiano De Pasquale"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Formazione Digitale",
+      "url": "https://formazione-digitale.it"
+    }
+  }
+  </script>
+
+  <!-- GoatCounter -->
+  <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/shared.css?v=3">
+
+  <style>
+    /* ── LAYOUT STRUMENTO ── */
+    .tool-header {
+      background: linear-gradient(135deg, #1A3F63 0%, var(--blue-dark) 60%);
+      padding: 2rem 2.5rem 1.75rem;
+      color: #fff;
+    }
+    .tool-header-inner {
+      max-width: 900px; margin: 0 auto;
+      display: flex; align-items: flex-start;
+      gap: 2rem; flex-wrap: wrap;
+    }
+    .tool-header-text { flex: 1; min-width: 260px; }
+    .tool-eyebrow {
+      font-size: .7rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--blue-light); margin-bottom: .6rem;
+    }
+    .tool-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      line-height: 1.1; margin-bottom: .6rem;
+    }
+    .tool-desc {
+      font-size: .92rem; color: rgba(255,255,255,.75);
+      line-height: 1.7; max-width: 520px;
+    }
+    .tool-badges {
+      display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem;
+    }
+    .tool-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      padding: .3rem .8rem; border-radius: 20px;
+      font-size: .75rem; color: rgba(255,255,255,.85);
+    }
+
+    /* ── DOWNLOAD BOX ── */
+    .download-box {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 12px;
+      padding: 1.5rem;
+      min-width: 240px; max-width: 280px;
+      flex-shrink: 0;
+      display: flex; flex-direction: column; gap: .75rem;
+      align-items: center; text-align: center;
+    }
+    .download-icon { font-size: 2.5rem; }
+    .download-filename {
+      font-size: .75rem; color: rgba(255,255,255,.6);
+      font-family: 'Courier New', monospace;
+    }
+    .download-btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: #fff; color: var(--blue-dark);
+      font-weight: 700; font-size: .88rem;
+      padding: .75rem 1.5rem; border-radius: 8px;
+      text-decoration: none; width: 100%; justify-content: center;
+      transition: background .2s, transform .15s;
+    }
+    .download-btn:hover { background: var(--blue-pale); transform: translateY(-1px); }
+
+    /* ── MAIN CONTENT ── */
+    .tool-main {
+      max-width: 900px; margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .tool-section { margin-bottom: 2.5rem; }
+    .tool-section h2 {
+      font-family: var(--font-display);
+      font-size: 1.25rem; color: var(--blue-dark);
+      margin-bottom: 1rem;
+      border-left: 3px solid var(--blue-mid);
+      padding-left: .75rem;
+    }
+    .tool-section p {
+      font-size: .93rem; color: var(--gray-dark);
+      line-height: 1.75; margin-bottom: .75rem;
+    }
+
+    /* ── FEATURES GRID ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem; margin-top: 1rem;
+    }
+    .feature-card {
+      background: var(--blue-pale);
+      border: 1px solid var(--blue-light);
+      border-radius: 10px; padding: 1rem 1.1rem;
+    }
+    .feature-icon { font-size: 1.4rem; margin-bottom: .4rem; }
+    .feature-title {
+      font-weight: 700; font-size: .88rem;
+      color: var(--blue-dark); margin-bottom: .3rem;
+    }
+    .feature-desc { font-size: .8rem; color: var(--gray-mid); line-height: 1.55; }
+
+    /* ── ISTRUZIONI STEPS ── */
+    .steps-list {
+      counter-reset: steps;
+      list-style: none;
+      display: flex; flex-direction: column; gap: .75rem;
+      margin-top: 1rem;
+    }
+    .steps-list li {
+      counter-increment: steps;
+      display: flex; align-items: flex-start; gap: .85rem;
+      font-size: .88rem; color: var(--gray-dark); line-height: 1.6;
+    }
+    .steps-list li::before {
+      content: counter(steps);
+      min-width: 26px; height: 26px;
+      background: var(--blue-dark); color: #fff;
+      border-radius: 50%; font-size: .75rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: .1rem;
+    }
+    .steps-list li code {
+      background: var(--blue-pale);
+      border: 1px solid var(--blue-light);
+      padding: .1rem .4rem; border-radius: 4px;
+      font-size: .82rem; font-family: 'Courier New', monospace;
+      color: var(--blue-dark);
+    }
+
+    /* ── FASI COLORI ── */
+    .fasi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: .75rem; margin-top: 1rem;
+    }
+    .fase-item {
+      border-radius: 8px; padding: .75rem 1rem;
+      font-size: .82rem; font-weight: 600; color: #fff;
+    }
+    .fase-item span { display: block; font-size: .72rem; font-weight: 400; opacity: .85; margin-top: .2rem; }
+
+    /* ── COMPAT BOX ── */
+    .compat-box {
+      background: #E8F5EE;
+      border: 1px solid #A5D6B7;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      display: flex; align-items: center; gap: 1rem;
+      font-size: .88rem; color: #1E6B3C;
+    }
+    .compat-box strong { color: #155724; }
+
+    /* ── BACK LINK ── */
+    .tool-back {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .82rem; color: rgba(255,255,255,.65);
+      text-decoration: none; margin-bottom: 1.25rem;
+      transition: color .2s;
+    }
+    .tool-back:hover { color: #fff; }
+
+    @media(max-width:600px) {
+      .tool-header { padding: 1.5rem 1.25rem; }
+      .download-box { max-width: 100%; }
+      .tool-main { padding: 1.5rem 1rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<div class="tool-header">
+  <div class="tool-header-inner">
+    <div class="tool-header-text">
+      <a href="/project-management/guida-gestione-progetti/" class="tool-back">← Guida Gestione Progetti</a>
+      <div class="tool-eyebrow">Strumento interattivo · Pianificazione</div>
+      <h1 class="tool-title">📅 Gantt Planner</h1>
+      <p class="tool-desc">Un foglio di calcolo pronto all'uso per pianificare le attività del tuo progetto su una timeline visuale a settimane. Organizza fasi, assegna attività, traccia l'avanzamento.</p>
+      <div class="tool-badges">
+        <span class="tool-badge">📊 Excel &amp; Google Fogli</span>
+        <span class="tool-badge">🆓 Gratuito</span>
+        <span class="tool-badge">📋 4 fasi · 20 attività</span>
+        <span class="tool-badge">📅 7 settimane visibili</span>
+      </div>
+    </div>
+
+    <div class="download-box">
+      <div class="download-icon">📥</div>
+      <div class="download-filename">gantt-planner.xlsx</div>
+      <a href="/project-management/gantt-planner/gantt-planner.xlsx"
+         class="download-btn" download>
+        ⬇️ Scarica il file
+      </a>
+      <div style="font-size:.72rem;color:rgba(255,255,255,.5);">
+        Compatibile con Excel e Google Fogli
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MAIN ══ -->
+<main class="tool-main">
+
+  <!-- FUNZIONALITÀ -->
+  <div class="tool-section">
+    <h2>Cosa contiene</h2>
+    <p>Il file è composto da due fogli: il <strong>GANTT</strong> con la timeline interattiva e le <strong>Istruzioni</strong> con la guida rapida alla compilazione.</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🗂</div>
+        <div class="feature-title">4 fasi personalizzabili</div>
+        <div class="feature-desc">Ogni fase ha 5 attività preimpostate. Cambia i nomi delle fasi e delle attività direttamente nelle celle.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Avanzamento visuale</div>
+        <div class="feature-desc">Ogni attività ha una colonna avanzamento: 0 = non iniziata, 0,5 = metà, 1 = completata. La barra cambia colore automaticamente.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📅</div>
+        <div class="feature-title">Timeline a settimane</div>
+        <div class="feature-desc">Inserisci la data di inizio e la griglia delle settimane si popola automaticamente. Naviga tra le settimane con un solo numero.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📌</div>
+        <div class="feature-title">Evidenzia oggi e la scadenza</div>
+        <div class="feature-desc">Scrivi X per evidenziare in giallo la colonna di oggi, e inserisci la data di fine per evidenziare in arancione la scadenza del progetto.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FASI E COLORI -->
+  <div class="tool-section">
+    <h2>Fasi e colori</h2>
+    <p>Le barre del Gantt sono colorate per fase — colore chiaro per le attività pianificate, colore scuro per quelle completate.</p>
+    <div class="fasi-grid">
+      <div class="fase-item" style="background:#1F4E79;">Fase 1 — Blu<span>Avvio e pianificazione</span></div>
+      <div class="fase-item" style="background:#1E6B3C;">Fase 2 — Verde<span>Sviluppo e produzione</span></div>
+      <div class="fase-item" style="background:#7D4E00;">Fase 3 — Ambra<span>Revisione e test</span></div>
+      <div class="fase-item" style="background:#B71C1C;">Fase 4 — Rosso<span>Chiusura e consegna</span></div>
+    </div>
+  </div>
+
+  <!-- COME INIZIARE -->
+  <div class="tool-section">
+    <h2>Come iniziare</h2>
+    <ol class="steps-list">
+      <li>Scarica il file e aprilo con Excel o Google Fogli (File → Importa).</li>
+      <li>Nel foglio <strong>GANTT</strong>, scrivi il nome del progetto in <code>B1</code> e il responsabile in <code>N1</code>.</li>
+      <li>Inserisci la data di inizio in <code>AA1</code> (formato GG/MM/AAAA) — la griglia delle settimane appare automaticamente.</li>
+      <li>Rinomina le fasi (righe grigie, colonna B) e le attività secondo il tuo progetto.</li>
+      <li>Per ogni attività: compila <strong>Assegnato a</strong>, <strong>Avanzamento</strong> (0 / 0,5 / 1), <strong>Inizio</strong> e <strong>Fine</strong>.</li>
+      <li>Usa <code>AJ1</code> per navigare tra le settimane: scrivi 1 per la prima, 2 per la seconda, ecc.</li>
+      <li>Opzionale: scrivi <code>X</code> in <code>AR1</code> per evidenziare oggi, e inserisci la data di fine progetto in <code>AX1</code>.</li>
+    </ol>
+  </div>
+
+  <!-- COMPATIBILITÀ -->
+  <div class="tool-section">
+    <h2>Compatibilità</h2>
+    <div class="compat-box">
+      <span style="font-size:1.5rem;">✅</span>
+      <div>
+        <strong>Compatibile con Microsoft Excel e Google Fogli.</strong><br>
+        Su Google Fogli: vai su File → Importa → carica il file .xlsx e scegli "Sostituisci foglio di calcolo". Le formule e le barre colorate funzionano correttamente su entrambe le piattaforme.
+      </div>
+    </div>
+  </div>
+
+  <!-- LINK GUIDA -->
+  <div class="tool-section">
+    <h2>Vuoi saperne di più sul Gantt?</h2>
+    <a href="/project-management/guida-gestione-progetti/#s3" class="related-link">
+      <div class="related-link-icon">📋</div>
+      <div class="related-link-text">
+        <strong>Guida alla Gestione Digitale di un Progetto</strong>
+        <span>Cos'è un diagramma di Gantt, come si legge e quando usarlo rispetto alla Kanban board.</span>
+      </div>
+      <div class="related-link-arrow">→</div>
+    </a>
+  </div>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer class="fw-footer">
+  <strong>Formazione Digitale</strong> &middot;
+  <a href="/index.html">← Torna al portale</a><br>
+  Strumento didattico libero e gratuito. I dati inseriti non vengono salvati né trasmessi.
+  <p style="margin-top:.4rem;font-size:.78rem;">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>

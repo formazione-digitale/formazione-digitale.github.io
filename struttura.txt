@@ -1,5 +1,5 @@
 Elenco del percorso delle cartelle per il volume Acer
-Numero di serie del volume: 00000079-544D:3F7C
+Numero di serie del volume: 00000011-544D:3F7C
 C:.
 |   .gitignore
 |   .nojekyll
@@ -52,9 +52,9 @@ C:.
 |           index.html
 |           
 +---css
-|       shared-.css
 |       shared-extended.css
 |       shared.css
+|       shared_.css
 |       
 +---data-src
 |       export_singoli_esami_20260101-20260630.xlsx
@@ -169,6 +169,10 @@ C:.
 |           index.html
 |           
 +---project-management
+|   +---gantt-planner
+|   |       gantt-planner.xlsx
+|   |       index.html
+|   |       
 |   +---guida-gestione-progetti
 |   |       index.html
 |   |       

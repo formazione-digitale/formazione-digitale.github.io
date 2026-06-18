@@ -1051,5 +1051,41 @@
             "DCEdu 2.2",
             "DCEdu 6.5"
         ]
+    },
+    {
+        "path": "/project-management/gantt-planner/",
+        "label": "Gantt Planner",
+        "short": "Gantt Planner",
+        "cat": "strumento",
+        "emoji": "📅",
+        "tags": [
+            "gantt",
+            "project management",
+            "pianificazione",
+            "timeline",
+            "excel",
+            "google fogli",
+            "gpoi",
+            "afm",
+            "rim"
+        ],
+        "meta": "Template Excel/Google Fogli · Scaricabile · Livello base",
+        "description": "Template Excel/Google Fogli per pianificare le attività del progetto su una timeline visuale. 4 fasi, avanzamento automatico, compatibile con Google Fogli.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 3.1",
+            "DC 5.2"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "creazione",
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 3.1",
+            "DCEdu 4.1",
+            "DCEdu 6.1"
+        ]
     }
 ]

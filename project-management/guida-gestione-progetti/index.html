@@ -85,6 +85,28 @@
   display: inline-block;
 }
 
+/* ── DOCUMENTI DI PROGETTO — part-header/part-num ── */
+.part-header {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  background: var(--blue-dark);
+  border-radius: 8px;
+  padding: .65rem 1rem;
+  color: #fff;
+}
+.part-num {
+  width: 32px; height: 32px;
+  background: rgba(255,255,255,.2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: .95rem;
+  flex-shrink: 0;
+}
+.part-header span:last-child {
+  font-weight: 600; font-size: .95rem;
+}
+
 /* ── COMPARAZIONE GANTT/KANBAN ── */
 .scenario-selector {
   background: var(--gray-light);
@@ -376,11 +398,6 @@
     <!-- ─── S0 · COVER ─── -->
     <section id="s0">
       <div class="cover-block">
-        <div class="cover-extras">
-          <span>📋 GPOI</span>
-          <span>AFM · RIM</span>
-          <span>DC 2.4 · DCEdu 2.1</span>
-        </div>
         <h1 class="cover-title">Gestione Digitale<br><em>di un Progetto</em></h1>
         <p class="cover-desc">Dal ciclo di vita alla Kanban board, dal Gantt al SAL: tutto quello che serve per pianificare, coordinare e portare a termine un progetto — con gli strumenti digitali giusti.</p>
       </div>
@@ -397,12 +414,12 @@
           <div class="tool-card-desc">Organizza le attività del tuo progetto con colonne e card trascinabili.</div>
           <span class="tool-card-badge badge-live">✅ Disponibile</span>
         </a>
-        <div class="tool-card" style="cursor:default; opacity:.8;">
+        <a class="tool-card" href="/project-management/gantt-planner/">
           <div class="tool-card-icon">📅</div>
           <div class="tool-card-title">Gantt Planner</div>
           <div class="tool-card-desc">Pianifica le attività del progetto su una timeline visuale con dipendenze.</div>
-          <span class="tool-card-badge badge-coming">🔜 In arrivo</span>
-        </div>
+          <span class="tool-card-badge badge-live">✅ Disponibile</span>
+        </a>
       </div>
     </section>
 
@@ -780,7 +797,7 @@
           <tr><td class="cat">Documenti condivisi</td><td>Capitolato, SAL, verbali di riunione</td><td>Google Docs, Microsoft 365</td></tr>
           <tr><td class="cat">Fogli di calcolo</td><td>Budget, tracciamento attività, SAL</td><td>Google Sheets, Excel Online</td></tr>
           <tr><td class="cat">Task board</td><td>Gestione attività operative del team</td><td>Kanban Board (questo portale), Trello</td></tr>
-          <tr><td class="cat">Pianificazione</td><td>Timeline, Gantt, milestone</td><td>Gantt Planner (in arrivo), MS Project</td></tr>
+          <tr><td class="cat">Pianificazione</td><td>Timeline, Gantt, milestone</td><td><a href="/project-management/gantt-planner/">Gantt Planner</a>, MS Project</td></tr>
           <tr><td class="cat">Comunicazione</td><td>Aggiornamenti rapidi, domande, avvisi</td><td>Teams, Slack, email</td></tr>
           <tr><td class="cat">Archiviazione</td><td>Documentazione tecnica, versioni</td><td>Google Drive, SharePoint</td></tr>
         </tbody>
@@ -792,48 +809,48 @@
       <div class="collab-checklist" id="collab-checklist">
 
         <div class="collab-section-title">📋 Pianificazione</div>
-        <label class="checklist-item" onclick="toggleCheck(this)">
+        <div class="checklist-item" onclick="toggleCheck(this)">
           <input type="checkbox"> <span>L'obiettivo del progetto è chiaro e condiviso con tutti i membri del team</span>
-        </label>
-        <label class="checklist-item" onclick="toggleCheck(this)">
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
           <input type="checkbox"> <span>È stato redatto (o abbozzato) un Gantt con le principali attività e scadenze</span>
-        </label>
-        <label class="checklist-item" onclick="toggleCheck(this)">
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
           <input type="checkbox"> <span>Le risorse necessarie (tempo, persone, budget) sono state identificate</span>
-        </label>
-        <label class="checklist-item" onclick="toggleCheck(this)">
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
           <input type="checkbox"> <span>I rischi principali sono stati discussi e documentati</span>
-        </label>
+        </div>
 
         <div class="collab-section-title">👥 Team e ruoli</div>
-        <label class="checklist-item" onclick="toggleCheck(this)">
+        <div class="checklist-item" onclick="toggleCheck(this)">
           <input type="checkbox"> <span>Ogni membro del team conosce il proprio ruolo e le proprie responsabilità</span>
-        </label>
-        <label class="checklist-item" onclick="toggleCheck(this)">
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
           <input type="checkbox"> <span>È stato designato un responsabile (Project Manager o referente)</span>
-        </label>
-        <label class="checklist-item" onclick="toggleCheck(this)">
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
           <input type="checkbox"> <span>Gli stakeholder principali sono stati identificati e informati</span>
-        </label>
+        </div>
 
         <div class="collab-section-title">🛠️ Strumenti</div>
-        <label class="checklist-item" onclick="toggleCheck(this)">
+        <div class="checklist-item" onclick="toggleCheck(this)">
           <input type="checkbox"> <span>Il team ha accesso agli strumenti condivisi (Drive, documenti, cartelle)</span>
-        </label>
-        <label class="checklist-item" onclick="toggleCheck(this)">
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
           <input type="checkbox"> <span>È stata creata una Kanban board con le prime attività operative</span>
-        </label>
-        <label class="checklist-item" onclick="toggleCheck(this)">
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
           <input type="checkbox"> <span>È stato definito il canale di comunicazione principale (email, chat, riunioni)</span>
-        </label>
+        </div>
 
         <div class="collab-section-title">📄 Documentazione</div>
-        <label class="checklist-item" onclick="toggleCheck(this)">
+        <div class="checklist-item" onclick="toggleCheck(this)">
           <input type="checkbox"> <span>Esiste un documento (anche informale) che descrive l'obiettivo e il perimetro del progetto</span>
-        </label>
-        <label class="checklist-item" onclick="toggleCheck(this)">
+        </div>
+        <div class="checklist-item" onclick="toggleCheck(this)">
           <input type="checkbox"> <span>È stata pianificata la prima verifica di avanzamento (SAL)</span>
-        </label>
+        </div>
 
         <div class="checklist-progress">
           <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
@@ -857,12 +874,12 @@
           <div class="tool-card-desc">Inizia subito a organizzare le attività del tuo progetto con la board interattiva.</div>
           <span class="tool-card-badge badge-live">✅ Disponibile ora</span>
         </a>
-        <div class="tool-card" style="cursor:default; opacity:.8;">
+        <a class="tool-card" href="/project-management/gantt-planner/">
           <div class="tool-card-icon">📅</div>
           <div class="tool-card-title">Gantt Planner</div>
-          <div class="tool-card-desc">Pianifica le attività su una timeline visuale. Disponibile a breve.</div>
-          <span class="tool-card-badge badge-coming">🔜 In arrivo</span>
-        </div>
+          <div class="tool-card-desc">Pianifica le attività del progetto su una timeline visuale con dipendenze. Scarica il file Excel.</div>
+          <span class="tool-card-badge badge-live">✅ Disponibile</span>
+        </a>
       </div>
 
     </section>
@@ -933,10 +950,20 @@ const scenarios = {
 };
 
 function showScenario(key) {
-  document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-  const s = scenarios[key];
+  const btn = event.target;
   const result = document.getElementById('scenario-result');
+
+  // Se il bottone era già attivo → deseleziona (reset)
+  if (btn.classList.contains('active')) {
+    btn.classList.remove('active');
+    result.classList.remove('visible');
+    result.innerHTML = '';
+    return;
+  }
+
+  document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const s = scenarios[key];
   result.innerHTML = `<span class="rec-badge ${s.color}">${s.badge}</span> ${s.text}`;
   result.classList.add('visible');
 }
@@ -944,10 +971,14 @@ function showScenario(key) {
 /* ── CHECKLIST ── */
 const TOTAL = 12;
 
-function toggleCheck(label) {
-  const cb = label.querySelector('input[type="checkbox"]');
-  cb.checked = !cb.checked;
-  label.classList.toggle('done', cb.checked);
+function toggleCheck(el) {
+  const cb = el.querySelector('input[type="checkbox"]');
+  // Non modifico cb.checked qui — il browser lo gestisce se l'utente
+  // clicca direttamente il checkbox. Se clicca il div wrapper, lo toglio manualmente.
+  if (event.target.tagName !== 'INPUT') {
+    cb.checked = !cb.checked;
+  }
+  el.classList.toggle('done', cb.checked);
   updateProgress();
 }
 

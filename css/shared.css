@@ -529,7 +529,7 @@ ul.guide-list li, ol.guide-list li { font-size: .95rem; line-height: 1.75; color
 /* ══════════════════════════════════════════════════════════════
    11. COMPONENTI GUIDE
    Blocchi riutilizzabili dentro le guide: part header, highlight grid,
-   do/don't, two-col, footer nav link, nav part label.
+   do/don't, two-col, footer nav link, nav part label, related link.
    ══════════════════════════════════════════════════════════════ */
 
 /* Part header — intestazione di parte/capitolo con numero grande */
@@ -612,6 +612,20 @@ ul.guide-list li, ol.guide-list li { font-size: .95rem; line-height: 1.75; color
   text-transform: uppercase; color: var(--blue-mid);
   padding: .75rem 1.25rem .35rem; opacity: .7;
 }
+
+/* Related link — card cliccabile per rimandare a risorse correlate */
+.related-link {
+  display: flex; align-items: center; gap: 1rem;
+  background: var(--blue-pale); border: 1px solid var(--blue-light);
+  border-radius: var(--radius); padding: 1rem 1.25rem; margin: 1rem 0;
+  text-decoration: none; transition: all var(--transition);
+}
+.related-link:hover { background: var(--blue-light); border-color: var(--blue-mid); }
+.related-link-icon  { font-size: 1.8rem; flex-shrink: 0; }
+.related-link-text  { flex: 1; min-width: 0; }
+.related-link-text strong { display: block; font-size: .9rem; color: var(--blue-dark); margin-bottom: .15rem; }
+.related-link-text span   { font-size: .8rem; color: var(--gray-mid); line-height: 1.5; }
+.related-link-arrow { margin-left: auto; color: var(--blue-mid); font-size: 1.1rem; flex-shrink: 0; }
 
 
 /* ══════════════════════════════════════════════════════════════
