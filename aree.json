@@ -3,66 +3,77 @@
         "id": "intelligenza-artificiale",
         "label": "Intelligenza Artificiale",
         "emoji": "🤖",
-        "color": "#1F4E79"
+        "color": "#1F4E79",
+        "hasHub": false
     },
     {
         "id": "database",
         "label": "Database",
         "emoji": "🗄️",
-        "color": "#4A148C"
+        "color": "#4A148C",
+        "hasHub": true
     },
     {
         "id": "marketing",
         "label": "Marketing",
         "emoji": "🛒",
-        "color": "#1E6B3C"
+        "color": "#1E6B3C",
+        "hasHub": false
     },
     {
         "id": "competenze-digitali",
         "label": "Competenze Digitali",
         "emoji": "💡",
-        "color": "#2E75B6"
+        "color": "#2E75B6",
+        "hasHub": false
     },
     {
         "id": "sicurezza",
         "label": "Sicurezza",
         "emoji": "🔒",
-        "color": "#B71C1C"
+        "color": "#B71C1C",
+        "hasHub": false
     },
     {
         "id": "elaborazione-testi",
         "label": "Elaborazione Testi",
         "emoji": "📝",
-        "color": "#00695C"
+        "color": "#00695C",
+        "hasHub": false
     },
     {
         "id": "foglio-di-calcolo",
         "label": "Foglio di Calcolo",
         "emoji": "📊",
-        "color": "#2E7D32"
+        "color": "#2E7D32",
+        "hasHub": false
     },
     {
         "id": "networking",
         "label": "Networking",
         "emoji": "🌐",
-        "color": "#7D4E00"
+        "color": "#7D4E00",
+        "hasHub": false
     },
     {
         "id": "sistemi",
         "label": "Sistemi",
         "emoji": "⚙️",
-        "color": "#37474F"
+        "color": "#37474F",
+        "hasHub": false
     },
     {
         "id": "project-management",
         "label": "Project Management",
         "emoji": "📋",
-        "color": "#1565C0"
+        "color": "#1565C0",
+        "hasHub": false
     },
     {
         "id": "programmazione",
         "label": "Programmazione",
         "emoji": "💻",
-        "color": "#7c5cfc"
+        "color": "#7c5cfc",
+        "hasHub": true
     }
 ]

@@ -94,7 +94,6 @@ html, body {
 .ma-header-right { display: flex; align-items: center; gap: .75rem; margin-left: auto; }
 .ma-sep          { width: 1px; height: 20px; background: rgba(255,255,255,.2); }
 
-
 .ma-header-hint {
   position: absolute;
   left: 50%;
@@ -102,6 +101,24 @@ html, body {
   font-size: .82rem;
   color: rgba(255,255,255,.6);
 }
+
+/* ── BREADCRUMB AREA ATTIVA ── */
+.ma-breadcrumb {
+  display: none;
+  align-items: center;
+  gap: .5rem;
+  background: rgba(255,255,255,.12);
+  padding: .35rem .75rem;
+  border-radius: 20px;
+  font-size: .8rem;
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s;
+  flex-shrink: 0;
+}
+.ma-breadcrumb:hover { background: rgba(255,255,255,.2); }
+.ma-breadcrumb.visible { display: flex; }
+.ma-breadcrumb-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
 /* ── CANVAS ── */
 #graph-container {
@@ -319,10 +336,10 @@ html, body {
 /* ── TOOLTIP AREA (hover nodo area) ── */
 .ma-tooltip {
   position: fixed;
-  background: rgba(255,255,255,.96);
+  background: rgba(255,255,255,.98);
   border: 1px solid var(--blue-light);
   border-radius: 8px;
-  padding: .5rem .8rem;
+  padding: .6rem .85rem;
   font-size: .78rem;
   font-weight: 600;
   color: var(--blue-dark);
@@ -331,8 +348,35 @@ html, body {
   box-shadow: 0 2px 12px rgba(31,78,121,.12);
   opacity: 0;
   transition: opacity .15s;
+  max-width: 220px;
+  line-height: 1.5;
 }
 .ma-tooltip.visible { opacity: 1; }
+.ma-tooltip-title { display: block; margin-bottom: .3rem; }
+.ma-tooltip-list { font-weight: 400; font-size: .74rem; color: var(--gray-mid); }
+.ma-tooltip-list span { display: block; }
+
+/* ── PULSANTE TORNA ALLE AREE (vista dettaglio) ── */
+.ma-back-overview {
+  position: fixed;
+  top: 68px; left: 1.25rem;
+  display: none;
+  align-items: center;
+  gap: .4rem;
+  background: #fff;
+  border: 1px solid var(--blue-light);
+  border-radius: 20px;
+  padding: .5rem 1rem;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--blue-dark);
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(31,78,121,.12);
+  z-index: 55;
+  transition: background .2s, transform .15s;
+}
+.ma-back-overview:hover { background: var(--blue-pale); transform: translateY(-1px); }
+.ma-back-overview.visible { display: flex; }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 600px) {
@@ -340,31 +384,35 @@ html, body {
   .ma-header-hint { display: none; }
   .ma-legend { display: none; }
   .ma-panel { top: 52px; }
+  .ma-breadcrumb span.bc-label { display: none; }
 }
 
 /* ── NODI SVG ── */
-.node-hub circle { cursor: default; }
-.node-area circle { cursor: pointer; transition: opacity .2s; }
+.node-hub circle { cursor: pointer; }
+.node-area circle { cursor: pointer; transition: opacity .25s, r .35s; }
+.node-area.no-hub circle { cursor: default; }
 .node-area:hover circle { opacity: .85; }
 .node-risorsa circle { cursor: pointer; transition: opacity .2s, r .2s; }
 .node-risorsa:hover circle { opacity: .85; }
 
-.node-area text, .node-risorsa text {
+.node-area text, .node-risorsa text, .node-hub text {
   pointer-events: none;
   user-select: none;
 }
 
 /* Link SVG */
-.link-area { stroke-opacity: .25; }
-.link-risorsa { stroke-opacity: .18; }
+.link-area { stroke-opacity: .25; transition: stroke-opacity .3s; }
+.link-risorsa { stroke-opacity: .35; transition: stroke-opacity .3s; }
 
-/* Stato highlight */
-.node-area.dimmed circle { opacity: .2; }
-.node-area.dimmed text { opacity: .2; }
-.node-risorsa.dimmed circle { opacity: .15; }
-.node-risorsa.dimmed text { opacity: .15; }
-.link-area.dimmed { stroke-opacity: .05; }
-.link-risorsa.dimmed { stroke-opacity: .05; }
+/* Stato sfondo (aree non selezionate durante il dettaglio) */
+.node-area.bg-faded circle { opacity: .22; }
+.node-area.bg-faded text { opacity: .3; }
+.node-area.bg-faded { pointer-events: none; }
+.link-area.bg-faded { stroke-opacity: .05; }
+
+/* Transizioni di scena */
+.node-area, .node-risorsa, .node-hub { transition: opacity .3s; }
+.node-risorsa.entering { opacity: 0; }
 
 /* Footer fisso in basso */
 .fw-footer {
@@ -383,13 +431,23 @@ html, body {
     </a>
     <div class="ma-header-title">Mappa per Aree</div>
   </div>
-  <div class="ma-header-hint">Clicca una risorsa per i dettagli · Trascina per esplorare</div>
+  <div class="ma-header-hint" id="ma-hint">Clicca un'area per esplorarla · Trascina per muovere</div>
   <div class="ma-header-right">
+    <div class="ma-breadcrumb" id="ma-breadcrumb" onclick="goToOverview()">
+      <div class="ma-breadcrumb-dot" id="ma-breadcrumb-dot"></div>
+      <span class="bc-label" id="ma-breadcrumb-label"></span>
+      <span>✕</span>
+    </div>
     <a class="ma-header-back" href="/mappa-risorse.html">🗺 Mappa risorse</a>
     <div class="ma-sep"></div>
     <a class="ma-header-back" href="/mappa-framework.html">🧭 Mappa framework</a>
   </div>
 </header>
+
+<!-- PULSANTE TORNA ALLE AREE -->
+<div class="ma-back-overview" id="ma-back-overview" onclick="goToOverview()">
+  ← Torna alle aree
+</div>
 
 <!-- GRAFO -->
 <div id="graph-container">
@@ -438,7 +496,7 @@ html, body {
     <div class="ma-panel-meta" id="panel-meta"></div>
   </div>
   <div class="ma-panel-footer">
-    <a class="ma-panel-cta" id="panel-cta" href="#" target="_blank">
+    <a class="ma-panel-cta" id="panel-cta" href="#">
       <span id="panel-cta-label">Apri la risorsa</span>
       <span class="arrow">→</span>
     </a>
@@ -454,14 +512,26 @@ html, body {
 <script>
 /* ══════════════════════════════════════════════════════════════
    MAPPA AREE — Formazione Digitale
-   Grafo force-directed D3.js v7
-   Lettura da manifest.json + aree.json
+   Navigazione a due livelli stile "Prezi":
+   - Vista d'insieme: hub + nodi area (sempre leggibile, max 11 nodi)
+   - Vista dettaglio: area selezionata al centro + sue risorse in
+     cerchio, altre aree sfumate ai margini come contesto
+   Stato tracciato via URL hash (#area-id) per back/forward e link diretti.
 ══════════════════════════════════════════════════════════════ */
 
-/* ── STATO ── */
+/* ── STATO GLOBALE ── */
 let AREE    = null;
 let RISORSE = null;
-let selectedArea = null;
+let currentView = 'overview';   // 'overview' | area.id
+let W, H, svg, g, sim;
+let hubNode, areaNodes, risorsaNodes;
+let linkSel, areaSel, risorsaSel, hubSel;
+
+// Dispositivo con hover reale (desktop/mouse) vs touch (mobile/tablet).
+// Su desktop: hover apre il pannello come anteprima, click naviga subito.
+// Su touch: il tocco apre il pannello (come hover non esiste), un secondo
+// tocco sul CTA naviga — evita di aprire pagine per sbaglio scorrendo.
+const HAS_HOVER = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
 /* ── CARICAMENTO DATI ── */
 async function init() {
@@ -473,7 +543,6 @@ async function init() {
     AREE    = aree;
     RISORSE = manifest.filter(r => r.active !== false);
 
-    // ── CONTROLLO AREE MANCANTI ──
     const areeIds = new Set(aree.map(a => a.id));
     const mancanti = [...new Set(
       RISORSE
@@ -484,11 +553,16 @@ async function init() {
       throw new Error(`Aree mancanti in aree.json: ${mancanti.join(', ')}`);
     }
 
-    // Aggiorna contatore
     const el = document.getElementById('ma-counter');
     el.innerHTML = `<strong>${RISORSE.length}</strong> risorse`;
 
-    buildGraph();
+    buildBaseGraph();
+
+    // Applica lo stato iniziale da hash URL
+    const hash = location.hash.replace('#', '');
+    if (hash && areeIds.has(hash)) {
+      enterAreaDetail(hash, false);
+    }
   } catch(e) {
     console.error('Errore caricamento dati:', e);
     document.getElementById('graph-container').innerHTML =
@@ -496,121 +570,94 @@ async function init() {
   }
 }
 
-/* ── COSTRUZIONE GRAFO ── */
-function buildGraph() {
+/* ══════════════════════════════════════════════════════════════
+   COSTRUZIONE GRAFO BASE (hub + aree, sempre presenti nel DOM)
+   Le risorse vengono aggiunte/rimosse dinamicamente in entrata/uscita
+   dalla vista dettaglio — non serve ricostruire hub/aree ogni volta.
+══════════════════════════════════════════════════════════════ */
+function buildBaseGraph() {
   const container = document.getElementById('graph-container');
-  const W = container.clientWidth;
-  const H = container.clientHeight;
+  W = container.clientWidth;
+  H = container.clientHeight;
 
-  const svg = d3.select('#graph-svg')
-    .attr('viewBox', `0 0 ${W} ${H}`);
+  svg = d3.select('#graph-svg').attr('viewBox', `0 0 ${W} ${H}`);
+  g = svg.append('g').attr('class', 'graph-layer');
 
-  // Layer per zoom/pan
-  const g = svg.append('g').attr('class', 'graph-layer');
-
-  // Zoom
   const zoom = d3.zoom()
     .scaleExtent([0.3, 3])
     .on('zoom', e => g.attr('transform', e.transform));
   svg.call(zoom);
 
-  // Click su sfondo → deseleziona
+  // Click su sfondo → torna alla vista d'insieme (se in dettaglio) o deseleziona
   svg.on('click', function(e) {
     if (e.target === this || e.target.tagName === 'svg') {
-      clearHighlight();
+      if (currentView !== 'overview') {
+        goToOverview();
+      }
       closePanel();
     }
   });
 
-  /* ── NODI ── */
-  // Hub centrale
-  const hubNode = { id: '__hub__', type: 'hub', label: 'Formazione\nDigitale', x: W/2, y: H/2, fx: W/2, fy: H/2 };
+  /* ── NODI HUB E AREA (creati una sola volta) ── */
+  hubNode = { id: '__hub__', type: 'hub', label: 'Formazione\nDigitale', x: W/2, y: H/2, fx: W/2, fy: H/2 };
 
-  // Nodi area
-  const areaNodes = AREE.map(a => ({
+  areaNodes = AREE.map(a => ({
     id: a.id,
     type: 'area',
     label: a.label,
     emoji: a.emoji,
     color: a.color,
+    hasHub: !!a.hasHub,
     count: RISORSE.filter(r => r.path.replace(/^\//, '').split('/')[0] === a.id).length
   }));
 
-  // Nodi risorsa
-  const risorsaNodes = RISORSE.map(r => {
-    const areaId = r.path.replace(/^\//, '').split('/')[0];
-    const area = AREE.find(a => a.id === areaId);
-    return {
-      id: r.path,
-      type: 'risorsa',
-      areaId,
-      label: r.short,
-      emoji: r.emoji,
-      cat: r.cat,
-      color: area ? area.color : '#888',
-      path: r.path,
-      description: r.description || '',
-      meta: r.meta || '',
-      areaLabel: area ? area.label : areaId
-    };
-  });
+  risorsaNodes = [];  // popolato solo quando si entra in un'area
 
-  const nodes = [hubNode, ...areaNodes, ...risorsaNodes];
+  const nodes = [hubNode, ...areaNodes];
+  const links = areaNodes.map(a => ({ source: '__hub__', target: a.id, type: 'area' }));
 
-  /* ── LINK ── */
-  // Hub → area
-  const areaLinks = areaNodes.map(a => ({ source: '__hub__', target: a.id, type: 'area' }));
-  // Area → risorsa
-  const risorsaLinks = risorsaNodes.map(r => ({ source: r.areaId, target: r.id, type: 'risorsa' }));
-  const links = [...areaLinks, ...risorsaLinks];
-
-  /* ── SIMULAZIONE ── */
-  const sim = d3.forceSimulation(nodes)
-    .force('link', d3.forceLink(links)
-      .id(d => d.id)
-      .distance(d => d.type === 'area' ? 160 : 80)
-      .strength(d => d.type === 'area' ? 0.8 : 0.6)
-    )
-    .force('charge', d3.forceManyBody()
-      .strength(d => d.type === 'hub' ? -800 : d.type === 'area' ? -400 : -120)
-    )
-    .force('collision', d3.forceCollide()
-      .radius(d => d.type === 'hub' ? 60 : d.type === 'area' ? 58 : 38)
-    )
+  sim = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(links).id(d => d.id).distance(160).strength(0.8))
+    .force('charge', d3.forceManyBody().strength(d => d.type === 'hub' ? -800 : -400))
+    .force('collision', d3.forceCollide().radius(d => d.type === 'hub' ? 60 : 58))
     .force('center', d3.forceCenter(W/2, H/2).strength(0.05))
     .alphaDecay(0.025);
 
-  /* ── RENDER LINK ── */
-  const linkSel = g.append('g').attr('class', 'links')
-    .selectAll('line')
-    .data(links)
-    .join('line')
-    .attr('class', d => `link-${d.type}`)
-    .attr('stroke', d => {
-      if (d.type === 'area') return '#1F4E79';
-      const rNode = risorsaNodes.find(r => r.id === (typeof d.target === 'object' ? d.target.id : d.target));
-      return rNode ? rNode.color : '#888';
-    })
-    .attr('stroke-width', d => d.type === 'area' ? 1.5 : 1);
+  linkSel = g.append('g').attr('class', 'links')
+    .selectAll('line').data(links).join('line')
+    .attr('class', 'link-area')
+    .attr('stroke', '#1F4E79')
+    .attr('stroke-width', 1.5);
 
-  /* ── RENDER NODI AREA ── */
-  const areaSel = g.append('g').attr('class', 'nodes-area')
-    .selectAll('g')
-    .data(areaNodes)
-    .join('g')
+  areaSel = g.append('g').attr('class', 'nodes-area')
+    .selectAll('g').data(areaNodes).join('g')
     .attr('class', 'node-area')
     .attr('data-id', d => d.id)
-    .call(d3.drag()
-      .on('start', dragStart)
-      .on('drag', dragging)
-      .on('end', dragEnd)
-    )
+    .call(d3.drag().on('start', dragStart).on('drag', dragging).on('end', dragEnd))
     .on('click', function(e, d) {
       e.stopPropagation();
-      toggleAreaHighlight(d.id);
+      if (currentView === 'overview') {
+        enterAreaDetail(d.id, true);
+      } else if (currentView === d.id && d.hasHub) {
+        // click sull'area centrale già selezionata → apre l'hub, solo se esiste realmente
+        window.location.href = '/' + d.id + '/';
+      }
     })
     .on('mouseover', function(e, d) {
-      showTooltip(e, `${d.emoji} ${d.label} (${d.count})`);
+      if (currentView === d.id) {
+        const msg = d.hasHub
+          ? "Clicca per aprire la pagina dell'area →"
+          : 'Risorse raggruppate per area';
+        showTooltip(e, `<span class="ma-tooltip-title">${d.emoji} ${d.label}</span><span class="ma-tooltip-list">${msg}</span>`);
+        return;
+      }
+      const risorseArea = RISORSE.filter(r => r.path.replace(/^\//, '').split('/')[0] === d.id);
+      const maxList = 5;
+      const items = risorseArea.slice(0, maxList).map(r => `<span>${r.emoji || '•'} ${r.short}</span>`).join('');
+      const extra = risorseArea.length > maxList
+        ? `<span style="opacity:.7;">+ altre ${risorseArea.length - maxList}</span>` : '';
+      const html = `<span class="ma-tooltip-title">${d.emoji} ${d.label} (${d.count})</span><span class="ma-tooltip-list">${items}${extra}</span>`;
+      showTooltip(e, html);
     })
     .on('mouseout', hideTooltip);
 
@@ -622,22 +669,41 @@ function buildGraph() {
     .attr('filter', 'drop-shadow(0 3px 8px rgba(0,0,0,.18))');
 
   areaSel.append('text')
-    .attr('text-anchor', 'middle')
-    .attr('dy', '0.4em')
+    .attr('text-anchor', 'middle').attr('dy', '0.4em')
     .attr('font-size', '1.4rem')
     .text(d => d.emoji);
 
   areaSel.append('text')
-    .attr('text-anchor', 'middle')
-    .attr('y', 36 + 14)
-    .attr('font-size', '10px')
-    .attr('font-weight', '700')
+    .attr('text-anchor', 'middle').attr('y', 36 + 14)
+    .attr('font-size', '10px').attr('font-weight', '700')
     .attr('fill', d => d.color)
     .attr('font-family', 'DM Sans, system-ui, sans-serif')
     .text(d => d.label);
 
-  /* ── RENDER HUB ── */
-  const hubSel = g.append('g').attr('class', 'node-hub');
+  // ── BADGE CONTEGGIO — sempre visibile, non solo in hover ──
+  areaSel.append('circle')
+    .attr('class', 'area-badge-circle')
+    .attr('cx', 26).attr('cy', -26)
+    .attr('r', 11)
+    .attr('fill', '#fff')
+    .attr('stroke', d => d.color)
+    .attr('stroke-width', 2)
+    .attr('filter', 'drop-shadow(0 1px 4px rgba(0,0,0,.2))');
+
+  areaSel.append('text')
+    .attr('class', 'area-badge-text')
+    .attr('x', 26).attr('y', -26)
+    .attr('text-anchor', 'middle').attr('dy', '0.32em')
+    .attr('font-size', '10px').attr('font-weight', '700')
+    .attr('fill', d => d.color)
+    .attr('font-family', 'DM Sans, system-ui, sans-serif')
+    .text(d => d.count);
+
+  hubSel = g.append('g').attr('class', 'node-hub')
+    .on('click', function(e) {
+      e.stopPropagation();
+      if (currentView !== 'overview') goToOverview();
+    });
 
   hubSel.append('circle')
     .attr('r', 48)
@@ -647,128 +713,257 @@ function buildGraph() {
     .attr('filter', 'drop-shadow(0 4px 16px rgba(31,78,121,.35))');
 
   hubSel.append('text')
-    .attr('text-anchor', 'middle')
-    .attr('dy', '-0.6em')
-    .attr('font-size', '1.5rem')
-    .text('🌐');
+    .attr('text-anchor', 'middle').attr('dy', '-0.6em')
+    .attr('font-size', '1.5rem').text('🌐');
 
   hubSel.append('text')
-    .attr('text-anchor', 'middle')
-    .attr('dy', '0.9em')
-    .attr('font-size', '9.5px')
-    .attr('font-weight', '700')
-    .attr('fill', '#fff')
-    .attr('font-family', 'DM Serif Display, Georgia, serif')
+    .attr('text-anchor', 'middle').attr('dy', '0.9em')
+    .attr('font-size', '9.5px').attr('font-weight', '700')
+    .attr('fill', '#fff').attr('font-family', 'DM Serif Display, Georgia, serif')
     .text('Formazione');
 
   hubSel.append('text')
-    .attr('text-anchor', 'middle')
-    .attr('dy', '2.2em')
-    .attr('font-size', '9.5px')
-    .attr('font-weight', '700')
-    .attr('fill', '#fff')
-    .attr('font-family', 'DM Serif Display, Georgia, serif')
+    .attr('text-anchor', 'middle').attr('dy', '2.2em')
+    .attr('font-size', '9.5px').attr('font-weight', '700')
+    .attr('fill', '#fff').attr('font-family', 'DM Serif Display, Georgia, serif')
     .text('Digitale');
 
-  /* ── RENDER NODI RISORSA ── */
-  const risorsaSel = g.append('g').attr('class', 'nodes-risorsa')
-    .selectAll('g')
-    .data(risorsaNodes)
-    .join('g')
-    .attr('class', 'node-risorsa')
+  // Gruppo vuoto per le risorse, popolato dinamicamente
+  g.append('g').attr('class', 'nodes-risorsa');
+  g.append('g').attr('class', 'links-risorsa');
+
+  sim.on('tick', tickHandler);
+}
+
+function tickHandler() {
+  linkSel
+    .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+    .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+  areaSel.attr('transform', d => `translate(${d.x},${d.y})`);
+  hubSel.attr('transform', () => `translate(${hubNode.x},${hubNode.y})`);
+  if (risorsaSel) risorsaSel.attr('transform', d => `translate(${d.x},${d.y})`);
+
+  // Link risorsa: curva quadratica con punto di controllo perpendicolare
+  // al segmento source→target, spostato di curveOffset px (organico, non rigido)
+  const risorsaLinkSel = g.select('.links-risorsa').selectAll('path');
+  risorsaLinkSel.attr('d', d => {
+    const x1 = d.source.x, y1 = d.source.y;
+    const x2 = d.target.x, y2 = d.target.y;
+    const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+    const dx = x2 - x1, dy = y2 - y1;
+    const len = Math.sqrt(dx * dx + dy * dy) || 1;
+    // perpendicolare normalizzata, scalata per l'offset di curvatura del link
+    const px = -dy / len, py = dx / len;
+    const cx = mx + px * d.curveOffset;
+    const cy = my + py * d.curveOffset;
+    return `M${x1},${y1} Q${cx},${cy} ${x2},${y2}`;
+  });
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TRANSIZIONE: VISTA D'INSIEME → DETTAGLIO AREA
+══════════════════════════════════════════════════════════════ */
+function enterAreaDetail(areaId, pushHash) {
+  currentView = areaId;
+  closePanel();
+
+  const area = AREE.find(a => a.id === areaId);
+  const selectedAreaNode = areaNodes.find(d => d.id === areaId);
+
+  // ── 1. Le aree non selezionate si spostano ai margini (anello esterno) ──
+  const others = areaNodes.filter(d => d.id !== areaId);
+  const marginRadius = Math.min(W, H) * 0.42;
+  others.forEach((d, i) => {
+    const angle = (i / others.length) * 2 * Math.PI - Math.PI / 2;
+    d.fx = W/2 + marginRadius * Math.cos(angle);
+    d.fy = H/2 + marginRadius * Math.sin(angle);
+  });
+
+  // ── 2. L'area selezionata va al centro ──
+  selectedAreaNode.fx = W/2;
+  selectedAreaNode.fy = H/2;
+  hubNode.fx = -200; hubNode.fy = -200; // hub esce dalla vista, resta cliccabile fuori schermo? No: lo nascondiamo
+  hubSel.style('display', 'none');
+  linkSel.style('display', 'none'); // i link hub→aree non servono più in questa vista
+
+  // ── 3. Marca le aree sfondo come "faded"; l'area centrale senza hub reale è "no-hub" ──
+  areaSel.classed('bg-faded', d => d.id !== areaId);
+  areaSel.classed('no-hub', d => d.id === areaId && !d.hasHub);
+
+  // ── 4. Crea i nodi risorsa per quest'area, disposti in cerchio ──
+  const risorseArea = RISORSE.filter(r => r.path.replace(/^\//, '').split('/')[0] === areaId);
+  const ring = 130; // raggio fisso del cerchio risorse attorno al nodo area
+
+  risorsaNodes = risorseArea.map((r, i) => {
+    const angle = (i / risorseArea.length) * 2 * Math.PI - Math.PI / 2;
+    return {
+      id: r.path,
+      type: 'risorsa',
+      areaId,
+      label: r.short,
+      emoji: r.emoji,
+      cat: r.cat,
+      color: area.color,
+      path: r.path,
+      description: r.description || '',
+      meta: r.meta || '',
+      areaLabel: area.label,
+      x: W/2 + ring * Math.cos(angle),
+      y: H/2 + ring * Math.sin(angle),
+      fx: W/2 + ring * Math.cos(angle),
+      fy: H/2 + ring * Math.sin(angle)
+    };
+  });
+
+  // curveOffset: leggera variazione per link, per un effetto più organico
+  // (segno alternato + ampiezza random tra 12 e 28px)
+  const risorsaLinks = risorsaNodes.map((r, i) => ({
+    source: areaId,
+    target: r.id,
+    curveOffset: (i % 2 === 0 ? 1 : -1) * (12 + Math.random() * 16)
+  }));
+
+  // Aggiorna la simulazione con i nuovi nodi risorsa
+  sim.nodes([hubNode, ...areaNodes, ...risorsaNodes]);
+  sim.force('link').links([
+    ...areaNodes.map(a => ({ source: '__hub__', target: a.id, type: 'area' })),
+    ...risorsaLinks
+  ]);
+  sim.alpha(0.6).restart();
+
+  // ── 5. Render link risorse (path curvo invece di linea retta) ──
+  g.select('.links-risorsa').selectAll('path')
+    .data(risorsaLinks).join('path')
+    .attr('class', 'link-risorsa')
+    .attr('fill', 'none')
+    .attr('stroke', area.color)
+    .attr('stroke-width', 1.5);
+
+  // ── 6. Render nodi risorsa ──
+  risorsaSel = g.select('.nodes-risorsa')
+    .selectAll('g').data(risorsaNodes, d => d.id).join('g')
+    .attr('class', 'node-risorsa entering')
     .attr('data-id', d => d.id)
-    .attr('data-area', d => d.areaId)
-    .call(d3.drag()
-      .on('start', dragStart)
-      .on('drag', dragging)
-      .on('end', dragEnd)
-    )
+    .call(d3.drag().on('start', dragStart).on('drag', dragging).on('end', dragEnd))
     .on('click', function(e, d) {
       e.stopPropagation();
-      openPanel(d);
+      if (HAS_HOVER) {
+        // Desktop: il pannello è già visibile dall'hover, il click naviga subito
+        window.location.href = d.path;
+      } else {
+        // Touch: primo tocco apre il pannello (anteprima), il CTA dentro naviga
+        openPanel(d, true);
+      }
     })
     .on('mouseover', function(e, d) {
       showTooltip(e, `${d.emoji} ${d.label}`);
+      if (HAS_HOVER) openPanel(d, false);  // anteprima automatica solo su desktop, senza overlay
     })
-    .on('mouseout', hideTooltip);
+    .on('mouseout', function() {
+      hideTooltip();
+      if (HAS_HOVER) closePanel();
+    });
 
   risorsaSel.append('circle')
-    .attr('r', 16)
+    .attr('r', 18)
     .attr('fill', '#fff')
     .attr('stroke', d => d.color)
-    .attr('stroke-width', 2)
-    .attr('filter', 'drop-shadow(0 2px 6px rgba(0,0,0,.12))');
+    .attr('stroke-width', 2.5)
+    .attr('filter', 'drop-shadow(0 2px 8px rgba(0,0,0,.15))');
 
   risorsaSel.append('text')
-    .attr('text-anchor', 'middle')
-    .attr('dy', '0.35em')
-    .attr('font-size', '0.8rem')
-    .text(d => d.emoji);
+    .attr('text-anchor', 'middle').attr('dy', '0.35em')
+    .attr('font-size', '0.9rem').text(d => d.emoji);
 
-  /* ── LABEL RISORSA (sotto il nodo) ── */
   risorsaSel.append('text')
-    .attr('text-anchor', 'middle')
-    .attr('dy', '3.2em')
-    .attr('font-size', '9px')
-    .attr('fill', '#444')
-    .attr('font-weight', '500')
+    .attr('text-anchor', 'middle').attr('dy', '3.4em')
+    .attr('font-size', '10px').attr('fill', '#444').attr('font-weight', '600')
     .attr('font-family', 'DM Sans, system-ui, sans-serif')
-    .text(d => d.label.length > 16 ? d.label.slice(0, 15) + '…' : d.label);
+    .text(d => d.label.length > 18 ? d.label.slice(0, 17) + '…' : d.label);
 
-  /* ── TICK ── */
-  sim.on('tick', () => {
-    linkSel
-      .attr('x1', d => d.source.x)
-      .attr('y1', d => d.source.y)
-      .attr('x2', d => d.target.x)
-      .attr('y2', d => d.target.y);
-
-    areaSel.attr('transform', d => `translate(${d.x},${d.y})`);
-    hubSel.attr('transform', d => `translate(${hubNode.x},${hubNode.y})`);
-    risorsaSel.attr('transform', d => `translate(${d.x},${d.y})`);
+  // Animazione comparsa
+  requestAnimationFrame(() => {
+    risorsaSel.classed('entering', false);
   });
 
-  /* ── DRAG ── */
-  function dragStart(e, d) {
-    if (!e.active) sim.alphaTarget(0.3).restart();
-    d.fx = d.x; d.fy = d.y;
-  }
-  function dragging(e, d) {
-    d.fx = e.x; d.fy = e.y;
-  }
-  function dragEnd(e, d) {
-    if (!e.active) sim.alphaTarget(0);
-    if (d.type !== 'hub') { d.fx = null; d.fy = null; }
-  }
+  // ── 7. UI: breadcrumb, pulsante back, hint ──
+  document.getElementById('ma-breadcrumb').classList.add('visible');
+  document.getElementById('ma-breadcrumb-dot').style.background = area.color;
+  document.getElementById('ma-breadcrumb-label').textContent = area.label;
+  document.getElementById('ma-back-overview').classList.add('visible');
+  document.getElementById('ma-hint').textContent = 'Clicca una risorsa per i dettagli · Clicca lo sfondo per tornare alle aree';
 
-  /* ── HIGHLIGHT AREA ── */
-  window.toggleAreaHighlight = function(areaId) {
-    if (selectedArea === areaId) {
-      clearHighlight();
-      return;
-    }
-    selectedArea = areaId;
+  // ── 8. Hash URL ──
+  if (pushHash) {
+    history.pushState(null, '', '#' + areaId);
+  }
+}
 
-    // Dimma tutto
-    areaSel.classed('dimmed', d => d.id !== areaId);
-    risorsaSel.classed('dimmed', d => d.areaId !== areaId);
-    linkSel.classed('dimmed', d => {
-      const src = typeof d.source === 'object' ? d.source.id : d.source;
-      const tgt = typeof d.target === 'object' ? d.target.id : d.target;
-      return src !== areaId && tgt !== areaId && src !== '__hub__';
-    });
-  };
+/* ══════════════════════════════════════════════════════════════
+   TRANSIZIONE: DETTAGLIO → VISTA D'INSIEME
+══════════════════════════════════════════════════════════════ */
+window.goToOverview = function() {
+  if (currentView === 'overview') return;
+  currentView = 'overview';
+  closePanel();
 
-  window.clearHighlight = function() {
-    selectedArea = null;
-    areaSel.classed('dimmed', false);
-    risorsaSel.classed('dimmed', false);
-    linkSel.classed('dimmed', false);
-  };
+  // Rimuove i nodi risorsa
+  g.select('.nodes-risorsa').selectAll('g').remove();
+  g.select('.links-risorsa').selectAll('path').remove();
+  risorsaNodes = [];
+  risorsaSel = null;
+
+  // Le aree tornano libere (force-layout riprende il controllo)
+  areaNodes.forEach(d => { d.fx = null; d.fy = null; });
+  hubNode.fx = W/2; hubNode.fy = H/2;
+  hubSel.style('display', null);
+  linkSel.style('display', null);
+  areaSel.classed('bg-faded', false);
+  areaSel.classed('no-hub', false);
+
+  sim.nodes([hubNode, ...areaNodes]);
+  sim.force('link').links(areaNodes.map(a => ({ source: '__hub__', target: a.id, type: 'area' })));
+  sim.alpha(0.6).restart();
+
+  document.getElementById('ma-breadcrumb').classList.remove('visible');
+  document.getElementById('ma-back-overview').classList.remove('visible');
+  document.getElementById('ma-hint').textContent = "Clicca un'area per esplorarla · Trascina per muovere";
+
+  history.pushState(null, '', location.pathname);
+};
+
+/* ── GESTIONE BACK/FORWARD BROWSER ── */
+window.addEventListener('popstate', () => {
+  const hash = location.hash.replace('#', '');
+  if (hash && AREE.some(a => a.id === hash)) {
+    if (currentView !== hash) enterAreaDetail(hash, false);
+  } else {
+    if (currentView !== 'overview') goToOverview();
+  }
+});
+
+/* ── DRAG ── */
+function dragStart(e, d) {
+  if (!e.active) sim.alphaTarget(0.3).restart();
+  d.fx = d.x; d.fy = d.y;
+}
+function dragging(e, d) {
+  d.fx = e.x; d.fy = e.y;
+}
+function dragEnd(e, d) {
+  if (!e.active) sim.alphaTarget(0);
+  // In vista dettaglio, area selezionata e risorse restano ancorate dove l'utente le lascia
+  // ma le aree di sfondo (non selezionate) e l'area centrale non si liberano mai in quella vista
+  if (currentView === 'overview' && d.type !== 'hub') {
+    d.fx = null; d.fy = null;
+  } else if (currentView !== 'overview' && d.type === 'risorsa') {
+    // le risorse restano libere di essere riposizionate dall'utente ma non vengono "rilasciate"
+    // per evitare che il force-layout le faccia schizzare via dal cerchio
+  }
 }
 
 /* ── PANNELLO ── */
-function openPanel(d) {
+function openPanel(d, withOverlay) {
   const panel  = document.getElementById('ma-panel');
   const overlay = document.getElementById('ma-overlay');
 
@@ -777,24 +972,23 @@ function openPanel(d) {
   document.getElementById('panel-desc').textContent   = d.description || '';
   document.getElementById('panel-meta').textContent   = d.meta || '';
 
-  // Badge categoria
   const catEl = document.getElementById('panel-cat');
   const catMap = { guide: 'Guida', strumento: 'Strumento', pillola: 'Pillola' };
   catEl.textContent  = catMap[d.cat] || d.cat;
   catEl.className    = 'ma-panel-cat ' + (d.cat || '');
 
-  // Area
   document.getElementById('panel-area-dot').style.background = d.color;
   document.getElementById('panel-area-label').textContent    = d.areaLabel || '';
 
-  // CTA
   const ctaEl = document.getElementById('panel-cta');
   ctaEl.href = d.path;
   const ctaLabel = { guide: 'Apri la guida', strumento: 'Apri lo strumento', pillola: 'Apri la pillola' };
   document.getElementById('panel-cta-label').textContent = ctaLabel[d.cat] || 'Apri la risorsa';
 
   panel.classList.add('open');
-  overlay.classList.add('open');
+  // L'overlay full-screen serve solo su touch (blocca e dà focus al pannello).
+  // Su desktop l'hover apre solo il pannello, senza oscurare il resto della mappa.
+  if (withOverlay) overlay.classList.add('open');
 }
 
 window.closePanel = function() {
@@ -803,9 +997,9 @@ window.closePanel = function() {
 };
 
 /* ── TOOLTIP ── */
-function showTooltip(e, text) {
+function showTooltip(e, html) {
   const t = document.getElementById('ma-tooltip');
-  t.textContent = text;
+  t.innerHTML = html;
   t.style.left = (e.clientX + 12) + 'px';
   t.style.top  = (e.clientY - 10) + 'px';
   t.classList.add('visible');
@@ -817,8 +1011,8 @@ function hideTooltip() {
 /* ── RESIZE ── */
 window.addEventListener('resize', () => {
   const container = document.getElementById('graph-container');
-  const svg = document.getElementById('graph-svg');
-  svg.setAttribute('viewBox', `0 0 ${container.clientWidth} ${container.clientHeight}`);
+  W = container.clientWidth; H = container.clientHeight;
+  document.getElementById('graph-svg').setAttribute('viewBox', `0 0 ${W} ${H}`);
 });
 
 /* ── AVVIO ── */
