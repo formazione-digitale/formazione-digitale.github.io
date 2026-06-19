@@ -59,9 +59,9 @@ formazione-digitale/
 |   \--- shared-extended.css         <- CSS proprietario per guide con layout custom
 |--- img/
 |--- docs/
+|   |--- catalogo_scripts.md
 |--- scripts/
 |   |--- aggiorna_dominio.py
-|   |--- catalogo_scripts.md
 |   |--- cerca_vecchio_dominio.ps1
 |   |--- cerca_vecchio_dominio.py
 |   |--- check_site_links.bat
@@ -107,15 +107,24 @@ formazione-digitale/
 |   \--- guida-word/
 |--- foglio-di-calcolo/
 |   \--- guida-funzioni-excel/
-|--- database/
+|--- database/                       <- HUB (index.html proprio, escluso da manifest)
+|   |--- index.html                  <- Header due colonne, mappa D3, percorso consigliato
 |   |--- guida-database/             <- Usa shared-extended.css — NON shared.css
 |   |--- guida-libreoffice-base-query/  <- Usa shared-extended.css — NON shared.css
 |   \--- guida-modello-logico/       <- Usa shared-extended.css — NON shared.css
+|--- programmazione/                 <- HUB (index.html proprio, escluso da manifest)
+|   |--- index.html                  <- Header due colonne, mappa D3, percorso consigliato
+|   |--- algoritmi-ordinamento/
+|   \--- algoritmi-ricerca/
 |--- marketing/
 |   |--- guida-marketing/
 |   |--- pillola-seo/
 |   |--- analizzatore-seo/
 |   \--- break-even-point-tool/
+|--- project-management/
+|   |--- guida-gestione-progetti/
+|   |--- kanban-tool/
+|   \--- gantt-planner/              <- Pagina download Excel/Google Fogli
 |--- networking/
 |   |--- subnet-calculator/
 |   \--- hfs-server/
@@ -147,7 +156,7 @@ Contiene 17 sezioni numerate e commentate:
 8. Sidebar guide (`.guide-layout`, `.guide-sidebar`, `.sidebar-overlay`, `.sidebar-nav`)
 9. Main content (`#main`, `p`, `hr`, liste)
 10. Struttura sezioni (`.section-header`, `.cover-block`, `.cover-extras`)
-11. Componenti guide (`.part-header`, `.highlight-grid`, `.dodont`, `.two-col`)
+11. Componenti guide (`.part-header`, `.highlight-grid`, `.dodont`, `.two-col`, `.related-link`)
 12. Box callout (`.box-tip`, `.box-warn`, `.box-note`, `.box-info`, `.box-red`)
 13. Footer (`footer`, `.fw-footer`, `.footer-nav-link`)
 14. Auth UI (`#auth-btn`, `.auth-overlay`, `.auth-panel`, `.btn-bookmark`)
@@ -182,6 +191,8 @@ La sezione 8 usa ora un layout **block** con sidebar fixed, allineato al pattern
 | Grigio | `--gray-dark` #2C2C2C · `--gray-mid` #666 · `--gray-light` #F5F5F5 · `--white` #FFFFFF |
 
 > **Regola:** usare sempre le variabili — mai hardcodare i colori nelle pagine.
+
+> **`.related-link` (aggiunto 18/06/2026):** card cliccabile per rimandare a risorse correlate dentro una guida — banda icona + titolo + descrizione + freccia, sfondo `--blue-pale`. Prima dell'aggiunta a `shared.css`, alcune guide (es. `guida-peer-review-ia`) lo ridefinivano localmente con CSS duplicato — ora va sempre usato dalla classe condivisa, mai ridefinito inline.
 
 ## shared-extended.css
 
@@ -220,13 +231,17 @@ Ogni pagina mantiene un `<style>` inline per componenti non condivisi.
 
 | File | Responsabilità |
 |---|---|
-| `sw.js` | Service Worker PWA. Cache First per CSS/img, Network First per HTML/JSON. `CACHE_VERSION` da incrementare ad ogni deploy significativo. |
+| `sw.js` | Service Worker PWA. Cache First per CSS/img/`manifest.json`/`aree.json` (espliciti, non `.json` generico — per non cachare indiscriminatamente eventuali JSON futuri), Network First per HTML. `CACHE_VERSION` aggiornata **automaticamente** da `genera_sitemap.py` (vedi sotto) — non più a mano. |
 | `stats.js` | Carica statistiche da GoatCounter API. Inietta Schema.org ItemList dinamico da `manifest.json`. Non modificare per aggiungere risorse — aggiornare solo `manifest.json`. |
 | `supabase.js` | Client Supabase condiviso. Esporta `supabase` per import ES module. **ATTENZIONE:** contiene anon key — pianificata migrazione a variabile d'ambiente Vercel (settembre 2026). |
 | `auth.js` | Gestisce login magic link, logout, stato sessione, segnalibri. Importa `supabase.js`. |
 | `scripts/ui.js` | Inietta back-to-top button e gestisce theme toggle in tutte le pagine. Includere con `<script src="/scripts/ui.js" defer></script>` prima di `</body>` in ogni pagina HTML. Migrazione in `/js/` pianificata luglio/agosto 2026. |
 
 > **Regola ui.js:** ogni file HTML del portale deve includere `<script src="/scripts/ui.js" defer></script>`. Verifica pagine mancanti (PowerShell dalla root): `ls -r *.html | ?{ !(sls "ui.js" $_.FullName -Quiet) } | % FullName`
+
+## Bump automatico CACHE_VERSION (18/06/2026)
+
+`genera_sitemap.py` ora aggiorna anche `sw.js` ad ogni lancio — risolve il problema della `CACHE_VERSION` dimenticata nei commit. La versione diventa `fd-v{data-odierna}` (es. `fd-v2026-06-19`), sostituita via regex sul valore esistente. Lo script stampa un messaggio (`sw.js aggiornato` o `già aggiornata`) e non riscrive il file se il contenuto non cambia. `sw.js` è attualmente in root — `SW_PATH` nello script andrà aggiornato quando verrà spostato in `/scripts/` insieme alla migrazione JS.
 
 ---
 
@@ -250,6 +265,8 @@ File JSON unica fonte di verità per tutte le risorse del portale. Include anche
 | `digcomp_level` | Livello DigComp: `foundation` / `intermediate` / `advanced` |
 | `digcompedu` | Array competenze DigCompEdu (es. `["DCEdu 6.4"]`) |
 | `digcomp_areas` | Array aree tematiche DigComp |
+| `hub` | Path della hub di appartenenza (solo se la risorsa vive dentro una hub, es. `/database/`) |
+| `order` | Ordine della risorsa all'interno della hub |
 
 Consumato da: `stats.js` (GoatCounter + Schema.org), `mappa-risorse.html` (grafo), `mappa-aree.html` (grafo D3 per aree), `mappa-framework.html` (navigazione per competenza), `sitemap.xml` tramite `genera_sitemap.py`.
 
@@ -261,11 +278,11 @@ Consumato da: `stats.js` (GoatCounter + Schema.org), `mappa-risorse.html` (grafo
 
 # Script di manutenzione
 
-Documentazione completa in `scripts/catalogo_scripts.md`. Riepilogo principale:
+Documentazione completa in `docs/catalogo_scripts.md`. Riepilogo principale:
 
 | Script | Tipo | Funzione |
 |---|---|---|
-| `genera_sitemap.py` | Python | Genera `sitemap.xml` da `manifest.json`. Usa date Git per `<lastmod>`. |
+| `genera_sitemap.py` | Python | Genera `sitemap.xml` da `manifest.json` (date Git per `<lastmod>`) + bump automatico `CACHE_VERSION` in `sw.js` |
 | `cerca_vecchio_dominio.py/.ps1` | Python/PS | Cerca occorrenze del vecchio dominio github.io. |
 | `aggiorna_dominio.py` | Python | Sostituisce github.io → formazione-digitale.it in tutti i file. |
 | `replace_in_files.py` | Python | Trova e sostituisce una stringa in tutti gli HTML. |
@@ -325,9 +342,11 @@ Il dark mode è raccomandato. Il costo reale non è tecnico — è di manutenzio
 
 | Tier | Pagine | Strategia |
 |---|---|---|
-| **Tier 1 — Risposta automatica** | index.html, mappa-risorse.html, guide IA, Subnet, BEP | Variabili dark in `shared.css` |
-| **Tier 2 — Intervento mirato** | guida-marketing, hfs-server, codifica-binaria | Revisione colori hardcoded inline |
+| **Tier 1 — Risposta automatica** | index.html, mappa-risorse.html, guide IA, Subnet, BEP, `database/index.html` (hub), `programmazione/index.html` (hub) | Variabili dark in `shared.css` |
+| **Tier 2 — Intervento mirato** | guida-marketing, hfs-server, codifica-binaria, `mappa-aree.html` (standalone, non carica shared.css) | Revisione colori hardcoded inline |
 | **Tier 3 — Escludere** | guida-libreoffice-base-query, guida-modello-logico, guida-database (usano `shared-extended.css`) · guida-word (tema Microsoft) | `data-theme-lock="true"` — il bottone toggle non appare |
+
+> **Nota (19/06/2026):** il Tier va verificato per singolo file, non per area/cartella. `database/index.html` (la hub) è Tier 1, mentre le 3 guide nella stessa cartella (`guida-database`, `guida-modello-logico`, `guida-libreoffice-base-query`) restano Tier 3 — usano CSS diversi.
 
 ## Pattern scelto
 
@@ -360,6 +379,100 @@ CSS per guide con layout proprietario completamente diverso da `shared.css`. Il 
 Il nome è generico per design — può essere usato da qualsiasi guida con identità visiva custom, non solo LibreOffice.
 
 **Pagine che lo usano:** `guida-libreoffice-base-query`, `guida-modello-logico`, `guida-database`.
+
+---
+
+# Sistema Hub — aree con più risorse
+
+Introdotto il 18/06/2026. Quando un'area tematica raggiunge 3+ risorse correlate, diventa una **hub di sezione** con pagina dedicata `[area]/index.html` — invece di restare card singole sparse in home.
+
+## Componenti del sistema
+
+| Elemento | Comportamento |
+|---|---|
+| `[area]/index.html` | Header a due colonne (testo + snippet/schema decorativo), introduzione di sezione (paragrafo + punti chiave), tab Mappa/Lista, percorso consigliato |
+| `manifest.json` | La hub stessa NON è una risorsa — è navigazione, esclusa dal manifest. Le risorse al suo interno hanno `"hub": "/[area]/"` e `"order": N` |
+| `aree.json` | Campo `"hasHub": true/false` per ogni area — distingue hub reali da raggruppamenti puramente categorici. Default `false` |
+| Home (`index.html`) | La hub è rappresentata da una **card-area wide** (`.card-area-wrap`), prima riga di "Guide complete". Non ha `data-cat`/`data-tags`, niente classe `.card` — invisibile a `filterAll()` e `updateStats()` |
+| `mappa-aree.html` | Click sul nodo area centrale, in vista dettaglio, naviga all'hub **solo se `hasHub: true`** — altrimenti tooltip "Risorse raggruppate per area" senza promettere nulla |
+
+**Hub attualmente esistenti:** `database/` (3 guide: Basi di Dati, Modello Logico, LibreOffice Base — Guida alle query), `programmazione/` (2 guide: Algoritmi di Ordinamento, Algoritmi di Ricerca).
+
+**Percorso consigliato nella hub:** sequenza didattica scritta a mano nell'HTML, indipendente dal campo `order` del manifest — permette di anticipare risorse "coming soon" (es. Modello Fisico prima di LibreOffice Query nella hub Database, SQL in fondo) senza che il manifest debba conoscerle in anticipo.
+
+## Card-area — template
+
+```html
+<a href="/[area]/" class="card-area card-area-[nome]">
+  <div class="card-area-band"></div>
+  <div class="card-area-body">
+    <div class="card-area-icon">[EMOJI]</div>
+    <div class="card-area-text">
+      <div class="card-area-title">[TITOLO AREA]</div>
+      <div class="card-area-desc">[DESCRIZIONE BREVE]</div>
+    </div>
+    <div class="card-area-badge">[N] guide →</div>
+  </div>
+</a>
+```
+
+CSS in `index.html` (non in `shared.css` — specifico per la home), palette propria per area: Database `#d64f2a`, Programmazione `#7c5cfc`.
+
+---
+
+# Mappa per Aree — navigazione a due livelli
+
+Riscritta integralmente il 18/06/2026 (stile "Prezi": overview poi zoom su singola area). Sostituisce la versione precedente a grafo unico (hub + tutte le aree + tutte le risorse visibili insieme), che diventava illeggibile con la crescita del numero di risorse.
+
+## Architettura
+
+| Vista | Contenuto | Nodi |
+|---|---|---|
+| **Overview** (default, `#` vuoto) | Hub centrale + un nodo per ogni area | Sempre 11 (hub + 10 aree), indipendente da quante risorse esistono |
+| **Dettaglio** (`#[area-id]`) | Area selezionata al centro, sue risorse in cerchio attorno (raggio fisso 130px), altre 9 aree spostate su anello esterno (raggio `min(W,H)*0.42`), sfumate (`bg-faded`) | Variabile, proporzionato alla singola area |
+
+**Transizioni:** click su un'area in overview → `enterAreaDetail()`. Click sullo sfondo o sul breadcrumb → `goToOverview()`. Click sul nodo area centrale già selezionato → naviga all'hub (solo se `hasHub: true`).
+
+**URL hash:** `mappa-aree.html#database` apre direttamente in dettaglio — condivisibile, supporta back/forward via `popstate`.
+
+**Badge conteggio:** ogni nodo area ha un badge numerico permanente (non solo in hover) con il numero di risorse contenute.
+
+**Tooltip arricchito:** hover su un'area mostra titolo + elenco delle prime 5 risorse (emoji + nome) + "altre N" se ce ne sono di più.
+
+**UX differenziata desktop/touch (`HAS_HOVER = matchMedia('(hover: hover) and (pointer: fine)')`):**
+
+| Azione | Desktop | Touch |
+|---|---|---|
+| Hover su risorsa | Apre pannello anteprima, senza overlay (non blocca interazione) | — |
+| Click su risorsa | Naviga diretto | Apre pannello con overlay, secondo tocco su CTA naviga |
+| Drag risorsa | Libera al rilascio | Libera al rilascio |
+| Drag area centrale (in dettaglio) | Resta ancorata, non si libera mai | Idem |
+
+**Link curvi:** i collegamenti area→risorse in vista dettaglio sono `<path>` con curva quadratica (non `<line>` rette) — punto di controllo perpendicolare al segmento, offset random per link (12–28px, segno alternato) per un effetto organico. I link hub→aree in overview restano rette.
+
+**Footer:** la pagina non carica `shared.css` (standalone) — il footer fisso (`.fw-footer`) ha stile copiato esplicitamente da `shared.css`, non linkato, per coerenza visiva con `mappa-risorse.html`.
+
+**Legenda:** rimossa il 18/06/2026 — con la navigazione a due livelli la distinzione hub/area/risorsa è già implicita nella gerarchia visiva, la legenda aggiungeva rumore senza informazione.
+
+---
+
+# Ricerca federata — home
+
+Aggiunta il 18/06/2026 a `index.html`. Prima della ricerca federata, la barra di ricerca (`filterAll()`) trovava solo le card fisicamente presenti in home — le risorse dentro le hub (database, programmazione) erano "invisibili" alla ricerca.
+
+## Come funziona
+
+| Componente | Ruolo |
+|---|---|
+| `filterAll()` | Invariato — filtra le card DOM per categoria attiva + query testuale |
+| `fedSearch()` | Nuovo — legge `manifest.json` (cache `FED_MANIFEST`, un solo fetch per sessione), cerca su `label`/`short`/`description`/`meta`/`tags` di **tutte** le risorse attive, incluse quelle nelle hub |
+| `#fed-overlay` | Dropdown posizionato `position: fixed` (fuori da `.hero` che ha `overflow: hidden`), coordinate calcolate via `getBoundingClientRect()` al momento della query |
+
+**Comportamento con query attiva:** `.card-area-wrap` si nasconde (`filterAll()` lo gestisce) — le hub sono sostituite nei risultati dall'overlay, che mostra direttamente le risorse specifiche invece del contenitore.
+
+**Anti-stale:** dopo l'`await getManifest()`, la query viene riletta dal campo input — se è cambiata nel frattempo (l'utente ha continuato a digitare), il risultato della chiamata precedente viene scartato.
+
+**Cache offline:** `manifest.json` e `aree.json` sono in `cacheFirst()` nel service worker (vedi sezione Service Worker) — la ricerca federata funziona anche offline dopo il primo caricamento.
 
 ---
 
@@ -434,6 +547,15 @@ MATERIALE_DIDATTICO\NEUTRALINO\bep-tool\
 - [OK] BEP tool desktop — dati salvati in `Documenti\BEP Tool\` via `Neutralino.os.getPath('documents')` (22/05/2026)
 - [OK] BEP tool desktop — installer `BEP_Tool_Setup.exe` generato con Inno Setup (22/05/2026)
 - [OK] Supabase Auth + magic link + Resend SMTP configurati (22/05/2026)
+- [OK] Sistema Hub introdotto — `database/` e `programmazione/` con index.html proprio, campo `hub`/`order` in manifest, `hasHub` in aree.json, card-area in home (18/06/2026)
+- [OK] Area Programmazione creata — 2 guide (Algoritmi di Ordinamento, Algoritmi di Ricerca) con visualizzatore animato (17/06/2026)
+- [OK] Mappa Aree riscritta a due livelli stile Prezi — overview/dettaglio, hash URL, badge conteggio, tooltip arricchito, link curvi, UX desktop/touch differenziata, legenda rimossa (18/06/2026)
+- [OK] Ricerca federata in home — overlay su tutte le risorse del portale incluse quelle nelle hub, cache manifest, anti-stale (18/06/2026)
+- [OK] `.related-link` centralizzato in `shared.css` sezione 11 — rimosso CSS duplicato da `guida-peer-review-ia` (19/06/2026)
+- [OK] Gantt Planner — strumento nuovo, pagina download Excel/Google Fogli, mapping DigComp/DigCompEdu (DC 3.1/5.2, DCEdu 3.1/4.1/6.1) (18/06/2026)
+- [OK] `guida-gestione-progetti` — checklist corretta (bug double-toggle label+onclick), documenti A/B leggibili (CSS `part-header` mancante), riga sigle rimossa dall'hero, Gantt Planner collegato (18/06/2026)
+- [OK] `genera_sitemap.py` — bump automatico `CACHE_VERSION` in `sw.js` ad ogni lancio (18/06/2026)
+- [OK] `sw.js` — Cache First esplicito per `manifest.json`/`aree.json` (ricerca federata funziona offline) (19/06/2026)
 
 ---
 
@@ -441,8 +563,12 @@ MATERIALE_DIDATTICO\NEUTRALINO\bep-tool\
 
 - Cancellare PNG orfani in `guida-libreoffice-base-query/img/` dopo verifica manuale (`find_orphan_png.py --delete`)
 - `index.html` — verificare se `formazione-digitale-logo.png` è ancora presente o già convertito in WebP
-- `genera_sitemap.py` — aggiungere `mappa-aree.html` alle pagine fisse
+- `genera_sitemap.py` — aggiungere `mappa-aree.html` alle pagine fisse (ancora non incluso, verificato 19/06/2026)
 - BEP tool web — aggiungere bottone Manuale (modale) e bottone download app desktop nell'hero
+- Gap DigComp/DigCompEdu — analizzare quali competenze restano scoperte dal catalogo risorse attuale prima di pianificare nuovi contenuti (discusso 18/06/2026, non ancora svolto)
+- Guida Modello Fisico database — "coming soon" nel percorso consigliato della hub Database
+- Guida LibreOffice Base — Creazione e gestione di un Database (seconda guida LibreOffice, per distinguerla da "Guida alle query")
+- Guida SQL — "coming soon" in fondo al percorso consigliato della hub Database
 
 ---
 
@@ -474,11 +600,15 @@ MATERIALE_DIDATTICO\NEUTRALINO\bep-tool\
 
 ## Nuovi contenuti — priorità DigComp/INDIRE
 
+> **Chiarimento framework INDIRE (19/06/2026):** non esiste un framework INDIRE autonomo distinto da DigComp/DigCompEdu. INDIRE gestisce la piattaforma di certificazione delle competenze digitali per docenti e ATA, ma adotta DigCompEdu come riferimento — non ne ha uno proprio. I livelli "B1/B2" talvolta citati in contesto INDIRE sono i livelli di padronanza DigCompEdu stessi (Sperimentatore B1, Esperto B2), non aree di un framework separato. Essere compliant DigCompEdu 2.2 copre quanto richiesto anche dalla certificazione INDIRE — le sigle "INDIRE A3/A4/B1/B2" usate nella tabella sotto restano comunque utili come riferimento interno per il portfolio professionale, ma non vanno trattate come un framework a sé da mappare separatamente.
+
 | Priorità | Risorsa | Standard attivati |
 |---|---|---|
 | [OK] | Pillola netiquette / cittadinanza digitale | DC 2.2–2.4 · DCEdu 6.4 · INDIRE A4 |
 | 1 | Strumento/guida collaborazione scolastica | INDIRE B1·B2 · DCEdu 1.2·2.3 |
 | 2 | Rubric builder (valutazione digitale) | DCEdu 4.1·4.2·4.3 · INDIRE A3 |
+
+> **Nota Gantt Planner (18/06/2026):** mappato su `DC 3.1`/`DC 5.2` e `DCEdu 3.1`/`4.1`/`6.1` — tutte competenze già coperte da altre risorse del portale, nessuna nuova area aperta. Da qui la priorità di "analizzare i gap reali" in sospeso immediato, prima di aggiungere altre risorse che rischiano di sovrapporsi a quanto già presidiato.
 
 ---
 
@@ -595,4 +725,4 @@ MATERIALE_DIDATTICO\NEUTRALINO\bep-tool\
 
 ---
 
-*Documento aggiornato 09/06/2026 · Formazione Digitale*
+*Documento aggiornato 19/06/2026 · Formazione Digitale*

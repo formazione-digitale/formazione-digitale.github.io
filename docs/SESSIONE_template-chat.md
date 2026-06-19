@@ -1,27 +1,40 @@
 # TEMPLATE SESSIONE — Formazione Digitale
-# Usa questo file all'inizio di ogni nuova chat nel progetto.
+# Usa questo file all'inizio di ogni nuova chat NEL PROGETTO Claude già configurato
+# (le Istruzioni di progetto sono già caricate — qui aggiungi solo lo stato
+# corrente e il task specifico).
 # Compila le sezioni [IN MAIUSCOLO] e incolla tutto come primo messaggio.
-# I file allegati al progetto (index.html, ecc.) vengono letti automaticamente.
+# Ultimo aggiornamento: 19/06/2026
 
 ---
 
 ## STATO ATTUALE DEL REPOSITORY
 
-La struttura attuale del repository è:
+> Aggiorna questa sezione se hai aggiunto nuove cartelle, hub o file
+> dall'ultima sessione. Lo stato sotto riflette il repository al 19/06/2026.
 
 ```
-formazione-digitale/
+formazione-digitale.github.io/
 ├── index.html
+├── mappa-risorse.html
+├── mappa-aree.html              (navigazione a due livelli, hash URL)
+├── mappa-framework.html
+├── manifest.json                (31 risorse, 2 hub: database, programmazione)
+├── aree.json                    (11 aree, hasHub su database/programmazione)
+├── database/                    HUB — 3 guide
+├── programmazione/               HUB — 2 guide
+├── project-management/
+│   ├── guida-gestione-progetti/
+│   ├── kanban-tool/
+│   └── gantt-planner/
 ├── intelligenza-artificiale/
-│   └── Guida_Prompting.html
-└── LibreOfficeBase_Query/
-    ├── Guida_LibreOfficeBase_Query.html
-    ├── NERD-HERD.odb
-    └── img/
+├── competenze-digitali/
+├── sicurezza/
+├── marketing/
+├── networking/
+├── sistemi/
+├── foglio-di-calcolo/
+└── elaborazione-testi/
 ```
-
-> Aggiorna questa sezione se hai aggiunto nuove cartelle o file
-> dall'ultima sessione.
 
 ---
 
@@ -30,8 +43,10 @@ formazione-digitale/
 I seguenti file sono allegati al progetto e disponibili per la lettura:
 
 - `index.html` — versione attuale della homepage
+- `manifest.json` — catalogo risorse aggiornato
+- `aree.json` — definizione aree con hasHub
 
-> Se stai lavorando su una guida specifica, allega anche quel file
+> Se stai lavorando su una guida o hub specifica, allega anche quel file
 > e aggiungilo qui.
 
 ---
@@ -44,36 +59,44 @@ I seguenti file sono allegati al progetto e disponibili per la lettura:
 
 ### Esempi di task pronti da copiare:
 
-**Aggiungere una nuova scheda:**
+**Aggiungere una nuova scheda (card singola):**
 ```
 Aggiungi una nuova card nella sezione [Guide|Strumenti|Pillole]
 con questi dati:
 - Titolo: [TITOLO]
 - Descrizione: [DESCRIZIONE BREVE]
-- Cartella GitHub: [NOME-CARTELLA]
-- File HTML principale: [NomeFile.html]
+- Cartella: [nome-area]/[nome-risorsa]/
 - Tag per la ricerca: [parola1 parola2 parola3]
 - Tipo: [card-active | card.coming]
-Restituisci solo il blocco HTML della card e il punto esatto
-dove incollarlo nell'index.html.
+Aggiorna anche manifest.json con il mapping DigComp/DigCompEdu pertinente.
 ```
 
 **Convertire una card.coming in card-active:**
 ```
 La risorsa "[TITOLO]" è ora disponibile.
 Converti la sua card da card.coming a card-active.
-Il file si trova in: [CARTELLA]/[NOMEFILE].html
-Restituisci il blocco HTML aggiornato.
+Il file si trova in: [area]/[nome-risorsa]/
+Aggiorna manifest.json: active: true.
+```
+
+**Creare una nuova hub:**
+```
+L'area "[NOME AREA]" ha raggiunto [N] risorse correlate.
+Valuta se trasformarla in hub di sezione seguendo il pattern
+di database/ e programmazione/ (header due colonne, mappa D3,
+percorso consigliato). Se sì, prepara:
+1. [area]/index.html
+2. Aggiornamento aree.json (hasHub: true)
+3. Aggiornamento manifest.json (campo hub + order sulle risorse)
+4. Card-area in home, rimozione delle card singole equivalenti
 ```
 
 **Creare una nuova guida HTML:**
 ```
 Crea una nuova guida HTML su [ARGOMENTO].
-Usa la stessa grafica e struttura di Guida_Prompting.html
-(disponibile nei file del progetto).
+Usa la stessa grafica e struttura delle guide esistenti in [area]/.
 La guida deve contenere: [DESCRIVI SEZIONI E CONTENUTO]
-Nome file: [NomeGuida.html]
-Cartella: [nome-cartella]
+Cartella: [nome-area]/[nome-guida]/
 ```
 
 **Modificare una card esistente:**
@@ -81,16 +104,16 @@ Cartella: [nome-cartella]
 Modifica la card di "[TITOLO RISORSA]" nell'index.html:
 [DESCRIVI COSA CAMBIARE — es. aggiorna la descrizione,
 cambia i tag, aggiorna il link, ecc.]
-Restituisci solo il blocco HTML modificato.
+Restituisci solo il blocco HTML modificato (delta).
 ```
 
-**Aggiungere una nuova sezione all'index:**
+**Mapping DigComp/DigCompEdu per nuova risorsa:**
 ```
-Aggiungi una nuova sezione all'index.html chiamata "[NOME SEZIONE]"
-con categoria "[NOME-CATEGORIA]".
-Segui lo stesso pattern visivo delle sezioni esistenti
-(Guide, Strumenti, Pillole).
-Inseriscila [prima|dopo] la sezione [SEZIONE ESISTENTE].
+Analizza la risorsa "[TITOLO]" — [BREVE DESCRIZIONE DI COSA FA
+E CHI LA USA, studenti/docenti, in che contesto].
+Proponi il mapping DigComp 2.2 e DigCompEdu più pertinente,
+verificando prima quali competenze sono già coperte da altre
+risorse del portale per evitare sovrapposizioni inutili.
 ```
 
 ---
@@ -98,6 +121,7 @@ Inseriscila [prima|dopo] la sezione [SEZIONE ESISTENTE].
 ## NOTE OPZIONALI
 
 > Aggiungi qui qualsiasi contesto aggiuntivo utile per questa sessione:
-> - Modifiche fatte manualmente all'index dall'ultima sessione
+> - Modifiche fatte manualmente ai file dall'ultima sessione
 > - Preferenze specifiche per questa risorsa
 > - Vincoli particolari (lunghezza descrizione, tag obbligatori, ecc.)
+> - Esito dell'ultimo deploy/test se rilevante per il task di oggi
