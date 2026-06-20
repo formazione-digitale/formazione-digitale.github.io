@@ -1,5 +1,5 @@
 Elenco del percorso delle cartelle per il volume Acer
-Numero di serie del volume: 00000011-544D:3F7C
+Numero di serie del volume: 000000E3-544D:3F7C
 C:.
 |   .gitignore
 |   .nojekyll
@@ -85,9 +85,9 @@ C:.
 +---docs
 |   |   ARCHITETTURA_Formazione_Digitale.md
 |   |   ARCHITETTURA_Formazione_Digitale.pdf
+|   |   catalogo_scripts.md
 |   |   DARK_MODE_architettura.md
-|   |   Formazione_Digitale_Guida_Collaboratori.docx
-|   |   MAPPA_DigComp_metodo.md
+|   |   Formazione_Digitale_Guida_Collaboratori.md
 |   |   MAPPA_DigComp_metodo_v1.3.md
 |   |   META-PROMPT_Formazione_Digitale.md
 |   |   PROGETTO_istruzioni-fisse.md
@@ -149,6 +149,11 @@ C:.
 |           index.html
 |           
 +---networking
+|   +---guida-ipv4
+|   |   |   index.html
+|   |   |   
+|   |   \---img
+|   |           
 |   +---hfs-server
 |   |   |   hfs-windows-x64-3.0.8.zip
 |   |   |   hfs2.0.zip
@@ -181,7 +186,6 @@ C:.
 |           
 +---scripts
 |       aggiorna_dominio.py
-|       catalogo_scripts.md
 |       cerca_vecchio_dominio.ps1
 |       cerca_vecchio_dominio.py
 |       check_site_links.bat

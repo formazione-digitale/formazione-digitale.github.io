@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Protocollo IPv4 — Struttura del Datagramma e Header · Formazione Digitale</title>
+<meta name="description" content="Header IPv4 campo per campo: versione, IHL, TTL, checksum e indirizzi, con diagramma interattivo a 32 bit e screenshot Wireshark.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#1F4E79">
+<link rel="canonical" href="https://formazione-digitale.it/networking/guida-ipv4/">
+<link rel="icon" type="image/png" href="/img/favicon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="//gc.zgo.at">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+
+<meta property="og:title" content="Protocollo IPv4 — Struttura del Datagramma e Header · Formazione Digitale">
+<meta property="og:description" content="Versione, IHL, ToS, TTL, checksum, indirizzi: tutti i campi dell'header IPv4 spiegati con un diagramma interattivo a 32 bit.">
+<meta property="og:url" content="https://formazione-digitale.it/networking/guida-ipv4/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Protocollo IPv4 — Struttura del Datagramma e Header · Formazione Digitale">
+<meta name="twitter:description" content="Header IPv4 campo per campo, con diagramma interattivo a 32 bit.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Protocollo IPv4 — Struttura del Datagramma e Header",
+  "description": "Struttura del datagramma IPv4 e funzione di ciascun campo dell'header: versione, IHL, ToS, lunghezza totale, identificazione, flags, fragment offset, TTL, protocollo, checksum, indirizzi sorgente e destinazione.",
+  "url": "https://formazione-digitale.it/networking/guida-ipv4/",
+  "inLanguage": "it",
+  "educationalLevel": "Intermediate",
+  "author": {
+    "@type": "Person",
+    "name": "Cristiano De Pasquale",
+    "jobTitle": "Docente di Informatica"
+  },
+  "provider": {
+    "@type": "WebSite",
+    "name": "Formazione Digitale",
+    "url": "https://formazione-digitale.it"
+  },
+  "keywords": "ipv4, datagramma, header, reti, networking, protocollo internet, ttl, checksum, wireshark"
+}
+</script>
+
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="stylesheet" href="/css/shared.css?v=3">
+<style>
+/* ═══════════════════════════════════════════
+   CSS SPECIFICO — Guida IPv4
+   Solo componenti non presenti in shared.css
+═══════════════════════════════════════════ */
+
+/* Hero */
+.guide-hero {
+  background: linear-gradient(135deg, var(--blue-dark) 0%, #2A6099 100%);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 24px rgba(31,78,121,.22);
+}
+.guide-hero-eyebrow {
+  font-size: .72rem; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--blue-light); margin-bottom: .5rem;
+}
+.guide-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  color: #fff; line-height: 1.1; margin-bottom: .5rem;
+}
+.guide-hero-title em { font-style: italic; color: var(--blue-light); }
+.guide-hero-sub {
+  font-size: .95rem; color: rgba(255,255,255,.75);
+  line-height: 1.65; max-width: 600px;
+}
+.guide-hero-badges { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.25rem; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: .3rem;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.22);
+  color: rgba(255,255,255,.85);
+  font-size: .72rem; font-weight: 500;
+  padding: .28rem .7rem; border-radius: 20px;
+}
+
+/* Sezioni */
+.guide-section { padding: 2rem 0; border-bottom: 1px solid var(--blue-light); }
+.guide-section:last-child { border-bottom: none; }
+.section-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.25rem; }
+.section-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 40px; height: 40px;
+  background: var(--blue-dark); color: #fff;
+  border-radius: 8px; font-size: 1.1rem; font-weight: 700; flex-shrink: 0;
+}
+.section-titles { flex: 1; }
+.section-title { font-family: var(--font-display); font-size: clamp(1.25rem,3vw,1.7rem); color: var(--blue-dark); line-height: 1.2; }
+.section-subtitle { font-size: .88rem; color: var(--gray-mid); margin-top: .2rem; }
+.sub-title { font-size: 1rem; font-weight: 600; color: var(--blue-dark); margin: 1.5rem 0 .75rem; }
+
+p { margin-bottom: 1rem; line-height: 1.75; }
+code { font-family: 'Courier New', monospace; font-size: .88em; background: var(--gray-light); padding: .15rem .4rem; border-radius: 4px; color: var(--blue-dark); }
+
+/* Box */
+.box { display: flex; gap: .85rem; border-radius: var(--radius); padding: 1rem 1.25rem; margin: 1.25rem 0; line-height: 1.65; font-size: .9rem; }
+.box-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: .05rem; }
+.box-info  { background: var(--blue-pale);   border-left: 4px solid var(--blue-mid); color: #1a3a5c; }
+.box-tip   { background: var(--green-light); border-left: 4px solid var(--green-dark); color: #14472a; }
+.box-warn  { background: var(--amber-light); border-left: 4px solid var(--amber-dark); color: #5a3500; }
+.box-future {
+  background: var(--purple-light);
+  border-left: 4px solid var(--purple-dark);
+  color: #2e0a5e;
+}
+
+/* Highlight grid */
+.highlight-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: .85rem; margin: 1.25rem 0; }
+.highlight-card { background: var(--white); border: 1px solid var(--blue-light); border-radius: var(--radius); padding: 1rem 1.1rem; }
+.hc-icon { font-size: 1.5rem; margin-bottom: .4rem; }
+.hc-title { font-weight: 600; font-size: .9rem; color: var(--blue-dark); margin-bottom: .3rem; }
+.hc-desc { font-size: .82rem; color: var(--gray-mid); line-height: 1.55; }
+
+/* Tabelle */
+.table-wrap { overflow-x: auto; margin: 1.25rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+th { background: var(--blue-dark); color: #fff; padding: .6rem 1rem; text-align: left; font-weight: 600; font-size: .8rem; }
+td { padding: .6rem 1rem; border-bottom: 1px solid var(--blue-light); vertical-align: top; line-height: 1.55; }
+tr:nth-child(even) td { background: var(--blue-pale); }
+tr:last-child td { border-bottom: none; }
+
+/* Do/Don't (limiti vs IPv6) */
+.dodont { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0; }
+@media(max-width:600px) { .dodont { grid-template-columns: 1fr; } }
+.do-col, .dont-col { border-radius: var(--radius); overflow: hidden; }
+.do-col-head { background: var(--green-dark); color: #fff; padding: .6rem 1rem; font-weight: 600; font-size: .85rem; }
+.do-col-body { background: var(--green-light); padding: 1rem; }
+.dont-col-head { background: var(--amber-dark); color: #fff; padding: .6rem 1rem; font-weight: 600; font-size: .85rem; }
+.dont-col-body { background: var(--amber-light); padding: 1rem; }
+.do-col-body ul, .dont-col-body ul { padding-left: 1.2rem; }
+.do-col-body li, .dont-col-body li { font-size: .84rem; margin-bottom: .4rem; line-height: 1.5; }
+
+/* Screenshot Wireshark */
+.shot-wrap { margin: 1.25rem 0; border: 1px solid var(--blue-light); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+.shot-wrap img { width: 100%; display: block; }
+.shot-caption { background: var(--gray-light); color: var(--gray-mid); font-size: .8rem; padding: .6rem 1rem; }
+
+/* ── Diagramma datagramma: header + payload ── */
+.datagram-wrap { display: flex; gap: 0; margin: 1.25rem 0; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+.datagram-header { flex: 0 0 38%; background: var(--blue-dark); color: #fff; padding: 1.25rem 1rem; text-align: center; }
+.datagram-payload { flex: 1; background: var(--blue-pale); color: var(--blue-dark); padding: 1.25rem 1rem; text-align: center; border-left: 3px dashed var(--blue-mid); }
+.datagram-label { font-weight: 700; font-size: .95rem; margin-bottom: .3rem; }
+.datagram-sub { font-size: .78rem; opacity: .85; }
+@media(max-width:550px) { .datagram-wrap { flex-direction: column; } .datagram-payload { border-left: none; border-top: 3px dashed var(--blue-mid); } }
+
+/* ── Diagramma interattivo header IPv4 a 32 bit ── */
+.ipv4-diagram { margin: 1.5rem 0; }
+.ipv4-row { display: flex; flex-wrap: wrap; margin-bottom: 2px; }
+.ipv4-row-label { flex: 0 0 100%; font-size: .72rem; color: var(--gray-mid); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; margin: .6rem 0 .25rem; }
+.ipv4-field {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 56px; padding: .35rem .3rem;
+  background: var(--blue-pale); border: 1px solid var(--blue-light);
+  font-size: .72rem; text-align: center; color: var(--blue-dark);
+  cursor: pointer; user-select: none;
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.ipv4-field:hover { background: var(--blue-light); }
+.ipv4-field.active { background: var(--blue-mid); color: #fff; transform: translateY(-2px); box-shadow: 0 4px 14px rgba(31,78,121,.3); z-index: 2; }
+.ipv4-field-name { font-weight: 700; line-height: 1.2; }
+.ipv4-field-bits { font-size: .65rem; opacity: .8; margin-top: .15rem; }
+
+/* Larghezza proporzionale ai bit su schermi normali */
+@media(min-width: 701px) {
+  .ipv4-field[data-bits="32"] { flex: 0 0 100%; }
+  .ipv4-field[data-bits="16"] { flex: 0 0 50%; }
+  .ipv4-field[data-bits="13"] { flex: 0 0 40.6%; }
+  .ipv4-field[data-bits="8"]  { flex: 0 0 25%; }
+  .ipv4-field[data-bits="4"]  { flex: 0 0 12.5%; }
+  .ipv4-field[data-bits="3"]  { flex: 0 0 9.4%; }
+}
+/* Sotto i 700px: le celle si restringono e vanno a capo come "chip", niente più proporzione a bit */
+@media(max-width: 700px) {
+  .ipv4-field { flex: 1 1 120px; min-width: 100px; }
+}
+
+.ipv4-panel {
+  margin-top: 1rem; background: var(--white); border: 1px solid var(--blue-light);
+  border-left: 4px solid var(--blue-mid); border-radius: var(--radius);
+  padding: 1rem 1.25rem; min-height: 80px;
+}
+.ipv4-panel-placeholder { color: var(--gray-mid); font-size: .88rem; font-style: italic; }
+.ipv4-panel-title { font-weight: 700; color: var(--blue-dark); margin-bottom: .35rem; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.ipv4-panel-bits { font-size: .72rem; font-weight: 600; color: #fff; background: var(--blue-mid); padding: .15rem .55rem; border-radius: 20px; }
+.ipv4-panel-desc { font-size: .9rem; line-height: 1.65; color: var(--gray-dark); }
+.ipv4-hint { font-size: .78rem; color: var(--gray-mid); margin-top: .6rem; }
+
+/* ── Confronto campo-per-campo IPv4 / IPv6 ── */
+.headers-compare { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1.5rem 0; }
+.hc-col { flex: 1; min-width: 240px; }
+.schema-col-title { text-align: center; font-weight: 700; color: var(--blue-dark); font-size: .92rem; margin-bottom: .6rem; }
+.hc-grid { display: grid; grid-template-columns: repeat(32, 1fr); gap: 2px; }
+.hc-cell {
+  flex: 1; display: flex; align-items: center; justify-content: center; text-align: center;
+  padding: .4rem .3rem; min-height: 42px; border-radius: 3px;
+  font-size: .68rem; font-weight: 700; color: #fff; line-height: 1.25;
+}
+.hc-cell.tall { min-height: 84px; }
+.hc-kept    { background: var(--amber-mid); }
+.hc-removed { background: var(--red-mid); }
+.hc-changed { background: var(--blue-mid); }
+.hc-new     { background: var(--green-mid); }
+
+.hc-legend { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 1rem; font-size: .76rem; color: var(--gray-dark); }
+.hc-legend-item { display: flex; align-items: center; gap: .4rem; }
+.hc-legend-swatch { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+@media(max-width: 520px) {
+  .hc-grid { display: flex; flex-wrap: wrap; }
+  .hc-cell { flex: 1 1 80px !important; font-size: .64rem; min-height: 38px; }
+}
+
+/* ── Mini-demo nel pannello campi (Opzione B) ── */
+.field-demo { margin-top: .9rem; padding-top: .85rem; border-top: 1px dashed var(--blue-light); }
+.field-demo-label { font-size: .7rem; font-weight: 700; color: var(--gray-mid); text-transform: uppercase; letter-spacing: .05em; margin-bottom: .65rem; }
+
+.ttl-scenario { margin-bottom: 1.1rem; }
+.ttl-scenario-label { font-size: .8rem; font-weight: 700; margin-bottom: .5rem; }
+.ttl-scenario-label.ok { color: var(--green-dark); }
+.ttl-scenario-label.fail { color: var(--amber-dark); }
+.ttl-track { position: relative; display: flex; justify-content: space-between; align-items: center; height: 40px; }
+.ttl-router { font-size: 1.3rem; z-index: 1; }
+.ttl-packet { position: absolute; left: 0; top: 1px; font-size: 1.2rem; transition: left .65s linear; z-index: 2; }
+.ttl-counter { display: inline-block; margin-top: .4rem; font-weight: 800; font-size: .95rem; color: var(--blue-dark); background: var(--blue-pale); padding: .2rem .55rem; border-radius: 6px; }
+.ttl-caption { font-size: .8rem; color: var(--gray-mid); margin-top: .35rem; min-height: 1.2em; }
+.ttl-replay-btn { margin-top: .3rem; font-size: .76rem; font-weight: 700; color: var(--blue-mid); background: #fff; border: 1px solid var(--blue-light); border-radius: 20px; padding: .35rem .9rem; cursor: pointer; }
+.ttl-replay-btn:hover { background: var(--blue-pale); }
+
+.frag-demo { display: flex; gap: .5rem; margin-bottom: .5rem; }
+.frag-piece { flex: 1; background: var(--blue-pale); border: 2px solid var(--blue-mid); border-radius: 6px; padding: .5rem .3rem; text-align: center; font-size: .72rem; font-weight: 600; color: var(--blue-dark); opacity: 0; transform: translateY(8px); transition: opacity .4s, transform .4s; }
+.frag-piece.show { opacity: 1; transform: translateY(0); }
+
+.chk-demo { display: flex; align-items: center; gap: .9rem; flex-wrap: wrap; margin-bottom: .5rem; }
+.chk-value { font-family: 'Courier New', monospace; font-size: 1rem; font-weight: 700; padding: .4rem .75rem; border-radius: 6px; background: var(--blue-pale); color: var(--blue-dark); transition: background .35s, color .35s; }
+.chk-value.flash { background: var(--amber-dark); color: #fff; }
+.chk-arrow { font-size: 1.1rem; color: var(--gray-mid); }
+
+.proto-demo-btns { display: flex; gap: .5rem; margin-bottom: .6rem; }
+.proto-btn { padding: .4rem .9rem; border-radius: 20px; border: 1px solid var(--blue-light); background: var(--white); font-size: .78rem; font-weight: 700; cursor: pointer; color: var(--blue-dark); transition: background .2s, color .2s; }
+.proto-btn:hover { background: var(--blue-pale); }
+.proto-btn.active { background: var(--blue-mid); color: #fff; border-color: var(--blue-mid); }
+.proto-result { font-size: .85rem; color: var(--gray-dark); line-height: 1.55; }
+
+/* Footer */
+.guide-footer {
+  background: var(--blue-dark); color: rgba(255,255,255,.65);
+  text-align: center; padding: 2rem 1rem; font-size: .82rem; line-height: 1.8;
+}
+.guide-footer a { color: rgba(255,255,255,.5); font-size: .75rem; }
+
+/* Reading bar */
+#reading-bar {
+  position: fixed; top: 0; left: 0; height: 3px; z-index: 200;
+  background: var(--blue-light); width: 0; transition: width .1s linear;
+}
+</style>
+</head>
+<body>
+
+<div id="reading-bar"></div>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<header class="guide-header">
+  <a class="guide-header-back" href="/index.html">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Portale
+  </a>
+  <div class="guide-header-center">Protocollo IPv4</div>
+  <div class="guide-header-right">
+    <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu sezioni">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="guide-layout">
+
+  <aside class="guide-sidebar" id="guide-sidebar">
+    <div class="sidebar-label">Sezioni</div>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li><a class="nav-item active" href="#s1" onclick="closeSidebar()"><span class="nav-num">1</span><span class="nav-text">Dove si colloca IPv4</span></a></li>
+      <li><a class="nav-item" href="#s2" onclick="closeSidebar()"><span class="nav-num">2</span><span class="nav-text">Cos'è IPv4 e il datagramma</span></a></li>
+      <li><a class="nav-item" href="#s3" onclick="closeSidebar()"><span class="nav-num">3</span><span class="nav-text">Struttura del datagramma</span></a></li>
+      <li><a class="nav-item" href="#s4" onclick="closeSidebar()"><span class="nav-num">4</span><span class="nav-text">Header — campi (parte 1)</span></a></li>
+      <li><a class="nav-item" href="#s5" onclick="closeSidebar()"><span class="nav-num">5</span><span class="nav-text">Header — campi (parte 2)</span></a></li>
+      <li><a class="nav-item" href="#s6" onclick="closeSidebar()"><span class="nav-num">6</span><span class="nav-text">Header — campi (parte 3)</span></a></li>
+      <li><a class="nav-item" href="#s7" onclick="closeSidebar()"><span class="nav-num">7</span><span class="nav-text">Funzioni chiave dei campi</span></a></li>
+      <li><a class="nav-item" href="#s8" onclick="closeSidebar()"><span class="nav-num">8</span><span class="nav-text">Limiti ed evoluzione a IPv6</span></a></li>
+    </ul>
+    <hr class="sidebar-divider">
+    <div class="sidebar-meta">
+      <strong>Guida IPv4</strong><br>
+      📖 Guida completa<br>
+      ⏱ ~25 min di lettura<br>
+      📊 Livello intermedio<br>
+      🔄 Aggiornata giugno 2026
+    </div>
+  </aside>
+
+  <main class="guide-main">
+
+    <div class="guide-hero">
+      <div class="guide-hero-eyebrow">Formazione Digitale · Guida completa · Networking</div>
+      <h1 class="guide-hero-title">Il Protocollo IPv4: <br><em>Struttura del Datagramma e Header</em></h1>
+      <p class="guide-hero-sub">Versione, IHL, ToS, TTL, checksum, indirizzi: ogni campo dell'header IPv4 spiegato a fondo, con un diagramma interattivo a 32 bit e un caso reale catturato con Wireshark.</p>
+      <div class="guide-hero-badges">
+        <span class="hero-badge">📦 Networking</span>
+        <span class="hero-badge">💡 Livello intermedio</span>
+        <span class="hero-badge">⏱ ~25 minuti</span>
+        <span class="hero-badge">🖱 Diagramma interattivo</span>
+        <span class="hero-badge">🗓 2026</span>
+      </div>
+    </div>
+
+    <!-- S1 -->
+    <section class="guide-section" id="s1">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div class="section-titles">
+          <h2 class="section-title">Dove si colloca IPv4</h2>
+          <p class="section-subtitle">Il modello TCP/IP e il concetto di PDU</p>
+        </div>
+      </div>
+      <p>Ogni comunicazione in rete passa attraverso più livelli, ciascuno con un compito preciso. Il modello <strong>TCP/IP</strong> ne definisce quattro: <strong>Applicazione</strong> (i programmi che usiamo, es. browser, client email), <strong>Trasporto</strong> (consegna affidabile o veloce dei dati, TCP/UDP), <strong>Internet</strong> (instradamento tra reti diverse) e <strong>Accesso alla rete</strong> (trasmissione fisica sul cavo o sul Wi-Fi).</p>
+      <p>A ogni livello, l'unità di dati scambiata ha un nome diverso — si parla di <strong>PDU</strong>, <em>Protocol Data Unit</em>: <strong>segmento</strong> a livello Trasporto, <strong>datagramma</strong> a livello Internet, <strong>frame</strong> a livello di accesso alla rete.</p>
+      <div class="highlight-grid">
+        <div class="highlight-card">
+          <div class="hc-icon">📨</div>
+          <div class="hc-title">Segmento</div>
+          <div class="hc-desc">PDU del livello Trasporto. Prodotto da TCP o UDP.</div>
+        </div>
+        <div class="highlight-card">
+          <div class="hc-icon">📦</div>
+          <div class="hc-title">Datagramma</div>
+          <div class="hc-desc">PDU del livello Internet. È l'unità con cui lavora IPv4 — l'oggetto di questa guida.</div>
+        </div>
+        <div class="highlight-card">
+          <div class="hc-icon">🔌</div>
+          <div class="hc-title">Frame</div>
+          <div class="hc-desc">PDU del livello Accesso alla rete. Trasporta il datagramma sul mezzo fisico.</div>
+        </div>
+      </div>
+      <div class="box box-info">
+        <div class="box-icon">💡</div>
+        <div><strong>Il ruolo di IPv4</strong> IPv4 opera al livello Internet: incapsula i dati in datagrammi e si occupa dell'instradamento tra reti diverse attraverso i router. Non garantisce la consegna né l'ordine dei pacchetti — di quello si occupano i livelli superiori (TCP). Il suo compito è uno solo: far arrivare ogni datagramma a destinazione, scegliendo il percorso tra i router.</div>
+      </div>
+    </section>
+
+    <!-- S2 -->
+    <section class="guide-section" id="s2">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div class="section-titles">
+          <h2 class="section-title">Cos'è IPv4 e il datagramma</h2>
+          <p class="section-subtitle">Origini, indirizzamento, struttura in due parti</p>
+        </div>
+      </div>
+      <p><strong>Internet Protocol versione 4</strong> nasce nel <strong>1983</strong> come protocollo di rete per ARPANET, l'antenato militare/accademico di Internet. Da allora è diventato il fondamento su cui è cresciuta tutta la rete globale.</p>
+      <p>Ogni dispositivo connesso riceve un <strong>indirizzo IP a 32 bit</strong>, scritto in notazione decimale puntata per renderlo leggibile — ad esempio <code>192.168.1.1</code>. Con 32 bit disponibili si ottengono circa <strong>4,3 miliardi</strong> di combinazioni possibili: un numero enorme nel 1983, oggi insufficiente per miliardi di smartphone, sensori IoT e dispositivi connessi (ne parliamo nella Sezione 8).</p>
+      <p>Il <strong>datagramma</strong> — l'unità di trasmissione di IPv4 — è composto da due parti distinte:</p>
+      <div class="datagram-wrap">
+        <div class="datagram-header">
+          <div class="datagram-label">HEADER</div>
+          <div class="datagram-sub">Informazioni di controllo — 20 a 60 byte</div>
+        </div>
+        <div class="datagram-payload">
+          <div class="datagram-label">PAYLOAD</div>
+          <div class="datagram-sub">Dati utili — es. un segmento TCP o UDP</div>
+        </div>
+      </div>
+      <p>L'<strong>header</strong> è la "busta" del datagramma: contiene tutte le informazioni che servono ai router per instradarlo correttamente, senza che nessuno debba aprire il <strong>payload</strong> (il contenuto vero e proprio). È esattamente l'header — campo per campo — il cuore di questa guida.</p>
+    </section>
+
+    <!-- S3 -->
+    <section class="guide-section" id="s3">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div class="section-titles">
+          <h2 class="section-title">Struttura generale del datagramma</h2>
+          <p class="section-subtitle">Dimensione variabile: 20-60 byte di header</p>
+        </div>
+      </div>
+      <p>L'header IPv4 non ha una dimensione fissa. Il suo minimo è <strong>20 byte</strong> — cioè 5 "parole" da 32 bit ciascuna — quando non sono presenti campi opzionali. Può arrivare fino a un massimo di <strong>60 byte</strong> quando vengono aggiunte opzioni (usate raramente nel traffico Internet moderno, più comuni in contesti di rete specifici come diagnostica o sicurezza).</p>
+      <p>Il payload, invece, trasporta i dati del livello superiore — tipicamente un segmento TCP o UDP — e la sua dimensione varia in base a cosa deve essere trasmesso.</p>
+      <div class="box box-tip">
+        <div class="box-icon">🧱</div>
+        <div><strong>Perché l'header è "a parole da 32 bit"</strong> IPv4 organizza l'header in righe di 32 bit (4 byte) per renderlo facile da elaborare dall'hardware di rete: ogni router legge l'header un blocco di 32 bit alla volta. Nella Sezione 4 vedremo esattamente come sono divisi questi blocchi, campo per campo — con un diagramma su cui puoi cliccare.</div>
+      </div>
+    </section>
+
+    <!-- S4 -->
+    <section class="guide-section" id="s4">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div class="section-titles">
+          <h2 class="section-title">Campi dell'header — parte 1</h2>
+          <p class="section-subtitle">Versione, IHL, ToS, Lunghezza totale — clicca un campo per i dettagli</p>
+        </div>
+      </div>
+      <p>Da qui in avanti l'header viene esplorato campo per campo, riga per riga (ogni riga = 32 bit). Il diagramma sotto è <strong>interattivo</strong> e resta uguale per tutta la guida: clicca o tocca un campo qualsiasi — anche di sezioni successive — per leggerne la spiegazione nel pannello sotto.</p>
+
+      <div class="ipv4-diagram" id="ipv4-diagram">
+        <div class="ipv4-row" data-row="1">
+          <div class="ipv4-row-label">Riga 1 — 32 bit</div>
+          <div class="ipv4-field" data-id="ver" data-bits="4" tabindex="0" role="button" aria-label="Versione, 4 bit">
+            <span class="ipv4-field-name">Versione</span><span class="ipv4-field-bits">4 bit</span>
+          </div>
+          <div class="ipv4-field" data-id="ihl" data-bits="4" tabindex="0" role="button" aria-label="IHL, 4 bit">
+            <span class="ipv4-field-name">IHL</span><span class="ipv4-field-bits">4 bit</span>
+          </div>
+          <div class="ipv4-field" data-id="tos" data-bits="8" tabindex="0" role="button" aria-label="ToS, 8 bit">
+            <span class="ipv4-field-name">ToS</span><span class="ipv4-field-bits">8 bit</span>
+          </div>
+          <div class="ipv4-field" data-id="tlen" data-bits="16" tabindex="0" role="button" aria-label="Lunghezza totale, 16 bit">
+            <span class="ipv4-field-name">Lunghezza totale</span><span class="ipv4-field-bits">16 bit</span>
+          </div>
+        </div>
+
+        <div class="ipv4-row" data-row="2">
+          <div class="ipv4-row-label">Riga 2 — 32 bit</div>
+          <div class="ipv4-field" data-id="id" data-bits="16" tabindex="0" role="button" aria-label="Identificazione, 16 bit">
+            <span class="ipv4-field-name">Identificazione</span><span class="ipv4-field-bits">16 bit</span>
+          </div>
+          <div class="ipv4-field" data-id="flags" data-bits="3" tabindex="0" role="button" aria-label="Flags, 3 bit">
+            <span class="ipv4-field-name">Flags</span><span class="ipv4-field-bits">3 bit</span>
+          </div>
+          <div class="ipv4-field" data-id="fragoff" data-bits="13" tabindex="0" role="button" aria-label="Fragment Offset, 13 bit">
+            <span class="ipv4-field-name">Fragment Offset</span><span class="ipv4-field-bits">13 bit</span>
+          </div>
+        </div>
+
+        <div class="ipv4-row" data-row="3">
+          <div class="ipv4-row-label">Riga 3 — 32 bit</div>
+          <div class="ipv4-field" data-id="ttl" data-bits="8" tabindex="0" role="button" aria-label="TTL, 8 bit">
+            <span class="ipv4-field-name">TTL</span><span class="ipv4-field-bits">8 bit</span>
+          </div>
+          <div class="ipv4-field" data-id="proto" data-bits="8" tabindex="0" role="button" aria-label="Protocollo, 8 bit">
+            <span class="ipv4-field-name">Protocollo</span><span class="ipv4-field-bits">8 bit</span>
+          </div>
+          <div class="ipv4-field" data-id="chk" data-bits="16" tabindex="0" role="button" aria-label="Checksum header, 16 bit">
+            <span class="ipv4-field-name">Checksum header</span><span class="ipv4-field-bits">16 bit</span>
+          </div>
+        </div>
+
+        <div class="ipv4-row" data-row="4">
+          <div class="ipv4-row-label">Riga 4 — 32 bit</div>
+          <div class="ipv4-field" data-id="src" data-bits="32" tabindex="0" role="button" aria-label="Indirizzo IP sorgente, 32 bit">
+            <span class="ipv4-field-name">Indirizzo IP sorgente</span><span class="ipv4-field-bits">32 bit</span>
+          </div>
+        </div>
+
+        <div class="ipv4-row" data-row="5">
+          <div class="ipv4-row-label">Riga 5 — 32 bit</div>
+          <div class="ipv4-field" data-id="dst" data-bits="32" tabindex="0" role="button" aria-label="Indirizzo IP destinazione, 32 bit">
+            <span class="ipv4-field-name">Indirizzo IP destinazione</span><span class="ipv4-field-bits">32 bit</span>
+          </div>
+        </div>
+
+        <div class="ipv4-panel" id="ipv4-panel">
+          <p class="ipv4-panel-placeholder" id="ipv4-panel-content">👆 Clicca un campo del diagramma per leggere qui la sua spiegazione.</p>
+          <div id="ipv4-panel-demo"></div>
+        </div>
+        <p class="ipv4-hint">Le 5 righe da 32 bit qui sopra formano i 20 byte dell'header minimo (senza opzioni) — vedi Sezione 3.</p>
+      </div>
+
+      <h3 class="sub-title">Versione (4 bit)</h3>
+      <p>Indica la versione del protocollo IP utilizzata. Per IPv4 questo valore è sempre <strong>4</strong> — è il primo campo che ogni router legge per sapere come interpretare tutto il resto dell'header.</p>
+
+      <h3 class="sub-title">IHL — Internet Header Length (4 bit)</h3>
+      <p>Specifica la lunghezza dell'header in unità da 32 bit (parole). Il valore minimo è <strong>5</strong>, che corrisponde a 5 × 32 bit = <strong>20 byte</strong>, cioè l'header senza opzioni. Se sono presenti opzioni, IHL sale di conseguenza.</p>
+
+      <h3 class="sub-title">ToS — Type of Service (8 bit)</h3>
+      <p>Definisce la priorità e la qualità del servizio (<strong>QoS</strong>) richiesta per il datagramma. Serve, ad esempio, a dare precedenza al traffico voce o video in tempo reale rispetto a una semplice email, che può tollerare ritardi maggiori senza conseguenze percepibili.</p>
+
+      <h3 class="sub-title">Lunghezza totale (16 bit)</h3>
+      <p>Indica la dimensione totale del datagramma — header più dati — espressa in byte. Con 16 bit disponibili, il valore massimo rappresentabile è <strong>65.535 byte</strong>: è il limite teorico di dimensione di un singolo datagramma IPv4.</p>
+    </section>
+
+    <!-- S5 -->
+    <section class="guide-section" id="s5">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div class="section-titles">
+          <h2 class="section-title">Campi dell'header — parte 2</h2>
+          <p class="section-subtitle">Identificazione, Flags, Fragment Offset, TTL</p>
+        </div>
+      </div>
+      <p>Questo gruppo di campi gestisce un problema concreto: non tutte le reti che un datagramma attraversa accettano pacchetti della stessa dimensione massima (<strong>MTU</strong>, Maximum Transmission Unit). Quando un datagramma è troppo grande per la rete successiva, va <strong>frammentato</strong> — diviso in pezzi più piccoli che il destinatario dovrà poi riassemblare.</p>
+
+      <h3 class="sub-title">Identificazione (16 bit)</h3>
+      <p>Un numero univoco assegnato a ogni datagramma dal mittente. Se il datagramma viene frammentato lungo il percorso, tutti i frammenti mantengono lo stesso numero di Identificazione: è così che il destinatario sa quali pezzi appartengono allo stesso datagramma originale, per riassemblarli correttamente.</p>
+
+      <h3 class="sub-title">Flags (3 bit)</h3>
+      <p>Tre bit che controllano la frammentazione. I due rilevanti sono <strong>DF</strong> (<em>Do Not Fragment</em>: il datagramma non deve essere frammentato — se non passa, viene scartato e il mittente avvisato) e <strong>MF</strong> (<em>More Fragments</em>: indica se esistono altri frammenti dopo questo, oppure se è l'ultimo pezzo).</p>
+
+      <h3 class="sub-title">Fragment Offset (13 bit)</h3>
+      <p>Indica la posizione di questo frammento all'interno del datagramma originale, espressa in unità di 8 byte. È il "numero di pagina" che permette al destinatario di rimettere i frammenti nell'ordine giusto, anche se arrivano in disordine.</p>
+
+      <h3 class="sub-title">TTL — Time To Live (8 bit)</h3>
+      <p>Un contatore che parte da un valore impostato dal mittente e viene <strong>decrementato di 1 a ogni hop</strong> (ogni router attraversato). Quando arriva a 0, il datagramma viene scartato. Serve a evitare che un pacchetto, per un errore di instradamento, circoli all'infinito in un loop tra router — senza TTL, una rete con un loop di routing si intaserebbe rapidamente di pacchetti "fantasma" che non arriveranno mai a destinazione.</p>
+      <div class="box box-warn">
+        <div class="box-icon">⚠️</div>
+        <div><strong>Un dettaglio spesso sottovalutato</strong> Il TTL è anche il principio su cui si basa il comando <code>traceroute</code>/<code>tracert</code>: inviando pacchetti con TTL crescente (1, 2, 3…) si forza ogni router del percorso a scartarli e a rispondere con un messaggio di errore, rivelando così l'intero percorso fino a destinazione.</div>
+      </div>
+    </section>
+
+    <!-- S6 -->
+    <section class="guide-section" id="s6">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <div class="section-titles">
+          <h2 class="section-title">Campi dell'header — parte 3</h2>
+          <p class="section-subtitle">Protocollo, Checksum, Indirizzo sorgente e destinazione</p>
+        </div>
+      </div>
+
+      <h3 class="sub-title">Protocollo (8 bit)</h3>
+      <p>Indica quale protocollo di livello superiore è contenuto nel payload del datagramma, così il destinatario sa a chi "consegnare" i dati una volta tolto l'header. I valori più comuni: <strong>TCP = 6</strong>, <strong>UDP = 17</strong>, <strong>ICMP = 1</strong> (il protocollo usato, tra l'altro, dal comando <code>ping</code>).</p>
+
+      <h3 class="sub-title">Checksum header (16 bit)</h3>
+      <p>Un valore di controllo calcolato sul solo header (non sui dati del payload) per verificarne l'integrità. Va <strong>ricalcolato a ogni hop</strong>, perché il campo TTL cambia a ogni passaggio attraverso un router — e quindi anche il checksum, che dipende da tutto il contenuto dell'header, deve essere aggiornato di conseguenza.</p>
+
+      <h3 class="sub-title">Indirizzo IP sorgente (32 bit)</h3>
+      <p>L'indirizzo IP del dispositivo che ha generato il datagramma — il mittente.</p>
+
+      <h3 class="sub-title">Indirizzo IP destinazione (32 bit)</h3>
+      <p>L'indirizzo IP del dispositivo a cui il datagramma è destinato — il destinatario finale. Sono questi due campi, insieme, che ogni router usa per decidere su quale interfaccia di rete instradare il pacchetto.</p>
+
+      <div class="shot-wrap">
+        <img src="img/wireshark-ipv4.webp" alt="Header IPv4 di un pacchetto reale catturato con Wireshark, con i campi Protocollo, Checksum, indirizzo sorgente e destinazione evidenziati">
+        <div class="shot-caption">📸 Un pacchetto IPv4 reale catturato con Wireshark — gli stessi campi descritti sopra, visibili nel traffico di rete effettivo.</div>
+      </div>
+    </section>
+
+    <!-- S7 -->
+    <section class="guide-section" id="s7">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <div class="section-titles">
+          <h2 class="section-title">Funzioni chiave dei campi</h2>
+          <p class="section-subtitle">Perché contano davvero, in sintesi</p>
+        </div>
+      </div>
+      <p>Dopo aver visto ogni campo singolarmente, è utile rivedere a cosa serve ciascun gruppo nel funzionamento reale della rete:</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Gruppo di campi</th><th>Funzione chiave</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Versione + IHL</strong></td><td>Permettono a ogni router l'interpretazione corretta della struttura del pacchetto, prima ancora di leggerne il contenuto.</td></tr>
+            <tr><td><strong>ToS / DSCP</strong></td><td>Gestisce la priorità del traffico — fondamentale per servizi sensibili al ritardo come VoIP e streaming in diretta.</td></tr>
+            <tr><td><strong>Identificazione, Flags, Fragment Offset</strong></td><td>Permettono la trasmissione su reti con MTU diverse, suddividendo e poi riassemblando correttamente i dati.</td></tr>
+            <tr><td><strong>TTL</strong></td><td>Previene la congestione della rete eliminando pacchetti intrappolati in loop di instradamento (deve essere &gt;1: un TTL a 0 non sopravvive nemmeno al primo hop).</td></tr>
+            <tr><td><strong>Protocollo</strong></td><td>Instrada i dati al livello corretto a destinazione: TCP, UDP o ICMP, secondo il servizio richiesto.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- S8 -->
+    <section class="guide-section" id="s8">
+      <div class="section-header">
+        <div class="section-num">8</div>
+        <div class="section-titles">
+          <h2 class="section-title">Limiti di IPv4 ed evoluzione a IPv6</h2>
+          <p class="section-subtitle">Perché esiste un protocollo "successivo"</p>
+        </div>
+      </div>
+      <p>IPv4 sostiene la rete globale da oltre 40 anni, ma la sua architettura — pensata negli anni '80 — mostra limiti diventati via via più evidenti con la crescita di Internet. Il modo più diretto per capirlo è confrontare l'header campo per campo con quello del suo successore:</p>
+
+      <div class="headers-compare">
+        <div class="hc-col">
+          <div class="schema-col-title">IPv4 Header</div>
+          <div class="hc-grid">
+            <div class="hc-cell hc-kept" style="grid-column: span 4;">Versione</div>
+            <div class="hc-cell hc-removed" style="grid-column: span 4;">IHL</div>
+            <div class="hc-cell hc-changed" style="grid-column: span 8;">Type of Service</div>
+            <div class="hc-cell hc-changed" style="grid-column: span 16;">Total Length</div>
+
+            <div class="hc-cell hc-removed" style="grid-column: span 16;">Identification</div>
+            <div class="hc-cell hc-removed" style="grid-column: span 3;">Flags</div>
+            <div class="hc-cell hc-removed" style="grid-column: span 13;">Fragment Offset</div>
+
+            <div class="hc-cell hc-changed" style="grid-column: span 8;">Time to Live</div>
+            <div class="hc-cell hc-changed" style="grid-column: span 8;">Protocol</div>
+            <div class="hc-cell hc-removed" style="grid-column: span 16;">Header Checksum</div>
+
+            <div class="hc-cell hc-kept" style="grid-column: span 32;">Source Address</div>
+            <div class="hc-cell hc-kept" style="grid-column: span 32;">Destination Address</div>
+
+            <div class="hc-cell hc-removed" style="grid-column: span 24;">Options</div>
+            <div class="hc-cell hc-removed" style="grid-column: span 8;">Padding</div>
+          </div>
+        </div>
+
+        <div class="hc-col">
+          <div class="schema-col-title">IPv6 Header</div>
+          <div class="hc-grid">
+            <div class="hc-cell hc-kept" style="grid-column: span 4;">Versione</div>
+            <div class="hc-cell hc-changed" style="grid-column: span 8;">Traffic Class</div>
+            <div class="hc-cell hc-new" style="grid-column: span 20;">Flow Label</div>
+
+            <div class="hc-cell hc-changed" style="grid-column: span 16;">Payload Length</div>
+            <div class="hc-cell hc-changed" style="grid-column: span 8;">Next Header</div>
+            <div class="hc-cell hc-changed" style="grid-column: span 8;">Hop Limit</div>
+
+            <div class="hc-cell hc-kept tall" style="grid-column: span 32;">Source Address</div>
+            <div class="hc-cell hc-kept tall" style="grid-column: span 32;">Destination Address</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hc-legend">
+        <div class="hc-legend-item"><span class="hc-legend-swatch" style="background:var(--amber-mid);"></span>Nome mantenuto da IPv4 a IPv6</div>
+        <div class="hc-legend-item"><span class="hc-legend-swatch" style="background:var(--red-mid);"></span>Campo non presente in IPv6</div>
+        <div class="hc-legend-item"><span class="hc-legend-swatch" style="background:var(--blue-mid);"></span>Nome e/o posizione cambiati in IPv6</div>
+        <div class="hc-legend-item"><span class="hc-legend-swatch" style="background:var(--green-mid);"></span>Campo nuovo in IPv6</div>
+      </div>
+      <p class="ipv4-hint">Nota: gli indirizzi sorgente/destinazione sono disegnati più "alti" nello schema IPv6 solo per rendere visivamente la differenza di dimensione — 128 bit contro 32 bit, non sono in scala bit-per-bit con le altre righe.</p>
+
+      <div class="dodont">
+        <div class="do-col">
+          <div class="do-col-head">🚀 La risposta: IPv6</div>
+          <div class="do-col-body">
+            <ul>
+              <li>Indirizzi a <strong>128 bit</strong>: spazio di indirizzamento praticamente illimitato.</li>
+              <li>Header <strong>semplificato e di dimensione fissa</strong> (40 byte): elaborazione più rapida da parte dei router.</li>
+              <li><strong>Coesistenza</strong> con IPv4 durante la lunga fase di transizione globale, ancora in corso.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="dont-col">
+          <div class="dont-col-head">⚠️ I limiti di IPv4</div>
+          <div class="dont-col-body">
+            <ul>
+              <li><strong>Esaurimento degli indirizzi</strong>: ~4,3 miliardi di combinazioni, insufficienti per i miliardi di dispositivi IoT connessi oggi.</li>
+              <li><strong>Header complesso</strong>: campi opzionali e frammentazione rallentano l'elaborazione da parte dei router moderni.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="shot-wrap">
+        <img src="img/ipv4-vs-oggi.webp" alt="Confronto illustrato tra Internet del 1983 — terminale, modem acustico, mainframe — e Internet di oggi, con smartphone, smartwatch, auto connesse e dispositivi smart home">
+        <div class="shot-caption">🕰️ Da ARPANET ai dispositivi IoT: lo stesso protocollo, 40 anni di crescita.</div>
+      </div>
+      <h3 class="sub-title">Il ruolo di IPv4, oggi e domani</h3>
+      <div class="highlight-grid">
+        <div class="highlight-card">
+          <div class="hc-icon">🏛️</div>
+          <div class="hc-title">Pilastro storico</div>
+          <div class="hc-desc">IPv4 sostiene la rete globale da oltre 40 anni.</div>
+        </div>
+        <div class="highlight-card">
+          <div class="hc-icon">🔍</div>
+          <div class="hc-title">Conoscenza essenziale</div>
+          <div class="hc-desc">Comprendere l'header è fondamentale per networking e sicurezza.</div>
+        </div>
+        <div class="highlight-card">
+          <div class="hc-icon">🔮</div>
+          <div class="hc-title">Futuro IPv6</div>
+          <div class="hc-desc">IPv6 è il futuro, ma IPv4 resta largamente in uso.</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
+  Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem;">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;Â·&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<script>
+/* ════════════════════════════════════════════════════════════════
+   DIAGRAMMA INTERATTIVO HEADER IPv4
+   Click/tap = selezione persistente. Nessun hover: cambiare contenuto
+   al passaggio del mouse generava confusione durante la lettura.
+════════════════════════════════════════════════════════════════ */
+(function() {
+  const FIELDS = {
+    ver:     { label: 'Versione',               bits: 4,  desc: 'Indica la versione del protocollo IP. Per IPv4 il valore è sempre 4.' },
+    ihl:     { label: 'IHL',                     bits: 4,  desc: 'Internet Header Length: lunghezza dell\'header in unità da 32 bit. Valore minimo 5 = 20 byte, senza opzioni.' },
+    tos:     { label: 'ToS',                     bits: 8,  desc: 'Tipo di servizio: definisce priorità e QoS — ad esempio dare precedenza a voce/video rispetto alle email.' },
+    tlen:    { label: 'Lunghezza totale',        bits: 16, desc: 'Dimensione totale del datagramma (header + dati), in byte. Valore massimo: 65.535 byte.' },
+    id:      { label: 'Identificazione',         bits: 16, desc: 'Numero univoco assegnato al datagramma, usato per il riassemblaggio dei frammenti a destinazione.' },
+    flags:   { label: 'Flags',                   bits: 3,  desc: 'Controllano la frammentazione: DF (Do Not Fragment) e MF (More Fragments).', demo: 'frag' },
+    fragoff: { label: 'Fragment Offset',         bits: 13, desc: 'Posizione del frammento all\'interno del datagramma originale, in unità di 8 byte.', demo: 'frag' },
+    ttl:     { label: 'TTL',                     bits: 8,  desc: 'Time To Live: decrementato a ogni hop. Evita che i pacchetti circolino in loop infiniti nella rete.', demo: 'ttl' },
+    proto:   { label: 'Protocollo',              bits: 8,  desc: 'Protocollo di livello superiore trasportato: TCP = 6, UDP = 17, ICMP = 1.', demo: 'proto' },
+    chk:     { label: 'Checksum header',         bits: 16, desc: 'Verifica l\'integrità del solo header. Ricalcolato a ogni hop, perché il TTL cambia a ogni passaggio.', demo: 'chk' },
+    src:     { label: 'Indirizzo IP sorgente',   bits: 32, desc: 'L\'indirizzo IP a 32 bit del mittente del datagramma.' },
+    dst:     { label: 'Indirizzo IP destinazione', bits: 32, desc: 'L\'indirizzo IP a 32 bit del destinatario finale del datagramma.' }
+  };
+
+  const PROTO_INFO = {
+    TCP:  { val: 6,  text: 'Valore decimale 6 → il payload contiene un segmento TCP (es. navigazione web HTTPS, email, trasferimento file): connessione affidabile, con controllo di consegna.' },
+    UDP:  { val: 17, text: 'Valore decimale 17 → il payload contiene un segmento UDP (es. streaming video, videochiamate, DNS): più veloce, senza garanzia di consegna.' },
+    ICMP: { val: 1,  text: 'Valore decimale 1 → il payload contiene un messaggio ICMP, usato per diagnostica di rete (es. il comando ping si basa su ICMP).' }
+  };
+
+  const fieldEls = document.querySelectorAll('.ipv4-field');
+  const panelContent = document.getElementById('ipv4-panel-content');
+  const panelDemo = document.getElementById('ipv4-panel-demo');
+  let selectedId = null;
+
+  /* ── Mini-demo: TTL che scende a ogni router ── */
+  function demoTTL() {
+    panelDemo.innerHTML =
+      '<div class="field-demo"><div class="field-demo-label">🔁 Stesso TTL di partenza, due esiti diversi</div>' +
+
+      '<div class="ttl-scenario">' +
+        '<div class="ttl-scenario-label ok">✅ Scenario A — percorso breve: 3 router</div>' +
+        '<div class="ttl-track" id="ttlA-track">' +
+          '<span class="ttl-router">🖥️</span><span class="ttl-router">📡</span><span class="ttl-router">📡</span><span class="ttl-router">📡</span><span class="ttl-router">🏁</span>' +
+          '<span class="ttl-packet" id="ttlA-packet">📦</span>' +
+        '</div>' +
+        '<div class="ttl-counter" id="ttlA-counter">TTL: 4</div>' +
+        '<p class="ttl-caption" id="ttlA-result"></p>' +
+      '</div>' +
+
+      '<div class="ttl-scenario">' +
+        '<div class="ttl-scenario-label fail">❌ Scenario B — stesso TTL, percorso più lungo: 5 router</div>' +
+        '<div class="ttl-track" id="ttlB-track">' +
+          '<span class="ttl-router">🖥️</span><span class="ttl-router">📡</span><span class="ttl-router">📡</span><span class="ttl-router">📡</span><span class="ttl-router">📡</span><span class="ttl-router">📡</span><span class="ttl-router">🏁</span>' +
+          '<span class="ttl-packet" id="ttlB-packet">📦</span>' +
+        '</div>' +
+        '<div class="ttl-counter" id="ttlB-counter">TTL: 4</div>' +
+        '<p class="ttl-caption" id="ttlB-result"></p>' +
+      '</div>' +
+
+      '<button class="ttl-replay-btn" id="ttl-replay">🔁 Rigioca le animazioni</button></div>';
+
+    runTTLScenario('ttlA', 3, 4);
+    runTTLScenario('ttlB', 5, 4);
+    document.getElementById('ttl-replay').addEventListener('click', () => {
+      runTTLScenario('ttlA', 3, 4);
+      runTTLScenario('ttlB', 5, 4);
+    });
+  }
+
+  /* Anima un pacchetto con TTL "startTTL" attraverso "hopCount" router.
+     Decrementa il TTL a ogni router intermedio (non alla partenza né, se sopravvive, al traguardo).
+     Se il TTL arriva a 0 prima del traguardo, il pacchetto viene scartato lì. */
+  function runTTLScenario(prefix, hopCount, startTTL) {
+    const packet = document.getElementById(prefix + '-packet');
+    const counter = document.getElementById(prefix + '-counter');
+    const resultEl = document.getElementById(prefix + '-result');
+    const totalNodes = hopCount + 2; // partenza + router intermedi + traguardo
+    const stops = [];
+    for (let n = 0; n < totalNodes; n++) stops.push((n / (totalNodes - 1)) * 96 + 2);
+
+    let ttl = startTTL;
+    let i = 0;
+    packet.textContent = '📦';
+    packet.style.left = stops[0] + '%';
+    counter.textContent = 'TTL: ' + ttl;
+    counter.style.background = 'var(--blue-pale)';
+    counter.style.color = 'var(--blue-dark)';
+    resultEl.textContent = '';
+
+    const interval = setInterval(() => {
+      i++;
+      if (i >= stops.length) {
+        clearInterval(interval);
+        resultEl.textContent = '✅ Consegnato a destinazione con TTL ' + ttl + ' residuo.';
+        return;
+      }
+      packet.style.left = stops[i] + '%';
+      const isRouterHop = i <= hopCount; // i = 1..hopCount sono i router intermedi
+      if (isRouterHop) {
+        ttl--;
+        counter.textContent = 'TTL: ' + ttl;
+        if (ttl <= 0) {
+          clearInterval(interval);
+          packet.textContent = '❌';
+          counter.style.background = 'var(--amber-dark)';
+          counter.style.color = '#fff';
+          resultEl.textContent = '❌ Scartato al router ' + i + ': il TTL ha raggiunto 0 prima del traguardo.';
+        }
+      }
+    }, 700);
+  }
+
+  /* ── Mini-demo: frammentazione (Flags / Fragment Offset) ── */
+  function demoFrag() {
+    panelDemo.innerHTML =
+      '<div class="field-demo"><div class="field-demo-label">🧩 Un datagramma troppo grande viene frammentato</div>' +
+      '<div class="frag-demo">' +
+        '<div class="frag-piece" id="frag-1">Frammento 1<br>Offset 0 · MF=1</div>' +
+        '<div class="frag-piece" id="frag-2">Frammento 2<br>Offset 185 · MF=1</div>' +
+        '<div class="frag-piece" id="frag-3">Frammento 3<br>Offset 370 · MF=0</div>' +
+      '</div>' +
+      '<p class="ttl-caption">Stesso valore di Identificazione su tutti i frammenti. Fragment Offset indica dove va riposizionato ciascun pezzo; MF=0 sull\'ultimo segnala che la sequenza è completa.</p></div>';
+    ['frag-1', 'frag-2', 'frag-3'].forEach((id, idx) => {
+      setTimeout(() => document.getElementById(id).classList.add('show'), 200 + idx * 350);
+    });
+  }
+
+  /* ── Mini-demo: ricalcolo del Checksum ── */
+  function demoChk() {
+    panelDemo.innerHTML =
+      '<div class="field-demo"><div class="field-demo-label">🔄 Il checksum cambia a ogni hop</div>' +
+      '<div class="chk-demo">' +
+        '<span class="chk-value" id="chk-before">Prima del hop: 0x4F2B</span>' +
+        '<span class="chk-arrow">→</span>' +
+        '<span class="chk-value" id="chk-after">Dopo (TTL −1): 0x3D91</span>' +
+      '</div>' +
+      '<p class="ttl-caption">Il TTL è cambiato, quindi anche il checksum — calcolato su tutto l\'header — deve essere ricalcolato dal router prima di rispedire il pacchetto.</p></div>';
+    setTimeout(() => document.getElementById('chk-after').classList.add('flash'), 500);
+  }
+
+  /* ── Mini-demo: Protocollo selezionabile ── */
+  function demoProto() {
+    panelDemo.innerHTML =
+      '<div class="field-demo"><div class="field-demo-label">🔀 Cosa cambia secondo il valore di Protocollo</div>' +
+      '<div class="proto-demo-btns" id="proto-btns">' +
+        '<button class="proto-btn active" data-p="TCP">TCP</button>' +
+        '<button class="proto-btn" data-p="UDP">UDP</button>' +
+        '<button class="proto-btn" data-p="ICMP">ICMP</button>' +
+      '</div>' +
+      '<p class="proto-result" id="proto-result">' + PROTO_INFO.TCP.text + '</p></div>';
+    document.querySelectorAll('#proto-btns .proto-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#proto-btns .proto-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('proto-result').textContent = PROTO_INFO[btn.dataset.p].text;
+      });
+    });
+  }
+
+  const DEMOS = { ttl: demoTTL, frag: demoFrag, chk: demoChk, proto: demoProto };
+
+  function render(id) {
+    if (!id || !FIELDS[id]) {
+      panelContent.className = 'ipv4-panel-placeholder';
+      panelContent.innerHTML = '👆 Clicca un campo del diagramma per leggere qui la sua spiegazione.';
+      panelDemo.innerHTML = '';
+      return;
+    }
+    const f = FIELDS[id];
+    panelContent.className = '';
+    panelContent.innerHTML =
+      '<div class="ipv4-panel-title">' + f.label + ' <span class="ipv4-panel-bits">' + f.bits + ' bit</span></div>' +
+      '<p class="ipv4-panel-desc">' + f.desc + '</p>';
+    panelDemo.innerHTML = '';
+    if (f.demo && DEMOS[f.demo]) DEMOS[f.demo]();
+  }
+
+  function setActive(id) {
+    fieldEls.forEach(el => el.classList.toggle('active', el.dataset.id === id));
+  }
+
+  fieldEls.forEach(el => {
+    const id = el.dataset.id;
+
+    el.addEventListener('click', () => {
+      selectedId = id;
+      setActive(id);
+      render(id);
+    });
+
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selectedId = id;
+        setActive(id);
+        render(id);
+      }
+    });
+  });
+})();
+
+/* ── Reading bar ── */
+(function() {
+  const bar = document.getElementById('reading-bar');
+  if (!bar) return;
+  window.addEventListener('scroll', function() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+  }, { passive: true });
+})();
+
+function toggleSidebar() {
+  document.getElementById('guide-sidebar').classList.toggle('is-open');
+  document.getElementById('sidebar-overlay').classList.toggle('is-open');
+  document.getElementById('hamburger-btn').classList.toggle('is-open');
+}
+function closeSidebar() {
+  document.getElementById('guide-sidebar').classList.remove('is-open');
+  document.getElementById('sidebar-overlay').classList.remove('is-open');
+  document.getElementById('hamburger-btn').classList.remove('is-open');
+}
+
+/* ── Scrollspy sidebar ── */
+(function() {
+  const sections = document.querySelectorAll('.guide-section');
+  const navItems = document.querySelectorAll('.nav-item');
+  function update() {
+    let active = null;
+    sections.forEach(sec => { if (sec.getBoundingClientRect().top <= 90) active = sec.id; });
+    navItems.forEach(item => item.classList.toggle('active', item.getAttribute('href') === '#' + active));
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>

@@ -402,6 +402,22 @@
             "DCEdu 6.2"
         ]
     },
+	{
+	  "path": "/networking/guida-ipv4/",
+	  "label": "Protocollo IPv4 — Struttura del Datagramma e Header",
+	  "short": "Guida IPv4",
+	  "cat": "guide",
+	  "emoji": "📦",
+	  "tags": ["ipv4", "datagramma", "header", "reti", "networking", "protocollo internet", "ttl", "checksum", "wireshark"],
+	  "meta": "8 sezioni · Diagramma interattivo · Livello intermedio",
+	  "description": "Header IPv4 campo per campo: versione, IHL, TTL, checksum e indirizzi, con diagramma interattivo a 32 bit e screenshot Wireshark.",
+	  "featured": false,
+	  "active": true,
+	  "digcomp": ["DC 3.4", "DC 5.1"],
+	  "digcomp_level": "intermediate",
+	  "digcomp_areas": ["creazione", "problem-solving"],
+	  "digcompedu": ["DCEdu 6.5"]
+	},
     {
         "path": "/marketing/pillola-seo/",
         "label": "SEO — Ottimizzazione per i Motori di Ricerca",

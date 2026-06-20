@@ -556,6 +556,7 @@ MATERIALE_DIDATTICO\NEUTRALINO\bep-tool\
 - [OK] `guida-gestione-progetti` — checklist corretta (bug double-toggle label+onclick), documenti A/B leggibili (CSS `part-header` mancante), riga sigle rimossa dall'hero, Gantt Planner collegato (18/06/2026)
 - [OK] `genera_sitemap.py` — bump automatico `CACHE_VERSION` in `sw.js` ad ogni lancio (18/06/2026)
 - [OK] `sw.js` — Cache First esplicito per `manifest.json`/`aree.json` (ricerca federata funziona offline) (19/06/2026)
+- [OK] `genera_sitemap.py` — aggiunta `mappa-aree.html` alle pagine fisse (19/06/2026)
 
 ---
 
@@ -563,7 +564,6 @@ MATERIALE_DIDATTICO\NEUTRALINO\bep-tool\
 
 - Cancellare PNG orfani in `guida-libreoffice-base-query/img/` dopo verifica manuale (`find_orphan_png.py --delete`)
 - `index.html` — verificare se `formazione-digitale-logo.png` è ancora presente o già convertito in WebP
-- `genera_sitemap.py` — aggiungere `mappa-aree.html` alle pagine fisse (ancora non incluso, verificato 19/06/2026)
 - BEP tool web — aggiungere bottone Manuale (modale) e bottone download app desktop nell'hero
 - Gap DigComp/DigCompEdu — analizzare quali competenze restano scoperte dal catalogo risorse attuale prima di pianificare nuovi contenuti (discusso 18/06/2026, non ancora svolto)
 - Guida Modello Fisico database — "coming soon" nel percorso consigliato della hub Database

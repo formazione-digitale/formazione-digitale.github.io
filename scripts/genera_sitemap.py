@@ -24,6 +24,7 @@ OUTPUT     = os.path.join(ROOT, "sitemap.xml")
 PAGINE_FISSE = [
     {"loc": "/",                     "file": "index.html",        "priority": "1.0", "changefreq": "weekly"},
     {"loc": "/mappa-risorse.html",           "file": "mappa-risorse.html",        "priority": "0.5", "changefreq": "monthly"},
+    {"loc": "/mappa-aree.html",      "file": "mappa-aree.html",      "priority": "0.5", "changefreq": "monthly"},
     {"loc": "/mappa-framework.html", "file": "mappa-framework.html", "priority": "0.5", "changefreq": "monthly"},
 ]
 
