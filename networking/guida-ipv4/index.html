@@ -634,7 +634,16 @@ tr:last-child td { border-bottom: none; }
       </div>
       <p class="ipv4-hint">Nota: gli indirizzi sorgente/destinazione sono disegnati più "alti" nello schema IPv6 solo per rendere visivamente la differenza di dimensione — 128 bit contro 32 bit, non sono in scala bit-per-bit con le altre righe.</p>
 
-      <div class="dodont">
+    <div class="dodont">
+        <div class="dont-col">
+          <div class="dont-col-head">⚠️ I limiti di IPv4</div>
+          <div class="dont-col-body">
+            <ul>
+              <li><strong>Esaurimento degli indirizzi</strong>: ~4,3 miliardi di combinazioni, insufficienti per i miliardi di dispositivi IoT connessi oggi.</li>
+              <li><strong>Header complesso</strong>: campi opzionali e frammentazione rallentano l'elaborazione da parte dei router moderni.</li>
+            </ul>
+          </div>
+        </div>
         <div class="do-col">
           <div class="do-col-head">🚀 La risposta: IPv6</div>
           <div class="do-col-body">
@@ -645,16 +654,8 @@ tr:last-child td { border-bottom: none; }
             </ul>
           </div>
         </div>
-        <div class="dont-col">
-          <div class="dont-col-head">⚠️ I limiti di IPv4</div>
-          <div class="dont-col-body">
-            <ul>
-              <li><strong>Esaurimento degli indirizzi</strong>: ~4,3 miliardi di combinazioni, insufficienti per i miliardi di dispositivi IoT connessi oggi.</li>
-              <li><strong>Header complesso</strong>: campi opzionali e frammentazione rallentano l'elaborazione da parte dei router moderni.</li>
-            </ul>
-          </div>
-        </div>
       </div>
+
       <div class="shot-wrap">
         <img src="img/ipv4-vs-oggi.webp" alt="Confronto illustrato tra Internet del 1983 — terminale, modem acustico, mainframe — e Internet di oggi, con smartphone, smartwatch, auto connesse e dispositivi smart home">
         <div class="shot-caption">🕰️ Da ARPANET ai dispositivi IoT: lo stesso protocollo, 40 anni di crescita.</div>
