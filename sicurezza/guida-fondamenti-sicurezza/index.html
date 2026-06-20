@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Principi di Sicurezza Informatica: Triade CIA, Crittografia e PKI · Formazione Digitale</title>
+<meta name="description" content="Triade CIA, crittografia simmetrica e asimmetrica, certificati digitali e PKI, autenticazione e SPID: i fondamenti della sicurezza informatica, con hash SHA-256 calcolato dal vivo nel browser.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#1F4E79">
+<link rel="canonical" href="https://formazione-digitale.it/sicurezza/guida-principi-sicurezza/">
+<link rel="icon" type="image/png" href="/img/favicon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="//gc.zgo.at">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+
+<meta property="og:title" content="Principi di Sicurezza Informatica: Triade CIA, Crittografia e PKI · Formazione Digitale">
+<meta property="og:description" content="Triade CIA, crittografia simmetrica/asimmetrica, certificati digitali, PKI, autenticazione e SPID — con un calcolatore di hash SHA-256 dal vivo.">
+<meta property="og:url" content="https://formazione-digitale.it/sicurezza/guida-principi-sicurezza/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Principi di Sicurezza Informatica · Formazione Digitale">
+<meta name="twitter:description" content="Triade CIA, crittografia, certificati digitali e PKI, autenticazione e SPID, con hash SHA-256 dal vivo.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Principi di Sicurezza Informatica",
+  "description": "Triade CIA (Riservatezza, Integrità, Disponibilità), crittografia simmetrica e asimmetrica, certificati digitali e PKI, autenticazione e autorizzazione, SPID.",
+  "url": "https://formazione-digitale.it/sicurezza/guida-principi-sicurezza/",
+  "inLanguage": "it",
+  "educationalLevel": "Intermediate",
+  "author": { "@type": "Person", "name": "Cristiano De Pasquale", "jobTitle": "Docente di Informatica" },
+  "provider": { "@type": "WebSite", "name": "Formazione Digitale", "url": "https://formazione-digitale.it" },
+  "keywords": "sicurezza informatica, triade cia, riservatezza, integrità, disponibilità, crittografia, sha-256, certificati digitali, pki, spid"
+}
+</script>
+
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="stylesheet" href="/css/shared.css?v=3">
+<style>
+/* ═══ CSS SPECIFICO — Guida Principi di Sicurezza ═══ */
+
+.guide-hero { background: linear-gradient(135deg, var(--blue-dark) 0%, #2A6099 100%); border-radius: var(--radius); padding: 2.5rem 2rem 2rem; margin-bottom: 2rem; box-shadow: 0 4px 24px rgba(31,78,121,.22); }
+.guide-hero-eyebrow { font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--blue-light); margin-bottom: .5rem; }
+.guide-hero-title { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.6rem); color: #fff; line-height: 1.1; margin-bottom: .5rem; }
+.guide-hero-sub { font-size: .95rem; color: rgba(255,255,255,.75); line-height: 1.65; max-width: 600px; }
+.guide-hero-badges { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.25rem; }
+.hero-badge { display: inline-flex; align-items: center; gap: .3rem; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22); color: rgba(255,255,255,.85); font-size: .72rem; font-weight: 500; padding: .28rem .7rem; border-radius: 20px; }
+
+.guide-section { padding: 2rem 0; border-bottom: 1px solid var(--blue-light); }
+.guide-section:last-child { border-bottom: none; }
+.section-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.25rem; }
+.section-num { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; height: 40px; background: var(--blue-dark); color: #fff; border-radius: 8px; font-size: 1.1rem; font-weight: 700; flex-shrink: 0; }
+.section-titles { flex: 1; }
+.section-title { font-family: var(--font-display); font-size: clamp(1.25rem,3vw,1.7rem); color: var(--blue-dark); line-height: 1.2; }
+.section-subtitle { font-size: .88rem; color: var(--gray-mid); margin-top: .2rem; }
+.sub-title { font-size: 1rem; font-weight: 600; color: var(--blue-dark); margin: 1.5rem 0 .75rem; }
+p { margin-bottom: 1rem; line-height: 1.75; }
+code { font-family: 'Courier New', monospace; font-size: .88em; background: var(--gray-light); padding: .15rem .4rem; border-radius: 4px; color: var(--blue-dark); word-break: break-all; }
+
+.box { display: flex; gap: .85rem; border-radius: var(--radius); padding: 1rem 1.25rem; margin: 1.25rem 0; line-height: 1.65; font-size: .9rem; }
+.box-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: .05rem; }
+.box-info  { background: var(--blue-pale);   border-left: 4px solid var(--blue-mid); color: #1a3a5c; }
+.box-tip   { background: var(--green-light); border-left: 4px solid var(--green-dark); color: #14472a; }
+.box-link  { background: var(--gray-light);  border-left: 4px solid var(--gray-mid); color: var(--gray-dark); }
+.box-link a { color: var(--blue-mid); font-weight: 600; }
+.box-future{ background: var(--purple-light); border-left: 4px solid var(--purple-dark); color: #2e0a5e; }
+
+.highlight-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: .85rem; margin: 1.25rem 0; }
+.highlight-card { background: var(--white); border: 1px solid var(--blue-light); border-radius: var(--radius); padding: 1rem 1.1rem; }
+.hl-icon { font-size: 1.5rem; margin-bottom: .4rem; }
+.hl-title { font-weight: 600; font-size: .9rem; color: var(--blue-dark); margin-bottom: .3rem; }
+.hl-desc { font-size: .82rem; color: var(--gray-mid); line-height: 1.55; }
+
+.table-wrap { overflow-x: auto; margin: 1.25rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+th { background: var(--blue-dark); color: #fff; padding: .6rem 1rem; text-align: left; font-weight: 600; font-size: .8rem; }
+td { padding: .6rem 1rem; border-bottom: 1px solid var(--blue-light); vertical-align: top; line-height: 1.55; }
+tr:nth-child(even) td { background: var(--blue-pale); }
+tr:last-child td { border-bottom: none; }
+
+/* ── Componente 1: Donut CIA interattivo ── */
+.cia-wrap { display: flex; gap: 2rem; flex-wrap: wrap; align-items: center; margin: 1.5rem 0; }
+.cia-svg-box { flex: 0 0 auto; }
+.cia-segment { cursor: pointer; transition: opacity .2s; }
+.cia-segment:hover { opacity: .85; }
+.cia-segment.active { opacity: 1; filter: drop-shadow(0 0 4px rgba(0,0,0,.25)); }
+.cia-legend { display: flex; flex-direction: column; gap: .5rem; }
+.cia-legend-item { display: flex; align-items: center; gap: .5rem; font-size: .85rem; font-weight: 600; cursor: pointer; padding: .3rem .5rem; border-radius: 6px; transition: background .2s; }
+.cia-legend-item:hover, .cia-legend-item.active { background: var(--blue-pale); }
+.cia-legend-swatch { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+.cia-panel { flex: 1; min-width: 240px; background: var(--white); border: 1px solid var(--blue-light); border-left: 4px solid var(--blue-mid); border-radius: var(--radius); padding: 1rem 1.25rem; min-height: 90px; }
+.cia-panel-placeholder { color: var(--gray-mid); font-size: .88rem; font-style: italic; }
+.cia-panel-title { font-weight: 700; color: var(--blue-dark); margin-bottom: .35rem; }
+.cia-panel-desc { font-size: .9rem; line-height: 1.65; color: var(--gray-dark); }
+
+/* ── Componente 2: Hash SHA-256 dal vivo ── */
+.hash-demo { background: var(--blue-pale); border-radius: var(--radius); padding: 1.25rem; margin: 1.25rem 0; }
+.hash-input { width: 100%; padding: .7rem .9rem; border: 1px solid var(--blue-light); border-radius: 8px; font-size: .9rem; font-family: inherit; margin-bottom: .8rem; }
+.hash-output-label { font-size: .72rem; font-weight: 700; color: var(--gray-mid); text-transform: uppercase; letter-spacing: .05em; margin-bottom: .3rem; }
+.hash-output { font-family: 'Courier New', monospace; font-size: .78rem; background: var(--blue-dark); color: #9fd9ff; padding: .8rem 1rem; border-radius: 8px; word-break: break-all; line-height: 1.6; transition: background .2s; }
+.hash-output.changed { background: var(--green-dark); color: #fff; }
+.hash-note { font-size: .78rem; color: var(--gray-mid); margin-top: .6rem; }
+
+/* ── Componente 3: Ridondanza — server singolo vs cluster ── */
+.redund-wrap { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1.25rem 0; }
+.redund-col { flex: 1; min-width: 220px; background: var(--white); border: 1px solid var(--blue-light); border-radius: var(--radius); padding: 1rem; text-align: center; }
+.redund-title { font-weight: 700; font-size: .85rem; color: var(--blue-dark); margin-bottom: .8rem; }
+.redund-servers { display: flex; justify-content: center; gap: .5rem; margin-bottom: .8rem; font-size: 2rem; }
+.redund-server.down { opacity: .3; filter: grayscale(1); }
+.redund-status { font-size: .85rem; font-weight: 700; min-height: 1.4em; }
+.redund-status.ok { color: var(--green-dark); }
+.redund-status.fail { color: var(--amber-dark); }
+.redund-btn { display: block; margin: 1rem auto 0; padding: .5rem 1.2rem; border-radius: 20px; border: none; background: var(--blue-mid); color: #fff; font-weight: 700; font-size: .82rem; cursor: pointer; }
+.redund-btn:hover { background: var(--blue-dark); }
+
+/* ── Componente 4: Crittografia simmetrica/asimmetrica ── */
+.crypto-toggle { display: flex; gap: .5rem; margin-bottom: 1rem; }
+.crypto-btn { flex: 1; padding: .55rem; border-radius: 8px; border: 2px solid var(--blue-light); background: var(--white); font-weight: 700; font-size: .85rem; color: var(--blue-dark); cursor: pointer; }
+.crypto-btn.active { background: var(--blue-mid); color: #fff; border-color: var(--blue-mid); }
+.crypto-flow { background: var(--blue-pale); border-radius: var(--radius); padding: 1.5rem 1rem; display: flex; flex-direction: column; align-items: center; gap: .8rem; }
+.crypto-flow-row { display: flex; align-items: center; justify-content: center; gap: .8rem; flex-wrap: wrap; text-align: center; font-size: .82rem; }
+.crypto-node { background: var(--white); border: 1px solid var(--blue-light); border-radius: 8px; padding: .6rem .8rem; font-weight: 600; color: var(--blue-dark); min-width: 90px; }
+.crypto-key-col { display: flex; flex-direction: column; align-items: center; }
+.crypto-key { font-size: 1.4rem; }
+.crypto-key-label { font-size: .66rem; color: var(--gray-mid); margin-top: .2rem; max-width: 90px; line-height: 1.25; font-weight: 600; }
+.crypto-arrow { font-size: 1.3rem; color: var(--blue-mid); }
+.crypto-note { font-size: .8rem; color: var(--blue-dark); background: rgba(255,255,255,.6); border-radius: 8px; padding: .6rem .9rem; text-align: center; max-width: 480px; }
+
+/* ── Componente 5: Catena di fiducia PKI ── */
+.pki-chain { display: flex; gap: .6rem; flex-wrap: wrap; margin: 1.25rem 0; }
+.pki-node { flex: 1; min-width: 130px; background: var(--blue-pale); border: 2px solid var(--blue-light); border-radius: var(--radius); padding: 1rem .6rem; text-align: center; cursor: pointer; transition: all .2s; }
+.pki-node:hover { border-color: var(--blue-mid); }
+.pki-node.active { background: var(--blue-mid); border-color: var(--blue-mid); color: #fff; }
+.pki-icon { font-size: 1.6rem; margin-bottom: .4rem; }
+.pki-label { font-weight: 700; font-size: .78rem; }
+.pki-panel { background: var(--white); border: 1px solid var(--blue-light); border-left: 4px solid var(--blue-mid); border-radius: var(--radius); padding: 1rem 1.25rem; min-height: 70px; }
+.pki-panel-placeholder { color: var(--gray-mid); font-size: .88rem; font-style: italic; }
+
+.guide-footer { background: var(--blue-dark); color: rgba(255,255,255,.65); text-align: center; padding: 2rem 1rem; font-size: .82rem; line-height: 1.8; }
+#reading-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 200; background: var(--blue-light); width: 0; transition: width .1s linear; }
+</style>
+</head>
+<body>
+
+<div id="reading-bar"></div>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<header class="guide-header">
+  <a class="guide-header-back" href="/index.html">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Portale
+  </a>
+  <div class="guide-header-center">Principi di Sicurezza Informatica</div>
+  <div class="guide-header-right">
+    <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu sezioni">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="guide-layout">
+
+  <aside class="guide-sidebar" id="guide-sidebar">
+    <div class="sidebar-label">Sezioni</div>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li><a class="nav-item active" href="#s1" onclick="closeSidebar()"><span class="nav-num">1</span><span class="nav-text">Sicurezza informatica e Triade CIA</span></a></li>
+      <li><a class="nav-item" href="#s2" onclick="closeSidebar()"><span class="nav-num">2</span><span class="nav-text">Riservatezza in pratica</span></a></li>
+      <li><a class="nav-item" href="#s3" onclick="closeSidebar()"><span class="nav-num">3</span><span class="nav-text">Integrità in pratica</span></a></li>
+      <li><a class="nav-item" href="#s4" onclick="closeSidebar()"><span class="nav-num">4</span><span class="nav-text">Disponibilità in pratica</span></a></li>
+      <li><a class="nav-item" href="#s5" onclick="closeSidebar()"><span class="nav-num">5</span><span class="nav-text">Crittografia simmetrica/asimmetrica</span></a></li>
+      <li><a class="nav-item" href="#s6" onclick="closeSidebar()"><span class="nav-num">6</span><span class="nav-text">Certificati digitali e PKI</span></a></li>
+      <li><a class="nav-item" href="#s7" onclick="closeSidebar()"><span class="nav-num">7</span><span class="nav-text">Autenticazione e autorizzazione</span></a></li>
+      <li><a class="nav-item" href="#s8" onclick="closeSidebar()"><span class="nav-num">8</span><span class="nav-text">SPID, in breve</span></a></li>
+      <li><a class="nav-item" href="#s9" onclick="closeSidebar()"><span class="nav-num">9</span><span class="nav-text">Attacchi informatici: panoramica</span></a></li>
+    </ul>
+    <hr class="sidebar-divider">
+    <div class="sidebar-meta">
+      <strong>Guida Principi di Sicurezza</strong><br>
+      📖 Guida completa<br>
+      ⏱ ~30 min di lettura<br>
+      📊 Livello intermedio<br>
+      🔄 Aggiornata giugno 2026
+    </div>
+  </aside>
+
+  <main class="guide-main">
+
+    <div class="guide-hero">
+      <div class="guide-hero-eyebrow">Formazione Digitale · Guida completa · Sicurezza</div>
+      <h1 class="guide-hero-title">Principi di Sicurezza Informatica</h1>
+      <p class="guide-hero-sub">Triade CIA, crittografia simmetrica e asimmetrica, certificati digitali e PKI, autenticazione e SPID — i fondamenti teorici, con un calcolatore di hash SHA-256 che funziona dal vivo nel tuo browser.</p>
+      <div class="guide-hero-badges">
+        <span class="hero-badge">🔐 Sicurezza</span>
+        <span class="hero-badge">💡 Livello intermedio</span>
+        <span class="hero-badge">⏱ ~30 minuti</span>
+        <span class="hero-badge">🖱 5 componenti interattivi</span>
+        <span class="hero-badge">🗓 2026</span>
+      </div>
+    </div>
+
+    <!-- S1 — Triade CIA -->
+    <section class="guide-section" id="s1">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div class="section-titles">
+          <h2 class="section-title">Sicurezza informatica e Triade CIA</h2>
+          <p class="section-subtitle">I tre pilastri su cui si fonda ogni misura di protezione</p>
+        </div>
+      </div>
+      <p>La sicurezza informatica è uno dei pilastri fondamentali dell'era digitale: in un mondo sempre più connesso, proteggere dati e sistemi è essenziale per aziende, istituzioni e privati cittadini. Alla base di ogni misura di protezione — dalla password più semplice all'infrastruttura di un data center — c'è un modello che ne riassume gli obiettivi: la <strong>Triade CIA</strong>.</p>
+      <p>Clicca su ciascuno dei tre pilastri per leggerne la definizione:</p>
+
+      <div class="cia-wrap">
+        <div class="cia-svg-box">
+          <svg width="200" height="200" viewBox="0 0 220 220">
+            <g transform="rotate(-90 110 110)">
+              <circle class="cia-segment" data-pillar="riservatezza" cx="110" cy="110" r="70" fill="none" stroke="var(--blue-mid)" stroke-width="38" stroke-dasharray="146.6 439.8" stroke-dashoffset="0" tabindex="0" role="button" aria-label="Riservatezza"></circle>
+              <circle class="cia-segment" data-pillar="integrita" cx="110" cy="110" r="70" fill="none" stroke="var(--green-dark)" stroke-width="38" stroke-dasharray="146.6 439.8" stroke-dashoffset="-146.6" tabindex="0" role="button" aria-label="Integrità"></circle>
+              <circle class="cia-segment" data-pillar="disponibilita" cx="110" cy="110" r="70" fill="none" stroke="var(--amber-dark)" stroke-width="38" stroke-dasharray="146.6 439.8" stroke-dashoffset="-293.2" tabindex="0" role="button" aria-label="Disponibilità"></circle>
+            </g>
+            <text x="110" y="105" text-anchor="middle" font-size="13" font-weight="700" fill="var(--blue-dark)">Triade</text>
+            <text x="110" y="122" text-anchor="middle" font-size="13" font-weight="700" fill="var(--blue-dark)">CIA</text>
+          </svg>
+        </div>
+        <div class="cia-legend" id="cia-legend">
+          <div class="cia-legend-item" data-pillar="riservatezza"><span class="cia-legend-swatch" style="background:var(--blue-mid);"></span>Riservatezza (Confidentiality)</div>
+          <div class="cia-legend-item" data-pillar="integrita"><span class="cia-legend-swatch" style="background:var(--green-dark);"></span>Integrità (Integrity)</div>
+          <div class="cia-legend-item" data-pillar="disponibilita"><span class="cia-legend-swatch" style="background:var(--amber-dark);"></span>Disponibilità (Availability)</div>
+        </div>
+        <div class="cia-panel" id="cia-panel">
+          <p class="cia-panel-placeholder" id="cia-panel-content">👆 Clicca un pilastro del diagramma (o la voce in legenda) per leggere qui la definizione.</p>
+        </div>
+      </div>
+
+      <p>Le prossime tre sezioni riprendono ciascun pilastro singolarmente, con le tecniche concrete usate per garantirlo.</p>
+    </section>
+
+    <!-- S2 — Riservatezza in pratica -->
+    <section class="guide-section" id="s2">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div class="section-titles">
+          <h2 class="section-title">Riservatezza in pratica</h2>
+          <p class="section-subtitle">Crittografia e tokenizzazione</p>
+        </div>
+      </div>
+
+      <h3 class="sub-title">Crittografia</h3>
+      <p>La <strong>crittografia</strong> trasforma i dati in un formato illeggibile per chiunque non possieda la chiave di decrittazione corretta. È il meccanismo alla base, ad esempio, del protocollo <strong>SSL/TLS</strong> che rende sicure le connessioni HTTPS: senza crittografia, qualunque dato scambiato tra il tuo browser e un sito viaggerebbe in chiaro, leggibile da chiunque intercettasse il traffico. Nella Sezione 5 vedremo nel dettaglio le due famiglie di crittografia (simmetrica e asimmetrica) e come funzionano davvero.</p>
+
+      <h3 class="sub-title">Tokenizzazione</h3>
+      <p>La <strong>tokenizzazione</strong> sostituisce un dato sensibile (es. un numero di carta di credito) con un valore casuale — il <em>token</em> — che non ha alcun significato o valore se intercettato isolatamente. Il dato originale resta custodito in un sistema separato e sicuro; il token può circolare nei sistemi di pagamento senza esporre mai l'informazione reale.</p>
+
+      <h3 class="sub-title">Autenticazione e VPN: l'uso quotidiano</h3>
+      <p>Riservatezza significa anche controllare <em>chi</em> può accedere ai dati — è il compito dell'autenticazione (verificare l'identità di chi richiede l'accesso) e delle VPN (creare connessioni sicure su reti pubbliche, come il Wi-Fi di un bar). Questi aspetti pratici — autenticazione a due fattori, password, VPN — li abbiamo già trattati in dettaglio altrove sul portale.</p>
+      <div class="box box-link">
+        <div class="box-icon">🔗</div>
+        <div>Vuoi il lato pratico e quotidiano (2FA, password, VPN)? → <a href="/sicurezza/guida-cybersicurezza/">Guida alla Cybersicurezza Personale</a></div>
+      </div>
+    </section>
+
+    <!-- S3 — Integrità in pratica -->
+    <section class="guide-section" id="s3">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div class="section-titles">
+          <h2 class="section-title">Integrità in pratica</h2>
+          <p class="section-subtitle">Firme digitali, hash e controllo di versione</p>
+        </div>
+      </div>
+
+      <h3 class="sub-title">Firme digitali</h3>
+      <p>Una <strong>firma digitale</strong> permette di verificare l'autenticità e l'integrità di un documento, garantendo che provenga da una fonte affidabile e che non sia stato modificato dopo la firma. Si basa sulla crittografia asimmetrica che vedremo in Sezione 5: chi firma usa la propria chiave privata, chiunque può verificare la firma con la corrispondente chiave pubblica.</p>
+
+      <h3 class="sub-title">Hash e checksum — provalo dal vivo</h3>
+      <p>Una <strong>funzione di hash</strong> come <strong>SHA-256</strong> genera un'impronta digitale a lunghezza fissa di qualsiasi testo o file. La stessa identica funzione, sullo stesso input, produce sempre lo stesso hash — ma basta cambiare anche un solo carattere per ottenere un risultato completamente diverso. È così che si verifica l'integrità: si confronta l'hash calcolato con quello originale; se non coincidono, il dato è stato alterato.</p>
+
+      <div class="hash-demo">
+        <label for="hash-input" class="hash-output-label">Scrivi qualcosa, l'hash si aggiorna in tempo reale</label>
+        <input type="text" id="hash-input" class="hash-input" value="Ciao mondo" autocomplete="off" spellcheck="false">
+        <div class="hash-output-label">SHA-256</div>
+        <div class="hash-output" id="hash-output">—</div>
+        <p class="hash-note">🔒 Calcolato interamente nel tuo browser (Web Crypto API) — nessun testo viene inviato a nessun server. Prova a cambiare una sola lettera e guarda cosa succede all'hash.</p>
+      </div>
+
+      <h3 class="sub-title">Controllo di versione</h3>
+      <p>Sistemi come <strong>Git</strong> applicano lo stesso principio su scala più ampia: permettono di tracciare e monitorare tutte le modifiche ai file nel tempo, mantenendo una cronologia completa — utile non solo per collaborare, ma anche per verificare quando e da chi è stato alterato un determinato contenuto.</p>
+    </section>
+
+    <!-- S4 — Disponibilità in pratica -->
+    <section class="guide-section" id="s4">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div class="section-titles">
+          <h2 class="section-title">Disponibilità in pratica</h2>
+          <p class="section-subtitle">Ridondanza, disaster recovery, protezione DDoS</p>
+        </div>
+      </div>
+
+      <h3 class="sub-title">Ridondanza — guarda la differenza</h3>
+      <p>La <strong>ridondanza</strong> duplica le risorse critiche (tipicamente attraverso server cluster) in modo che un guasto hardware o software non interrompa il servizio. Simula un guasto e osserva la differenza tra un server singolo e un cluster ridondante:</p>
+
+      <div class="redund-wrap">
+        <div class="redund-col">
+          <div class="redund-title">🖥️ Server singolo</div>
+          <div class="redund-servers" id="redund-single"><span class="redund-server">🖥️</span></div>
+          <div class="redund-status ok" id="redund-single-status">✅ Servizio attivo</div>
+        </div>
+        <div class="redund-col">
+          <div class="redund-title">🖥️🖥️🖥️ Cluster ridondante</div>
+          <div class="redund-servers" id="redund-cluster"><span class="redund-server">🖥️</span><span class="redund-server">🖥️</span><span class="redund-server">🖥️</span></div>
+          <div class="redund-status ok" id="redund-cluster-status">✅ Servizio attivo</div>
+        </div>
+      </div>
+      <button class="redund-btn" id="redund-btn">⚡ Simula un guasto hardware</button>
+
+      <h3 class="sub-title">Backup e disaster recovery</h3>
+      <p>Copie di sicurezza regolari (tipicamente su cloud) e piani di ripristino strutturati permettono di recuperare rapidamente i dati in caso di perdita. Il backup quotidiano per un singolo dispositivo l'abbiamo già trattato nella guida pratica.</p>
+      <div class="box box-link">
+        <div class="box-icon">🔗</div>
+        <div>Vuoi sapere come organizzare i tuoi backup personali? → <a href="/sicurezza/guida-cybersicurezza/">Guida alla Cybersicurezza Personale</a></div>
+      </div>
+
+      <h3 class="sub-title">Protezione DDoS</h3>
+      <p>Un attacco <strong>DDoS</strong> (Distributed Denial of Service) cerca di rendere un servizio indisponibile sommergendolo di richieste da migliaia di sorgenti contemporaneamente. Firewall avanzati e CDN (Content Delivery Network) come Cloudflare distribuiscono e filtrano il traffico, mitigando l'impatto di questi attacchi prima che raggiungano il server di origine.</p>
+    </section>
+
+    <!-- S5 — Crittografia simmetrica/asimmetrica -->
+    <section class="guide-section" id="s5">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div class="section-titles">
+          <h2 class="section-title">Crittografia simmetrica vs asimmetrica</h2>
+          <p class="section-subtitle">Una chiave o due? Confrontale</p>
+        </div>
+      </div>
+      <p>Esistono due grandi famiglie di crittografia, che risolvono problemi diversi. Usa i due bottoni per confrontare il flusso delle chiavi:</p>
+
+      <div class="crypto-toggle">
+        <button class="crypto-btn active" id="crypto-sym-btn">🔑 Simmetrica</button>
+        <button class="crypto-btn" id="crypto-asym-btn">🔐🔓 Asimmetrica</button>
+      </div>
+      <div class="crypto-flow" id="crypto-flow"></div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th></th><th>Simmetrica</th><th>Asimmetrica</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Chiavi</strong></td><td>Una sola, condivisa tra mittente e destinatario</td><td>Una coppia: pubblica (per cifrare) e privata (per decifrare)</td></tr>
+            <tr><td><strong>Velocità</strong></td><td>Veloce ed efficiente</td><td>Più lenta</td></tr>
+            <tr><td><strong>Problema principale</strong></td><td>Distribuire la chiave in modo sicuro</td><td>Risolve proprio il problema della distribuzione delle chiavi</td></tr>
+            <tr><td><strong>Esempi</strong></td><td>AES, DES</td><td>RSA, ECC</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Nella pratica, i due metodi si usano spesso insieme: una connessione HTTPS, ad esempio, usa la crittografia asimmetrica solo all'inizio per scambiarsi in sicurezza una chiave simmetrica, che poi viene usata per il resto della comunicazione — più veloce, con il problema della distribuzione già risolto.</p>
+    </section>
+
+    <!-- S6 — Certificati digitali e PKI -->
+    <section class="guide-section" id="s6">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <div class="section-titles">
+          <h2 class="section-title">Certificati digitali e PKI</h2>
+          <p class="section-subtitle">La catena di fiducia che rende sicuro il Web — clicca ogni anello</p>
+        </div>
+      </div>
+      <p>Quando il browser mostra il lucchetto su un sito HTTPS, sta verificando una <strong>catena di fiducia</strong>. Clicca ogni elemento della catena per capire il suo ruolo:</p>
+
+      <div class="pki-chain" id="pki-chain">
+        <div class="pki-node" data-node="ca"><div class="pki-icon">🏛️</div><div class="pki-label">Autorità di Certificazione</div></div>
+        <div class="pki-node" data-node="cert"><div class="pki-icon">📜</div><div class="pki-label">Certificato Digitale</div></div>
+        <div class="pki-node" data-node="pubkey"><div class="pki-icon">🔓</div><div class="pki-label">Chiave Pubblica</div></div>
+        <div class="pki-node" data-node="pki"><div class="pki-icon">🌐</div><div class="pki-label">Infrastruttura PKI</div></div>
+      </div>
+      <div class="pki-panel" id="pki-panel">
+        <p class="pki-panel-placeholder" id="pki-panel-content">👆 Clicca un elemento della catena per leggerne il ruolo.</p>
+      </div>
+    </section>
+
+    <!-- S7 — Autenticazione e autorizzazione -->
+    <section class="guide-section" id="s7">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <div class="section-titles">
+          <h2 class="section-title">Autenticazione e autorizzazione</h2>
+          <p class="section-subtitle">Verificare chi sei, poi decidere cosa puoi fare</p>
+        </div>
+      </div>
+      <p>L'<strong>autenticazione</strong> si basa su tre possibili fattori, spesso riassunti così:</p>
+      <div class="highlight-grid">
+        <div class="highlight-card"><div class="hl-icon">🧬</div><div class="hl-title">Qualcosa che sei</div><div class="hl-desc">Biometria: impronta digitale, riconoscimento facciale.</div></div>
+        <div class="highlight-card"><div class="hl-icon">📱</div><div class="hl-title">Qualcosa che possiedi</div><div class="hl-desc">OTP, smart card, token di autenticazione.</div></div>
+        <div class="highlight-card"><div class="hl-icon">🔑</div><div class="hl-title">Qualcosa che conosci</div><div class="hl-desc">Password, PIN, domande di sicurezza.</div></div>
+      </div>
+      <p>L'<strong>autenticazione a più fattori (MFA)</strong> combina almeno due di questi elementi per garantire maggiore sicurezza — il lato pratico (come attivarla sui tuoi account) l'abbiamo già coperto altrove.</p>
+      <div class="box box-link">
+        <div class="box-icon">🔗</div>
+        <div>Vuoi attivare l'autenticazione a due fattori sui tuoi account? → <a href="/sicurezza/guida-cybersicurezza/">Guida alla Cybersicurezza Personale</a></div>
+      </div>
+
+      <h3 class="sub-title">Dopo l'autenticazione: l'autorizzazione</h3>
+      <p>Una volta verificata l'identità, l'<strong>autorizzazione</strong> determina <em>cosa</em> quella identità può effettivamente fare, attraverso modelli come:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Modello</th><th>Come funziona</th></tr></thead>
+          <tbody>
+            <tr><td><strong>RBAC</strong> (Role-Based)</td><td>I permessi sono legati al ruolo dell'utente (es. "amministratore", "editor", "ospite").</td></tr>
+            <tr><td><strong>MAC</strong> (Mandatory)</td><td>Un'autorità centrale impone le regole di accesso, l'utente non può modificarle.</td></tr>
+            <tr><td><strong>DAC</strong> (Discretionary)</td><td>Il proprietario della risorsa decide chi può accedervi e con quali permessi.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- S8 — SPID, in breve -->
+    <section class="guide-section" id="s8">
+      <div class="section-header">
+        <div class="section-num">8</div>
+        <div class="section-titles">
+          <h2 class="section-title">SPID, in breve</h2>
+          <p class="section-subtitle">L'identità digitale italiana — solo un cenno</p>
+        </div>
+      </div>
+      <p><strong>SPID</strong> (Sistema Pubblico di Identità Digitale) permette l'accesso unificato ai servizi della Pubblica Amministrazione attraverso Identity Provider autorizzati come Poste Italiane, Aruba e InfoCert. Prevede tre livelli di sicurezza crescente:</p>
+      <div class="highlight-grid">
+        <div class="highlight-card"><div class="hl-icon">1️⃣</div><div class="hl-title">Livello 1</div><div class="hl-desc">Username e password, per servizi base.</div></div>
+        <div class="highlight-card"><div class="hl-icon">2️⃣</div><div class="hl-title">Livello 2</div><div class="hl-desc">Password più OTP o app di autenticazione.</div></div>
+        <div class="highlight-card"><div class="hl-icon">3️⃣</div><div class="hl-title">Livello 3</div><div class="hl-desc">Smart card o dispositivo crittografico, per operazioni molto sensibili.</div></div>
+      </div>
+      <p>SPID è un argomento che si presta a un approfondimento dedicato, con esempi pratici di utilizzo — qui ci fermiamo all'inquadramento generale.</p>
+    </section>
+
+    <!-- S9 — Attacchi informatici: panoramica -->
+    <section class="guide-section" id="s9">
+      <div class="section-header">
+        <div class="section-num">9</div>
+        <div class="section-titles">
+          <h2 class="section-title">Attacchi informatici: panoramica</h2>
+          <p class="section-subtitle">Le categorie principali, in sintesi</p>
+        </div>
+      </div>
+      <p>Conoscere le minacce è la base per difendersi. Le principali categorie di attacco:</p>
+      <div class="highlight-grid">
+        <div class="highlight-card"><div class="hl-icon">🌐</div><div class="hl-title">Attacchi di rete</div><div class="hl-desc">ARP/DNS spoofing, Man-in-the-Middle, DDoS, sniffing del traffico.</div></div>
+        <div class="highlight-card"><div class="hl-icon">💻</div><div class="hl-title">Attacchi applicativi</div><div class="hl-desc">SQL Injection, Cross-Site Scripting (XSS), buffer overflow, command injection.</div></div>
+        <div class="highlight-card"><div class="hl-icon">🎭</div><div class="hl-title">Malware e social engineering</div><div class="hl-desc">Ransomware, trojan, phishing, vishing, shoulder surfing, keylogger, brute force.</div></div>
+      </div>
+      <p>Il phishing, il ransomware e gli attacchi a forza bruta li abbiamo già trattati lato vittima/difesa quotidiana. Per la mappa completa di tutte le tecniche — comprese quelle qui solo accennate — c'è una scheda dedicata:</p>
+      <div class="box box-link">
+        <div class="box-icon">🔗</div>
+        <div>Mappa completa di tutti i tipi di attacco → <a href="/sicurezza/guida-attacchi-informatici/">Guida agli Attacchi Informatici</a></div>
+      </div>
+      <div class="box box-future">
+        <div class="box-icon">🛡️</div>
+        <div><strong>Difesa multilivello</strong> Nessuna singola misura basta da sola: firewall, sistemi IDS/IPS, aggiornamenti regolari, formazione del personale e conformità a normative come il GDPR lavorano insieme per proteggere dati e sistemi.</div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
+  Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem;">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;Â·&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<script>
+/* ── Componente 1: Donut CIA ── */
+(function() {
+  const PILLARS = {
+    riservatezza:  { label: 'Riservatezza',  desc: 'Garantisce che i dati siano accessibili solo a utenti autorizzati, impedendo la divulgazione non autorizzata di informazioni sensibili.' },
+    integrita:     { label: 'Integrità',     desc: "Assicura che i dati non vengano modificati, alterati o corrotti senza autorizzazione durante la trasmissione o l'archiviazione." },
+    disponibilita: { label: 'Disponibilità', desc: 'Garantisce che dati e servizi siano accessibili agli utenti legittimi quando necessario, senza interruzioni.' }
+  };
+  const segments = document.querySelectorAll('.cia-segment');
+  const legendItems = document.querySelectorAll('.cia-legend-item');
+  const panel = document.getElementById('cia-panel-content');
+
+  function select(pillar) {
+    segments.forEach(s => s.classList.toggle('active', s.dataset.pillar === pillar));
+    legendItems.forEach(l => l.classList.toggle('active', l.dataset.pillar === pillar));
+    const p = PILLARS[pillar];
+    panel.className = '';
+    panel.innerHTML = '<div class="cia-panel-title">' + p.label + '</div><p class="cia-panel-desc">' + p.desc + '</p>';
+  }
+  segments.forEach(s => {
+    s.addEventListener('click', () => select(s.dataset.pillar));
+    s.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(s.dataset.pillar); } });
+  });
+  legendItems.forEach(l => l.addEventListener('click', () => select(l.dataset.pillar)));
+})();
+
+/* ── Componente 2: Hash SHA-256 dal vivo ── */
+(function() {
+  const input = document.getElementById('hash-input');
+  const output = document.getElementById('hash-output');
+  async function sha256(text) {
+    const data = new TextEncoder().encode(text);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+  async function update() {
+    const hash = await sha256(input.value);
+    output.textContent = hash;
+    output.classList.add('changed');
+    setTimeout(() => output.classList.remove('changed'), 300);
+  }
+  input.addEventListener('input', update);
+  update();
+})();
+
+/* ── Componente 3: Ridondanza ── */
+(function() {
+  const btn = document.getElementById('redund-btn');
+  const singleServers = document.querySelectorAll('#redund-single .redund-server');
+  const clusterServers = document.querySelectorAll('#redund-cluster .redund-server');
+  const singleStatus = document.getElementById('redund-single-status');
+  const clusterStatus = document.getElementById('redund-cluster-status');
+  let failed = false;
+  btn.addEventListener('click', () => {
+    failed = !failed;
+    singleServers.forEach(s => s.classList.toggle('down', failed));
+    clusterServers[0].classList.toggle('down', failed);
+    if (failed) {
+      singleStatus.textContent = '❌ Servizio interrotto';
+      singleStatus.className = 'redund-status fail';
+      clusterStatus.textContent = '✅ Servizio continua (failover automatico)';
+      clusterStatus.className = 'redund-status ok';
+      btn.textContent = '🔧 Ripristina';
+    } else {
+      singleStatus.textContent = '✅ Servizio attivo';
+      singleStatus.className = 'redund-status ok';
+      clusterStatus.textContent = '✅ Servizio attivo';
+      clusterStatus.className = 'redund-status ok';
+      btn.textContent = '⚡ Simula un guasto hardware';
+    }
+  });
+})();
+
+/* ── Componente 4: Crittografia simmetrica/asimmetrica ── */
+(function() {
+  const symBtn = document.getElementById('crypto-sym-btn');
+  const asymBtn = document.getElementById('crypto-asym-btn');
+  const flow = document.getElementById('crypto-flow');
+  const SYM = '<div class="crypto-flow-row">' +
+      '<div class="crypto-node">📤 Mittente</div>' +
+      '<div class="crypto-key-col"><div class="crypto-key">🔑</div><div class="crypto-key-label">chiave condivisa</div></div>' +
+      '<div class="crypto-arrow">→</div>' +
+      '<div class="crypto-node">Messaggio cifrato</div>' +
+      '<div class="crypto-arrow">→</div>' +
+      '<div class="crypto-key-col"><div class="crypto-key">🔑</div><div class="crypto-key-label">stessa chiave</div></div>' +
+      '<div class="crypto-node">📥 Destinatario</div>' +
+    '</div>' +
+    '<div class="crypto-note">Mittente e Destinatario possiedono entrambi la <strong>stessa identica chiave</strong>, usata sia per cifrare che per decifrare.</div>';
+  const ASYM = '<div class="crypto-flow-row">' +
+      '<div class="crypto-node">📤 Mittente</div>' +
+      '<div class="crypto-key-col"><div class="crypto-key">🔓</div><div class="crypto-key-label">chiave pubblica<br>del Destinatario</div></div>' +
+      '<div class="crypto-arrow">→</div>' +
+      '<div class="crypto-node">Messaggio cifrato</div>' +
+      '<div class="crypto-arrow">→</div>' +
+      '<div class="crypto-key-col"><div class="crypto-key">🔐</div><div class="crypto-key-label">chiave privata<br>del Destinatario</div></div>' +
+      '<div class="crypto-node">📥 Destinatario</div>' +
+    '</div>' +
+    '<div class="crypto-note"><strong>Entrambe le chiavi appartengono al Destinatario.</strong> Il Mittente usa quella pubblica (che chiunque può conoscere) solo per cifrare; soltanto il Destinatario possiede la chiave privata necessaria per decifrare.</div>';
+  function show(mode) {
+    flow.innerHTML = mode === 'sym' ? SYM : ASYM;
+    symBtn.classList.toggle('active', mode === 'sym');
+    asymBtn.classList.toggle('active', mode === 'asym');
+  }
+  symBtn.addEventListener('click', () => show('sym'));
+  asymBtn.addEventListener('click', () => show('asym'));
+  show('sym');
+})();
+
+/* ── Componente 5: Catena PKI ── */
+(function() {
+  const NODES = {
+    ca:     { label: 'Autorità di Certificazione', desc: "Enti fidati come DigiCert e GlobalSign che emettono e verificano i certificati digitali, garantendo l'autenticità delle identità." },
+    cert:   { label: 'Certificato Digitale', desc: "Documento elettronico che collega una chiave pubblica all'identità del proprietario, contenente informazioni verificate e la firma della CA." },
+    pubkey: { label: 'Chiave Pubblica', desc: 'La chiave contenuta nel certificato, usata da chiunque per cifrare dati destinati al proprietario o verificarne le firme.' },
+    pki:    { label: 'Infrastruttura PKI', desc: 'Il sistema completo di regole, certificati e CA che gestisce la crittografia asimmetrica su Internet per SSL/TLS e firme digitali.' }
+  };
+  const nodes = document.querySelectorAll('.pki-node');
+  const panel = document.getElementById('pki-panel-content');
+  nodes.forEach(n => {
+    n.addEventListener('click', () => {
+      nodes.forEach(x => x.classList.toggle('active', x === n));
+      const d = NODES[n.dataset.node];
+      panel.className = '';
+      panel.innerHTML = '<div class="ipv4-panel-title" style="font-weight:700;color:var(--blue-dark);margin-bottom:.35rem;">' + d.label + '</div><p style="font-size:.9rem;line-height:1.65;color:var(--gray-dark);">' + d.desc + '</p>';
+    });
+  });
+})();
+
+/* ── Reading bar ── */
+(function() {
+  const bar = document.getElementById('reading-bar');
+  if (!bar) return;
+  window.addEventListener('scroll', function() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+  }, { passive: true });
+})();
+
+function toggleSidebar() {
+  document.getElementById('guide-sidebar').classList.toggle('is-open');
+  document.getElementById('sidebar-overlay').classList.toggle('is-open');
+  document.getElementById('hamburger-btn').classList.toggle('is-open');
+}
+function closeSidebar() {
+  document.getElementById('guide-sidebar').classList.remove('is-open');
+  document.getElementById('sidebar-overlay').classList.remove('is-open');
+  document.getElementById('hamburger-btn').classList.remove('is-open');
+}
+
+(function() {
+  const sections = document.querySelectorAll('.guide-section');
+  const navItems = document.querySelectorAll('.nav-item');
+  function update() {
+    let active = null;
+    sections.forEach(sec => { if (sec.getBoundingClientRect().top <= 90) active = sec.id; });
+    navItems.forEach(item => item.classList.toggle('active', item.getAttribute('href') === '#' + active));
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>

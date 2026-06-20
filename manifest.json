@@ -454,6 +454,22 @@
             "DCEdu 6.1"
         ]
     },
+	{
+	  "path": "/sicurezza/guida-principi-sicurezza/",
+	  "label": "Principi di Sicurezza Informatica",
+	  "short": "Principi di Sicurezza",
+	  "cat": "guide",
+	  "emoji": "🔐",
+	  "tags": ["sicurezza informatica", "triade cia", "riservatezza", "integrità", "disponibilità", "crittografia", "sha-256", "certificati digitali", "pki", "spid", "autenticazione"],
+	  "meta": "9 sezioni · 5 componenti interattivi · Livello intermedio",
+	  "description": "Triade CIA, crittografia simmetrica e asimmetrica, certificati digitali e PKI, autenticazione e SPID, con un calcolatore di hash SHA-256 dal vivo nel browser.",
+	  "featured": false,
+	  "active": true,
+	  "digcomp": ["DC 4.1", "DC 4.2"],
+	  "digcomp_level": "intermediate",
+	  "digcomp_areas": ["sicurezza"],
+	  "digcompedu": ["DCEdu 6.4"]
+	},
     {
         "path": "/sicurezza/pillola-cybersicurezza/",
         "label": "Cybersicurezza in 5 Minuti — Le mosse essenziali",
