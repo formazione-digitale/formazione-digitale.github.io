@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tavola di Verità & Equivalenza Logica — Formazione Digitale</title>
+
+<meta name="description" content="Teoria e pratica della logica booleana: tavole di verità di NOT, AND, OR, XOR, implicazione e doppia implicazione, più uno strumento interattivo per costruire tabelle complesse e verificare equivalenze. Fino a 4 variabili.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://formazione-digitale.it/sistemi/logica-booleana/">
+<link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="//gc.zgo.at">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#1F4E79">
+
+<meta property="og:title" content="Tavola di Verità & Equivalenza Logica — Formazione Digitale">
+<meta property="og:description" content="Teoria e pratica della logica booleana: tavole di verità dei 6 operatori fondamentali, più uno strumento interattivo per espressioni complesse ed equivalenze.">
+<meta property="og:url" content="https://formazione-digitale.it/sistemi/logica-booleana/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tavola di Verità & Equivalenza Logica — Formazione Digitale">
+<meta name="twitter:description" content="Teoria e pratica della logica booleana, con strumento interattivo per tabelle ed equivalenze.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="stylesheet" href="/css/shared.css?v=3">
+<style>
+
+/* ── ACCESSO RAPIDO (sopra la teoria, visibile senza scroll) ── */
+.quick-intro {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+  background: var(--blue-pale); border: 1.5px solid var(--blue-light); border-radius: var(--radius);
+  padding: .85rem 1.1rem; margin-top: 1.25rem;
+}
+.quick-intro p { font-size: .85rem; color: var(--blue-dark); margin: 0; max-width: 600px; line-height: 1.45; }
+.quick-cta {
+  flex-shrink: 0; background: var(--blue-dark); color: #fff; text-decoration: none;
+  font-size: .82rem; font-weight: 600; padding: .55rem 1rem; border-radius: 7px;
+  transition: background .15s ease; white-space: nowrap;
+}
+.quick-cta:hover { background: var(--blue-mid); }
+
+/* ── SEZIONE TEORIA (blocchi compatti, no sidebar) ── */
+.theory-section { margin-top: 1.5rem; }
+.theory-eyebrow {
+  font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--blue-mid); margin-bottom: .4rem;
+}
+.theory-title {
+  font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--blue-dark); line-height: 1.2; margin-bottom: .5rem;
+}
+.theory-desc { font-size: .92rem; color: var(--gray-mid); line-height: 1.55; max-width: 680px; margin-bottom: 1.5rem; }
+
+.theory-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+}
+@media(max-width:900px) { .theory-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width:600px) { .theory-grid { grid-template-columns: 1fr; } }
+
+.op-card {
+  background: #fff; border: 1.5px solid var(--blue-light); border-radius: var(--radius);
+  padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: .6rem;
+}
+.op-card-header { display: flex; align-items: center; gap: .55rem; }
+.op-symbol {
+  font-family: monospace; font-size: 1.4rem; font-weight: 700; color: #fff;
+  background: var(--blue-dark); width: 38px; height: 38px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.op-name { font-size: .92rem; font-weight: 700; color: var(--blue-dark); }
+
+.mini-truth-table { border-collapse: collapse; font-size: .82rem; align-self: flex-start; }
+.mini-truth-table th, .mini-truth-table td {
+  border: 1px solid var(--blue-light); padding: .25rem .6rem; text-align: center; font-family: monospace;
+}
+.mini-truth-table th { background: var(--blue-pale); color: var(--blue-dark); }
+
+.op-def { font-size: .82rem; color: var(--gray-dark); line-height: 1.45; margin: 0; }
+.op-example { font-size: .78rem; color: var(--gray-mid); line-height: 1.45; margin: 0; font-style: italic; }
+
+.theory-cta { text-align: center; margin: 1.75rem 0 .5rem; }
+.theory-cta a {
+  display: inline-flex; align-items: center; gap: .4rem; font-size: .88rem; font-weight: 600;
+  color: var(--blue-mid); text-decoration: none; border-bottom: 1.5px solid var(--blue-light); padding-bottom: 2px;
+  transition: border-color .15s ease;
+}
+.theory-cta a:hover { border-color: var(--blue-mid); }
+
+/* ── WRAPPER UNICO cover + tool ── */
+.tool-wrapper {
+  background: #fff; border: 2px solid #D6E8F7; border-radius: var(--radius);
+  overflow: hidden; margin-top: 2.25rem;
+}
+
+.tool-cover {
+  background: linear-gradient(135deg, #1F4E79 0%, #2A6099 100%);
+  padding: 1.25rem 1.75rem 1.1rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+}
+.tool-cover-title {
+  font-family: var(--font-display); font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+  color: #fff; line-height: 1.2; margin-bottom: .25rem;
+}
+.tool-cover-desc { font-size: .85rem; color: rgba(255,255,255,.8); line-height: 1.5; }
+.tool-cover-badge { font-size: .72rem; color: rgba(255,255,255,.5); margin-top: .3rem; }
+
+.tool-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; padding: 1.25rem; align-items: start;
+}
+@media(max-width:800px) { .tool-layout { grid-template-columns: 1fr; } }
+
+.input-panel { display: flex; flex-direction: column; gap: 1rem; }
+
+.expr-block { display: flex; flex-direction: column; gap: .5rem; }
+.expr-label-row { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.expr-label { font-size: .82rem; font-weight: 600; color: var(--blue-dark); }
+
+.toolbar-group { display: flex; flex-direction: column; gap: .4rem; }
+.toolbar-row { display: flex; align-items: center; gap: .5rem; }
+.toolbar-row-label {
+  font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+  color: var(--gray-mid); width: 64px; flex-shrink: 0;
+}
+.toolbar-buttons { display: flex; gap: .35rem; flex-wrap: wrap; }
+.symbol-btn, .var-btn {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 1rem; font-weight: 600; width: 34px; height: 34px;
+  border-radius: 7px; cursor: pointer; transition: all .15s ease;
+  display: flex; align-items: center; justify-content: center; border: 1.5px solid transparent;
+}
+.symbol-btn { background: var(--blue-pale); color: var(--blue-dark); border-color: #D6E8F7; }
+.symbol-btn:hover { background: var(--blue-mid); color: #fff; border-color: var(--blue-mid); }
+.var-btn { background: var(--blue-mid); color: #fff; font-family: monospace; }
+.var-btn:hover { background: var(--blue-dark); }
+
+.expr-input {
+  font-family: monospace; font-size: 1.05rem; padding: .65rem .8rem;
+  border: 1.5px solid #D6E8F7; border-radius: var(--radius);
+  width: 100%; box-sizing: border-box; transition: border-color .15s ease;
+}
+.expr-input:focus { outline: none; border-color: var(--blue-mid); }
+.expr-input.input-error { border-color: #C0392B; }
+
+.expr-error-msg { font-size: .76rem; color: #C0392B; display: none; }
+.expr-error-msg.visible { display: block; }
+
+.compare-toggle-row {
+  display: flex; align-items: center; gap: .5rem;
+  font-size: .82rem; color: var(--gray-dark); cursor: pointer;
+  padding-top: .25rem; border-top: 1px dashed var(--blue-light);
+}
+.compare-toggle-row input { accent-color: var(--blue-mid); width: 16px; height: 16px; cursor: pointer; }
+
+#g-block { display: none; }
+#g-block.visible { display: flex; }
+
+.examples-row { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.examples-label {
+  font-size: .72rem; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: .06em; white-space: nowrap;
+}
+.example-btn {
+  font-size: .75rem; padding: .28rem .75rem; border-radius: 20px;
+  border: 1.5px solid #D6E8F7; background: #fff; color: #1F4E79;
+  cursor: pointer; font-family: var(--font-body); font-weight: 500; transition: all .18s ease;
+}
+.example-btn:hover { background: #EBF3FC; border-color: #2E75B6; }
+
+.btn-row { display: flex; gap: .6rem; }
+.btn-build {
+  flex: 1; background: var(--blue-dark); color: #fff; border: none;
+  padding: .75rem 1rem; border-radius: var(--radius); font-weight: 600;
+  font-size: .9rem; cursor: pointer; transition: background .15s ease;
+}
+.btn-build:hover { background: var(--blue-mid); }
+.btn-clear {
+  background: #fff; color: var(--gray-mid); border: 1.5px solid #ddd;
+  padding: .75rem 1rem; border-radius: var(--radius); font-size: .9rem; cursor: pointer;
+}
+.btn-clear:hover { border-color: #999; color: #333; }
+
+.output-empty {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 260px; background: var(--gray-light); border-radius: var(--radius);
+  color: var(--gray-mid); font-size: .85rem; gap: .5rem; text-align: center; padding: 1.5rem;
+}
+.output-empty-icon { font-size: 1.8rem; opacity: .4; }
+
+.output-header { font-family: monospace; font-size: 1rem; color: var(--blue-dark); font-weight: 700; margin-bottom: .75rem; }
+
+.truth-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+.truth-table th, .truth-table td {
+  border: 1px solid var(--blue-light); padding: .4rem .55rem; text-align: center; font-family: monospace;
+}
+.truth-table th { background: var(--blue-pale); color: var(--blue-dark); font-weight: 700; }
+.truth-table td.col-result { background: #fafcfe; font-weight: 700; }
+.truth-table tr.row-diff td { background: #FDECEA; }
+.truth-table td.val-true { color: var(--green-dark); }
+.truth-table td.val-false { color: #999; }
+
+.verdict-badge {
+  margin-top: 1rem; padding: .75rem 1rem; border-radius: var(--radius);
+  font-weight: 700; font-size: .92rem; display: flex; align-items: center; gap: .5rem;
+}
+.verdict-badge.equiv { background: var(--green-light); color: var(--green-dark); }
+.verdict-badge.not-equiv { background: var(--amber-light); color: var(--amber-dark); }
+.verdict-counterexample { font-size: .78rem; font-weight: 500; margin-top: .35rem; font-family: monospace; }
+
+footer { background: var(--blue-dark); color: rgba(255,255,255,.6); text-align: center; padding: 2rem 1.5rem; font-size: .8rem; line-height: 1.7; }
+footer strong { color: rgba(255,255,255,.9); }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div class="header-left">
+    <button id="hamburger"><span></span><span></span><span></span></button>
+    <a href="/index.html" class="header-back">← Portale</a>
+    <div class="header-sep"></div>
+    <span class="header-logo">Logica Booleana</span>
+    <span class="header-sub">Teoria, Tavola di Verità & Equivalenza</span>
+  </div>
+</div>
+
+<div id="overlay"></div>
+
+<div id="main" style="max-width:1100px;">
+
+  <!-- ACCESSO RAPIDO ALLO STRUMENTO (visibile senza scroll) -->
+  <div class="quick-intro">
+    <p>Costruisci tavole di verità per espressioni booleane (AND, OR, NOT, XOR, implicazione, doppia implicazione) e verifica se due espressioni sono equivalenti.</p>
+    <a href="#tool" class="quick-cta">Vai allo strumento interattivo ↓</a>
+  </div>
+
+  <!-- TEORIA -->
+  <div class="theory-section">
+    <div class="theory-eyebrow">Formazione Digitale · Sistemi · Logica</div>
+    <div class="theory-title">I 6 operatori della logica booleana</div>
+    <p class="theory-desc">Ogni operatore mette in relazione due (o una) affermazioni che possono essere solo Vere (V) o False (F). Qui sotto la tavola di verità di ciascuno, con un esempio per renderlo intuitivo. Sono gli stessi 6 operatori che puoi usare nello strumento qui sotto.</p>
+
+    <div class="theory-grid">
+
+      <div class="op-card">
+        <div class="op-card-header"><span class="op-symbol">¬</span><span class="op-name">NOT — Negazione</span></div>
+        <table class="mini-truth-table"><thead><tr><th>p</th><th>¬p</th></tr></thead>
+          <tbody><tr><td>V</td><td>F</td></tr><tr><td>F</td><td>V</td></tr></tbody></table>
+        <p class="op-def">Inverte il valore di verità: vera quando l'affermazione originale è falsa, e viceversa.</p>
+        <p class="op-example">💬 "Non sto dormendo" è vera esattamente quando "Sto dormendo" è falsa.</p>
+      </div>
+
+      <div class="op-card">
+        <div class="op-card-header"><span class="op-symbol">∧</span><span class="op-name">AND — Congiunzione</span></div>
+        <table class="mini-truth-table"><thead><tr><th>p</th><th>q</th><th>p∧q</th></tr></thead>
+          <tbody><tr><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>F</td></tr></tbody></table>
+        <p class="op-def">Vera solo se entrambe le affermazioni sono vere.</p>
+        <p class="op-example">💬 "Ho la patente E ho l'auto": posso guidare solo se entrambe sono vere.</p>
+      </div>
+
+      <div class="op-card">
+        <div class="op-card-header"><span class="op-symbol">∨</span><span class="op-name">OR — Disgiunzione</span></div>
+        <table class="mini-truth-table"><thead><tr><th>p</th><th>q</th><th>p∨q</th></tr></thead>
+          <tbody><tr><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>V</td></tr><tr><td>F</td><td>F</td><td>F</td></tr></tbody></table>
+        <p class="op-def">Vera se almeno una delle due affermazioni è vera (anche entrambe).</p>
+        <p class="op-example">💬 "Sconto se sei studente O hai più di 65 anni": basta una sola condizione.</p>
+      </div>
+
+      <div class="op-card">
+        <div class="op-card-header"><span class="op-symbol">⊕</span><span class="op-name">XOR — O esclusivo</span></div>
+        <table class="mini-truth-table"><thead><tr><th>p</th><th>q</th><th>p⊕q</th></tr></thead>
+          <tbody><tr><td>V</td><td>V</td><td>F</td></tr><tr><td>V</td><td>F</td><td>V</td></tr><tr><td>F</td><td>V</td><td>V</td></tr><tr><td>F</td><td>F</td><td>F</td></tr></tbody></table>
+        <p class="op-def">Vera quando le due affermazioni hanno valori diversi — l'una o l'altra, ma non entrambe.</p>
+        <p class="op-example">💬 "Vado al mare O in montagna" (non posso fare entrambe le cose nello stesso giorno).</p>
+      </div>
+
+      <div class="op-card">
+        <div class="op-card-header"><span class="op-symbol">→</span><span class="op-name">Implicazione</span></div>
+        <table class="mini-truth-table"><thead><tr><th>p</th><th>q</th><th>p→q</th></tr></thead>
+          <tbody><tr><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>V</td></tr><tr><td>F</td><td>F</td><td>V</td></tr></tbody></table>
+        <p class="op-def">Falsa solo nel caso in cui la premessa è vera ma la conseguenza è falsa.</p>
+        <p class="op-example">💬 "Se piove, porto l'ombrello": l'unica situazione che rende falsa la promessa è piove + non porto l'ombrello.</p>
+      </div>
+
+      <div class="op-card">
+        <div class="op-card-header"><span class="op-symbol">↔</span><span class="op-name">Doppia implicazione</span></div>
+        <table class="mini-truth-table"><thead><tr><th>p</th><th>q</th><th>p↔q</th></tr></thead>
+          <tbody><tr><td>V</td><td>V</td><td>V</td></tr><tr><td>V</td><td>F</td><td>F</td></tr><tr><td>F</td><td>V</td><td>F</td></tr><tr><td>F</td><td>F</td><td>V</td></tr></tbody></table>
+        <p class="op-def">Vera quando le due affermazioni hanno lo stesso valore di verità (entrambe vere o entrambe false).</p>
+        <p class="op-example">💬 "Il semaforo è verde se e solo se posso passare": coerenti, o entrambe vere o entrambe false.</p>
+      </div>
+
+    </div>
+
+    <div class="theory-cta"><a href="#tool">Prova lo strumento interattivo ↓</a></div>
+  </div>
+
+<div class="tool-wrapper" id="tool">
+
+  <div class="tool-cover">
+    <div class="tool-cover-text">
+      <div class="tool-cover-title">Tavola di Verità & Equivalenza Logica</div>
+      <div class="tool-cover-desc">Scrivi un'espressione booleana, costruisci la sua tavola di verità completa — e, se vuoi, confrontala con una seconda espressione per verificare l'equivalenza.</div>
+      <div class="tool-cover-badge">🔒 Calcolo locale nel browser · Nessun dato inviato · Fino a 4 variabili</div>
+    </div>
+  </div>
+
+  <div class="tool-layout">
+
+    <div class="input-panel">
+
+      <div class="expr-block">
+        <div class="expr-label-row">
+          <span class="expr-label">Espressione F</span>
+        </div>
+        <div class="toolbar-group" data-target="expr-f">
+          <div class="toolbar-row">
+            <span class="toolbar-row-label">Variabili</span>
+            <div class="toolbar-buttons">
+              <button class="var-btn" data-sym="a">a</button>
+              <button class="var-btn" data-sym="b">b</button>
+              <button class="var-btn" data-sym="c">c</button>
+              <button class="var-btn" data-sym="d">d</button>
+            </div>
+          </div>
+          <div class="toolbar-row">
+            <span class="toolbar-row-label">Operatori</span>
+            <div class="toolbar-buttons">
+              <button class="symbol-btn" data-sym="∧" title="AND">∧</button>
+              <button class="symbol-btn" data-sym="∨" title="OR">∨</button>
+              <button class="symbol-btn" data-sym="¬" title="NOT">¬</button>
+              <button class="symbol-btn" data-sym="→" title="Implicazione">→</button>
+              <button class="symbol-btn" data-sym="↔" title="Doppia implicazione">↔</button>
+              <button class="symbol-btn" data-sym="⊕" title="XOR">⊕</button>
+              <button class="symbol-btn" data-sym="(" title="Apri parentesi">(</button>
+              <button class="symbol-btn" data-sym=")" title="Chiudi parentesi">)</button>
+            </div>
+          </div>
+        </div>
+        <input type="text" class="expr-input" id="expr-f" spellcheck="false" placeholder="es. (a ∧ ¬b) ∨ (b ∧ c)">
+        <div class="expr-error-msg" id="error-f"></div>
+      </div>
+
+      <label class="compare-toggle-row">
+        <input type="checkbox" id="compare-toggle" onchange="toggleCompare()">
+        Confronta con un'altra espressione per verificarne l'equivalenza
+      </label>
+
+      <div class="expr-block" id="g-block">
+        <div class="expr-label-row">
+          <span class="expr-label">Espressione G</span>
+        </div>
+        <div class="toolbar-group" data-target="expr-g">
+          <div class="toolbar-row">
+            <span class="toolbar-row-label">Variabili</span>
+            <div class="toolbar-buttons">
+              <button class="var-btn" data-sym="a">a</button>
+              <button class="var-btn" data-sym="b">b</button>
+              <button class="var-btn" data-sym="c">c</button>
+              <button class="var-btn" data-sym="d">d</button>
+            </div>
+          </div>
+          <div class="toolbar-row">
+            <span class="toolbar-row-label">Operatori</span>
+            <div class="toolbar-buttons">
+              <button class="symbol-btn" data-sym="∧" title="AND">∧</button>
+              <button class="symbol-btn" data-sym="∨" title="OR">∨</button>
+              <button class="symbol-btn" data-sym="¬" title="NOT">¬</button>
+              <button class="symbol-btn" data-sym="→" title="Implicazione">→</button>
+              <button class="symbol-btn" data-sym="↔" title="Doppia implicazione">↔</button>
+              <button class="symbol-btn" data-sym="⊕" title="XOR">⊕</button>
+              <button class="symbol-btn" data-sym="(" title="Apri parentesi">(</button>
+              <button class="symbol-btn" data-sym=")" title="Chiudi parentesi">)</button>
+            </div>
+          </div>
+        </div>
+        <input type="text" class="expr-input" id="expr-g" spellcheck="false" placeholder="es. ¬a ∨ b">
+        <div class="expr-error-msg" id="error-g"></div>
+      </div>
+
+      <div class="examples-row">
+        <span class="examples-label">Esempi:</span>
+        <button class="example-btn" onclick="loadExample('singola')">Espressione singola</button>
+        <button class="example-btn" onclick="loadExample('demorgan')">De Morgan</button>
+        <button class="example-btn" onclick="loadExample('distributiva')">Distributiva</button>
+        <button class="example-btn" onclick="loadExample('implicazione')">Implicazione</button>
+        <button class="example-btn" onclick="loadExample('doppianegazione')">Doppia negazione</button>
+        <button class="example-btn" onclick="loadExample('contrapposizione')">Contrapposizione</button>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-build" onclick="generateTable()">Costruisci tabella di verità</button>
+        <button class="btn-clear" onclick="clearAll()">Pulisci</button>
+      </div>
+    </div>
+
+    <div class="output-panel" id="output-panel">
+      <div class="output-empty" id="output-empty">
+        <div class="output-empty-icon">🧮</div>
+        <p>Scrivi un'espressione e clicca<br><strong>Costruisci tabella di verità</strong></p>
+      </div>
+      <div id="output-content" style="display:none;"></div>
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+<footer>
+  <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
+  Strumento didattico libero e gratuito. I dati inseriti non vengono salvati né trasmessi.
+</footer>
+
+<script src="/scripts/ui.js" defer></script>
+<script>
+function tokenize(str) {
+  const tokens = [];
+  let i = 0;
+  while (i < str.length) {
+    const c = str[i];
+    if (/\s/.test(c)) { i++; continue; }
+    if (c === '¬' || c === '!') { tokens.push({ type: 'NOT' }); i++; continue; }
+    if (c === '∧' || c === '&') { tokens.push({ type: 'AND' }); i++; continue; }
+    if (c === '∨' || c === '|') { tokens.push({ type: 'OR' }); i++; continue; }
+    if (c === '⊕' || c === '^') { tokens.push({ type: 'XOR' }); i++; continue; }
+    if (c === '↔') { tokens.push({ type: 'IFF' }); i++; continue; }
+    if (c === '→') { tokens.push({ type: 'IMPL' }); i++; continue; }
+    if (str.substr(i, 3) === '<->') { tokens.push({ type: 'IFF' }); i += 3; continue; }
+    if (str.substr(i, 2) === '->') { tokens.push({ type: 'IMPL' }); i += 2; continue; }
+    if (c === '(') { tokens.push({ type: 'LPAREN' }); i++; continue; }
+    if (c === ')') { tokens.push({ type: 'RPAREN' }); i++; continue; }
+    if (/[a-zA-Z]/.test(c)) { tokens.push({ type: 'VAR', name: c.toLowerCase() }); i++; continue; }
+    throw new Error(`Carattere non riconosciuto: "${c}" (posizione ${i + 1})`);
+  }
+  tokens.push({ type: 'EOF' });
+  return tokens;
+}
+
+function parse(tokens) {
+  let pos = 0;
+  const peek = () => tokens[pos];
+  const advance = () => tokens[pos++];
+  function expect(type, label) {
+    if (peek().type !== type) throw new Error(`Attesa "${label}" — trovato qualcosa di inatteso (posizione token ${pos + 1})`);
+    return advance();
+  }
+  function parseIff() { let left = parseImpl(); while (peek().type === 'IFF') { advance(); left = { type: 'IFF', left, right: parseImpl() }; } return left; }
+  function parseImpl() { const left = parseXor(); if (peek().type === 'IMPL') { advance(); return { type: 'IMPL', left, right: parseImpl() }; } return left; }
+  function parseXor() { let left = parseOr(); while (peek().type === 'XOR') { advance(); left = { type: 'XOR', left, right: parseOr() }; } return left; }
+  function parseOr() { let left = parseAnd(); while (peek().type === 'OR') { advance(); left = { type: 'OR', left, right: parseAnd() }; } return left; }
+  function parseAnd() { let left = parseNot(); while (peek().type === 'AND') { advance(); left = { type: 'AND', left, right: parseNot() }; } return left; }
+  function parseNot() { if (peek().type === 'NOT') { advance(); return { type: 'NOT', operand: parseNot() }; } return parsePrimary(); }
+  function parsePrimary() {
+    const t = peek();
+    if (t.type === 'VAR') { advance(); return { type: 'VAR', name: t.name }; }
+    if (t.type === 'LPAREN') { advance(); const expr = parseIff(); expect('RPAREN', ')'); return expr; }
+    throw new Error('Espressione non valida: manca una variabile o un\'espressione tra parentesi.');
+  }
+  if (peek().type === 'EOF') throw new Error('L\'espressione è vuota.');
+  const result = parseIff();
+  expect('EOF', 'fine espressione (controlla le parentesi)');
+  return result;
+}
+
+function evalNode(node, env) {
+  switch (node.type) {
+    case 'VAR':  return env[node.name];
+    case 'NOT':  return !evalNode(node.operand, env);
+    case 'AND':  return evalNode(node.left, env) && evalNode(node.right, env);
+    case 'OR':   return evalNode(node.left, env) || evalNode(node.right, env);
+    case 'XOR':  return evalNode(node.left, env) !== evalNode(node.right, env);
+    case 'IMPL': return (!evalNode(node.left, env)) || evalNode(node.right, env);
+    case 'IFF':  return evalNode(node.left, env) === evalNode(node.right, env);
+  }
+}
+
+function collectVars(node, set) {
+  if (node.type === 'VAR') { set.add(node.name); return; }
+  if (node.type === 'NOT') { collectVars(node.operand, set); return; }
+  collectVars(node.left, set);
+  collectVars(node.right, set);
+}
+
+document.querySelectorAll('.toolbar-group').forEach(group => {
+  const targetId = group.dataset.target;
+  group.querySelectorAll('.symbol-btn, .var-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const input = document.getElementById(targetId);
+      const start = input.selectionStart ?? input.value.length;
+      const end = input.selectionEnd ?? input.value.length;
+      const sym = btn.dataset.sym;
+      input.value = input.value.slice(0, start) + sym + input.value.slice(end);
+      input.focus();
+      input.setSelectionRange(start + sym.length, start + sym.length);
+    });
+  });
+});
+
+function toggleCompare() {
+  const on = document.getElementById('compare-toggle').checked;
+  document.getElementById('g-block').classList.toggle('visible', on);
+}
+
+const EXAMPLES = {
+  singola:           { f: '(a ∧ ¬b) ∨ (b ∧ c)', g: '' },
+  demorgan:          { f: '¬(a ∧ b)', g: '¬a ∨ ¬b' },
+  distributiva:      { f: '(a ∧ b) ∨ (a ∧ c)', g: 'a ∧ (b ∨ c)' },
+  implicazione:      { f: 'a → b', g: '¬a ∨ b' },
+  doppianegazione:   { f: '¬¬a', g: 'a' },
+  contrapposizione:  { f: 'a → b', g: '¬b → ¬a' }
+};
+
+function loadExample(key) {
+  const ex = EXAMPLES[key];
+  document.getElementById('expr-f').value = ex.f;
+  document.getElementById('expr-g').value = ex.g;
+  // Attiva il confronto solo se l'esempio ne ha bisogno (ha un G) e solo se è spento.
+  // Non lo spegne mai: se l'utente lo aveva già attivato, resta attivo.
+  if (ex.g && !document.getElementById('compare-toggle').checked) {
+    document.getElementById('compare-toggle').checked = true;
+    toggleCompare();
+  }
+  clearErrors();
+}
+
+function clearErrors() {
+  ['error-f', 'error-g'].forEach(id => {
+    document.getElementById(id).classList.remove('visible');
+    document.getElementById(id).textContent = '';
+  });
+  ['expr-f', 'expr-g'].forEach(id => document.getElementById(id).classList.remove('input-error'));
+}
+
+function showError(exprId, errorId, msg) {
+  document.getElementById(errorId).textContent = '⚠ ' + msg;
+  document.getElementById(errorId).classList.add('visible');
+  document.getElementById(exprId).classList.add('input-error');
+}
+
+function parseExpression(raw, exprId, errorId) {
+  if (!raw || !raw.trim()) { showError(exprId, errorId, 'L\'espressione è vuota.'); return null; }
+  try {
+    const tokens = tokenize(raw);
+    return parse(tokens);
+  } catch (e) {
+    showError(exprId, errorId, e.message);
+    return null;
+  }
+}
+
+function generateTable() {
+  clearErrors();
+  const compareOn = document.getElementById('compare-toggle').checked;
+
+  const rawF = document.getElementById('expr-f').value;
+  const astF = parseExpression(rawF, 'expr-f', 'error-f');
+  if (!astF) return;
+
+  let astG = null;
+  if (compareOn) {
+    const rawG = document.getElementById('expr-g').value;
+    astG = parseExpression(rawG, 'expr-g', 'error-g');
+    if (!astG) return;
+  }
+
+  const varSet = new Set();
+  collectVars(astF, varSet);
+  if (astG) collectVars(astG, varSet);
+  const vars = Array.from(varSet).sort();
+
+  if (vars.length === 0) { showError('expr-f', 'error-f', 'Nessuna variabile trovata nell\'espressione.'); return; }
+  if (vars.length > 4) { showError('expr-f', 'error-f', `Trovate ${vars.length} variabili (${vars.join(', ')}) — il massimo supportato è 4.`); return; }
+
+  renderTable(vars, astF, astG);
+}
+
+function renderTable(vars, astF, astG) {
+  const n = vars.length;
+  const rows = [];
+  let allEqual = true;
+  let counterexample = null;
+
+  for (let i = 0; i < (1 << n); i++) {
+    const env = {};
+    vars.forEach((v, idx) => { env[v] = !!((i >> (n - 1 - idx)) & 1); });
+
+    const resultF = evalNode(astF, env);
+    const resultG = astG ? evalNode(astG, env) : null;
+    const diff = astG ? (resultF !== resultG) : false;
+    if (diff) { allEqual = false; if (!counterexample) counterexample = { ...env }; }
+    rows.push({ env, resultF, resultG, diff });
+  }
+
+  let html = `<div class="output-header">F(${vars.join(', ')})${astG ? ` &nbsp;vs&nbsp; G(${vars.join(', ')})` : ''}</div>`;
+  html += '<table class="truth-table"><thead><tr>';
+  vars.forEach(v => html += `<th>${v}</th>`);
+  html += '<th>F</th>';
+  if (astG) { html += '<th>G</th><th>Δ</th>'; }
+  html += '</tr></thead><tbody>';
+
+  rows.forEach(row => {
+    html += `<tr class="${row.diff ? 'row-diff' : ''}">`;
+    vars.forEach(v => {
+      const val = row.env[v];
+      html += `<td class="${val ? 'val-true' : 'val-false'}">${val ? 'V' : 'F'}</td>`;
+    });
+    html += `<td class="col-result ${row.resultF ? 'val-true' : 'val-false'}">${row.resultF ? 'V' : 'F'}</td>`;
+    if (astG) {
+      html += `<td class="col-result ${row.resultG ? 'val-true' : 'val-false'}">${row.resultG ? 'V' : 'F'}</td>`;
+      html += `<td>${row.diff ? '✗' : '✓'}</td>`;
+    }
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+
+  if (astG) {
+    if (allEqual) {
+      html += `<div class="verdict-badge equiv">✅ Le due espressioni sono EQUIVALENTI — stesso risultato su tutte le ${rows.length} combinazioni.</div>`;
+    } else {
+      const ceStr = vars.map(v => `${v}=${counterexample[v] ? 'V' : 'F'}`).join(', ');
+      html += `<div class="verdict-badge not-equiv">❌ Le due espressioni NON sono equivalenti.<div class="verdict-counterexample">Controesempio: con ${ceStr} → F dà un risultato diverso da G.</div></div>`;
+    }
+  }
+
+  document.getElementById('output-content').innerHTML = html;
+  document.getElementById('output-content').style.display = 'block';
+  document.getElementById('output-empty').style.display = 'none';
+}
+
+function clearAll() {
+  document.getElementById('expr-f').value = '';
+  document.getElementById('expr-g').value = '';
+  document.getElementById('compare-toggle').checked = false;
+  toggleCompare();
+  clearErrors();
+  document.getElementById('output-content').style.display = 'none';
+  document.getElementById('output-content').innerHTML = '';
+  document.getElementById('output-empty').style.display = 'flex';
+}
+</script>
+</body>
+</html>

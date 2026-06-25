@@ -846,6 +846,41 @@
             "DCEdu 6.5"
         ]
     },
+	{
+		"path": "/sistemi/logica-booleana/",
+		"label": "Tavola di Verità & Equivalenza Logica",
+		"short": "Logica Booleana",
+		"cat": "strumento",
+		"emoji": "🧮",
+		"tags": [
+			"logica booleana",
+			"tavola di verità",
+			"and",
+			"or",
+			"not",
+			"xor",
+			"implicazione",
+			"equivalenza logica",
+			"algebra di boole",
+			"pensiero computazionale"
+		],
+		"meta": "Interattivo · Calcolo in tempo reale · Fino a 4 variabili",
+		"description": "Costruisci tabelle di verità per espressioni booleane complesse e verifica se due espressioni sono logicamente equivalenti. Operatori AND, OR, NOT, XOR, implicazione e doppia implicazione.",
+		"featured": false,
+		"active": true,
+		"digcomp": [
+			"DC 3.4",
+			"DC 5.1"
+		],
+		"digcomp_level": "intermediate",
+		"digcomp_areas": [
+			"creazione",
+			"problem-solving"
+		],
+		"digcompedu": [
+			"DCEdu 6.5"
+		]
+	},
     {
         "path": "/competenze-digitali/strumento-autovalutazione-digcompedu/",
         "label": "Autovalutazione DigCompEdu",
