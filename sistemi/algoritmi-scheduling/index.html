@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Algoritmi di Scheduling della CPU — Formazione Digitale</title>
 
-<meta name="description" content="Teoria e simulatore interattivo degli algoritmi di scheduling della CPU: FCFS, SJF, SRTF, Priorità (con e senza prelazione), Round Robin. Configura fino a 4 processi, guarda l'animazione passo-passo e confronta i risultati.">
+<meta name="description" content="Teoria e simulatore interattivo degli algoritmi di scheduling della CPU: FCFS, SJF, SRTF, Priorità (con e senza prelazione), Round Robin. Configura fino a 5 processi, guarda l'animazione passo-passo e confronta i risultati.">
 <meta name="author" content="Cristiano De Pasquale">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://formazione-digitale.it/sistemi/algoritmi-scheduling/">
@@ -80,7 +80,7 @@
 .btn-add-process:hover { background: var(--blue-pale); }
 .btn-add-process:disabled { opacity: .35; cursor: not-allowed; }
 
-.inline-config { display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: flex-end; }
+.inline-config { display: flex; flex-direction: row; gap: 1.5rem; flex-wrap: wrap; align-items: flex-end; }
 .config-field { display: flex; flex-direction: column; gap: .35rem; }
 .config-field input[type=number] { width: 80px; padding: .45rem; border: 1.5px solid #D6E8F7; border-radius: 6px; font-family: monospace; }
 .mode-options { display: flex; gap: 1rem; }
@@ -94,10 +94,7 @@
 .btn-clear:hover { border-color: #999; color: #333; }
 .config-error { font-size: .8rem; color: #C0392B; }
 
-/* ── LEGENDA PROCESSI ── */
-.process-legend { display: flex; gap: .8rem; flex-wrap: wrap; font-size: .8rem; }
-.legend-chip { display: flex; align-items: center; gap: .3rem; }
-.legend-swatch { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+/* ── LEGENDA PROCESSI: rimossa (ridondante con i chip nella tabella processi) ── */
 
 /* ── AREA SIMULAZIONE ── */
 .sim-area { border-top: 1px dashed var(--blue-light); padding-top: 1rem; display: flex; flex-direction: column; gap: 1rem; }
@@ -186,7 +183,7 @@ footer strong { color: rgba(255,255,255,.9); }
   <h1 class="cover-title">Algoritmi di Scheduling della CPU</h1>
   <p class="cover-desc">Come il sistema operativo decide quale processo eseguire quando la CPU è libera. Teoria di 6 algoritmi e simulatore interattivo con animazione passo-passo.</p>
   <div class="cover-divider"></div>
-  <p class="cover-intro">💡 Guida + strumento · Livello intermedio · Configura fino a 4 processi</p>
+  <p class="cover-intro">💡 Guida + strumento · Livello intermedio · Configura fino a 5 processi</p>
 </div>
 
 <!-- INTRODUZIONE -->
@@ -206,6 +203,13 @@ footer strong { color: rgba(255,255,255,.9); }
     <div class="box-label">Le due metriche fondamentali</div>
     <p><strong>Tempo di attesa</strong> = tempo di completamento − tempo di arrivo − burst (quanto il processo è rimasto in coda senza essere eseguito).<br>
     <strong>Tempo di turnaround</strong> = tempo di completamento − tempo di arrivo (quanto tempo totale il processo ha impiegato dall'arrivo al completamento, inclusa l'attesa).</p>
+  </div>
+
+  <div class="box box-info">
+    <div class="box-label">Preemptive vs non-preemptive</div>
+    <p><strong>Non-preemptive (senza prelazione):</strong> una volta che un processo inizia ad eseguire, continua fino al completamento — anche se nel frattempo arriva un processo "migliore" secondo il criterio dell'algoritmo (burst più corto, priorità più alta).<br>
+    <strong>Preemptive (con prelazione):</strong> il processo in esecuzione può essere interrotto prima di finire, se un nuovo arrivo ha un titolo più forte secondo lo stesso criterio. Per Round Robin il meccanismo è diverso: l'interruzione non dipende da un arrivo "migliore", ma dallo scadere del quanto di tempo.</p>
+    <p>La prelazione è quindi una scelta di <em>politica</em>, indipendente dal criterio usato per scegliere: lo dimostra il fatto che "Priorità" compare due volte in questa guida (sezioni 3 e 5) — stesso criterio, comportamento diverso a seconda che sia o meno prelazionabile.</p>
   </div>
 
   <table class="algo-ref-table">
@@ -249,6 +253,9 @@ footer strong { color: rgba(255,255,255,.9); }
   </div>
   <p>Non preemptive: una volta scelto, il processo esegue fino al completamento. La scelta avviene solo quando la CPU si libera, tra i processi già arrivati.</p>
   <p>Stessi processi di prima — questa volta l'ordine cambia in base al burst, non all'arrivo:</p>
+  <div class="box box-note">
+    <p>All'istante 0 è arrivato solo A: lo esegue per forza, non c'è ancora nessuna scelta da fare. B e C, arrivati dopo, restano in coda. La vera scelta secondo SJF avviene al tempo 5, quando la CPU si libera e tra i due processi in coda si sceglie quello con il burst più corto: C prima di B.</p>
+  </div>
   <div class="mini-gantt-row">
     <div class="mini-gantt-block" style="flex:5;background:var(--blue-mid);">A (5)</div>
     <div class="mini-gantt-block" style="flex:1;background:var(--amber-mid);">C (1)</div>
@@ -270,6 +277,9 @@ footer strong { color: rgba(255,255,255,.9); }
   </div>
   <p>Identico a SJF nel meccanismo, ma il criterio di scelta è un valore di priorità assegnato esplicitamente, non il burst. Numero più basso = priorità più alta.</p>
   <p>Stessi processi, priorità: A=2, B=1, C=3 (B il più importante):</p>
+  <div class="box box-note">
+    <p>Anche qui, all'istante 0 è arrivato solo A: lo esegue per forza, indipendentemente dalla sua priorità. La scelta secondo priorità avviene al tempo 5, quando la CPU si libera e tra i due processi in coda si sceglie quello con priorità più alta: B (1) prima di C (3).</p>
+  </div>
   <div class="mini-gantt-row">
     <div class="mini-gantt-block" style="flex:5;background:var(--blue-mid);">A (5)</div>
     <div class="mini-gantt-block" style="flex:3;background:var(--green-mid);">B (3)</div>
@@ -286,6 +296,9 @@ footer strong { color: rgba(255,255,255,.9); }
     <div class="section-titles"><div class="section-title">SRTF — Shortest Remaining Time First</div><div class="section-subtitle">Versione preemptive di SJF: vince chi ha meno tempo rimanente, anche a metà esecuzione</div></div>
   </div>
   <p>Ad ogni nuovo arrivo, si confronta il tempo <em>rimanente</em> del processo in esecuzione con quello del nuovo arrivato: se il nuovo arrivato ha meno lavoro da fare, prelaziona.</p>
+  <div class="box box-note">
+    <p>All'istante 0 è arrivato solo A, che parte per mancanza di alternative — non perché abbia il tempo rimanente più corto. Da qui in avanti, ogni nuovo arrivo viene confrontato con il tempo rimanente del processo in esecuzione.</p>
+  </div>
   <div class="mini-gantt-row">
     <div class="mini-gantt-block" style="flex:1;background:var(--blue-mid);">A</div>
     <div class="mini-gantt-block" style="flex:1;background:var(--green-mid);">B</div>
@@ -306,6 +319,9 @@ footer strong { color: rgba(255,255,255,.9); }
   </div>
   <p>Stesso meccanismo di SRTF, ma il confronto è sulla priorità dichiarata, non sul tempo rimanente. A parità di priorità, il processo in esecuzione NON viene interrotto.</p>
   <p>Priorità: A=2, B=1, C=3 (C il meno importante):</p>
+  <div class="box box-note">
+    <p>All'istante 0 è arrivato solo A, che parte per mancanza di alternative — non per la sua priorità. Al tempo 1 arriva B con priorità più alta (1) e lo prelaziona immediatamente.</p>
+  </div>
   <div class="mini-gantt-row">
     <div class="mini-gantt-block" style="flex:1;background:var(--blue-mid);">A</div>
     <div class="mini-gantt-block" style="flex:3;background:var(--green-mid);">B (3)</div>
@@ -350,7 +366,7 @@ footer strong { color: rgba(255,255,255,.9); }
   <div class="tool-wrapper">
     <div class="tool-cover">
       <div class="tool-cover-title">Simulatore di Scheduling</div>
-      <div class="tool-cover-desc">Fino a 4 processi · Animazione passo-passo · Riepilogo finale con Gantt e medie</div>
+      <div class="tool-cover-desc">Fino a 5 processi · Animazione passo-passo · Riepilogo finale con Gantt e medie</div>
     </div>
 
     <div class="tool-body">
@@ -366,13 +382,10 @@ footer strong { color: rgba(255,255,255,.9); }
           <button class="btn-add-process" id="btn-add-process" onclick="addProcessRow()">+ Aggiungi processo</button>
         </div>
 
-        <div class="config-row process-legend" id="process-legend"></div>
+        <div style="border-top:1px dashed var(--blue-light); padding-top:1rem;">
+        </div>
 
         <div class="config-row inline-config">
-          <div class="config-field">
-            <label class="config-label" for="quantum">Quantum (Round Robin)</label>
-            <input type="number" id="quantum" value="3" min="1">
-          </div>
           <div class="config-field">
             <span class="config-label">Modalità</span>
             <div class="mode-options">
@@ -391,6 +404,13 @@ footer strong { color: rgba(255,255,255,.9); }
               <option value="roundRobin">Round Robin</option>
             </select>
           </div>
+          <div class="config-field">
+            <label class="config-label" for="quantum">TS (Round Robin)</label>
+            <input type="number" id="quantum" value="3" min="1">
+          </div>
+        </div>
+
+        <div style="border-top:1px dashed var(--blue-light); padding-top:1rem;">
         </div>
 
         <div class="btn-row">
@@ -416,13 +436,15 @@ footer strong { color: rgba(255,255,255,.9); }
           <button class="btn-jump-summary" onclick="jumpToSummary()">Salta al riepilogo →</button>
         </div>
 
-        <div class="single-status" id="single-status">
-          <div class="cpu-now"><span class="cpu-now-label">CPU ora</span><div class="cpu-now-box" id="cpu-now-box">—</div></div>
-          <div class="ready-queue"><span class="ready-queue-label">Coda pronti</span><div class="ready-queue-chips" id="ready-queue-chips"></div></div>
-        </div>
+        <div id="gantt-live-wrap">
+          <div class="single-status" id="single-status">
+            <div class="cpu-now"><span class="cpu-now-label">CPU ora</span><div class="cpu-now-box" id="cpu-now-box">—</div></div>
+            <div class="ready-queue"><span class="ready-queue-label">Coda pronti</span><div class="ready-queue-chips" id="ready-queue-chips"></div></div>
+          </div>
 
-        <div class="gantt-live" id="gantt-live"></div>
-        <div class="gantt-time-axis" id="gantt-time-axis-live"></div>
+          <div class="gantt-live" id="gantt-live"></div>
+          <div class="gantt-time-axis" id="gantt-time-axis-live"></div>
+        </div>
       </div>
 
       <div class="summary-area" id="summary-area" style="display:none;">
@@ -563,7 +585,7 @@ const ALGO_ORDER = [
   { key: 'roundRobin', label: 'Round Robin' }
 ];
 
-const PROCESS_COLORS = ['#2E75B6', '#4CAF50', '#f39c12', '#4A148C'];
+const PROCESS_COLORS = ['#2E75B6', '#4CAF50', '#f39c12', '#4A148C', '#C0392B'];
 
 /* ════════════════════════════════════════════════════════════
    GESTIONE RIGHE PROCESSO
@@ -588,19 +610,7 @@ function renderProcessRows(data) {
       <td><button class="btn-remove-process" onclick="removeProcessRow(${i})" ${data.length <= 1 ? 'disabled' : ''}>✕</button></td>`;
     tbody.appendChild(tr);
   });
-  document.getElementById('btn-add-process').disabled = data.length >= 4;
-  renderLegend(data.length);
-}
-
-function renderLegend(n) {
-  const legend = document.getElementById('process-legend');
-  legend.innerHTML = '';
-  for (let i = 0; i < n; i++) {
-    const chip = document.createElement('div');
-    chip.className = 'legend-chip';
-    chip.innerHTML = `<span class="legend-swatch" style="background:${PROCESS_COLORS[i]};"></span>P${i + 1}`;
-    legend.appendChild(chip);
-  }
+  document.getElementById('btn-add-process').disabled = data.length >= 5;
 }
 
 function readProcessRows() {
@@ -616,7 +626,7 @@ function readProcessRows() {
 
 function addProcessRow() {
   const current = readProcessRows();
-  if (current.length >= 4) return;
+  if (current.length >= 5) return;
   current.push({ arrival: 0, burst: 1, priority: current.length + 1 });
   renderProcessRows(current);
 }
@@ -691,6 +701,8 @@ function startSimulation(skipToSummary) {
 }
 
 function renderFrame(t) {
+  document.getElementById('gantt-live-wrap').style.display = 'block';
+  document.getElementById('summary-area').style.display = 'none';
   simState.currentTime = t;
   document.getElementById('sim-time-label').textContent = 't = ' + t;
   document.getElementById('sim-slider').value = t;
@@ -792,8 +804,11 @@ function seekSim(value) {
 function jumpToSummary() {
   if (!simState) return;
   if (simState.playing) togglePlay();
+  simState.currentTime = simState.maxTime;
+  document.getElementById('sim-slider').value = simState.maxTime;
+  document.getElementById('sim-time-label').textContent = 't = ' + simState.maxTime;
+  document.getElementById('gantt-live-wrap').style.display = 'none';
   document.getElementById('summary-area').style.display = 'flex';
-  renderFrame(simState.maxTime);
 
   const ganttFinal = document.getElementById('gantt-final');
   const axisFinal = document.getElementById('gantt-time-axis-final');

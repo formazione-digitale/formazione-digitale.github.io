@@ -1,5 +1,5 @@
 Elenco del percorso delle cartelle per il volume Acer
-Numero di serie del volume: 000000AB-544D:3F7C
+Numero di serie del volume: 0000002E-544D:3F7C
 C:.
 |   .gitignore
 |   .nojekyll
@@ -214,15 +214,21 @@ C:.
 |   +---guida-cybersicurezza
 |   |       index.html
 |   |       
-|   +---guida-fondamenti-sicurezza
+|   +---guida-minacce-informatiche
+|   +---guida-principi-sicurezza
 |   |       index.html
 |   |       
-|   +---guida-minacce-informatiche
 |   \---pillola-cybersicurezza
 |           index.html
 |           
 +---sistemi
-|   \---codifica-binaria
+|   +---algoritmi-scheduling
+|   |       index.html
+|   |       
+|   +---codifica-binaria
+|   |       index.html
+|   |       
+|   \---logica-booleana
 |           index.html
 |           
 \---stats

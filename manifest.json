@@ -881,6 +881,43 @@
 			"DCEdu 6.5"
 		]
 	},
+	{
+		"path": "/sistemi/algoritmi-scheduling/",
+		"label": "Algoritmi di Scheduling della CPU",
+		"short": "Scheduling CPU",
+		"cat": "strumento",
+		"emoji": "🖥️",
+		"tags": [
+			"scheduling",
+			"sistemi operativi",
+			"fcfs",
+			"sjf",
+			"srtf",
+			"round robin",
+			"priorità",
+			"prelazione",
+			"gantt",
+			"tempo di attesa",
+			"turnaround",
+			"starvation"
+		],
+		"meta": "Guida + simulatore · Animazione passo-passo · Fino a 5 processi",
+		"description": "Teoria e simulatore interattivo di 6 algoritmi di scheduling della CPU: FCFS, SJF, SRTF, Priorità (con e senza prelazione), Round Robin. Animazione passo-passo, modalità singola o confronto tra tutti gli algoritmi.",
+		"featured": false,
+		"active": true,
+		"digcomp": [
+			"DC 3.4",
+			"DC 5.1"
+		],
+		"digcomp_level": "intermediate",
+		"digcomp_areas": [
+			"creazione",
+			"problem-solving"
+		],
+		"digcompedu": [
+			"DCEdu 6.5"
+		]
+	},
     {
         "path": "/competenze-digitali/strumento-autovalutazione-digcompedu/",
         "label": "Autovalutazione DigCompEdu",
