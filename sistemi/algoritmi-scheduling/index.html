@@ -123,18 +123,24 @@
 }
 
 .gantt-live, .gantt-final { display: flex; flex-direction: column; gap: .5rem; overflow-x: auto; padding-bottom: .3rem; }
-.gantt-lane { display: flex; align-items: center; gap: .6rem; }
-.gantt-lane-label { font-size: .78rem; font-weight: 700; color: var(--blue-dark); width: 110px; flex-shrink: 0; font-family: monospace; }
+.gantt-lane { display: flex; align-items: center; }
+.gantt-lane-label {
+  font-size: .78rem; font-weight: 700; color: var(--blue-dark); width: 115px; flex-shrink: 0; font-family: monospace;
+  position: sticky; left: 0; z-index: 2; background: #fff; padding-right: 10px; box-sizing: content-box;
+  align-self: stretch; display: flex; align-items: center;
+}
 .gantt-cells { display: flex; gap: 1px; }
 .gantt-cell {
-  width: 22px; height: 26px; flex-shrink: 0; border-radius: 3px; background: var(--gray-light);
+  width: 24px; height: 26px; flex-shrink: 0; border-radius: 3px; background: var(--gray-light);
   display: flex; align-items: center; justify-content: center; font-size: .62rem; color: rgba(255,255,255,.85);
   font-family: monospace; transition: opacity .15s ease;
 }
 .gantt-cell.future { opacity: .18; }
 .gantt-cell.idle { background: repeating-linear-gradient(45deg, #eee, #eee 4px, #f7f7f7 4px, #f7f7f7 8px); }
-.gantt-time-axis { display: flex; gap: 1px; margin-left: 116px; }
-.gantt-time-tick { width: 22px; flex-shrink: 0; font-size: .62rem; color: var(--gray-mid); text-align: center; font-family: monospace; }
+.gantt-cell.not-arrived { background: #fafafa; opacity: .35; }
+.gantt-cell.waiting { background: #b0b0b0; }
+.gantt-time-axis-cells { display: flex; gap: 1px; }
+.gantt-time-tick { width: 24px; flex-shrink: 0; font-size: .62rem; color: var(--gray-mid); text-align: left; font-family: monospace; }
 
 /* ── RIEPILOGO ── */
 .summary-area { border-top: 1px dashed var(--blue-light); padding-top: 1rem; display: flex; flex-direction: column; gap: 1rem; }
@@ -382,6 +388,11 @@ footer strong { color: rgba(255,255,255,.9); }
           <button class="btn-add-process" id="btn-add-process" onclick="addProcessRow()">+ Aggiungi processo</button>
         </div>
 
+        <div class="box box-info">
+          <div class="box-label">Nota sui pareggi</div>
+          <p>In caso di pareggio esatto (stesso arrivo, stessa priorità o stesso burst), decide l'ordine in questa tabella — è una convenzione del simulatore per garantire un risultato deterministico, non un comportamento degli algoritmi in sé: un sistema operativo reale potrebbe risolvere lo stesso pareggio diversamente.</p>
+        </div>
+
         <div style="border-top:1px dashed var(--blue-light); padding-top:1rem;">
         </div>
 
@@ -427,12 +438,17 @@ footer strong { color: rgba(255,255,255,.9); }
           <button class="sim-btn" id="btn-play" onclick="togglePlay()">▶</button>
           <button class="sim-btn" id="btn-step-fwd" onclick="stepSim(1)">⏭</button>
           <select id="sim-speed">
+            <option value="1400">0.5x</option>
             <option value="700">1x</option>
             <option value="350">2x</option>
             <option value="150">4x</option>
           </select>
           <input type="range" id="sim-slider" min="0" max="0" value="0" oninput="seekSim(this.value)">
           <span id="sim-time-label">t = 0</span>
+          <label id="extended-view-field" style="display:flex;align-items:center;gap:.35rem;font-size:.78rem;color:var(--gray-mid);cursor:pointer;">
+            <input type="checkbox" id="extended-view-toggle" onchange="onToggleExtendedView()">
+            Vista estesa (distingue attesa da non-arrivato)
+          </label>
           <button class="btn-jump-summary" onclick="jumpToSummary()">Salta al riepilogo →</button>
         </div>
 
@@ -443,14 +459,12 @@ footer strong { color: rgba(255,255,255,.9); }
           </div>
 
           <div class="gantt-live" id="gantt-live"></div>
-          <div class="gantt-time-axis" id="gantt-time-axis-live"></div>
         </div>
       </div>
 
       <div class="summary-area" id="summary-area" style="display:none;">
         <h3 class="summary-title">Riepilogo</h3>
         <div class="gantt-final" id="gantt-final"></div>
-        <div class="gantt-time-axis" id="gantt-time-axis-final"></div>
         <table class="metrics-table" id="metrics-table"></table>
         <div id="compare-table-wrap" style="display:none;">
           <h4 class="summary-title" style="font-size:1rem;margin-top:1rem;">Confronto medie tra algoritmi</h4>
@@ -659,6 +673,7 @@ let simState = null; // { mode, processes, quantum, single:{algoKey,segments,com
 function onModeChange() {
   const mode = document.querySelector('input[name=sim-mode]:checked').value;
   document.getElementById('algo-select-field').style.display = (mode === 'single') ? 'flex' : 'none';
+  document.getElementById('extended-view-field').style.display = (mode === 'single') ? 'flex' : 'none';
 }
 
 function buildTimeline(segments, maxTime) {
@@ -700,6 +715,18 @@ function startSimulation(skipToSummary) {
   if (skipToSummary) { jumpToSummary(); } else { renderFrame(0); }
 }
 
+function buildAxisRow(maxTime) {
+  const lane = document.createElement('div'); lane.className = 'gantt-lane';
+  const label = document.createElement('div'); label.className = 'gantt-lane-label'; label.textContent = '';
+  const ticks = document.createElement('div'); ticks.className = 'gantt-time-axis-cells';
+  for (let i = 0; i <= maxTime; i++) {
+    const tick = document.createElement('span'); tick.className = 'gantt-time-tick'; tick.textContent = i;
+    ticks.appendChild(tick);
+  }
+  lane.appendChild(label); lane.appendChild(ticks);
+  return lane;
+}
+
 function renderFrame(t) {
   document.getElementById('gantt-live-wrap').style.display = 'block';
   document.getElementById('summary-area').style.display = 'none';
@@ -708,26 +735,24 @@ function renderFrame(t) {
   document.getElementById('sim-slider').value = t;
 
   const ganttLive = document.getElementById('gantt-live');
-  const axis = document.getElementById('gantt-time-axis-live');
   ganttLive.innerHTML = '';
-  axis.innerHTML = '';
-  for (let i = 0; i <= simState.maxTime; i++) {
-    const tick = document.createElement('span');
-    tick.className = 'gantt-time-tick';
-    tick.textContent = (i % 2 === 0) ? i : '';
-    axis.appendChild(tick);
-  }
 
   if (simState.mode === 'single') {
+    const extended = document.getElementById('extended-view-toggle').checked;
     simState.processes.forEach((p, i) => {
       const lane = document.createElement('div'); lane.className = 'gantt-lane';
       const label = document.createElement('div'); label.className = 'gantt-lane-label'; label.textContent = p.id;
       const cells = document.createElement('div'); cells.className = 'gantt-cells';
+      const completion = simState.result.completion[p.id];
       for (let u = 0; u < simState.maxTime; u++) {
         const cell = document.createElement('div'); cell.className = 'gantt-cell';
         if (simState.timeline[u] === p.id) {
           cell.style.background = PROCESS_COLORS[i];
           cell.textContent = p.id;
+        } else if (extended && (u < p.arrival || u >= completion)) {
+          cell.classList.add('not-arrived');
+        } else if (extended) {
+          cell.classList.add('waiting');
         } else {
           cell.classList.add('idle');
         }
@@ -773,6 +798,35 @@ function renderFrame(t) {
       lane.appendChild(label); lane.appendChild(cells); ganttLive.appendChild(lane);
     });
   }
+  ganttLive.appendChild(buildAxisRow(simState.maxTime));
+}
+
+function onToggleExtendedView() {
+  if (!simState || simState.mode !== 'single') return;
+  const summaryVisible = document.getElementById('summary-area').style.display !== 'none';
+  if (summaryVisible) {
+    const extended = document.getElementById('extended-view-toggle').checked;
+    const ganttFinal = document.getElementById('gantt-final');
+    ganttFinal.innerHTML = '';
+    simState.processes.forEach((p, i) => {
+      const lane = document.createElement('div'); lane.className = 'gantt-lane';
+      const label = document.createElement('div'); label.className = 'gantt-lane-label'; label.textContent = p.id;
+      const cells = document.createElement('div'); cells.className = 'gantt-cells';
+      const completion = simState.result.completion[p.id];
+      for (let u = 0; u < simState.maxTime; u++) {
+        const cell = document.createElement('div'); cell.className = 'gantt-cell';
+        if (simState.timeline[u] === p.id) { cell.style.background = PROCESS_COLORS[i]; cell.textContent = p.id; }
+        else if (extended && (u < p.arrival || u >= completion)) { cell.classList.add('not-arrived'); }
+        else if (extended) { cell.classList.add('waiting'); }
+        else { cell.classList.add('idle'); }
+        cells.appendChild(cell);
+      }
+      lane.appendChild(label); lane.appendChild(cells); ganttFinal.appendChild(lane);
+    });
+    ganttFinal.appendChild(buildAxisRow(simState.maxTime));
+  } else {
+    renderFrame(simState.currentTime);
+  }
 }
 
 function togglePlay() {
@@ -811,21 +865,20 @@ function jumpToSummary() {
   document.getElementById('summary-area').style.display = 'flex';
 
   const ganttFinal = document.getElementById('gantt-final');
-  const axisFinal = document.getElementById('gantt-time-axis-final');
-  ganttFinal.innerHTML = ''; axisFinal.innerHTML = '';
-  for (let i = 0; i <= simState.maxTime; i++) {
-    const tick = document.createElement('span'); tick.className = 'gantt-time-tick';
-    tick.textContent = (i % 2 === 0) ? i : ''; axisFinal.appendChild(tick);
-  }
+  ganttFinal.innerHTML = '';
 
   if (simState.mode === 'single') {
+    const extended = document.getElementById('extended-view-toggle').checked;
     simState.processes.forEach((p, i) => {
       const lane = document.createElement('div'); lane.className = 'gantt-lane';
       const label = document.createElement('div'); label.className = 'gantt-lane-label'; label.textContent = p.id;
       const cells = document.createElement('div'); cells.className = 'gantt-cells';
+      const completion = simState.result.completion[p.id];
       for (let u = 0; u < simState.maxTime; u++) {
         const cell = document.createElement('div'); cell.className = 'gantt-cell';
         if (simState.timeline[u] === p.id) { cell.style.background = PROCESS_COLORS[i]; cell.textContent = p.id; }
+        else if (extended && (u < p.arrival || u >= completion)) { cell.classList.add('not-arrived'); }
+        else if (extended) { cell.classList.add('waiting'); }
         else { cell.classList.add('idle'); }
         cells.appendChild(cell);
       }
@@ -866,6 +919,7 @@ function jumpToSummary() {
     document.getElementById('compare-table').innerHTML = html;
     document.getElementById('compare-table-wrap').style.display = 'block';
   }
+  ganttFinal.appendChild(buildAxisRow(simState.maxTime));
 }
 
 function resetTool() {
