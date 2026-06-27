@@ -862,10 +862,16 @@
 			"implicazione",
 			"equivalenza logica",
 			"algebra di boole",
-			"pensiero computazionale"
+			"pensiero computazionale",
+			"esercizio",
+			"quiz",
+			"tautologia",
+			"contraddizione",
+			"contingente",
+			"soddisfacibile"
 		],
-		"meta": "Interattivo · Calcolo in tempo reale · Fino a 4 variabili",
-		"description": "Costruisci tabelle di verità per espressioni booleane complesse e verifica se due espressioni sono logicamente equivalenti. Operatori AND, OR, NOT, XOR, implicazione e doppia implicazione.",
+		"meta": "Interattivo · Modalità Lezione/Esercizio · Fino a 4 variabili",
+		"description": "Costruisci tabelle di verità in modalità Lezione (passo per passo) o Esercizio (quiz autocorrettivo). Classificazione automatica come tautologia, contraddizione o contingente, e verifica di equivalenza tra due espressioni.",
 		"featured": false,
 		"active": true,
 		"digcomp": [
