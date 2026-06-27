@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Somma e Sottrazione Binaria — Calcolatore e Guida — Formazione Digitale</title>
+
+<meta name="description" content="Calcolatore interattivo di somma e sottrazione binaria a 8 bit, passo dopo passo: riporto colonna per colonna, complemento a 2 e gestione dell'overflow. Utile per verificare esercizi.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://formazione-digitale.it/sistemi/aritmetica-binaria/">
+<link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="//gc.zgo.at">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#1F4E79">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Somma e Sottrazione Binaria — Formazione Digitale">
+<meta property="og:description" content="Calcolatore passo-passo con riporto colonna per colonna, complemento a 2 e gestione dell'overflow. Utile per verificare esercizi.">
+<meta property="og:url" content="https://formazione-digitale.it/sistemi/aritmetica-binaria/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+
+<!-- Twitter/X Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Somma e Sottrazione Binaria — Formazione Digitale">
+<meta name="twitter:description" content="Calcolatore passo-passo con riporto colonna per colonna, complemento a 2 e gestione dell'overflow.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Somma e Sottrazione Binaria",
+  "description": "Calcolatore interattivo passo-passo di somma e sottrazione binaria a 8 bit, con riporto, complemento a 2 e gestione dell'overflow.",
+  "url": "https://formazione-digitale.it/sistemi/aritmetica-binaria/",
+  "inLanguage": "it",
+  "author": {
+    "@type": "Person",
+    "name": "Cristiano De Pasquale",
+    "jobTitle": "Docente di Informatica"
+  },
+  "provider": {
+    "@type": "WebSite",
+    "name": "Formazione Digitale",
+    "url": "https://formazione-digitale.it"
+  },
+  "educationalLevel": "Livello intermedio",
+  "keywords": "binario, somma, sottrazione, riporto, carry, complemento a 2, overflow, sistemi, aritmetica"
+}
+</script>
+
+<!-- GoatCounter tracking -->
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+<link rel="stylesheet" href="/css/shared.css?v=2">
+<style>
+:root {
+    --nav-height: 58px;
+    --accent-border: #90CAF9;
+    --accent-light: #E3F2FD;
+    --font-mono: 'Fira Code', 'Courier New', monospace;
+}
+
+* { box-sizing: border-box; }
+body { padding-top: var(--nav-height); scroll-behavior: smooth; background: #fdfdfd; }
+
+/* ── STICKY NAV ── */
+nav.sticky-bar {
+    position: fixed; top: 0; left: 0; right: 0; height: var(--nav-height);
+    background: var(--blue-dark); display: flex; align-items: center;
+    justify-content: space-between; padding: 0 1.5rem; z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+.nav-left { display: flex; align-items: center; gap: 1rem; }
+.nav-back { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 5px; }
+.nav-back:hover { color: white; }
+.nav-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.2); }
+.nav-title { font-family: var(--font-display); color: white; font-size: 1.1rem; }
+@media(max-width:600px) { .nav-title, .nav-divider { display: none; } }
+
+/* ── LAYOUT A SEZIONI ── */
+.page-container { display: flex; max-width: 1350px; margin: 0 auto; gap: 3rem; padding: 3rem 1.5rem; }
+aside.sidebar { width: 240px; position: sticky; top: calc(var(--nav-height) + 2rem); height: fit-content; flex-shrink: 0; }
+.sidebar-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--blue-mid); margin-bottom: 1rem; }
+.sidebar-nav { display: flex; flex-direction: column; gap: 0.5rem; }
+.sidebar-nav a { text-decoration: none; color: var(--gray-mid); font-size: 0.9rem; padding: 0.5rem 0.8rem; border-radius: 6px; transition: all 0.2s; border-left: 3px solid transparent; }
+.sidebar-nav a.active { border-left-color: var(--blue-mid); background: var(--blue-pale); color: var(--blue-dark); font-weight: 600; }
+
+.content { flex: 1; min-width: 0; }
+.content-header { margin-bottom: 3rem; }
+.content-header .eyebrow { color: var(--amber-dark); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; display: block; }
+.content-header h1 { font-family: var(--font-display); font-size: 3rem; color: var(--blue-dark); line-height: 1.1; }
+.content-header p { font-size: 1rem; color: var(--gray-mid); margin-top: .75rem; max-width: 640px; }
+
+/* ── TOOL CARD ── */
+.tool-card {
+    background: linear-gradient(180deg, var(--white) 0%, var(--accent-light) 100%);
+    border: 2px solid var(--accent-border); border-radius: 20px; padding: 2.5rem;
+    box-shadow: 0 10px 30px rgba(31, 78, 121, 0.08); margin-bottom: 4rem; scroll-margin-top: 100px;
+}
+.theory-card { background: var(--white); border: 1px solid var(--blue-light); border-radius: 16px; padding: 2rem 2.5rem; margin-bottom: 3rem; scroll-margin-top: 100px; }
+.theory-card h2 { font-family: var(--font-display); font-size: 1.6rem; color: var(--blue-dark); margin-bottom: 1rem; }
+.theory-card p { font-size: .92rem; line-height: 1.75; color: var(--gray-dark); margin-bottom: .9rem; }
+
+/* ── MODE TOGGLE ── */
+.mode-toggle { display: flex; gap: .6rem; margin-bottom: 1.75rem; }
+.mode-btn {
+    flex: 1; padding: .75rem 1rem; border-radius: 10px; border: 1.5px solid var(--accent-border);
+    background: var(--white); color: var(--blue-mid); font-weight: 700; font-size: .92rem;
+    cursor: pointer; transition: all .2s;
+}
+.mode-btn.active { background: var(--blue-dark); border-color: var(--blue-dark); color: #fff; }
+
+/* ── OPERANDI (input binario + decimale live) ── */
+.operands-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.75rem; }
+@media(max-width:700px) { .operands-grid { grid-template-columns: 1fr; } }
+.input-group label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--blue-mid); text-transform: uppercase; margin-bottom: 0.5rem; }
+.bin-input-row { display: flex; align-items: center; gap: .6rem; }
+.bin-input-row input[type=text] {
+    flex: 1; padding: 0.7rem; border: 1.5px solid var(--accent-border); border-radius: 8px;
+    font-family: var(--font-mono); font-size: 1.25rem; letter-spacing: .1em; outline: none; text-align: center;
+}
+.bin-input-row input[type=text]:focus { border-color: var(--blue-mid); }
+.dec-badge {
+    flex-shrink: 0; background: var(--blue-pale); color: var(--blue-dark); font-weight: 700;
+    font-family: var(--font-mono); font-size: .95rem; padding: .6rem .85rem; border-radius: 8px;
+    border: 1px solid var(--blue-light); white-space: nowrap;
+}
+
+/* ── BLOCCO COMPLEMENTO (istantaneo, solo sottrazione) ── */
+#block-complemento { margin-bottom: 1.5rem; }
+.sub-step { margin-bottom: 1rem; }
+.sub-step-title { font-size: .85rem; font-weight: 700; color: var(--blue-dark); margin-bottom: .5rem; display: flex; align-items: center; gap: .5rem; }
+.sub-step-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: var(--blue-mid); color: #fff; border-radius: 50%; font-size: .75rem; flex-shrink: 0; }
+.bit-strip-static { display: flex; gap: 4px; }
+.bit-strip-static .cell {
+    flex: 1; max-width: 38px; aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-weight: 700; font-size: .95rem;
+    background: #eef3f8; border: 1px solid var(--accent-border); border-radius: 6px; color: var(--blue-dark);
+}
+
+/* ── MOTORE A COLONNA VERTICALE ── */
+.engine { background: var(--white); border: 1px solid var(--blue-light); border-radius: 12px; padding: 1.5rem; margin-top: .5rem; overflow-x: auto; }
+.engine-row { display: flex; align-items: center; gap: .6rem; margin-bottom: .35rem; }
+.engine-row:last-child { margin-bottom: 0; }
+.engine-label { width: 96px; flex-shrink: 0; font-size: .72rem; font-weight: 700; color: var(--blue-mid); text-transform: uppercase; text-align: right; }
+.engine-cells { display: grid; grid-template-columns: 46px repeat(8, minmax(34px, 1fr)); gap: 5px; flex: 1; min-width: 360px; }
+.engine-cell {
+    display: flex; align-items: center; justify-content: center; height: 36px;
+    font-family: var(--font-mono); font-weight: 700; font-size: 1.05rem; border-radius: 6px;
+}
+.engine-cell.carry-cell { height: 22px; font-size: .82rem; background: none; color: var(--amber-dark); }
+.engine-cell.bit-a, .engine-cell.bit-b { background: #eef3f8; border: 1px solid var(--accent-border); color: var(--blue-dark); }
+.engine-cell.bit-result { background: var(--blue-pale); border: 1px solid var(--blue-light); color: var(--blue-dark); }
+.engine-cell.bit-result.pending { background: #f7f7f7; border: 1px dashed #ccc; color: #bbb; font-weight: 400; }
+.engine-cell.extra-bit { background: var(--blue-dark); border: 1px solid var(--blue-dark); color: #fff; }
+.engine-cell.extra-discarded { background: var(--gray-light); border: 1px dashed #bbb; color: var(--gray-mid); text-decoration: line-through; font-weight: 600; }
+.engine-cell.empty-slot { background: none; border: none; }
+.engine-cell.current-col { outline: 2.5px solid var(--blue-mid); outline-offset: 1px; }
+.engine-divider { border-top: 2.5px solid var(--blue-dark); margin: .25rem 0 .35rem 102px; }
+
+/* ── CONTROLLI ESECUZIONE ── */
+.engine-controls { display: flex; align-items: center; gap: .75rem; margin-top: 1.25rem; flex-wrap: wrap; }
+.btn-exec {
+    padding: .6rem 1.1rem; border-radius: 8px; border: 1.5px solid var(--blue-mid);
+    background: var(--white); color: var(--blue-mid); font-weight: 700; font-size: .85rem; cursor: pointer;
+    transition: all .2s;
+}
+.btn-exec:hover:not(:disabled) { background: var(--blue-pale); }
+.btn-exec:disabled { opacity: .4; cursor: not-allowed; }
+.btn-exec.primary { background: var(--blue-mid); color: #fff; }
+.btn-exec.primary:hover:not(:disabled) { background: var(--blue-dark); }
+#step-status { font-size: .82rem; color: var(--gray-mid); margin-left: auto; }
+
+/* ── RISULTATO FINALE ── */
+.result-box { margin-top: 1.5rem; padding: 1.25rem 1.5rem; background: var(--blue-pale); border-radius: 12px; border: 1px solid var(--blue-light); }
+.result-row { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; margin-bottom: .6rem; }
+.result-row:last-child { margin-bottom: 0; }
+.result-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; color: var(--blue-mid); width: 100%; }
+.result-bin { font-family: var(--font-mono); font-size: 1.25rem; font-weight: 700; color: var(--blue-dark); letter-spacing: .05em; }
+.result-dec { font-family: var(--font-mono); font-size: 1.25rem; font-weight: 700; color: var(--blue-dark); }
+.result-placeholder { color: var(--gray-mid); font-size: .9rem; font-style: italic; }
+
+/* ── BOX CALLOUT con icona ── */
+.box { display: flex; gap: .85rem; }
+.box-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: .1rem; }
+
+@media (max-width: 1000px) {
+    .page-container { flex-direction: column; }
+    aside.sidebar { display: none; }
+}
+@media (max-width: 560px) {
+    .engine-label { width: 70px; font-size: .62rem; }
+    .engine-divider { margin-left: 76px; }
+    .engine-cells { grid-template-columns: 32px repeat(8, minmax(26px, 1fr)); }
+}
+</style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="sticky-bar">
+    <div class="nav-left">
+        <a href="../../index.html" class="nav-back">← Portale</a>
+        <div class="nav-divider"></div>
+        <div class="nav-title">Laboratorio Sistemi</div>
+    </div>
+    <button class="nav-menu-btn" id="nav-menu-btn" onclick="toggleNavMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<!-- DROPDOWN MENU MOBILE -->
+<div class="nav-dropdown" id="nav-dropdown">
+    <div class="nav-dropdown-label">Sezioni</div>
+    <a href="#calcolatore" onclick="closeNavMenu()">00 Calcolatore</a>
+    <a href="#riporto" onclick="closeNavMenu()">01 Il riporto nella somma</a>
+    <a href="#complemento" onclick="closeNavMenu()">02 Complemento a 2</a>
+    <a href="#overflow" onclick="closeNavMenu()">03 Overflow vs riporto</a>
+</div>
+
+<div class="page-container">
+    <aside class="sidebar">
+        <div class="sidebar-label">Indice</div>
+        <nav class="sidebar-nav">
+            <a href="#calcolatore" class="active">00 Calcolatore</a>
+            <a href="#riporto">01 Il riporto</a>
+            <a href="#complemento">02 Complemento a 2</a>
+            <a href="#overflow">03 Overflow vs riporto</a>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <header class="content-header">
+            <span class="eyebrow">Sistemi e Architetture</span>
+            <h1>Somma e Sottrazione Binaria</h1>
+            <p>Esegui l'operazione passo dopo passo, colonna per colonna, esattamente come a mano — utile anche per verificare un esercizio già svolto sulla carta.</p>
+        </header>
+
+        <!-- 00 CALCOLATORE -->
+        <section id="calcolatore">
+            <div class="tool-card">
+
+                <div class="mode-toggle">
+                    <button class="mode-btn active" id="btn-somma" onclick="setMode('somma')">➕ Somma</button>
+                    <button class="mode-btn" id="btn-sottrazione" onclick="setMode('sottrazione')">➖ Sottrazione (complemento a 2)</button>
+                </div>
+
+                <div class="operands-grid">
+                    <div class="input-group">
+                        <label>Operando A (binario, max 8 bit)</label>
+                        <div class="bin-input-row">
+                            <input type="text" id="in-a" maxlength="8" value="11001000" inputmode="numeric">
+                            <span class="dec-badge" id="dec-a">= 200</span>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Operando B (binario, max 8 bit)</label>
+                        <div class="bin-input-row">
+                            <input type="text" id="in-b" maxlength="8" value="10010110" inputmode="numeric">
+                            <span class="dec-badge" id="dec-b">= 150</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BLOCCO SOTTRAZIONE: complemento a 1 e a 2 di B (calcolo istantaneo, non a passi) -->
+                <div id="block-complemento" style="display:none;">
+                    <div class="sub-step">
+                        <div class="sub-step-title"><span class="sub-step-num">1</span> Complemento a 1 di B — si inverte ogni bit</div>
+                        <div class="bit-strip-static" id="bits-comp1"></div>
+                    </div>
+                    <div class="sub-step">
+                        <div class="sub-step-title"><span class="sub-step-num">2</span> Complemento a 2 di B — si somma 1 al complemento a 1</div>
+                        <div class="bit-strip-static" id="bits-comp2"></div>
+                    </div>
+                    <div class="sub-step-title"><span class="sub-step-num">3</span> Si somma A al complemento a 2 di B, colonna per colonna ↓</div>
+                </div>
+
+                <!-- MOTORE A COLONNA VERTICALE -->
+                <div class="engine" id="engine"></div>
+
+                <div class="engine-controls">
+                    <button class="btn-exec primary" id="btn-step" onclick="stepOnce()">▶ Esegui passo</button>
+                    <button class="btn-exec" id="btn-runall" onclick="runAll()">⏭ Esegui tutto</button>
+                    <button class="btn-exec" id="btn-reset-steps" onclick="resetSteps()">↺ Reset</button>
+                    <span id="step-status"></span>
+                </div>
+
+                <!-- RISULTATO FINALE (visibile solo a esecuzione completata) -->
+                <div class="result-box" id="result-box">
+                    <p class="result-placeholder" id="result-placeholder">Esegui tutti i passi per vedere il risultato finale.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 01 IL RIPORTO -->
+        <section id="riporto">
+            <div class="theory-card">
+                <h2>Il riporto (carry) nella somma</h2>
+                <p>Nella somma in colonna, ogni bit si calcola insieme al bit corrispondente dell'altro numero e al <strong>riporto</strong> generato dalla colonna precedente (quella meno significativa, a destra). Quando la somma di una colonna vale 2 o 3, si scrive il bit meno significativo del risultato e si riporta 1 alla colonna successiva — esattamente come nella somma in colonna decimale.</p>
+                <p>Con due numeri a 8 bit, il riporto generato dall'ultima colonna (il bit più significativo, 2<sup>7</sup>) diventa un <strong>nono bit</strong>: il risultato di una somma a 8 bit può quindi richiedere 9 bit per essere rappresentato senza perdere informazione.</p>
+                <div class="box box-info">
+                    <div class="box-icon">💡</div>
+                    <p>Se il registro che memorizza il risultato è largo solo 8 bit, quel nono bit (il riporto finale) va perso: il valore letto sarà diverso da quello matematicamente corretto. Provalo nel calcolatore con 11001000 + 10010110 (200 + 150).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02 COMPLEMENTO A 2 -->
+        <section id="complemento">
+            <div class="theory-card">
+                <h2>Sottrarre senza sottrarre: il complemento a 2</h2>
+                <p>I calcolatori non implementano un circuito separato per la sottrazione: usano lo stesso circuito della somma. L'idea è semplice: <strong>A − B</strong> si calcola come <strong>A + (complemento a 2 di B)</strong>.</p>
+                <p>Il complemento a 2 di un numero a 8 bit si ottiene in due passaggi: si inverte ogni bit (complemento a 1, cioè il NOT bit a bit), poi si somma 1 al risultato. Il numero ottenuto, sommato all'originale, dà sempre 0 (a meno del riporto finale, che si scarta).</p>
+                <p>Il risultato della somma A + complemento_a_2(B) si interpreta poi come un numero <strong>con segno</strong>: se il bit più significativo è 0 il numero è positivo e si legge normalmente; se è 1 il numero è negativo, e il suo valore si ottiene sottraendo 256 al valore binario letto come se fosse senza segno.</p>
+                <div class="box box-tip">
+                    <div class="box-icon">✅</div>
+                    <p>Il riporto finale generato da questa somma si scarta sempre: è una conseguenza naturale del metodo, non un segnale di errore (a differenza della somma normale, vedi sezione successiva).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03 OVERFLOW VS RIPORTO -->
+        <section id="overflow">
+            <div class="theory-card">
+                <h2>Overflow di segno e riporto finale: due cose diverse</h2>
+                <p>È facile confondere due concetti che riguardano entrambi l'ultimo bit, ma hanno significati opposti:</p>
+                <div class="dodont">
+                    <div class="do-col">
+                        <div class="dodont-title">Riporto finale (somma senza segno)</div>
+                        <p style="font-size:.85rem;color:var(--green-dark);line-height:1.6;">Indica che il risultato non entra in 8 bit. È un'informazione <strong>persa</strong> se ignorata: il valore letto sarà sbagliato. Va sempre considerato un avviso.</p>
+                    </div>
+                    <div class="dont-col">
+                        <div class="dodont-title">Riporto nella sottrazione (complemento a 2)</div>
+                        <p style="font-size:.85rem;color:var(--amber-dark);line-height:1.6;">Va sempre <strong>scartato</strong>: non indica un problema. L'eventuale errore nella sottrazione si manifesta invece come <em>overflow di segno</em>, quando il risultato vero non rientra nell'intervallo rappresentabile −128…127.</p>
+                    </div>
+                </div>
+                <p style="margin-top:1.25rem;">Nel calcolatore qui sopra, prova 11001000 − 00110010 (200 − 50): il risultato vero (150) non è rappresentabile in 8 bit con segno, perché supera 127. Il tool segnala l'overflow di segno, distinto dal riporto (che in quel caso viene comunque scartato).</p>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<footer>
+  <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
+  Strumento didattico libero e gratuito. I dati inseriti non vengono salvati né trasmessi.
+  <p style="margin-top:.5rem;font-size:.78rem;">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+// ARITMETICA BINARIA — somma e sottrazione (complemento a 2), 8 bit
+// Esecuzione passo-passo da bit 0 (LSB) a bit 7 (MSB), per verificare
+// esercizi svolti a mano.
+// ══════════════════════════════════════════════════════════════
+
+const inA = document.getElementById('in-a');
+const inB = document.getElementById('in-b');
+let mode = 'somma'; // 'somma' | 'sottrazione'
+
+// Stato dell'esecuzione passo-passo: indicizzato per "potenza" (0 = LSB ... 7 = MSB)
+let steps = { carryOut: new Array(8).fill(null), resultBit: new Array(8).fill(null), done: 0 };
+
+/** Pulisce l'input (solo 0/1, max 8 cifre) e lo allinea a 8 bit con zeri iniziali. */
+function padded8(raw) {
+    const clean = (raw || '').replace(/[^01]/g, '').slice(0, 8);
+    return clean.padStart(8, '0');
+}
+
+/** Estrae il bit alla potenza "power" (0 = meno significativo) da una stringa a 8 bit. */
+function bitAt(str8, power) { return parseInt(str8[7 - power], 10); }
+
+/** Inverte ogni bit di una stringa binaria (complemento a 1). */
+function complemento1(bin8) {
+    return bin8.split('').map(b => b === '0' ? '1' : '0').join('');
+}
+
+/** Somma istantanea a 8 bit (usata solo per calcolare il complemento a 2, non è "a passi"). */
+function addBin8Instant(binA, binB) {
+    let carry = 0;
+    const bits = new Array(8);
+    for (let i = 7; i >= 0; i--) {
+        const total = parseInt(binA[i], 10) + parseInt(binB[i], 10) + carry;
+        bits[i] = total % 2;
+        carry = total >= 2 ? 1 : 0;
+    }
+    return bits.join('');
+}
+
+/** Filtra l'input mentre l'utente digita, lasciando solo 0/1. */
+function sanitizeInput(el) {
+    el.value = el.value.replace(/[^01]/g, '').slice(0, 8);
+}
+
+/** Operandi correnti, allineati a 8 bit. */
+function getOperands() {
+    return { paddedA: padded8(inA.value), paddedB: padded8(inB.value) };
+}
+
+/** Per la sottrazione: l'operando B effettivamente usato nel motore è il complemento a 2 di B. */
+function getOperandUsedByEngine() {
+    const { paddedA, paddedB } = getOperands();
+    if (mode === 'somma') return { paddedA, operandB: paddedB };
+    const comp1 = complemento1(paddedB);
+    const comp2 = addBin8Instant(comp1, padded8('1'));
+    return { paddedA, operandB: comp2, comp1, comp2 };
+}
+
+/** Cambia modalità e resetta l'esecuzione (gli operandi restano). */
+function setMode(newMode) {
+    mode = newMode;
+    document.getElementById('btn-somma').classList.toggle('active', mode === 'somma');
+    document.getElementById('btn-sottrazione').classList.toggle('active', mode === 'sottrazione');
+    document.getElementById('block-complemento').style.display = mode === 'sottrazione' ? 'block' : 'none';
+    resetSteps();
+}
+
+/** Azzera l'esecuzione a passi, mantenendo gli operandi inseriti. */
+function resetSteps() {
+    steps = { carryOut: new Array(8).fill(null), resultBit: new Array(8).fill(null), done: 0 };
+    renderAll();
+}
+
+/** Calcola un'unica colonna (quella corrente) e avanza lo stato. */
+function stepOnce() {
+    if (steps.done >= 8) return;
+    const { paddedA, operandB } = getOperandUsedByEngine();
+    const p = steps.done;
+    const a = bitAt(paddedA, p);
+    const b = bitAt(operandB, p);
+    const carryIn = p === 0 ? 0 : (steps.carryOut[p - 1] || 0);
+    const total = a + b + carryIn;
+    steps.resultBit[p] = total % 2;
+    steps.carryOut[p] = total >= 2 ? 1 : 0;
+    steps.done++;
+    renderAll();
+}
+
+/** Completa tutti i passi rimanenti. */
+function runAll() {
+    while (steps.done < 8) stepOnce();
+}
+
+/** Costruisce l'HTML di una riga di celle del motore (9 colonne: extra + potenze 7..0). */
+function buildCellsRow(kind, values) {
+    // values: array di 9 elementi, indice 0 = colonna extra (9° bit), 1..8 = potenze 7..0
+    return values.map((v, i) => `<div class="engine-cell ${v.cls}">${v.text}</div>`).join('');
+}
+
+/** Determina se la colonna di una data potenza è quella "corrente" (prossima da calcolare). */
+function isCurrent(power) { return power === steps.done && steps.done < 8; }
+
+/** Disegna il motore a colonna verticale (riporti, A, B/compl.2(B), riga, risultato). */
+function renderEngine() {
+    const { paddedA, operandB } = getOperandUsedByEngine();
+    const powers = [7, 6, 5, 4, 3, 2, 1, 0]; // ordine di visualizzazione: MSB → LSB
+
+    // RIGA RIPORTI: sopra ogni colonna p (p>0) mostra il riporto generato dalla colonna p-1
+    const carryCells = [{ cls: 'carry-cell empty-slot', text: '' }];
+    powers.forEach(p => {
+        const show = p > 0 && steps.carryOut[p - 1] === 1;
+        carryCells.push({ cls: 'carry-cell', text: show ? '1' : '' });
+    });
+
+    // RIGA A: la colonna extra è sempre vuota (A non ha un nono bit)
+    const aCells = [{ cls: 'empty-slot', text: '' }];
+    powers.forEach(p => aCells.push({ cls: 'bit-a', text: bitAt(paddedA, p) }));
+
+    // RIGA B (o compl.2 di B): idem, colonna extra vuota
+    const bCells = [{ cls: 'empty-slot', text: '' }];
+    powers.forEach(p => bCells.push({ cls: 'bit-b' + (isCurrent(p) ? ' current-col' : ''), text: bitAt(operandB, p) }));
+
+    // RIGA RISULTATO: colonna extra mostra il 9° bit (solo somma, solo a esecuzione completata)
+    const finalCarry = steps.done === 8 ? steps.carryOut[7] : null;
+    const extraCls = finalCarry === 1 ? (mode === 'somma' ? 'extra-bit' : 'extra-discarded') : 'empty-slot';
+    const resultCells = [{ cls: extraCls, text: finalCarry === 1 ? '1' : '' }];
+    powers.forEach(p => {
+        const computed = steps.resultBit[p] !== null;
+        const cls = 'bit-result' + (computed ? '' : ' pending') + (isCurrent(p) ? ' current-col' : '');
+        resultCells.push({ cls, text: computed ? steps.resultBit[p] : '–' });
+    });
+
+    document.getElementById('engine').innerHTML = `
+        <div class="engine-row">
+            <span class="engine-label">Riporti</span>
+            <div class="engine-cells">${buildCellsRow('carry', carryCells)}</div>
+        </div>
+        <div class="engine-row">
+            <span class="engine-label">A</span>
+            <div class="engine-cells">${buildCellsRow('a', aCells)}</div>
+        </div>
+        <div class="engine-row">
+            <span class="engine-label">${mode === 'somma' ? '+ B' : '+ Compl.2(B)'}</span>
+            <div class="engine-cells">${buildCellsRow('b', bCells)}</div>
+        </div>
+        <div class="engine-divider"></div>
+        <div class="engine-row">
+            <span class="engine-label">Risultato</span>
+            <div class="engine-cells">${buildCellsRow('result', resultCells)}</div>
+        </div>`;
+}
+
+/** Aggiorna lo stato dei controlli (pulsanti, testo di stato). */
+function renderControls() {
+    const finished = steps.done >= 8;
+    document.getElementById('btn-step').disabled = finished;
+    document.getElementById('btn-runall').disabled = finished;
+    document.getElementById('step-status').textContent = finished
+        ? 'Completato ✓'
+        : `Passo ${steps.done + 1} di 8 (bit 2^${steps.done})`;
+}
+
+/** Mostra il box con il risultato finale, solo quando tutti i passi sono completati. */
+function renderFinalResult() {
+    const box = document.getElementById('result-box');
+    if (steps.done < 8) {
+        box.innerHTML = '<p class="result-placeholder">Esegui tutti i passi per vedere il risultato finale.</p>';
+        return;
+    }
+
+    const { paddedA, paddedB } = getOperands();
+    const a = parseInt(paddedA, 2);
+    const b = parseInt(paddedB, 2);
+    const resultBitsStr = [...Array(8).keys()].sort((x, y) => y - x).map(p => steps.resultBit[p]).join('');
+
+    if (mode === 'somma') {
+        const fullValue = steps.carryOut[7] * 256 + parseInt(resultBitsStr, 2);
+        const truncNote = fullValue > 255
+            ? `<div class="box box-warn" style="margin-top:.75rem;"><div class="box-icon">⚠️</div><p>Il risultato non è rappresentabile in un registro a 8 bit: il riporto finale andrebbe perso. Il valore memorizzato sarebbe <strong>${fullValue % 256}</strong> invece di <strong>${fullValue}</strong>.</p></div>`
+            : '';
+        box.innerHTML = `
+            <div class="result-row">
+                <span class="result-label">Risultato a 9 bit (riporto finale + 8 bit)</span>
+                <span class="result-bin">${steps.carryOut[7]}${resultBitsStr}</span>
+            </div>
+            <div class="result-row">
+                <span class="result-label">Valore decimale</span>
+                <span class="result-dec">${fullValue}</span>
+            </div>${truncNote}`;
+    } else {
+        const unsignedValue = parseInt(resultBitsStr, 2);
+        const signedValue = unsignedValue < 128 ? unsignedValue : unsignedValue - 256;
+        const trueValue = a - b;
+        const overflow = trueValue < -128 || trueValue > 127;
+        const overflowNote = overflow
+            ? `<div class="box box-warn" style="margin-top:.75rem;"><div class="box-icon">⚠️</div><p>Il risultato vero (${trueValue}) non rientra nell'intervallo rappresentabile in 8 bit con segno (−128…127): è un <strong>overflow di segno</strong>. Il valore letto dal bit pattern non corrisponde al risultato matematico corretto.</p></div>`
+            : '';
+        box.innerHTML = `
+            <div class="result-row">
+                <span class="result-label">Risultato a 8 bit (il riporto generato viene scartato)</span>
+                <span class="result-bin">${resultBitsStr}</span>
+            </div>
+            <div class="result-row">
+                <span class="result-label">Interpretazione in complemento a 2</span>
+                <span class="result-dec">${signedValue}</span>
+                <span style="color:var(--gray-mid);font-size:.85rem;">(bit di segno: ${resultBitsStr[0]} → ${resultBitsStr[0] === '1' ? 'negativo' : 'positivo'})</span>
+            </div>${overflowNote}`;
+    }
+}
+
+/** Aggiorna le strisce di bit del complemento a 1/a 2 (visualizzazione istantanea, non a passi). */
+function renderComplementBlock() {
+    if (mode !== 'sottrazione') return;
+    const { paddedB } = getOperands();
+    const comp1 = complemento1(paddedB);
+    const comp2 = addBin8Instant(comp1, padded8('1'));
+    document.getElementById('bits-comp1').innerHTML = comp1.split('').map(b => `<div class="cell">${b}</div>`).join('');
+    document.getElementById('bits-comp2').innerHTML = comp2.split('').map(b => `<div class="cell">${b}</div>`).join('');
+}
+
+/** Aggiorna i badge con il valore decimale live di A e B. */
+function renderDecimalBadges() {
+    const { paddedA, paddedB } = getOperands();
+    document.getElementById('dec-a').textContent = '= ' + parseInt(paddedA, 2);
+    document.getElementById('dec-b').textContent = '= ' + parseInt(paddedB, 2);
+}
+
+/** Ridisegna tutta l'interfaccia in base allo stato corrente. */
+function renderAll() {
+    renderDecimalBadges();
+    renderComplementBlock();
+    renderEngine();
+    renderControls();
+    renderFinalResult();
+}
+
+// ── INPUT HANDLERS — ogni modifica agli operandi resetta l'esecuzione a passi ──
+inA.addEventListener('input', () => { sanitizeInput(inA); resetSteps(); });
+inB.addEventListener('input', () => { sanitizeInput(inB); resetSteps(); });
+
+// ── NAV DROPDOWN ──
+function toggleNavMenu() {
+    document.getElementById('nav-menu-btn').classList.toggle('is-open');
+    document.getElementById('nav-dropdown').classList.toggle('is-open');
+}
+function closeNavMenu() {
+    document.getElementById('nav-menu-btn').classList.remove('is-open');
+    document.getElementById('nav-dropdown').classList.remove('is-open');
+}
+document.addEventListener('click', e => {
+    if (!e.target.closest('nav.sticky-bar') && !e.target.closest('#nav-dropdown')) closeNavMenu();
+});
+
+// ── SCROLL SPY (sidebar) ──
+const sections = document.querySelectorAll('main section');
+const navItems = document.querySelectorAll('.sidebar-nav a');
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+    navItems.forEach(n => n.classList.toggle('active', n.getAttribute('href') === '#' + current));
+}, { passive: true });
+
+// ── INIT ──
+renderAll();
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>

@@ -882,6 +882,40 @@
 		]
 	},
 	{
+		"path": "/sistemi/aritmetica-binaria/",
+		"label": "Somma e Sottrazione Binaria",
+		"short": "Aritmetica Binaria",
+		"cat": "strumento",
+		"emoji": "🧮",
+		"tags": [
+			"binario",
+			"somma",
+			"sottrazione",
+			"riporto",
+			"carry",
+			"complemento a 2",
+			"overflow",
+			"sistemi",
+			"aritmetica"
+		],
+		"meta": "Interattivo · Step-by-step · Livello intermedio",
+		"description": "Calcolatore di somma e sottrazione binaria a 8 bit, passo dopo passo: riporto colonna per colonna, complemento a 2 e gestione dell'overflow.",
+		"featured": false,
+		"active": true,
+		"digcomp": [
+			"DC 3.4",
+			"DC 5.1"
+		],
+		"digcomp_level": "intermediate",
+		"digcomp_areas": [
+			"creazione",
+			"problem-solving"
+		],
+		"digcompedu": [
+			"DCEdu 6.5"
+		]
+	},
+	{
 		"path": "/sistemi/algoritmi-scheduling/",
 		"label": "Algoritmi di Scheduling della CPU",
 		"short": "Scheduling CPU",
