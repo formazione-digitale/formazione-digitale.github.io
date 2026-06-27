@@ -206,13 +206,66 @@
 .truth-table td.val-true { color: var(--green-dark); }
 .truth-table td.val-false { color: #999; }
 
-.verdict-badge {
-  margin-top: 1rem; padding: .75rem 1rem; border-radius: var(--radius);
-  font-weight: 700; font-size: .92rem; display: flex; align-items: center; gap: .5rem;
+/* ── TOGGLE MODALITÀ (Lezione / Esercizio) ── */
+.mode-toggle-row { display: flex; align-items: center; gap: .6rem; }
+.mode-toggle-label {
+  font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--gray-mid);
 }
-.verdict-badge.equiv { background: var(--green-light); color: var(--green-dark); }
-.verdict-badge.not-equiv { background: var(--amber-light); color: var(--amber-dark); }
-.verdict-counterexample { font-size: .78rem; font-weight: 500; margin-top: .35rem; font-family: monospace; }
+.mode-toggle-buttons { display: flex; gap: .4rem; }
+.btn-mode {
+  font-size: .82rem; font-weight: 600; padding: .4rem .85rem; border-radius: 20px;
+  border: 1.5px solid #D6E8F7; background: #fff; color: var(--blue-dark); cursor: pointer; transition: all .15s ease;
+}
+.btn-mode:hover { border-color: var(--blue-mid); }
+.btn-mode.active { background: var(--blue-dark); color: #fff; border-color: var(--blue-dark); }
+
+/* ── MODALITÀ LEZIONE (reveal riga per riga) ── */
+.reveal-controls { display: flex; align-items: center; gap: .6rem; margin-top: 1rem; }
+.btn-reveal {
+  background: var(--blue-dark); color: #fff; border: none; padding: .6rem 1.1rem;
+  border-radius: var(--radius); font-weight: 600; font-size: .85rem; cursor: pointer; transition: background .15s ease;
+}
+.btn-reveal:hover:not(:disabled) { background: var(--blue-mid); }
+.btn-reveal:disabled { background: var(--green-dark); cursor: default; opacity: .9; }
+.btn-restart-reveal {
+  background: #fff; color: var(--gray-mid); border: 1.5px solid #ddd; padding: .6rem .9rem;
+  border-radius: var(--radius); font-size: .85rem; cursor: pointer;
+}
+.btn-restart-reveal:hover { border-color: #999; color: #333; }
+
+@keyframes rowReveal { from { background: var(--blue-pale); } to { background: transparent; } }
+.row-new { animation: rowReveal 1s ease-out; }
+
+/* ── MODALITÀ ESERCIZIO (quiz) ── */
+.exercise-controls {
+  display: flex; align-items: center; justify-content: space-between; gap: .6rem;
+  margin-top: 1rem; flex-wrap: wrap;
+}
+.exercise-counter { font-size: .85rem; font-weight: 700; color: var(--blue-dark); }
+td.cell-exercise { padding: .25rem; }
+.cell-answer-btn {
+  font-family: monospace; font-size: .8rem; font-weight: 700; width: 28px; height: 26px;
+  border: 1.5px solid var(--blue-light); background: #fff; color: var(--blue-dark);
+  border-radius: 5px; cursor: pointer; margin: 0 2px; transition: all .15s ease;
+}
+.cell-answer-btn:hover { background: var(--blue-pale); border-color: var(--blue-mid); }
+td.cell-correct { background: var(--green-light); color: var(--green-dark); font-weight: 700; }
+td.cell-wrong { background: #FDECEA; color: #C0392B; font-weight: 700; }
+.exercise-delta { color: var(--gray-mid); font-weight: 700; }
+
+/* ── DIAGNOSI DINAMICA & BOX CONCETTI TEORICI ── */
+.concepts-section { margin-top: 2.5rem; }
+.diagnosis-box {
+  background: var(--blue-pale); border: 1.5px solid var(--blue-light); border-radius: var(--radius);
+  padding: 1rem 1.2rem; margin-bottom: 1.5rem;
+}
+.diagnosis-placeholder { font-size: .85rem; color: var(--gray-mid); margin: 0; line-height: 1.5; }
+.diagnosis-row { display: flex; align-items: flex-start; gap: .6rem; font-size: .88rem; color: var(--gray-dark); }
+.diagnosis-row + .diagnosis-row { margin-top: .75rem; padding-top: .75rem; border-top: 1px dashed var(--blue-light); }
+.diagnosis-icon { font-size: 1.1rem; flex-shrink: 0; }
+.diagnosis-desc { font-size: .78rem; color: var(--gray-mid); margin-top: .2rem; line-height: 1.45; }
+.diagnosis-row.equiv strong { color: var(--green-dark); }
+.diagnosis-row.not-equiv strong { color: var(--amber-dark); }
 
 footer { background: var(--blue-dark); color: rgba(255,255,255,.6); text-align: center; padding: 2rem 1.5rem; font-size: .8rem; line-height: 1.7; }
 footer strong { color: rgba(255,255,255,.9); }
@@ -230,6 +283,13 @@ footer strong { color: rgba(255,255,255,.9); }
   </div>
 </div>
 
+<div id="sidebar">
+  <div class="nav-section-label">Indice</div>
+  <a href="#operatori" class="nav-item"><span class="nav-num">1</span> Operatori logici</a>
+  <a href="#tool" class="nav-item"><span class="nav-num">2</span> Strumento interattivo</a>
+  <a href="#definizioni" class="nav-item"><span class="nav-num">3</span> Definizioni</a>
+</div>
+
 <div id="overlay"></div>
 
 <div id="main" style="max-width:1100px;">
@@ -241,7 +301,7 @@ footer strong { color: rgba(255,255,255,.9); }
   </div>
 
   <!-- TEORIA -->
-  <div class="theory-section">
+  <div class="theory-section" id="operatori">
     <div class="theory-eyebrow">Formazione Digitale · Sistemi · Logica</div>
     <div class="theory-title">I 6 operatori della logica booleana</div>
     <p class="theory-desc">Ogni operatore mette in relazione due (o una) affermazioni che possono essere solo Vere (V) o False (F). Qui sotto la tavola di verità di ciascuno, con un esempio per renderlo intuitivo. Sono gli stessi 6 operatori che puoi usare nello strumento qui sotto.</p>
@@ -305,7 +365,7 @@ footer strong { color: rgba(255,255,255,.9); }
 
   <div class="tool-cover">
     <div class="tool-cover-text">
-      <div class="tool-cover-title">Tavola di Verità & Equivalenza Logica</div>
+      <div class="tool-cover-title">Tavola di verità interattiva</div>
       <div class="tool-cover-desc">Scrivi un'espressione booleana, costruisci la sua tavola di verità completa — e, se vuoi, confrontala con una seconda espressione per verificare l'equivalenza.</div>
       <div class="tool-cover-badge">🔒 Calcolo locale nel browser · Nessun dato inviato · Fino a 4 variabili</div>
     </div>
@@ -394,6 +454,14 @@ footer strong { color: rgba(255,255,255,.9); }
         <button class="example-btn" onclick="loadExample('contrapposizione')">Contrapposizione</button>
       </div>
 
+      <div class="mode-toggle-row">
+        <span class="mode-toggle-label">Modalità</span>
+        <div class="mode-toggle-buttons">
+          <button class="btn-mode active" data-mode="lezione" onclick="setMode('lezione')" title="Costruisci la tabella riga per riga con un click alla volta — utile per spiegare il procedimento.">📖 Lezione</button>
+          <button class="btn-mode" data-mode="esercizio" onclick="setMode('esercizio')" title="Tutte le combinazioni sono già pronte: indovina i valori V/F di ogni riga e ricevi una correzione immediata.">✏️ Esercizio</button>
+        </div>
+      </div>
+
       <div class="btn-row">
         <button class="btn-build" onclick="generateTable()">Costruisci tabella di verità</button>
         <button class="btn-clear" onclick="clearAll()">Pulisci</button>
@@ -406,6 +474,53 @@ footer strong { color: rgba(255,255,255,.9); }
         <p>Scrivi un'espressione e clicca<br><strong>Costruisci tabella di verità</strong></p>
       </div>
       <div id="output-content" style="display:none;"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="concepts-section" id="definizioni">
+
+  <div id="diagnosis-box" class="diagnosis-box">
+    <p class="diagnosis-placeholder" id="diagnosis-placeholder">Costruisci o completa una tabella qui sopra per vedere la sua classificazione (tautologia, contraddizione, contingente) ed eventualmente l'esito del confronto con G.</p>
+    <div class="diagnosis-content" id="diagnosis-content" style="display:none;"></div>
+  </div>
+
+  <div class="theory-eyebrow">Formazione Digitale · Sistemi · Logica</div>
+  <div class="theory-title" style="font-size:clamp(1.3rem,2.5vw,1.7rem);">Tautologia, contraddizione, soddisfacibilità, equivalenza</div>
+  <p class="theory-desc">Cinque concetti chiave per leggere una tabella di verità: dicono che "tipo" di funzione booleana hai costruito, e se due funzioni diverse si comportano sempre allo stesso modo.</p>
+
+  <div class="theory-grid">
+
+    <div class="op-card">
+      <div class="op-card-header"><span class="op-symbol">🟩</span><span class="op-name">Tautologia</span></div>
+      <p class="op-def">Una funzione booleana <strong>sempre vera</strong>, per qualunque combinazione di valori delle sue variabili — la colonna F della tabella è tutta V.</p>
+      <p class="op-example">💬 Esempio: <code>a ∨ ¬a</code> — "piove o non piove" è sempre vero.</p>
+    </div>
+
+    <div class="op-card">
+      <div class="op-card-header"><span class="op-symbol">🟥</span><span class="op-name">Contraddizione</span></div>
+      <p class="op-def">Una funzione booleana <strong>sempre falsa</strong>, per qualunque combinazione di valori — la colonna F è tutta F.</p>
+      <p class="op-example">💬 Esempio: <code>a ∧ ¬a</code> — "piove e non piove contemporaneamente" non è mai vero.</p>
+    </div>
+
+    <div class="op-card">
+      <div class="op-card-header"><span class="op-symbol">🟨</span><span class="op-name">Funzione soddisfacibile</span></div>
+      <p class="op-def">Una funzione booleana vera per <strong>almeno una</strong> combinazione di valori. Attenzione: per questa definizione anche una tautologia è soddisfacibile (è vera ovunque, quindi anche "in almeno un caso"). L'unica funzione <strong>non</strong> soddisfacibile è la contraddizione.</p>
+      <p class="op-example">💬 Esempio: <code>a ∧ b</code> è soddisfacibile (vera quando a e b sono entrambe vere) — ma non è una tautologia, perché non è vera sempre.</p>
+    </div>
+
+    <div class="op-card">
+      <div class="op-card-header"><span class="op-symbol">🔷</span><span class="op-name">Funzione contingente</span></div>
+      <p class="op-def">Una funzione booleana vera per <strong>alcune</strong> combinazioni di valori e falsa per <strong>altre</strong> — non è né una tautologia né una contraddizione. È il caso "intermedio", il più comune nella pratica.</p>
+      <p class="op-example">💬 Esempio: <code>a ∧ b</code> è contingente: vera solo quando a e b sono entrambe vere, falsa in tutti gli altri casi. ⚠️ Alcuni testi usano "soddisfacibile" come sinonimo di "contingente" — non è del tutto preciso (una tautologia è soddisfacibile ma non contingente), ma è una semplificazione che capita spesso di trovare.</p>
+    </div>
+
+    <div class="op-card">
+      <div class="op-card-header"><span class="op-symbol">⇔</span><span class="op-name">Equivalenza tra funzioni</span></div>
+      <p class="op-def">Due funzioni booleane F e G sono equivalenti se hanno <strong>lo stesso valore di verità</strong> per ogni combinazione delle variabili — le colonne F e G coincidono riga per riga.</p>
+      <p class="op-example">💬 Esempio: <code>¬(a ∧ b)</code> e <code>¬a ∨ ¬b</code> sono equivalenti (legge di De Morgan).</p>
     </div>
 
   </div>
@@ -556,6 +671,23 @@ function parseExpression(raw, exprId, errorId) {
   }
 }
 
+// ── STATO MODALITÀ E COSTRUZIONE CORRENTE ─────────────────────────
+let mode = 'lezione';        // 'lezione' | 'esercizio'
+let currentBuild = null;     // { vars, hasG, rows } — calcolato una volta, riusato da entrambe le modalità
+let revealIndex = 0;         // righe già rivelate, modalità lezione
+let exerciseState = null;    // stato risposte, modalità esercizio
+
+function setMode(newMode) {
+  if (mode === newMode) return;
+  mode = newMode;
+  document.querySelectorAll('.btn-mode').forEach(b => b.classList.toggle('active', b.dataset.mode === newMode));
+  document.getElementById('output-content').style.display = 'none';
+  document.getElementById('output-content').innerHTML = '';
+  document.getElementById('output-empty').style.display = 'flex';
+  currentBuild = null;
+  resetDiagnosis();
+}
+
 function generateTable() {
   clearErrors();
   const compareOn = document.getElementById('compare-toggle').checked;
@@ -579,60 +711,242 @@ function generateTable() {
   if (vars.length === 0) { showError('expr-f', 'error-f', 'Nessuna variabile trovata nell\'espressione.'); return; }
   if (vars.length > 4) { showError('expr-f', 'error-f', `Trovate ${vars.length} variabili (${vars.join(', ')}) — il massimo supportato è 4.`); return; }
 
-  renderTable(vars, astF, astG);
+  buildRows(vars, astF, astG);
+  startBuild();
 }
 
-function renderTable(vars, astF, astG) {
+// Calcola tutte le righe della tabella una sola volta e le salva in currentBuild.
+// Sia la modalità Lezione che Esercizio leggono da qui, senza ricalcolare nulla.
+function buildRows(vars, astF, astG) {
   const n = vars.length;
   const rows = [];
-  let allEqual = true;
-  let counterexample = null;
-
   for (let i = 0; i < (1 << n); i++) {
     const env = {};
     vars.forEach((v, idx) => { env[v] = !!((i >> (n - 1 - idx)) & 1); });
-
     const resultF = evalNode(astF, env);
     const resultG = astG ? evalNode(astG, env) : null;
     const diff = astG ? (resultF !== resultG) : false;
-    if (diff) { allEqual = false; if (!counterexample) counterexample = { ...env }; }
     rows.push({ env, resultF, resultG, diff });
   }
+  currentBuild = { vars, hasG: !!astG, rows };
+}
 
-  let html = `<div class="output-header">F(${vars.join(', ')})${astG ? ` &nbsp;vs&nbsp; G(${vars.join(', ')})` : ''}</div>`;
+function startBuild() {
+  document.getElementById('output-empty').style.display = 'none';
+  document.getElementById('output-content').style.display = 'block';
+  resetDiagnosis();
+  if (mode === 'lezione') {
+    renderRevealShell();
+  } else {
+    renderExerciseTable();
+  }
+}
+
+// Intestazione tabella + tbody vuoto, condivisa dalle due modalità
+function tableHeaderHtml(vars, hasG) {
+  let html = `<div class="output-header">F(${vars.join(', ')})${hasG ? ` &nbsp;vs&nbsp; G(${vars.join(', ')})` : ''}</div>`;
   html += '<table class="truth-table"><thead><tr>';
   vars.forEach(v => html += `<th>${v}</th>`);
   html += '<th>F</th>';
-  if (astG) { html += '<th>G</th><th>Δ</th>'; }
-  html += '</tr></thead><tbody>';
+  if (hasG) html += '<th>G</th><th>Δ</th>';
+  html += '</tr></thead><tbody class="truth-tbody"></tbody></table>';
+  return html;
+}
 
-  rows.forEach(row => {
-    html += `<tr class="${row.diff ? 'row-diff' : ''}">`;
-    vars.forEach(v => {
-      const val = row.env[v];
-      html += `<td class="${val ? 'val-true' : 'val-false'}">${val ? 'V' : 'F'}</td>`;
-    });
-    html += `<td class="col-result ${row.resultF ? 'val-true' : 'val-false'}">${row.resultF ? 'V' : 'F'}</td>`;
-    if (astG) {
-      html += `<td class="col-result ${row.resultG ? 'val-true' : 'val-false'}">${row.resultG ? 'V' : 'F'}</td>`;
-      html += `<td>${row.diff ? '✗' : '✓'}</td>`;
-    }
-    html += '</tr>';
-  });
-  html += '</tbody></table>';
+function rowCellsHtml(row, vars) {
+  return vars.map(v => {
+    const val = row.env[v];
+    return `<td class="${val ? 'val-true' : 'val-false'}">${val ? 'V' : 'F'}</td>`;
+  }).join('');
+}
 
-  if (astG) {
+/* ═══════════════════════════════════════════════════
+   MODALITÀ LEZIONE — reveal riga per riga
+═══════════════════════════════════════════════════ */
+function renderRevealShell() {
+  const { vars, hasG, rows } = currentBuild;
+  document.getElementById('output-content').innerHTML = tableHeaderHtml(vars, hasG) +
+    `<div class="reveal-controls">
+      <button class="btn-reveal" id="btn-reveal" onclick="revealNextRow()">▶ Riga successiva (0/${rows.length})</button>
+      <button class="btn-restart-reveal" id="btn-show-all" onclick="completeReveal()">👁 Mostra risultato</button>
+      <button class="btn-restart-reveal" onclick="restartReveal()">↺ Ricomincia</button>
+    </div>`;
+  revealIndex = 0;
+}
+
+function lezioneRowHtml(row, vars, hasG) {
+  let html = `<tr class="row-new ${row.diff ? 'row-diff' : ''}">`;
+  html += rowCellsHtml(row, vars);
+  html += `<td class="col-result ${row.resultF ? 'val-true' : 'val-false'}">${row.resultF ? 'V' : 'F'}</td>`;
+  if (hasG) {
+    html += `<td class="col-result ${row.resultG ? 'val-true' : 'val-false'}">${row.resultG ? 'V' : 'F'}</td>`;
+    html += `<td>${row.diff ? '✗' : '✓'}</td>`;
+  }
+  html += '</tr>';
+  return html;
+}
+
+function revealNextRow() {
+  if (!currentBuild || revealIndex >= currentBuild.rows.length) return;
+  const { vars, hasG, rows } = currentBuild;
+  const row = rows[revealIndex];
+  document.querySelector('#output-content .truth-tbody').insertAdjacentHTML('beforeend', lezioneRowHtml(row, vars, hasG));
+  revealIndex++;
+
+  const btn = document.getElementById('btn-reveal');
+  if (revealIndex < rows.length) {
+    btn.textContent = `▶ Riga successiva (${revealIndex}/${rows.length})`;
+  } else {
+    btn.textContent = '✓ Tabella completa';
+    btn.disabled = true;
+    document.getElementById('btn-show-all').disabled = true;
+    renderDiagnosis();
+  }
+}
+
+// Salta il reveal manuale e mostra subito tutte le righe rimanenti
+function completeReveal() {
+  if (!currentBuild || revealIndex >= currentBuild.rows.length) return;
+  const { vars, hasG, rows } = currentBuild;
+  let html = '';
+  for (let i = revealIndex; i < rows.length; i++) {
+    html += lezioneRowHtml(rows[i], vars, hasG);
+  }
+  document.querySelector('#output-content .truth-tbody').insertAdjacentHTML('beforeend', html);
+  revealIndex = rows.length;
+
+  const btn = document.getElementById('btn-reveal');
+  btn.textContent = '✓ Tabella completa';
+  btn.disabled = true;
+  document.getElementById('btn-show-all').disabled = true;
+  renderDiagnosis();
+}
+
+function restartReveal() {
+  if (!currentBuild) return;
+  document.querySelector('#output-content .truth-tbody').innerHTML = '';
+  revealIndex = 0;
+  const btn = document.getElementById('btn-reveal');
+  btn.disabled = false;
+  btn.textContent = `▶ Riga successiva (0/${currentBuild.rows.length})`;
+  document.getElementById('btn-show-all').disabled = false;
+  resetDiagnosis();
+}
+
+/* ═══════════════════════════════════════════════════
+   MODALITÀ ESERCIZIO — quiz con correzione
+═══════════════════════════════════════════════════ */
+function exerciseCellHtml(rowIndex, col) {
+  return `<td class="col-result cell-exercise" id="cell-${col}-${rowIndex}">
+    <button class="cell-answer-btn" onclick="answerCell(${rowIndex},'${col}',true)">V</button>
+    <button class="cell-answer-btn" onclick="answerCell(${rowIndex},'${col}',false)">F</button>
+  </td>`;
+}
+
+function renderExerciseTable() {
+  const { vars, hasG, rows } = currentBuild;
+  exerciseState = {
+    answers: rows.map(() => ({ F: null, G: null })),
+    correct: 0, answered: 0,
+    total: rows.length * (hasG ? 2 : 1)
+  };
+
+  const bodyHtml = rows.map((row, i) => {
+    let tr = '<tr>' + rowCellsHtml(row, vars) + exerciseCellHtml(i, 'F');
+    if (hasG) tr += exerciseCellHtml(i, 'G') + `<td class="exercise-delta" id="delta-${i}">—</td>`;
+    return tr + '</tr>';
+  }).join('');
+
+  document.getElementById('output-content').innerHTML = tableHeaderHtml(vars, hasG) +
+    `<div class="exercise-controls">
+      <div class="exercise-counter" id="exercise-counter">Corrette: 0/${exerciseState.total}</div>
+      <button class="btn-restart-reveal" onclick="retryExercise()">↺ Riprova</button>
+    </div>`;
+
+  document.querySelector('#output-content .truth-tbody').innerHTML = bodyHtml;
+}
+
+function answerCell(rowIndex, col, value) {
+  if (!exerciseState || !currentBuild) return;
+  if (exerciseState.answers[rowIndex][col] !== null) return; // già risposto, ignora
+
+  const row = currentBuild.rows[rowIndex];
+  const real = col === 'F' ? row.resultF : row.resultG;
+  const correct = value === real;
+
+  exerciseState.answers[rowIndex][col] = value;
+  exerciseState.answered++;
+  if (correct) exerciseState.correct++;
+
+  const cell = document.getElementById(`cell-${col}-${rowIndex}`);
+  cell.textContent = value ? 'V' : 'F';
+  cell.classList.add(correct ? 'cell-correct' : 'cell-wrong');
+
+  if (currentBuild.hasG && exerciseState.answers[rowIndex].F !== null && exerciseState.answers[rowIndex].G !== null) {
+    document.getElementById(`delta-${rowIndex}`).textContent = row.diff ? '✗' : '✓';
+  }
+
+  const counter = document.getElementById('exercise-counter');
+  counter.textContent = `Corrette: ${exerciseState.correct}/${exerciseState.total}`;
+
+  if (exerciseState.answered === exerciseState.total) {
+    counter.textContent += ' — esercizio completato 🎉';
+    renderDiagnosis();
+  }
+}
+
+function retryExercise() {
+  if (!currentBuild) return;
+  renderExerciseTable();
+  resetDiagnosis();
+}
+
+/* ═══════════════════════════════════════════════════
+   DIAGNOSI DINAMICA — tautologia / contraddizione / contingente / equivalenza
+═══════════════════════════════════════════════════ */
+function renderDiagnosis() {
+  if (!currentBuild) return;
+  const { vars, hasG, rows } = currentBuild;
+
+  const allTrue = rows.every(r => r.resultF);
+  const allFalse = rows.every(r => !r.resultF);
+  let sentence, icon, desc;
+  if (allTrue) {
+    sentence = 'F è una tautologia.'; icon = '🟩';
+    desc = 'È sempre vera, indipendentemente dai valori delle variabili.';
+  } else if (allFalse) {
+    sentence = 'F è una contraddizione.'; icon = '🟥';
+    desc = 'È sempre falsa, indipendentemente dai valori delle variabili.';
+  } else {
+    sentence = 'F è contingente.'; icon = '🟨';
+    desc = 'È vera per alcune combinazioni e falsa per altre — non è né una tautologia né una contraddizione. (È comunque "soddisfacibile", visto che è vera in almeno un caso.)';
+  }
+
+  let html = `<div class="diagnosis-row"><span class="diagnosis-icon">${icon}</span><div><strong>${sentence}</strong><div class="diagnosis-desc">${desc}</div></div></div>`;
+
+  if (hasG) {
+    const allEqual = rows.every(r => !r.diff);
     if (allEqual) {
-      html += `<div class="verdict-badge equiv">✅ Le due espressioni sono EQUIVALENTI — stesso risultato su tutte le ${rows.length} combinazioni.</div>`;
+      html += `<div class="diagnosis-row equiv"><span class="diagnosis-icon">✅</span><div><strong>F e G sono EQUIVALENTI.</strong><div class="diagnosis-desc">Stesso risultato su tutte le ${rows.length} combinazioni.</div></div></div>`;
     } else {
-      const ceStr = vars.map(v => `${v}=${counterexample[v] ? 'V' : 'F'}`).join(', ');
-      html += `<div class="verdict-badge not-equiv">❌ Le due espressioni NON sono equivalenti.<div class="verdict-counterexample">Controesempio: con ${ceStr} → F dà un risultato diverso da G.</div></div>`;
+      const ce = rows.find(r => r.diff);
+      const ceStr = vars.map(v => `${v}=${ce.env[v] ? 'V' : 'F'}`).join(', ');
+      html += `<div class="diagnosis-row not-equiv"><span class="diagnosis-icon">❌</span><div><strong>F e G NON sono equivalenti.</strong><div class="diagnosis-desc">Controesempio: con ${ceStr} → F e G danno risultati diversi.</div></div></div>`;
     }
   }
 
-  document.getElementById('output-content').innerHTML = html;
-  document.getElementById('output-content').style.display = 'block';
-  document.getElementById('output-empty').style.display = 'none';
+  document.getElementById('diagnosis-content').innerHTML = html;
+  document.getElementById('diagnosis-content').style.display = 'block';
+  document.getElementById('diagnosis-placeholder').style.display = 'none';
+}
+
+function resetDiagnosis() {
+  const content = document.getElementById('diagnosis-content');
+  const placeholder = document.getElementById('diagnosis-placeholder');
+  if (!content || !placeholder) return;
+  content.style.display = 'none';
+  content.innerHTML = '';
+  placeholder.style.display = 'block';
 }
 
 function clearAll() {
@@ -644,7 +958,12 @@ function clearAll() {
   document.getElementById('output-content').style.display = 'none';
   document.getElementById('output-content').innerHTML = '';
   document.getElementById('output-empty').style.display = 'flex';
+  currentBuild = null;
+  revealIndex = 0;
+  exerciseState = null;
+  resetDiagnosis();
 }
+
 </script>
 </body>
 </html>
