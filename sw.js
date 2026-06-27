@@ -4,7 +4,7 @@
 //  per forzare l'aggiornamento della cache su tutti i client.
 // ════════════════════════════════════════════════════════════════
 
-const CACHE_VERSION = 'fd-v2026-06-25';
+const CACHE_VERSION = 'fd-v2026-06-27';
 
 // Risorse da precachare all'installazione (shell dell'app)
 const PRECACHE = [
