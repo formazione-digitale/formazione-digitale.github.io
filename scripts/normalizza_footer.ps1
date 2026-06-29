@@ -1,4 +1,4 @@
-# normalizza_footer.ps1
+﻿# normalizza_footer.ps1
 # Sostituisce il blocco <footer>...</footer> in tutti i file HTML del repo
 # con il template canonico, rispettando i casi speciali.
 # Crea backup .bak prima di ogni modifica.
@@ -18,8 +18,19 @@ $escludi = @(
     'database\guida-modello-logico\index.html'
 )
 
+# ── Path che sono "strumento" ma il nome cartella non lo rivela
+#    (il regex sotto non può indovinarlo dal nome) — aggiungere qui
+#    ogni volta che un nuovo strumento ha un path "non parlante" ─────
+$strumentiEspliciti = @(
+    'sistemi\logica-booleana\index.html',
+    'sistemi\alberi-di-parsing\index.html'
+)
+
 # ── Determina tipo risorsa → descrizione ─────────────────────────
 function Get-Descrizione($percorsoRelativo) {
+    if ($strumentiEspliciti -contains $percorsoRelativo) {
+        return 'Strumento didattico libero e gratuito. I dati inseriti non vengono salvati né trasmessi.'
+    }
     if ($percorsoRelativo -match 'strumento|tool|calculator|kanban|analizzatore|builder|subnet') {
         return 'Strumento didattico libero e gratuito. I dati inseriti non vengono salvati né trasmessi.'
     }
@@ -36,7 +47,7 @@ function Get-FooterCanonico($descrizione) {
   <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
   $descrizione
   <p style="margin-top:.5rem;font-size:.78rem;">
-    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp;
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
     <a href="/cookie-policy.html">Cookie Policy</a>
   </p>
 </footer>

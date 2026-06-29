@@ -888,6 +888,44 @@
 		]
 	},
 	{
+		"path": "/sistemi/alberi-di-parsing/",
+		"label": "Alberi di Parsing per Funzioni Booleane",
+		"short": "Alberi di Parsing",
+		"cat": "strumento",
+		"emoji": "🌳",
+		"tags": [
+			"albero di parsing",
+			"parsing tree",
+			"precedenza degli operatori",
+			"altezza",
+			"lunghezza",
+			"h(f)",
+			"l(f)",
+			"definizione induttiva",
+			"funzione booleana",
+			"ricostruzione bottom-up",
+			"sintassi",
+			"logica",
+			"algebra di boole"
+		],
+		"meta": "Interattivo · Costruzione e ricostruzione bottom-up · Altezza e lunghezza",
+		"description": "Scompone una funzione booleana nel suo albero di parsing secondo la precedenza degli operatori, calcola altezza h(F) e lunghezza l(F) con definizione induttiva, e permette di ricostruire la formula risalendo dalle foglie alla radice.",
+		"featured": false,
+		"active": true,
+		"digcomp": [
+			"DC 3.4",
+			"DC 5.1"
+		],
+		"digcomp_level": "intermediate",
+		"digcomp_areas": [
+			"creazione",
+			"problem-solving"
+		],
+		"digcompedu": [
+			"DCEdu 6.5"
+		]
+	},
+	{
 		"path": "/sistemi/aritmetica-binaria/",
 		"label": "Somma e Sottrazione Binaria",
 		"short": "Aritmetica Binaria",

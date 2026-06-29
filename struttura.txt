@@ -1,5 +1,5 @@
 Elenco del percorso delle cartelle per il volume Acer
-Numero di serie del volume: 00000080-544D:3F7C
+Numero di serie del volume: 000000CB-544D:3F7C
 C:.
 |   .gitignore
 |   .nojekyll
@@ -7,7 +7,6 @@ C:.
 |   aree.json
 |   auth.js
 |   cookie-policy.html
-|   formazione-digitale_20260617_1033.zip
 |   framework.json
 |   index.html
 |   manifest.json
@@ -222,6 +221,9 @@ C:.
 |           index.html
 |           
 +---sistemi
+|   +---alberi-di-parsing
+|   |       index.html
+|   |       
 |   +---algoritmi-scheduling
 |   |       index.html
 |   |       

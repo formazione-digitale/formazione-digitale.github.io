@@ -7,7 +7,9 @@ Uso:
     python replace_in_files.py
 
 Personalizza TROVA e SOSTITUISCI nelle costanti qui sotto.
-Lo script è idempotente: se TROVA non è presente ma SOSTITUISCI sì, salta il file.
+Lo script è idempotente: se applicare la sostituzione non cambia il
+contenuto del file, lo salta (confronto diretto, non basato su
+substring-check — vedi nota più sotto).
 """
 
 import os
@@ -41,7 +43,15 @@ def find_html_files(root):
 def process_file(filepath):
     """
     Cerca TROVA nel file e lo sostituisce con SOSTITUISCI.
-    Restituisce: 'ok', 'skip' (già sostituito), 'not_found', 'error'
+    Restituisce: 'ok', 'skip' (TROVA assente, nulla da fare), 'error'
+
+    NOTA: l'idempotenza è verificata applicando davvero la sostituzione
+    e confrontando il risultato con l'originale — NON controllando se
+    SOSTITUISCI è già presente nel testo. Quel controllo si rompe ogni
+    volta che SOSTITUISCI è una sottostringa di TROVA (es. TROVA='Â·',
+    SOSTITUISCI='·' — '·' è sempre presente se 'Â·' lo è, quindi il
+    vecchio controllo segnalava "già sostituito" anche quando non era
+    mai stato sostituito nulla).
     """
     try:
         with open(filepath, 'r', encoding='utf-8-sig') as f:
@@ -49,16 +59,13 @@ def process_file(filepath):
     except Exception as e:
         return 'error', str(e)
 
-    # Già sostituito — idempotenza
-    if SOSTITUISCI in content:
+    if TROVA not in content:
         return 'skip', None
 
-    # TROVA non presente
-    if TROVA not in content:
-        return 'not_found', None
-
-    # Sostituisce
     new_content = content.replace(TROVA, SOSTITUISCI)
+
+    if new_content == content:
+        return 'skip', None
 
     try:
         with open(filepath, 'w', encoding='utf-8') as f:
@@ -78,7 +85,7 @@ def main():
     files = find_html_files(ROOT)
     print(f"File HTML trovati: {len(files)}\n")
 
-    stats = {'ok': 0, 'skip': 0, 'not_found': 0, 'error': 0}
+    stats = {'ok': 0, 'skip': 0, 'error': 0}
 
     for filepath in files:
         rel = os.path.relpath(filepath, ROOT)
@@ -87,24 +94,19 @@ def main():
         if result == 'ok':
             print(f"  ✅  OK        {rel}")
         elif result == 'skip':
-            print(f"  ⏭   SKIP      {rel}  (già sostituito)")
-        elif result == 'not_found':
-            print(f"  ⚠️   NOT FOUND  {rel}  (TROVA non trovato)")
+            print(f"  ⏭   SKIP      {rel}")
         elif result == 'error':
             print(f"  ❌  ERROR     {rel}  → {detail}")
 
         stats[result] += 1
 
     print("-" * 70)
-    print(f"Riepilogo: {stats['ok']} OK · {stats['skip']} SKIP · "
-          f"{stats['not_found']} NOT FOUND · {stats['error']} ERROR")
+    print(f"Riepilogo: {stats['ok']} OK · {stats['skip']} SKIP · {stats['error']} ERROR")
 
-    if stats['not_found'] > 0:
-        print("\n⚠️  I file NOT FOUND non contengono TROVA — verifica manualmente.")
     if stats['error'] > 0:
         print("\n❌  Alcuni file hanno generato errori — controlla i permessi.")
-    if stats['ok'] == 0 and stats['not_found'] == 0:
-        print("\nℹ️  Nessuna modifica necessaria — tutto già aggiornato.")
+    if stats['ok'] == 0:
+        print("\nℹ️  Nessuna modifica necessaria — TROVA non presente in nessun file.")
 
 
 if __name__ == '__main__':
