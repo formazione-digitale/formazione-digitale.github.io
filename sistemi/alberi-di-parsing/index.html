@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Albero di Parsing — Formazione Digitale</title>
 
-<meta name="description" content="Teoria e pratica dell'albero di parsing per espressioni booleane: precedenza degli operatori, altezza h(F) e lunghezza l(F) con definizione induttiva, costruzione interattiva dell'albero e ricostruzione bottom-up della formula a partire dalle foglie.">
+<meta name="description" content="Costruisci l'albero di parsing di una funzione booleana, calcola altezza h(F) e lunghezza l(F), e ricostruisci la formula risalendo dalle foglie.">
 <meta name="author" content="Cristiano De Pasquale">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://formazione-digitale.it/sistemi/alberi-di-parsing/">
@@ -29,6 +29,29 @@
 <meta name="twitter:description" content="Strumento interattivo per costruire e ricostruire alberi di parsing di espressioni booleane.">
 <meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Albero di Parsing",
+  "description": "Costruisci l'albero di parsing di una funzione booleana, calcola altezza h(F) e lunghezza l(F), e ricostruisci la formula risalendo dalle foglie.",
+  "url": "https://formazione-digitale.it/sistemi/alberi-di-parsing/",
+  "inLanguage": "it",
+  "educationalLevel": "Intermediate",
+  "learningResourceType": "Strumento interattivo",
+  "competencyRequired": ["DC 3.4", "DC 5.1", "DCEdu 6.5"],
+  "author": {
+    "@type": "Person",
+    "name": "Cristiano De Pasquale"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Formazione Digitale",
+    "url": "https://formazione-digitale.it"
+  }
+}
+</script>
+
 <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <link rel="stylesheet" href="/css/shared.css?v=3">
 <style>
@@ -36,70 +59,70 @@
 /* ── ACCESSO RAPIDO (sopra la teoria, visibile senza scroll) ── */
 .quick-intro {
   display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
-  background: var(--blue-pale,#EBF3FC); border: 1.5px solid var(--blue-light,#D6E8F7); border-radius: var(--radius,10px);
+  background: var(--blue-pale); border: 1.5px solid var(--blue-light); border-radius: var(--radius);
   padding: .85rem 1.1rem; margin-top: 1.25rem;
 }
-.quick-intro p { font-size: .85rem; color: var(--blue-dark,#1F4E79); margin: 0; max-width: 600px; line-height: 1.45; }
+.quick-intro p { font-size: .85rem; color: var(--blue-dark); margin: 0; max-width: 600px; line-height: 1.45; }
 .quick-cta {
-  flex-shrink: 0; background: var(--blue-dark,#1F4E79); color: #fff; text-decoration: none;
+  flex-shrink: 0; background: var(--blue-dark); color: #fff; text-decoration: none;
   font-size: .82rem; font-weight: 600; padding: .55rem 1rem; border-radius: 7px;
   transition: background .15s ease; white-space: nowrap;
 }
-.quick-cta:hover { background: var(--blue-mid,#2E75B6); }
+.quick-cta:hover { background: var(--blue-mid); }
 
 /* ── SEZIONE TEORIA ── */
 .theory-section { margin-top: 1.5rem; }
 .theory-eyebrow {
   font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
-  color: var(--blue-mid,#2E75B6); margin-bottom: .4rem;
+  color: var(--blue-mid); margin-bottom: .4rem;
 }
 .theory-title {
-  font-family: var(--font-display, serif); font-size: clamp(1.5rem, 3vw, 2rem);
-  color: var(--blue-dark,#1F4E79); line-height: 1.2; margin-bottom: .5rem;
+  font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--blue-dark); line-height: 1.2; margin-bottom: .5rem;
 }
-.theory-desc { font-size: .92rem; color: var(--gray-mid,#888); line-height: 1.55; max-width: 680px; margin-bottom: 1.5rem; }
+.theory-desc { font-size: .92rem; color: var(--gray-mid); line-height: 1.55; max-width: 680px; margin-bottom: 1.5rem; }
 
 .theory-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
 @media(max-width:700px) { .theory-grid { grid-template-columns: 1fr; } }
 
 .op-card {
-  background: #fff; border: 1.5px solid var(--blue-light,#D6E8F7); border-radius: var(--radius,10px);
+  background: #fff; border: 1.5px solid var(--blue-light); border-radius: var(--radius);
   padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: .6rem;
 }
 .op-card-header { display: flex; align-items: center; gap: .55rem; }
 .op-symbol {
   font-family: monospace; font-size: 1.4rem; font-weight: 700; color: #fff;
-  background: var(--blue-dark,#1F4E79); width: 38px; height: 38px; border-radius: 8px;
+  background: var(--blue-dark); width: 38px; height: 38px; border-radius: 8px;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
-.op-name { font-size: .92rem; font-weight: 700; color: var(--blue-dark,#1F4E79); }
-.op-def { font-size: .82rem; color: var(--gray-dark,#333); line-height: 1.45; margin: 0; }
-.op-example { font-size: .78rem; color: var(--gray-mid,#888); line-height: 1.45; margin: 0; font-style: italic; }
+.op-name { font-size: .92rem; font-weight: 700; color: var(--blue-dark); }
+.op-def { font-size: .82rem; color: var(--gray-dark); line-height: 1.45; margin: 0; }
+.op-example { font-size: .78rem; color: var(--gray-mid); line-height: 1.45; margin: 0; font-style: italic; }
 
 .mini-truth-table { border-collapse: collapse; font-size: .82rem; align-self: flex-start; }
 .mini-truth-table th, .mini-truth-table td {
-  border: 1px solid var(--blue-light,#D6E8F7); padding: .25rem .6rem; text-align: center; font-family: monospace;
+  border: 1px solid var(--blue-light); padding: .25rem .6rem; text-align: center; font-family: monospace;
 }
-.mini-truth-table th { background: var(--blue-pale,#EBF3FC); color: var(--blue-dark,#1F4E79); }
+.mini-truth-table th { background: var(--blue-pale); color: var(--blue-dark); }
 
 .theory-cta { text-align: center; margin: 1.75rem 0 .5rem; }
 .theory-cta a {
   display: inline-flex; align-items: center; gap: .4rem; font-size: .88rem; font-weight: 600;
-  color: var(--blue-mid,#2E75B6); text-decoration: none; border-bottom: 1.5px solid var(--blue-light,#D6E8F7); padding-bottom: 2px;
+  color: var(--blue-mid); text-decoration: none; border-bottom: 1.5px solid var(--blue-light); padding-bottom: 2px;
 }
-.theory-cta a:hover { border-color: var(--blue-mid,#2E75B6); }
+.theory-cta a:hover { border-color: var(--blue-mid); }
 
 /* ── Illustrazione statica nella teoria ── */
 .static-tree-figure { display: flex; flex-direction: column; align-items: center; gap: .5rem; padding: .5rem 0; }
 .static-tree-figure svg text { font-family: monospace; font-size: 14px; fill: #fff; text-anchor: middle; }
-.static-tree-figure circle { fill: var(--blue-mid,#2E75B6); stroke: var(--blue-dark,#1F4E79); stroke-width: 1.5; }
-.static-tree-figure circle.leaf { fill: var(--green-dark,#2E7D32); }
-.static-tree-figure line { stroke: var(--blue-light,#D6E8F7); stroke-width: 2; }
-.static-tree-caption { font-size: .78rem; color: var(--gray-mid,#888); font-style: italic; text-align: center; }
+.static-tree-figure circle { fill: var(--blue-mid); stroke: var(--blue-dark); stroke-width: 1.5; }
+.static-tree-figure circle.leaf { fill: var(--green-dark); }
+.static-tree-figure line { stroke: var(--blue-light); stroke-width: 2; }
+.static-tree-caption { font-size: .78rem; color: var(--gray-mid); font-style: italic; text-align: center; }
 
 /* ── WRAPPER UNICO cover + tool (riusato identico) ── */
 .tool-wrapper {
-  background: #fff; border: 2px solid #D6E8F7; border-radius: var(--radius,10px);
+  background: #fff; border: 2px solid #D6E8F7; border-radius: var(--radius);
   overflow: hidden; margin-top: 2.25rem;
 }
 .tool-cover {
@@ -109,7 +132,7 @@
   gap: 1rem; flex-wrap: wrap;
 }
 .tool-cover-title {
-  font-family: var(--font-display, serif); font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+  font-family: var(--font-display); font-size: clamp(1.3rem, 2.5vw, 1.7rem);
   color: #fff; line-height: 1.2; margin-bottom: .25rem;
 }
 .tool-cover-desc { font-size: .85rem; color: rgba(255,255,255,.8); line-height: 1.5; }
@@ -125,13 +148,13 @@
 
 .expr-block { display: flex; flex-direction: column; gap: .5rem; }
 .expr-label-row { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
-.expr-label { font-size: .82rem; font-weight: 600; color: var(--blue-dark,#1F4E79); }
+.expr-label { font-size: .82rem; font-weight: 600; color: var(--blue-dark); }
 
 .toolbar-group { display: flex; flex-direction: column; gap: .4rem; }
 .toolbar-row { display: flex; align-items: center; gap: .5rem; }
 .toolbar-row-label {
   font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
-  color: var(--gray-mid,#888); width: 64px; flex-shrink: 0;
+  color: var(--gray-mid); width: 64px; flex-shrink: 0;
 }
 .toolbar-buttons { display: flex; gap: .35rem; flex-wrap: wrap; }
 .symbol-btn, .var-btn {
@@ -140,25 +163,25 @@
   border-radius: 7px; cursor: pointer; transition: all .15s ease;
   display: flex; align-items: center; justify-content: center; border: 1.5px solid transparent;
 }
-.symbol-btn { background: var(--blue-pale,#EBF3FC); color: var(--blue-dark,#1F4E79); border-color: #D6E8F7; }
-.symbol-btn:hover { background: var(--blue-mid,#2E75B6); color: #fff; border-color: var(--blue-mid,#2E75B6); }
-.var-btn { background: var(--blue-mid,#2E75B6); color: #fff; font-family: monospace; }
-.var-btn:hover { background: var(--blue-dark,#1F4E79); }
+.symbol-btn { background: var(--blue-pale); color: var(--blue-dark); border-color: #D6E8F7; }
+.symbol-btn:hover { background: var(--blue-mid); color: #fff; border-color: var(--blue-mid); }
+.var-btn { background: var(--blue-mid); color: #fff; font-family: monospace; }
+.var-btn:hover { background: var(--blue-dark); }
 
 .expr-input {
   font-family: monospace; font-size: 1.05rem; padding: .65rem .8rem;
-  border: 1.5px solid #D6E8F7; border-radius: var(--radius,10px);
+  border: 1.5px solid #D6E8F7; border-radius: var(--radius);
   width: 100%; box-sizing: border-box; transition: border-color .15s ease;
 }
-.expr-input:focus { outline: none; border-color: var(--blue-mid,#2E75B6); }
+.expr-input:focus { outline: none; border-color: var(--blue-mid); }
 .expr-input.input-error { border-color: #C0392B; }
 
 .expr-error-msg { font-size: .76rem; color: #C0392B; display: none; }
 .expr-error-msg.visible { display: block; }
-.kbd-legend { font-size: .74rem; color: var(--gray-mid,#888); }
+.kbd-legend { font-size: .74rem; color: var(--gray-mid); }
 .kbd-legend-title { font-weight: 600; margin-bottom: .25rem; }
 .kbd-legend-row { margin: .15rem 0; }
-.kbd-legend code { background: var(--gray-light,#F5F5F5); border-radius: 4px; padding: .05rem .35rem; font-family: monospace; }
+.kbd-legend code { background: var(--gray-light); border-radius: 4px; padding: .05rem .35rem; font-family: monospace; }
 
 .examples-row { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
 .examples-label {
@@ -167,60 +190,60 @@
 .example-btn {
   font-size: .75rem; padding: .28rem .75rem; border-radius: 20px;
   border: 1.5px solid #D6E8F7; background: #fff; color: #1F4E79;
-  cursor: pointer; font-family: var(--font-body, sans-serif); font-weight: 500; transition: all .18s ease;
+  cursor: pointer; font-family: var(--font-body); font-weight: 500; transition: all .18s ease;
 }
 .example-btn:hover { background: #EBF3FC; border-color: #2E75B6; }
 
 .btn-row { display: flex; gap: .6rem; flex-wrap: wrap; }
 .btn-build {
-  flex: 1; background: var(--blue-dark,#1F4E79); color: #fff; border: none;
-  padding: .75rem 1rem; border-radius: var(--radius,10px); font-weight: 600;
+  flex: 1; background: var(--blue-dark); color: #fff; border: none;
+  padding: .75rem 1rem; border-radius: var(--radius); font-weight: 600;
   font-size: .9rem; cursor: pointer; transition: background .15s ease;
 }
-.btn-build:hover { background: var(--blue-mid,#2E75B6); }
+.btn-build:hover { background: var(--blue-mid); }
 .btn-build:disabled { background: #aab; cursor: default; }
 .btn-clear {
-  background: #fff; color: var(--gray-mid,#888); border: 1.5px solid #ddd;
-  padding: .75rem 1rem; border-radius: var(--radius,10px); font-size: .9rem; cursor: pointer;
+  background: #fff; color: var(--gray-mid); border: 1.5px solid #ddd;
+  padding: .75rem 1rem; border-radius: var(--radius); font-size: .9rem; cursor: pointer;
 }
 .btn-clear:hover { border-color: #999; color: #333; }
 
 .output-empty {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  min-height: 260px; background: var(--gray-light,#F5F5F5); border-radius: var(--radius,10px);
-  color: var(--gray-mid,#888); font-size: .85rem; gap: .5rem; text-align: center; padding: 1.5rem;
+  min-height: 260px; background: var(--gray-light); border-radius: var(--radius);
+  color: var(--gray-mid); font-size: .85rem; gap: .5rem; text-align: center; padding: 1.5rem;
 }
 .output-empty-icon { font-size: 1.8rem; opacity: .4; }
-.output-header { font-family: monospace; font-size: 1rem; color: var(--blue-dark,#1F4E79); font-weight: 700; margin-bottom: .5rem; }
+.output-header { font-family: monospace; font-size: 1rem; color: var(--blue-dark); font-weight: 700; margin-bottom: .5rem; }
 
 /* ── ALBERO SVG ── */
-.tree-svg-wrap { overflow-x: auto; background: var(--gray-light,#F5F5F5); border-radius: var(--radius,10px); padding: 1rem; }
+.tree-svg-wrap { overflow-x: auto; background: var(--gray-light); border-radius: var(--radius); padding: 1rem; }
 .tree-svg-wrap svg { display: block; margin: 0 auto; }
 .tree-svg-wrap text { font-family: monospace; font-size: 14px; fill: #fff; text-anchor: middle; pointer-events: none; }
 .tree-edge { stroke: #b9cfe3; stroke-width: 2; }
-.tree-node circle { fill: var(--blue-mid,#2E75B6); stroke: var(--blue-dark,#1F4E79); stroke-width: 1.5; }
-.tree-node-var circle { fill: var(--green-dark,#2E7D32); stroke: #1d5c25; }
-.tree-node-highlight circle { stroke: var(--amber-dark,#C9780C); stroke-width: 3.5; }
-.tree-node-target circle { stroke: var(--blue-mid,#2E75B6); stroke-width: 3; stroke-dasharray: 5 4; animation: pulseTarget 1.3s ease-in-out infinite; }
+.tree-node circle { fill: var(--blue-mid); stroke: var(--blue-dark); stroke-width: 1.5; }
+.tree-node-var circle { fill: var(--green-dark); stroke: #1d5c25; }
+.tree-node-highlight circle { stroke: var(--amber-dark); stroke-width: 3.5; }
+.tree-node-target circle { stroke: var(--blue-mid); stroke-width: 3; stroke-dasharray: 5 4; animation: pulseTarget 1.3s ease-in-out infinite; }
 .tree-node-hidden circle { fill: #c9ccd1; stroke: #9a9ea6; }
 .tree-node-hidden text { fill: #6b6f76; }
 @keyframes pulseTarget { 0%,100% { opacity: 1; } 50% { opacity: .55; } }
 
 .tree-badges { display: flex; gap: .6rem; margin: .85rem 0; flex-wrap: wrap; }
 .tree-badge {
-  background: var(--blue-pale,#EBF3FC); border: 1.5px solid var(--blue-light,#D6E8F7); border-radius: 20px;
-  padding: .4rem .9rem; font-family: monospace; font-size: .85rem; color: var(--blue-dark,#1F4E79); font-weight: 700;
+  background: var(--blue-pale); border: 1.5px solid var(--blue-light); border-radius: 20px;
+  padding: .4rem .9rem; font-family: monospace; font-size: .85rem; color: var(--blue-dark); font-weight: 700;
 }
-.tree-badge .badge-note { font-weight: 400; color: var(--gray-mid,#888); margin-left: .3rem; }
+.tree-badge .badge-note { font-weight: 400; color: var(--gray-mid); margin-left: .3rem; }
 
 .decomp-toggle-btn {
-  background: #fff; color: var(--blue-mid,#2E75B6); border: 1.5px solid var(--blue-light,#D6E8F7);
-  padding: .5rem .9rem; border-radius: var(--radius,10px); font-size: .82rem; cursor: pointer; font-weight: 600;
+  background: #fff; color: var(--blue-mid); border: 1.5px solid var(--blue-light);
+  padding: .5rem .9rem; border-radius: var(--radius); font-size: .82rem; cursor: pointer; font-weight: 600;
 }
-.decomp-toggle-btn:hover { background: var(--blue-pale,#EBF3FC); }
+.decomp-toggle-btn:hover { background: var(--blue-pale); }
 .decomp-lines {
-  font-family: monospace; font-size: .78rem; line-height: 1.7; background: var(--gray-light,#F5F5F5);
-  border-radius: var(--radius,10px); padding: .85rem 1rem; white-space: pre-wrap; color: var(--gray-dark,#333);
+  font-family: monospace; font-size: .78rem; line-height: 1.7; background: var(--gray-light);
+  border-radius: var(--radius); padding: .85rem 1rem; white-space: pre-wrap; color: var(--gray-dark);
   margin-top: .6rem; display: none;
 }
 .decomp-lines.visible { display: block; }
@@ -228,76 +251,76 @@
 /* ── TOGGLE MODALITÀ ricostruzione (stesso pattern Lezione/Esercizio) ── */
 .mode-toggle-row { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
 .mode-toggle-label {
-  font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--gray-mid,#888);
+  font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--gray-mid);
 }
 .mode-toggle-buttons { display: flex; gap: .4rem; }
 .btn-mode {
   font-size: .82rem; font-weight: 600; padding: .4rem .85rem; border-radius: 20px;
-  border: 1.5px solid #D6E8F7; background: #fff; color: var(--blue-dark,#1F4E79); cursor: pointer; transition: all .15s ease;
+  border: 1.5px solid #D6E8F7; background: #fff; color: var(--blue-dark); cursor: pointer; transition: all .15s ease;
 }
-.btn-mode:hover { border-color: var(--blue-mid,#2E75B6); }
-.btn-mode.active { background: var(--blue-dark,#1F4E79); color: #fff; border-color: var(--blue-dark,#1F4E79); }
+.btn-mode:hover { border-color: var(--blue-mid); }
+.btn-mode.active { background: var(--blue-dark); color: #fff; border-color: var(--blue-dark); }
 
-.recon-step-label { font-weight: 700; color: var(--blue-dark,#1F4E79); font-size: .9rem; margin-top: .9rem; }
+.recon-step-label { font-weight: 700; color: var(--blue-dark); font-size: .9rem; margin-top: .9rem; }
 .recon-quiz-block { display: flex; flex-direction: column; gap: .6rem; margin-top: .6rem; }
-.recon-log { font-size: .82rem; color: var(--gray-dark,#333); line-height: 1.5; margin-top: .85rem; max-height: 220px; overflow-y: auto; }
-.recon-log-line { padding: .35rem 0; border-bottom: 1px dashed var(--blue-light,#D6E8F7); }
-.recon-log-line.ok { color: var(--green-dark,#2E7D32); }
+.recon-log { font-size: .82rem; color: var(--gray-dark); line-height: 1.5; margin-top: .85rem; max-height: 220px; overflow-y: auto; }
+.recon-log-line { padding: .35rem 0; border-bottom: 1px dashed var(--blue-light); }
+.recon-log-line.ok { color: var(--green-dark); }
 .recon-log-line.err { color: #C0392B; }
 .recon-complete {
-  background: var(--green-light,#E8F5E9); border: 1.5px solid var(--green-dark,#2E7D32); border-radius: var(--radius,10px);
-  padding: .85rem 1rem; color: var(--green-dark,#2E7D32); font-weight: 700; margin-top: .85rem; font-size: .88rem;
+  background: var(--green-light); border: 1.5px solid var(--green-dark); border-radius: var(--radius);
+  padding: .85rem 1rem; color: var(--green-dark); font-weight: 700; margin-top: .85rem; font-size: .88rem;
 }
 .reveal-controls { display: flex; align-items: center; gap: .6rem; margin-top: .6rem; flex-wrap: wrap; }
 .btn-reveal {
-  background: var(--blue-dark,#1F4E79); color: #fff; border: none; padding: .6rem 1.1rem;
-  border-radius: var(--radius,10px); font-weight: 600; font-size: .85rem; cursor: pointer; transition: background .15s ease;
+  background: var(--blue-dark); color: #fff; border: none; padding: .6rem 1.1rem;
+  border-radius: var(--radius); font-weight: 600; font-size: .85rem; cursor: pointer; transition: background .15s ease;
 }
-.btn-reveal:hover:not(:disabled) { background: var(--blue-mid,#2E75B6); }
+.btn-reveal:hover:not(:disabled) { background: var(--blue-mid); }
 .btn-reveal:disabled { background: #ccc; cursor: default; }
 .btn-restart-reveal {
-  background: #fff; color: var(--gray-mid,#888); border: 1.5px solid #ddd; padding: .6rem .9rem;
-  border-radius: var(--radius,10px); font-size: .85rem; cursor: pointer;
+  background: #fff; color: var(--gray-mid); border: 1.5px solid #ddd; padding: .6rem .9rem;
+  border-radius: var(--radius); font-size: .85rem; cursor: pointer;
 }
 .btn-restart-reveal:hover { border-color: #999; color: #333; }
 
 /* ── NOTA / CALLOUT ── */
 .note-box {
-  background: var(--blue-pale,#EBF3FC); border-left: 4px solid var(--blue-mid,#2E75B6); border-radius: var(--radius,10px);
-  padding: .85rem 1.1rem; font-size: .85rem; color: var(--gray-dark,#333); line-height: 1.5; margin: 1.25rem 0;
+  background: var(--blue-pale); border-left: 4px solid var(--blue-mid); border-radius: var(--radius);
+  padding: .85rem 1.1rem; font-size: .85rem; color: var(--gray-dark); line-height: 1.5; margin: 1.25rem 0;
 }
-.note-box strong { color: var(--blue-dark,#1F4E79); }
+.note-box strong { color: var(--blue-dark); }
 
 .concepts-section { margin-top: 2.5rem; }
 
 /* ── ESERCIZIO: formula casuale, foresta di pezzi ── */
-.exercise-config { display: flex; flex-direction: column; gap: .75rem; background: var(--gray-light,#F5F5F5); border-radius: var(--radius,10px); padding: 1rem 1.1rem; }
+.exercise-config { display: flex; flex-direction: column; gap: .75rem; background: var(--gray-light); border-radius: var(--radius); padding: 1rem 1.1rem; }
 .exercise-config-row { display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap; }
 .exercise-field { display: flex; align-items: center; gap: .5rem; }
 .exercise-select {
-  font-family: var(--font-body, sans-serif); font-size: .85rem; padding: .35rem .6rem;
-  border: 1.5px solid #D6E8F7; border-radius: 7px; background: #fff; color: var(--blue-dark,#1F4E79);
+  font-family: var(--font-body); font-size: .85rem; padding: .35rem .6rem;
+  border: 1.5px solid #D6E8F7; border-radius: 7px; background: #fff; color: var(--blue-dark);
 }
 .op-checkbox {
   display: flex; align-items: center; gap: .3rem; font-family: monospace; font-size: 1rem;
-  color: var(--blue-dark,#1F4E79); cursor: pointer; user-select: none;
+  color: var(--blue-dark); cursor: pointer; user-select: none;
 }
 .op-checkbox input { cursor: pointer; }
 
-.exercise-hint { font-size: .82rem; color: var(--gray-mid,#888); margin: .3rem 0 .75rem; }
+.exercise-hint { font-size: .82rem; color: var(--gray-mid); margin: .3rem 0 .75rem; }
 
 .forest-wrap { display: flex; }
 .forest-row { display: flex; align-items: flex-end; gap: 1.25rem; flex-wrap: wrap; margin: 0 auto; }
-.forest-piece { cursor: pointer; border-radius: var(--radius,10px); padding: .35rem; transition: background .15s ease; border: 2px solid transparent; }
+.forest-piece { cursor: pointer; border-radius: var(--radius); padding: .35rem; transition: background .15s ease; border: 2px solid transparent; }
 .forest-piece:hover { background: rgba(46,117,182,.08); }
-.forest-piece.selected { background: var(--blue-pale,#EBF3FC); border-color: var(--blue-mid,#2E75B6); }
+.forest-piece.selected { background: var(--blue-pale); border-color: var(--blue-mid); }
 
 .op-picker-row { display: flex; gap: .5rem; margin: 1rem 0 .5rem; flex-wrap: wrap; }
 .op-picker-row .symbol-btn { width: 42px; height: 42px; font-size: 1.15rem; }
-.op-picker-row .symbol-btn:disabled { opacity: .35; cursor: default; background: var(--blue-pale,#EBF3FC); color: var(--blue-dark,#1F4E79); }
-.op-picker-row .symbol-btn:disabled:hover { background: var(--blue-pale,#EBF3FC); }
+.op-picker-row .symbol-btn:disabled { opacity: .35; cursor: default; background: var(--blue-pale); color: var(--blue-dark); }
+.op-picker-row .symbol-btn:disabled:hover { background: var(--blue-pale); }
 
-footer { background: var(--blue-dark,#1F4E79); color: rgba(255,255,255,.6); text-align: center; padding: 2rem 1.5rem; font-size: .8rem; line-height: 1.7; }
+footer { background: var(--blue-dark); color: rgba(255,255,255,.6); text-align: center; padding: 2rem 1.5rem; font-size: .8rem; line-height: 1.7; }
 footer strong { color: rgba(255,255,255,.9); }
 </style>
 </head>
@@ -334,7 +357,7 @@ footer strong { color: rgba(255,255,255,.9); }
   <!-- TEORIA -->
   <div class="theory-section" id="teoria">
     <div class="theory-eyebrow">Formazione Digitale · Sistemi · Logica</div>
-    <div class="theory-title">Cos'è un albero di parsing</div>
+    <h1 class="theory-title">Cos'è un albero di parsing</h1>
     <p class="theory-desc">Una formula booleana non è solo una stringa di simboli: ha una struttura ad albero che rispecchia l'ordine in cui gli operatori vengono effettivamente applicati. La radice è sempre l'operatore applicato per <strong>ultimo</strong> (quello a precedenza più bassa, fuori da ogni parentesi); le foglie sono variabili o costanti.</p>
 
     <div class="op-card" style="margin-bottom:1.5rem;">
@@ -378,6 +401,15 @@ footer strong { color: rgba(255,255,255,.9); }
     <div class="note-box">
       <strong>Attenzione all'associatività.</strong> Quando lo stesso operatore si ripete senza parentesi, l'ordine con cui si raggruppa non è sempre "da sinistra". In questo strumento: ∧, ∨, ⊕, ↔ si raggruppano da sinistra (es. a∧b∧c = (a∧b)∧c), mentre → si raggruppa da <strong>destra</strong> (es. a→b→c = a→(b→c)) — è una convenzione standard in logica, ma è facile sbagliarla se non la si conosce.
     </div>
+
+    <a class="related-link" href="/sistemi/logica-booleana/">
+      <div class="related-link-icon">🧮</div>
+      <div class="related-link-text">
+        <strong>Non hai ancora costruito la tabella di verità della tua funzione?</strong>
+        <span>Lo strumento Tavola di Verità & Equivalenza Logica calcola F per ogni combinazione di valori e ne verifica l'equivalenza con un'altra funzione.</span>
+      </div>
+      <div class="related-link-arrow">→</div>
+    </a>
 
     <div class="theory-cta"><a href="#tool">Prova lo strumento interattivo ↓</a></div>
   </div>
