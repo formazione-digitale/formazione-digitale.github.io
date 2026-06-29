@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Albero di Parsing — Formazione Digitale</title>
+
+<meta name="description" content="Teoria e pratica dell'albero di parsing per espressioni booleane: precedenza degli operatori, altezza h(F) e lunghezza l(F) con definizione induttiva, costruzione interattiva dell'albero e ricostruzione bottom-up della formula a partire dalle foglie.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://formazione-digitale.it/sistemi/alberi-di-parsing/">
+<link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="//gc.zgo.at">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#1F4E79">
+
+<meta property="og:title" content="Albero di Parsing — Formazione Digitale">
+<meta property="og:description" content="Costruisci l'albero di parsing di un'espressione booleana, calcola altezza e lunghezza, e impara a ricostruire la formula risalendo dalle foglie alla radice.">
+<meta property="og:url" content="https://formazione-digitale.it/sistemi/alberi-di-parsing/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Albero di Parsing — Formazione Digitale">
+<meta name="twitter:description" content="Strumento interattivo per costruire e ricostruire alberi di parsing di espressioni booleane.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="stylesheet" href="/css/shared.css?v=3">
+<style>
+
+/* ── ACCESSO RAPIDO (sopra la teoria, visibile senza scroll) ── */
+.quick-intro {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+  background: var(--blue-pale,#EBF3FC); border: 1.5px solid var(--blue-light,#D6E8F7); border-radius: var(--radius,10px);
+  padding: .85rem 1.1rem; margin-top: 1.25rem;
+}
+.quick-intro p { font-size: .85rem; color: var(--blue-dark,#1F4E79); margin: 0; max-width: 600px; line-height: 1.45; }
+.quick-cta {
+  flex-shrink: 0; background: var(--blue-dark,#1F4E79); color: #fff; text-decoration: none;
+  font-size: .82rem; font-weight: 600; padding: .55rem 1rem; border-radius: 7px;
+  transition: background .15s ease; white-space: nowrap;
+}
+.quick-cta:hover { background: var(--blue-mid,#2E75B6); }
+
+/* ── SEZIONE TEORIA ── */
+.theory-section { margin-top: 1.5rem; }
+.theory-eyebrow {
+  font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--blue-mid,#2E75B6); margin-bottom: .4rem;
+}
+.theory-title {
+  font-family: var(--font-display, serif); font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--blue-dark,#1F4E79); line-height: 1.2; margin-bottom: .5rem;
+}
+.theory-desc { font-size: .92rem; color: var(--gray-mid,#888); line-height: 1.55; max-width: 680px; margin-bottom: 1.5rem; }
+
+.theory-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+@media(max-width:700px) { .theory-grid { grid-template-columns: 1fr; } }
+
+.op-card {
+  background: #fff; border: 1.5px solid var(--blue-light,#D6E8F7); border-radius: var(--radius,10px);
+  padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: .6rem;
+}
+.op-card-header { display: flex; align-items: center; gap: .55rem; }
+.op-symbol {
+  font-family: monospace; font-size: 1.4rem; font-weight: 700; color: #fff;
+  background: var(--blue-dark,#1F4E79); width: 38px; height: 38px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.op-name { font-size: .92rem; font-weight: 700; color: var(--blue-dark,#1F4E79); }
+.op-def { font-size: .82rem; color: var(--gray-dark,#333); line-height: 1.45; margin: 0; }
+.op-example { font-size: .78rem; color: var(--gray-mid,#888); line-height: 1.45; margin: 0; font-style: italic; }
+
+.mini-truth-table { border-collapse: collapse; font-size: .82rem; align-self: flex-start; }
+.mini-truth-table th, .mini-truth-table td {
+  border: 1px solid var(--blue-light,#D6E8F7); padding: .25rem .6rem; text-align: center; font-family: monospace;
+}
+.mini-truth-table th { background: var(--blue-pale,#EBF3FC); color: var(--blue-dark,#1F4E79); }
+
+.theory-cta { text-align: center; margin: 1.75rem 0 .5rem; }
+.theory-cta a {
+  display: inline-flex; align-items: center; gap: .4rem; font-size: .88rem; font-weight: 600;
+  color: var(--blue-mid,#2E75B6); text-decoration: none; border-bottom: 1.5px solid var(--blue-light,#D6E8F7); padding-bottom: 2px;
+}
+.theory-cta a:hover { border-color: var(--blue-mid,#2E75B6); }
+
+/* ── Illustrazione statica nella teoria ── */
+.static-tree-figure { display: flex; flex-direction: column; align-items: center; gap: .5rem; padding: .5rem 0; }
+.static-tree-figure svg text { font-family: monospace; font-size: 14px; fill: #fff; text-anchor: middle; }
+.static-tree-figure circle { fill: var(--blue-mid,#2E75B6); stroke: var(--blue-dark,#1F4E79); stroke-width: 1.5; }
+.static-tree-figure circle.leaf { fill: var(--green-dark,#2E7D32); }
+.static-tree-figure line { stroke: var(--blue-light,#D6E8F7); stroke-width: 2; }
+.static-tree-caption { font-size: .78rem; color: var(--gray-mid,#888); font-style: italic; text-align: center; }
+
+/* ── WRAPPER UNICO cover + tool (riusato identico) ── */
+.tool-wrapper {
+  background: #fff; border: 2px solid #D6E8F7; border-radius: var(--radius,10px);
+  overflow: hidden; margin-top: 2.25rem;
+}
+.tool-cover {
+  background: linear-gradient(135deg, #1F4E79 0%, #2A6099 100%);
+  padding: 1.25rem 1.75rem 1.1rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+}
+.tool-cover-title {
+  font-family: var(--font-display, serif); font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+  color: #fff; line-height: 1.2; margin-bottom: .25rem;
+}
+.tool-cover-desc { font-size: .85rem; color: rgba(255,255,255,.8); line-height: 1.5; }
+.tool-cover-badge { font-size: .72rem; color: rgba(255,255,255,.5); margin-top: .3rem; }
+
+.tool-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; padding: 1.25rem; align-items: start;
+}
+.tool-layout.single-col { grid-template-columns: 1fr; }
+@media(max-width:800px) { .tool-layout { grid-template-columns: 1fr; } }
+
+.input-panel { display: flex; flex-direction: column; gap: 1rem; }
+
+.expr-block { display: flex; flex-direction: column; gap: .5rem; }
+.expr-label-row { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.expr-label { font-size: .82rem; font-weight: 600; color: var(--blue-dark,#1F4E79); }
+
+.toolbar-group { display: flex; flex-direction: column; gap: .4rem; }
+.toolbar-row { display: flex; align-items: center; gap: .5rem; }
+.toolbar-row-label {
+  font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+  color: var(--gray-mid,#888); width: 64px; flex-shrink: 0;
+}
+.toolbar-buttons { display: flex; gap: .35rem; flex-wrap: wrap; }
+.symbol-btn, .var-btn {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 1rem; font-weight: 600; width: 34px; height: 34px;
+  border-radius: 7px; cursor: pointer; transition: all .15s ease;
+  display: flex; align-items: center; justify-content: center; border: 1.5px solid transparent;
+}
+.symbol-btn { background: var(--blue-pale,#EBF3FC); color: var(--blue-dark,#1F4E79); border-color: #D6E8F7; }
+.symbol-btn:hover { background: var(--blue-mid,#2E75B6); color: #fff; border-color: var(--blue-mid,#2E75B6); }
+.var-btn { background: var(--blue-mid,#2E75B6); color: #fff; font-family: monospace; }
+.var-btn:hover { background: var(--blue-dark,#1F4E79); }
+
+.expr-input {
+  font-family: monospace; font-size: 1.05rem; padding: .65rem .8rem;
+  border: 1.5px solid #D6E8F7; border-radius: var(--radius,10px);
+  width: 100%; box-sizing: border-box; transition: border-color .15s ease;
+}
+.expr-input:focus { outline: none; border-color: var(--blue-mid,#2E75B6); }
+.expr-input.input-error { border-color: #C0392B; }
+
+.expr-error-msg { font-size: .76rem; color: #C0392B; display: none; }
+.expr-error-msg.visible { display: block; }
+.kbd-legend { font-size: .74rem; color: var(--gray-mid,#888); }
+.kbd-legend-title { font-weight: 600; margin-bottom: .25rem; }
+.kbd-legend-row { margin: .15rem 0; }
+.kbd-legend code { background: var(--gray-light,#F5F5F5); border-radius: 4px; padding: .05rem .35rem; font-family: monospace; }
+
+.examples-row { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.examples-label {
+  font-size: .72rem; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: .06em; white-space: nowrap;
+}
+.example-btn {
+  font-size: .75rem; padding: .28rem .75rem; border-radius: 20px;
+  border: 1.5px solid #D6E8F7; background: #fff; color: #1F4E79;
+  cursor: pointer; font-family: var(--font-body, sans-serif); font-weight: 500; transition: all .18s ease;
+}
+.example-btn:hover { background: #EBF3FC; border-color: #2E75B6; }
+
+.btn-row { display: flex; gap: .6rem; flex-wrap: wrap; }
+.btn-build {
+  flex: 1; background: var(--blue-dark,#1F4E79); color: #fff; border: none;
+  padding: .75rem 1rem; border-radius: var(--radius,10px); font-weight: 600;
+  font-size: .9rem; cursor: pointer; transition: background .15s ease;
+}
+.btn-build:hover { background: var(--blue-mid,#2E75B6); }
+.btn-build:disabled { background: #aab; cursor: default; }
+.btn-clear {
+  background: #fff; color: var(--gray-mid,#888); border: 1.5px solid #ddd;
+  padding: .75rem 1rem; border-radius: var(--radius,10px); font-size: .9rem; cursor: pointer;
+}
+.btn-clear:hover { border-color: #999; color: #333; }
+
+.output-empty {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 260px; background: var(--gray-light,#F5F5F5); border-radius: var(--radius,10px);
+  color: var(--gray-mid,#888); font-size: .85rem; gap: .5rem; text-align: center; padding: 1.5rem;
+}
+.output-empty-icon { font-size: 1.8rem; opacity: .4; }
+.output-header { font-family: monospace; font-size: 1rem; color: var(--blue-dark,#1F4E79); font-weight: 700; margin-bottom: .5rem; }
+
+/* ── ALBERO SVG ── */
+.tree-svg-wrap { overflow-x: auto; background: var(--gray-light,#F5F5F5); border-radius: var(--radius,10px); padding: 1rem; }
+.tree-svg-wrap svg { display: block; margin: 0 auto; }
+.tree-svg-wrap text { font-family: monospace; font-size: 14px; fill: #fff; text-anchor: middle; pointer-events: none; }
+.tree-edge { stroke: #b9cfe3; stroke-width: 2; }
+.tree-node circle { fill: var(--blue-mid,#2E75B6); stroke: var(--blue-dark,#1F4E79); stroke-width: 1.5; }
+.tree-node-var circle { fill: var(--green-dark,#2E7D32); stroke: #1d5c25; }
+.tree-node-highlight circle { stroke: var(--amber-dark,#C9780C); stroke-width: 3.5; }
+.tree-node-target circle { stroke: var(--blue-mid,#2E75B6); stroke-width: 3; stroke-dasharray: 5 4; animation: pulseTarget 1.3s ease-in-out infinite; }
+.tree-node-hidden circle { fill: #c9ccd1; stroke: #9a9ea6; }
+.tree-node-hidden text { fill: #6b6f76; }
+@keyframes pulseTarget { 0%,100% { opacity: 1; } 50% { opacity: .55; } }
+
+.tree-badges { display: flex; gap: .6rem; margin: .85rem 0; flex-wrap: wrap; }
+.tree-badge {
+  background: var(--blue-pale,#EBF3FC); border: 1.5px solid var(--blue-light,#D6E8F7); border-radius: 20px;
+  padding: .4rem .9rem; font-family: monospace; font-size: .85rem; color: var(--blue-dark,#1F4E79); font-weight: 700;
+}
+.tree-badge .badge-note { font-weight: 400; color: var(--gray-mid,#888); margin-left: .3rem; }
+
+.decomp-toggle-btn {
+  background: #fff; color: var(--blue-mid,#2E75B6); border: 1.5px solid var(--blue-light,#D6E8F7);
+  padding: .5rem .9rem; border-radius: var(--radius,10px); font-size: .82rem; cursor: pointer; font-weight: 600;
+}
+.decomp-toggle-btn:hover { background: var(--blue-pale,#EBF3FC); }
+.decomp-lines {
+  font-family: monospace; font-size: .78rem; line-height: 1.7; background: var(--gray-light,#F5F5F5);
+  border-radius: var(--radius,10px); padding: .85rem 1rem; white-space: pre-wrap; color: var(--gray-dark,#333);
+  margin-top: .6rem; display: none;
+}
+.decomp-lines.visible { display: block; }
+
+/* ── TOGGLE MODALITÀ ricostruzione (stesso pattern Lezione/Esercizio) ── */
+.mode-toggle-row { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+.mode-toggle-label {
+  font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--gray-mid,#888);
+}
+.mode-toggle-buttons { display: flex; gap: .4rem; }
+.btn-mode {
+  font-size: .82rem; font-weight: 600; padding: .4rem .85rem; border-radius: 20px;
+  border: 1.5px solid #D6E8F7; background: #fff; color: var(--blue-dark,#1F4E79); cursor: pointer; transition: all .15s ease;
+}
+.btn-mode:hover { border-color: var(--blue-mid,#2E75B6); }
+.btn-mode.active { background: var(--blue-dark,#1F4E79); color: #fff; border-color: var(--blue-dark,#1F4E79); }
+
+.recon-step-label { font-weight: 700; color: var(--blue-dark,#1F4E79); font-size: .9rem; margin-top: .9rem; }
+.recon-quiz-block { display: flex; flex-direction: column; gap: .6rem; margin-top: .6rem; }
+.recon-log { font-size: .82rem; color: var(--gray-dark,#333); line-height: 1.5; margin-top: .85rem; max-height: 220px; overflow-y: auto; }
+.recon-log-line { padding: .35rem 0; border-bottom: 1px dashed var(--blue-light,#D6E8F7); }
+.recon-log-line.ok { color: var(--green-dark,#2E7D32); }
+.recon-log-line.err { color: #C0392B; }
+.recon-complete {
+  background: var(--green-light,#E8F5E9); border: 1.5px solid var(--green-dark,#2E7D32); border-radius: var(--radius,10px);
+  padding: .85rem 1rem; color: var(--green-dark,#2E7D32); font-weight: 700; margin-top: .85rem; font-size: .88rem;
+}
+.reveal-controls { display: flex; align-items: center; gap: .6rem; margin-top: .6rem; flex-wrap: wrap; }
+.btn-reveal {
+  background: var(--blue-dark,#1F4E79); color: #fff; border: none; padding: .6rem 1.1rem;
+  border-radius: var(--radius,10px); font-weight: 600; font-size: .85rem; cursor: pointer; transition: background .15s ease;
+}
+.btn-reveal:hover:not(:disabled) { background: var(--blue-mid,#2E75B6); }
+.btn-reveal:disabled { background: #ccc; cursor: default; }
+.btn-restart-reveal {
+  background: #fff; color: var(--gray-mid,#888); border: 1.5px solid #ddd; padding: .6rem .9rem;
+  border-radius: var(--radius,10px); font-size: .85rem; cursor: pointer;
+}
+.btn-restart-reveal:hover { border-color: #999; color: #333; }
+
+/* ── NOTA / CALLOUT ── */
+.note-box {
+  background: var(--blue-pale,#EBF3FC); border-left: 4px solid var(--blue-mid,#2E75B6); border-radius: var(--radius,10px);
+  padding: .85rem 1.1rem; font-size: .85rem; color: var(--gray-dark,#333); line-height: 1.5; margin: 1.25rem 0;
+}
+.note-box strong { color: var(--blue-dark,#1F4E79); }
+
+.concepts-section { margin-top: 2.5rem; }
+
+/* ── ESERCIZIO: formula casuale, foresta di pezzi ── */
+.exercise-config { display: flex; flex-direction: column; gap: .75rem; background: var(--gray-light,#F5F5F5); border-radius: var(--radius,10px); padding: 1rem 1.1rem; }
+.exercise-config-row { display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap; }
+.exercise-field { display: flex; align-items: center; gap: .5rem; }
+.exercise-select {
+  font-family: var(--font-body, sans-serif); font-size: .85rem; padding: .35rem .6rem;
+  border: 1.5px solid #D6E8F7; border-radius: 7px; background: #fff; color: var(--blue-dark,#1F4E79);
+}
+.op-checkbox {
+  display: flex; align-items: center; gap: .3rem; font-family: monospace; font-size: 1rem;
+  color: var(--blue-dark,#1F4E79); cursor: pointer; user-select: none;
+}
+.op-checkbox input { cursor: pointer; }
+
+.exercise-hint { font-size: .82rem; color: var(--gray-mid,#888); margin: .3rem 0 .75rem; }
+
+.forest-wrap { display: flex; }
+.forest-row { display: flex; align-items: flex-end; gap: 1.25rem; flex-wrap: wrap; margin: 0 auto; }
+.forest-piece { cursor: pointer; border-radius: var(--radius,10px); padding: .35rem; transition: background .15s ease; border: 2px solid transparent; }
+.forest-piece:hover { background: rgba(46,117,182,.08); }
+.forest-piece.selected { background: var(--blue-pale,#EBF3FC); border-color: var(--blue-mid,#2E75B6); }
+
+.op-picker-row { display: flex; gap: .5rem; margin: 1rem 0 .5rem; flex-wrap: wrap; }
+.op-picker-row .symbol-btn { width: 42px; height: 42px; font-size: 1.15rem; }
+.op-picker-row .symbol-btn:disabled { opacity: .35; cursor: default; background: var(--blue-pale,#EBF3FC); color: var(--blue-dark,#1F4E79); }
+.op-picker-row .symbol-btn:disabled:hover { background: var(--blue-pale,#EBF3FC); }
+
+footer { background: var(--blue-dark,#1F4E79); color: rgba(255,255,255,.6); text-align: center; padding: 2rem 1.5rem; font-size: .8rem; line-height: 1.7; }
+footer strong { color: rgba(255,255,255,.9); }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div class="header-left">
+    <button id="hamburger"><span></span><span></span><span></span></button>
+    <a href="/index.html" class="header-back">← Portale</a>
+    <div class="header-sep"></div>
+    <span class="header-logo">Albero di Parsing</span>
+    <span class="header-sub">Teoria, costruzione e ricostruzione bottom-up</span>
+  </div>
+</div>
+
+<div id="sidebar">
+  <div class="nav-section-label">Indice</div>
+  <a href="#teoria" class="nav-item"><span class="nav-num">1</span> Cos'è un albero di parsing</a>
+  <a href="#tool" class="nav-item"><span class="nav-num">2</span> Costruisci l'albero</a>
+  <a href="#ricostruzione" class="nav-item"><span class="nav-num">3</span> Ricostruzione bottom-up</a>
+  <a href="#definizioni" class="nav-item"><span class="nav-num">4</span> Definizioni induttive</a>
+</div>
+
+<div id="overlay"></div>
+
+<div id="main" style="max-width:1100px;">
+
+  <!-- ACCESSO RAPIDO -->
+  <div class="quick-intro">
+    <p>Scrivi un'espressione booleana, guarda il suo albero di parsing, calcola altezza h(F) e lunghezza l(F) — e poi prova a ricostruire la formula risalendo dalle foglie alla radice.</p>
+    <a href="#tool" class="quick-cta">Vai allo strumento ↓</a>
+  </div>
+
+  <!-- TEORIA -->
+  <div class="theory-section" id="teoria">
+    <div class="theory-eyebrow">Formazione Digitale · Sistemi · Logica</div>
+    <div class="theory-title">Cos'è un albero di parsing</div>
+    <p class="theory-desc">Una formula booleana non è solo una stringa di simboli: ha una struttura ad albero che rispecchia l'ordine in cui gli operatori vengono effettivamente applicati. La radice è sempre l'operatore applicato per <strong>ultimo</strong> (quello a precedenza più bassa, fuori da ogni parentesi); le foglie sono variabili o costanti.</p>
+
+    <div class="op-card" style="margin-bottom:1.5rem;">
+      <div class="op-card-header"><span class="op-symbol" style="font-size:1rem;">∧</span><span class="op-name">Esempio: a ∧ b</span></div>
+      <div class="static-tree-figure">
+        <svg viewBox="0 0 160 110" width="220" height="150">
+          <line x1="80" y1="28" x2="35" y2="88"></line>
+          <line x1="80" y1="28" x2="125" y2="88"></line>
+          <g class="tree-node"><circle cx="80" cy="28" r="20"></circle><text x="80" y="28" dy="0.32em">∧</text></g>
+          <g class="tree-node"><circle class="leaf" cx="35" cy="88" r="20"></circle><text x="35" y="88" dy="0.32em">a</text></g>
+          <g class="tree-node"><circle class="leaf" cx="125" cy="88" r="20"></circle><text x="125" y="88" dy="0.32em">b</text></g>
+        </svg>
+      </div>
+      <p class="static-tree-caption">La radice ∧ ha due figli: la foglia a (a sinistra) e la foglia b (a destra).</p>
+    </div>
+
+    <div class="theory-grid">
+      <div class="op-card">
+        <div class="op-card-header"><span class="op-symbol">▸</span><span class="op-name">Precedenza degli operatori</span></div>
+        <table class="mini-truth-table">
+          <thead><tr><th>Operatore</th><th>Precedenza</th></tr></thead>
+          <tbody>
+            <tr><td>¬</td><td>più alta</td></tr>
+            <tr><td>∧</td><td>↓</td></tr>
+            <tr><td>∨</td><td>↓</td></tr>
+            <tr><td>⊕</td><td>↓</td></tr>
+            <tr><td>→</td><td>↓</td></tr>
+            <tr><td>↔</td><td>più bassa</td></tr>
+          </tbody>
+        </table>
+        <p class="op-def">La radice dell'albero è sempre l'operatore a precedenza più <strong>bassa</strong> tra quelli non già "chiusi" da parentesi: è l'ultimo che viene applicato leggendo la formula.</p>
+      </div>
+
+      <div class="op-card">
+        <div class="op-card-header"><span class="op-symbol">⎵</span><span class="op-name">Le parentesi vincono sempre</span></div>
+        <p class="op-def">Qualunque sia la precedenza, il contenuto di una coppia di parentesi viene risolto (cioè diventa un sotto-albero completo) prima di essere combinato con il resto della formula.</p>
+        <p class="op-example">💬 In ¬(a∨b)∧(c→a), sia (a∨b) che (c→a) sono sotto-alberi "chiusi" dalle parentesi prima ancora di applicare ¬ e ∧.</p>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <strong>Attenzione all'associatività.</strong> Quando lo stesso operatore si ripete senza parentesi, l'ordine con cui si raggruppa non è sempre "da sinistra". In questo strumento: ∧, ∨, ⊕, ↔ si raggruppano da sinistra (es. a∧b∧c = (a∧b)∧c), mentre → si raggruppa da <strong>destra</strong> (es. a→b→c = a→(b→c)) — è una convenzione standard in logica, ma è facile sbagliarla se non la si conosce.
+    </div>
+
+    <div class="theory-cta"><a href="#tool">Prova lo strumento interattivo ↓</a></div>
+  </div>
+
+  <!-- TOOL: COSTRUZIONE -->
+  <div class="tool-wrapper" id="tool">
+    <div class="tool-cover">
+      <div class="tool-cover-text">
+        <div class="tool-cover-title">Costruttore di alberi di parsing</div>
+        <div class="tool-cover-desc">Scrivi una formula con i simboli (¬∧∨⊕→↔) oppure con le alternative da tastiera (! & | ^ -&gt; &lt;-&gt;) e genera il suo albero, con altezza h(F) e lunghezza l(F) calcolate passo per passo.</div>
+        <div class="tool-cover-badge">🔒 Calcolo locale nel browser · Nessun dato inviato · Fino a 4 variabili</div>
+      </div>
+    </div>
+
+    <div class="tool-layout">
+      <div class="input-panel">
+
+        <div class="expr-block">
+          <div class="expr-label-row"><span class="expr-label">Espressione F</span></div>
+          <div class="toolbar-group" data-target="expr-f">
+            <div class="toolbar-row">
+              <span class="toolbar-row-label">Variabili</span>
+              <div class="toolbar-buttons">
+                <button class="var-btn" data-sym="a">a</button>
+                <button class="var-btn" data-sym="b">b</button>
+                <button class="var-btn" data-sym="c">c</button>
+                <button class="var-btn" data-sym="d">d</button>
+              </div>
+            </div>
+            <div class="toolbar-row">
+              <span class="toolbar-row-label">Operatori</span>
+              <div class="toolbar-buttons">
+                <button class="symbol-btn" data-sym="∧" title="AND">∧</button>
+                <button class="symbol-btn" data-sym="∨" title="OR">∨</button>
+                <button class="symbol-btn" data-sym="¬" title="NOT">¬</button>
+                <button class="symbol-btn" data-sym="→" title="Implicazione">→</button>
+                <button class="symbol-btn" data-sym="↔" title="Doppia implicazione">↔</button>
+                <button class="symbol-btn" data-sym="⊕" title="XOR">⊕</button>
+                <button class="symbol-btn" data-sym="(" title="Apri parentesi">(</button>
+                <button class="symbol-btn" data-sym=")" title="Chiudi parentesi">)</button>
+              </div>
+            </div>
+          </div>
+          <input type="text" class="expr-input" id="expr-f" spellcheck="false" placeholder="es. ¬(a∨b)∧(c→a)  —  oppure: !(a|b)&(c->a)">
+          <div class="kbd-legend">
+            <div class="kbd-legend-title">Alternative da tastiera:</div>
+            <div class="kbd-legend-row">¬ = <code>!</code> / <code>not</code></div>
+            <div class="kbd-legend-row">∧ = <code>&amp;</code> / <code>and</code></div>
+            <div class="kbd-legend-row">∨ = <code>|</code> / <code>or</code></div>
+            <div class="kbd-legend-row">⊕ = <code>^</code> / <code>xor</code></div>
+            <div class="kbd-legend-row">→ = <code>-&gt;</code> / <code>impl</code></div>
+            <div class="kbd-legend-row">↔ = <code>&lt;-&gt;</code> / <code>iff</code></div>
+          </div>
+          <div class="expr-error-msg" id="error-f"></div>
+        </div>
+
+        <div class="examples-row">
+          <span class="examples-label">Esempi:</span>
+          <button class="example-btn" onclick="loadExample('demorgan')">Esempio completo</button>
+          <button class="example-btn" onclick="loadExample('implright')">Associatività →</button>
+          <button class="example-btn" onclick="loadExample('doppianeg')">Doppia negazione</button>
+          <button class="example-btn" onclick="loadExample('quattro')">Quattro variabili</button>
+          <button class="example-btn" onclick="loadExample('complex')">Esempio complesso</button>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-build" onclick="generateTree()">Costruisci albero</button>
+          <button class="btn-clear" onclick="clearAll()">Pulisci</button>
+        </div>
+      </div>
+
+      <div class="output-panel" id="output-panel">
+        <div class="output-empty" id="output-empty">
+          <div class="output-empty-icon">🌳</div>
+          <p>Scrivi un'espressione e clicca<br><strong>Costruisci albero</strong></p>
+        </div>
+        <div id="output-content" style="display:none;">
+          <div class="output-header" id="tree-formula-header"></div>
+          <div class="tree-badges" id="tree-badges"></div>
+          <div class="tree-svg-wrap" id="tree-svg-wrap"></div>
+          <button class="decomp-toggle-btn" id="decomp-toggle-btn" onclick="toggleDecomp()">▼ Mostra decomposizione passo-passo</button>
+          <div class="decomp-lines" id="decomp-lines"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOL: RICOSTRUZIONE BOTTOM-UP -->
+  <div class="tool-wrapper" id="ricostruzione">
+    <div class="tool-cover">
+      <div class="tool-cover-text">
+        <div class="tool-cover-title">🧩 Ricostruzione bottom-up</div>
+        <div class="tool-cover-desc">Parti dalle foglie e risali verso la radice: ad ogni passo combini i sotto-alberi già pronti con l'operatore giusto, fino a ricostruire l'intera formula F.</div>
+      </div>
+    </div>
+
+    <div class="tool-layout single-col">
+
+      <div class="mode-toggle-row" style="margin-bottom:1rem;">
+        <span class="mode-toggle-label">Modalità</span>
+        <div class="mode-toggle-buttons">
+          <button class="btn-mode active" data-mode="guidata" onclick="setReconMode('guidata')" title="Lavora sull'albero che hai costruito qui sopra: il sistema rivela un nodo alla volta.">▶ Guidata (la tua formula)</button>
+          <button class="btn-mode" data-mode="quiz" onclick="setReconMode('quiz')" title="Genera una formula casuale e costruisci tu l'albero unendo i pezzi.">🎲 Esercizio (formula casuale)</button>
+        </div>
+      </div>
+
+      <!-- PANNELLO GUIDATA: stesso motore a pezzi, ma sulla formula costruita sopra -->
+      <div id="guided-pane">
+        <div id="recon-empty" class="output-empty">
+          <div class="output-empty-icon">🧩</div>
+          <p>Costruisci prima un albero nella sezione qui sopra,<br>poi torna qui per ricostruirlo.</p>
+        </div>
+
+        <div id="recon-content" style="display:none;">
+          <div class="output-header" id="guided-formula-header"></div>
+          <p class="exercise-hint">Clicca due pezzi <strong>adiacenti</strong> (o uno solo, per ¬), poi scegli l'operatore.</p>
+
+          <div class="tree-svg-wrap forest-wrap">
+            <div class="forest-row" id="guided-forest-row"></div>
+          </div>
+
+          <div class="op-picker-row" id="guided-op-row">
+            <button class="symbol-btn" data-op="NOT" title="NOT (serve 1 pezzo selezionato)">¬</button>
+            <button class="symbol-btn" data-op="AND" title="AND (servono 2 pezzi adiacenti)">∧</button>
+            <button class="symbol-btn" data-op="OR" title="OR (servono 2 pezzi adiacenti)">∨</button>
+            <button class="symbol-btn" data-op="IMPL" title="Implicazione (servono 2 pezzi adiacenti)">→</button>
+            <button class="symbol-btn" data-op="XOR" title="XOR (servono 2 pezzi adiacenti)">⊕</button>
+            <button class="symbol-btn" data-op="IFF" title="Doppia implicazione (servono 2 pezzi adiacenti)">↔</button>
+          </div>
+
+          <div class="recon-log" id="guided-log"></div>
+          <div class="recon-complete" id="guided-complete" style="display:none;"></div>
+
+          <div class="btn-row" style="margin-top:.85rem;">
+            <button class="btn-restart-reveal" onclick="startGuided()">↺ Ricomincia</button>
+            <button class="btn-clear" onclick="showMergeSolution(guidedCtx)">👁 Mostra soluzione</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANNELLO ESERCIZIO: formula casuale, stesso motore a pezzi -->
+      <div id="quiz-pane" style="display:none;">
+
+        <div id="quiz-config" class="exercise-config">
+          <div class="exercise-config-row">
+            <label class="exercise-field"><span class="toolbar-row-label" style="width:auto;">Variabili</span>
+              <select id="ex-numvars" class="exercise-select">
+                <option value="2">2</option>
+                <option value="3" selected>3</option>
+                <option value="4">4</option>
+              </select>
+            </label>
+            <label class="exercise-field"><span class="toolbar-row-label" style="width:auto;">N. operatori</span>
+              <select id="ex-numops" class="exercise-select">
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5" selected>5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+              </select>
+            </label>
+          </div>
+          <div class="exercise-config-row">
+            <span class="toolbar-row-label" style="width:auto;">Operatori abilitati</span>
+            <label class="op-checkbox"><input type="checkbox" value="NOT" checked> ¬</label>
+            <label class="op-checkbox"><input type="checkbox" value="AND" checked> ∧</label>
+            <label class="op-checkbox"><input type="checkbox" value="OR" checked> ∨</label>
+            <label class="op-checkbox"><input type="checkbox" value="IMPL" checked> →</label>
+            <label class="op-checkbox"><input type="checkbox" value="XOR" checked> ⊕</label>
+            <label class="op-checkbox"><input type="checkbox" value="IFF" checked> ↔</label>
+          </div>
+          <div class="expr-error-msg" id="ex-config-error"></div>
+          <button class="btn-build" style="max-width:240px;" onclick="generateExercise()">🎲 Genera esercizio</button>
+        </div>
+
+        <div id="exercise-content" style="display:none; margin-top:1.1rem;">
+          <div class="output-header" id="exercise-formula-header"></div>
+          <p class="exercise-hint">Clicca due pezzi <strong>adiacenti</strong> (o uno solo, per ¬), poi scegli l'operatore.</p>
+
+          <div class="tree-svg-wrap forest-wrap">
+            <div class="forest-row" id="exercise-forest-row"></div>
+          </div>
+
+          <div class="op-picker-row" id="exercise-op-row">
+            <button class="symbol-btn" data-op="NOT" title="NOT (serve 1 pezzo selezionato)">¬</button>
+            <button class="symbol-btn" data-op="AND" title="AND (servono 2 pezzi adiacenti)">∧</button>
+            <button class="symbol-btn" data-op="OR" title="OR (servono 2 pezzi adiacenti)">∨</button>
+            <button class="symbol-btn" data-op="IMPL" title="Implicazione (servono 2 pezzi adiacenti)">→</button>
+            <button class="symbol-btn" data-op="XOR" title="XOR (servono 2 pezzi adiacenti)">⊕</button>
+            <button class="symbol-btn" data-op="IFF" title="Doppia implicazione (servono 2 pezzi adiacenti)">↔</button>
+          </div>
+
+          <div class="recon-log" id="exercise-log"></div>
+          <div class="recon-complete" id="exercise-complete" style="display:none;"></div>
+
+          <div class="btn-row" style="margin-top:.85rem;">
+            <button class="btn-restart-reveal" onclick="generateExercise()">🎲 Nuovo esercizio (stessi parametri)</button>
+            <button class="btn-clear" onclick="showMergeSolution(exerciseCtx)">👁 Mostra soluzione</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<div class="concepts-section" id="definizioni">
+
+  <div class="theory-eyebrow">Formazione Digitale · Sistemi · Logica</div>
+  <div class="theory-title" style="font-size:clamp(1.3rem,2.5vw,1.7rem);">Definizioni induttive di h(F) e l(F)</div>
+  <p class="theory-desc">Due grandezze che descrivono un albero di parsing: l'altezza (quanto è "profondo") e la lunghezza (quanti nodi contiene in totale). Entrambe si definiscono per induzione sulla struttura della formula — esattamente come l'albero stesso è costruito.</p>
+
+  <div class="theory-grid">
+    <div class="op-card">
+      <div class="op-card-header"><span class="op-symbol">h</span><span class="op-name">Altezza h(F)</span></div>
+      <p class="op-def">Caso base — F è una variabile o una costante: <strong>h(F) = 0</strong>.</p>
+      <p class="op-def">F = ¬G: <strong>h(F) = h(G) + 1</strong>.</p>
+      <p class="op-def">F = G∧H (oppure ∨, ⊕, →, ↔): <strong>h(F) = 1 + max(h(G), h(H))</strong>.</p>
+      <p class="op-example">💬 È il numero di "livelli" da scendere dalla radice fino alla foglia più lontana.</p>
+    </div>
+    <div class="op-card">
+      <div class="op-card-header"><span class="op-symbol">l</span><span class="op-name">Lunghezza l(F)</span></div>
+      <p class="op-def">Caso base — F è una variabile o una costante: <strong>l(F) = 1</strong>.</p>
+      <p class="op-def">F = ¬G: <strong>l(F) = l(G) + 1</strong>.</p>
+      <p class="op-def">F = G∧H (oppure ∨, ⊕, →, ↔): <strong>l(F) = l(G) + l(H) + 1</strong>.</p>
+      <p class="op-example">💬 È il numero totale di nodi disegnati nell'albero: variabili, costanti e connettivi.</p>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <strong>Perché "induttiva"?</strong> Perché ogni regola calcola h e l di una formula a partire da h e l delle sue sotto-formule (i figli nell'albero) — esattamente il modo in cui lo strumento di ricostruzione qui sopra fa risalire i valori dalle foglie alla radice.
+  </div>
+
+</div>
+
+</div>
+
+<footer>
+  <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
+  Strumento didattico libero e gratuito. I dati inseriti non vengono salvati né trasmessi.
+</footer>
+
+<script src="/scripts/ui.js" defer></script>
+<script>
+/* ═══════════════════════════════════════════════════
+   PARSER — riuso letterale dal tool "Tavola di Verità"
+═══════════════════════════════════════════════════ */
+function tokenize(str) {
+  const tokens = [];
+  let i = 0;
+  while (i < str.length) {
+    const c = str[i];
+    if (/\s/.test(c)) { i++; continue; }
+    if (c === '¬' || c === '!') { tokens.push({ type: 'NOT' }); i++; continue; }
+    if (c === '∧' || c === '&') { tokens.push({ type: 'AND' }); i++; continue; }
+    if (c === '∨' || c === '|') { tokens.push({ type: 'OR' }); i++; continue; }
+    if (c === '⊕' || c === '^') { tokens.push({ type: 'XOR' }); i++; continue; }
+    if (c === '↔') { tokens.push({ type: 'IFF' }); i++; continue; }
+    if (c === '→') { tokens.push({ type: 'IMPL' }); i++; continue; }
+    if (str.substr(i, 3) === '<->') { tokens.push({ type: 'IFF' }); i += 3; continue; }
+    if (str.substr(i, 2) === '->') { tokens.push({ type: 'IMPL' }); i += 2; continue; }
+    if (c === '(') { tokens.push({ type: 'LPAREN' }); i++; continue; }
+    if (c === ')') { tokens.push({ type: 'RPAREN' }); i++; continue; }
+    if (/[a-zA-Z]/.test(c)) {
+      const word = str.slice(i).toLowerCase().match(/^[a-z]+/)[0];
+      const wordMap = { not: 'NOT', and: 'AND', or: 'OR', xor: 'XOR', impl: 'IMPL', iff: 'IFF' };
+      if (wordMap[word]) { tokens.push({ type: wordMap[word] }); i += word.length; continue; }
+      tokens.push({ type: 'VAR', name: c.toLowerCase() }); i++; continue;
+    }
+    throw new Error(`Carattere non riconosciuto: "${c}" (posizione ${i + 1})`);
+  }
+  tokens.push({ type: 'EOF' });
+  return tokens;
+}
+
+function parse(tokens) {
+  let pos = 0;
+  const peek = () => tokens[pos];
+  const advance = () => tokens[pos++];
+  function expect(type, label) {
+    if (peek().type !== type) throw new Error(`Attesa "${label}" — trovato qualcosa di inatteso (posizione token ${pos + 1})`);
+    return advance();
+  }
+  function parseIff() { let left = parseImpl(); while (peek().type === 'IFF') { advance(); left = { type: 'IFF', left, right: parseImpl() }; } return left; }
+  function parseImpl() { const left = parseXor(); if (peek().type === 'IMPL') { advance(); return { type: 'IMPL', left, right: parseImpl() }; } return left; }
+  function parseXor() { let left = parseOr(); while (peek().type === 'XOR') { advance(); left = { type: 'XOR', left, right: parseOr() }; } return left; }
+  function parseOr() { let left = parseAnd(); while (peek().type === 'OR') { advance(); left = { type: 'OR', left, right: parseAnd() }; } return left; }
+  function parseAnd() { let left = parseNot(); while (peek().type === 'AND') { advance(); left = { type: 'AND', left, right: parseNot() }; } return left; }
+  function parseNot() { if (peek().type === 'NOT') { advance(); return { type: 'NOT', operand: parseNot() }; } return parsePrimary(); }
+  function parsePrimary() {
+    const t = peek();
+    if (t.type === 'VAR') { advance(); return { type: 'VAR', name: t.name }; }
+    if (t.type === 'LPAREN') { advance(); const expr = parseIff(); expect('RPAREN', ')'); return expr; }
+    throw new Error('Espressione non valida: manca una variabile o un\'espressione tra parentesi.');
+  }
+  if (peek().type === 'EOF') throw new Error('L\'espressione è vuota.');
+  const result = parseIff();
+  expect('EOF', 'fine espressione (controlla le parentesi)');
+  return result;
+}
+
+function collectVars(node, set) {
+  if (node.type === 'VAR') { set.add(node.name); return; }
+  if (node.type === 'NOT') { collectVars(node.operand, set); return; }
+  collectVars(node.left, set);
+  collectVars(node.right, set);
+}
+
+/* ═══════════════════════════════════════════════════
+   NUOVO — annotazione albero, layout, stampa, decomposizione
+═══════════════════════════════════════════════════ */
+const SYM = { AND: '∧', OR: '∨', XOR: '⊕', IMPL: '→', IFF: '↔' };
+function isBinaryNode(n) { return n.type in SYM; }
+
+let _idCounter = 0;
+function annotate(node, depth) {
+  node.id = _idCounter++;
+  node.depth = depth;
+  if (node.type === 'VAR') {
+    node.h = 0; node.l = 1; node.children = []; node.leafCount = 1; node.label = node.name;
+  } else if (node.type === 'NOT') {
+    annotate(node.operand, depth + 1);
+    node.h = node.operand.h + 1;
+    node.l = node.operand.l + 1;
+    node.children = [node.operand];
+    node.leafCount = node.operand.leafCount;
+    node.label = '¬';
+  } else {
+    annotate(node.left, depth + 1);
+    annotate(node.right, depth + 1);
+    node.h = 1 + Math.max(node.left.h, node.right.h);
+    node.l = node.left.l + node.right.l + 1;
+    node.children = [node.left, node.right];
+    node.leafCount = node.left.leafCount + node.right.leafCount;
+    node.label = SYM[node.type];
+  }
+}
+
+function nodeToString(node) {
+  if (node.type === 'VAR') return node.name;
+  if (node.type === 'NOT') return '¬' + wrapIfBinary(node.operand);
+  return wrapIfBinary(node.left) + SYM[node.type] + wrapIfBinary(node.right);
+}
+function wrapIfBinary(node) {
+  const inner = nodeToString(node);
+  return isBinaryNode(node) ? `(${inner})` : inner;
+}
+
+function maxHeightPathIds(root) {
+  const ids = [];
+  let cur = root;
+  while (true) {
+    ids.push(cur.id);
+    if (cur.type === 'VAR') break;
+    if (cur.type === 'NOT') { cur = cur.operand; continue; }
+    cur = (cur.left.h >= cur.right.h) ? cur.left : cur.right;
+  }
+  return ids;
+}
+
+function decompositionLines(node) {
+  if (node.type === 'VAR') return [];
+  let lines = [];
+  if (node.type === 'NOT') {
+    lines = lines.concat(decompositionLines(node.operand));
+    const childStr = nodeToString(node.operand);
+    const fullStr = nodeToString(node);
+    lines.push(`${fullStr}:  h = h(${childStr}) + 1 = ${node.operand.h} + 1 = ${node.h}    l = l(${childStr}) + 1 = ${node.operand.l} + 1 = ${node.l}`);
+  } else {
+    lines = lines.concat(decompositionLines(node.left));
+    lines = lines.concat(decompositionLines(node.right));
+    const leftStr = nodeToString(node.left);
+    const rightStr = nodeToString(node.right);
+    const fullStr = nodeToString(node);
+    lines.push(`${fullStr}:  h = 1 + max(h(${leftStr}), h(${rightStr})) = 1 + max(${node.left.h}, ${node.right.h}) = ${node.h}    l = l(${leftStr}) + l(${rightStr}) + 1 = ${node.left.l} + ${node.right.l} + 1 = ${node.l}`);
+  }
+  return lines;
+}
+
+/* ═══════════════════════════════════════════════════
+   RENDER SVG — riusato per costruzione, ricostruzione guidata, esercizio
+   Calcola il layout (x, depth) localmente: funziona anche su un sotto-albero isolato.
+═══════════════════════════════════════════════════ */
+function renderTreeSVG(root, opts) {
+  opts = opts || {};
+  const LEAF_SPACING = 70, LEVEL_HEIGHT = 64, MARGIN = 30, R = 20;
+  const posX = new Map(), posDepth = new Map();
+  let leafIndex = 0;
+  (function assign(n, depth) {
+    posDepth.set(n, depth);
+    if (n.children.length === 0) { posX.set(n, leafIndex); leafIndex++; return; }
+    n.children.forEach(c => assign(c, depth + 1));
+    const xs = n.children.map(c => posX.get(c));
+    posX.set(n, xs.reduce((s, v) => s + v, 0) / xs.length);
+  })(root, 0);
+  const leafCount = leafIndex;
+  let maxDepth = 0;
+  posDepth.forEach(d => { if (d > maxDepth) maxDepth = d; });
+
+  const width = MARGIN * 2 + Math.max(0, leafCount - 1) * LEAF_SPACING + 2 * R;
+  const height = MARGIN * 2 + maxDepth * LEVEL_HEIGHT + 2 * R;
+  const px = n => MARGIN + R + posX.get(n) * LEAF_SPACING;
+  const py = n => MARGIN + R + posDepth.get(n) * LEVEL_HEIGHT;
+
+  let edges = '', nodes = '';
+  (function walk(n) {
+    n.children.forEach(c => {
+      edges += `<line x1="${px(n)}" y1="${py(n)}" x2="${px(c)}" y2="${py(c)}" class="tree-edge"></line>`;
+      walk(c);
+    });
+  })(root);
+
+  function labelFor(n) {
+    if (n.type === 'VAR') return n.name;
+    if (opts.revealedIds && !opts.revealedIds.has(n.id)) return '?';
+    return n.label;
+  }
+
+  (function walk(n) {
+    const hidden = !!(opts.revealedIds && n.type !== 'VAR' && !opts.revealedIds.has(n.id));
+    let cls = 'tree-node';
+    if (n.type === 'VAR') cls += ' tree-node-var';
+    if (hidden) cls += ' tree-node-hidden';
+    if (opts.highlightIds && opts.highlightIds.has(n.id)) cls += ' tree-node-highlight';
+    if (opts.targetId === n.id) cls += ' tree-node-target';
+    nodes += `<g class="${cls}"><circle cx="${px(n)}" cy="${py(n)}" r="${R}"></circle><text x="${px(n)}" y="${py(n)}" dy="0.32em">${labelFor(n)}</text></g>`;
+    n.children.forEach(walk);
+  })(root);
+
+  return `<svg viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">${edges}${nodes}</svg>`;
+}
+
+/* ═══════════════════════════════════════════════════
+   TOOLBAR — inserimento simboli (stesso script riusato)
+═══════════════════════════════════════════════════ */
+function wireToolbar(groupEl) {
+  const targetId = groupEl.dataset.target;
+  groupEl.querySelectorAll('.symbol-btn, .var-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const input = document.getElementById(targetId);
+      const start = input.selectionStart ?? input.value.length;
+      const end = input.selectionEnd ?? input.value.length;
+      const sym = btn.dataset.sym;
+      input.value = input.value.slice(0, start) + sym + input.value.slice(end);
+      input.focus();
+      input.setSelectionRange(start + sym.length, start + sym.length);
+    });
+  });
+}
+document.querySelectorAll('.toolbar-group').forEach(wireToolbar);
+
+/* ═══════════════════════════════════════════════════
+   ESEMPI
+═══════════════════════════════════════════════════ */
+const EXAMPLES = {
+  demorgan: '¬(a∨b)∧(c→a)',
+  implright: 'a→b→c',
+  doppianeg: '¬¬a',
+  quattro: '(a∧b)∨(¬c→d)',
+  complex: '¬a∧(b∧¬c)∨(a∧¬b∨(b∧¬c))'
+};
+function loadExample(key) {
+  document.getElementById('expr-f').value = EXAMPLES[key];
+  clearErrors();
+}
+
+function clearErrors() {
+  document.getElementById('error-f').classList.remove('visible');
+  document.getElementById('error-f').textContent = '';
+  document.getElementById('expr-f').classList.remove('input-error');
+}
+function showError(msg) {
+  const el = document.getElementById('error-f');
+  el.textContent = '⚠ ' + msg;
+  el.classList.add('visible');
+  document.getElementById('expr-f').classList.add('input-error');
+}
+
+/* ═══════════════════════════════════════════════════
+   COSTRUZIONE DELL'ALBERO
+═══════════════════════════════════════════════════ */
+let currentAst = null;
+let currentLeafCount = 0;
+let decompVisible = false;
+
+function generateTree() {
+  clearErrors();
+  const raw = document.getElementById('expr-f').value;
+  if (!raw || !raw.trim()) { showError('L\'espressione è vuota.'); return; }
+
+  let ast;
+  try {
+    const tokens = tokenize(raw);
+    ast = parse(tokens);
+  } catch (e) {
+    showError(e.message);
+    return;
+  }
+
+  const varSet = new Set();
+  collectVars(ast, varSet);
+  if (varSet.size === 0) { showError('Nessuna variabile trovata nell\'espressione.'); return; }
+  if (varSet.size > 4) { showError(`Trovate ${varSet.size} variabili (${Array.from(varSet).sort().join(', ')}) — il massimo supportato è 4.`); return; }
+
+  annotate(ast, 0);
+  const leafCount = ast.leafCount;
+  if (leafCount > 12) { showError('Formula troppo lunga da visualizzare (troppe occorrenze di variabili).'); return; }
+
+  currentAst = ast;
+  currentLeafCount = leafCount;
+
+  document.getElementById('output-empty').style.display = 'none';
+  document.getElementById('output-content').style.display = 'block';
+
+  document.getElementById('tree-formula-header').textContent = `F = ${nodeToString(ast)}`;
+
+  const highlightIds = new Set(maxHeightPathIds(ast));
+  document.getElementById('tree-svg-wrap').innerHTML = renderTreeSVG(ast, { highlightIds });
+
+  document.getElementById('tree-badges').innerHTML =
+    `<span class="tree-badge">h(F) = ${ast.h} <span class="badge-note">(percorso evidenziato in arancio)</span></span>` +
+    `<span class="tree-badge">l(F) = ${ast.l} <span class="badge-note">(nodi totali)</span></span>`;
+
+  decompVisible = false;
+  document.getElementById('decomp-lines').classList.remove('visible');
+  document.getElementById('decomp-toggle-btn').textContent = '▼ Mostra decomposizione passo-passo';
+  document.getElementById('decomp-lines').textContent = decompositionLines(ast).join('\n');
+
+  resetGuidedPanel();
+}
+
+function toggleDecomp() {
+  decompVisible = !decompVisible;
+  document.getElementById('decomp-lines').classList.toggle('visible', decompVisible);
+  document.getElementById('decomp-toggle-btn').textContent = decompVisible ? '▲ Nascondi decomposizione' : '▼ Mostra decomposizione passo-passo';
+}
+
+function clearAll() {
+  document.getElementById('expr-f').value = '';
+  clearErrors();
+  document.getElementById('output-content').style.display = 'none';
+  document.getElementById('output-empty').style.display = 'flex';
+  currentAst = null;
+  currentLeafCount = 0;
+  resetGuidedPanel();
+}
+
+/* ═══════════════════════════════════════════════════
+   RICOSTRUZIONE BOTTOM-UP — un solo motore "a pezzi", due fonti diverse
+═══════════════════════════════════════════════════ */
+let reconMode = 'guidata';
+
+function setReconMode(mode) {
+  reconMode = mode;
+  document.querySelectorAll('#ricostruzione .btn-mode').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  document.getElementById('guided-pane').style.display = mode === 'guidata' ? 'block' : 'none';
+  document.getElementById('quiz-pane').style.display = mode === 'quiz' ? 'block' : 'none';
+}
+
+function appendToLog(logElId, text, cls) {
+  const log = document.getElementById(logElId);
+  const div = document.createElement('div');
+  div.className = 'recon-log-line' + (cls ? ' ' + cls : '');
+  div.textContent = text;
+  log.appendChild(div);
+  log.scrollTop = log.scrollHeight;
+}
+
+function shuffleArr(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function randomTree(numOperators, enabledOps, numVars) {
+  let root = { type: 'LEAF' };
+  let leaves = [root];
+  for (let i = 0; i < numOperators; i++) {
+    const idx = Math.floor(Math.random() * leaves.length);
+    const leaf = leaves[idx];
+    const op = enabledOps[Math.floor(Math.random() * enabledOps.length)];
+    if (op === 'NOT') {
+      leaf.type = 'NOT';
+      leaf.operand = { type: 'LEAF' };
+      leaves[idx] = leaf.operand;
+    } else {
+      leaf.type = op;
+      leaf.left = { type: 'LEAF' };
+      leaf.right = { type: 'LEAF' };
+      leaves.splice(idx, 1, leaf.left, leaf.right);
+    }
+  }
+  const pool = ['a', 'b', 'c', 'd'].slice(0, numVars);
+  const n = leaves.length;
+  let assignment;
+  if (n <= pool.length) {
+    assignment = shuffleArr(pool.slice()).slice(0, n);
+  } else {
+    assignment = pool.slice();
+    while (assignment.length < n) assignment.push(pool[Math.floor(Math.random() * pool.length)]);
+    assignment = shuffleArr(assignment);
+  }
+  leaves.forEach((leaf, i) => { leaf.type = 'VAR'; leaf.name = assignment[i]; });
+  return root;
+}
+
+function setParentsEx(node, parent) {
+  node.parent = parent;
+  node.children.forEach(c => setParentsEx(c, node));
+}
+function collectLeavesInOrderEx(node, out) {
+  if (node.children.length === 0) { out.push(node); return; }
+  node.children.forEach(c => collectLeavesInOrderEx(c, out));
+}
+
+/* ── Motore "a pezzi": un contesto = un set di id DOM (prefisso) + uno stato.
+   Validazione tramite IDENTITÀ dei nodi reali (puntatori), non confronto di stringhe. ── */
+function createMergeContext(idPrefix) { return { idPrefix, state: null }; }
+const guidedCtx = createMergeContext('guided');
+const exerciseCtx = createMergeContext('exercise');
+function ctxId(ctx, suffix) { return ctx.idPrefix + '-' + suffix; }
+
+function startMerge(ctx, root) {
+  setParentsEx(root, null);
+  const leaves = [];
+  collectLeavesInOrderEx(root, leaves);
+  ctx.state = { root, pieces: leaves.map(l => ({ matchedNode: l })), selection: [] };
+  document.getElementById(ctxId(ctx, 'formula-header')).textContent = `F = ${nodeToString(root)}`;
+  document.getElementById(ctxId(ctx, 'log')).innerHTML = '';
+  document.getElementById(ctxId(ctx, 'complete')).style.display = 'none';
+  renderMergeForest(ctx);
+}
+
+function renderMergeForest(ctx) {
+  const row = document.getElementById(ctxId(ctx, 'forest-row'));
+  row.innerHTML = '';
+  ctx.state.pieces.forEach((p, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'forest-piece' + (ctx.state.selection.includes(i) ? ' selected' : '');
+    wrap.innerHTML = renderTreeSVG(p.matchedNode, {});
+    wrap.addEventListener('click', () => selectMergePiece(ctx, i));
+    row.appendChild(wrap);
+  });
+  updateMergeOpButtons(ctx);
+}
+
+function selectMergePiece(ctx, i) {
+  const sel = ctx.state.selection;
+  if (sel.length === 0) { ctx.state.selection = [i]; }
+  else if (sel.length === 1) {
+    if (sel[0] === i) { ctx.state.selection = []; }
+    else if (Math.abs(sel[0] - i) === 1) { ctx.state.selection = [Math.min(sel[0], i), Math.max(sel[0], i)]; }
+    else { ctx.state.selection = [i]; }
+  } else {
+    ctx.state.selection = [i];
+  }
+  renderMergeForest(ctx);
+}
+
+function updateMergeOpButtons(ctx) {
+  const sel = ctx.state.selection;
+  document.querySelectorAll('#' + ctxId(ctx, 'op-row') + ' button').forEach(btn => {
+    btn.disabled = (btn.dataset.op === 'NOT') ? (sel.length !== 1) : (sel.length !== 2);
+  });
+}
+
+function pickMergeOperator(ctx, op) {
+  if (!ctx.state) return;
+  const sel = ctx.state.selection;
+  let ok = false;
+  if (op === 'NOT') {
+    if (sel.length !== 1) return;
+    ok = tryNotMerge(ctx, sel[0]);
+  } else {
+    if (sel.length !== 2) return;
+    ok = tryBinaryMerge(ctx, sel[0], sel[1], op);
+  }
+  renderMergeForest(ctx);
+  if (ok && ctx.state.pieces.length === 1 && ctx.state.pieces[0].matchedNode === ctx.state.root) {
+    const complete = document.getElementById(ctxId(ctx, 'complete'));
+    complete.style.display = 'block';
+    complete.textContent = `🎉 Completato! Hai ricostruito F = ${nodeToString(ctx.state.root)}`;
+  }
+}
+
+function tryNotMerge(ctx, idx) {
+  const node = ctx.state.pieces[idx].matchedNode;
+  if (node.parent && node.parent.type === 'NOT') {
+    ctx.state.pieces[idx] = { matchedNode: node.parent };
+    ctx.state.selection = [];
+    appendToLog(ctxId(ctx, 'log'), `✓ ¬ applicato: ${nodeToString(node.parent)}`, 'ok');
+    return true;
+  }
+  appendToLog(ctxId(ctx, 'log'), `✗ ¬ non si applica a questo pezzo.`, 'err');
+  return false;
+}
+
+function tryBinaryMerge(ctx, idxA, idxB, opType) {
+  const a = ctx.state.pieces[idxA].matchedNode, b = ctx.state.pieces[idxB].matchedNode;
+  if (a.parent && a.parent === b.parent && a.parent.type === opType && a.parent.left === a && a.parent.right === b) {
+    const merged = a.parent;
+    ctx.state.pieces.splice(idxA, 2, { matchedNode: merged });
+    ctx.state.selection = [];
+    appendToLog(ctxId(ctx, 'log'), `✓ unione corretta: ${nodeToString(merged)}`, 'ok');
+    return true;
+  }
+  appendToLog(ctxId(ctx, 'log'), `✗ questa coppia non si combina con "${SYM[opType]}".`, 'err');
+  return false;
+}
+
+function showMergeSolution(ctx) {
+  if (!ctx.state) return;
+  ctx.state.pieces = [{ matchedNode: ctx.state.root }];
+  ctx.state.selection = [];
+  renderMergeForest(ctx);
+  appendToLog(ctxId(ctx, 'log'), `Soluzione mostrata: F = ${nodeToString(ctx.state.root)}`);
+  const complete = document.getElementById(ctxId(ctx, 'complete'));
+  complete.style.display = 'block';
+  complete.textContent = `Soluzione: F = ${nodeToString(ctx.state.root)}`;
+}
+
+document.querySelectorAll('#guided-op-row button').forEach(btn => btn.addEventListener('click', () => pickMergeOperator(guidedCtx, btn.dataset.op)));
+document.querySelectorAll('#exercise-op-row button').forEach(btn => btn.addEventListener('click', () => pickMergeOperator(exerciseCtx, btn.dataset.op)));
+
+/* ── Guidata: sorgente = currentAst (la formula costruita nella sezione sopra) ── */
+function resetGuidedPanel() {
+  guidedCtx.state = null;
+  document.getElementById('recon-content').style.display = 'none';
+  document.getElementById('recon-empty').style.display = 'flex';
+  if (currentAst) {
+    document.getElementById('recon-empty').innerHTML =
+      '<div class="output-empty-icon">🧩</div><p>Albero pronto — clicca qui sotto per iniziare.</p>' +
+      '<button class="btn-build" style="max-width:280px;" onclick="startGuided()">Inizia ricostruzione</button>';
+  } else {
+    document.getElementById('recon-empty').innerHTML =
+      '<div class="output-empty-icon">🧩</div><p>Costruisci prima un albero nella sezione qui sopra,<br>poi torna qui per ricostruirlo.</p>';
+  }
+}
+
+function startGuided() {
+  if (!currentAst) return;
+  document.getElementById('recon-empty').style.display = 'none';
+  document.getElementById('recon-content').style.display = 'block';
+  startMerge(guidedCtx, currentAst);
+}
+
+/* ── Esercizio: sorgente = albero casuale generato sul momento ── */
+function generateExercise() {
+  const errEl = document.getElementById('ex-config-error');
+  errEl.classList.remove('visible'); errEl.textContent = '';
+
+  const enabled = Array.from(document.querySelectorAll('#quiz-config input[type=checkbox]:checked')).map(cb => cb.value);
+  if (enabled.length === 0) { errEl.textContent = '⚠ Seleziona almeno un operatore.'; errEl.classList.add('visible'); return; }
+
+  const numVars = parseInt(document.getElementById('ex-numvars').value, 10);
+  const numOps = parseInt(document.getElementById('ex-numops').value, 10);
+
+  const root = randomTree(numOps, enabled, numVars);
+  annotate(root, 0);
+
+  document.getElementById('exercise-content').style.display = 'block';
+  startMerge(exerciseCtx, root);
+}
+</script>
+</body>
+</html>
