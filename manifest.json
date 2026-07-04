@@ -797,16 +797,54 @@
         "featured": false,
         "active": true,
         "digcomp": [
-            "DC 3.4",
-            "DC 5.1"
+            "DC 5.1",
+            "DC 5.2"
         ],
         "digcomp_level": "foundation",
         "digcomp_areas": [
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 2.2",
+            "DCEdu 6.5"
+        ]
+    },
+    {
+        "path": "/sistemi/conversioni-di-base/",
+        "label": "Convertitore Multi-Base 2-8-10-16",
+        "short": "Convertitore Basi",
+        "cat": "strumento",
+        "emoji": "🔣",
+        "tags": [
+            "binario",
+            "ottale",
+            "decimale",
+            "esadecimale",
+            "conversione",
+            "basi numeriche",
+            "sistemi numerici",
+            "algoritmi",
+            "informatica",
+            "divisioni successive"
+        ],
+        "meta": "Interattivo · 3 algoritmi · Passo-passo · Livello base",
+        "description": "Converti tra binario, ottale, decimale ed esadecimale con tre algoritmi interattivi: divisioni successive, raggruppamento veloce e espansione. Osserva ogni passo.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 1.2",
+            "DC 3.4",
+            "DC 5.1",
+            "DC 5.2"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "informazioni",
             "creazione",
             "problem-solving"
         ],
         "digcompedu": [
-            "DCEdu 5.3",
+            "DCEdu 2.2",
             "DCEdu 6.5"
         ]
     },

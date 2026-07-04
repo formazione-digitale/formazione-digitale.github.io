@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convertitore Multi-Base 2-8-10-16 — Formazione Digitale</title>
+
+<meta name="description" content="Convertitore interattivo tra basi numeriche: binario, ottale, decimale, esadecimale. Visualizza divisioni successive, raggruppamento veloce e espansione con algoritmi passo-passo.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://formazione-digitale.it/sistemi/conversioni-di-base/">
+<link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="//gc.zgo.at">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#1F4E79">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Convertitore Multi-Base — Formazione Digitale">
+<meta property="og:description" content="Converti tra binario, ottale, decimale ed esadecimale con tre algoritmi interattivi.">
+<meta property="og:url" content="https://formazione-digitale.it/sistemi/conversioni-di-base/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+
+<!-- Twitter/X Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Convertitore Multi-Base — Formazione Digitale">
+<meta name="twitter:description" content="Converti tra binario, ottale, decimale ed esadecimale.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Convertitore Multi-Base 2-8-10-16",
+  "description": "Convertitore interattivo tra sistemi numerici con tre algoritmi: divisioni successive, raggruppamento e espansione.",
+  "url": "https://formazione-digitale.it/sistemi/conversioni-di-base/",
+  "inLanguage": "it",
+  "author": {
+    "@type": "Person",
+    "name": "Cristiano De Pasquale",
+    "jobTitle": "Docente di Informatica"
+  },
+  "provider": {
+    "@type": "WebSite",
+    "name": "Formazione Digitale",
+    "url": "https://formazione-digitale.it"
+  },
+  "educationalLevel": "Livello base",
+  "keywords": "binario, ottale, decimale, esadecimale, conversione, sistemi numerici, informatica"
+}
+</script>
+
+<!-- GoatCounter tracking -->
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="stylesheet" href="/css/shared.css?v=1">
+
+<style>
+/* Variabili specifiche della pagina (non duplicate da shared.css) */
+:root {
+    --radius: 10px;
+    --transition: all 0.2s ease-in-out;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { 
+    font-family: var(--font-body); 
+    background: #F8FBFF;
+    color: var(--gray-dark); 
+    min-height: 100vh; 
+    display: flex; 
+    flex-direction: column;
+}
+
+main { 
+    flex: 1; 
+    padding: 1.5rem;
+    padding-top: calc(56px + 1.5rem);
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.theory-box { 
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.theory-box h3 { 
+    font-family: var(--font-display); 
+    font-size: 1.3rem; 
+    margin-bottom: 0.6rem; 
+    color: var(--blue-dark); 
+}
+
+.theory-box p { 
+    font-size: 0.88rem; 
+    line-height: 1.5; 
+    color: var(--gray-dark); 
+    margin-bottom: 0.5rem; 
+}
+
+.theory-box strong { 
+    color: var(--blue-dark); 
+}
+
+/* Container input (4 basi) */
+.bases-container {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.bases-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.field { 
+    display: flex;
+    flex-direction: column;
+}
+
+.field label { 
+    display: block; 
+    font-size: 0.65rem; 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    letter-spacing: 0.1em; 
+    color: var(--blue-mid); 
+    margin-bottom: 0.4rem; 
+}
+
+input[type="text"],
+input[type="number"] {
+    padding: 0.6rem;
+    border: 2px solid var(--blue-light);
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 1.2rem;
+    text-align: center;
+    transition: var(--transition);
+    outline: none;
+    background: white;
+    color: var(--blue-dark);
+}
+
+input:focus {
+    border-color: var(--blue-mid);
+    box-shadow: 0 0 0 3px rgba(46,117,182,0.1);
+}
+
+input.invalid {
+    border-color: var(--red-dark);
+    box-shadow: 0 0 0 3px rgba(193,39,45,0.1);
+}
+
+/* Tab switcher */
+.algo-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0;
+    border-bottom: 2px solid var(--blue-light);
+    background: var(--white);
+    border-radius: var(--radius) var(--radius) 0 0;
+    padding: 0 1.25rem;
+    flex-wrap: wrap;
+}
+
+.tab-button {
+    padding: 0.75rem 1.2rem;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--blue-mid);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.tab-button.active {
+    color: var(--blue-dark);
+    border-bottom-color: var(--blue-dark);
+}
+
+.tab-button:hover:not(.active) {
+    color: var(--blue-dark);
+    opacity: 0.7;
+}
+
+/* Tab content container */
+.tab-container {
+    background: var(--white);
+    border-radius: 0 0 var(--radius) var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.algo-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--blue-dark);
+    border-bottom: 2px solid var(--blue-light);
+    padding-bottom: 0.5rem;
+}
+
+/* Selettore target nei tab */
+.tab-selector {
+    margin-bottom: 1.5rem;
+    padding: 0.75rem;
+    background: #EBF3FC;
+    border-radius: 8px;
+    border: 1px solid var(--blue-light);
+}
+
+.tab-selector label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--blue-mid);
+    margin-bottom: 0.5rem;
+}
+
+.tab-selector select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--blue-light);
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 0.95rem;
+    color: var(--blue-dark);
+    background: white;
+    cursor: pointer;
+}
+
+/* Tabella divisioni */
+.div-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: monospace;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+.div-header {
+    font-size: 0.65rem;
+    color: var(--blue-mid);
+    text-transform: uppercase;
+    padding: 0.6rem;
+    text-align: center;
+    background: #EBF3FC;
+    font-weight: 700;
+    border: 1px solid var(--blue-light);
+}
+
+.div-cell {
+    padding: 0.6rem;
+    text-align: center;
+    border: 1px solid var(--blue-light);
+}
+
+.resto-highlight {
+    color: var(--amber-dark);
+    font-weight: 800;
+    background: var(--amber-light);
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--amber-mid);
+}
+
+/* ACCORDIMENTO #1: Numero risultante evidente */
+.result-box {
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    background: var(--green-light);
+    border: 2px solid var(--green-dark);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.result-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--green-dark);
+    margin-bottom: 0.5rem;
+}
+
+.result-value {
+    font-family: monospace;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--green-dark);
+    margin-bottom: 0.75rem;
+}
+
+.result-note {
+    font-size: 0.8rem;
+    color: var(--green-dark);
+    line-height: 1.4;
+}
+
+/* Raggruppamento visivo */
+.grouping-display {
+    margin-top: 1rem;
+}
+
+.binary-line {
+    font-family: monospace;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.bit-groups {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.bit-group {
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    align-items: center;
+}
+
+.group-bits {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 0.5rem;
+    font-family: monospace;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.bit {
+    width: 32px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    background: white;
+    border: 1px solid #999;
+    color: var(--blue-dark);
+}
+
+.group-calc {
+    font-size: 0.75rem;
+    color: var(--blue-mid);
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 0.4rem;
+}
+
+.group-result {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--green-dark);
+    font-family: monospace;
+}
+
+/* Colori ciclici per i gruppi */
+.bit-group:nth-child(1) { background: #FFE5E5; border-color: #FF9999; }
+.bit-group:nth-child(2) { background: #E5F3FF; border-color: #99CCFF; }
+.bit-group:nth-child(3) { background: #E5FFE5; border-color: #99FF99; }
+.bit-group:nth-child(4) { background: #FFF9E5; border-color: #FFEB99; }
+.bit-group:nth-child(5) { background: #F5E5FF; border-color: #D99FFF; }
+.bit-group:nth-child(6) { background: #FFE5F5; border-color: #FF99CC; }
+
+/* ACCORDIMENTO #2: Nota padding zeri */
+.padding-note {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #FFF9E6;
+    border-left: 4px solid var(--amber-dark);
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: var(--amber-dark);
+    line-height: 1.5;
+}
+
+.padding-note strong {
+    color: var(--amber-dark);
+}
+
+/* Espansione */
+.expansion-display {
+    margin-top: 1rem;
+}
+
+/* ACCORDIMENTO #3: Colonne bilanciate */
+.expansion-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: monospace;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    table-layout: fixed;
+}
+
+.expansion-table th {
+    font-size: 0.65rem;
+    color: var(--blue-mid);
+    text-transform: uppercase;
+    padding: 0.75rem;
+    text-align: center;
+    background: #EBF3FC;
+    font-weight: 700;
+    border: 1px solid var(--blue-light);
+    word-break: break-word;
+}
+
+.expansion-table td {
+    padding: 0.75rem;
+    text-align: center;
+    border: 1px solid var(--blue-light);
+    word-break: break-word;
+}
+
+.expansion-digit {
+    font-weight: 700;
+    color: var(--blue-dark);
+}
+
+.expansion-bits {
+    color: var(--green-dark);
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    main {
+        padding: 1rem;
+        padding-top: calc(56px + 1rem);
+    }
+
+    .bases-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .algo-tabs {
+        padding: 0 0.75rem;
+    }
+
+    .tab-button {
+        font-size: 0.8rem;
+        padding: 0.6rem 0.8rem;
+    }
+
+    .tab-container {
+        padding: 1rem;
+    }
+
+    .bit-groups {
+        gap: 0.75rem;
+    }
+
+    .bit-group {
+        padding: 0.6rem;
+    }
+
+    .group-bits {
+        gap: 2px;
+    }
+
+    .bit {
+        width: 28px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+
+    .result-value {
+        font-size: 1.4rem;
+    }
+
+    .expansion-table {
+        font-size: 0.8rem;
+    }
+
+    .expansion-table th,
+    .expansion-table td {
+        padding: 0.5rem;
+    }
+}
+</style>
+
+</head>
+<body>
+
+<header class="guide-header">
+    <a href="../../index.html" class="guide-header-back">
+        <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;">
+            <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Portale
+    </a>
+    <div class="guide-header-center">Convertitore Multi-Base</div>
+    <div class="guide-header-right"></div>
+</header>
+
+<main>
+    <div class="theory-box">
+        <h3>Come funziona?</h3>
+        <p>Questo strumento converte numeri tra quattro sistemi numerici: <strong>binario (base 2)</strong>, <strong>ottale (base 8)</strong>, <strong>decimale (base 10)</strong> e <strong>esadecimale (base 16)</strong>.</p>
+        <p>Digita un numero in qualsiasi campo — gli altri si aggiornano automaticamente. Poi scegli il metodo di conversione che preferisci: divisioni successive (lento, didattico), raggruppamento veloce (binario → ottale/hex), oppure espansione veloce (ottale/hex → binario).</p>
+    </div>
+
+    <!-- INPUT: 4 BASI -->
+    <div class="bases-container">
+        <div class="bases-grid">
+            <div class="field">
+                <label>Binario (Base 2)</label>
+                <input type="text" id="in-bin" placeholder="es. 11111111" data-base="2" maxlength="16">
+            </div>
+            <div class="field">
+                <label>Ottale (Base 8)</label>
+                <input type="text" id="in-oct" placeholder="es. 377" data-base="8" maxlength="6">
+            </div>
+            <div class="field">
+                <label>Decimale (Base 10)</label>
+                <input type="number" id="in-dec" min="0" max="65535" value="255" data-base="10">
+            </div>
+            <div class="field">
+                <label>Esadecimale (Base 16)</label>
+                <input type="text" id="in-hex" placeholder="es. FF" data-base="16" maxlength="4">
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB SWITCHER -->
+    <div class="algo-tabs">
+        <button class="tab-button active" data-tab="divisions">Divisioni Successive</button>
+        <button class="tab-button" data-tab="grouping">Raggruppamento 2→8/16</button>
+        <button class="tab-button" data-tab="expansion">Espansione 8/16→2</button>
+    </div>
+
+    <!-- TAB CONTENT CONTAINER -->
+    <div class="tab-container">
+
+        <!-- TAB 1: DIVISIONI SUCCESSIVE -->
+        <div class="tab-content active" id="tab-divisions">
+            <h3 class="algo-title">Algoritmo delle divisioni successive</h3>
+            <div class="tab-selector">
+                <label>Converti il decimale in:</label>
+                <select id="div-target-base">
+                    <option value="2">Binario (÷2)</option>
+                    <option value="8">Ottale (÷8)</option>
+                    <option value="16">Esadecimale (÷16)</option>
+                </select>
+            </div>
+            <table class="div-table">
+                <thead>
+                    <tr>
+                        <th class="div-header">Dividendo</th>
+                        <th class="div-header">Divisore</th>
+                        <th class="div-header">Quoziente</th>
+                        <th class="div-header">Resto</th>
+                    </tr>
+                </thead>
+                <tbody id="div-body"></tbody>
+            </table>
+            <!-- ACCORDIMENTO #1: Risultato evidente -->
+            <div class="result-box" id="div-result" style="display:none;">
+                <div class="result-label">Risultato</div>
+                <div class="result-value" id="div-result-value"></div>
+                <div class="result-note">
+                    <strong>Metodo:</strong> leggi i resti dal basso verso l'alto. I resti, in ordine inverso, formano il numero nella base scelta.
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: RAGGRUPPAMENTO -->
+        <div class="tab-content" id="tab-grouping">
+            <h3 class="algo-title">Raggruppamento veloce</h3>
+            <div class="tab-selector">
+                <label>Converti binario in:</label>
+                <select id="grouping-target-base">
+                    <option value="8">Ottale (3 bit per cifra)</option>
+                    <option value="16">Esadecimale (4 bit per cifra)</option>
+                </select>
+            </div>
+            <div class="grouping-display" id="grouping-display"></div>
+        </div>
+
+        <!-- TAB 3: ESPANSIONE -->
+        <div class="tab-content" id="tab-expansion">
+            <h3 class="algo-title">Espansione veloce</h3>
+            <div class="tab-selector">
+                <label>Converti in binario da:</label>
+                <select id="expansion-source-base">
+                    <option value="8">Ottale (3 bit per cifra)</option>
+                    <option value="16">Esadecimale (4 bit per cifra)</option>
+                </select>
+            </div>
+            <div class="expansion-display" id="expansion-display"></div>
+        </div>
+
+    </div>
+
+</main>
+
+<footer>
+  <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
+  Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem;">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<script>
+// ===== CONVERSIONI PURE =====
+
+const Converter = {
+    toDecimal(str, base) {
+        if (!str) return 0;
+        const val = parseInt(str, base);
+        return isNaN(val) ? 0 : val;
+    },
+
+    fromDecimal(num, base) {
+        if (num === 0) return '0';
+        return num.toString(base).toUpperCase();
+    },
+
+    groupBinary(binStr, groupSize) {
+        if (!binStr || binStr === '0') return [];
+        
+        const padded = binStr.padStart(
+            Math.ceil(binStr.length / groupSize) * groupSize,
+            '0'
+        );
+        
+        const groups = [];
+        for (let i = 0; i < padded.length; i += groupSize) {
+            groups.push(padded.substring(i, i + groupSize));
+        }
+        
+        return groups.map(group => {
+            const decVal = parseInt(group, 2);
+            const hexVal = decVal.toString(groupSize === 3 ? 8 : 16).toUpperCase();
+            return { bits: group, decVal, hexVal };
+        });
+    },
+
+    expandToBinary(str, base) {
+        if (!str) return [];
+        
+        const bitsPerDigit = base === 8 ? 3 : 4;
+        const result = [];
+        
+        for (let i = 0; i < str.length; i++) {
+            const digit = str[i].toUpperCase();
+            const decVal = parseInt(digit, base);
+            
+            if (isNaN(decVal)) continue;
+            
+            const bits = decVal
+                .toString(2)
+                .padStart(bitsPerDigit, '0');
+            
+            result.push({ digit, bits, decVal });
+        }
+        
+        return result;
+    }
+};
+
+// ===== VALIDATORI =====
+
+const Validators = {
+    2: (str) => /^[01]*$/.test(str),
+    8: (str) => /^[0-7]*$/.test(str),
+    10: (str) => /^\d*$/.test(str),
+    16: (str) => /^[0-9A-Fa-f]*$/.test(str),
+};
+
+const ValidChars = {
+    2: '01',
+    8: '01234567',
+    10: '0123456789',
+    16: '0123456789ABCDEFabcdef',
+};
+
+// ===== SYNCHRONIZER =====
+
+const Synchronizer = {
+    currentDecimal: 255,
+    currentSourceBase: 10,
+    currentSourceValue: '255',
+
+    sync(value, sourceBase) {
+        // ACCORDIMENTO #4: Input costruttivi (non sostitutivi)
+        // Salva il valore sorgente e la base sorgente
+        this.currentSourceValue = value;
+        this.currentSourceBase = sourceBase;
+        
+        if (!value || value === '') {
+            this.currentDecimal = 0;
+        } else {
+            const dec = Converter.toDecimal(value, sourceBase);
+            if (dec > 65535) return;
+            this.currentDecimal = dec;
+        }
+        
+        this.regenerateAllFields();
+        this.regenerateAlgorithm();
+    },
+
+    regenerateAllFields() {
+        const dec = this.currentDecimal;
+        const bin = Converter.fromDecimal(dec, 2).padStart(Math.max(8, Math.ceil(Converter.fromDecimal(dec, 2).length / 4) * 4), '0');
+        const oct = Converter.fromDecimal(dec, 8);
+        const hex = Converter.fromDecimal(dec, 16);
+
+        // ACCORDIMENTO #4: Aggiorna SOLO gli altri campi, non quello sorgente
+        if (this.currentSourceBase !== 10) document.getElementById('in-dec').value = dec;
+        if (this.currentSourceBase !== 2) document.getElementById('in-bin').value = bin;
+        if (this.currentSourceBase !== 8) document.getElementById('in-oct').value = oct;
+        if (this.currentSourceBase !== 16) document.getElementById('in-hex').value = hex;
+    },
+
+    regenerateAlgorithm() {
+        const activeTab = document.querySelector('.tab-button.active').dataset.tab;
+        
+        if (activeTab === 'divisions') {
+            this.renderDivisions();
+        } else if (activeTab === 'grouping') {
+            this.renderGrouping();
+        } else if (activeTab === 'expansion') {
+            this.renderExpansion();
+        }
+    },
+
+    renderDivisions() {
+        const targetBase = parseInt(document.getElementById('div-target-base').value);
+        const dec = this.currentDecimal;
+        const tbody = document.getElementById('div-body');
+        tbody.innerHTML = '';
+
+        let temp = dec;
+        if (temp === 0) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td class="div-cell">0</td><td class="div-cell">÷ ${targetBase}</td><td class="div-cell">= 0</td><td class="div-cell"><span class="resto-highlight">0</span></td>`;
+            tbody.appendChild(tr);
+        } else {
+            while (temp > 0) {
+                const quoziente = Math.floor(temp / targetBase);
+                const resto = temp % targetBase;
+                const restoDisplay = resto < 10 ? resto : String.fromCharCode(65 + resto - 10);
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td class="div-cell">${temp}</td><td class="div-cell">÷ ${targetBase}</td><td class="div-cell">= ${quoziente}</td><td class="div-cell"><span class="resto-highlight">${restoDisplay}</span></td>`;
+                tbody.appendChild(tr);
+                temp = quoziente;
+            }
+        }
+
+        // ACCORDIMENTO #1: Numero risultante evidente
+        const resultBox = document.getElementById('div-result');
+        const resultValue = document.getElementById('div-result-value');
+        const result = Converter.fromDecimal(dec, targetBase);
+        resultValue.textContent = result + (targetBase === 2 ? '₂' : targetBase === 8 ? '₈' : '₁₆');
+        resultBox.style.display = 'block';
+    },
+
+    renderGrouping() {
+        const targetBase = parseInt(document.getElementById('grouping-target-base').value);
+        const dec = this.currentDecimal;
+        const bin = Converter.fromDecimal(dec, 2).padStart(8, '0');
+        const groupSize = targetBase === 8 ? 3 : 4;
+        const groups = Converter.groupBinary(bin, groupSize);
+
+        const display = document.getElementById('grouping-display');
+        display.innerHTML = '';
+
+        // Mostra la stringa binaria con separatori
+        const binLine = document.createElement('div');
+        binLine.className = 'binary-line';
+        let binWithSeps = bin;
+        for (let i = bin.length - groupSize; i > 0; i -= groupSize) {
+            binWithSeps = binWithSeps.substring(0, i) + ' | ' + binWithSeps.substring(i);
+        }
+        binLine.textContent = binWithSeps;
+        display.appendChild(binLine);
+
+        // Mostra i gruppi con calcoli
+        const groupsContainer = document.createElement('div');
+        groupsContainer.className = 'bit-groups';
+
+        groups.forEach((group, idx) => {
+            const groupDiv = document.createElement('div');
+            groupDiv.className = 'bit-group';
+
+            const bitsDiv = document.createElement('div');
+            bitsDiv.className = 'group-bits';
+            for (let bit of group.bits) {
+                const bitSpan = document.createElement('div');
+                bitSpan.className = 'bit';
+                bitSpan.textContent = bit;
+                bitsDiv.appendChild(bitSpan);
+            }
+            groupDiv.appendChild(bitsDiv);
+
+            // Calcolo intermedio
+            const calcDiv = document.createElement('div');
+            calcDiv.className = 'group-calc';
+            let calcStr = '';
+            const bitArray = group.bits.split('');
+            for (let i = 0; i < bitArray.length; i++) {
+                const power = bitArray.length - 1 - i;
+                const val = parseInt(bitArray[i]) * Math.pow(2, power);
+                if (i > 0) calcStr += ' + ';
+                calcStr += `${bitArray[i]}·${Math.pow(2, power)}`;
+            }
+            calcStr += ` = ${group.decVal}`;
+            calcDiv.textContent = calcStr;
+            groupDiv.appendChild(calcDiv);
+
+            // Risultato
+            const resultDiv = document.createElement('div');
+            resultDiv.className = 'group-result';
+            resultDiv.textContent = group.hexVal;
+            groupDiv.appendChild(resultDiv);
+
+            groupsContainer.appendChild(groupDiv);
+        });
+
+        display.appendChild(groupsContainer);
+
+        // ACCORDIMENTO #2: Nota sul padding di zeri
+        if (bin.length % groupSize !== 0) {
+            const paddingNote = document.createElement('div');
+            paddingNote.className = 'padding-note';
+            const zeriAggiunti = groupSize - (bin.length % groupSize);
+            paddingNote.innerHTML = `
+                <strong>⚠ Nota sul raggruppamento:</strong>
+                Il binario originale ha ${bin.length} bit, che non è un multiplo di ${groupSize}.
+                Per completare il raggruppamento, abbiamo aggiunto ${zeriAggiunti} zero${zeriAggiunti > 1 ? 'i' : ''} non significativo${zeriAggiunti > 1 ? 'i' : ''} in testa.
+                Questi zeri non cambiano il valore, solo lo organizzano in gruppi completi.
+            `;
+            display.appendChild(paddingNote);
+        }
+
+        // Risultato finale
+        const finalDiv = document.createElement('div');
+        finalDiv.className = 'result-box';
+        finalDiv.innerHTML = `
+            <div class="result-label">Risultato</div>
+            <div class="result-value">${groups.map(g => g.hexVal).join('')}${targetBase === 8 ? '₈' : '₁₆'}</div>
+            <div class="result-note">I valori di ogni gruppo, letti da sinistra a destra, formano il numero in base ${targetBase}.</div>
+        `;
+        display.appendChild(finalDiv);
+    },
+
+    renderExpansion() {
+        const sourceBase = parseInt(document.getElementById('expansion-source-base').value);
+        const value = sourceBase === 8 ? document.getElementById('in-oct').value : document.getElementById('in-hex').value;
+        
+        if (!value) {
+            document.getElementById('expansion-display').innerHTML = '<p style="color: #999; text-align: center;">Digita un valore per vedere l\'espansione.</p>';
+            return;
+        }
+
+        const expanded = Converter.expandToBinary(value, sourceBase);
+        const display = document.getElementById('expansion-display');
+        display.innerHTML = '';
+
+        // ACCORDIMENTO #3: Colonne bilanciate con table-layout: fixed
+        const table = document.createElement('table');
+        table.className = 'expansion-table';
+        table.innerHTML = `
+            <thead>
+                <tr>
+                    <th>${sourceBase === 8 ? 'Cifra ottale' : 'Cifra hex'}</th>
+                    <th>Valore decimale</th>
+                    <th>Binario (${sourceBase === 8 ? '3' : '4'} bit)</th>
+                </tr>
+            </thead>
+        `;
+
+        const tbody = document.createElement('tbody');
+        expanded.forEach(exp => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td><span class="expansion-digit">${exp.digit}</span></td><td class="expansion-digit">${exp.decVal}</td><td class="expansion-bits">${exp.bits}</td>`;
+            tbody.appendChild(tr);
+        });
+        table.appendChild(tbody);
+        display.appendChild(table);
+
+        // Risultato finale
+        const finalDiv = document.createElement('div');
+        finalDiv.className = 'result-box';
+        finalDiv.innerHTML = `
+            <div class="result-label">Binario risultante</div>
+            <div class="result-value">${expanded.map(e => e.bits).join(' ')}</div>
+            <div class="result-note">Ogni cifra è stata convertita nel suo equivalente binario (${sourceBase === 8 ? '3' : '4'} bit per cifra), poi i bit sono stati concatenati.</div>
+        `;
+        display.appendChild(finalDiv);
+    }
+};
+
+// ===== LISTENER INPUT =====
+
+document.querySelectorAll('input[data-base]').forEach(input => {
+    input.addEventListener('input', (e) => {
+        const base = parseInt(e.target.dataset.base);
+        let value = e.target.value.toUpperCase();
+
+        // Filtra solo caratteri validi
+        value = [...value].filter(char => ValidChars[base].includes(char)).join('');
+        e.target.value = value;
+
+        // Sincronizza se valido
+        if (value === '' || Validators[base](value)) {
+            Synchronizer.sync(value, base);
+            e.target.classList.remove('invalid');
+        } else {
+            e.target.classList.add('invalid');
+        }
+    });
+
+    input.addEventListener('blur', (e) => {
+        const base = parseInt(e.target.dataset.base);
+        const value = e.target.value;
+        
+        if (value && Validators[base](value)) {
+            Synchronizer.sync(value, base);
+            e.target.classList.remove('invalid');
+        } else {
+            e.target.classList.remove('invalid');
+        }
+    });
+});
+
+// ===== LISTENER TAB SWITCHING =====
+
+document.querySelectorAll('.tab-button').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const tabName = e.target.dataset.tab;
+
+        document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+
+        e.target.classList.add('active');
+        document.getElementById(`tab-${tabName}`).classList.add('active');
+
+        Synchronizer.regenerateAlgorithm();
+    });
+});
+
+// ===== LISTENER SELECT DROPDOWN =====
+
+document.getElementById('div-target-base').addEventListener('change', () => {
+    Synchronizer.renderDivisions();
+});
+
+document.getElementById('grouping-target-base').addEventListener('change', () => {
+    Synchronizer.renderGrouping();
+});
+
+document.getElementById('expansion-source-base').addEventListener('change', () => {
+    Synchronizer.renderExpansion();
+});
+
+// ===== INIT =====
+
+window.addEventListener('DOMContentLoaded', () => {
+    Synchronizer.sync('255', 10);
+});
+
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>
