@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://formazione-digitale.it/</loc>
-    <lastmod>2026-06-29</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -164,7 +164,13 @@
   </url>
   <url>
     <loc>https://formazione-digitale.it/sistemi/codifica-binaria/</loc>
-    <lastmod>2026-06-29</lastmod>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://formazione-digitale.it/sistemi/conversioni-di-base/</loc>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -176,25 +182,25 @@
   </url>
   <url>
     <loc>https://formazione-digitale.it/sistemi/logica-booleana/</loc>
-    <lastmod>2026-06-29</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://formazione-digitale.it/sistemi/alberi-di-parsing/</loc>
-    <lastmod>2026-06-29</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://formazione-digitale.it/sistemi/aritmetica-binaria/</loc>
-    <lastmod>2026-06-29</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://formazione-digitale.it/sistemi/algoritmi-scheduling/</loc>
-    <lastmod>2026-06-29</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
