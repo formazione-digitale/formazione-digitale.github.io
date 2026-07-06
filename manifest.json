@@ -402,22 +402,40 @@
             "DCEdu 6.2"
         ]
     },
-	{
-	  "path": "/networking/guida-ipv4/",
-	  "label": "Protocollo IPv4 — Struttura del Datagramma e Header",
-	  "short": "Guida IPv4",
-	  "cat": "guide",
-	  "emoji": "📦",
-	  "tags": ["ipv4", "datagramma", "header", "reti", "networking", "protocollo internet", "ttl", "checksum", "wireshark"],
-	  "meta": "8 sezioni · Diagramma interattivo · Livello intermedio",
-	  "description": "Header IPv4 campo per campo: versione, IHL, TTL, checksum e indirizzi, con diagramma interattivo a 32 bit e screenshot Wireshark.",
-	  "featured": false,
-	  "active": true,
-	  "digcomp": ["DC 3.4", "DC 5.1"],
-	  "digcomp_level": "intermediate",
-	  "digcomp_areas": ["creazione", "problem-solving"],
-	  "digcompedu": ["DCEdu 6.5"]
-	},
+    {
+        "path": "/networking/guida-ipv4/",
+        "label": "Protocollo IPv4 — Struttura del Datagramma e Header",
+        "short": "Guida IPv4",
+        "cat": "guide",
+        "emoji": "📦",
+        "tags": [
+            "ipv4",
+            "datagramma",
+            "header",
+            "reti",
+            "networking",
+            "protocollo internet",
+            "ttl",
+            "checksum",
+            "wireshark"
+        ],
+        "meta": "8 sezioni · Diagramma interattivo · Livello intermedio",
+        "description": "Header IPv4 campo per campo: versione, IHL, TTL, checksum e indirizzi, con diagramma interattivo a 32 bit e screenshot Wireshark.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 3.4",
+            "DC 5.1"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "creazione",
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 6.5"
+        ]
+    },
     {
         "path": "/marketing/pillola-seo/",
         "label": "SEO — Ottimizzazione per i Motori di Ricerca",
@@ -454,22 +472,41 @@
             "DCEdu 6.1"
         ]
     },
-	{
-	  "path": "/sicurezza/guida-principi-sicurezza/",
-	  "label": "Principi di Sicurezza Informatica",
-	  "short": "Principi di Sicurezza",
-	  "cat": "guide",
-	  "emoji": "🔐",
-	  "tags": ["sicurezza informatica", "triade cia", "riservatezza", "integrità", "disponibilità", "crittografia", "sha-256", "certificati digitali", "pki", "spid", "autenticazione"],
-	  "meta": "9 sezioni · 5 componenti interattivi · Livello intermedio",
-	  "description": "Triade CIA, crittografia simmetrica e asimmetrica, certificati digitali e PKI, autenticazione e SPID, con un calcolatore di hash SHA-256 dal vivo nel browser.",
-	  "featured": false,
-	  "active": true,
-	  "digcomp": ["DC 4.1", "DC 4.2"],
-	  "digcomp_level": "intermediate",
-	  "digcomp_areas": ["sicurezza"],
-	  "digcompedu": ["DCEdu 6.4"]
-	},
+    {
+        "path": "/sicurezza/guida-principi-sicurezza/",
+        "label": "Principi di Sicurezza Informatica",
+        "short": "Principi di Sicurezza",
+        "cat": "guide",
+        "emoji": "🔐",
+        "tags": [
+            "sicurezza informatica",
+            "triade cia",
+            "riservatezza",
+            "integrità",
+            "disponibilità",
+            "crittografia",
+            "sha-256",
+            "certificati digitali",
+            "pki",
+            "spid",
+            "autenticazione"
+        ],
+        "meta": "9 sezioni · 5 componenti interattivi · Livello intermedio",
+        "description": "Triade CIA, crittografia simmetrica e asimmetrica, certificati digitali e PKI, autenticazione e SPID, con un calcolatore di hash SHA-256 dal vivo nel browser.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 4.1",
+            "DC 4.2"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "sicurezza"
+        ],
+        "digcompedu": [
+            "DCEdu 6.4"
+        ]
+    },
     {
         "path": "/sicurezza/pillola-cybersicurezza/",
         "label": "Cybersicurezza in 5 Minuti — Le mosse essenziali",
@@ -807,7 +844,9 @@
         "digcompedu": [
             "DCEdu 2.2",
             "DCEdu 6.5"
-        ]
+        ],
+        "hub": "/sistemi/",
+        "order": 1
     },
     {
         "path": "/sistemi/conversioni-di-base/",
@@ -846,7 +885,9 @@
         "digcompedu": [
             "DCEdu 2.2",
             "DCEdu 6.5"
-        ]
+        ],
+        "hub": "/sistemi/",
+        "order": 3
     },
     {
         "path": "/marketing/analizzatore-seo/",
@@ -884,156 +925,164 @@
             "DCEdu 6.5"
         ]
     },
-	{
-		"path": "/sistemi/logica-booleana/",
-		"label": "Tavola di Verità & Equivalenza Logica",
-		"short": "Logica Booleana",
-		"cat": "strumento",
-		"emoji": "🧮",
-		"tags": [
-			"logica booleana",
-			"tavola di verità",
-			"and",
-			"or",
-			"not",
-			"xor",
-			"implicazione",
-			"equivalenza logica",
-			"algebra di boole",
-			"pensiero computazionale",
-			"esercizio",
-			"quiz",
-			"tautologia",
-			"contraddizione",
-			"contingente",
-			"soddisfacibile"
-		],
-		"meta": "Interattivo · Modalità Lezione/Esercizio · Fino a 4 variabili",
-		"description": "Costruisci tabelle di verità in modalità Lezione (passo per passo) o Esercizio (quiz autocorrettivo). Classificazione automatica come tautologia, contraddizione o contingente, e verifica di equivalenza tra due espressioni.",
-		"featured": false,
-		"active": true,
-		"digcomp": [
-			"DC 3.4",
-			"DC 5.1"
-		],
-		"digcomp_level": "intermediate",
-		"digcomp_areas": [
-			"creazione",
-			"problem-solving"
-		],
-		"digcompedu": [
-			"DCEdu 6.5"
-		]
-	},
-	{
-		"path": "/sistemi/alberi-di-parsing/",
-		"label": "Alberi di Parsing per Funzioni Booleane",
-		"short": "Alberi di Parsing",
-		"cat": "strumento",
-		"emoji": "🌳",
-		"tags": [
-			"albero di parsing",
-			"parsing tree",
-			"precedenza degli operatori",
-			"altezza",
-			"lunghezza",
-			"h(f)",
-			"l(f)",
-			"definizione induttiva",
-			"funzione booleana",
-			"ricostruzione bottom-up",
-			"sintassi",
-			"logica",
-			"algebra di boole"
-		],
-		"meta": "Interattivo · Costruzione e ricostruzione bottom-up · Altezza e lunghezza",
-		"description": "Scompone una funzione booleana nel suo albero di parsing secondo la precedenza degli operatori, calcola altezza h(F) e lunghezza l(F) con definizione induttiva, e permette di ricostruire la formula risalendo dalle foglie alla radice.",
-		"featured": false,
-		"active": true,
-		"digcomp": [
-			"DC 3.4",
-			"DC 5.1"
-		],
-		"digcomp_level": "intermediate",
-		"digcomp_areas": [
-			"creazione",
-			"problem-solving"
-		],
-		"digcompedu": [
-			"DCEdu 6.5"
-		]
-	},
-	{
-		"path": "/sistemi/aritmetica-binaria/",
-		"label": "Somma e Sottrazione Binaria",
-		"short": "Aritmetica Binaria",
-		"cat": "strumento",
-		"emoji": "🧮",
-		"tags": [
-			"binario",
-			"somma",
-			"sottrazione",
-			"riporto",
-			"carry",
-			"complemento a 2",
-			"overflow",
-			"sistemi",
-			"aritmetica"
-		],
-		"meta": "Interattivo · Step-by-step · Livello intermedio",
-		"description": "Calcolatore di somma e sottrazione binaria a 8 bit, passo dopo passo: riporto colonna per colonna, complemento a 2 e gestione dell'overflow.",
-		"featured": false,
-		"active": true,
-		"digcomp": [
-			"DC 3.4",
-			"DC 5.1"
-		],
-		"digcomp_level": "intermediate",
-		"digcomp_areas": [
-			"creazione",
-			"problem-solving"
-		],
-		"digcompedu": [
-			"DCEdu 6.5"
-		]
-	},
-	{
-		"path": "/sistemi/algoritmi-scheduling/",
-		"label": "Algoritmi di Scheduling della CPU",
-		"short": "Scheduling CPU",
-		"cat": "strumento",
-		"emoji": "🖥️",
-		"tags": [
-			"scheduling",
-			"sistemi operativi",
-			"fcfs",
-			"sjf",
-			"srtf",
-			"round robin",
-			"priorità",
-			"prelazione",
-			"gantt",
-			"tempo di attesa",
-			"turnaround",
-			"starvation"
-		],
-		"meta": "Guida + simulatore · Animazione passo-passo · Fino a 5 processi",
-		"description": "Teoria e simulatore interattivo di 6 algoritmi di scheduling della CPU: FCFS, SJF, SRTF, Priorità (con e senza prelazione), Round Robin. Animazione passo-passo, modalità singola o confronto tra tutti gli algoritmi.",
-		"featured": false,
-		"active": true,
-		"digcomp": [
-			"DC 3.4",
-			"DC 5.1"
-		],
-		"digcomp_level": "intermediate",
-		"digcomp_areas": [
-			"creazione",
-			"problem-solving"
-		],
-		"digcompedu": [
-			"DCEdu 6.5"
-		]
-	},
+    {
+        "path": "/sistemi/logica-booleana/",
+        "label": "Tavola di Verità & Equivalenza Logica",
+        "short": "Logica Booleana",
+        "cat": "strumento",
+        "emoji": "🧮",
+        "tags": [
+            "logica booleana",
+            "tavola di verità",
+            "and",
+            "or",
+            "not",
+            "xor",
+            "implicazione",
+            "equivalenza logica",
+            "algebra di boole",
+            "pensiero computazionale",
+            "esercizio",
+            "quiz",
+            "tautologia",
+            "contraddizione",
+            "contingente",
+            "soddisfacibile"
+        ],
+        "meta": "Interattivo · Modalità Lezione/Esercizio · Fino a 4 variabili",
+        "description": "Costruisci tabelle di verità in modalità Lezione (passo per passo) o Esercizio (quiz autocorrettivo). Classificazione automatica come tautologia, contraddizione o contingente, e verifica di equivalenza tra due espressioni.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 3.4",
+            "DC 5.1"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "creazione",
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 6.5"
+        ],
+        "hub": "/sistemi/",
+        "order": 4
+    },
+    {
+        "path": "/sistemi/alberi-di-parsing/",
+        "label": "Alberi di Parsing per Funzioni Booleane",
+        "short": "Alberi di Parsing",
+        "cat": "strumento",
+        "emoji": "🌳",
+        "tags": [
+            "albero di parsing",
+            "parsing tree",
+            "precedenza degli operatori",
+            "altezza",
+            "lunghezza",
+            "h(f)",
+            "l(f)",
+            "definizione induttiva",
+            "funzione booleana",
+            "ricostruzione bottom-up",
+            "sintassi",
+            "logica",
+            "algebra di boole"
+        ],
+        "meta": "Interattivo · Costruzione e ricostruzione bottom-up · Altezza e lunghezza",
+        "description": "Scompone una funzione booleana nel suo albero di parsing secondo la precedenza degli operatori, calcola altezza h(F) e lunghezza l(F) con definizione induttiva, e permette di ricostruire la formula risalendo dalle foglie alla radice.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 3.4",
+            "DC 5.1"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "creazione",
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 6.5"
+        ],
+        "hub": "/sistemi/",
+        "order": 5
+    },
+    {
+        "path": "/sistemi/aritmetica-binaria/",
+        "label": "Somma e Sottrazione Binaria",
+        "short": "Aritmetica Binaria",
+        "cat": "strumento",
+        "emoji": "🧮",
+        "tags": [
+            "binario",
+            "somma",
+            "sottrazione",
+            "riporto",
+            "carry",
+            "complemento a 2",
+            "overflow",
+            "sistemi",
+            "aritmetica"
+        ],
+        "meta": "Interattivo · Step-by-step · Livello intermedio",
+        "description": "Calcolatore di somma e sottrazione binaria a 8 bit, passo dopo passo: riporto colonna per colonna, complemento a 2 e gestione dell'overflow.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 3.4",
+            "DC 5.1"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "creazione",
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 6.5"
+        ],
+        "hub": "/sistemi/",
+        "order": 2
+    },
+    {
+        "path": "/sistemi/algoritmi-scheduling/",
+        "label": "Algoritmi di Scheduling della CPU",
+        "short": "Scheduling CPU",
+        "cat": "strumento",
+        "emoji": "🖥️",
+        "tags": [
+            "scheduling",
+            "sistemi operativi",
+            "fcfs",
+            "sjf",
+            "srtf",
+            "round robin",
+            "priorità",
+            "prelazione",
+            "gantt",
+            "tempo di attesa",
+            "turnaround",
+            "starvation"
+        ],
+        "meta": "Guida + simulatore · Animazione passo-passo · Fino a 5 processi",
+        "description": "Teoria e simulatore interattivo di 6 algoritmi di scheduling della CPU: FCFS, SJF, SRTF, Priorità (con e senza prelazione), Round Robin. Animazione passo-passo, modalità singola o confronto tra tutti gli algoritmi.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 3.4",
+            "DC 5.1"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "creazione",
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 6.5"
+        ],
+        "hub": "/sistemi/",
+        "order": 6
+    },
     {
         "path": "/competenze-digitali/strumento-autovalutazione-digcompedu/",
         "label": "Autovalutazione DigCompEdu",

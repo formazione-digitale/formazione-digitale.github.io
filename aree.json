@@ -60,7 +60,7 @@
         "label": "Sistemi",
         "emoji": "⚙️",
         "color": "#37474F",
-        "hasHub": false
+        "hasHub": true
     },
     {
         "id": "project-management",
