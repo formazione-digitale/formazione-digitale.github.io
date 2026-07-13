@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dimensionamento dei File: Immagini, Audio, Video — Formazione Digitale</title>
+
+<meta name="description" content="Come calcolare la dimensione di un file non compresso: immagini raster, audio digitale e video. Bit, byte, KiB, MiB e perché la compressione è indispensabile.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://formazione-digitale.it/sistemi/dimensionamento-files/">
+<link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="//gc.zgo.at">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#1F4E79">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Dimensionamento dei File: Immagini, Audio, Video — Formazione Digitale">
+<meta property="og:description" content="Come calcolare la dimensione di un file non compresso: immagini raster, audio digitale e video, con esempi numerici svolti passo per passo.">
+<meta property="og:url" content="https://formazione-digitale.it/sistemi/dimensionamento-files/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+
+<!-- Twitter/X Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dimensionamento dei File: Immagini, Audio, Video — Formazione Digitale">
+<meta name="twitter:description" content="Come calcolare la dimensione di un file non compresso, con esempi numerici svolti.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Dimensionamento dei File: Immagini, Audio, Video",
+  "description": "Come calcolare la dimensione di un file non compresso: immagini raster, audio digitale e video. Bit, byte, KiB, MiB e perché la compressione è indispensabile.",
+  "url": "https://formazione-digitale.it/sistemi/dimensionamento-files/",
+  "inLanguage": "it",
+  "author": {
+    "@type": "Person",
+    "name": "Cristiano De Pasquale",
+    "jobTitle": "Docente di Informatica"
+  },
+  "provider": {
+    "@type": "WebSite",
+    "name": "Formazione Digitale",
+    "url": "https://formazione-digitale.it"
+  },
+  "educationalLevel": "Livello base",
+  "keywords": "dimensionamento file, bit, byte, KiB, MiB, immagini raster, audio digitale, bit rate, video non compresso, profondità colore"
+}
+</script>
+
+<!-- GoatCounter tracking -->
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+<link rel="stylesheet" href="/css/shared.css?v=3">
+<style>
+/* ── Stili specifici della pagina: tabella di conversione unità e box formula ── */
+
+.formula-box {
+  background: var(--blue-dark);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 1.1rem 1.4rem;
+  margin: 1.25rem 0;
+  font-family: 'Courier New', monospace;
+  font-size: .98rem;
+  line-height: 1.9;
+  text-align: center;
+}
+.formula-box .formula-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--blue-light);
+  margin-bottom: .5rem;
+}
+
+.unit-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  font-size: .88rem;
+}
+.unit-table th, .unit-table td {
+  border: 1px solid var(--blue-light);
+  padding: .6rem .85rem;
+  text-align: left;
+}
+.unit-table th {
+  background: var(--blue-pale);
+  color: var(--blue-dark);
+  font-weight: 700;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.unit-table td.mono { font-family: 'Courier New', monospace; }
+.unit-table td.result { color: var(--green-dark); font-weight: 700; }
+
+/* Step-by-step del calcolo svolto */
+.calc-steps {
+  background: var(--white);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.4rem;
+  margin: 1.25rem 0;
+}
+.calc-steps .calc-title {
+  font-size: .8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--blue-mid);
+  margin-bottom: .75rem;
+}
+.calc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: .4rem 0;
+  border-bottom: 1px dashed var(--blue-light);
+  font-family: 'Courier New', monospace;
+  font-size: .88rem;
+}
+.calc-row:last-child { border-bottom: none; }
+.calc-row .calc-desc { font-family: var(--font-body); color: var(--gray-mid); font-size: .82rem; flex-shrink: 0; }
+.calc-row .calc-val { color: var(--blue-dark); font-weight: 700; text-align: right; }
+.calc-row.calc-final { border-top: 2px solid var(--blue-mid); margin-top: .3rem; padding-top: .6rem; }
+.calc-row.calc-final .calc-val { color: var(--green-dark); font-size: 1rem; }
+
+/* Confronto colori 2^n */
+.color-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+@media(max-width:600px) { .color-compare { grid-template-columns: 1fr; } }
+.color-card {
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  text-align: center;
+  border: 1px solid var(--blue-light);
+}
+.color-card .cc-bits { font-family: var(--font-display); font-size: 1.8rem; color: var(--blue-dark); }
+.color-card .cc-colors { font-size: .82rem; color: var(--gray-mid); margin-top: .3rem; }
+.color-card canvas {
+  width: 100%; height: 130px; border-radius: 6px; margin-top: .7rem;
+  display: block; border: 1px solid var(--blue-light);
+}
+
+footer { margin-left: 0; }
+@media(min-width:900px) { footer { margin-left: var(--nav-w); } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header">
+  <div class="header-left">
+    <button id="hamburger"><span></span><span></span><span></span></button>
+    <a href="/index.html" class="header-back">← Portale</a>
+    <div class="header-sep"></div>
+    <span class="header-logo">Dimensionamento File</span>
+    <span class="header-sub">Immagini, Audio, Video</span>
+  </div>
+</div>
+
+<div id="overlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <a class="nav-item" href="#s1"><span class="nav-num">1</span>Il principio generale</a>
+  <a class="nav-item" href="#s2"><span class="nav-num">2</span>Immagini</a>
+  <a class="nav-item" href="#s3"><span class="nav-num">3</span>Audio</a>
+  <a class="nav-item" href="#s4"><span class="nav-num">4</span>Video</a>
+  <hr class="nav-divider">
+  <a class="nav-item" href="/sistemi/teoria-del-campionamento/" style="color:var(--green-dark);font-weight:600;">
+    <span class="nav-num" style="background:var(--green-dark);">🌊</span>Teoria del campionamento
+  </a>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+
+<!-- COVER -->
+<div class="cover-block">
+  <div class="cover-eyebrow">Formazione Digitale · Sistemi · Rappresentazione dei dati</div>
+  <h1 class="cover-title">Dimensionamento dei File<br><em>Immagini, Audio, Video</em></h1>
+  <p class="cover-desc">Quanto pesa un file non compresso? Un unico principio, applicato a tre casi concreti, con esempi numerici svolti passo per passo.</p>
+  <div class="cover-divider"></div>
+  <p class="cover-intro">💡 Guida · Livello base · ~15 min di lettura</p>
+</div>
+
+<!-- 1: PRINCIPIO GENERALE -->
+<section class="guide-section" id="s1">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div class="section-titles">
+      <div class="section-title">Il principio generale</div>
+      <div class="section-subtitle">Un'unica idea per immagini, audio e video</div>
+    </div>
+  </div>
+
+  <p>Ogni file multimediale non compresso è composto da tante piccole unità elementari — i <strong>campioni</strong>: i pixel di un'immagine, i campioni audio, i fotogrammi di un video. Per calcolarne la dimensione basta un unico schema:</p>
+
+  <div class="formula-box">
+    <span class="formula-label">Formula generale</span>
+    dimensione (bit) = numero di campioni × bit per campione
+  </div>
+
+  <p>Il risultato è in <strong>bit</strong>. Da lì, per arrivare alle unità che usiamo davvero (byte, KiB, MiB), si applicano sempre le stesse conversioni:</p>
+
+  <table class="unit-table">
+    <thead>
+      <tr><th>Conversione</th><th>Operazione</th><th>Perché</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="mono">bit → byte</td><td class="mono">÷ 8</td><td>1 byte = 8 bit</td></tr>
+      <tr><td class="mono">byte → KiB</td><td class="mono">÷ 1024</td><td>1 KiB = 1024 byte</td></tr>
+      <tr><td class="mono">KiB → MiB</td><td class="mono">÷ 1024</td><td>1 MiB = 1024 KiB</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box box-info">
+    <div class="box-label">Nota terminologica</div>
+    <p>Qui usiamo i prefissi binari <strong>KiB/MiB</strong> (base 1024), quelli effettivamente usati dal sistema operativo per riportare la dimensione dei file. I prefissi <strong>KB/MB</strong> (base 1000) sono invece quelli usati commercialmente, ad esempio dai produttori di dischi — è una delle ragioni per cui un disco "da 500 GB" mostra meno spazio del previsto una volta collegato al PC.</p>
+  </div>
+
+  <p>Le tre sezioni seguenti applicano questo stesso schema a immagini, audio e video: cambia solo <em>cosa</em> si conta come "campione" e <em>quanti bit</em> servono per rappresentarlo.</p>
+</section>
+
+<!-- 2: IMMAGINI -->
+<section class="guide-section" id="s2">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div class="section-titles">
+      <div class="section-title">Immagini raster</div>
+      <div class="section-subtitle">Pixel × profondità di colore</div>
+    </div>
+  </div>
+
+  <p>In un'immagine raster (una griglia di pixel, come una fotografia), il "campione" è il singolo <strong>pixel</strong>, e i "bit per campione" sono la <strong>profondità di colore</strong> — quanti bit servono per memorizzare il colore di ogni pixel.</p>
+
+  <div class="formula-box">
+    <span class="formula-label">Formula immagini</span>
+    bit totali = (larghezza × altezza) × bit per pixel
+  </div>
+
+  <div class="calc-steps">
+    <div class="calc-title">Esempio svolto — immagine 1920 × 1080, 24 bit per pixel (RGB)</div>
+    <div class="calc-row"><span class="calc-desc">Pixel totali</span><span class="calc-val">1920 × 1080 = 2.073.600 pixel</span></div>
+    <div class="calc-row"><span class="calc-desc">Bit totali</span><span class="calc-val">2.073.600 × 24 = 49.766.400 bit</span></div>
+    <div class="calc-row"><span class="calc-desc">Byte</span><span class="calc-val">49.766.400 ÷ 8 = 6.220.800 byte</span></div>
+    <div class="calc-row"><span class="calc-desc">KiB</span><span class="calc-val">6.220.800 ÷ 1024 = 6.075 KiB</span></div>
+    <div class="calc-row calc-final"><span class="calc-desc">MiB</span><span class="calc-val">6.075 ÷ 1024 ≈ 5,93 MiB</span></div>
+  </div>
+
+  <p class="sub-title">Quanti colori con n bit?</p>
+  <p>Con <strong>n bit per pixel</strong> si possono rappresentare esattamente <strong>2ⁿ</strong> colori distinti — ogni combinazione di bit codifica un colore diverso.</p>
+
+  <div class="color-compare">
+    <div class="color-card cc-24">
+      <div class="cc-bits">24 bit</div>
+      <div class="cc-colors">2²⁴ ≈ 16,7 milioni di colori</div>
+      <canvas id="canvas-24bit" width="380" height="130"></canvas>
+    </div>
+    <div class="color-card cc-8">
+      <div class="cc-bits">8 bit</div>
+      <div class="cc-colors">2⁸ = 256 colori (schema 3-3-2)</div>
+      <canvas id="canvas-8bit" width="380" height="130"></canvas>
+    </div>
+  </div>
+  <p style="font-size:.78rem;color:var(--gray-mid);text-align:center;margin-top:-.5rem;">Stesso gradiente, generato dal vivo nel browser: a sinistra a piena profondità, a destra ridotto a soli 256 colori (3 bit rosso, 3 bit verde, 2 bit blu — la ripartizione classica dell'8 bit).</p>
+
+  <div class="box box-warn">
+    <div class="box-label">Cosa succede riducendo i bit</div>
+    <p>Passando da 24 a 8 bit per pixel, la dimensione del file si riduce di un fattore <strong>24 / 8 = 3</strong> (diventa un terzo). Ma guarda il gradiente qui sopra: da 16,7 milioni di colori possibili si passa a soli 256, e molte tonalità simili vengono "appiattite" sullo stesso colore. È l'effetto detto <strong>banding</strong> o <strong>posterizzazione</strong> — bande di colore uniforme al posto di sfumature morbide, visibili soprattutto nei cieli o nei gradienti come questo.</p>
+  </div>
+</section>
+
+<!-- 3: AUDIO -->
+<section class="guide-section" id="s3">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div class="section-titles">
+      <div class="section-title">Audio digitale</div>
+      <div class="section-subtitle">Canali × frequenza di campionamento × bit per campione</div>
+    </div>
+  </div>
+
+  <p>Un segnale audio è continuo, ma per digitalizzarlo lo si misura a intervalli regolari: ogni misurazione è un <strong>campione</strong>. Il numero di campioni al secondo è la <strong>frequenza di campionamento</strong> (in Hz); il numero di bit usati per ogni campione è la <strong>profondità di bit</strong> (bit depth).</p>
+
+  <div class="formula-box">
+    <span class="formula-label">Formula bit rate</span>
+    bit rate (bit/s) = canali × frequenza di campionamento × bit per campione
+  </div>
+
+  <div class="calc-steps">
+    <div class="calc-title">Esempio svolto — audio stereo, 44,1 kHz, 16 bit/campione, 3 minuti</div>
+    <div class="calc-row"><span class="calc-desc">Bit rate</span><span class="calc-val">2 × 44.100 × 16 = 1.411.200 bit/s</span></div>
+    <div class="calc-row"><span class="calc-desc">Durata</span><span class="calc-val">3 min = 180 s</span></div>
+    <div class="calc-row"><span class="calc-desc">Bit totali</span><span class="calc-val">1.411.200 × 180 = 254.016.000 bit</span></div>
+    <div class="calc-row"><span class="calc-desc">Byte</span><span class="calc-val">254.016.000 ÷ 8 = 31.752.000 byte</span></div>
+    <div class="calc-row calc-final"><span class="calc-desc">MiB</span><span class="calc-val">31.752.000 ÷ 1024² ≈ 30,28 MiB</span></div>
+  </div>
+
+  <div class="box box-info">
+    <div class="box-label">Perché proprio 44,1 kHz e 16 bit?</div>
+    <p><strong>44,1 kHz</strong> — l'orecchio umano percepisce suoni fino a circa 20 kHz. Il teorema di Nyquist-Shannon impone di campionare ad almeno il doppio (40 kHz) per non perdere queste frequenze. Si è scelto un valore leggermente superiore per lasciare un margine ai filtri elettronici che "ripuliscono" il segnale prima della conversione — i filtri reali non sono perfetti come quelli teorici, e senza questo margine rischierebbero di tagliare anche frequenze udibili. Il valore esatto ha anche un'origine storica: derivava dalla compatibilità con i primi registratori audio digitali PCM degli anni '70-'80, che sincronizzavano il segnale sui fotogrammi dei videoregistratori Betamax/U-matic dell'epoca.</p>
+    <p style="margin-top:.6rem;"><strong>16 bit</strong> — offrono 2¹⁶ = 65.536 livelli di quantizzazione, corrispondenti a circa 96 dB di gamma dinamica: sufficienti a coprire la differenza tra il suono più debole e quello più forte di un ascolto normale, con un errore di quantizzazione praticamente impercettibile.</p>
+    <p style="margin-top:.6rem;">Il <em>perché</em> matematico di questi numeri — il teorema di Nyquist-Shannon nel dettaglio, cosa succede quando si campiona sotto la soglia minima (aliasing) e l'errore di quantizzazione visualizzato — è il cuore della guida di approfondimento collegata in fondo a questa pagina.</p>
+  </div>
+</section>
+
+<!-- 4: VIDEO -->
+<section class="guide-section" id="s4">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div class="section-titles">
+      <div class="section-title">Video</div>
+      <div class="section-subtitle">Lo stesso principio dell'immagine, moltiplicato per i fotogrammi</div>
+    </div>
+  </div>
+
+  <p>Un video non è altro che una sequenza di immagini (fotogrammi, o <em>frame</em>) mostrate rapidamente una dopo l'altra. La dimensione si calcola quindi come quella di un'immagine, moltiplicata per il numero totale di fotogrammi.</p>
+
+  <div class="formula-box">
+    <span class="formula-label">Formula video</span>
+    bit totali = (pixel per fotogramma × bit per pixel) × fotogrammi totali
+  </div>
+
+  <div class="calc-steps">
+    <div class="calc-title">Esempio svolto — 1280 × 720, 24 bit/pixel, 30 fps, 10 secondi</div>
+    <div class="calc-row"><span class="calc-desc">Pixel per frame</span><span class="calc-val">1280 × 720 = 921.600</span></div>
+    <div class="calc-row"><span class="calc-desc">Bit per frame</span><span class="calc-val">921.600 × 24 = 22.118.400 bit</span></div>
+    <div class="calc-row"><span class="calc-desc">Frame totali (10 s)</span><span class="calc-val">30 × 10 = 300 frame</span></div>
+    <div class="calc-row"><span class="calc-desc">Bit totali</span><span class="calc-val">22.118.400 × 300 = 6.635.520.000 bit</span></div>
+    <div class="calc-row"><span class="calc-desc">Byte</span><span class="calc-val">6.635.520.000 ÷ 8 = 829.440.000 byte</span></div>
+    <div class="calc-row calc-final"><span class="calc-desc">MiB</span><span class="calc-val">829.440.000 ÷ 1024² ≈ 790,6 MiB</span></div>
+  </div>
+
+  <div class="box box-warn">
+    <div class="box-label">Perché la compressione è indispensabile</div>
+    <p>Quasi <strong>800 MiB per soli 10 secondi</strong> di video non compresso. Un filmato di durata normale — minuti, non secondi — sarebbe enorme: impraticabile da salvare, trasmettere o vedere in streaming. Per questo, nella pratica, ogni video che guardiamo (YouTube, Netflix, un file su smartphone) è sempre <strong>compresso</strong>: algoritmi come H.264 o H.265 riducono drasticamente questa dimensione, eliminando ridondanze tra un fotogramma e l'altro.</p>
+  </div>
+</section>
+
+<!-- RIMANDO ALLA TEORIA DEL CAMPIONAMENTO -->
+<a class="related-link" href="/sistemi/teoria-del-campionamento/">
+  <div class="related-link-icon">🌊</div>
+  <div class="related-link-text">
+    <strong>Vuoi capire perché si campiona proprio a quella frequenza?</strong>
+    <span>La guida "Teoria del campionamento" approfondisce la conversione analogico-digitale, il teorema di Nyquist-Shannon, l'aliasing e la quantizzazione, con due simulazioni interattive. Non è necessario leggerla in un ordine particolare rispetto a questa guida.</span>
+  </div>
+  <div class="related-link-arrow">→</div>
+</a>
+
+</div><!-- /#main -->
+
+<footer>
+  <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
+  Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem;">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<script>
+  // Toggle sidebar mobile (hamburger) — pattern standard del portale
+  const hamburger = document.getElementById('hamburger');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+  if (hamburger) {
+    hamburger.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('open');
+    });
+  }
+  document.querySelectorAll('#sidebar .nav-item').forEach(a => a.addEventListener('click', closeSidebar));
+
+  // ── Dimostrazione reale: gradiente a piena profondità vs posterizzato a 256 colori ──
+  // Schema 3-3-2 bit (R-G-B): 8 livelli rosso × 8 livelli verde × 4 livelli blu = 256 colori esatti.
+  function hslToRgb(h, s, l) {
+    s /= 100; l /= 100;
+    const k = n => (n + h / 30) % 12;
+    const a = s * Math.min(l, 1 - l);
+    const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+    return [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)];
+  }
+
+  function quantizeChannel(value, levels) {
+    const step = Math.round(value / 255 * (levels - 1));
+    return Math.round(step / (levels - 1) * 255);
+  }
+
+  function drawGradients() {
+    const c24 = document.getElementById('canvas-24bit');
+    const c8  = document.getElementById('canvas-8bit');
+    if (!c24 || !c8) return;
+
+    const w = c24.width, h = c24.height;
+    const ctx24 = c24.getContext('2d');
+    const ctx8  = c8.getContext('2d');
+    const img24 = ctx24.createImageData(w, h);
+    const img8  = ctx8.createImageData(w, h);
+
+    for (let y = 0; y < h; y++) {
+      const lightness = 32 + (y / h) * 42; // varia la luminosità dall'alto in basso
+      for (let x = 0; x < w; x++) {
+        const hue = (x / w) * 300; // spazzata di tonalità, evita il wrap violaceo→rosso
+        const [r, g, b] = hslToRgb(hue, 72, lightness);
+        const idx = (y * w + x) * 4;
+
+        img24.data[idx]     = r;
+        img24.data[idx + 1] = g;
+        img24.data[idx + 2] = b;
+        img24.data[idx + 3] = 255;
+
+        img8.data[idx]     = quantizeChannel(r, 8); // 3 bit
+        img8.data[idx + 1] = quantizeChannel(g, 8); // 3 bit
+        img8.data[idx + 2] = quantizeChannel(b, 4); // 2 bit
+        img8.data[idx + 3] = 255;
+      }
+    }
+    ctx24.putImageData(img24, 0, 0);
+    ctx8.putImageData(img8, 0, 0);
+  }
+  drawGradients();
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>

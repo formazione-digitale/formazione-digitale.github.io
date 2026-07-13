@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teoria del Campionamento: Nyquist-Shannon, Aliasing e Quantizzazione — Formazione Digitale</title>
+
+<meta name="description" content="Come un segnale continuo diventa una sequenza di bit: il teorema di Nyquist-Shannon, l'aliasing e la quantizzazione, con due simulazioni interattive dal vivo.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://formazione-digitale.it/sistemi/teoria-del-campionamento/">
+<link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="//gc.zgo.at">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#1F4E79">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Teoria del Campionamento: Nyquist-Shannon, Aliasing e Quantizzazione — Formazione Digitale">
+<meta property="og:description" content="Come un segnale continuo diventa una sequenza di bit: teorema di Nyquist-Shannon, aliasing e quantizzazione, con simulazioni interattive dal vivo.">
+<meta property="og:url" content="https://formazione-digitale.it/sistemi/teoria-del-campionamento/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+
+<!-- Twitter/X Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Teoria del Campionamento — Formazione Digitale">
+<meta name="twitter:description" content="Nyquist-Shannon, aliasing e quantizzazione, con simulazioni interattive dal vivo.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Teoria del Campionamento: Nyquist-Shannon, Aliasing e Quantizzazione",
+  "description": "Come un segnale continuo diventa una sequenza di bit: il teorema di Nyquist-Shannon, l'aliasing e la quantizzazione, con due simulazioni interattive dal vivo.",
+  "url": "https://formazione-digitale.it/sistemi/teoria-del-campionamento/",
+  "inLanguage": "it",
+  "author": {
+    "@type": "Person",
+    "name": "Cristiano De Pasquale",
+    "jobTitle": "Docente di Informatica"
+  },
+  "provider": {
+    "@type": "WebSite",
+    "name": "Formazione Digitale",
+    "url": "https://formazione-digitale.it"
+  },
+  "educationalLevel": "Livello base",
+  "keywords": "campionamento, teorema di Nyquist-Shannon, aliasing, quantizzazione, errore di quantizzazione, conversione analogico-digitale, audio digitale"
+}
+</script>
+
+<!-- GoatCounter tracking -->
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+<link rel="stylesheet" href="/css/shared.css?v=3">
+<style>
+/* ── Box widget interattivi ── */
+.tool-wrapper {
+  background: #fff; border: 2px solid var(--blue-light); border-radius: var(--radius);
+  overflow: hidden; margin: 1.5rem 0;
+}
+.tool-cover {
+  background: linear-gradient(135deg, #1F4E79 0%, #2A6099 100%);
+  padding: 1.1rem 1.5rem;
+}
+.tool-cover-title { font-family: var(--font-display); font-size: 1.15rem; color: #fff; }
+.tool-cover-desc { font-size: .82rem; color: rgba(255,255,255,.78); margin-top: .25rem; line-height: 1.5; }
+.tool-body { padding: 1.25rem 1.5rem 1.5rem; }
+
+.tool-body canvas {
+  width: 100%; height: auto; display: block;
+  background: var(--gray-light); border-radius: 8px; border: 1px solid var(--blue-light);
+}
+
+.slider-row { display: flex; align-items: center; gap: .9rem; margin: 1rem 0 .5rem; flex-wrap: wrap; }
+.slider-row label { font-size: .82rem; font-weight: 600; color: var(--blue-dark); flex-shrink: 0; }
+.slider-row input[type="range"] { flex: 1; min-width: 180px; accent-color: var(--blue-mid); }
+.slider-value {
+  font-family: 'Courier New', monospace; font-weight: 700; color: var(--blue-dark);
+  background: var(--blue-pale); border-radius: 6px; padding: .2rem .6rem; font-size: .85rem; min-width: 64px; text-align: center;
+}
+
+.status-chip {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-size: .84rem; font-weight: 600; padding: .5rem .9rem; border-radius: 20px; margin-top: .75rem;
+}
+.status-ok   { background: var(--green-light); color: var(--green-dark); }
+.status-bad  { background: var(--red-light);   color: var(--red-dark); }
+
+.legend { display: flex; gap: 1.25rem; flex-wrap: wrap; font-size: .78rem; color: var(--gray-mid); margin-top: .6rem; }
+.legend span { display: inline-flex; align-items: center; gap: .35rem; }
+.legend .sw { width: 18px; height: 3px; border-radius: 2px; display: inline-block; }
+.legend .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+
+.readout-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap: .75rem; margin-top: 1rem; }
+.readout-card { background: var(--blue-pale); border-radius: 8px; padding: .75rem .9rem; }
+.readout-card .rc-label { font-size: .68rem; text-transform: uppercase; letter-spacing: .06em; color: var(--blue-mid); font-weight: 700; }
+.readout-card .rc-value { font-family: 'Courier New', monospace; font-size: 1.05rem; color: var(--blue-dark); margin-top: .2rem; font-weight: 700; }
+
+footer { margin-left: 0; }
+@media(min-width:900px) { footer { margin-left: var(--nav-w); } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header">
+  <div class="header-left">
+    <button id="hamburger"><span></span><span></span><span></span></button>
+    <a href="/index.html" class="header-back">← Portale</a>
+    <div class="header-sep"></div>
+    <span class="header-logo">Teoria del Campionamento</span>
+    <span class="header-sub">Nyquist-Shannon, Aliasing, Quantizzazione</span>
+  </div>
+</div>
+
+<div id="overlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <a class="nav-item" href="#s1"><span class="nav-num">1</span>Dal segnale continuo ai bit</a>
+  <a class="nav-item" href="#s2"><span class="nav-num">2</span>Nyquist-Shannon e aliasing</a>
+  <a class="nav-item" href="#s3"><span class="nav-num">3</span>Quantizzazione e rumore</a>
+  <hr class="nav-divider">
+  <a class="nav-item" href="/sistemi/dimensionamento-files/" style="color:var(--green-dark);font-weight:600;">
+    <span class="nav-num" style="background:var(--green-dark);">📐</span>Dimensionamento file
+  </a>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+
+<!-- COVER -->
+<div class="cover-block">
+  <div class="cover-eyebrow">Formazione Digitale · Sistemi · Rappresentazione dei dati</div>
+  <h1 class="cover-title">Teoria del Campionamento<br><em>Dal segnale continuo ai bit</em></h1>
+  <p class="cover-desc">Perché si campiona a una certa frequenza, cosa succede se non lo si fa correttamente, e cosa significa "precisione" in un mondo fatto solo di 0 e 1. Con due simulazioni dal vivo.</p>
+  <div class="cover-divider"></div>
+  <p class="cover-intro">💡 Guida introduttiva · Livello base · ~15 min di lettura · 2 simulazioni interattive</p>
+</div>
+
+<!-- 1: DAL SEGNALE CONTINUO AI BIT -->
+<section class="guide-section" id="s1">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div class="section-titles">
+      <div class="section-title">Dal segnale continuo ai bit</div>
+      <div class="section-subtitle">Due domande indipendenti, due soluzioni distinte</div>
+    </div>
+  </div>
+
+  <p>Un fenomeno naturale — un suono, la luce che colpisce un sensore, la temperatura — è per sua natura <strong>continuo</strong>: in ogni istante ha un valore, e tra due istanti qualsiasi ne esistono infiniti altri. Un computer, invece, può memorizzare solo numeri con un numero finito di cifre, misurati in un numero finito di istanti. Digitalizzare un segnale significa quindi rispondere a <strong>due domande separate</strong>:</p>
+
+  <div class="highlight-grid">
+    <div class="highlight-card">
+      <div class="hc-icon">⏱️</div>
+      <div class="hc-title">Quando misurare?</div>
+      <div class="hc-desc">È il <strong>campionamento</strong> nel tempo: quante volte al secondo si "fotografa" il valore del segnale. Risponde il <strong>teorema di Nyquist-Shannon</strong> (sezione 2).</div>
+    </div>
+    <div class="highlight-card">
+      <div class="hc-icon">📏</div>
+      <div class="hc-title">Con quale precisione?</div>
+      <div class="hc-desc">È la <strong>quantizzazione</strong> in ampiezza: con quanti bit si approssima ogni misurazione. Determina l'<strong>errore di quantizzazione</strong> (sezione 3).</div>
+    </div>
+  </div>
+
+  <p>Queste due scelte sono indipendenti l'una dall'altra, e sono esattamente i due numeri che comparivano nella formula del bit rate audio: <code>canali × frequenza di campionamento × bit per campione</code>. Se non hai ancora visto come questi numeri incidono sulla dimensione di un file, può valere la pena partire da lì.</p>
+
+  <a class="related-link" href="/sistemi/dimensionamento-files/">
+    <div class="related-link-icon">📐</div>
+    <div class="related-link-text">
+      <strong>Non hai ancora letto la guida sul dimensionamento dei file?</strong>
+      <span>Vedi come frequenza di campionamento e bit per campione determinano concretamente il peso di un file audio, immagine o video. Non è necessario leggerla prima di questa: sono pensate per essere autonome.</span>
+    </div>
+    <div class="related-link-arrow">→</div>
+  </a>
+</section>
+
+<!-- 2: NYQUIST-SHANNON E ALIASING -->
+<section class="guide-section" id="s2">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div class="section-titles">
+      <div class="section-title">Il teorema di Nyquist-Shannon</div>
+      <div class="section-subtitle">Quanto spesso serve campionare per non perdere informazione</div>
+    </div>
+  </div>
+
+  <div class="box box-info">
+    <div class="box-label">Il teorema</div>
+    <p>Per poter ricostruire fedelmente un segnale a partire dai suoi campioni, la <strong>frequenza di campionamento</strong> deve essere <strong>almeno il doppio</strong> della frequenza massima contenuta nel segnale. Questa soglia minima si chiama <strong>frequenza di Nyquist</strong>.</p>
+    <p style="margin-top:.6rem;">Il teorema garantisce la ricostruzione <em>perfetta</em>, ma solo usando lo specifico metodo di ricostruzione previsto dalla teoria (l'<strong>interpolazione sinc</strong>). La simulazione qui sotto, per restare semplice, usa invece una curva morbida di approssimazione: sopra la soglia di Nyquist l'aliasing vero non c'è più, ma la ricostruzione approssimata può comunque apparire imprecisa finché non si sale un po' oltre il minimo teorico.</p>
+  </div>
+
+  <p>Se questa condizione non è rispettata — se cioè si campiona <em>troppo lentamente</em> rispetto a quanto varia il segnale — succede qualcosa di controintuitivo: i campioni raccolti non permettono più di distinguere il segnale originale da un altro, <strong>più lento</strong>, che passa esattamente per gli stessi punti. Il segnale ricostruito assume quindi una frequenza diversa (falsa) da quella reale. Questo fenomeno si chiama <strong>aliasing</strong>, ed è un'informazione persa in modo irreversibile: una volta campionato male, non si può più recuperare il segnale corretto.</p>
+
+  <div class="tool-wrapper" id="tool-nyquist">
+    <div class="tool-cover">
+      <div class="tool-cover-title">🌊 Simulazione — campionamento e aliasing</div>
+      <div class="tool-cover-desc">Sposta lo slider per cambiare quanti campioni si prendono per ogni ciclo dell'onda, e osserva cosa succede alla ricostruzione (in verde). <strong>Nota:</strong> questa demo <em>simula</em> il campionamento con una curva morbida di interpolazione (non l'esatta formula matematica del teorema, la cosiddetta "interpolazione sinc"): serve a far vedere l'effetto in modo intuitivo, non è la ricostruzione perfetta della teoria.</div>
+    </div>
+    <div class="tool-body">
+      <canvas id="canvas-nyquist" width="700" height="240"></canvas>
+      <div class="legend">
+        <span><span class="sw" style="background:var(--blue-light);"></span> Segnale reale (continuo)</span>
+        <span><span class="dot" style="background:var(--amber-dark);"></span> Campioni prelevati</span>
+        <span><span class="sw" style="background:var(--green-dark);"></span> Segnale ricostruito dai campioni</span>
+      </div>
+      <div class="slider-row">
+        <label for="slider-nyquist">Campioni per ciclo</label>
+        <input type="range" id="slider-nyquist" min="1" max="12" step="0.1" value="2.3">
+        <span class="slider-value" id="value-nyquist">2,3</span>
+      </div>
+      <div id="status-nyquist"></div>
+    </div>
+  </div>
+
+  <div class="box box-tip">
+    <div class="box-label">Da provare</div>
+    <p>Porta lo slider appena sotto 2: qui è aliasing vero, garantito dal teorema — nessuna tecnica di ricostruzione, nemmeno quella perfetta, potrebbe recuperare il segnale originale. Tra 2 e 4 la situazione è diversa: l'aliasing vero non c'è più, ma questa demo (che usa un'interpolazione approssimata, non quella perfetta della teoria) mostra ancora una ricostruzione imprecisa. Solo sopra 4-5 la curva verde diventa quasi indistinguibile dall'originale.</p>
+  </div>
+
+  <p>Nella pratica, un microfono o un convertitore audio non sa a priori quali frequenze contiene il segnale in ingresso: per questo, prima della conversione, un <strong>filtro anti-aliasing</strong> elimina elettronicamente tutte le frequenze superiori alla metà della frequenza di campionamento scelta, in modo che l'aliasing non possa verificarsi.</p>
+</section>
+
+<!-- 3: QUANTIZZAZIONE -->
+<section class="guide-section" id="s3">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div class="section-titles">
+      <div class="section-title">Quantizzazione e rumore di quantizzazione</div>
+      <div class="section-subtitle">Con quale precisione si misura ogni singolo campione</div>
+    </div>
+  </div>
+
+  <p>Anche una volta deciso <em>quando</em> campionare, resta un problema: il valore del segnale in quell'istante è ancora un numero continuo (potenzialmente con infinite cifre decimali), ma un campione digitale può usare solo un numero finito di bit. La <strong>quantizzazione</strong> è l'operazione che approssima ogni valore reale al <strong>livello discreto più vicino</strong> tra quelli rappresentabili con i bit disponibili.</p>
+
+  <div class="formula-box" style="background:var(--blue-dark);color:#fff;border-radius:var(--radius);padding:1.1rem 1.4rem;font-family:'Courier New',monospace;font-size:.98rem;line-height:1.9;text-align:center;">
+    <span style="display:block;font-family:var(--font-body);font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-light);margin-bottom:.5rem;">Livelli disponibili con n bit</span>
+    livelli = 2ⁿ
+  </div>
+
+  <p>Più bit sono disponibili, più i livelli discreti sono fitti, e più piccola è la distanza tra il valore reale e quello approssimato. Questa distanza è l'<strong>errore di quantizzazione</strong> (chiamato anche <em>rumore di quantizzazione</em>, perché all'ascolto si percepisce come un fruscio di fondo).</p>
+
+  <div class="tool-wrapper" id="tool-quant">
+    <div class="tool-cover">
+      <div class="tool-cover-title">📏 Simulazione — quantizzazione e gradini</div>
+      <div class="tool-cover-desc">Cambia i bit per campione e osserva i "gradini" della curva quantizzata rispetto al segnale reale continuo.</div>
+    </div>
+    <div class="tool-body">
+      <canvas id="canvas-quant" width="700" height="240"></canvas>
+      <div class="legend">
+        <span><span class="sw" style="background:var(--blue-light);"></span> Segnale reale (continuo)</span>
+        <span><span class="sw" style="background:var(--green-dark);"></span> Segnale quantizzato (gradini)</span>
+      </div>
+      <div class="slider-row">
+        <label for="slider-quant">Bit per campione</label>
+        <input type="range" id="slider-quant" min="1" max="8" step="1" value="3">
+        <span class="slider-value" id="value-quant">3 bit</span>
+      </div>
+      <div class="readout-grid">
+        <div class="readout-card">
+          <div class="rc-label">Livelli disponibili</div>
+          <div class="rc-value" id="readout-levels">2³ = 8</div>
+        </div>
+        <div class="readout-card">
+          <div class="rc-label">Errore massimo teorico</div>
+          <div class="rc-value" id="readout-error">± 7,1% del fondo scala</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box box-warn">
+    <div class="box-label">Perché non usare sempre tanti bit?</div>
+    <p>Più bit per campione significa errore più piccolo, ma anche <strong>file più grandi</strong>: lo si è visto nella formula del bit rate audio. La scelta dei bit per campione (come dei 16 bit del CD audio) è sempre un compromesso tra fedeltà e dimensione — un compromesso che, sopra una certa soglia, diventa impercettibile all'orecchio umano pur costando byte aggiuntivi.</p>
+  </div>
+</section>
+
+</div><!-- /#main -->
+
+<footer>
+  <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
+  Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem;">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<script>
+  // Toggle sidebar mobile (hamburger) — pattern standard del portale
+  const hamburger = document.getElementById('hamburger');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+  if (hamburger) {
+    hamburger.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('open');
+    });
+  }
+  document.querySelectorAll('#sidebar .nav-item').forEach(a => a.addEventListener('click', closeSidebar));
+
+  // ══════════════════════════════════════════════════════════════
+  // WIDGET 1 — Campionamento e aliasing (Nyquist-Shannon)
+  // ══════════════════════════════════════════════════════════════
+  (function () {
+    const canvas = document.getElementById('canvas-nyquist');
+    const ctx = canvas.getContext('2d');
+    const slider = document.getElementById('slider-nyquist');
+    const valueLabel = document.getElementById('value-nyquist');
+    const statusBox = document.getElementById('status-nyquist');
+
+    const W = canvas.width, H = canvas.height;
+    const CYCLES = 4;          // cicli visibili del segnale reale
+    const MARGIN = 24;
+    const midY = H / 2;
+    const ampPx = (H / 2) - MARGIN;
+
+    // Interpolazione Catmull-Rom: curva morbida che passa per tutti i punti dati.
+    function catmullRom(p0, p1, p2, p3, t) {
+      const t2 = t * t, t3 = t2 * t;
+      return 0.5 * ((2 * p1) + (-p0 + p2) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * t2 + (-p0 + 3 * p1 - 3 * p2 + p3) * t3);
+    }
+
+    function drawSmoothCurve(points, color, lineWidth) {
+      if (points.length < 2) return;
+      const pts = [points[0], ...points, points[points.length - 1]];
+      ctx.beginPath();
+      ctx.moveTo(pts[1].x, pts[1].y);
+      for (let i = 1; i < pts.length - 2; i++) {
+        const p0 = pts[i - 1], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2];
+        const steps = 14;
+        for (let s = 1; s <= steps; s++) {
+          const t = s / steps;
+          const x = catmullRom(p0.x, p1.x, p2.x, p3.x, t);
+          const y = catmullRom(p0.y, p1.y, p2.y, p3.y, t);
+          ctx.lineTo(x, y);
+        }
+      }
+      ctx.strokeStyle = color;
+      ctx.lineWidth = lineWidth;
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+    }
+
+    function render() {
+      const samplesPerCycle = parseFloat(slider.value);
+      valueLabel.textContent = samplesPerCycle.toFixed(1).replace('.', ',');
+
+      ctx.clearRect(0, 0, W, H);
+
+      // Asse centrale
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(0, midY);
+      ctx.lineTo(W, midY);
+      ctx.stroke();
+
+      // Segnale reale continuo
+      ctx.beginPath();
+      for (let px = 0; px <= W; px++) {
+        const t = (px / W) * CYCLES;
+        const y = midY - Math.sin(2 * Math.PI * t) * ampPx;
+        if (px === 0) ctx.moveTo(px, y); else ctx.lineTo(px, y);
+      }
+      ctx.strokeStyle = '#9fc4e8';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Campioni
+      const totalSamples = Math.floor(CYCLES * samplesPerCycle) + 1;
+      const samplePoints = [];
+      for (let i = 0; i <= totalSamples; i++) {
+        const tCycle = i / samplesPerCycle;
+        if (tCycle > CYCLES) break;
+        const x = (tCycle / CYCLES) * W;
+        const y = midY - Math.sin(2 * Math.PI * tCycle) * ampPx;
+        samplePoints.push({ x, y });
+      }
+
+      // Ricostruzione (curva morbida attraverso i campioni)
+      drawSmoothCurve(samplePoints, '#1E6B3C', 2.5);
+
+      // Pallini dei campioni
+      ctx.fillStyle = '#7D4E00';
+      samplePoints.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Stato del badge — SOGLIA EMPIRICA della spline di ricostruzione usata in questa
+      // demo, NON la soglia teorica del teorema (che vale solo per l'interpolazione sinc,
+      // non implementata qui). La Catmull-Rom richiede più margine sopra 2× per convergere
+      // visivamente all'originale: sotto ~4× può ancora sembrare distorta pur essendo
+      // "matematicamente" sopra Nyquist. Il messaggio riflette questa distinzione.
+      if (samplesPerCycle < 2) {
+        statusBox.innerHTML = '<span class="status-chip status-bad">⚠ Sotto la soglia minima del teorema (2 campioni/ciclo) — aliasing vero: l\'informazione è persa, nessun metodo di ricostruzione può recuperarla</span>';
+      } else if (samplesPerCycle < 4) {
+        statusBox.innerHTML = '<span class="status-chip" style="background:var(--amber-light);color:var(--amber-dark);">⚠ Sopra la soglia minima del teorema, ma questa demo (interpolazione approssimata) non converge ancora: la vera interpolazione sinc qui ricostruirebbe perfettamente, questa curva morbida no</span>';
+      } else {
+        statusBox.innerHTML = '<span class="status-chip status-ok">✓ Con margine abbondante sopra Nyquist, anche questa interpolazione approssimata converge visivamente all\'originale</span>';
+      }
+    }
+
+    slider.addEventListener('input', render);
+    render();
+  })();
+
+  // ══════════════════════════════════════════════════════════════
+  // WIDGET 2 — Quantizzazione e rumore di quantizzazione
+  // ══════════════════════════════════════════════════════════════
+  (function () {
+    const canvas = document.getElementById('canvas-quant');
+    const ctx = canvas.getContext('2d');
+    const slider = document.getElementById('slider-quant');
+    const valueLabel = document.getElementById('value-quant');
+    const readoutLevels = document.getElementById('readout-levels');
+    const readoutError = document.getElementById('readout-error');
+
+    const W = canvas.width, H = canvas.height;
+    const CYCLES = 2.5;
+    const MARGIN = 24;
+    const midY = H / 2;
+    const ampPx = (H / 2) - MARGIN;
+
+    function render() {
+      const bits = parseInt(slider.value, 10);
+      const levels = Math.pow(2, bits);
+      valueLabel.textContent = bits + (bits === 1 ? ' bit' : ' bit');
+      readoutLevels.textContent = '2' + toSuperscript(bits) + ' = ' + levels;
+      const errorPct = (100 / (2 * (levels - 1))).toFixed(1).replace('.', ',');
+      readoutError.textContent = '± ' + errorPct + '% del fondo scala';
+
+      ctx.clearRect(0, 0, W, H);
+
+      // Asse centrale
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(0, midY);
+      ctx.lineTo(W, midY);
+      ctx.stroke();
+
+      // Segnale reale continuo — onda ASIMMETRICA (fondamentale + 2 armoniche),
+      // più simile a un suono reale di un seno puro. Coefficienti che sommano a 1.0
+      // garantiscono che il segnale resti sempre dentro [-1, 1] senza normalizzare.
+      function signal(t) {
+        return 0.6 * Math.sin(2 * Math.PI * t)
+             + 0.35 * Math.sin(4 * Math.PI * t)
+             + 0.05 * Math.sin(6 * Math.PI * t);
+      }
+
+      ctx.beginPath();
+      for (let px = 0; px <= W; px++) {
+        const t = (px / W) * CYCLES;
+        const y = midY - signal(t) * ampPx;
+        if (px === 0) ctx.moveTo(px, y); else ctx.lineTo(px, y);
+      }
+      ctx.strokeStyle = '#9fc4e8';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Segnale quantizzato (gradini): per ogni pixel, il valore reale viene
+      // approssimato al livello discreto più vicino tra i "levels" disponibili.
+      ctx.beginPath();
+      for (let px = 0; px <= W; px++) {
+        const t = (px / W) * CYCLES;
+        const yReal = signal(t); // -1..1
+        const step = Math.round((yReal + 1) / 2 * (levels - 1));
+        const yQuant = (step / (levels - 1)) * 2 - 1;
+        const y = midY - yQuant * ampPx;
+        if (px === 0) ctx.moveTo(px, y); else ctx.lineTo(px, y);
+      }
+      ctx.strokeStyle = '#1E6B3C';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+    }
+
+    function toSuperscript(n) {
+      const map = { '0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹' };
+      return String(n).split('').map(d => map[d] || d).join('');
+    }
+
+    slider.addEventListener('input', render);
+    render();
+  })();
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>
