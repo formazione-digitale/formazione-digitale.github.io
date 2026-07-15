@@ -1083,7 +1083,7 @@
         "hub": "/sistemi/",
         "order": 6
     },
-	   {
+    {
         "path": "/sistemi/dimensionamento-files/",
         "label": "Dimensionamento dei File: Immagini, Audio, Video",
         "short": "Dimensionamento File",
@@ -1146,6 +1146,91 @@
             "problem-solving"
         ],
         "digcompedu": [
+            "DCEdu 6.5"
+        ]
+    },
+    {
+        "path": "/sistemi/architettura-pc/",
+        "label": "Architettura del PC e Sistemi",
+        "short": "Architettura PC",
+        "cat": "guide",
+        "emoji": "🖥️",
+        "tags": [
+            "architettura",
+            "pc",
+            "cpu",
+            "ram",
+            "raid",
+            "bios",
+            "uefi",
+            "ssd",
+            "nvme",
+            "periferiche",
+            "upgrade",
+            "hardware",
+            "von neumann",
+            "sistemi e reti",
+            "itis informatica"
+        ],
+        "meta": "11 capitoli · Simulatore CPU · Modalità aula · SVG interattivi",
+        "description": "Dal modello Von Neumann al RAID: CPU, memorie, storage, connettori, periferiche, BIOS/UEFI, alimentazione e upgrade hardware. Con simulatore Fetch-Decode-Execute e modalità presentazione per l'aula.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 1.2",
+            "DC 4.1",
+            "DC 5.1",
+            "DC 5.2"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "informazioni",
+            "sicurezza",
+            "problem-solving"
+        ],
+        "digcompedu": [
+            "DCEdu 2.2",
+            "DCEdu 6.5"
+        ]
+    },
+    {
+        "path": "/sistemi/bash-programming/",
+        "label": "Bash — Guida Interattiva",
+        "short": "Bash: Guida Interattiva",
+        "cat": "guide",
+        "emoji": "🐚",
+        "tags": [
+            "bash",
+            "shell",
+            "linux",
+            "command-line",
+            "cli",
+            "scripting",
+            "permessi",
+            "automazione",
+            "git-bash",
+            "windows",
+            "itis informatica"
+        ],
+        "meta": "6 sezioni · 35+ comandi · Laboratorio script · Filtri dinamici · CSV scaricabile",
+        "description": "Guida completa a Bash: fondamenti della shell, Git Bash su Windows, 35+ comandi filtrabili per categoria, variabili globali, permessi file e laboratorio script progressivo. 6 sezioni didattiche + cheatsheet scaricabile in CSV.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 3.4",
+            "DC 4.1",
+            "DC 5.1",
+            "DC 5.2"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "creazione",
+            "problem-solving",
+            "sicurezza"
+        ],
+        "digcompedu": [
+            "DCEdu 2.2",
+            "DCEdu 6.2",
             "DCEdu 6.5"
         ]
     },

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sistemi Numerici e Computazionali — Formazione Digitale</title>
-  <meta name="description" content="8 risorse interattive per comprendere sistemi numerici, rappresentazione dei dati, logica booleana e algoritmi di scheduling. Strumenti didattici per AF/RIM e SIA.">
+  <meta name="description" content="10 risorse interattive: architettura del PC, sistemi numerici, rappresentazione dei dati, logica booleana, scheduling CPU e shell Bash. Strumenti didattici per ITIS Informatica, AFM/RIM e SIA.">
   <meta name="author" content="Cristiano De Pasquale">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://formazione-digitale.it/sistemi/">
@@ -16,7 +16,7 @@
 
   <!-- Open Graph -->
   <meta property="og:title" content="Sistemi Numerici e Computazionali — Formazione Digitale">
-  <meta property="og:description" content="8 risorse interattive: codifica binaria, aritmetica, dimensionamento file, campionamento, logica booleana, conversioni, parsing, scheduling.">
+  <meta property="og:description" content="10 risorse interattive: architettura PC, codifica binaria, aritmetica, dimensionamento file, campionamento, logica booleana, conversioni, parsing, scheduling, Bash.">
   <meta property="og:url" content="https://formazione-digitale.it/sistemi/">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
@@ -26,7 +26,7 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Sistemi Numerici e Computazionali — Formazione Digitale">
-  <meta name="twitter:description" content="8 risorse interattive di sistemi numerici, rappresentazione dei dati, logica e algoritmi.">
+  <meta name="twitter:description" content="10 risorse interattive di architettura PC, sistemi numerici, rappresentazione dei dati, logica, scheduling e Bash.">
   <meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
 
   <!-- Schema.org -->
@@ -35,7 +35,7 @@
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Sistemi Numerici e Computazionali",
-    "description": "8 risorse interattive per comprendere sistemi numerici, rappresentazione dei dati, logica booleana e algoritmi di scheduling.",
+    "description": "10 risorse interattive: architettura del PC, sistemi numerici, rappresentazione dei dati, logica booleana, scheduling CPU e shell Bash.",
     "url": "https://formazione-digitale.it/sistemi/",
     "publisher": {
       "@type": "WebSite",
@@ -219,14 +219,13 @@
       font-size: 0.85rem;
       color: var(--gray-mid);
       margin: 0;
-      line-height: 1.5;
     }
 
     @media(max-width: 900px) {
-      .hub-path { margin-left: 1.5rem; margin-right: 1.5rem; padding: 1.5rem; }
+      .hub-path { margin: 0 1.5rem 3rem; padding: 1.5rem; }
     }
 
-    /* ── RISORSE GRID ────────────────────────────────────────────────── */
+    /* ── RISORSE ──────────────────────────────────────────────────────── */
     .hub-resources {
       max-width: 960px;
       margin: 0 auto 3rem;
@@ -235,142 +234,128 @@
 
     .hub-resources h3 {
       font-family: var(--font-display);
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       color: var(--blue-dark);
       margin-bottom: 1.5rem;
     }
 
-    /* ── SOTTOAREE ────────────────────────────────────────────────── */
     .resources-subgroup {
       margin-bottom: 2.5rem;
     }
 
     .subgroup-header {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      color: var(--blue-dark);
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      color: var(--blue-dark);
-      margin-bottom: 1rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 2px solid var(--blue-light);
+      gap: 0.6rem;
+      margin-bottom: 0.35rem;
     }
 
     .subgroup-icon {
-      font-size: 1.5rem;
-      line-height: 1;
+      font-size: 1.1rem;
     }
 
     .subgroup-desc {
       font-size: 0.85rem;
       color: var(--gray-mid);
       margin-bottom: 1rem;
-      line-height: 1.55;
     }
 
     .resources-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
+      gap: 1rem;
     }
 
     .resource-card {
-      background: var(--white);
+      background: #fff;
       border: 1px solid var(--blue-light);
       border-radius: 10px;
-      overflow: hidden;
-      transition: all 0.22s ease;
+      padding: 1.25rem;
       text-decoration: none;
       color: inherit;
+      transition: all 0.2s;
       display: flex;
       flex-direction: column;
     }
 
     .resource-card:hover {
       border-color: var(--blue-mid);
-      box-shadow: 0 8px 24px rgba(31,78,121,0.12);
-      transform: translateY(-4px);
+      box-shadow: 0 4px 20px rgba(31,78,121,0.12);
+      transform: translateY(-3px);
     }
 
     .resource-head {
-      background: var(--blue-pale);
-      padding: 1.25rem 1.5rem;
-      border-bottom: 1px solid var(--blue-light);
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
     }
 
     .resource-icon {
-      font-size: 2rem;
-      line-height: 1;
+      font-size: 1.5rem;
     }
 
     .resource-title {
-      font-weight: 600;
+      font-weight: 700;
+      font-size: 0.95rem;
       color: var(--blue-dark);
     }
 
     .resource-body {
-      padding: 1.25rem 1.5rem;
       flex: 1;
-      display: flex;
-      flex-direction: column;
     }
 
     .resource-desc {
       font-size: 0.85rem;
-      color: var(--gray-mid);
-      line-height: 1.55;
-      margin-bottom: auto;
+      color: #3a3a3a;
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
     }
 
     .resource-meta {
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       color: var(--gray-mid);
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--blue-light);
+      font-style: italic;
     }
-
-    .resource-card:hover .resource-title { color: var(--blue-mid); }
 
     @media(max-width: 900px) {
       .hub-resources { padding: 0 1.5rem; }
-      .resources-subgroup { margin-bottom: 2rem; }
-      .subgroup-header { font-size: 1rem; margin-bottom: 0.85rem; padding-bottom: 0.6rem; }
-      .subgroup-icon { font-size: 1.25rem; }
-      .subgroup-desc { font-size: 0.8rem; margin-bottom: 0.85rem; }
       .resources-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ── HEADER HUB ────────────────────────────────────────────────── -->
+  <!-- ── HEADER ────────────────────────────────────────────────────── -->
   <div class="hub-header">
     <div class="hub-header-text">
       <h1>Sistemi Numerici e Computazionali</h1>
-      <p>Comprendi come i computer rappresentano l'informazione e risolvono i problemi di scheduling. 8 risorse interattive per AF/RIM, SIA e Programmazione I.</p>
+      <p>Dall'architettura hardware alla shell: tutto ciò che serve per capire come funziona un computer, dal livello fisico al livello operativo.</p>
       <div class="hub-header-meta">
-        <span><strong>8 risorse</strong> interattive</span>
-        <span><strong>Livello</strong> base–intermedio</span>
-        <span><strong>DigComp</strong> 1.2, 1.3, 3.4, 5.1, 5.2</span>
+        <div>📚 <strong>10 risorse</strong> interattive</div>
+        <div>🎯 Da AFM/RIM a ITIS Informatica</div>
+        <div>⏱ Percorso modulare, nessun ordine obbligatorio</div>
       </div>
     </div>
-    <div class="hub-header-visual">⚙️</div>
+    <div class="hub-header-visual">🖥️</div>
   </div>
 
   <!-- ── INTRO ────────────────────────────────────────────────────── -->
   <div class="hub-intro">
     <h2>Cosa imparerai</h2>
     <p>
-      Dalla rappresentazione dei numeri in base binaria ai sistemi che permettono ai computer di decidere quale processo eseguire.
+      Dall'architettura interna del PC alla rappresentazione dei numeri in base binaria, dai sistemi che permettono ai computer di decidere quale processo eseguire fino all'interazione diretta con la shell.
       Ogni strumento è progettato per mostrare il concetto passo dopo passo — visualizzazione interattiva, non solo teoria.
     </p>
 
     <div class="hub-intro-highlights">
+      <div class="highlight-item">
+        <strong>Architettura del PC</strong>
+        <p>CPU, memorie, storage, RAID, BIOS/UEFI, periferiche e upgrade hardware</p>
+      </div>
       <div class="highlight-item">
         <strong>Codifica numerica</strong>
         <p>Converti tra basi, somma/sottrai in binario, scopri gli algoritmi</p>
@@ -380,12 +365,16 @@
         <p>Tavole di verità, equivalenza, proprietà dell'algebra di Boole</p>
       </div>
       <div class="highlight-item">
+        <strong>Rappresentazione dei dati</strong>
+        <p>Dimensionamento di file multimediali, campionamento e quantizzazione del segnale</p>
+      </div>
+      <div class="highlight-item">
         <strong>Algoritmi di sistema</strong>
         <p>Scheduling della CPU: 6 algoritmi, simulazione passo-passo</p>
       </div>
       <div class="highlight-item">
-        <strong>Rappresentazione dei dati</strong>
-        <p>Dimensionamento di file multimediali, campionamento e quantizzazione del segnale</p>
+        <strong>Shell e scripting</strong>
+        <p>Bash da zero: comandi, variabili, permessi file, laboratorio script</p>
       </div>
     </div>
   </div>
@@ -397,29 +386,43 @@
       <div class="path-step">
         <div class="path-num">1</div>
         <div class="path-content">
-          <strong>Sistemi numerici</strong>
-          <p>Parti da qui: come i computer rappresentano e manipolano i numeri. Bin-Digit Decoder, Aritmetica Binaria, Convertitore Multi-Base.</p>
+          <strong>Architettura dei computer</strong>
+          <p>Parti da qui: cos'è un PC, CPU, memorie, storage, RAID, BIOS/UEFI, periferiche e upgrade. Le fondamenta hardware.</p>
         </div>
       </div>
       <div class="path-step">
         <div class="path-num">2</div>
+        <div class="path-content">
+          <strong>Sistemi numerici</strong>
+          <p>Come i computer rappresentano e manipolano i numeri. Bin-Digit Decoder, Aritmetica Binaria, Convertitore Multi-Base.</p>
+        </div>
+      </div>
+      <div class="path-step">
+        <div class="path-num">3</div>
         <div class="path-content">
           <strong>Rappresentazione dei dati</strong>
           <p>Dal numero al file: dimensionamento di immagini/audio/video e teoria del campionamento (Nyquist-Shannon, quantizzazione).</p>
         </div>
       </div>
       <div class="path-step">
-        <div class="path-num">3</div>
+        <div class="path-num">4</div>
         <div class="path-content">
           <strong>Logica e algebra booleana</strong>
           <p>Il linguaggio computazionale: tavole di verità, equivalenze, alberi di parsing.</p>
         </div>
       </div>
       <div class="path-step">
-        <div class="path-num">4</div>
+        <div class="path-num">5</div>
         <div class="path-content">
           <strong>Sistemi operativi</strong>
           <p>Come il sistema decide quale processo eseguire: 6 algoritmi di scheduling simulati.</p>
+        </div>
+      </div>
+      <div class="path-step">
+        <div class="path-num">6</div>
+        <div class="path-content">
+          <strong>Shell e scripting</strong>
+          <p>Interagisci con il sistema operativo: Bash, comandi, variabili, permessi file, laboratorio script progressivo.</p>
         </div>
       </div>
     </div>
@@ -429,7 +432,28 @@
   <div class="hub-resources">
     <h3>🔧 Gli strumenti</h3>
 
-    <!-- SOTTOAREA 1: Sistemi numerici -->
+    <!-- SOTTOAREA 1: Architettura dei computer -->
+    <div class="resources-subgroup">
+      <div class="subgroup-header">
+        <span class="subgroup-icon">🖥️</span>
+        Architettura dei computer
+      </div>
+      <p class="subgroup-desc">CPU, memorie, storage, connettori, periferiche, BIOS/UEFI, alimentazione e upgrade — le fondamenta hardware.</p>
+      <div class="resources-grid">
+        <a href="/sistemi/architettura-pc/" class="resource-card">
+          <div class="resource-head">
+            <div class="resource-icon">🖥️</div>
+            <div class="resource-title">Architettura del PC</div>
+          </div>
+          <div class="resource-body">
+            <p class="resource-desc">Dal modello Von Neumann al RAID: CPU, memorie, storage, connettori, periferiche, BIOS/UEFI, alimentazione e upgrade. Con simulatore FDE e modalità aula.</p>
+            <div class="resource-meta">Guida completa · 11 capitoli · Simulatore CPU · Modalità aula</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- SOTTOAREA 2: Sistemi numerici -->
     <div class="resources-subgroup">
       <div class="subgroup-header">
         <span class="subgroup-icon">🔢</span>
@@ -475,7 +499,7 @@
       </div>
     </div>
 
-    <!-- SOTTOAREA 2: Rappresentazione dei dati -->
+    <!-- SOTTOAREA 3: Rappresentazione dei dati -->
     <div class="resources-subgroup">
       <div class="subgroup-header">
         <span class="subgroup-icon">📐</span>
@@ -509,7 +533,7 @@
       </div>
     </div>
 
-    <!-- SOTTOAREA 3: Logica e algebra booleana [rinominata da 2 a 3 in seguito all'inserimento di "Rappresentazione dei dati"] -->
+    <!-- SOTTOAREA 4: Logica e algebra booleana -->
     <div class="resources-subgroup">
       <div class="subgroup-header">
         <span class="subgroup-icon">🧮</span>
@@ -543,10 +567,10 @@
       </div>
     </div>
 
-    <!-- SOTTOAREA 4: Sistemi operativi [rinominata da 3 a 4 in seguito all'inserimento di "Rappresentazione dei dati"] -->
+    <!-- SOTTOAREA 5: Sistemi operativi -->
     <div class="resources-subgroup">
       <div class="subgroup-header">
-        <span class="subgroup-icon">🖥️</span>
+        <span class="subgroup-icon">⚙️</span>
         Sistemi operativi
       </div>
       <p class="subgroup-desc">Come il sistema operativo decide quale processo eseguire. 6 algoritmi di scheduling simulati.</p>
@@ -554,12 +578,33 @@
         <!-- 6. Scheduling CPU -->
         <a href="/sistemi/algoritmi-scheduling/" class="resource-card">
           <div class="resource-head">
-            <div class="resource-icon">🖥️</div>
+            <div class="resource-icon">⚙️</div>
             <div class="resource-title">Scheduling della CPU</div>
           </div>
           <div class="resource-body">
             <p class="resource-desc">Simula 6 algoritmi: FCFS, SJF, SRTF, Priorità (no/con prelazione), Round Robin. Confronta le metriche di performance.</p>
             <div class="resource-meta">Simulatore + guida · Fino a 5 processi · ~25 min</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- SOTTOAREA 6: Shell e scripting -->
+    <div class="resources-subgroup">
+      <div class="subgroup-header">
+        <span class="subgroup-icon">🐚</span>
+        Shell e scripting
+      </div>
+      <p class="subgroup-desc">Interagire con il sistema operativo via riga di comando — comandi, variabili, permessi, automazione.</p>
+      <div class="resources-grid">
+        <a href="/sistemi/bash-programming/" class="resource-card">
+          <div class="resource-head">
+            <div class="resource-icon">🐚</div>
+            <div class="resource-title">Bash — Guida Interattiva</div>
+          </div>
+          <div class="resource-body">
+            <p class="resource-desc">Fondamenti della shell, Git Bash su Windows, 35+ comandi filtrabili, variabili globali, permessi file e laboratorio script progressivo.</p>
+            <div class="resource-meta">Guida completa · 6 sezioni · 35+ comandi · CSV scaricabile</div>
           </div>
         </a>
       </div>
@@ -579,4 +624,3 @@
   <script src="/scripts/ui.js" defer></script>
 </body>
 </html>
-

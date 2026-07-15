@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bash — Guida Interattiva · Formazione Digitale</title>
+
+  <meta name="description" content="Bash per programmatori: fondamenti, Git Bash su Windows, 35+ comandi filtrabili, variabili globali, permessi file, laboratorio script progressivo. ITIS Informatica.">
+  <meta name="author" content="Cristiano De Pasquale">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://formazione-digitale.it/sistemi/bash-programming/">
+  <link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="//gc.zgo.at">
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#7c5cfc">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Bash — Guida Interattiva · Formazione Digitale">
+  <meta property="og:description" content="Bash per programmatori: fondamenti, 35+ comandi, variabili, permessi, laboratorio script. Guida completa ITIS Informatica.">
+  <meta property="og:url" content="https://formazione-digitale.it/sistemi/bash-programming/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Formazione Digitale">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Bash — Guida Interattiva">
+  <meta name="twitter:description" content="Bash da zero: fondamenti, 35+ comandi, variabili, permessi, script. Corso interattivo ITIS.">
+  <meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "Bash — Guida Interattiva",
+    "description": "Guida completa a Bash: fondamenti, Git Bash su Windows, 35+ comandi filtrabili, variabili globali, permessi file, laboratorio script progressivo.",
+    "url": "https://formazione-digitale.it/sistemi/bash-programming/",
+    "inLanguage": "it",
+    "educationalLevel": "intermediate",
+    "teaches": ["Bash", "Shell scripting", "Linux/Windows command line", "File permissions", "Environment variables"],
+    "author": {
+      "@type": "Person",
+      "name": "Cristiano De Pasquale",
+      "jobTitle": "Docente di Informatica"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Formazione Digitale",
+      "url": "https://formazione-digitale.it"
+    },
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Formazione Digitale",
+      "url": "https://formazione-digitale.it"
+    }
+  }
+  </script>
+
+  <!-- GoatCounter -->
+  <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+  <link rel="stylesheet" href="/css/shared-extended.css?v=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --prog-bg:      #0f1117;
+      --prog-surface: #1a1d27;
+      --prog-card:    #21253a;
+      --prog-border:  #2e3350;
+      --prog-accent:  #7c5cfc;
+      --prog-accent2: #56cfb2;
+      --prog-accent3: #f9a03f;
+      --prog-red:     #e05c5c;
+      --prog-text:    #d4d8f0;
+      --prog-muted:   #7a7f9a;
+      --prog-code-bg: #131620;
+      --kw-type:    #79b8ff;
+      --kw-keyword: #f97583;
+      --kw-comment: #6a737d;
+      --kw-string:  #9ecbff;
+      --kw-number:  #b392f0;
+      --kw-func:    #56cfb2;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body { font-family: 'Sora', sans-serif; background: var(--prog-bg); color: var(--prog-text); line-height: 1.75; }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--prog-surface);
+      border-bottom: 3px solid var(--prog-accent);
+      padding: 2.5rem 2rem 2rem;
+      position: relative; overflow: hidden;
+    }
+    header::before {
+      content: ''; position: absolute; top: -80px; right: -80px;
+      width: 320px; height: 320px; border-radius: 50%;
+      background: var(--prog-accent); opacity: 0.07; pointer-events: none;
+    }
+    .header-back-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.78rem; color: var(--prog-muted);
+      text-decoration: none; transition: color 0.2s;
+      position: absolute; top: 1rem; left: 1.5rem;
+    }
+    .header-back-link:hover { color: var(--prog-text); }
+    .header-badge {
+      display: inline-block; font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; background: var(--prog-accent); color: white;
+      padding: 3px 10px; border-radius: 3px; letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 1rem;
+    }
+    header h1 { font-size: clamp(1.7rem,4vw,2.6rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; color: #fff; }
+    header h1 span { color: var(--prog-accent); }
+    header p { margin-top: 0.75rem; color: var(--prog-muted); font-size: 0.95rem; max-width: 620px; }
+    .header-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; }
+    .header-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      padding: 4px 12px; border-radius: 20px;
+      font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--prog-muted);
+    }
+
+    /* ── TOC STICKY ── */
+    .toc-wrap { position: sticky; top: 0; z-index: 100; background: #1a1a18; border-bottom: 3px solid var(--prog-accent); }
+    nav.toc {
+      padding: 0.7rem 1.5rem; display: flex; flex-wrap: wrap; gap: 0.25rem;
+      align-items: center; justify-content: center; max-width: 1200px; margin: 0 auto;
+    }
+    nav.toc a {
+      font-size: 0.82rem; font-family: 'Sora', sans-serif; font-weight: 500;
+      color: #aaa9a0; text-decoration: none; padding: 5px 13px; border-radius: 20px;
+      border: 1px solid transparent; transition: all 0.18s; white-space: nowrap; letter-spacing: 0.01em;
+    }
+    nav.toc a:hover { background: rgba(255,255,255,0.1); color: white; border-color: rgba(255,255,255,0.2); }
+    nav.toc a.active { background: var(--prog-accent); color: white; border-color: var(--prog-accent); font-weight: 700; }
+    @media (max-width:900px) { nav.toc { flex-wrap: wrap; justify-content: center; } }
+    @media (max-width:600px) { nav.toc { flex-wrap: wrap; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; } nav.toc::-webkit-scrollbar { display: none; } }
+
+    /* ── LAYOUT ── */
+    main { max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+    section { margin-bottom: 4.5rem; scroll-margin-top: 70px; }
+    .section-label { font-family: 'Space Mono', monospace; font-size: 0.82rem; font-weight: 700; color: var(--prog-accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    h2 { font-size: 1.65rem; font-weight: 700; color: #fff; letter-spacing: -0.02em; border-bottom: 2px solid var(--prog-border); padding-bottom: 0.6rem; margin-bottom: 1.5rem; }
+    h3 { font-size: 1.1rem; font-weight: 600; color: var(--prog-accent2); margin: 2rem 0 0.8rem; }
+    p { margin-bottom: 1rem; color: var(--prog-text); font-size: 0.97rem; line-height: 1.85; letter-spacing: 0.01em; }
+    ul { margin-left: 1.5rem; }
+    li { margin-bottom: 0.5rem; }
+
+    /* ── BOX ── */
+    .box { border-radius: 6px; padding: 1rem 1.25rem; margin: 1.25rem 0; font-size: 0.92rem; border-left: 3px solid; line-height: 1.75; }
+    .box-info { background: rgba(86,207,178,0.08); border-color: var(--prog-accent2); }
+    .box-warn { background: rgba(249,160,63,0.08); border-color: var(--prog-accent3); }
+    .box-tip  { background: rgba(124,92,252,0.08); border-color: var(--prog-accent); }
+    .box strong { display: block; margin-bottom: 0.35rem; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.8; }
+    .box h4 { margin-bottom: 0.5rem; font-size: 0.95rem; font-weight: 600; color: #fff; }
+    .box ol, .box ul { margin-left: 1.5rem; margin-top: 0.5rem; }
+    .box li { margin-bottom: 0.3rem; }
+
+    /* ── CODICE ── */
+    .code-wrapper { background: var(--prog-code-bg); border: 1px solid var(--prog-border); border-radius: 8px; margin: 1.5rem 0; overflow: hidden; }
+    .code-header { background: var(--prog-card); padding: 0.5rem 1rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--prog-border); font-size: 0.85rem; color: var(--prog-muted); }
+    .copy-btn {
+      background: transparent; border: 1px solid var(--prog-border); color: var(--prog-text);
+      padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; font-weight: 600;
+      transition: all 0.18s;
+    }
+    .copy-btn:hover { border-color: var(--prog-accent); color: var(--prog-accent); }
+    pre { padding: 1.25rem 1.5rem; overflow-x: auto; font-family: 'Space Mono', monospace; font-size: 0.83rem; line-height: 1.65; tab-size: 4; color: var(--prog-text); }
+    .hl-shebang { color: var(--kw-comment); font-style: italic; }
+    .hl-comment { color: var(--kw-comment); font-style: italic; }
+    .hl-keyword { color: var(--kw-keyword); font-weight: 700; }
+    .hl-variable { color: var(--kw-type); }
+    .hl-string { color: var(--kw-string); }
+    .hl-command { color: var(--prog-accent3); }
+    .hl-num { color: var(--kw-number); }
+
+    /* ── TABELLE ── */
+    table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; font-size: 0.88rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--prog-border); }
+    table thead { background: var(--prog-card); }
+    table th { color: var(--prog-accent); padding: 0.65rem 1rem; text-align: left; font-family: 'Space Mono', monospace; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; border-bottom: 2px solid var(--prog-border); }
+    table td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--prog-border); vertical-align: middle; }
+    table tr:last-child td { border-bottom: none; }
+    table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+    table code { font-family: 'Space Mono', monospace; color: var(--prog-accent2); background: rgba(86,207,178,0.1); padding: 2px 6px; border-radius: 3px; }
+
+    /* ── RICERCA E FILTRI ── */
+    .search-container {
+      display: flex; gap: 15px; margin-bottom: 25px; align-items: center; flex-wrap: wrap;
+    }
+    .search-box {
+      flex: 1; min-width: 200px; padding: 10px 15px;
+      background: var(--prog-card); border: 1px solid var(--prog-border); border-radius: 6px;
+      color: var(--prog-text); font-size: 0.9rem; outline: none;
+    }
+    .search-box:focus { border-color: var(--prog-accent); }
+    .btn-download {
+      background: var(--prog-accent); color: white;
+      border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer;
+      font-size: 0.85rem; font-weight: 600; transition: all 0.18s;
+    }
+    .btn-download:hover { background: #6a4ee0; }
+    .category-filter { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .filter-chip {
+      background: var(--prog-card); border: 1px solid var(--prog-border);
+      padding: 6px 14px; border-radius: 20px; font-size: 0.82rem; font-weight: 500;
+      cursor: pointer; transition: all 0.18s; color: var(--prog-text);
+    }
+    .filter-chip:hover, .filter-chip.active {
+      background: var(--prog-accent); border-color: var(--prog-accent); color: white;
+    }
+
+    /* ── GRIGLIA COMANDI ── */
+    .command-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem; margin: 2rem 0;
+    }
+    .command-card {
+      background: var(--prog-card); border: 1px solid var(--prog-border);
+      border-radius: 8px; padding: 1.25rem; transition: all 0.2s;
+    }
+    .command-card:hover { border-color: var(--prog-accent); background: rgba(124, 92, 252, 0.05); }
+    .command-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 10px; }
+    .cmd-badge { font-family: 'Space Mono', monospace; font-weight: 700; color: var(--prog-accent); font-size: 1rem; }
+    .cmd-category {
+      font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+      background: rgba(124, 92, 252, 0.15); color: var(--prog-accent);
+      padding: 3px 8px; border-radius: 4px;
+    }
+    .cmd-desc { font-size: 0.88rem; color: var(--prog-text); margin-bottom: 10px; }
+    .cmd-meta {
+      border-top: 1px solid var(--prog-border); padding-top: 10px;
+      font-size: 0.8rem; color: var(--prog-muted); display: flex; flex-direction: column; gap: 4px;
+    }
+    .cmd-meta code {
+      font-family: 'Space Mono', monospace; color: var(--prog-accent2);
+      background: rgba(86, 207, 178, 0.1); padding: 2px 6px; border-radius: 3px;
+    }
+
+    /* ── TAB LABORATORIO ── */
+    .tab-container { margin-top: 25px; }
+    .tab-headers { display: flex; border-bottom: 2px solid var(--prog-border); gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
+    .tab-btn {
+      background: none; border: none; padding: 12px 20px; font-size: 0.9rem;
+      font-weight: 600; color: var(--prog-muted); cursor: pointer;
+      border-bottom: 3px solid transparent; transition: all 0.2s; white-space: nowrap;
+    }
+    .tab-btn:hover { color: var(--prog-text); border-bottom-color: var(--prog-accent3); }
+    .tab-btn.active { color: var(--prog-accent); border-bottom-color: var(--prog-accent); font-weight: 700; }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; animation: fadeIn 0.3s; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* ── BACK TO TOP ── */
+    #back-to-top {
+      position: fixed; bottom: 20px; right: 20px; width: 40px; height: 40px;
+      background: var(--prog-accent); border: none; border-radius: 50%;
+      color: white; cursor: pointer; display: flex; align-items: center;
+      justify-content: center; opacity: 0; transition: opacity 0.3s; pointer-events: none;
+      font-size: 1.2rem; z-index: 99;
+    }
+    #back-to-top.visible { opacity: 1; pointer-events: auto; }
+    #back-to-top:hover { background: #6a4ee0; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a class="header-back-link" href="/programmazione/">← Programmazione</a>
+    <span class="header-badge">🐚 SHELL</span>
+    <h1>Bash — <span>Guida Interattiva</span></h1>
+    <p>Fondamenti della shell, Git Bash su Windows, 35+ comandi filtrabili, variabili globali, permessi file, laboratorio script progressivo. Corso completo per ITIS Informatica.</p>
+    <div class="header-pills">
+      <span class="header-pill">📖 Guida completa</span>
+      <span class="header-pill">⏱ ~1h 30min</span>
+      <span class="header-pill">🪟 Windows/Linux/macOS</span>
+      <span class="header-pill">35+ comandi</span>
+      <span class="header-pill">🎓 ITIS Informatica</span>
+    </div>
+  </header>
+
+  <div class="toc-wrap">
+    <nav class="toc" id="toc">
+      <a href="#intro" class="active">Introduzione</a>
+      <a href="#gitbash">Windows & Git Bash</a>
+      <a href="#commands">Comandi Bash</a>
+      <a href="#globalvars">Variabili Globali</a>
+      <a href="#permessi">Permessi & Sicurezza</a>
+      <a href="#lab">Laboratorio Script</a>
+    </nav>
+  </div>
+
+  <main>
+
+    <section id="intro">
+      <div class="section-label">01 - INTRODUZIONE</div>
+      <h2>Fondamenti & Esecuzione dei File</h2>
+      <p>Uno script Bash non è altro che un file di testo contenente una sequenza di comandi che la shell legge ed esegue uno dopo l'altro. Per rendere un file di testo un vero script eseguibile sul sistema operativo, è fondamentale seguire uno standard preciso.</p>
+
+      <h3>La Struttura Anatomica dello Script</h3>
+      <p>Ogni script professionale deve aprirsi con la cosiddetta <strong>Shebang</strong> (<code>#!/bin/bash</code>) posizionata tassativamente nella primissima riga del file. Questo indica al sistema quale interprete utilizzare per tradurre i comandi sottostanti.</p>
+
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>Inizio di uno script standard (.sh)</span>
+          <button class="copy-btn" onclick="copyCode('intro-code1')">Copia</button>
+        </div>
+        <pre id="intro-code1"><span class="hl-shebang">#!/bin/bash</span>
+<span class="hl-comment"># Questo è un commento didattico: la shebang qui sopra è obbligatoria!</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Hello, Bash!"</span></pre>
+      </div>
+
+      <h3>Le Due Modalità di Esecuzione</h3>
+      <p>Spesso si genera confusione su come lanciare uno script. In Bash hai due strade principali a tua disposizione:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Metodo</th>
+            <th>Comando</th>
+            <th>Richiede chmod +x?</th>
+            <th>Descrizione</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Standard Professionale</strong></td>
+            <td><code>./mio_script.sh</code></td>
+            <td><strong>SÌ</strong></td>
+            <td>Usa la Shebang dichiarata nel file per eseguirlo direttamente.</td>
+          </tr>
+          <tr>
+            <td><strong>Scorciatoia Diretta</strong></td>
+            <td><code>bash mio_script.sh</code></td>
+            <td><strong>NO</strong></td>
+            <td>Avvia esplicitamente Bash passandogli il file. Perfetto per sviluppo rapido.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="box box-info">
+        <strong>💡 Il Ciclo Standard per Avviare uno Script</strong>
+        <p>Se utilizzi il metodo professionale (<code>./script.sh</code>), segui questo ciclo:</p>
+        <ol>
+          <li>Crea il file: <code>touch script.sh</code></li>
+          <li>Modifica il file (includi <code>#!/bin/bash</code> alla riga 1)</li>
+          <li>Rendilo eseguibile: <code>chmod +x script.sh</code></li>
+          <li>Avvialo: <code>./script.sh</code></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="gitbash">
+      <div class="section-label">02 - WINDOWS & GIT BASH</div>
+      <h2>Ambiente Windows: Sviluppare in Git Bash</h2>
+      <p>Poiché questo corso si appoggia alla didattica su macchine <strong>Windows</strong>, utilizzeremo l'ambiente simulato <strong>Git Bash</strong> (fornito con Git per Windows). Lavorare qui introduce dinamiche fondamentali di portabilità e compatibilità.</p>
+
+      <h3>La Traduzione dei Percorsi (Drive Mapping)</h3>
+      <p>Windows utilizza la sintassi classica delle partizioni (es: <code>C:\Users\Studente\Documenti</code>). Git Bash, lavorando secondo lo standard POSIX, traduce questi percorsi virtualmente:</p>
+      <ul>
+        <li>Il disco rigido locale <code>C:</code> diventa <code>/c/</code></li>
+        <li>Il percorso precedente si traduce in: <code>/c/Users/Studente/Documenti</code></li>
+        <li>La cartella personale (Home) può essere abbreviata con la tilde: <code>~</code></li>
+      </ul>
+
+      <div class="box box-warn">
+        <strong>⚠️ L'Inganno d'Ambiente: $USER vs $USERNAME</strong>
+        <p>Su server reali Linux, <code>$USER</code> contiene il nome dell'utente loggato. Su Git Bash Windows, potrebbe risultare completamente vuoto! Usa questa configurazione difensiva:</p>
+      </div>
+
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>Codice universale per intercettare l'utente</span>
+          <button class="copy-btn" onclick="copyCode('gitbash-code1')">Copia</button>
+        </div>
+        <pre id="gitbash-code1"><span class="hl-comment"># Se $USER è vuoto, usa $USERNAME. Se entrambi vuoti, usa whoami</span>
+<span class="hl-variable">UTENTE_ATTUALE</span>=<span class="hl-string">${USER:-$USERNAME}</span>
+<span class="hl-keyword">if</span> [ -z <span class="hl-string">"$UTENTE_ATTUALE"</span> ]; <span class="hl-keyword">then</span>
+    <span class="hl-variable">UTENTE_ATTUALE</span>=<span class="hl-string">$(whoami)</span>
+<span class="hl-keyword">fi</span>
+
+<span class="hl-keyword">echo</span> <span class="hl-string">"L'utente corrente è: $UTENTE_ATTUALE"</span></pre>
+      </div>
+    </section>
+
+    <section id="commands">
+      <div class="section-label">03 - COMANDI BASH</div>
+      <h2>Cheat-Sheet Interattivo (35+ Comandi)</h2>
+      <p>Consulta, filtra e scarica in tempo reale la tabella completa dei principali comandi Bash. Ricerca per nome, descrizione o categoria.</p>
+
+      <div class="search-container">
+        <input type="text" class="search-box" id="cmdSearchInput" placeholder="Cerca comando, descrizione o esempio..." onkeyup="filterCommands()">
+        <button class="btn-download" onclick="exportToCSV()">📥 Scarica CSV Cheatsheet</button>
+      </div>
+
+      <div class="category-filter">
+        <button class="filter-chip active" onclick="filterByCategory('ALL')">Tutti</button>
+        <button class="filter-chip" onclick="filterByCategory('NAV')">Navigazione</button>
+        <button class="filter-chip" onclick="filterByCategory('FILE')">File/Cartelle</button>
+        <button class="filter-chip" onclick="filterByCategory('PERM')">Permessi</button>
+        <button class="filter-chip" onclick="filterByCategory('TEXT')">Testo</button>
+        <button class="filter-chip" onclick="filterByCategory('SYS')">Sistema</button>
+      </div>
+
+      <div class="command-grid" id="commandGrid"></div>
+    </section>
+
+    <section id="globalvars">
+      <div class="section-label">04 - VARIABILI GLOBALI</div>
+      <h2>Come si Generano le Variabili Globali?</h2>
+      <p>Se dichiari una variabile all'interno di un terminale (es: <code>MIA_CART="progetti"</code>), quella variabile è <strong>locale</strong> — esiste solo nel processo in cui è nata. Per renderla <strong>globale</strong> e farla ereditare da altri script, dobbiamo usare l'istruzione <strong><code>export</code></strong>.</p>
+
+      <h3>I Tre Livelli di Dichiarazione</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tipologia</th>
+            <th>Sintassi</th>
+            <th>Ambito & Durata</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Locale</strong></td>
+            <td><code>MIA_VAR="valore"</code></td>
+            <td>Valida solo nel terminale corrente. Svanisce subito.</td>
+          </tr>
+          <tr>
+            <td><strong>Globale Temporanea</strong></td>
+            <td><code>export WORDLIST="/path"</code></td>
+            <td>Ereditata da script lanciati. Svanisce alla chiusura finestra.</td>
+          </tr>
+          <tr>
+            <td><strong>Globale Permanente</strong></td>
+            <td>Dentro <code>~/.bashrc</code></td>
+            <td>Valida per sempre. Caricata automaticamente.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="box box-info">
+        <strong>📝 Come Impostare una Variabile Globale Permanente</strong>
+        <div class="code-wrapper" style="margin-top: 0.8rem;">
+          <div class="code-header">
+            <span>Scrittura permanente in ~/.bashrc</span>
+            <button class="copy-btn" onclick="copyCode('vars-code1')">Copia</button>
+          </div>
+          <pre id="vars-code1"><span class="hl-comment"># 1. Scrivi l'esportazione in coda al file ~/.bashrc</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">'export WORDLIST="/c/Users/utente/Documenti/words.txt"'</span> >> ~/.bashrc
+
+<span class="hl-comment"># 2. Ricarica la configurazione per applicare istantaneamente</span>
+<span class="hl-keyword">source</span> ~/.bashrc</pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="permessi">
+      <div class="section-label">05 - PERMESSI & SICUREZZA</div>
+      <h2>Sicurezza, Permessi File & Notazione Ottale</h2>
+      <p>In ambiente Linux/POSIX, la sicurezza è governata da una matrice di permessi assegnata a ogni file e cartella. I permessi si dividono in tre classi di utenti:</p>
+      <ul>
+        <li><strong>Owner (u):</strong> Il proprietario del file</li>
+        <li><strong>Group (g):</strong> Gli utenti del gruppo associato</li>
+        <li><strong>Others (o):</strong> Tutti gli altri utenti del sistema</li>
+      </ul>
+
+      <h3>Le Tre Operazioni Base</h3>
+      <p>Ogni classe di utenti può avere diritti di <strong>Lettura</strong> (r), <strong>Scrittura</strong> (w), ed <strong>Esecuzione</strong> (x).</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Operazione</th>
+            <th>Simbolo</th>
+            <th>File</th>
+            <th>Directory</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Lettura</strong></td>
+            <td><code>r</code></td>
+            <td>Leggere il contenuto</td>
+            <td>Listare i file dentro</td>
+          </tr>
+          <tr>
+            <td><strong>Scrittura</strong></td>
+            <td><code>w</code></td>
+            <td>Modificare il contenuto</td>
+            <td>Creare/eliminare file dentro</td>
+          </tr>
+          <tr>
+            <td><strong>Esecuzione</strong></td>
+            <td><code>x</code></td>
+            <td>Eseguire come programma</td>
+            <td>Accedere alla directory</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="box box-tip">
+        <strong>📊 Notazione Ottale — Le Combinazioni Standard</strong>
+        <ul style="margin-top: 0.5rem;">
+          <li><code>755</code> = rwx r-x r-x (proprietario esecuzione, gruppo/altri no)</li>
+          <li><code>644</code> = rw- r-- r-- (solo proprietario scrive)</li>
+          <li><code>777</code> = rwx rwx rwx (chiunque può fare tutto)</li>
+          <li><code>700</code> = rwx --- --- (solo proprietario, accesso totale)</li>
+        </ul>
+      </div>
+
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>Comandi chmod comuni</span>
+          <button class="copy-btn" onclick="copyCode('perm-code1')">Copia</button>
+        </div>
+        <pre id="perm-code1"><span class="hl-comment"># Rendere uno script eseguibile</span>
+<span class="hl-keyword">chmod</span> +x script.sh
+<span class="hl-keyword">chmod</span> 755 script.sh
+
+<span class="hl-comment"># Permettere a gruppo e altri di leggere/eseguire</span>
+<span class="hl-keyword">chmod</span> 755 file.txt
+
+<span class="hl-comment"># Accesso solo al proprietario</span>
+<span class="hl-keyword">chmod</span> 700 file.txt
+
+<span class="hl-comment"># Visualizzare permessi dettagliati</span>
+<span class="hl-keyword">ls</span> -l</pre>
+      </div>
+    </section>
+
+    <section id="lab">
+      <div class="section-label">06 - LABORATORIO SCRIPT</div>
+      <h2>Laboratorio Script Progressivi</h2>
+      <p>Esercizi progressivi per imparare Bash attraverso script pratici e funzionali. Ogni script è presentato in una o più varianti di complessità crescente: copia i codici, modificali e sperimenta!</p>
+
+      <div class="tab-container">
+        <div class="tab-headers">
+          <button class="tab-btn active" onclick="switchTab(event, 'lab1')">1. benvenuto.sh</button>
+          <button class="tab-btn" onclick="switchTab(event, 'lab2')">2. progetto.sh</button>
+          <button class="tab-btn" onclick="switchTab(event, 'lab3')">3. classifica.sh</button>
+          <button class="tab-btn" onclick="switchTab(event, 'lab4')">4. media.sh</button>
+          <button class="tab-btn" onclick="switchTab(event, 'lab5')">5. cercaparola.sh</button>
+          <button class="tab-btn" onclick="switchTab(event, 'lab6')">6. backup_progetti.sh</button>
+        </div>
+
+        <!-- ═══ TAB 1: benvenuto.sh ═══ -->
+        <div id="lab1" class="tab-pane active">
+          <h3>Script 1: benvenuto.sh — Hello World Personalizzato</h3>
+          <p>Il primo script: dichiarare variabili locali e stampare valori a schermo. Attenzione alla sintassi: in Bash <strong>non si mettono spazi intorno al segno <code>=</code></strong> nelle assegnazioni.</p>
+
+          <h3>Variante Base</h3>
+          <p>Dichiara due variabili, intercetta l'utente di sistema e stampa un messaggio di benvenuto.</p>
+          <div class="code-wrapper">
+            <div class="code-header">
+              <span>benvenuto.sh — variante base</span>
+              <button class="copy-btn" onclick="copyCode('lab1-base')">Copia</button>
+            </div>
+            <pre id="lab1-base"><span class="hl-shebang">#!/bin/bash</span>
+
+<span class="hl-comment"># Dichiarazione variabili locali (ATTENZIONE: nessun spazio intorno all'uguale '=')</span>
+<span class="hl-variable">NOME</span>=<span class="hl-string">"Sviluppatore"</span>
+<span class="hl-variable">CORSO</span>=<span class="hl-string">"Bash Base"</span>
+
+<span class="hl-comment"># Intercettiamo l'utente in modo robusto per Windows/Git Bash:</span>
+<span class="hl-comment"># ${USER:-$USERNAME} significa: usa $USER, se vuoto usa $USERNAME</span>
+<span class="hl-variable">UTENTE_CORRENTE</span>=<span class="hl-string">${USER:-$USERNAME}</span>
+
+<span class="hl-comment"># Stampe dell'output sul terminale</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Benvenuto, $NOME!"</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Utente di sistema corrente: $UTENTE_CORRENTE"</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Stai seguendo il corso: $CORSO"</span></pre>
+          </div>
+
+          <h3>Variante Intermedia</h3>
+          <p>Aggiunge il costrutto <code>if</code> per gestire il caso in cui sia <code>$USER</code> che <code>$USERNAME</code> siano vuoti (possibile su alcuni ambienti Windows), e usa <code>$(date)</code> per stampare data e ora correnti.</p>
+          <div class="code-wrapper">
+            <div class="code-header">
+              <span>benvenuto.sh — variante intermedia</span>
+              <button class="copy-btn" onclick="copyCode('lab1-inter')">Copia</button>
+            </div>
+            <pre id="lab1-inter"><span class="hl-shebang">#!/bin/bash</span>
+
+<span class="hl-comment"># Dichiarazione variabili locali</span>
+<span class="hl-variable">NOME</span>=<span class="hl-string">"Sviluppatore"</span>
+<span class="hl-variable">CORSO</span>=<span class="hl-string">"Bash Base"</span>
+
+<span class="hl-comment"># Intercettiamo l'utente: primo tentativo con ${USER:-$USERNAME}</span>
+<span class="hl-variable">UTENTE_CORRENTE</span>=<span class="hl-string">${USER:-$USERNAME}</span>
+
+<span class="hl-comment"># if [ -z "..." ] verifica se la stringa è vuota (zero-length)</span>
+<span class="hl-comment"># Se entrambe le variabili d'ambiente sono vuote, usiamo il comando whoami</span>
+<span class="hl-keyword">if</span> [ -z <span class="hl-string">"$UTENTE_CORRENTE"</span> ]; <span class="hl-keyword">then</span>
+    <span class="hl-variable">UTENTE_CORRENTE</span>=<span class="hl-string">$(whoami)</span>
+<span class="hl-keyword">fi</span>
+
+<span class="hl-comment"># $(date '+formato') esegue il comando date e ne cattura l'output</span>
+<span class="hl-comment"># %d = giorno, %m = mese, %Y = anno, %H = ore, %M = minuti, %S = secondi</span>
+<span class="hl-variable">DATA_ORA</span>=<span class="hl-string">$(date '+%d/%m/%Y %H:%M:%S')</span>
+
+<span class="hl-comment"># Stampe dell'output sul terminale</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"═══════════════════════════════════"</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Benvenuto, $NOME!"</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Utente di sistema: $UTENTE_CORRENTE"</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Corso: $CORSO"</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Data e ora: $DATA_ORA"</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"═══════════════════════════════════"</span></pre>
+          </div>
+
+          <div class="box box-info">
+            <strong>💡 Come usarlo</strong>
+            <p>Copia il codice, salvalo in <code>benvenuto.sh</code>, esegui <code>chmod +x benvenuto.sh</code>, quindi <code>./benvenuto.sh</code></p>
+          </div>
+        </div>
+
+        <!-- ═══ TAB 2: progetto.sh ═══ -->
+        <div id="lab2" class="tab-pane">
+          <h3>Script 2: progetto.sh — Creazione Cartelle Progetto</h3>
+          <p>Chiede all'utente il nome di un progetto via <code>read</code> e crea automaticamente la struttura di cartelle. Usa <code>mkdir -p</code> per creare cartelle annidate senza errori se già esistono.</p>
+          <div class="code-wrapper">
+            <div class="code-header">
+              <span>progetto.sh</span>
+              <button class="copy-btn" onclick="copyCode('lab2-code')">Copia</button>
+            </div>
+            <pre id="lab2-code"><span class="hl-shebang">#!/bin/bash</span>
+
+<span class="hl-comment"># Intercetta l'utente corrente (compatibile Windows/Git Bash)</span>
+<span class="hl-variable">UTENTE</span>=<span class="hl-string">${USER:-$USERNAME}</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Benvenuto utente $UTENTE!!"</span>
+
+<span class="hl-comment"># Richiesta di input testuale: read legge ciò che l'utente digita</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Inserisci il nome del progetto da creare:"</span>
+<span class="hl-keyword">read</span> <span class="hl-variable">NOME_PROGETTO</span>
+
+<span class="hl-keyword">echo</span> <span class="hl-string">"Creazione cartella in corso..."</span>
+
+<span class="hl-comment"># mkdir -p: crea la cartella genitore "Progetti" se non esiste,</span>
+<span class="hl-comment"># e non restituisce errore se la sottocartella esiste già</span>
+<span class="hl-keyword">mkdir</span> -p <span class="hl-string">"Progetti/$NOME_PROGETTO"</span>
+
+<span class="hl-keyword">echo</span> <span class="hl-string">"Cartella '$NOME_PROGETTO' creata con successo!"</span>
+
+<span class="hl-comment"># ls -ld mostra i dettagli di una cartella specifica (non il suo contenuto)</span>
+<span class="hl-keyword">ls</span> -ld <span class="hl-string">"Progetti/$NOME_PROGETTO"</span></pre>
+          </div>
+        </div>
+
+        <!-- ═══ TAB 3: classifica.sh ═══ -->
+        <div id="lab3" class="tab-pane">
+          <h3>Script 3: classifica.sh — Parametri e Costrutti Condizionali</h3>
+          <p>Riceve un numero come argomento da riga di comando e lo classifica. Introduce i parametri posizionali (<code>$1</code>, <code>$#</code>, <code>$0</code>) e i comparatori matematici di Bash.</p>
+          <div class="code-wrapper">
+            <div class="code-header">
+              <span>classifica.sh</span>
+              <button class="copy-btn" onclick="copyCode('lab3-code')">Copia</button>
+            </div>
+            <pre id="lab3-code"><span class="hl-shebang">#!/bin/bash</span>
+
+<span class="hl-comment"># $# conta quanti argomenti l'utente ha inserito a riga di comando</span>
+<span class="hl-comment"># Se non ne ha inseriti, mostriamo l'uso corretto ed usciamo</span>
+<span class="hl-keyword">if</span> [ <span class="hl-variable">$#</span> -eq <span class="hl-num">0</span> ]; <span class="hl-keyword">then</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"Errore sintattico. Uso corretto: $0 &lt;numero&gt;"</span>
+    <span class="hl-keyword">exit</span> <span class="hl-num">1</span>
+<span class="hl-keyword">fi</span>
+
+<span class="hl-comment"># $1 è il primo parametro inviato (es: ./classifica.sh 5 → $1 vale 5)</span>
+<span class="hl-variable">numero</span>=<span class="hl-variable">$1</span>
+
+<span class="hl-comment"># Comparatori per costrutti if-else matematici:</span>
+<span class="hl-comment"># -lt (less than, &lt;) | -eq (equal, ==) | -le (less or equal, &lt;=)</span>
+<span class="hl-keyword">if</span> [ <span class="hl-string">"$numero"</span> -lt <span class="hl-num">0</span> ]; <span class="hl-keyword">then</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"negativo"</span>
+<span class="hl-keyword">elif</span> [ <span class="hl-string">"$numero"</span> -eq <span class="hl-num">0</span> ]; <span class="hl-keyword">then</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"zero"</span>
+<span class="hl-keyword">elif</span> [ <span class="hl-string">"$numero"</span> -le <span class="hl-num">9</span> ]; <span class="hl-keyword">then</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"piccolo"</span>
+<span class="hl-keyword">else</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"grande"</span>
+<span class="hl-keyword">fi</span></pre>
+          </div>
+          <div class="box box-tip">
+            <strong>📊 Riepilogo comparatori Bash</strong>
+            <p><code>-lt</code> (less than), <code>-le</code> (less or equal), <code>-eq</code> (equal), <code>-ne</code> (not equal), <code>-gt</code> (greater than), <code>-ge</code> (greater or equal).</p>
+          </div>
+        </div>
+
+        <!-- ═══ TAB 4: media.sh ═══ -->
+        <div id="lab4" class="tab-pane">
+          <h3>Script 4: media.sh — Calcolo Media Aritmetica</h3>
+          <p>Legge voti da un file di testo (uno per riga), calcola la media intera con Bash e poi quella decimale precisa usando <code>awk</code>. Se il file non esiste, ne crea uno di prova.</p>
+          <div class="code-wrapper">
+            <div class="code-header">
+              <span>media.sh</span>
+              <button class="copy-btn" onclick="copyCode('lab4-code')">Copia</button>
+            </div>
+            <pre id="lab4-code"><span class="hl-shebang">#!/bin/bash</span>
+
+<span class="hl-comment"># Verifica se il file dei dati esiste. Se manca, lo creiamo di esempio</span>
+<span class="hl-keyword">if</span> [ ! -f voti.txt ]; <span class="hl-keyword">then</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"File 'voti.txt' non trovato. Inizializzo file di prova..."</span>
+    <span class="hl-keyword">echo</span> -e <span class="hl-string">"18\n24\n30\n26\n22"</span> > voti.txt
+<span class="hl-keyword">fi</span>
+
+<span class="hl-variable">somma</span>=<span class="hl-num">0</span>
+<span class="hl-variable">conta</span>=<span class="hl-num">0</span>
+
+<span class="hl-comment"># Il ciclo while read legge il file passato in fondo col simbolo '&lt;'</span>
+<span class="hl-keyword">while</span> <span class="hl-keyword">read</span> <span class="hl-variable">voto</span>; <span class="hl-keyword">do</span>
+    <span class="hl-comment"># Ignoriamo eventuali righe vuote nel documento</span>
+    [ -z <span class="hl-string">"$voto"</span> ] && <span class="hl-keyword">continue</span>
+
+    <span class="hl-variable">somma</span>=$((<span class="hl-variable">somma</span> + <span class="hl-variable">voto</span>))
+    <span class="hl-variable">conta</span>=$((<span class="hl-variable">conta</span> + <span class="hl-num">1</span>))
+<span class="hl-keyword">done</span> &lt; voti.txt
+
+<span class="hl-comment"># Divisione intera standard di Bash (non supporta decimali)</span>
+<span class="hl-variable">media</span>=$((<span class="hl-variable">somma</span> / <span class="hl-variable">conta</span>))
+
+<span class="hl-keyword">echo</span> <span class="hl-string">"Somma dei voti analizzati: $somma"</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Numero di righe elaborate: $conta"</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Media (arrotondata all'intero per limite Bash): $media"</span>
+
+<span class="hl-comment"># RISOLUZIONE DEL LIMITE: integrazione con AWK per calcolo decimale preciso</span>
+<span class="hl-variable">media_precisa</span>=<span class="hl-string">$(awk '{somma+=$1; conta++} END {print somma/conta}' voti.txt)</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Media reale (con cifre decimali tramite AWK): $media_precisa"</span></pre>
+          </div>
+          <div class="box box-warn">
+            <strong>⚠️ Limite di Bash</strong>
+            <p>Bash supporta solo aritmetica intera. Per calcoli con decimali è necessario integrare strumenti esterni come <code>awk</code> o <code>bc</code>.</p>
+          </div>
+        </div>
+
+        <!-- ═══ TAB 5: cercaparola.sh ═══ -->
+        <div id="lab5" class="tab-pane">
+          <h3>Script 5: cercaparola.sh — Ricerca e Conteggio</h3>
+          <p>Cerca una parola in un file di testo e conta le occorrenze. Due varianti: una base con input interattivo, una avanzata che sfrutta la variabile globale <code>$WORDLIST</code>.</p>
+
+          <h3>Variante Base</h3>
+          <p>Chiede all'utente parola e file da cercare tramite <code>read -p</code>. Usa <code>grep -o</code> per contare le singole occorrenze.</p>
+          <div class="code-wrapper">
+            <div class="code-header">
+              <span>cercaparola.sh — variante base</span>
+              <button class="copy-btn" onclick="copyCode('lab5-base')">Copia</button>
+            </div>
+            <pre id="lab5-base"><span class="hl-shebang">#!/bin/bash</span>
+
+<span class="hl-comment"># Chiediamo all'utente cosa cercare e dove</span>
+<span class="hl-keyword">read</span> -p <span class="hl-string">"Inserisci la parola da cercare: "</span> <span class="hl-variable">PAROLA</span>
+<span class="hl-keyword">read</span> -p <span class="hl-string">"Inserisci il file dove cercare: "</span> <span class="hl-variable">FILE</span>
+
+<span class="hl-comment"># Verifica che il file esista prima di procedere</span>
+<span class="hl-keyword">if</span> [ ! -f <span class="hl-string">"$FILE"</span> ]; <span class="hl-keyword">then</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"Errore: file non trovato!"</span>
+    <span class="hl-keyword">exit</span> <span class="hl-num">1</span>
+<span class="hl-keyword">fi</span>
+
+<span class="hl-comment"># grep -o stampa solo le corrispondenze (una per riga), wc -l le conta</span>
+<span class="hl-variable">CONTEGGIO</span>=<span class="hl-string">$(grep -o "$PAROLA" "$FILE" | wc -l)</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"La parola '$PAROLA' appare $CONTEGGIO volte in $FILE"</span></pre>
+          </div>
+
+          <h3>Variante Avanzata (con $WORDLIST)</h3>
+          <p>Usa la variabile globale <code>$WORDLIST</code> (definita con <code>export</code> nella sezione 4) come dizionario sorgente. Se la variabile non è stata impostata, crea un file locale di fallback. Accetta la parola sia da argomento che da input interattivo.</p>
+          <div class="code-wrapper">
+            <div class="code-header">
+              <span>cercaparola.sh — variante avanzata</span>
+              <button class="copy-btn" onclick="copyCode('lab5-adv')">Copia</button>
+            </div>
+            <pre id="lab5-adv"><span class="hl-shebang">#!/bin/bash</span>
+
+<span class="hl-comment"># 1. Sicurezza preventiva: la variabile globale $WORDLIST esiste?</span>
+<span class="hl-keyword">if</span> [ -z <span class="hl-string">"$WORDLIST"</span> ]; <span class="hl-keyword">then</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"ATTENZIONE: La variabile globale \$WORDLIST non risulta valorizzata!"</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"Abilitazione fallback locale per impedire l'arresto dello script..."</span>
+    <span class="hl-variable">WORDLIST</span>=<span class="hl-string">"./words.txt"</span>
+
+    <span class="hl-comment"># Se non esiste neanche il file locale, ne generiamo uno al volo</span>
+    <span class="hl-keyword">if</span> [ ! -f <span class="hl-string">"$WORDLIST"</span> ]; <span class="hl-keyword">then</span>
+        <span class="hl-keyword">echo</span> -e <span class="hl-string">"casa\nalbero\ntavolo\nbash\ncorso\nsviluppatore\nsistema"</span> > <span class="hl-string">"$WORDLIST"</span>
+    <span class="hl-keyword">fi</span>
+<span class="hl-keyword">fi</span>
+
+<span class="hl-keyword">echo</span> <span class="hl-string">"Dizionario sorgente caricato da: $WORDLIST"</span>
+
+<span class="hl-comment"># 2. Controllo degli argomenti del terminale</span>
+<span class="hl-keyword">if</span> [ <span class="hl-variable">$#</span> -eq <span class="hl-num">0</span> ]; <span class="hl-keyword">then</span>
+    <span class="hl-comment"># Se l'utente non ha passato parametri, li chiediamo con 'read'</span>
+    <span class="hl-keyword">read</span> -p <span class="hl-string">"Inserisci la parola da cercare: "</span> <span class="hl-variable">parola</span>
+<span class="hl-keyword">else</span>
+    <span class="hl-comment"># Altrimenti prendiamo il primo argomento passato</span>
+    <span class="hl-variable">parola</span>=<span class="hl-variable">$1</span>
+<span class="hl-keyword">fi</span>
+
+<span class="hl-comment"># 3. Ricerca effettiva (-i = case-insensitive)</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Corrispondenze trovate:"</span>
+<span class="hl-keyword">grep</span> -i <span class="hl-string">"$parola"</span> <span class="hl-string">"$WORDLIST"</span>
+
+<span class="hl-comment"># 4. Conteggio complessivo delle righe trovate tramite flag '-c'</span>
+<span class="hl-variable">trovate</span>=<span class="hl-string">$(grep -i -c "$parola" "$WORDLIST")</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Totale righe corrispondenti trovate: $trovate"</span></pre>
+          </div>
+          <div class="box box-info">
+            <strong>💡 Prerequisito per la variante avanzata</strong>
+            <p>Per usare <code>$WORDLIST</code> senza fallback, impostala prima con: <code>export WORDLIST="/percorso/al/dizionario.txt"</code> (vedi sezione 4 — Variabili Globali).</p>
+          </div>
+        </div>
+
+        <!-- ═══ TAB 6: backup_progetti.sh ═══ -->
+        <div id="lab6" class="tab-pane">
+          <h3>Script 6: backup_progetti.sh — Archiviazione con Timestamp</h3>
+          <p>Crea una copia di backup della cartella <code>Progetti</code> aggiungendo la data e ora correnti al nome dell'archivio. Combina <code>date</code>, <code>if</code>, <code>mkdir -p</code> e <code>cp -r</code>.</p>
+          <div class="code-wrapper">
+            <div class="code-header">
+              <span>backup_progetti.sh</span>
+              <button class="copy-btn" onclick="copyCode('lab6-code')">Copia</button>
+            </div>
+            <pre id="lab6-code"><span class="hl-shebang">#!/bin/bash</span>
+
+<span class="hl-variable">SORGENTE</span>=<span class="hl-string">"Progetti"</span>
+<span class="hl-variable">DESTINAZIONE</span>=<span class="hl-string">"Backup"</span>
+<span class="hl-comment"># Definiamo la stringa temporale con anno, mese, giorno, ore e minuti</span>
+<span class="hl-variable">DATA</span>=<span class="hl-string">$(date +%Y-%m-%d_%H-%M)</span>
+
+<span class="hl-comment"># Verifichiamo l'esistenza della sorgente con -d (directory exists)</span>
+<span class="hl-keyword">if</span> [ ! -d <span class="hl-string">"$SORGENTE"</span> ]; <span class="hl-keyword">then</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"Errore critico: La cartella sorgente '$SORGENTE' non esiste su disco."</span>
+    <span class="hl-keyword">exit</span> <span class="hl-num">1</span>
+<span class="hl-keyword">fi</span>
+
+<span class="hl-comment"># Genera la cartella di backup se mancante</span>
+<span class="hl-keyword">mkdir</span> -p <span class="hl-string">"$DESTINAZIONE"</span>
+
+<span class="hl-keyword">echo</span> <span class="hl-string">"Avvio dell'archiviazione dati..."</span>
+
+<span class="hl-comment"># Copia ricorsiva (-r) della sorgente, rinominando con la data corrente</span>
+<span class="hl-keyword">cp</span> -r <span class="hl-string">"$SORGENTE"</span> <span class="hl-string">"$DESTINAZIONE/backup_progetti_$DATA"</span>
+
+<span class="hl-keyword">echo</span> <span class="hl-string">"Operazione conclusa con successo. Archivio registrato in: $DESTINAZIONE/backup_progetti_$DATA"</span></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <button id="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+
+  <script src="/scripts/ui.js" defer></script>
+
+  <script>
+    const commandsDataset = [
+      { cmd: "pwd", category: "NAV", desc: "Print Working Directory: mostra la cartella corrente.", example: "pwd", flag: "Nessuno" },
+      { cmd: "ls", category: "NAV", desc: "Elenca file e cartelle della directory.", example: "ls -la", flag: "-l (dettagli), -a (nascosti)" },
+      { cmd: "cd", category: "NAV", desc: "Change Directory: cambia cartella.", example: "cd /home", flag: ".. (genitore), ~ (home)" },
+      { cmd: "mkdir", category: "FILE", desc: "Make Directory: crea una nuova cartella.", example: "mkdir cartella", flag: "-p (ricorsivo)" },
+      { cmd: "touch", category: "FILE", desc: "Crea file vuoto o aggiorna timestamp.", example: "touch file.txt", flag: "Nessuno" },
+      { cmd: "cp", category: "FILE", desc: "Copy: copia file o cartelle.", example: "cp file1.txt file2.txt", flag: "-r (ricorsivo)" },
+      { cmd: "mv", category: "FILE", desc: "Move: sposta o rinomina file.", example: "mv vecchio.txt nuovo.txt", flag: "-f (forza)" },
+      { cmd: "rm", category: "FILE", desc: "Remove: cancella file.", example: "rm file.txt", flag: "-r (ricorsivo), -f (forza)" },
+      { cmd: "cat", category: "TEXT", desc: "Stampa il contenuto di un file.", example: "cat file.txt", flag: "Nessuno" },
+      { cmd: "echo", category: "TEXT", desc: "Stampa testo a schermo.", example: "echo 'Ciao'", flag: "-n (no newline)" },
+      { cmd: "grep", category: "TEXT", desc: "Cerca pattern in file.", example: "grep 'parola' file.txt", flag: "-i (case-insensitive), -n (numero righe)" },
+      { cmd: "chmod", category: "PERM", desc: "Change Mode: modifica permessi file.", example: "chmod 755 script.sh", flag: "u/g/o (user/group/others), +/-" },
+      { cmd: "chown", category: "PERM", desc: "Change Owner: cambia proprietario.", example: "chown utente file.txt", flag: "-R (ricorsivo)" },
+      { cmd: "whoami", category: "SYS", desc: "Mostra l'utente corrente loggato.", example: "whoami", flag: "Nessuno" },
+      { cmd: "date", category: "SYS", desc: "Mostra data e ora corrente.", example: "date '+%d/%m/%Y'", flag: "Parametri formattazione" },
+      { cmd: "clear", category: "SYS", desc: "Pulisce lo schermo del terminale.", example: "clear", flag: "Nessuno" },
+      { cmd: "man", category: "SYS", desc: "Manual: legge documentazione comando.", example: "man ls", flag: "Nessuno" },
+      { cmd: "which", category: "SYS", desc: "Trova il percorso di un comando.", example: "which python3", flag: "Nessuno" },
+      { cmd: "find", category: "SYS", desc: "Cerca file o cartelle nel filesystem.", example: "find . -name '*.txt'", flag: "-name (per nome), -type f/d" },
+      { cmd: "head", category: "TEXT", desc: "Stampa le prime righe di un file.", example: "head -n 5 file.txt", flag: "-n (numero righe)" },
+      { cmd: "tail", category: "TEXT", desc: "Stampa le ultime righe di un file.", example: "tail -f log.txt", flag: "-n (righe), -f (segui aggiornamenti)" },
+      { cmd: "wc", category: "TEXT", desc: "Word Count: conta righe, parole, caratteri.", example: "wc -l file.txt", flag: "-l (righe), -w (parole)" },
+      { cmd: "sort", category: "TEXT", desc: "Ordina le righe di un file.", example: "sort file.txt", flag: "-n (numerico), -r (reverse)" },
+      { cmd: "uniq", category: "TEXT", desc: "Filtra linee duplicate.", example: "uniq file.txt", flag: "-c (conta), -d (mostra duplicati)" },
+      { cmd: "diff", category: "TEXT", desc: "Compara due file riga per riga.", example: "diff file1.txt file2.txt", flag: "-u (unified format)" },
+      { cmd: "sed", category: "TEXT", desc: "Stream editor: sostituisce testo.", example: "sed 's/old/new/' file.txt", flag: "-i (modifica in place)" },
+      { cmd: "awk", category: "TEXT", desc: "Elabora file strutturati colonna per colonna.", example: "awk '{print $1}' file.txt", flag: "-F (separatore)" },
+      { cmd: "cut", category: "TEXT", desc: "Estrae colonne specifiche.", example: "cut -d',' -f1 file.csv", flag: "-d (delimitatore), -f (campi)" },
+      { cmd: "ps", category: "SYS", desc: "Process Status: mostra processi attivi.", example: "ps aux", flag: "aux (dettagliato)" },
+      { cmd: "kill", category: "SYS", desc: "Termina un processo tramite PID.", example: "kill -9 1234", flag: "-9 (force)" },
+      { cmd: "top", category: "SYS", desc: "Mostra in tempo reale processi e risorse.", example: "top", flag: "Nessuno" },
+      { cmd: "df", category: "SYS", desc: "Disk Free: mostra spazio su disco.", example: "df -h", flag: "-h (human readable)" },
+      { cmd: "du", category: "SYS", desc: "Disk Usage: stima spazio cartella.", example: "du -sh .", flag: "-s (sommario), -h (human)" },
+      { cmd: "tar", category: "FILE", desc: "Comprime/decomprime archivi tar.", example: "tar -czf archivio.tar.gz cartella/", flag: "-c/-x, -z (gzip), -f (file)" },
+      { cmd: "zip", category: "FILE", desc: "Crea archivi zip.", example: "zip -r archivio.zip cartella/", flag: "-r (ricorsivo)" }
+    ];
+
+    let activeCategory = "ALL";
+
+    function renderCommands() {
+      const grid = document.getElementById("commandGrid");
+      grid.innerHTML = "";
+      const searchVal = document.getElementById("cmdSearchInput").value.toLowerCase();
+
+      const filtered = commandsDataset.filter(item => {
+        const matchesCategory = (activeCategory === "ALL" || item.category === activeCategory);
+        const matchesSearch = (item.cmd.toLowerCase().includes(searchVal) || 
+                               item.desc.toLowerCase().includes(searchVal) || 
+                               item.example.toLowerCase().includes(searchVal));
+        return matchesCategory && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div style="text-align:center; padding:30px; color:var(--prog-muted); grid-column: 1/-1;">Nessun comando trovato.</div>`;
+        return;
+      }
+
+      filtered.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "command-card";
+        card.innerHTML = `
+          <div class="command-card-header">
+            <span class="cmd-badge">${item.cmd}</span>
+            <span class="cmd-category">${item.category}</span>
+          </div>
+          <div class="cmd-desc">${item.desc}</div>
+          <div class="cmd-meta">
+            <div><strong>Esempio:</strong> <code>${item.example}</code></div>
+            <div><strong>Flag:</strong> <code>${item.flag}</code></div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function filterByCategory(cat) {
+      activeCategory = cat;
+      document.querySelectorAll(".filter-chip").forEach(chip => chip.classList.remove("active"));
+      event.target.classList.add("active");
+      renderCommands();
+    }
+
+    function filterCommands() {
+      renderCommands();
+    }
+
+    function exportToCSV() {
+      let csvContent = "data:text/csv;charset=utf-8,Comando,Categoria,Descrizione,Esempio,Flag\n";
+      commandsDataset.forEach(item => {
+        const descEscaped = item.desc.replace(/"/g, '""');
+        const flagEscaped = item.flag.replace(/"/g, '""');
+        csvContent += `"${item.cmd}","${item.category}","${descEscaped}","${item.example}","${flagEscaped}"\n`;
+      });
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "BASH_cheatsheet_completo.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function copyCode(elementId) {
+      const codeText = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(codeText).then(() => {
+        const btn = document.querySelector(`#${elementId}`).parentElement.parentElement.querySelector('.copy-btn');
+        const originalText = btn.innerText;
+        btn.innerText = "Copiato!";
+        btn.style.borderColor = "#56cfb2";
+        btn.style.color = "#56cfb2";
+        setTimeout(() => {
+          btn.innerText = originalText;
+          btn.style.borderColor = "";
+          btn.style.color = "";
+        }, 1500);
+      }).catch(err => alert("Errore: " + err));
+    }
+
+    function switchTab(event, tabId) {
+      const parent = event.target.closest('.tab-container');
+      const buttons = parent.querySelectorAll('.tab-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      const panes = parent.querySelectorAll('.tab-pane');
+      panes.forEach(pane => pane.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    const tocLinks = document.querySelectorAll('#toc a');
+    const sections = document.querySelectorAll('section[id]');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          tocLinks.forEach(a => a.classList.remove('active'));
+          const active = document.querySelector(`#toc a[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-10% 0px -80% 0px', threshold: 0 });
+    sections.forEach(s => observer.observe(s));
+
+    tocLinks.forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    const btt = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => btt.classList.toggle('visible', window.scrollY > 300));
+
+    window.addEventListener('load', () => {
+      renderCommands();
+    });
+  </script>
+<script src="/scripts/ui.js" defer></script>
+
+</body>
+</html>
