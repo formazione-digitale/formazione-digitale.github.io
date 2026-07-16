@@ -750,7 +750,9 @@ function renderFrame(t) {
       const completion = simState.result.completion[p.id];
       for (let u = 0; u < simState.maxTime; u++) {
         const cell = document.createElement('div'); cell.className = 'gantt-cell';
-        if (simState.timeline[u] === p.id) {
+        if (u >= t) {
+          cell.classList.add('future'); // placeholder grigio — nessun colore rivelato
+        } else if (simState.timeline[u] === p.id) {
           cell.style.background = PROCESS_COLORS[i];
           cell.textContent = p.id;
         } else if (extended && (u < p.arrival || u >= completion)) {
@@ -760,7 +762,6 @@ function renderFrame(t) {
         } else {
           cell.classList.add('idle');
         }
-        if (u >= t) cell.classList.add('future');
         cells.appendChild(cell);
       }
       lane.appendChild(label); lane.appendChild(cells); ganttLive.appendChild(lane);
@@ -791,12 +792,15 @@ function renderFrame(t) {
       const cells = document.createElement('div'); cells.className = 'gantt-cells';
       for (let u = 0; u < simState.maxTime; u++) {
         const cell = document.createElement('div'); cell.className = 'gantt-cell';
-        const pid = r.timeline[u];
-        if (pid) {
-          const idx = simState.processes.findIndex(p => p.id === pid);
-          cell.style.background = PROCESS_COLORS[idx]; cell.textContent = pid;
-        } else { cell.classList.add('idle'); }
-        if (u >= t) cell.classList.add('future');
+        if (u >= t) {
+          cell.classList.add('future'); // placeholder grigio — nessun colore rivelato
+        } else {
+          const pid = r.timeline[u];
+          if (pid) {
+            const idx = simState.processes.findIndex(p => p.id === pid);
+            cell.style.background = PROCESS_COLORS[idx]; cell.textContent = pid;
+          } else { cell.classList.add('idle'); }
+        }
         cells.appendChild(cell);
       }
       lane.appendChild(label); lane.appendChild(cells); ganttLive.appendChild(lane);
