@@ -161,6 +161,73 @@
 
 footer { margin-left: 0; }
 @media(min-width:900px) { footer { margin-left: var(--nav-w); } }
+
+/* ── Calcolatori interattivi ── */
+.calc-widget {
+  background: var(--blue-pale);
+  border: 1px solid var(--blue-mid);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.4rem;
+  margin: 1.25rem 0;
+}
+.calc-widget-title {
+  font-size: .8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--blue-mid);
+  margin-bottom: .9rem;
+}
+.calc-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: .6rem;
+  margin-bottom: .85rem;
+}
+.calc-field {
+  display: flex;
+  flex-direction: column;
+  gap: .28rem;
+}
+.calc-field label {
+  font-size: .68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--gray-mid);
+}
+.calc-field input,
+.calc-field select {
+  padding: .42rem .6rem;
+  border: 1px solid var(--blue-light);
+  border-radius: 6px;
+  font-family: 'Courier New', monospace;
+  font-size: .88rem;
+  color: var(--blue-dark);
+  background: #fff;
+  width: 100%;
+  box-sizing: border-box;
+}
+.calc-field input:focus,
+.calc-field select:focus {
+  outline: 2px solid var(--blue-mid);
+  border-color: var(--blue-mid);
+}
+.calc-output {
+  border-top: 1px dashed var(--blue-light);
+  padding-top: .75rem;
+}
+.calc-error {
+  color: var(--amber-dark);
+  font-size: .84rem;
+  font-style: italic;
+}
+.calc-field-hint {
+  font-size: .7rem;
+  color: var(--gray-mid);
+  line-height: 1.35;
+  min-height: 1em;
+}
 </style>
 </head>
 <body>
@@ -266,6 +333,34 @@ footer { margin-left: 0; }
     <div class="calc-row calc-final"><span class="calc-desc">MiB</span><span class="calc-val">6.075 ÷ 1024 ≈ 5,93 MiB</span></div>
   </div>
 
+  <!-- CALCOLATORE IMMAGINI -->
+  <div class="calc-widget">
+    <div class="calc-widget-title">🧮 Prova con i tuoi valori — Immagini</div>
+    <div class="calc-inputs">
+      <div class="calc-field">
+        <label for="img-w">Larghezza (px)</label>
+        <input type="number" id="img-w" value="1920" min="1" max="99999">
+      </div>
+      <div class="calc-field">
+        <label for="img-h">Altezza (px)</label>
+        <input type="number" id="img-h" value="1080" min="1" max="99999">
+      </div>
+      <div class="calc-field">
+        <label for="img-bpp">Bit per pixel</label>
+        <select id="img-bpp">
+          <option value="1">1 bit (bianco/nero)</option>
+          <option value="4">4 bit (16 colori)</option>
+          <option value="8">8 bit (256 colori)</option>
+          <option value="16">16 bit (65.536 colori)</option>
+          <option value="24" selected>24 bit (RGB)</option>
+          <option value="32">32 bit (RGBA)</option>
+          <option value="48">48 bit (HDR)</option>
+        </select>
+      </div>
+    </div>
+    <div class="calc-output" id="out-img"></div>
+  </div>
+
   <p class="sub-title">Quanti colori con n bit?</p>
   <p>Con <strong>n bit per pixel</strong> si possono rappresentare esattamente <strong>2ⁿ</strong> colori distinti — ogni combinazione di bit codifica un colore diverso.</p>
 
@@ -306,6 +401,20 @@ footer { margin-left: 0; }
     bit rate (bit/s) = canali × frequenza di campionamento × bit per campione
   </div>
 
+  <p>I <strong>bit per campione</strong> (chiamati anche <em>bit depth</em> o profondità di bit) determinano con quanta precisione viene misurata l'ampiezza del segnale in ogni istante — esattamente come i bit per pixel determinano quanti colori si possono rappresentare in un'immagine.</p>
+
+  <table class="unit-table">
+    <thead>
+      <tr><th>Bit/campione</th><th>Livelli di ampiezza</th><th>Gamma dinamica</th><th>Uso tipico</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="mono">8 bit</td><td>256</td><td>~48 dB</td><td>Telefonia, voice memo, effetti di giochi</td></tr>
+      <tr><td class="mono">16 bit</td><td>65.536</td><td>~96 dB</td><td>CD audio, streaming, standard musicale</td></tr>
+      <tr><td class="mono">24 bit</td><td>16.777.216</td><td>~144 dB</td><td>Registrazione professionale in studio</td></tr>
+      <tr><td class="mono">32 bit</td><td>—</td><td>—</td><td>Editing e mixaggio in DAW (virgola mobile — non ha "livelli" nel senso classico)</td></tr>
+    </tbody>
+  </table>
+
   <div class="calc-steps">
     <div class="calc-title">Esempio svolto — audio stereo, 44,1 kHz, 16 bit/campione, 3 minuti</div>
     <div class="calc-row"><span class="calc-desc">Bit rate</span><span class="calc-val">2 × 44.100 × 16 = 1.411.200 bit/s</span></div>
@@ -313,6 +422,56 @@ footer { margin-left: 0; }
     <div class="calc-row"><span class="calc-desc">Bit totali</span><span class="calc-val">1.411.200 × 180 = 254.016.000 bit</span></div>
     <div class="calc-row"><span class="calc-desc">Byte</span><span class="calc-val">254.016.000 ÷ 8 = 31.752.000 byte</span></div>
     <div class="calc-row calc-final"><span class="calc-desc">MiB</span><span class="calc-val">31.752.000 ÷ 1024² ≈ 30,28 MiB</span></div>
+  </div>
+
+  <!-- CALCOLATORE AUDIO -->
+  <div class="calc-widget">
+    <div class="calc-widget-title">🧮 Prova con i tuoi valori — Audio</div>
+    <div class="calc-inputs">
+      <div class="calc-field">
+        <label for="aud-ch">Canali</label>
+        <select id="aud-ch">
+          <option value="1">1 — Mono</option>
+          <option value="2" selected>2 — Stereo</option>
+          <option value="6">6 — 5.1 Surround</option>
+          <option value="8">8 — 7.1 Surround</option>
+        </select>
+        <small id="aud-ch-desc" class="calc-field-hint"></small>
+      </div>
+      <div class="calc-field">
+        <label for="aud-freq">Frequenza (Hz)</label>
+        <select id="aud-freq">
+          <option value="8000">8.000 Hz (telefonia)</option>
+          <option value="22050">22.050 Hz</option>
+          <option value="44100" selected>44.100 Hz (CD)</option>
+          <option value="48000">48.000 Hz (video pro)</option>
+          <option value="96000">96.000 Hz (studio)</option>
+        </select>
+      </div>
+      <div class="calc-field">
+        <label for="aud-bits">Bit/campione</label>
+        <select id="aud-bits">
+          <option value="8">8 bit</option>
+          <option value="16" selected>16 bit</option>
+          <option value="24">24 bit</option>
+          <option value="32">32 bit</option>
+        </select>
+      </div>
+      <div class="calc-field">
+        <label for="aud-min">Durata (min)</label>
+        <input type="number" id="aud-min" value="3" min="0" max="999">
+      </div>
+      <div class="calc-field">
+        <label for="aud-sec">Durata (sec)</label>
+        <input type="number" id="aud-sec" value="0" min="0" max="59">
+      </div>
+    </div>
+    <div class="calc-output" id="out-audio"></div>
+  </div>
+
+  <div class="box box-warn">
+    <div class="box-label">Questo è un file WAV — nella pratica si comprime sempre</div>
+    <p>Il calcolo descrive audio <strong>PCM non compresso</strong>, il formato esatto di un file <strong>.wav</strong>. Nella pratica, l'audio viene quasi sempre compresso: <strong>MP3</strong> e <strong>AAC</strong> (con perdita) riducono la dimensione di un fattore 10–11×; <strong>FLAC</strong> (senza perdita) di circa 2×, senza degradare la qualità.</p>
   </div>
 
   <div class="box box-info">
@@ -348,6 +507,50 @@ footer { margin-left: 0; }
     <div class="calc-row"><span class="calc-desc">Bit totali</span><span class="calc-val">22.118.400 × 300 = 6.635.520.000 bit</span></div>
     <div class="calc-row"><span class="calc-desc">Byte</span><span class="calc-val">6.635.520.000 ÷ 8 = 829.440.000 byte</span></div>
     <div class="calc-row calc-final"><span class="calc-desc">MiB</span><span class="calc-val">829.440.000 ÷ 1024² ≈ 790,6 MiB</span></div>
+  </div>
+
+  <!-- CALCOLATORE VIDEO -->
+  <div class="calc-widget">
+    <div class="calc-widget-title">🧮 Prova con i tuoi valori — Video</div>
+    <div class="calc-inputs">
+      <div class="calc-field">
+        <label for="vid-w">Larghezza (px)</label>
+        <input type="number" id="vid-w" value="1280" min="1" max="99999">
+      </div>
+      <div class="calc-field">
+        <label for="vid-h">Altezza (px)</label>
+        <input type="number" id="vid-h" value="720" min="1" max="99999">
+      </div>
+      <div class="calc-field">
+        <label for="vid-bpp">Bit per pixel</label>
+        <select id="vid-bpp">
+          <option value="8">8 bit (256 colori)</option>
+          <option value="16">16 bit</option>
+          <option value="24" selected>24 bit (RGB)</option>
+          <option value="32">32 bit (RGBA)</option>
+          <option value="48">48 bit (HDR)</option>
+        </select>
+      </div>
+      <div class="calc-field">
+        <label for="vid-fps">Frame rate (fps)</label>
+        <select id="vid-fps">
+          <option value="24">24 fps (cinema)</option>
+          <option value="25">25 fps (PAL / TV europea)</option>
+          <option value="30" selected>30 fps (web, streaming)</option>
+          <option value="60">60 fps (gaming, video fluido)</option>
+          <option value="120">120 fps (slow motion, HFR)</option>
+        </select>
+      </div>
+      <div class="calc-field">
+        <label for="vid-min">Durata (min)</label>
+        <input type="number" id="vid-min" value="0" min="0" max="999">
+      </div>
+      <div class="calc-field">
+        <label for="vid-sec">Durata (sec)</label>
+        <input type="number" id="vid-sec" value="10" min="0" max="59">
+      </div>
+    </div>
+    <div class="calc-output" id="out-video"></div>
   </div>
 
   <div class="box box-warn">
@@ -393,6 +596,161 @@ footer { margin-left: 0; }
     });
   }
   document.querySelectorAll('#sidebar .nav-item').forEach(a => a.addEventListener('click', closeSidebar));
+
+  // ── Utility: formattazione numeri in stile italiano ──
+  function fmt(n) {
+    return Math.round(n).toLocaleString('it-IT');
+  }
+  function fmtDec(n, d) {
+    return n.toLocaleString('it-IT', { minimumFractionDigits: d, maximumFractionDigits: d });
+  }
+
+  // ── Utility: genera una riga calc-row ──
+  function calcRow(desc, val, isFinal) {
+    return `<div class="calc-row${isFinal ? ' calc-final' : ''}">
+      <span class="calc-desc">${desc}</span>
+      <span class="calc-val">${val}</span>
+    </div>`;
+  }
+
+  // ── Calcolatore Immagini ──
+  function calcImg() {
+    const w   = parseInt(document.getElementById('img-w').value);
+    const h   = parseInt(document.getElementById('img-h').value);
+    const bpp = parseInt(document.getElementById('img-bpp').value);
+    const out = document.getElementById('out-img');
+
+    if (!w || !h || w <= 0 || h <= 0) {
+      out.innerHTML = '<span class="calc-error">Inserisci larghezza e altezza valide.</span>';
+      return;
+    }
+
+    const px    = w * h;
+    const bits  = px * bpp;
+    const bytes = bits / 8;
+    const kib   = bytes / 1024;
+    const mib   = kib / 1024;
+
+    let html = '';
+    html += calcRow('Pixel totali', `${fmt(w)} × ${fmt(h)} = ${fmt(px)} pixel`);
+    html += calcRow('Bit totali',   `${fmt(px)} × ${bpp} = ${fmt(bits)} bit`);
+    html += calcRow('Byte',         `${fmt(bits)} ÷ 8 = ${fmt(bytes)} byte`);
+    html += calcRow('KiB',          `${fmt(bytes)} ÷ 1024 = ${fmtDec(kib, 0)} KiB`);
+    html += calcRow('MiB',          `${fmtDec(kib, 0)} ÷ 1024 ≈ ${fmtDec(mib, 2)} MiB`, true);
+
+    out.innerHTML = html;
+  }
+
+  // ── Calcolatore Audio ──
+  function calcAudio() {
+    const ch       = parseInt(document.getElementById('aud-ch').value);
+    const freq     = parseInt(document.getElementById('aud-freq').value);
+    const bits     = parseInt(document.getElementById('aud-bits').value);
+    const mins     = parseInt(document.getElementById('aud-min').value) || 0;
+    const secs     = parseInt(document.getElementById('aud-sec').value) || 0;
+    const out      = document.getElementById('out-audio');
+    const totalSec = mins * 60 + secs;
+
+    if (totalSec <= 0) {
+      out.innerHTML = '<span class="calc-error">Inserisci una durata maggiore di zero.</span>';
+      return;
+    }
+
+    const bitrate    = ch * freq * bits;
+    const totalBits  = bitrate * totalSec;
+    const bytes      = totalBits / 8;
+    const mib        = bytes / (1024 * 1024);
+    const durLabel   = mins > 0
+      ? `${mins} min${secs > 0 ? ' ' + secs + ' s' : ''} = ${totalSec} s`
+      : `${secs} s`;
+
+    let html = '';
+    html += calcRow('Bit rate',    `${fmt(ch)} × ${fmt(freq)} × ${bits} = ${fmt(bitrate)} bit/s`);
+    html += calcRow('Durata',      durLabel);
+    html += calcRow('Bit totali',  `${fmt(bitrate)} × ${totalSec} = ${fmt(totalBits)} bit`);
+    html += calcRow('Byte',        `${fmt(totalBits)} ÷ 8 = ${fmt(bytes)} byte`);
+    html += calcRow('MiB',         `${fmt(bytes)} ÷ 1024² ≈ ${fmtDec(mib, 2)} MiB`, true);
+
+    out.innerHTML = html;
+  }
+
+  // ── Calcolatore Video ──
+  function calcVideo() {
+    const w   = parseInt(document.getElementById('vid-w').value);
+    const h   = parseInt(document.getElementById('vid-h').value);
+    const bpp = parseInt(document.getElementById('vid-bpp').value);
+    const fps = parseInt(document.getElementById('vid-fps').value);
+    const mins = parseInt(document.getElementById('vid-min').value) || 0;
+    const secs = parseInt(document.getElementById('vid-sec').value) || 0;
+    const out = document.getElementById('out-video');
+    const totalSec = mins * 60 + secs;
+
+    if (!w || !h || totalSec <= 0 || w <= 0 || h <= 0) {
+      out.innerHTML = '<span class="calc-error">Inserisci valori validi per larghezza, altezza e durata.</span>';
+      return;
+    }
+
+    const pxFrame   = w * h;
+    const bitsFrame = pxFrame * bpp;
+    const frames    = fps * totalSec;
+    const totalBits = bitsFrame * frames;
+    const bytes     = totalBits / 8;
+    const mib       = bytes / (1024 * 1024);
+    const gib       = mib / 1024;
+    const durLabel  = mins > 0
+      ? `${mins} min${secs > 0 ? ' ' + secs + ' s' : ''} = ${totalSec} s`
+      : `${secs} s`;
+
+    let html = '';
+    html += calcRow('Pixel per frame',           `${fmt(w)} × ${fmt(h)} = ${fmt(pxFrame)} pixel`);
+    html += calcRow('Bit per frame',             `${fmt(pxFrame)} × ${bpp} = ${fmt(bitsFrame)} bit`);
+    html += calcRow('Durata',                    durLabel);
+    html += calcRow(`Frame totali`,              `${fps} × ${totalSec} = ${fmt(frames)} frame`);
+    html += calcRow('Bit totali',                `${fmt(bitsFrame)} × ${fmt(frames)} = ${fmt(totalBits)} bit`);
+    html += calcRow('Byte',                      `${fmt(totalBits)} ÷ 8 = ${fmt(bytes)} byte`);
+    if (gib >= 1) {
+      html += calcRow('MiB', `${fmt(bytes)} ÷ 1024² ≈ ${fmtDec(mib, 1)} MiB`);
+      html += calcRow('GiB', `${fmtDec(mib, 1)} ÷ 1024 ≈ ${fmtDec(gib, 2)} GiB`, true);
+    } else {
+      html += calcRow('MiB', `${fmt(bytes)} ÷ 1024² ≈ ${fmtDec(mib, 2)} MiB`, true);
+    }
+
+    out.innerHTML = html;
+  }
+
+  // ── Didascalia dinamica canali audio ──
+  const chHints = {
+    '1': 'Un solo canale — usato per voce, radio e registrazioni semplici.',
+    '2': 'Canale sinistro e destro — standard per musica, podcast e film.',
+    '6': 'Cinque canali direzionali + subwoofer per i bassi — standard DVD e Blu-ray.',
+    '8': 'Sette canali direzionali + subwoofer — home theater avanzato e cinema.'
+  };
+  function updateChHint() {
+    const val  = document.getElementById('aud-ch').value;
+    document.getElementById('aud-ch-desc').textContent = chHints[val] || '';
+  }
+  document.getElementById('aud-ch').addEventListener('change', updateChHint);
+  updateChHint(); // imposta testo al caricamento
+
+  // ── Listener input: aggiornamento real-time ──
+  ['img-w', 'img-h', 'img-bpp'].forEach(id => {
+    document.getElementById(id).addEventListener('input', calcImg);
+  });
+  ['aud-ch', 'aud-freq', 'aud-bits', 'aud-min', 'aud-sec'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('input',  calcAudio);
+    el.addEventListener('change', calcAudio);
+  });
+  ['vid-w', 'vid-h', 'vid-bpp', 'vid-fps', 'vid-min', 'vid-sec'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('input',  calcVideo);
+    el.addEventListener('change', calcVideo);
+  });
+
+  // Calcolo iniziale al caricamento della pagina
+  calcImg();
+  calcAudio();
+  calcVideo();
 
   // ── Dimostrazione reale: gradiente a piena profondità vs posterizzato a 256 colori ──
   // Schema 3-3-2 bit (R-G-B): 8 livelli rosso × 8 livelli verde × 4 livelli blu = 256 colori esatti.
