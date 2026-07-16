@@ -202,6 +202,7 @@ footer strong { color: rgba(255,255,255,.9); }
     </div>
   </div>
 
+  <p>Prima di parlare di scheduling, è importante distinguere due concetti spesso confusi. Il <strong>programma</strong> è il codice scritto, statico, salvato su disco (ad esempio un file eseguibile). Il <strong>processo</strong> è il programma in esecuzione: ha uno stato che cambia nel tempo — registri, memoria allocata, contatore di programma. Lo stesso programma può generare più processi se lanciato più volte contemporaneamente: due istanze aperte dello stesso editor sono due processi distinti che condividono lo stesso codice. In termini di risorse: il programma occupa solo <strong>spazio su disco</strong>; il processo consuma <strong>memoria RAM</strong> e <strong>tempo di CPU</strong>.</p>
   <p>Quando più processi sono pronti per essere eseguiti ma la CPU può eseguirne uno solo alla volta, il sistema operativo deve decidere <strong>chi esegue e quando</strong>. Questa decisione è presa dallo <strong>scheduler della CPU</strong>, seguendo un algoritmo di scheduling.</p>
   <p>Ogni processo è descritto da tre dati: il <strong>tempo di arrivo</strong> (quando diventa pronto), il <strong>burst</strong> (quanto tempo di CPU richiede in totale) e, per alcuni algoritmi, una <strong>priorità</strong> (numero più basso = priorità più alta).</p>
 
@@ -216,6 +217,11 @@ footer strong { color: rgba(255,255,255,.9); }
     <p><strong>Non-preemptive (senza prelazione):</strong> una volta che un processo inizia ad eseguire, continua fino al completamento — anche se nel frattempo arriva un processo "migliore" secondo il criterio dell'algoritmo (burst più corto, priorità più alta).<br>
     <strong>Preemptive (con prelazione):</strong> il processo in esecuzione può essere interrotto prima di finire, se un nuovo arrivo ha un titolo più forte secondo lo stesso criterio. Per Round Robin il meccanismo è diverso: l'interruzione non dipende da un arrivo "migliore", ma dallo scadere del quanto di tempo.</p>
     <p>La prelazione è quindi una scelta di <em>politica</em>, indipendente dal criterio usato per scegliere: lo dimostra il fatto che "Priorità" compare due volte in questa guida (sezioni 3 e 5) — stesso criterio, comportamento diverso a seconda che sia o meno prelazionabile.</p>
+  </div>
+
+  <div class="box box-info">
+    <div class="box-label">Context switch</div>
+    <p>Il <strong>context switch</strong> è l'operazione con cui il sistema operativo salva lo stato del processo in esecuzione e carica lo stato di un altro processo, per dargli la CPU. Ha un costo perché durante il context switch la CPU non esegue lavoro utile per nessun processo: è puro overhead di gestione. Nei calcoli di questa guida il costo del context switch viene ignorato per semplicità — ma in un sistema reale è un fattore rilevante, soprattutto per gli algoritmi preemptive che possono generare molte interruzioni.</p>
   </div>
 
   <table class="algo-ref-table">
@@ -359,7 +365,7 @@ footer strong { color: rgba(255,255,255,.9); }
   </div>
   <div class="mini-gantt-axis"><span style="flex:2;">0</span><span style="flex:2;">2</span><span style="flex:1;">4</span><span style="flex:2;">5</span><span style="flex:1;">7</span><span style="flex:1;">8</span><span style="flex:0;">9</span></div>
   <div class="box box-tip"><div class="box-label">Vantaggio</div><p>Nessun processo aspetta indefinitamente: ognuno riceve comunque dei turni regolari. Ottimo per sistemi interattivi (time-sharing), dove la reattività percepita conta più della velocità media.</p></div>
-  <div class="box box-warn"><div class="box-label">Svantaggio</div><p>Non privilegia chi avrebbe più bisogno di essere veloce: un quanto troppo piccolo aumenta l'overhead dei cambi di contesto, uno troppo grande fa degenerare Round Robin in un quasi-FCFS.</p></div>
+  <div class="box box-warn"><div class="box-label">Svantaggio</div><p>Non privilegia chi avrebbe più bisogno di essere veloce: un quanto troppo piccolo aumenta l'overhead derivato da molti context-switch, uno troppo grande fa degenerare Round Robin in un quasi-FCFS.</p></div>
 </section>
 
 <!-- STRUMENTO -->
@@ -731,6 +737,56 @@ function buildAxisRow(maxTime) {
   return lane;
 }
 
+/* Restituisce i processi in coda ordinati secondo il criterio dell'algoritmo attivo.
+   Usato solo in modalità single: in compare non c'è un'unica coda da mostrare. */
+function getSortedReadyQueue(t) {
+  const runningPid = (t < simState.maxTime) ? simState.timeline[t] : null;
+
+  // Processi arrivati, non finiti, non in esecuzione ora
+  const inQueue = simState.processes.filter(p => {
+    const finished = simState.result.completion[p.id] <= t;
+    return p.arrival <= t && !finished && p.id !== runningPid;
+  });
+
+  if (inQueue.length === 0) return [];
+
+  // Burst rimanente al tempo t (usato da SRTF)
+  function getRemaining(p) {
+    return p.burst - simState.timeline.slice(0, t).filter(pid => pid === p.id).length;
+  }
+
+  // Prima comparsa nel timeline da t in poi (usato da Round Robin)
+  function getNextSlot(p) {
+    for (let u = t; u < simState.maxTime; u++) {
+      if (simState.timeline[u] === p.id) return u;
+    }
+    return Infinity;
+  }
+
+  switch (simState.algoKey) {
+    case 'fcfs':
+      // Chi è arrivato prima va prima; pareggio: ordine tabella
+      return [...inQueue].sort((a, b) => a.arrival - b.arrival || a.idx - b.idx);
+    case 'sjf':
+      // Burst totale più corto; pareggio: ordine tabella
+      return [...inQueue].sort((a, b) => a.burst - b.burst || a.idx - b.idx);
+    case 'priorityNP':
+    case 'priorityP':
+      // Priorità più alta (numero più basso); pareggio: ordine tabella
+      // Cattura il caso in cui un nuovo processo ad alta priorità viene
+      // inserito in testa anche se arrivato dopo (es. Priorità senza prelazione)
+      return [...inQueue].sort((a, b) => a.priority - b.priority || a.idx - b.idx);
+    case 'srtf':
+      // Burst rimanente più corto a questo istante
+      return [...inQueue].sort((a, b) => getRemaining(a) - getRemaining(b) || a.idx - b.idx);
+    case 'roundRobin':
+      // Chi viene schedulato prima nel timeline (dalla posizione t in poi)
+      return [...inQueue].sort((a, b) => getNextSlot(a) - getNextSlot(b) || a.idx - b.idx);
+    default:
+      return inQueue;
+  }
+}
+
 function renderFrame(t) {
   document.getElementById('gantt-live-wrap').style.display = 'block';
   document.getElementById('summary-area').style.display = 'none';
@@ -775,15 +831,18 @@ function renderFrame(t) {
     } else { cpuBox.textContent = '—'; cpuBox.style.background = '#ddd'; }
 
     const queueWrap = document.getElementById('ready-queue-chips'); queueWrap.innerHTML = '';
-    simState.processes.forEach((p, i) => {
-      const finished = simState.result.completion[p.id] <= t;
-      const running = runningPid === p.id;
-      const arrived = p.arrival <= t;
-      if (arrived && !finished && !running) {
-        const chip = document.createElement('span'); chip.className = 'queue-chip';
-        chip.style.background = PROCESS_COLORS[i]; chip.textContent = p.id;
-        queueWrap.appendChild(chip);
+    const sortedQueue = getSortedReadyQueue(t);
+    sortedQueue.forEach((p, qi) => {
+      // Separatore → tra chip per segnalare che l'ordine è significativo
+      if (qi > 0) {
+        const sep = document.createElement('span');
+        sep.textContent = '→';
+        sep.style.cssText = 'color:var(--gray-mid);font-size:.72rem;align-self:center;flex-shrink:0;';
+        queueWrap.appendChild(sep);
       }
+      const chip = document.createElement('span'); chip.className = 'queue-chip';
+      chip.style.background = PROCESS_COLORS[p.idx]; chip.textContent = p.id;
+      queueWrap.appendChild(chip);
     });
   } else {
     simState.allResults.forEach(r => {
