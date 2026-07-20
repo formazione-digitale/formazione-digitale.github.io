@@ -244,19 +244,36 @@
       background: rgba(86, 207, 178, 0.1); padding: 2px 6px; border-radius: 3px;
     }
 
-    /* ── TAB LABORATORIO ── */
-    .tab-container { margin-top: 25px; }
-    .tab-headers { display: flex; border-bottom: 2px solid var(--prog-border); gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
-    .tab-btn {
-      background: none; border: none; padding: 12px 20px; font-size: 0.9rem;
-      font-weight: 600; color: var(--prog-muted); cursor: pointer;
-      border-bottom: 3px solid transparent; transition: all 0.2s; white-space: nowrap;
+    /* ── LAB LAYOUT (mini-nav + accordion) ── */
+    .lab-layout { display: grid; grid-template-columns: 185px 1fr; gap: 1.75rem; margin-top: 2rem; align-items: start; }
+    .lab-nav { position: sticky; top: 65px; background: var(--prog-card); border: 1px solid var(--prog-border); border-radius: 8px; padding: 1rem 0.75rem; }
+    .lab-nav-group { margin-bottom: 1.25rem; }
+    .lab-nav-group:last-child { margin-bottom: 0; }
+    .lab-nav-group-title { font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--prog-muted); padding: 0 0.5rem 0.4rem; margin-bottom: 0.35rem; border-bottom: 1px solid var(--prog-border); }
+    .lab-nav-item { display: block; padding: 5px 10px; border-radius: 4px; font-family: 'Space Mono', monospace; font-size: 0.73rem; color: var(--prog-muted); text-decoration: none; transition: all 0.18s; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .lab-nav-item:hover { background: rgba(124,92,252,0.1); color: var(--prog-text); }
+    .lab-nav-item.active { background: rgba(124,92,252,0.15); color: var(--prog-accent); font-weight: 700; }
+    .lab-content details { background: var(--prog-card); border: 1px solid var(--prog-border); border-radius: 8px; margin-bottom: 0.6rem; overflow: hidden; transition: border-color 0.2s; }
+    .lab-content details[open] { border-color: var(--prog-accent); }
+    .lab-content details summary { padding: 0.9rem 1.25rem; cursor: pointer; display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; font-weight: 600; color: var(--prog-text); list-style: none; user-select: none; transition: background 0.18s; }
+    .lab-content details summary::-webkit-details-marker { display: none; }
+    .lab-content details summary::before { content: '▶'; font-size: 0.6rem; color: var(--prog-muted); transition: transform 0.2s; flex-shrink: 0; }
+    .lab-content details[open] summary::before { transform: rotate(90deg); color: var(--prog-accent); }
+    .lab-content details summary:hover { background: rgba(124,92,252,0.05); }
+    .lab-content details[open] summary { color: var(--prog-accent); border-bottom: 1px solid var(--prog-border); }
+    .lab-sum-name { font-family: 'Space Mono', monospace; font-size: 0.82rem; }
+    .lab-sum-desc { font-size: 0.8rem; color: var(--prog-muted); font-weight: 400; }
+    .lab-group-badge { margin-left: auto; font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; background: rgba(124,92,252,0.12); color: var(--prog-accent); padding: 2px 8px; border-radius: 3px; flex-shrink: 0; }
+    .lab-detail-body { padding: 1.5rem; }
+    .lab-download-row { display: flex; align-items: center; gap: 1rem; margin: 1.25rem 0 2rem; flex-wrap: wrap; }
+    @media (max-width: 768px) {
+      .lab-layout { grid-template-columns: 1fr; }
+      .lab-nav { position: static; display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0.75rem; }
+      .lab-nav-group { display: contents; }
+      .lab-nav-group-title { display: none; }
+      .lab-nav-item { display: inline-block; border: 1px solid var(--prog-border); padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; }
+      .lab-group-badge { display: none; }
     }
-    .tab-btn:hover { color: var(--prog-text); border-bottom-color: var(--prog-accent3); }
-    .tab-btn.active { color: var(--prog-accent); border-bottom-color: var(--prog-accent); font-weight: 700; }
-    .tab-pane { display: none; }
-    .tab-pane.active { display: block; animation: fadeIn 0.3s; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
     /* ── BACK TO TOP ── */
     #back-to-top {
@@ -292,7 +309,9 @@
       <a href="#gitbash">Windows & Git Bash</a>
       <a href="#commands">Comandi Bash</a>
       <a href="#globalvars">Variabili Globali</a>
-      <a href="#permessi">Permessi & Sicurezza</a>
+      <a href="#costrutti">Costrutti Logici</a>
+      <a href="#pipe">Pipe &amp; Ridirezione</a>
+      <a href="#permessi">Permessi &amp; Sicurezza</a>
       <a href="#lab">Laboratorio Script</a>
     </nav>
   </div>
@@ -461,8 +480,250 @@
       </div>
     </section>
 
+    <section id="costrutti">
+      <div class="section-label">05 - COSTRUTTI LOGICI</div>
+      <h2>Costrutti di Controllo e Flusso</h2>
+      <p>I costrutti logici permettono di prendere decisioni, ripetere operazioni e ricevere dati dall'esterno. Sono i mattoni di qualsiasi script non banale — il laboratorio li usa tutti; questa sezione li presenta in modo sistematico.</p>
+
+      <h3>if / elif / else</h3>
+      <p>Esegue un blocco di codice solo se una condizione è vera. Le condizioni si scrivono tra parentesi quadre <code>[ ]</code> seguite da <code>; then</code>. Il blocco termina con <code>fi</code> (<em>if</em> al contrario).</p>
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>Struttura if / elif / else</span>
+          <button class="copy-btn" onclick="copyCode('ctrl-if')">Copia</button>
+        </div>
+        <pre id="ctrl-if"><span class="hl-shebang">#!/bin/bash</span>
+<span class="hl-variable">ETA</span>=<span class="hl-num">20</span>
+
+<span class="hl-keyword">if</span> [ <span class="hl-string">"$ETA"</span> -lt <span class="hl-num">18</span> ]; <span class="hl-keyword">then</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"Minorenne"</span>
+<span class="hl-keyword">elif</span> [ <span class="hl-string">"$ETA"</span> -eq <span class="hl-num">18</span> ]; <span class="hl-keyword">then</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"Maggiorenne da oggi"</span>
+<span class="hl-keyword">else</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"Adulto"</span>
+<span class="hl-keyword">fi</span></pre>
+      </div>
+
+      <h3>Tabella Comparatori</h3>
+      <p>Le condizioni all'interno di <code>[ ]</code> usano operatori specifici per interi, stringhe e file.</p>
+      <table>
+        <thead>
+          <tr><th>Operatori</th><th>Tipo</th><th>Significato</th><th>Esempio</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>-lt</code> <code>-le</code> <code>-eq</code> <code>-ne</code> <code>-gt</code> <code>-ge</code></td>
+            <td>Interi</td>
+            <td>&lt; &nbsp; ≤ &nbsp; = &nbsp; ≠ &nbsp; &gt; &nbsp; ≥</td>
+            <td><code>[ "$N" -gt 0 ]</code></td>
+          </tr>
+          <tr>
+            <td><code>=</code> &nbsp; <code>!=</code></td>
+            <td>Stringhe</td>
+            <td>uguale / diverso</td>
+            <td><code>[ "$S" = "ok" ]</code></td>
+          </tr>
+          <tr>
+            <td><code>-z</code> &nbsp; <code>-n</code></td>
+            <td>Stringhe</td>
+            <td>vuota / non vuota</td>
+            <td><code>[ -z "$S" ]</code></td>
+          </tr>
+          <tr>
+            <td><code>-f</code> &nbsp; <code>-d</code> &nbsp; <code>-e</code></td>
+            <td>File</td>
+            <td>esiste come file / cartella / qualsiasi</td>
+            <td><code>[ -f "dati.txt" ]</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Il ciclo for</h3>
+      <p>Itera su una lista di valori o su un insieme di file. Ad ogni iterazione la variabile assume il valore corrente dell'elemento.</p>
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>for su lista e su file</span>
+          <button class="copy-btn" onclick="copyCode('ctrl-for')">Copia</button>
+        </div>
+        <pre id="ctrl-for"><span class="hl-comment"># for su lista di valori espliciti</span>
+<span class="hl-keyword">for</span> <span class="hl-variable">GIORNO</span> <span class="hl-keyword">in</span> lunedì martedì mercoledì giovedì venerdì; <span class="hl-keyword">do</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"Giorno: $GIORNO"</span>
+<span class="hl-keyword">done</span>
+
+<span class="hl-comment"># for su file tramite glob: *.txt si espande prima del ciclo</span>
+<span class="hl-keyword">for</span> <span class="hl-variable">FILE</span> <span class="hl-keyword">in</span> *.txt; <span class="hl-keyword">do</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"File trovato: $FILE"</span>
+<span class="hl-keyword">done</span></pre>
+      </div>
+
+      <h3>Il ciclo while</h3>
+      <p>Continua finché una condizione rimane vera. Le due forme più comuni: lettura riga per riga da file e ciclo infinito con uscita esplicita tramite <code>break</code>.</p>
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>while read e while true</span>
+          <button class="copy-btn" onclick="copyCode('ctrl-while')">Copia</button>
+        </div>
+        <pre id="ctrl-while"><span class="hl-comment"># while read: legge un file riga per riga</span>
+<span class="hl-comment"># il simbolo &lt; redirige il file verso l'input del ciclo</span>
+<span class="hl-keyword">while</span> <span class="hl-keyword">read</span> <span class="hl-variable">RIGA</span>; <span class="hl-keyword">do</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"→ $RIGA"</span>
+<span class="hl-keyword">done</span> &lt; file.txt
+
+<span class="hl-comment"># while true: ciclo infinito, break lo interrompe</span>
+<span class="hl-keyword">while</span> true; <span class="hl-keyword">do</span>
+    <span class="hl-keyword">read</span> -p <span class="hl-string">"Continua? (s/n): "</span> <span class="hl-variable">R</span>
+    [ <span class="hl-string">"$R"</span> = <span class="hl-string">"n"</span> ] && <span class="hl-keyword">break</span>
+<span class="hl-keyword">done</span></pre>
+      </div>
+
+      <h3>Parametri Posizionali</h3>
+      <p>Quando si lancia uno script con argomenti (<code>bash script.sh arg1 arg2</code>), Bash li assegna automaticamente a variabili speciali.</p>
+      <table>
+        <thead>
+          <tr><th>Variabile</th><th>Contenuto</th><th>Esempio</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>$0</code></td><td>Nome dello script</td><td><code>./script.sh</code></td></tr>
+          <tr><td><code>$1</code>, <code>$2</code>…</td><td>Primo argomento, secondo…</td><td><code>bash s.sh mario</code> → <code>$1</code> = <code>mario</code></td></tr>
+          <tr><td><code>$#</code></td><td>Numero totale di argomenti</td><td><code>0</code> se nessun argomento</td></tr>
+          <tr><td><code>$@</code></td><td>Tutti gli argomenti come lista</td><td><code>for ARG in "$@"; do</code></td></tr>
+        </tbody>
+      </table>
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>Uso pratico dei parametri</span>
+          <button class="copy-btn" onclick="copyCode('ctrl-params')">Copia</button>
+        </div>
+        <pre id="ctrl-params"><span class="hl-shebang">#!/bin/bash</span>
+<span class="hl-comment"># Lancio: bash saluta.sh mario luigi</span>
+
+<span class="hl-keyword">if</span> [ <span class="hl-variable">$#</span> -eq <span class="hl-num">0</span> ]; <span class="hl-keyword">then</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"Uso: $0 &lt;nome&gt; [altri nomi...]"</span>
+    <span class="hl-keyword">exit</span> <span class="hl-num">1</span>
+<span class="hl-keyword">fi</span>
+
+<span class="hl-keyword">for</span> <span class="hl-variable">NOME</span> <span class="hl-keyword">in</span> <span class="hl-string">"$@"</span>; <span class="hl-keyword">do</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"Ciao, $NOME!"</span>
+<span class="hl-keyword">done</span></pre>
+      </div>
+
+      <h3>Codici di Uscita</h3>
+      <p>Ogni comando termina con un codice numerico: <strong>0</strong> indica successo, qualsiasi altro valore un errore. <code>$?</code> contiene il codice dell'ultimo comando eseguito; <code>exit N</code> termina lo script con codice <code>N</code>.</p>
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>exit e $?</span>
+          <button class="copy-btn" onclick="copyCode('ctrl-exit')">Copia</button>
+        </div>
+        <pre id="ctrl-exit"><span class="hl-comment"># $? contiene il codice di uscita dell'ultimo comando</span>
+<span class="hl-keyword">ls</span> file.txt
+<span class="hl-keyword">echo</span> <span class="hl-string">"Codice: $?"</span>    <span class="hl-comment"># 0 se il file esiste, 1 altrimenti</span>
+
+<span class="hl-comment"># Uso pratico: verifica e uscita anticipata con codice di errore</span>
+<span class="hl-keyword">if</span> [ ! -f <span class="hl-string">"dati.txt"</span> ]; <span class="hl-keyword">then</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"Errore: dati.txt non trovato"</span>
+    <span class="hl-keyword">exit</span> <span class="hl-num">1</span>
+<span class="hl-keyword">fi</span>
+
+<span class="hl-keyword">echo</span> <span class="hl-string">"Elaborazione completata"</span>
+<span class="hl-keyword">exit</span> <span class="hl-num">0</span></pre>
+      </div>
+      <div class="box box-tip">
+        <strong>💡 if come test di comando</strong>
+        <p><code>if comando; then</code> — oltre alle condizioni tra <code>[ ]</code>, <code>if</code> può testare direttamente il codice di uscita di qualsiasi comando: se restituisce 0 (successo) il ramo <code>then</code> viene eseguito. La negazione si scrive <code>if ! comando; then</code>. Esempio: <code>if ! mkdir dir; then echo "Errore"; fi</code>.</p>
+      </div>
+    </section>
+
+    <section id="pipe">
+      <div class="section-label">06 - PIPE &amp; RIDIREZIONE</div>
+      <h2>Flussi di Dati: Pipe e Ridirezione</h2>
+      <p>Ogni processo Bash ha tre canali standard: <strong>stdin</strong> (input, canale 0), <strong>stdout</strong> (output normale, canale 1), <strong>stderr</strong> (errori, canale 2). Ridirezione e pipe permettono di collegare questi canali tra comandi e file.</p>
+
+      <h3>Ridirezione Output: <code>&gt;</code> e <code>&gt;&gt;</code></h3>
+      <p><code>&gt;</code> crea o <strong>sovrascrive</strong> un file con l'output del comando. <code>&gt;&gt;</code> <strong>aggiunge in coda</strong> senza cancellare il contenuto esistente.</p>
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>Ridirezione output</span>
+          <button class="copy-btn" onclick="copyCode('pipe-out')">Copia</button>
+        </div>
+        <pre id="pipe-out"><span class="hl-comment"># &gt; crea il file o lo sovrascrive se esiste</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Prima riga"</span> &gt; log.txt
+
+<span class="hl-comment"># &gt;&gt; aggiunge in coda senza toccare il contenuto precedente</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Seconda riga"</span> &gt;&gt; log.txt
+<span class="hl-keyword">echo</span> <span class="hl-string">"Terza riga"</span>  &gt;&gt; log.txt
+
+<span class="hl-comment"># Pattern usato in funzioni.sh: intestazione con &gt;, dati con &gt;&gt;</span>
+<span class="hl-keyword">date</span> &gt; report.txt
+<span class="hl-keyword">df</span> -h &gt;&gt; report.txt</pre>
+      </div>
+      <div class="box box-warn">
+        <strong>⚠️ Attenzione a <code>&gt;</code></strong>
+        <p><code>&gt;</code> sovrascrive immediatamente senza conferma. Se il file esiste, il contenuto precedente viene perso. Quando si vuole conservare il contenuto esistente, usare sempre <code>&gt;&gt;</code>.</p>
+      </div>
+
+      <h3>Ridirezione Input: <code>&lt;</code></h3>
+      <p><code>&lt;</code> redirige il contenuto di un file verso lo <em>stdin</em> di un comando. Usato con <code>while read</code> per leggere un file riga per riga.</p>
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>Ridirezione input</span>
+          <button class="copy-btn" onclick="copyCode('pipe-in')">Copia</button>
+        </div>
+        <pre id="pipe-in"><span class="hl-comment"># Il file viene letto riga per riga dal ciclo while</span>
+<span class="hl-comment"># il simbolo &lt; in coda al done redirige verso l'intero ciclo</span>
+<span class="hl-keyword">while</span> <span class="hl-keyword">read</span> <span class="hl-variable">RIGA</span>; <span class="hl-keyword">do</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"→ $RIGA"</span>
+<span class="hl-keyword">done</span> &lt; lista.txt
+
+<span class="hl-comment"># Variante con due campi per riga (usata in stataccessi.sh)</span>
+<span class="hl-keyword">while</span> <span class="hl-keyword">read</span> <span class="hl-variable">NOME</span> <span class="hl-variable">VALORE</span>; <span class="hl-keyword">do</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"$NOME ha valore $VALORE"</span>
+<span class="hl-keyword">done</span> &lt; dati.txt</pre>
+      </div>
+
+      <h3>Pipe: <code>|</code></h3>
+      <p>Collega lo <em>stdout</em> di un comando allo <em>stdin</em> del successivo, creando una catena di elaborazione senza file temporanei. I dati fluiscono direttamente tra i processi.</p>
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>Esempi di pipe</span>
+          <button class="copy-btn" onclick="copyCode('pipe-pipe')">Copia</button>
+        </div>
+        <pre id="pipe-pipe"><span class="hl-comment"># Conta quante righe di un file contengono "errore"</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"errore"</span> log.txt | <span class="hl-keyword">wc</span> -l
+
+<span class="hl-comment"># Lista file, ordina alfabeticamente, mostra i primi 5</span>
+<span class="hl-keyword">ls</span> -la | <span class="hl-keyword">sort</span> | <span class="hl-keyword">head</span> -5
+
+<span class="hl-comment"># Cerca processi attivi per nome</span>
+<span class="hl-keyword">ps</span> aux | <span class="hl-keyword">grep</span> <span class="hl-string">"bash"</span>
+
+<span class="hl-comment"># Catena: elenca .sh → filtra per "backup" → conta risultati</span>
+<span class="hl-keyword">ls</span> *.sh | <span class="hl-keyword">grep</span> <span class="hl-string">"backup"</span> | <span class="hl-keyword">wc</span> -l</pre>
+      </div>
+
+      <h3>Scartare l'Output: <code>/dev/null</code></h3>
+      <p><code>/dev/null</code> è un file speciale che scarta tutto ciò che riceve. Utile per sopprimere errori o output non necessari in script automatizzati.</p>
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>/dev/null</span>
+          <button class="copy-btn" onclick="copyCode('pipe-null')">Copia</button>
+        </div>
+        <pre id="pipe-null"><span class="hl-comment"># 2&gt;/dev/null scarta solo gli errori (stderr = canale 2)</span>
+<span class="hl-keyword">ls</span> /cartella/inesistente <span class="hl-num">2</span>&gt;/dev/null
+
+<span class="hl-comment"># &gt;/dev/null scarta l'output normale (stdout = canale 1)</span>
+<span class="hl-keyword">cp</span> file.txt backup/ &gt;/dev/null
+
+<span class="hl-comment"># &amp;&gt;/dev/null scarta sia stdout che stderr</span>
+<span class="hl-keyword">comando_silenzioso</span> &amp;&gt;/dev/null</pre>
+      </div>
+      <div class="box box-tip">
+        <strong>💡 Subshell <code>$()</code></strong>
+        <p><code>$(comando)</code> esegue un comando e <em>cattura</em> il suo stdout come stringa da assegnare a una variabile — niente va su schermo. È una forma di ridirezione "in memoria". Già usato in tutti gli script: <code>DATA=$(date +%Y-%m-%d)</code>, <code>MEDIA=$(awk ...)</code>, <code>STATO=$(cat "$FILE")</code>.</p>
+      </div>
+    </section>
+
     <section id="permessi">
-      <div class="section-label">05 - PERMESSI & SICUREZZA</div>
+      <div class="section-label">07 - PERMESSI & SICUREZZA</div>
       <h2>Sicurezza, Permessi File & Notazione Ottale</h2>
       <p>In ambiente Linux/POSIX, la sicurezza è governata da una matrice di permessi assegnata a ogni file e cartella. I permessi si dividono in tre classi di utenti:</p>
       <ul>
@@ -536,23 +797,62 @@
     </section>
 
     <section id="lab">
-      <div class="section-label">06 - LABORATORIO SCRIPT</div>
-      <h2>Laboratorio Script Progressivi</h2>
-      <p>Esercizi progressivi per imparare Bash attraverso script pratici e funzionali. Ogni script è presentato in una o più varianti di complessità crescente: copia i codici, modificali e sperimenta!</p>
+      <div class="section-label">08 - LABORATORIO SCRIPT</div>
+      <h2>Laboratorio Script Progressivo</h2>
+      <p>Undici script con difficoltà crescente, organizzati per tema. Ogni script introduce nuovi costrutti Bash. Gli script di <em>File &amp; Dati</em> che leggono file esterni e quelli di <em>Strutture Avanzate</em> richiedono i file inclusi nello ZIP.</p>
 
-      <div class="tab-container">
-        <div class="tab-headers">
-          <button class="tab-btn active" onclick="switchTab(event, 'lab1')">1. benvenuto.sh</button>
-          <button class="tab-btn" onclick="switchTab(event, 'lab2')">2. progetto.sh</button>
-          <button class="tab-btn" onclick="switchTab(event, 'lab3')">3. classifica.sh</button>
-          <button class="tab-btn" onclick="switchTab(event, 'lab4')">4. media.sh</button>
-          <button class="tab-btn" onclick="switchTab(event, 'lab5')">5. cercaparola.sh</button>
-          <button class="tab-btn" onclick="switchTab(event, 'lab6')">6. backup_progetti.sh</button>
-        </div>
+      <div class="box box-info">
+        <strong>📦 File di supporto — ServerLab</strong>
+        <p>Alcuni script leggono file di dati dalla cartella <code>lab_bash/</code>. Scarica lo ZIP, estrailo nella tua home directory e avvia Git Bash da lì.</p>
+        <ol style="margin:0.75rem 0 0 1.25rem;">
+          <li>Scarica <strong>lab_bash.zip</strong> con il bottone qui sotto</li>
+          <li>Estrai la cartella <code>lab_bash/</code> in <code>C:\Users\tuonome\</code> &nbsp;(da Git Bash: <code>~/</code>)</li>
+          <li>Apri Git Bash: <code>cd ~/lab_bash</code></li>
+          <li>Esegui gli script con <code>bash nomescript.sh</code></li>
+        </ol>
+      </div>
 
-        <!-- ═══ TAB 1: benvenuto.sh ═══ -->
-        <div id="lab1" class="tab-pane active">
-          <h3>Script 1: benvenuto.sh — Hello World Personalizzato</h3>
+      <div class="lab-download-row">
+        <a href="lab_bash.zip" download class="btn-download" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;">📥 Scarica lab_bash.zip</a>
+        <span style="font-size:0.82rem;color:var(--prog-muted);">Necessario per gli script 6 e 9–11</span>
+      </div>
+
+      <div class="lab-layout">
+
+        <nav class="lab-nav">
+          <div class="lab-nav-group">
+            <div class="lab-nav-group-title">Fondamenti</div>
+            <a class="lab-nav-item active" data-target="lab1" href="#lab1" onclick="openScript(event,'lab1')">benvenuto.sh</a>
+            <a class="lab-nav-item" data-target="lab2" href="#lab2" onclick="openScript(event,'lab2')">progetto.sh</a>
+            <a class="lab-nav-item" data-target="lab3" href="#lab3" onclick="openScript(event,'lab3')">progetti.sh</a>
+            <a class="lab-nav-item" data-target="lab4" href="#lab4" onclick="openScript(event,'lab4')">classifica.sh</a>
+          </div>
+          <div class="lab-nav-group">
+            <div class="lab-nav-group-title">File &amp; Dati</div>
+            <a class="lab-nav-item" data-target="lab5" href="#lab5" onclick="openScript(event,'lab5')">media.sh</a>
+            <a class="lab-nav-item" data-target="lab6" href="#lab6" onclick="openScript(event,'lab6')">stataccessi.sh</a>
+            <a class="lab-nav-item" data-target="lab7" href="#lab7" onclick="openScript(event,'lab7')">cercaparola.sh</a>
+            <a class="lab-nav-item" data-target="lab8" href="#lab8" onclick="openScript(event,'lab8')">backup_progetti.sh</a>
+          </div>
+          <div class="lab-nav-group">
+            <div class="lab-nav-group-title">Strutture Avanzate</div>
+            <a class="lab-nav-item" data-target="lab9" href="#lab9" onclick="openScript(event,'lab9')">contatore.sh</a>
+            <a class="lab-nav-item" data-target="lab10" href="#lab10" onclick="openScript(event,'lab10')">menu.sh</a>
+            <a class="lab-nav-item" data-target="lab11" href="#lab11" onclick="openScript(event,'lab11')">funzioni.sh</a>
+          </div>
+        </nav>
+
+        <div class="lab-content">
+
+          <!-- ═══ lab1: benvenuto.sh ═══ -->
+          <details id="lab1" open>
+            <summary>
+              <span class="lab-sum-name">benvenuto.sh</span>
+              <span class="lab-sum-desc">— Variabili e Echo</span>
+              <span class="lab-group-badge">Fondamenti</span>
+            </summary>
+            <div class="lab-detail-body">
+<h3>Script 1: benvenuto.sh — Hello World Personalizzato</h3>
           <p>Il primo script: dichiarare variabili locali e stampare valori a schermo. Attenzione alla sintassi: in Bash <strong>non si mettono spazi intorno al segno <code>=</code></strong> nelle assegnazioni.</p>
 
           <h3>Variante Base</h3>
@@ -617,11 +917,17 @@
             <strong>💡 Come usarlo</strong>
             <p>Copia il codice, salvalo in <code>benvenuto.sh</code>, esegui <code>chmod +x benvenuto.sh</code>, quindi <code>./benvenuto.sh</code></p>
           </div>
-        </div>
-
-        <!-- ═══ TAB 2: progetto.sh ═══ -->
-        <div id="lab2" class="tab-pane">
-          <h3>Script 2: progetto.sh — Creazione Cartelle Progetto</h3>
+            </div>
+          </details>
+          <!-- ═══ lab2: progetto.sh ═══ -->
+          <details id="lab2">
+            <summary>
+              <span class="lab-sum-name">progetto.sh</span>
+              <span class="lab-sum-desc">— Read e Mkdir</span>
+              <span class="lab-group-badge">Fondamenti</span>
+            </summary>
+            <div class="lab-detail-body">
+<h3>Script 2: progetto.sh — Creazione Cartelle Progetto</h3>
           <p>Chiede all'utente il nome di un progetto via <code>read</code> e crea automaticamente la struttura di cartelle. Usa <code>mkdir -p</code> per creare cartelle annidate senza errori se già esistono.</p>
           <div class="code-wrapper">
             <div class="code-header">
@@ -649,11 +955,87 @@
 <span class="hl-comment"># ls -ld mostra i dettagli di una cartella specifica (non il suo contenuto)</span>
 <span class="hl-keyword">ls</span> -ld <span class="hl-string">"Progetti/$NOME_PROGETTO"</span></pre>
           </div>
-        </div>
+            </div>
+          </details>
+          <!-- ═══ lab3: progetti.sh ═══ -->
+          <details id="lab3">
+            <summary>
+              <span class="lab-sum-name">progetti.sh</span>
+              <span class="lab-sum-desc">— Default e While True</span>
+              <span class="lab-group-badge">Fondamenti</span>
+            </summary>
+            <div class="lab-detail-body">
 
-        <!-- ═══ TAB 3: classifica.sh ═══ -->
-        <div id="lab3" class="tab-pane">
-          <h3>Script 3: classifica.sh — Parametri e Costrutti Condizionali</h3>
+              <h3>Script 3: progetti.sh — Cartelle con Input Ripetuto</h3>
+              <p>Variante di <code>progetto.sh</code>: la cartella principale ha un nome di default configurabile e le sottocartelle si aggiungono in un ciclo finché l'utente non preme Invio senza scrivere nulla. Introduce il valore di default su input vuoto e il ciclo <code>while true</code> con uscita esplicita tramite <code>break</code>.</p>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span>progetti.sh</span>
+                  <button class="copy-btn" onclick="copyCode('proj-code')">Copia</button>
+                </div>
+                <pre id="proj-code"><span class="hl-shebang">#!/bin/bash</span>
+<span class="hl-comment"># progetti.sh — Creazione struttura cartelle multi-progetto</span>
+<span class="hl-comment"># Variante di progetto.sh: cartella principale configurabile</span>
+<span class="hl-comment"># e aggiunta iterativa di sottocartelle tramite ciclo while</span>
+
+<span class="hl-comment"># read -p legge l'input dell'utente e lo salva in PRINCIPALE</span>
+<span class="hl-comment"># Se l'utente preme Invio senza scrivere nulla, PRINCIPALE vale ""</span>
+<span class="hl-keyword">read</span> -p <span class="hl-string">"Nome cartella principale [progetti]: "</span> <span class="hl-variable">PRINCIPALE</span>
+
+<span class="hl-comment"># Sintassi ${VAR:-valore_di_default}:</span>
+<span class="hl-comment"># - se $PRINCIPALE non è vuota, usa il valore inserito dall'utente</span>
+<span class="hl-comment"># - se $PRINCIPALE è vuota (Invio senza scrivere), usa "progetti"</span>
+<span class="hl-comment"># È il modo idiomatico in Bash per gestire input opzionali</span>
+<span class="hl-variable">PRINCIPALE</span>=<span class="hl-string">${PRINCIPALE:-"progetti"}</span>
+
+<span class="hl-keyword">echo</span> <span class="hl-string">"Cartella principale: $PRINCIPALE"</span>
+<span class="hl-keyword">mkdir</span> -p <span class="hl-string">"$PRINCIPALE"</span>
+
+<span class="hl-keyword">echo</span> <span class="hl-string">""</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Inserisci le sottocartelle una alla volta."</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Premi Invio senza scrivere nulla per terminare."</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">""</span>
+
+<span class="hl-comment"># while true crea un ciclo potenzialmente infinito:</span>
+<span class="hl-comment"># non c'è una condizione di uscita nell'intestazione del ciclo,</span>
+<span class="hl-comment"># ma all'interno possiamo uscire in qualsiasi momento con break</span>
+<span class="hl-keyword">while</span> true; <span class="hl-keyword">do</span>
+
+    <span class="hl-keyword">read</span> -p <span class="hl-string">"  Sottocartella (Invio per finire): "</span> <span class="hl-variable">NOME</span>
+
+    <span class="hl-comment"># [ -z "$NOME" ] è vero se la stringa è vuota (zero-length)</span>
+    <span class="hl-comment"># Quando l'utente preme Invio senza scrivere, NOME vale ""</span>
+    <span class="hl-comment"># break interrompe immediatamente il ciclo while e passa</span>
+    <span class="hl-comment"># all'istruzione successiva (echo "Struttura finale:")</span>
+    <span class="hl-keyword">if</span> [ -z <span class="hl-string">"$NOME"</span> ]; <span class="hl-keyword">then</span>
+        <span class="hl-keyword">break</span>
+    <span class="hl-keyword">fi</span>
+
+    <span class="hl-keyword">mkdir</span> -p <span class="hl-string">"$PRINCIPALE/$NOME"</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"  ✓ Creata: $PRINCIPALE/$NOME"</span>
+
+<span class="hl-keyword">done</span>
+
+<span class="hl-keyword">echo</span> <span class="hl-string">""</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Struttura finale:"</span>
+<span class="hl-comment"># find -type d elenca solo le cartelle (esclude i file), sort le ordina</span>
+<span class="hl-keyword">find</span> <span class="hl-string">"$PRINCIPALE"</span> -type d | <span class="hl-keyword">sort</span></pre>
+              </div>
+              <div class="box box-tip">
+                <strong>💡 Tre costrutti nuovi</strong>
+                <p><code>${VAR:-default}</code> imposta un valore di fallback se la variabile è vuota. <code>while true</code> avvia un ciclo senza condizione di uscita: continua finché non interviene <code>break</code>. <code>find -type d</code> elenca ricorsivamente solo le cartelle.</p>
+              </div>
+            </div>
+          </details>
+          <!-- ═══ lab4: classifica.sh ═══ -->
+          <details id="lab4">
+            <summary>
+              <span class="lab-sum-name">classifica.sh</span>
+              <span class="lab-sum-desc">— Parametri e Condizionali</span>
+              <span class="lab-group-badge">Fondamenti</span>
+            </summary>
+            <div class="lab-detail-body">
+<h3>Script 3: classifica.sh — Parametri e Costrutti Condizionali</h3>
           <p>Riceve un numero come argomento da riga di comando e lo classifica. Introduce i parametri posizionali (<code>$1</code>, <code>$#</code>, <code>$0</code>) e i comparatori matematici di Bash.</p>
           <div class="code-wrapper">
             <div class="code-header">
@@ -688,11 +1070,17 @@
             <strong>📊 Riepilogo comparatori Bash</strong>
             <p><code>-lt</code> (less than), <code>-le</code> (less or equal), <code>-eq</code> (equal), <code>-ne</code> (not equal), <code>-gt</code> (greater than), <code>-ge</code> (greater or equal).</p>
           </div>
-        </div>
-
-        <!-- ═══ TAB 4: media.sh ═══ -->
-        <div id="lab4" class="tab-pane">
-          <h3>Script 4: media.sh — Calcolo Media Aritmetica</h3>
+            </div>
+          </details>
+          <!-- ═══ lab5: media.sh ═══ -->
+          <details id="lab5">
+            <summary>
+              <span class="lab-sum-name">media.sh</span>
+              <span class="lab-sum-desc">— While Read e Aritmetica</span>
+              <span class="lab-group-badge">File &amp; Dati</span>
+            </summary>
+            <div class="lab-detail-body">
+<h3>Script 4: media.sh — Calcolo Media Aritmetica</h3>
           <p>Legge voti da un file di testo (uno per riga), calcola la media intera con Bash e poi quella decimale precisa usando <code>awk</code>. Se il file non esiste, ne crea uno di prova.</p>
           <div class="code-wrapper">
             <div class="code-header">
@@ -734,11 +1122,89 @@
             <strong>⚠️ Limite di Bash</strong>
             <p>Bash supporta solo aritmetica intera. Per calcoli con decimali è necessario integrare strumenti esterni come <code>awk</code> o <code>bc</code>.</p>
           </div>
-        </div>
+            </div>
+          </details>
+          <!-- ═══ lab6: stataccessi.sh ═══ -->
+          <details id="lab6">
+            <summary>
+              <span class="lab-sum-name">stataccessi.sh</span>
+              <span class="lab-sum-desc">— Min, Max e Media</span>
+              <span class="lab-group-badge">File &amp; Dati</span>
+            </summary>
+            <div class="lab-detail-body">
 
-        <!-- ═══ TAB 5: cercaparola.sh ═══ -->
-        <div id="lab5" class="tab-pane">
-          <h3>Script 5: cercaparola.sh — Ricerca e Conteggio</h3>
+              <h3>Script 6: stataccessi.sh — Statistiche di Accesso</h3>
+              <p>Legge un file con utente e ore di accesso e restituisce il massimo, il minimo e la media. Introduce <code>read</code> a due campi contemporanei e il pattern di inizializzazione min/max con i comparatori <code>-gt</code> e <code>-lt</code> già visti in <code>classifica.sh</code>.</p>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span>stataccessi.sh</span>
+                  <button class="copy-btn" onclick="copyCode('acc-code')">Copia</button>
+                </div>
+                <pre id="acc-code"><span class="hl-shebang">#!/bin/bash</span>
+<span class="hl-comment"># stataccessi.sh — Statistiche accessi al sistema</span>
+
+<span class="hl-comment"># MAX_ORE parte da 0: qualsiasi valore reale sarà maggiore</span>
+<span class="hl-comment"># MIN_ORE parte da 99999: qualsiasi valore reale sarà minore</span>
+<span class="hl-comment"># È il modo standard per inizializzare min/max prima di leggere i dati</span>
+<span class="hl-variable">MAX_ORE</span>=<span class="hl-num">0</span>
+<span class="hl-variable">MIN_ORE</span>=<span class="hl-num">99999</span>
+<span class="hl-variable">MAX_UTENTE</span>=<span class="hl-string">""</span>
+<span class="hl-variable">MIN_UTENTE</span>=<span class="hl-string">""</span>
+<span class="hl-variable">TOTALE</span>=<span class="hl-num">0</span>
+<span class="hl-variable">CONTATORE</span>=<span class="hl-num">0</span>
+
+<span class="hl-comment"># while read NOME ORE legge due campi per riga separati da spazio</span>
+<span class="hl-keyword">while</span> <span class="hl-keyword">read</span> <span class="hl-variable">NOME</span> <span class="hl-variable">ORE</span>; <span class="hl-keyword">do</span>
+
+    [ -z <span class="hl-string">"$NOME"</span> ] && <span class="hl-keyword">continue</span>
+
+    <span class="hl-variable">TOTALE</span>=$((<span class="hl-variable">TOTALE</span> + <span class="hl-variable">ORE</span>))
+    <span class="hl-variable">CONTATORE</span>=$((<span class="hl-variable">CONTATORE</span> + <span class="hl-num">1</span>))
+
+    <span class="hl-comment"># Aggiorna il massimo se le ore correnti superano il massimo trovato finora</span>
+    <span class="hl-keyword">if</span> [ <span class="hl-string">"$ORE"</span> -gt <span class="hl-string">"$MAX_ORE"</span> ]; <span class="hl-keyword">then</span>
+        <span class="hl-variable">MAX_ORE</span>=<span class="hl-variable">$ORE</span>
+        <span class="hl-variable">MAX_UTENTE</span>=<span class="hl-variable">$NOME</span>
+    <span class="hl-keyword">fi</span>
+
+    <span class="hl-comment"># Aggiorna il minimo se le ore correnti sono inferiori al minimo trovato finora</span>
+    <span class="hl-keyword">if</span> [ <span class="hl-string">"$ORE"</span> -lt <span class="hl-string">"$MIN_ORE"</span> ]; <span class="hl-keyword">then</span>
+        <span class="hl-variable">MIN_ORE</span>=<span class="hl-variable">$ORE</span>
+        <span class="hl-variable">MIN_UTENTE</span>=<span class="hl-variable">$NOME</span>
+    <span class="hl-keyword">fi</span>
+
+<span class="hl-keyword">done</span> &lt; dati/accessi.txt
+
+<span class="hl-comment"># Divisione intera: media approssimata all'ora intera (limite di Bash)</span>
+<span class="hl-variable">MEDIA</span>=$((<span class="hl-variable">TOTALE</span> / <span class="hl-variable">CONTATORE</span>))
+
+<span class="hl-keyword">echo</span> <span class="hl-string">"=== ANALISI ACCESSI AL SISTEMA ==="</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">""</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"  Accesso maggiore: $MAX_UTENTE ($MAX_ORE ore)"</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"  Accesso minore:   $MIN_UTENTE ($MIN_ORE ore)"</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"  Media totale:     $MEDIA ore"</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">""</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"=================================="</span></pre>
+              </div>
+              <div class="box box-tip">
+                <strong>💡 Read a campi multipli e pattern min/max</strong>
+                <p><code>while read A B; do ... done &lt; file</code> — Bash assegna i campi separati da spazio a variabili distinte in una sola operazione. L'inizializzazione di <code>MAX=0</code> e <code>MIN=99999</code> è il pattern standard per trovare massimo e minimo senza conoscere i dati in anticipo.</p>
+              </div>
+              <div class="box box-warn">
+                <strong>⚠️ Prerequisito</strong>
+                <p>Esegui da <code>~/lab_bash/</code>. Il file <code>dati/accessi.txt</code> deve essere presente (incluso nello ZIP).</p>
+              </div>
+            </div>
+          </details>
+          <!-- ═══ lab7: cercaparola.sh ═══ -->
+          <details id="lab7">
+            <summary>
+              <span class="lab-sum-name">cercaparola.sh</span>
+              <span class="lab-sum-desc">— Grep e Variabili Globali</span>
+              <span class="lab-group-badge">File &amp; Dati</span>
+            </summary>
+            <div class="lab-detail-body">
+<h3>Script 5: cercaparola.sh — Ricerca e Conteggio</h3>
           <p>Cerca una parola in un file di testo e conta le occorrenze. Due varianti: una base con input interattivo, una avanzata che sfrutta la variabile globale <code>$WORDLIST</code>.</p>
 
           <h3>Variante Base</h3>
@@ -809,11 +1275,17 @@
             <strong>💡 Prerequisito per la variante avanzata</strong>
             <p>Per usare <code>$WORDLIST</code> senza fallback, impostala prima con: <code>export WORDLIST="/percorso/al/dizionario.txt"</code> (vedi sezione 4 — Variabili Globali).</p>
           </div>
-        </div>
-
-        <!-- ═══ TAB 6: backup_progetti.sh ═══ -->
-        <div id="lab6" class="tab-pane">
-          <h3>Script 6: backup_progetti.sh — Archiviazione con Timestamp</h3>
+            </div>
+          </details>
+          <!-- ═══ lab8: backup_progetti.sh ═══ -->
+          <details id="lab8">
+            <summary>
+              <span class="lab-sum-name">backup_progetti.sh</span>
+              <span class="lab-sum-desc">— Date e Copia Ricorsiva</span>
+              <span class="lab-group-badge">File &amp; Dati</span>
+            </summary>
+            <div class="lab-detail-body">
+<h3>Script 6: backup_progetti.sh — Archiviazione con Timestamp</h3>
           <p>Crea una copia di backup della cartella <code>Progetti</code> aggiungendo la data e ora correnti al nome dell'archivio. Combina <code>date</code>, <code>if</code>, <code>mkdir -p</code> e <code>cp -r</code>.</p>
           <div class="code-wrapper">
             <div class="code-header">
@@ -843,15 +1315,194 @@
 
 <span class="hl-keyword">echo</span> <span class="hl-string">"Operazione conclusa con successo. Archivio registrato in: $DESTINAZIONE/backup_progetti_$DATA"</span></pre>
           </div>
+            </div>
+          </details>
+          <!-- ═══ lab9: contatore.sh ═══ -->
+          <details id="lab9">
+            <summary>
+              <span class="lab-sum-name">contatore.sh</span>
+              <span class="lab-sum-desc">— Ciclo For e Basename</span>
+              <span class="lab-group-badge">Strutture Avanzate</span>
+            </summary>
+            <div class="lab-detail-body">
+
+              <h3>Script 9: contatore.sh — Iterazione con ciclo <code>for</code></h3>
+              <p>Legge tutti i file <code>.status</code> nella cartella <code>servizi/</code> e verifica se ogni servizio è attivo. Introduce il ciclo <code>for</code> su file tramite glob, il comando <code>basename</code> e i contatori numerici.</p>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span>contatore.sh</span>
+                  <button class="copy-btn" onclick="copyCode('lab7-code')">Copia</button>
+                </div>
+                <pre id="lab7-code"><span class="hl-shebang">#!/bin/bash</span>
+<span class="hl-comment"># contatore.sh — Controllo stato servizi ServerLab</span>
+
+<span class="hl-variable">SERVIZI_DIR</span>=<span class="hl-string">"servizi"</span>
+
+<span class="hl-keyword">echo</span> <span class="hl-string">"═══════════════════════════════════"</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"  CONTROLLO SERVIZI — ServerLab"</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"  Data: $(date '+%d/%m/%Y %H:%M:%S')"</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"═══════════════════════════════════"</span>
+
+<span class="hl-variable">ATTIVI</span>=<span class="hl-num">0</span>
+<span class="hl-variable">INATTIVI</span>=<span class="hl-num">0</span>
+
+<span class="hl-comment"># Il ciclo for itera su ogni file .status trovato nella cartella</span>
+<span class="hl-comment"># Il glob *.status viene espanso dalla shell prima che il ciclo inizi</span>
+<span class="hl-keyword">for</span> <span class="hl-variable">FILE</span> <span class="hl-keyword">in</span> <span class="hl-string">"$SERVIZI_DIR"</span>/*.status; <span class="hl-keyword">do</span>
+
+    <span class="hl-comment"># basename rimuove percorso ed estensione: servizi/web.status → web</span>
+    <span class="hl-variable">SERVIZIO</span>=<span class="hl-string">$(basename "$FILE" .status)</span>
+
+    <span class="hl-comment"># cat legge l'unica riga del file (ATTIVO oppure INATTIVO)</span>
+    <span class="hl-variable">STATO</span>=<span class="hl-string">$(cat "$FILE")</span>
+
+    <span class="hl-keyword">if</span> [ <span class="hl-string">"$STATO"</span> = <span class="hl-string">"ATTIVO"</span> ]; <span class="hl-keyword">then</span>
+        <span class="hl-keyword">echo</span> <span class="hl-string">"  [ OK ] $SERVIZIO → $STATO"</span>
+        <span class="hl-variable">ATTIVI</span>=$((<span class="hl-variable">ATTIVI</span> + <span class="hl-num">1</span>))
+    <span class="hl-keyword">else</span>
+        <span class="hl-keyword">echo</span> <span class="hl-string">"  [WARN] $SERVIZIO → $STATO"</span>
+        <span class="hl-variable">INATTIVI</span>=$((<span class="hl-variable">INATTIVI</span> + <span class="hl-num">1</span>))
+    <span class="hl-keyword">fi</span>
+
+<span class="hl-keyword">done</span>
+
+<span class="hl-keyword">echo</span> <span class="hl-string">"═══════════════════════════════════"</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"  Attivi: $ATTIVI  |  Inattivi: $INATTIVI"</span></pre>
+              </div>
+              <div class="box box-tip">
+                <strong>💡 Struttura del ciclo for su file</strong>
+                <p><code>for VAR in percorso/*.ext; do ... done</code> — il glob viene espanso dalla shell prima che il ciclo inizi. <code>basename "$FILE" .ext</code> rimuove percorso ed estensione in una sola operazione.</p>
+              </div>
+              <div class="box box-warn">
+                <strong>⚠️ Prerequisito</strong>
+                <p>Esegui da <code>~/lab_bash/</code>. La cartella <code>servizi/</code> con i tre file <code>.status</code> deve essere presente (inclusa nello ZIP).</p>
+              </div>
+            </div>
+          </details>
+          <!-- ═══ lab10: menu.sh ═══ -->
+          <details id="lab10">
+            <summary>
+              <span class="lab-sum-name">menu.sh</span>
+              <span class="lab-sum-desc">— Case e While True</span>
+              <span class="lab-group-badge">Strutture Avanzate</span>
+            </summary>
+            <div class="lab-detail-body">
+
+              <h3>Script 10: menu.sh — Pannello di Controllo Interattivo</h3>
+              <p>Un pannello a menu numerato: l'utente sceglie un'azione e lo script la esegue, ripetendo il ciclo finché non decide di uscire. Introduce <code>case</code>, il loop infinito <code>while true</code> e il comando <code>break</code>.</p>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span>menu.sh</span>
+                  <button class="copy-btn" onclick="copyCode('lab8-code')">Copia</button>
+                </div>
+                <pre id="lab8-code"><span class="hl-shebang">#!/bin/bash</span>
+<span class="hl-comment"># menu.sh — Pannello di controllo interattivo ServerLab</span>
+
+<span class="hl-keyword">while</span> true; <span class="hl-keyword">do</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">""</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"╔══════════════════════════════╗"</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"║   PANNELLO SERVERLAB         ║"</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"╠══════════════════════════════╣"</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"║  1) Ultimi accessi al server ║"</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"║  2) Spazio disco disponibile ║"</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"║  3) Elenco utenti registrati ║"</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"║  4) Ultimi errori di sistema ║"</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"║  0) Esci dal pannello        ║"</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"╚══════════════════════════════╝"</span>
+    <span class="hl-keyword">read</span> -p <span class="hl-string">"  Scelta: "</span> <span class="hl-variable">SCELTA</span>
+    <span class="hl-keyword">case</span> <span class="hl-variable">$SCELTA</span> <span class="hl-keyword">in</span>
+        <span class="hl-num">1</span>) <span class="hl-keyword">echo</span> <span class="hl-string">"--- Ultimi 5 accessi ---"</span>; <span class="hl-keyword">tail</span> -n <span class="hl-num">5</span> logs/accessi.log ;;
+        <span class="hl-num">2</span>) <span class="hl-keyword">echo</span> <span class="hl-string">"--- Spazio disco ---"</span>; <span class="hl-keyword">df</span> -h . ;;
+        <span class="hl-num">3</span>) <span class="hl-keyword">echo</span> <span class="hl-string">"--- Utenti registrati ---"</span>
+           <span class="hl-keyword">for</span> <span class="hl-variable">F</span> <span class="hl-keyword">in</span> utenti/*.txt; <span class="hl-keyword">do</span> <span class="hl-keyword">echo</span> <span class="hl-string">"  · $(basename "$F" .txt)"</span>; <span class="hl-keyword">done</span> ;;
+        <span class="hl-num">4</span>) <span class="hl-keyword">echo</span> <span class="hl-string">"--- Ultimi 3 errori ---"</span>; <span class="hl-keyword">tail</span> -n <span class="hl-num">3</span> logs/errori.log ;;
+        <span class="hl-num">0</span>) <span class="hl-keyword">echo</span> <span class="hl-string">"Uscita dal pannello."</span>; <span class="hl-keyword">break</span> ;;
+        *) <span class="hl-keyword">echo</span> <span class="hl-string">"Scelta non valida."</span> ;;
+    <span class="hl-keyword">esac</span>
+<span class="hl-keyword">done</span></pre>
+              </div>
+              <div class="box box-tip">
+                <strong>💡 Struttura <code>case</code> in Bash</strong>
+                <p><code>case $VAR in pattern) ... ;; *) ... ;; esac</code> — il ramo <code>*)</code> è il default. Ogni ramo termina con <code>;;</code>. Più leggibile di una catena <code>elif</code> quando i casi sono numerosi.</p>
+              </div>
+              <div class="box box-warn">
+                <strong>⚠️ Prerequisito</strong>
+                <p>Esegui da <code>~/lab_bash/</code>. Le cartelle <code>logs/</code> e <code>utenti/</code> devono essere presenti (incluse nello ZIP).</p>
+              </div>
+            </div>
+          </details>
+          <!-- ═══ lab11: funzioni.sh ═══ -->
+          <details id="lab11">
+            <summary>
+              <span class="lab-sum-name">funzioni.sh</span>
+              <span class="lab-sum-desc">— Funzioni e Return</span>
+              <span class="lab-group-badge">Strutture Avanzate</span>
+            </summary>
+            <div class="lab-detail-body">
+
+              <h3>Script 11: funzioni.sh — Toolkit Riutilizzabile</h3>
+              <p>Introduce le funzioni Bash: blocchi di codice con nome, richiamabili più volte con argomenti diversi. Lo script definisce tre funzioni e le chiama in sequenza, simulando un ciclo di manutenzione del server.</p>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span>funzioni.sh</span>
+                  <button class="copy-btn" onclick="copyCode('lab9-code')">Copia</button>
+                </div>
+                <pre id="lab9-code"><span class="hl-shebang">#!/bin/bash</span>
+<span class="hl-comment"># funzioni.sh — Toolkit di manutenzione ServerLab</span>
+
+<span class="hl-keyword">scrivi_log</span>() {
+    <span class="hl-keyword">local</span> <span class="hl-variable">TIPO</span>=<span class="hl-variable">$1</span>
+    <span class="hl-keyword">local</span> <span class="hl-variable">TESTO</span>=<span class="hl-variable">$2</span>
+    <span class="hl-keyword">local</span> <span class="hl-variable">TS</span>=<span class="hl-string">$(date '+%Y-%m-%d %H:%M:%S')</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"$TS [$TIPO] $TESTO"</span> >> logs/sistema.log
+    <span class="hl-keyword">echo</span> <span class="hl-string">"  → Log: [$TIPO] $TESTO"</span>
+}
+
+<span class="hl-keyword">utente_esiste</span>() {
+    <span class="hl-keyword">local</span> <span class="hl-variable">NOME</span>=<span class="hl-variable">$1</span>
+    [ -f <span class="hl-string">"utenti/$NOME.txt"</span> ] && <span class="hl-keyword">return</span> <span class="hl-num">0</span> || <span class="hl-keyword">return</span> <span class="hl-num">1</span>
+}
+
+<span class="hl-keyword">genera_report</span>() {
+    <span class="hl-keyword">local</span> <span class="hl-variable">OUTFILE</span>=<span class="hl-string">"report/disco_$(date +%Y-%m-%d).txt"</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"Report disco — $(date '+%d/%m/%Y %H:%M')"</span> &gt; <span class="hl-string">"$OUTFILE"</span>
+    <span class="hl-keyword">df</span> -h . &gt;&gt; <span class="hl-string">"$OUTFILE"</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"  → Report salvato: $OUTFILE"</span>
+}
+
+<span class="hl-keyword">echo</span> <span class="hl-string">"=== TOOLKIT SERVERLAB ==="</span>
+scrivi_log <span class="hl-string">"INFO"</span> <span class="hl-string">"Avvio toolkit"</span>
+
+<span class="hl-keyword">for</span> <span class="hl-variable">UTENTE</span> <span class="hl-keyword">in</span> mario anna guest ospite; <span class="hl-keyword">do</span>
+    <span class="hl-keyword">if</span> utente_esiste <span class="hl-string">"$UTENTE"</span>; <span class="hl-keyword">then</span>
+        <span class="hl-keyword">echo</span> <span class="hl-string">"  [ OK ] $UTENTE"</span>; scrivi_log <span class="hl-string">"INFO"</span> <span class="hl-string">"Utente $UTENTE verificato"</span>
+    <span class="hl-keyword">else</span>
+        <span class="hl-keyword">echo</span> <span class="hl-string">"  [WARN] $UTENTE NON trovato"</span>; scrivi_log <span class="hl-string">"WARN"</span> <span class="hl-string">"Utente $UTENTE assente"</span>
+    <span class="hl-keyword">fi</span>
+<span class="hl-keyword">done</span>
+
+genera_report
+scrivi_log <span class="hl-string">"INFO"</span> <span class="hl-string">"Toolkit completato"</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"========================="</span></pre>
+              </div>
+              <div class="box box-tip">
+                <strong>💡 Funzioni in Bash</strong>
+                <p><code>nome() { ... }</code> — argomenti via <code>$1</code>, <code>$2</code>…; <code>local</code> limita la visibilità alla funzione; <code>return N</code> imposta il codice di uscita letto da <code>if funzione; then</code>.</p>
+              </div>
+              <div class="box box-warn">
+                <strong>⚠️ Prerequisito</strong>
+                <p>Esegui da <code>~/lab_bash/</code>. Le cartelle <code>utenti/</code>, <code>logs/</code> e <code>report/</code> devono essere presenti (incluse nello ZIP).</p>
+              </div>
+            </div>
+          </details>
         </div>
+
       </div>
     </section>
-
   </main>
 
   <button id="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
 
-  <script src="/scripts/ui.js" defer></script>
 
   <script>
     const commandsDataset = [
@@ -865,6 +1516,7 @@
       { cmd: "rm", category: "FILE", desc: "Remove: cancella file.", example: "rm file.txt", flag: "-r (ricorsivo), -f (forza)" },
       { cmd: "cat", category: "TEXT", desc: "Stampa il contenuto di un file.", example: "cat file.txt", flag: "Nessuno" },
       { cmd: "echo", category: "TEXT", desc: "Stampa testo a schermo.", example: "echo 'Ciao'", flag: "-n (no newline)" },
+      { cmd: "printf", category: "TEXT", desc: "Stampa testo con formattazione; interpreta sempre \\n e \\t a differenza di echo.", example: "printf \"riga1\\nriga2\\n\"", flag: "%-10s (stringa), %d (intero)" },
       { cmd: "grep", category: "TEXT", desc: "Cerca pattern in file.", example: "grep 'parola' file.txt", flag: "-i (case-insensitive), -n (numero righe)" },
       { cmd: "chmod", category: "PERM", desc: "Change Mode: modifica permessi file.", example: "chmod 755 script.sh", flag: "u/g/o (user/group/others), +/-" },
       { cmd: "chown", category: "PERM", desc: "Change Owner: cambia proprietario.", example: "chown utente file.txt", flag: "-R (ricorsivo)" },
@@ -973,15 +1625,27 @@
       }).catch(err => alert("Errore: " + err));
     }
 
-    function switchTab(event, tabId) {
-      const parent = event.target.closest('.tab-container');
-      const buttons = parent.querySelectorAll('.tab-btn');
-      buttons.forEach(btn => btn.classList.remove('active'));
-      const panes = parent.querySelectorAll('.tab-pane');
-      panes.forEach(pane => pane.classList.remove('active'));
-      event.target.classList.add('active');
-      document.getElementById(tabId).classList.add('active');
+    function openScript(e, id) {
+      e.preventDefault();
+      document.querySelectorAll('.lab-content details').forEach(d => d.removeAttribute('open'));
+      const target = document.getElementById(id);
+      if (!target) return;
+      target.setAttribute('open', '');
+      document.querySelectorAll('.lab-nav-item').forEach(a => a.classList.remove('active'));
+      const nav = document.querySelector(`.lab-nav-item[data-target="${id}"]`);
+      if (nav) nav.classList.add('active');
+      setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
     }
+
+    document.querySelectorAll('.lab-content details').forEach(det => {
+      det.addEventListener('toggle', () => {
+        if (!det.open) return;
+        document.querySelectorAll('.lab-content details').forEach(d => { if (d !== det) d.removeAttribute('open'); });
+        document.querySelectorAll('.lab-nav-item').forEach(a => a.classList.remove('active'));
+        const nav = document.querySelector(`.lab-nav-item[data-target="${det.id}"]`);
+        if (nav) nav.classList.add('active');
+      });
+    });
 
     const tocLinks = document.querySelectorAll('#toc a');
     const sections = document.querySelectorAll('section[id]');
@@ -1010,6 +1674,14 @@
       renderCommands();
     });
   </script>
+<footer>
+  <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
+  Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem;">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
 <script src="/scripts/ui.js" defer></script>
 
 </body>
