@@ -104,13 +104,28 @@
       width: 320px; height: 320px; border-radius: 50%;
       background: var(--prog-accent); opacity: 0.07; pointer-events: none;
     }
-    .header-back-link {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-size: 0.78rem; color: var(--prog-muted);
-      text-decoration: none; transition: color 0.2s;
-      position: absolute; top: 1rem; left: 1.5rem;
-    }
-    .header-back-link:hover { color: var(--prog-text); }
+    /* ── BACKLINKS tabella 1×2 ── */
+    .hdr-back-table { position: absolute; top: 0.85rem; left: 1.5rem; border-collapse: collapse; z-index: 2; }
+    .hdr-back-table td { padding: 0 0.65rem; white-space: nowrap; }
+    .hdr-back-table td:first-child { padding-left: 0; border-right: 1px solid rgba(255,255,255,0.15); }
+    .hdr-back-table td:last-child  { padding-right: 0; }
+    .hdr-back-link { font-size: 0.78rem; color: var(--prog-muted); text-decoration: none; transition: color 0.2s; display: inline-flex; align-items: center; gap: 4px; }
+    .hdr-back-link:hover { color: var(--prog-text); }
+    /* ── HEADER INNER (replica programmazione) ── */
+    .hub-header-inner { max-width: 960px; margin: 0 auto; display: flex; align-items: center; gap: 2.5rem; position: relative; z-index: 1; }
+    .hub-header-text  { flex: 1; min-width: 0; }
+    /* ── SNIPPET DECORATIVO ── */
+    .hub-header-visual { flex-shrink: 0; width: 320px; display: none; }
+    .hub-code-card  { background: #0f1117; border: 1px solid var(--prog-border); border-radius: 10px; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,0.35); transform: rotate(1.5deg); }
+    .hub-code-bar   { background: var(--prog-card); padding: 0.5rem 0.9rem; display: flex; gap: 5px; border-bottom: 1px solid var(--prog-border); }
+    .hub-code-dot   { width: 9px; height: 9px; border-radius: 50%; }
+    .hub-code-pre   { padding: 1rem 1.1rem; font-family: 'Space Mono','Courier New',monospace; font-size: 0.74rem; line-height: 1.7; color: #d4d8f0; white-space: pre; opacity: 0.92; }
+    .hc-kw { color: #f97583; font-weight: 700; }
+    .hc-tp { color: #79b8ff; }
+    .hc-fn { color: #56cfb2; }
+    .hc-cm { color: #6a737d; font-style: italic; }
+    .hc-nm { color: #b392f0; }
+    @media (min-width: 860px) { .hub-header-visual { display: block; } }
     .header-badge {
       display: inline-block; font-family: 'Space Mono', monospace;
       font-size: 0.68rem; background: var(--prog-accent); color: white;
@@ -290,16 +305,53 @@
 <body>
 
   <header>
-    <a class="header-back-link" href="/programmazione/">← Programmazione</a>
-    <span class="header-badge">🐚 SHELL</span>
-    <h1>Bash — <span>Guida Interattiva</span></h1>
-    <p>Fondamenti della shell, Git Bash su Windows, 35+ comandi filtrabili, variabili globali, permessi file, laboratorio script progressivo. Corso completo per ITIS Informatica.</p>
-    <div class="header-pills">
-      <span class="header-pill">📖 Guida completa</span>
-      <span class="header-pill">⏱ ~1h 30min</span>
-      <span class="header-pill">🪟 Windows/Linux/macOS</span>
-      <span class="header-pill">35+ comandi</span>
-      <span class="header-pill">🎓 ITIS Informatica</span>
+    <table class="hdr-back-table">
+      <tr>
+        <td><a class="hdr-back-link" href="/">← Portale</a></td>
+        <td><a class="hdr-back-link" href="/sistemi/">Hub Sistemi</a></td>
+      </tr>
+    </table>
+    <div class="hub-header-inner">
+      <div class="hub-header-text">
+        <span class="header-badge">🐚 SHELL</span>
+        <h1>Bash — <span>Guida Interattiva</span></h1>
+        <p>Fondamenti della shell, Git Bash su Windows, 35+ comandi filtrabili, variabili globali, permessi file, laboratorio script progressivo. Corso completo per ITIS Informatica.</p>
+        <div class="header-pills">
+          <span class="header-pill">📖 Guida completa</span>
+          <span class="header-pill">⏱ ~1h 30min</span>
+          <span class="header-pill">🪟 Windows/Linux/macOS</span>
+          <span class="header-pill">35+ comandi</span>
+          <span class="header-pill">🎓 ITIS Informatica</span>
+        </div>
+      </div>
+      <div class="hub-header-visual">
+        <div class="hub-code-card">
+          <div class="hub-code-bar">
+            <div class="hub-code-dot" style="background:#e05c5c;"></div>
+            <div class="hub-code-dot" style="background:#f9a03f;"></div>
+            <div class="hub-code-dot" style="background:#56cfb2;"></div>
+          </div>
+          <div class="hub-code-pre"><span class="hc-cm">#!/bin/bash</span>
+<span class="hc-cm"># centralina.sh</span>
+
+<span class="hc-tp">ID</span>=$<span class="hc-nm">1</span>  <span class="hc-tp">ANNO</span>=$<span class="hc-nm">2</span>
+<span class="hc-tp">ETA</span>=$(( <span class="hc-nm">2026</span> - ANNO ))
+
+<span class="hc-fn">read</span> -p <span class="hc-fn">"Operatore: "</span> OP
+<span class="hc-kw">if</span> [ <span class="hc-fn">"${#OP}"</span> -lt <span class="hc-nm">3</span> ]; <span class="hc-kw">then</span>
+  <span class="hc-fn">echo</span> <span class="hc-fn">"Errore: nome troppo corto"</span>
+  <span class="hc-kw">exit</span> <span class="hc-nm">1</span>
+<span class="hc-kw">fi</span>
+
+<span class="hc-tp">SENSORI</span>=<span class="hc-nm">9</span>
+<span class="hc-tp">RIL</span>=$(( SENSORI * <span class="hc-nm">24</span> ))
+<span class="hc-kw">if</span> [ <span class="hc-fn">"$RIL"</span> -gt <span class="hc-nm">200</span> ]; <span class="hc-kw">then</span>
+  <span class="hc-fn">echo</span> <span class="hc-fn">"⚠ Carico elevato"</span>
+<span class="hc-kw">fi</span>
+
+<span class="hc-fn">echo</span> <span class="hc-fn">"$ID · età $ETA · op $OP"</span></div>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -307,8 +359,8 @@
     <nav class="toc" id="toc">
       <a href="#intro" class="active">Introduzione</a>
       <a href="#gitbash">Windows & Git Bash</a>
+      <a href="#variabili">Variabili</a>
       <a href="#commands">Comandi Bash</a>
-      <a href="#globalvars">Variabili Globali</a>
       <a href="#costrutti">Costrutti Logici</a>
       <a href="#pipe">Pipe &amp; Ridirezione</a>
       <a href="#permessi">Permessi &amp; Sicurezza</a>
@@ -374,6 +426,11 @@
           <li>Avvialo: <code>./script.sh</code></li>
         </ol>
       </div>
+
+      <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--prog-border);">
+        <a href="#lab" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.65rem 1.4rem;background:rgba(124,92,252,0.12);color:var(--prog-accent);border:1px solid var(--prog-accent);border-radius:6px;font-weight:600;font-size:0.88rem;text-decoration:none;transition:all 0.2s;font-family:'Sora',sans-serif;">🔬 Vai al Laboratorio →</a>
+        <span style="margin-left:1rem;font-size:0.78rem;color:var(--prog-muted);">11 script progressivi con file di supporto scaricabili</span>
+      </div>
     </section>
 
     <section id="gitbash">
@@ -409,8 +466,165 @@
       </div>
     </section>
 
+    <section id="variabili">
+      <div class="section-label">03 - VARIABILI</div>
+      <h2>Variabili in Bash</h2>
+      <p>Le variabili memorizzano valori riusabili nello script. In Bash non si dichiara il tipo: ogni variabile è una stringa, e l'aritmetica si applica con <code>$(( ))</code>. Esistono tre ambiti: locali allo script, locali alla funzione, globali d'ambiente.</p>
+
+      <h3>Variabili Locali</h3>
+      <p>Dichiarazione senza spazi attorno al <code>=</code>. L'accesso avviene con <code>$VAR</code>; le virgolette doppie proteggono i valori con spazi al loro interno.</p>
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>Dichiarazione e uso</span>
+          <button class="copy-btn" onclick="copyCode('var-local')">Copia</button>
+        </div>
+        <pre id="var-local"><span class="hl-variable">NOME</span>=<span class="hl-string">"mario"</span>         <span class="hl-comment"># assegnazione — NO spazi intorno a =</span>
+<span class="hl-variable">ETA</span>=<span class="hl-num">25</span>
+<span class="hl-variable">SALUTO</span>=<span class="hl-string">"Ciao $NOME"</span>   <span class="hl-comment"># espansione inline della variabile</span>
+
+<span class="hl-keyword">echo</span> <span class="hl-string">"$NOME"</span>            <span class="hl-comment"># mario</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Età: $ETA anni"</span>   <span class="hl-comment"># Età: 25 anni</span>
+
+<span class="hl-comment"># Dentro una funzione: local limita la visibilità alla funzione</span>
+<span class="hl-keyword">mia_funzione</span>() {
+    <span class="hl-keyword">local</span> <span class="hl-variable">TEMP</span>=<span class="hl-string">"solo qui"</span>   <span class="hl-comment"># non visibile fuori dalla funzione</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"$TEMP"</span>
+}</pre>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Sintassi</th><th>Effetto</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>NOME="valore"</code></td><td>Assegna una stringa (no spazi attorno a <code>=</code>)</td></tr>
+          <tr><td><code>N=42</code></td><td>Assegna un numero</td></tr>
+          <tr><td><code>echo "$NOME"</code></td><td>Legge il valore (virgolette consigliate)</td></tr>
+          <tr><td><code>local NOME="x"</code></td><td>Visibile solo nella funzione corrente</td></tr>
+          <tr><td><code>RISULTATO=$(comando)</code></td><td>Salva l'output di un comando in una variabile</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Variabili Globali e d'Ambiente</h3>
+      <p>Se dichiari una variabile nel terminale (<code>MIA_VAR="valore"</code>), è <strong>locale</strong> — esiste solo nel processo corrente. Per renderla <strong>globale</strong> ed ereditabile dagli script usa <code>export</code>.</p>
+      <table>
+        <thead>
+          <tr><th>Tipologia</th><th>Sintassi</th><th>Ambito &amp; Durata</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Locale</strong></td>
+            <td><code>MIA_VAR="valore"</code></td>
+            <td>Valida solo nel terminale corrente. Svanisce subito.</td>
+          </tr>
+          <tr>
+            <td><strong>Globale Temporanea</strong></td>
+            <td><code>export WORDLIST="/path"</code></td>
+            <td>Ereditata dagli script lanciati. Svanisce alla chiusura finestra.</td>
+          </tr>
+          <tr>
+            <td><strong>Globale Permanente</strong></td>
+            <td>Dentro <code>~/.bashrc</code></td>
+            <td>Valida per sempre. Caricata automaticamente all'avvio.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="box box-info">
+        <strong>📝 Variabile Globale Permanente in ~/.bashrc</strong>
+        <div class="code-wrapper" style="margin-top: 0.8rem;">
+          <div class="code-header">
+            <span>Scrittura in ~/.bashrc</span>
+            <button class="copy-btn" onclick="copyCode('vars-bashrc')">Copia</button>
+          </div>
+          <pre id="vars-bashrc"><span class="hl-comment"># 1. Aggiunge l'esportazione in coda a ~/.bashrc</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">'export WORDLIST="/c/Users/utente/Documenti/words.txt"'</span> >> ~/.bashrc
+
+<span class="hl-comment"># 2. Ricarica la configurazione per applicarla subito</span>
+<span class="hl-keyword">source</span> ~/.bashrc</pre>
+        </div>
+      </div>
+
+      <h3>Variabili d'Ambiente Predefinite</h3>
+      <p>Bash mette a disposizione variabili già valorizzate automaticamente. Alcune cambiano ad ogni accesso (<code>$RANDOM</code>), altre riflettono lo stato del sistema.</p>
+      <table>
+        <thead>
+          <tr><th>Variabile</th><th>Contenuto</th><th>Esempio di valore</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>$HOME</code></td><td>Home directory dell'utente</td><td><code>/c/Users/mario</code></td></tr>
+          <tr><td><code>$USER</code></td><td>Nome utente corrente</td><td><code>mario</code></td></tr>
+          <tr><td><code>$HOSTNAME</code></td><td>Nome del computer</td><td><code>PC-MARIO</code></td></tr>
+          <tr><td><code>$PWD</code></td><td>Cartella di lavoro corrente</td><td><code>/c/Users/mario/lab</code></td></tr>
+          <tr><td><code>$PATH</code></td><td>Percorsi di ricerca degli eseguibili</td><td><code>/usr/bin:/usr/local/bin:…</code></td></tr>
+          <tr><td><code>$RANDOM</code></td><td>Numero intero casuale 0–32767 ad ogni lettura</td><td><code>17423</code></td></tr>
+          <tr><td><code>$?</code></td><td>Codice di uscita dell'ultimo comando (0 = successo)</td><td><code>0</code></td></tr>
+        </tbody>
+      </table>
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>$RANDOM — generare numeri casuali in un intervallo</span>
+          <button class="copy-btn" onclick="copyCode('vars-random')">Copia</button>
+        </div>
+        <pre id="vars-random"><span class="hl-comment"># $RANDOM restituisce un numero tra 0 e 32767</span>
+<span class="hl-keyword">echo</span> <span class="hl-variable">$RANDOM</span>
+
+<span class="hl-comment"># Numero casuale tra 1000 e 9999 (operatore modulo)</span>
+<span class="hl-variable">CODICE</span>=$(( RANDOM % 9000 + 1000 ))
+<span class="hl-keyword">echo</span> <span class="hl-string">"Codice sessione: $CODICE"</span>
+
+<span class="hl-comment"># Numero casuale tra 1 e 6 (dado)</span>
+<span class="hl-variable">DADO</span>=$(( RANDOM % 6 + 1 ))
+<span class="hl-keyword">echo</span> <span class="hl-string">"Hai tirato: $DADO"</span></pre>
+      </div>
+
+      <h3>Espansioni di Parametro</h3>
+      <p>Sintassi avanzate con <code>${ }</code> per interrogare, misurare e trasformare variabili senza comandi esterni.</p>
+      <table>
+        <thead>
+          <tr><th>Sintassi</th><th>Effetto</th><th>Esempio</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>${VAR:-default}</code></td>
+            <td>Usa <code>default</code> se <code>VAR</code> è vuota o non definita</td>
+            <td><code>${NOME:-"ospite"}</code></td>
+          </tr>
+          <tr>
+            <td><code>${#VAR}</code></td>
+            <td>Lunghezza della stringa contenuta in <code>VAR</code></td>
+            <td><code>${#NOME}</code> → <code>5</code> se NOME="mario"</td>
+          </tr>
+          <tr>
+            <td><code>${VAR:0:n}</code></td>
+            <td>Primi <code>n</code> caratteri di <code>VAR</code></td>
+            <td><code>${NOME:0:3}</code> → <code>"mar"</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>Espansioni in pratica</span>
+          <button class="copy-btn" onclick="copyCode('vars-exp')">Copia</button>
+        </div>
+        <pre id="vars-exp"><span class="hl-variable">NOME</span>=<span class="hl-string">"mario"</span>
+
+<span class="hl-comment"># Lunghezza: utile per validare input (es. nome >= 3 caratteri)</span>
+<span class="hl-keyword">if</span> [ <span class="hl-string">${#NOME}</span> -lt <span class="hl-num">3</span> ]; <span class="hl-keyword">then</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"Errore: nome troppo corto"</span>
+    <span class="hl-keyword">exit</span> <span class="hl-num">1</span>
+<span class="hl-keyword">fi</span>
+
+<span class="hl-comment"># Valore di default: se l'utente non inserisce nulla</span>
+<span class="hl-keyword">read</span> -p <span class="hl-string">"Categoria [generale]: "</span> <span class="hl-variable">CAT</span>
+<span class="hl-variable">CAT</span>=<span class="hl-string">${CAT:-"generale"}</span>
+
+<span class="hl-comment"># Substring: prime 3 lettere come iniziali</span>
+<span class="hl-variable">INIZIALI</span>=<span class="hl-string">${NOME:0:3}</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Iniziali: $INIZIALI"</span>   <span class="hl-comment"># mar</span></pre>
+      </div>
+    </section>
+
     <section id="commands">
-      <div class="section-label">03 - COMANDI BASH</div>
+      <div class="section-label">04 - COMANDI BASH</div>
       <h2>Cheat-Sheet Interattivo (35+ Comandi)</h2>
       <p>Consulta, filtra e scarica in tempo reale la tabella completa dei principali comandi Bash. Ricerca per nome, descrizione o categoria.</p>
 
@@ -429,55 +643,6 @@
       </div>
 
       <div class="command-grid" id="commandGrid"></div>
-    </section>
-
-    <section id="globalvars">
-      <div class="section-label">04 - VARIABILI GLOBALI</div>
-      <h2>Come si Generano le Variabili Globali?</h2>
-      <p>Se dichiari una variabile all'interno di un terminale (es: <code>MIA_CART="progetti"</code>), quella variabile è <strong>locale</strong> — esiste solo nel processo in cui è nata. Per renderla <strong>globale</strong> e farla ereditare da altri script, dobbiamo usare l'istruzione <strong><code>export</code></strong>.</p>
-
-      <h3>I Tre Livelli di Dichiarazione</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Tipologia</th>
-            <th>Sintassi</th>
-            <th>Ambito & Durata</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Locale</strong></td>
-            <td><code>MIA_VAR="valore"</code></td>
-            <td>Valida solo nel terminale corrente. Svanisce subito.</td>
-          </tr>
-          <tr>
-            <td><strong>Globale Temporanea</strong></td>
-            <td><code>export WORDLIST="/path"</code></td>
-            <td>Ereditata da script lanciati. Svanisce alla chiusura finestra.</td>
-          </tr>
-          <tr>
-            <td><strong>Globale Permanente</strong></td>
-            <td>Dentro <code>~/.bashrc</code></td>
-            <td>Valida per sempre. Caricata automaticamente.</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="box box-info">
-        <strong>📝 Come Impostare una Variabile Globale Permanente</strong>
-        <div class="code-wrapper" style="margin-top: 0.8rem;">
-          <div class="code-header">
-            <span>Scrittura permanente in ~/.bashrc</span>
-            <button class="copy-btn" onclick="copyCode('vars-code1')">Copia</button>
-          </div>
-          <pre id="vars-code1"><span class="hl-comment"># 1. Scrivi l'esportazione in coda al file ~/.bashrc</span>
-<span class="hl-keyword">echo</span> <span class="hl-string">'export WORDLIST="/c/Users/utente/Documenti/words.txt"'</span> >> ~/.bashrc
-
-<span class="hl-comment"># 2. Ricarica la configurazione per applicare istantaneamente</span>
-<span class="hl-keyword">source</span> ~/.bashrc</pre>
-        </div>
-      </div>
     </section>
 
     <section id="costrutti">
@@ -576,6 +741,65 @@
 <span class="hl-keyword">done</span></pre>
       </div>
 
+
+
+      <div class="box box-tip">
+        <strong>💡 <code>read -n 1</code> — singolo tasto senza Invio</strong>
+        <p><code>read -n 1</code> legge esattamente un carattere e procede immediatamente, senza aspettare Invio. Combinato con <code>while true</code> e <code>case</code> crea menu interattivi reattivi. Aggiungere <code>echo ""</code> dopo il <code>read</code> per inserire il ritorno a capo mancante.</p>
+        <div class="code-wrapper" style="margin-top:0.75rem;">
+          <div class="code-header">
+            <span>Menu a singolo tasto</span>
+            <button class="copy-btn" onclick="copyCode('ctrl-readn')">Copia</button>
+          </div>
+          <pre id="ctrl-readn"><span class="hl-keyword">while</span> true; <span class="hl-keyword">do</span>
+    <span class="hl-keyword">read</span> -n <span class="hl-num">1</span> -p <span class="hl-string">"Stato (1=normale 2=attenzione 3=emergenza 0=esci): "</span> <span class="hl-variable">TASTO</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">""</span>   <span class="hl-comment"># read -n 1 non aggiunge newline — lo aggiungiamo noi</span>
+    <span class="hl-keyword">case</span> <span class="hl-variable">$TASTO</span> <span class="hl-keyword">in</span>
+        <span class="hl-num">1</span>) <span class="hl-keyword">echo</span> <span class="hl-string">"Stato: NORMALE"</span>    ;;
+        <span class="hl-num">2</span>) <span class="hl-keyword">echo</span> <span class="hl-string">"Stato: ATTENZIONE"</span> ;;
+        <span class="hl-num">3</span>) <span class="hl-keyword">echo</span> <span class="hl-string">"Stato: EMERGENZA"</span>  ;;
+        <span class="hl-num">0</span>) <span class="hl-keyword">echo</span> <span class="hl-string">"Uscita."</span>; <span class="hl-keyword">break</span>    ;;
+        *) <span class="hl-keyword">echo</span> <span class="hl-string">"Tasto non valido."</span>  ;;
+    <span class="hl-keyword">esac</span>
+<span class="hl-keyword">done</span></pre>
+        </div>
+      </div>
+
+      <h3>Array</h3>
+      <p>Un array contiene più valori in una sola variabile, accessibili per indice (da 0). Indispensabile quando si lavora con liste di input variabile — ad esempio temperature inserite in una sola riga.</p>
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>Dichiarazione, accesso e ciclo</span>
+          <button class="copy-btn" onclick="copyCode('ctrl-array')">Copia</button>
+        </div>
+        <pre id="ctrl-array"><span class="hl-comment"># Dichiarazione con valori fissi</span>
+<span class="hl-variable">FRUTTI</span>=(mela pera banana)
+
+<span class="hl-comment"># Accesso per indice (parte da 0)</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"${FRUTTI[0]}"</span>      <span class="hl-comment"># mela</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"${FRUTTI[2]}"</span>      <span class="hl-comment"># banana</span>
+
+<span class="hl-comment"># Tutti gli elementi</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"${FRUTTI[@]}"</span>      <span class="hl-comment"># mela pera banana</span>
+
+<span class="hl-comment"># Numero di elementi</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"${#FRUTTI[@]}"</span>     <span class="hl-comment"># 3</span>
+
+<span class="hl-comment"># Creare array da input su riga singola (parole separate da spazio)</span>
+<span class="hl-keyword">read</span> -p <span class="hl-string">"Inserisci valori: "</span> <span class="hl-variable">INPUT</span>
+<span class="hl-variable">ARR</span>=(<span class="hl-variable">$INPUT</span>)
+<span class="hl-keyword">echo</span> <span class="hl-string">"Elementi inseriti: ${#ARR[@]}"</span>
+
+<span class="hl-comment"># Ciclo su tutti gli elementi</span>
+<span class="hl-keyword">for</span> <span class="hl-variable">ELEM</span> <span class="hl-keyword">in</span> <span class="hl-string">"${ARR[@]}"</span>; <span class="hl-keyword">do</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"→ $ELEM"</span>
+<span class="hl-keyword">done</span></pre>
+      </div>
+      <div class="box box-tip">
+        <strong>💡 Array da input: pattern fondamentale</strong>
+        <p><code>ARR=($INPUT)</code> — quando l'utente inserisce valori separati da spazio, Bash li suddivide automaticamente negli elementi dell'array. <code>${#ARR[@]}</code> conta gli elementi: utile per verificare che il numero corrisponda a quanto atteso prima di elaborare.</p>
+      </div>
+
       <h3>Parametri Posizionali</h3>
       <p>Quando si lancia uno script con argomenti (<code>bash script.sh arg1 arg2</code>), Bash li assegna automaticamente a variabili speciali.</p>
       <table>
@@ -631,6 +855,69 @@
         <strong>💡 if come test di comando</strong>
         <p><code>if comando; then</code> — oltre alle condizioni tra <code>[ ]</code>, <code>if</code> può testare direttamente il codice di uscita di qualsiasi comando: se restituisce 0 (successo) il ramo <code>then</code> viene eseguito. La negazione si scrive <code>if ! comando; then</code>. Esempio: <code>if ! mkdir dir; then echo "Errore"; fi</code>.</p>
       </div>
+
+
+      <h3>Funzioni con Parametri</h3>
+      <p>Le funzioni Bash accettano argomenti esattamente come gli script: <code>$1</code>, <code>$2</code>… contengono i valori passati alla chiamata. <code>local</code> limita la visibilità delle variabili interne. L'output si cattura con <code>$()</code>.</p>
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>Definizione, chiamata e cattura output</span>
+          <button class="copy-btn" onclick="copyCode('ctrl-func')">Copia</button>
+        </div>
+        <pre id="ctrl-func"><span class="hl-comment"># $1, $2... ricevono gli argomenti passati alla chiamata</span>
+<span class="hl-keyword">saluta</span>() {
+    <span class="hl-keyword">local</span> <span class="hl-variable">NOME</span>=<span class="hl-variable">$1</span>
+    <span class="hl-keyword">local</span> <span class="hl-variable">LINGUA</span>=<span class="hl-variable">$2</span>
+    <span class="hl-keyword">if</span> [ <span class="hl-string">"$LINGUA"</span> = <span class="hl-string">"it"</span> ]; <span class="hl-keyword">then</span>
+        <span class="hl-keyword">echo</span> <span class="hl-string">"Ciao, $NOME!"</span>
+    <span class="hl-keyword">else</span>
+        <span class="hl-keyword">echo</span> <span class="hl-string">"Hello, $NOME!"</span>
+    <span class="hl-keyword">fi</span>
+}
+saluta <span class="hl-string">"Mario"</span> <span class="hl-string">"it"</span>    <span class="hl-comment"># Ciao, Mario!</span>
+saluta <span class="hl-string">"Alice"</span> <span class="hl-string">"en"</span>    <span class="hl-comment"># Hello, Alice!</span>
+
+<span class="hl-comment"># Cattura output con $()</span>
+<span class="hl-keyword">conta_char</span>() { <span class="hl-keyword">local</span> <span class="hl-variable">S</span>=<span class="hl-variable">$1</span>; <span class="hl-keyword">echo</span> <span class="hl-string">${#S}</span>; }
+<span class="hl-variable">LEN</span>=<span class="hl-string">$(conta_char "mario")</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Lunghezza: $LEN"</span>   <span class="hl-comment"># 5</span></pre>
+      </div>
+      <div class="box box-tip">
+        <strong>💡 Funzioni vs Script esterno</strong>
+        <p>Stessa sintassi di chiamata (<code>nome arg1 arg2</code>), stesso accesso agli argomenti (<code>$1</code>, <code>$2</code>…). La differenza: la funzione è nello stesso file e condivide le variabili globali; lo script esterno è un processo separato e non condivide nulla.</p>
+      </div>
+
+      <h3>Chiamare uno Script Esterno</h3>
+      <p>Uno script può lanciare altri script come sotto-processi. È la forma più modulare di riuso del codice in Bash: il main si occupa della logica principale, i sotto-script di operazioni specifiche. L'output può essere ignorato, stampato o catturato con <code>$()</code>.</p>
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>Esecuzione e cattura output</span>
+          <button class="copy-btn" onclick="copyCode('ctrl-script')">Copia</button>
+        </div>
+        <pre id="ctrl-script"><span class="hl-comment"># Esecuzione diretta — il main attende il termine</span>
+<span class="hl-keyword">bash</span> utilita.sh
+
+<span class="hl-comment"># Con argomenti posizionali</span>
+<span class="hl-keyword">bash</span> utilita.sh arg1 arg2
+
+<span class="hl-comment"># Con ./ (richiede permesso esecuzione: chmod +x)</span>
+./utilita.sh arg1 arg2
+
+<span class="hl-comment"># Cattura l'output in una variabile — lo script non stampa a schermo</span>
+<span class="hl-variable">RISULTATO</span>=<span class="hl-string">$(bash utilita.sh arg1)</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Output ricevuto: $RISULTATO"</span>
+
+<span class="hl-comment"># Esempio reale: main chiama trova_estremi.sh e cattura min e max</span>
+<span class="hl-variable">ESTREMI</span>=<span class="hl-string">$(bash trova_estremi.sh -5 10 30 2 -1)</span>
+<span class="hl-variable">MIN</span>=<span class="hl-string">$(echo "$ESTREMI" | cut -d' ' -f1)</span>
+<span class="hl-variable">MAX</span>=<span class="hl-string">$(echo "$ESTREMI" | cut -d' ' -f2)</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Min: $MIN  Max: $MAX"</span></pre>
+      </div>
+      <div class="box box-tip">
+        <strong>💡 Codice di uscita dello script chiamato</strong>
+        <p>Dopo aver chiamato uno script, <code>$?</code> contiene il suo codice di uscita. Se lo script chiamato fa <code>exit 1</code> in caso di errore, il main può verificare con <code>if ! bash utilita.sh; then echo "Errore"; fi</code> e gestire il fallimento senza interrompere l'esecuzione.</p>
+      </div>
+
     </section>
 
     <section id="pipe">
@@ -799,7 +1086,8 @@
     <section id="lab">
       <div class="section-label">08 - LABORATORIO SCRIPT</div>
       <h2>Laboratorio Script Progressivo</h2>
-      <p>Undici script con difficoltà crescente, organizzati per tema. Ogni script introduce nuovi costrutti Bash. Gli script di <em>File &amp; Dati</em> che leggono file esterni e quelli di <em>Strutture Avanzate</em> richiedono i file inclusi nello ZIP.</p>
+      <p style="margin-top:-0.5rem;margin-bottom:1.5rem;"><a href="#intro" style="font-size:0.78rem;color:var(--prog-muted);text-decoration:none;font-family:'Space Mono',monospace;transition:color 0.2s;" onmouseover="this.style.color='var(--prog-accent)'" onmouseout="this.style.color='var(--prog-muted)'">↑ torna alla guida</a></p>
+      <p>Dodici script con difficoltà crescente, organizzati per tema. Ogni script introduce nuovi costrutti Bash. Gli script di <em>File &amp; Dati</em> che leggono file esterni e quelli di <em>Strutture Avanzate</em> richiedono i file inclusi nello ZIP.</p>
 
       <div class="box box-info">
         <strong>📦 File di supporto — ServerLab</strong>
@@ -814,7 +1102,7 @@
 
       <div class="lab-download-row">
         <a href="lab_bash.zip" download class="btn-download" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;">📥 Scarica lab_bash.zip</a>
-        <span style="font-size:0.82rem;color:var(--prog-muted);">Necessario per gli script 6 e 9–11</span>
+        <span style="font-size:0.82rem;color:var(--prog-muted);">Necessario per gli script 6 e 9–12</span>
       </div>
 
       <div class="lab-layout">
@@ -839,6 +1127,7 @@
             <a class="lab-nav-item" data-target="lab9" href="#lab9" onclick="openScript(event,'lab9')">contatore.sh</a>
             <a class="lab-nav-item" data-target="lab10" href="#lab10" onclick="openScript(event,'lab10')">menu.sh</a>
             <a class="lab-nav-item" data-target="lab11" href="#lab11" onclick="openScript(event,'lab11')">funzioni.sh</a>
+            <a class="lab-nav-item" data-target="lab12" href="#lab12" onclick="openScript(event,'lab12')">main → util.sh</a>
           </div>
         </nav>
 
@@ -1517,6 +1806,102 @@ scrivi_log <span class="hl-string">"INFO"</span> <span class="hl-string">"Toolki
               </div>
             </div>
           </details>
+          <!-- ═══ lab12: lab12_main.sh + lab12_util.sh ═══ -->
+          <details id="lab12">
+            <summary>
+              <span class="lab-sum-name">lab12_main.sh</span>
+              <span class="lab-sum-desc">— Chiamata a Script Esterno</span>
+              <span class="lab-group-badge">Strutture Avanzate</span>
+            </summary>
+            <div class="lab-detail-body">
+
+              <h3>Script 12: main + util — Comunicazione tra Script</h3>
+              <p>Due script che lavorano insieme: <code>lab12_main.sh</code> legge i dati dall'utente e chiama <code>lab12_util.sh</code> passandogli i valori come argomenti. Lo script di utilità calcola minimo e massimo e li stampa su una riga; il main cattura l'output con <code>$()</code> e lo elabora.</p>
+
+              <h3>Passo 1 — lab12_util.sh (lo script chiamato)</h3>
+              <p>Riceve valori <strong>esclusivamente tramite argomenti</strong> (<code>$1</code>, <code>$2</code>…), non usa <code>read</code>. Stampa il risultato su una riga con <code>echo</code> — sarà catturato dal main.</p>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span>lab12_util.sh</span>
+                  <button class="copy-btn" onclick="copyCode('lab12-util')">Copia</button>
+                </div>
+                <pre id="lab12-util"><span class="hl-shebang">#!/bin/bash</span>
+<span class="hl-comment"># lab12_util.sh — trova minimo e massimo di una lista di numeri</span>
+<span class="hl-comment"># Riceve valori SOLO come argomenti: non usa read</span>
+<span class="hl-comment"># Output: "MIN MAX" su una riga, catturato dal main con $()</span>
+
+<span class="hl-keyword">if</span> [ <span class="hl-variable">$#</span> -eq <span class="hl-num">0</span> ]; <span class="hl-keyword">then</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"Errore: nessun valore ricevuto"</span> &gt;&amp;2
+    <span class="hl-keyword">exit</span> <span class="hl-num">1</span>
+<span class="hl-keyword">fi</span>
+
+<span class="hl-comment"># Inizializza min e max con il primo valore</span>
+<span class="hl-variable">MIN</span>=<span class="hl-variable">$1</span>
+<span class="hl-variable">MAX</span>=<span class="hl-variable">$1</span>
+
+<span class="hl-comment"># Itera su tutti gli argomenti con "$@"</span>
+<span class="hl-keyword">for</span> <span class="hl-variable">VALORE</span> <span class="hl-keyword">in</span> <span class="hl-string">"$@"</span>; <span class="hl-keyword">do</span>
+    <span class="hl-keyword">if</span> [ <span class="hl-string">"$VALORE"</span> -lt <span class="hl-string">"$MIN"</span> ]; <span class="hl-keyword">then</span>
+        <span class="hl-variable">MIN</span>=<span class="hl-variable">$VALORE</span>
+    <span class="hl-keyword">fi</span>
+    <span class="hl-keyword">if</span> [ <span class="hl-string">"$VALORE"</span> -gt <span class="hl-string">"$MAX"</span> ]; <span class="hl-keyword">then</span>
+        <span class="hl-variable">MAX</span>=<span class="hl-variable">$VALORE</span>
+    <span class="hl-keyword">fi</span>
+<span class="hl-keyword">done</span>
+
+<span class="hl-comment"># echo stampa "MIN MAX" — il main lo leggerà con cut</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"$MIN $MAX"</span></pre>
+              </div>
+
+              <h3>Passo 2 — lab12_main.sh (lo script principale)</h3>
+              <p>Legge l'input, costruisce l'array, chiama lo script esterno con <code>$(bash lab12_util.sh "${ARR[@]}")</code> e analizza la risposta.</p>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span>lab12_main.sh</span>
+                  <button class="copy-btn" onclick="copyCode('lab12-main')">Copia</button>
+                </div>
+                <pre id="lab12-main"><span class="hl-shebang">#!/bin/bash</span>
+<span class="hl-comment"># lab12_main.sh — legge valori e chiama lab12_util.sh per l'analisi</span>
+
+<span class="hl-keyword">echo</span> <span class="hl-string">"=== ANALISI VALORI ==="</span>
+<span class="hl-keyword">read</span> -p <span class="hl-string">"Inserisci numeri separati da spazio: "</span> <span class="hl-variable">INPUT</span>
+
+<span class="hl-comment"># Converte l'input in un array (ogni parola diventa un elemento)</span>
+<span class="hl-variable">ARR</span>=(<span class="hl-variable">$INPUT</span>)
+
+<span class="hl-keyword">if</span> [ <span class="hl-string">${#ARR[@]}"</span> -eq <span class="hl-num">0</span> ]; <span class="hl-keyword">then</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"Errore: nessun valore inserito"</span>
+    <span class="hl-keyword">exit</span> <span class="hl-num">1</span>
+<span class="hl-keyword">fi</span>
+
+<span class="hl-keyword">echo</span> <span class="hl-string">"Valori inseriti: ${#ARR[@]}"</span>
+
+<span class="hl-comment"># Chiama lo script esterno passando tutti gli elementi dell'array</span>
+<span class="hl-comment"># "${ ARR[@]}" espande l'array come lista di argomenti separati</span>
+<span class="hl-comment"># $() cattura ciò che lab12_util.sh stampa con echo</span>
+<span class="hl-variable">RISULTATO</span>=<span class="hl-string">$(bash lab12_util.sh "${ARR[@]}")</span>
+
+<span class="hl-comment"># L'output è "MIN MAX" — cut estrae il primo e il secondo campo</span>
+<span class="hl-variable">MIN</span>=<span class="hl-string">$(echo "$RISULTATO" | cut -d' ' -f1)</span>
+<span class="hl-variable">MAX</span>=<span class="hl-string">$(echo "$RISULTATO" | cut -d' ' -f2)</span>
+
+<span class="hl-keyword">echo</span> <span class="hl-string">""</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Minimo: $MIN"</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Massimo: $MAX"</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"========================="</span></pre>
+              </div>
+
+              <div class="box box-info">
+                <strong>🔗 Flusso di esecuzione</strong>
+                <p>main legge input → crea array → chiama <code>bash lab12_util.sh 5 -3 12 8</code> → util riceve quei 4 argomenti in <code>$@</code>, calcola min/max, stampa <code>"-3 12"</code> → main cattura <code>"-3 12"</code> in <code>$RISULTATO</code> → <code>cut</code> separa i due valori.</p>
+              </div>
+              <div class="box box-warn">
+                <strong>⚠️ Prerequisito</strong>
+                <p>Entrambi i file devono trovarsi nella <strong>stessa cartella</strong>. Esegui con <code>bash lab12_main.sh</code> dalla cartella che contiene anche <code>lab12_util.sh</code>.</p>
+              </div>
+
+            </div>
+          </details>
         </div>
 
       </div>
@@ -1538,6 +1923,7 @@ scrivi_log <span class="hl-string">"INFO"</span> <span class="hl-string">"Toolki
       { cmd: "rm", category: "FILE", desc: "Remove: cancella file.", example: "rm file.txt", flag: "-r (ricorsivo), -f (forza)" },
       { cmd: "cat", category: "TEXT", desc: "Stampa il contenuto di un file.", example: "cat file.txt", flag: "Nessuno" },
       { cmd: "echo", category: "TEXT", desc: "Stampa testo a schermo.", example: "echo 'Ciao'", flag: "-n (no newline)" },
+      { cmd: "read", category: "SYS", desc: "Legge una riga di input da tastiera e la salva in una variabile.", example: "read -p 'Nome: ' NOME", flag: "-p (prompt inline), -n N (solo N caratteri senza Enter), -r (raw, disabilita backslash)" },
       { cmd: "printf", category: "TEXT", desc: "Stampa testo con formattazione; interpreta sempre \\n e \\t a differenza di echo.", example: "printf \"riga1\\nriga2\\n\"", flag: "%-10s (stringa), %d (intero)" },
       { cmd: "grep", category: "TEXT", desc: "Cerca pattern in file.", example: "grep 'parola' file.txt", flag: "-i (case-insensitive), -n (numero righe)" },
       { cmd: "chmod", category: "PERM", desc: "Change Mode: modifica permessi file.", example: "chmod 755 script.sh", flag: "u/g/o (user/group/others), +/-" },
