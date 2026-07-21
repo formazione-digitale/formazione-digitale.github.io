@@ -325,6 +325,58 @@
       .hub-resources { padding: 0 1.5rem; }
       .resources-grid { grid-template-columns: 1fr; }
     }
+
+    /* ── TAB RISORSE ─────────────────────────────────────────────── */
+    .risorse-label {
+      max-width: 960px; margin: 0 auto 0.6rem;
+      padding: 0 2rem;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--blue-mid);
+    }
+    .hub-tabs {
+      display: flex; max-width: 960px;
+      margin: 0 auto; padding: 0 2rem;
+      border-bottom: 2px solid var(--blue-light);
+      margin-bottom: 0;
+    }
+    .hub-tab {
+      padding: 0.7rem 1.5rem; font-size: 0.88rem; font-weight: 600;
+      color: var(--gray-mid); background: none; border: none;
+      border-bottom: 3px solid transparent; margin-bottom: -2px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .hub-tab:hover { color: var(--blue-dark); }
+    .hub-tab.active { color: var(--blue-mid); border-bottom-color: var(--blue-mid); }
+    .hub-panel { display: none; }
+    .hub-panel.active { display: block; }
+
+    /* ── MAPPA D3 ─────────────────────────────────────────────────── */
+    .hub-map-wrap {
+      max-width: 960px; margin: 2rem auto 3rem; padding: 0 2rem;
+    }
+    #hub-map-container {
+      background: #0d1117; border-radius: 12px;
+      width: 100%; height: 580px; position: relative; overflow: hidden;
+    }
+    #hub-map-svg { width: 100%; height: 100%; display: block; }
+    #hub-tooltip {
+      position: absolute; background: rgba(20,24,40,0.95);
+      color: #d4d8f0; padding: 8px 12px; border-radius: 6px;
+      font-size: 0.78rem; pointer-events: none; opacity: 0;
+      transition: opacity 0.15s; max-width: 200px; line-height: 1.5;
+    }
+    #hub-tooltip strong { display: block; margin-bottom: 2px; }
+    .hub-map-hint {
+      text-align: right; font-size: 0.72rem; color: var(--gray-mid);
+      padding: 0.4rem 0 0; font-style: italic;
+    }
+    @media(max-width: 600px) {
+      .risorse-label { padding: 0 1.5rem; }
+      .hub-tabs { padding: 0 1.5rem; }
+      .hub-tab { padding: 0.6rem 1rem; font-size: 0.82rem; }
+      .hub-map-wrap { padding: 0 1.5rem; }
+      #hub-map-container { height: 420px; }
+    }
   </style>
 </head>
 <body>
@@ -490,6 +542,23 @@
     </div>
   </div>
 
+  <div class="risorse-label">RISORSE DISPONIBILI</div>
+  <div class="hub-tabs">
+    <button class="hub-tab active" data-panel="panel-map">🗺 Mappa</button>
+    <button class="hub-tab" data-panel="panel-list">📋 Lista</button>
+  </div>
+
+  <div id="panel-map" class="hub-panel active">
+    <div class="hub-map-wrap">
+      <div id="hub-map-container">
+        <svg id="hub-map-svg"></svg>
+        <div id="hub-tooltip"></div>
+      </div>
+      <p class="hub-map-hint">Trascina i nodi · Hover per dettagli · Click per aprire</p>
+    </div>
+  </div>
+
+  <div id="panel-list" class="hub-panel">
   <!-- ── PERCORSO CONSIGLIATO ────────────────────────────────────── -->
   <div class="hub-path">
     <h3>📍 Percorso consigliato</h3>
@@ -721,6 +790,187 @@
       </div>
     </div>
   </div>
+
+  </div><!-- /panel-list -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ── STRUTTURA DATI ─────────────────────────────────────────── */
+  const GROUPS = [
+    { id: 'grp_hw',   label: 'Hardware\n& Sistema', color: '#2E75B6', r: 32 },
+    { id: 'grp_num',  label: 'Sistemi\nNumerici',   color: '#1E8B5A', r: 32 },
+    { id: 'grp_dati', label: 'Dati\n& Logica',      color: '#B06A00', r: 32 },
+  ];
+
+  const RISORSE = [
+    { id: '/sistemi/architettura-pc/',          label: 'Architettura PC',      emoji: '🖥️', group: 'grp_hw'   },
+    { id: '/sistemi/algoritmi-scheduling/',     label: 'Scheduling CPU',        emoji: '⚙️',  group: 'grp_hw'   },
+    { id: '/sistemi/bash-programming/',         label: 'Bash',                  emoji: '💻', group: 'grp_hw'   },
+    { id: '/sistemi/codifica-binaria/',         label: 'Bin-Digit Decoder',     emoji: '🔢', group: 'grp_num'  },
+    { id: '/sistemi/aritmetica-binaria/',       label: 'Aritmetica Binaria',    emoji: '➕', group: 'grp_num'  },
+    { id: '/sistemi/conversioni-di-base/',      label: 'Convertitore Basi',     emoji: '🔣', group: 'grp_num'  },
+    { id: '/sistemi/dimensionamento-files/',    label: 'Dimensionamento File',  emoji: '📐', group: 'grp_dati' },
+    { id: '/sistemi/teoria-del-campionamento/', label: 'Campionamento',         emoji: '🌊', group: 'grp_dati' },
+    { id: '/sistemi/logica-booleana/',          label: 'Logica Booleana',       emoji: '🧮', group: 'grp_dati' },
+    { id: '/sistemi/alberi-di-parsing/',        label: 'Alberi di Parsing',     emoji: '🌲', group: 'grp_dati' },
+  ];
+
+  /* ── RENDER MAPPA ───────────────────────────────────────────── */
+  function renderMap() {
+    const container = document.getElementById('hub-map-container');
+    const svg       = d3.select('#hub-map-svg');
+    const tooltip   = document.getElementById('hub-tooltip');
+    const W = container.clientWidth  || 900;
+    const H = container.clientHeight || 580;
+
+    svg.selectAll('*').remove();
+
+    const hubNode = {
+      id: '__hub__', label: 'Sistemi', type: 'hub', r: 38,
+      x: W / 2, y: H / 2, fx: W / 2, fy: H / 2
+    };
+
+    const groupNodes = GROUPS.map(g => ({
+      ...g, type: 'group',
+      x: W / 2 + (Math.random() - 0.5) * 120,
+      y: H / 2 + (Math.random() - 0.5) * 120
+    }));
+
+    const resourceNodes = RISORSE.map(r => ({
+      ...r, type: 'risorsa', path: r.id, r: 22,
+      x: W / 2 + (Math.random() - 0.5) * 200,
+      y: H / 2 + (Math.random() - 0.5) * 200
+    }));
+
+    const nodes = [hubNode, ...groupNodes, ...resourceNodes];
+
+    const links = [
+      ...GROUPS.map(g  => ({ source: '__hub__', target: g.id,  ltype: 'hg' })),
+      ...RISORSE.map(r => ({ source: r.group,   target: r.id,  ltype: 'gr' }))
+    ];
+
+    const sim = d3.forceSimulation(nodes)
+      .force('link', d3.forceLink(links).id(d => d.id)
+        .distance(d => d.ltype === 'hg' ? 140 : 95)
+        .strength(0.9))
+      .force('charge', d3.forceManyBody().strength(-260))
+      .force('center',  d3.forceCenter(W / 2, H / 2))
+      .force('collide', d3.forceCollide(d => d.r + 16));
+
+    const g = svg.append('g');
+
+    svg.call(d3.zoom()
+      .scaleExtent([0.4, 2.5])
+      .on('zoom', e => g.attr('transform', e.transform))
+    );
+
+    /* link */
+    const link = g.append('g').selectAll('line').data(links).join('line')
+      .attr('stroke', d => d.ltype === 'hg' ? '#2e3350' : '#1e2840')
+      .attr('stroke-width', d => d.ltype === 'hg' ? 2 : 1.5)
+      .attr('stroke-dasharray', '5,4');
+
+    /* nodi */
+    const grpColor = id => { const g = GROUPS.find(g => g.id === id); return g ? g.color : '#2E75B6'; };
+
+    const node = g.append('g').selectAll('g').data(nodes).join('g')
+      .style('cursor', d => d.path ? 'pointer' : 'default')
+      .call(d3.drag()
+        .on('start', (e, d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+        .on('drag',  (e, d) => { d.fx = e.x; d.fy = e.y; })
+        .on('end',   (e, d) => {
+          if (!e.active) sim.alphaTarget(0);
+          if (d.type !== 'hub') { d.fx = null; d.fy = null; }
+        })
+      )
+      .on('click',     (e, d) => { if (d.path) window.location.href = d.path; })
+      .on('mouseover', (e, d) => {
+        if (d.type === 'hub' || d.type === 'group') return;
+        tooltip.style.opacity = '1';
+        tooltip.innerHTML = `<strong>${d.emoji} ${d.label}</strong>`;
+      })
+      .on('mousemove', e => {
+        const rect = container.getBoundingClientRect();
+        let x = e.clientX - rect.left + 12;
+        let y = e.clientY - rect.top  - 10;
+        if (x + 180 > W) x -= 190;
+        tooltip.style.left = x + 'px';
+        tooltip.style.top  = y + 'px';
+      })
+      .on('mouseout', () => { tooltip.style.opacity = '0'; });
+
+    /* cerchi */
+    node.append('circle')
+      .attr('r', d => d.r)
+      .attr('fill', d => {
+        if (d.type === 'hub')    return '#2E75B6';
+        if (d.type === 'group')  return d.color;
+        return grpColor(d.group);
+      })
+      .attr('fill-opacity', d => d.type === 'hub' ? 0.3 : d.type === 'group' ? 0.2 : 0.12)
+      .attr('stroke', d => {
+        if (d.type === 'hub')   return '#2E75B6';
+        if (d.type === 'group') return d.color;
+        return grpColor(d.group);
+      })
+      .attr('stroke-width', d => d.type === 'hub' ? 3 : d.type === 'group' ? 2.5 : 1.5);
+
+    /* emoji risorse */
+    node.filter(d => d.type === 'risorsa')
+      .append('text')
+      .attr('text-anchor', 'middle')
+      .attr('dy', '-0.15em')
+      .attr('font-size', '0.95rem')
+      .text(d => d.emoji);
+
+    /* label */
+    node.append('text')
+      .attr('text-anchor', 'middle')
+      .attr('dy', d => d.type === 'risorsa' ? '1.5em' : '0.35em')
+      .attr('fill', '#d4d8f0')
+      .attr('font-size', d => d.type === 'hub' ? '0.72rem' : d.type === 'group' ? '0.67rem' : '0.61rem')
+      .attr('font-weight', d => d.type !== 'risorsa' ? '700' : '400')
+      .attr('font-family', 'Sora, DM Sans, sans-serif')
+      .each(function (d) {
+        if (d.type === 'risorsa') {
+          const lbl = d.label.length > 18 ? d.label.slice(0, 16) + '…' : d.label;
+          d3.select(this).text(lbl);
+        } else {
+          const lines = d.label.split('\n');
+          d3.select(this).text('');
+          lines.forEach((line, i) => {
+            d3.select(this).append('tspan')
+              .attr('x', 0)
+              .attr('dy', i === 0 ? `-${(lines.length - 1) * 0.6}em` : '1.2em')
+              .text(line);
+          });
+        }
+      });
+
+    sim.on('tick', () => {
+      link
+        .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+        .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+      node.attr('transform', d => `translate(${d.x},${d.y})`);
+    });
+  }
+
+  /* ── TAB SWITCH ─────────────────────────────────────────────── */
+  document.querySelectorAll('.hub-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.hub-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.hub-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.panel).classList.add('active');
+    });
+  });
+
+  renderMap();
+})();
+</script>
 
   <!-- ── FOOTER ────────────────────────────────────────────────── -->
   <footer>

@@ -1449,38 +1449,60 @@
                 </div>
                 <pre id="lab9-code"><span class="hl-shebang">#!/bin/bash</span>
 <span class="hl-comment"># funzioni.sh — Toolkit di manutenzione ServerLab</span>
+<span class="hl-comment"># Le funzioni si definiscono PRIMA di essere chiamate</span>
 
+<span class="hl-comment"># ─── FUNZIONE 1: scrivi una riga nel log di sistema ───────────────</span>
+<span class="hl-comment"># Argomenti: $1 = tipo (INFO/WARN), $2 = messaggio</span>
 <span class="hl-keyword">scrivi_log</span>() {
     <span class="hl-keyword">local</span> <span class="hl-variable">TIPO</span>=<span class="hl-variable">$1</span>
     <span class="hl-keyword">local</span> <span class="hl-variable">TESTO</span>=<span class="hl-variable">$2</span>
+    <span class="hl-comment"># local limita la variabile allo scope della funzione</span>
     <span class="hl-keyword">local</span> <span class="hl-variable">TS</span>=<span class="hl-string">$(date '+%Y-%m-%d %H:%M:%S')</span>
     <span class="hl-keyword">echo</span> <span class="hl-string">"$TS [$TIPO] $TESTO"</span> >> logs/sistema.log
     <span class="hl-keyword">echo</span> <span class="hl-string">"  → Log: [$TIPO] $TESTO"</span>
 }
 
+<span class="hl-comment"># ─── FUNZIONE 2: verifica esistenza utente ────────────────────────</span>
+<span class="hl-comment"># Argomenti: $1 = nome utente</span>
+<span class="hl-comment"># Return: 0 se trovato (successo), 1 se non trovato (errore)</span>
 <span class="hl-keyword">utente_esiste</span>() {
     <span class="hl-keyword">local</span> <span class="hl-variable">NOME</span>=<span class="hl-variable">$1</span>
-    [ -f <span class="hl-string">"utenti/$NOME.txt"</span> ] && <span class="hl-keyword">return</span> <span class="hl-num">0</span> || <span class="hl-keyword">return</span> <span class="hl-num">1</span>
+    <span class="hl-keyword">if</span> [ -f <span class="hl-string">"utenti/$NOME.txt"</span> ]; <span class="hl-keyword">then</span>
+        <span class="hl-keyword">return</span> <span class="hl-num">0</span>   <span class="hl-comment"># trovato: la funzione "ha successo"</span>
+    <span class="hl-keyword">else</span>
+        <span class="hl-keyword">return</span> <span class="hl-num">1</span>   <span class="hl-comment"># non trovato: la funzione "fallisce"</span>
+    <span class="hl-keyword">fi</span>
 }
 
+<span class="hl-comment"># ─── FUNZIONE 3: genera report spazio disco ───────────────────────</span>
+<span class="hl-comment"># Nessun argomento: usa la data odierna come suffisso del file</span>
 <span class="hl-keyword">genera_report</span>() {
     <span class="hl-keyword">local</span> <span class="hl-variable">OUTFILE</span>=<span class="hl-string">"report/disco_$(date +%Y-%m-%d).txt"</span>
     <span class="hl-keyword">echo</span> <span class="hl-string">"Report disco — $(date '+%d/%m/%Y %H:%M')"</span> &gt; <span class="hl-string">"$OUTFILE"</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"──────────────────────────────"</span> &gt;&gt; <span class="hl-string">"$OUTFILE"</span>
     <span class="hl-keyword">df</span> -h . &gt;&gt; <span class="hl-string">"$OUTFILE"</span>
     <span class="hl-keyword">echo</span> <span class="hl-string">"  → Report salvato: $OUTFILE"</span>
 }
 
+<span class="hl-comment"># ─── ESECUZIONE PRINCIPALE ────────────────────────────────────────</span>
+
 <span class="hl-keyword">echo</span> <span class="hl-string">"=== TOOLKIT SERVERLAB ==="</span>
 scrivi_log <span class="hl-string">"INFO"</span> <span class="hl-string">"Avvio toolkit"</span>
 
+<span class="hl-keyword">echo</span> <span class="hl-string">""</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Verifica utenti:"</span>
 <span class="hl-keyword">for</span> <span class="hl-variable">UTENTE</span> <span class="hl-keyword">in</span> mario anna guest ospite; <span class="hl-keyword">do</span>
+    <span class="hl-comment"># if chiama la funzione e usa il suo valore di return (0 = successo)</span>
     <span class="hl-keyword">if</span> utente_esiste <span class="hl-string">"$UTENTE"</span>; <span class="hl-keyword">then</span>
-        <span class="hl-keyword">echo</span> <span class="hl-string">"  [ OK ] $UTENTE"</span>; scrivi_log <span class="hl-string">"INFO"</span> <span class="hl-string">"Utente $UTENTE verificato"</span>
+        <span class="hl-keyword">echo</span> <span class="hl-string">"  [ OK ] $UTENTE presente"</span>
+        scrivi_log <span class="hl-string">"INFO"</span> <span class="hl-string">"Utente $UTENTE verificato"</span>
     <span class="hl-keyword">else</span>
-        <span class="hl-keyword">echo</span> <span class="hl-string">"  [WARN] $UTENTE NON trovato"</span>; scrivi_log <span class="hl-string">"WARN"</span> <span class="hl-string">"Utente $UTENTE assente"</span>
+        <span class="hl-keyword">echo</span> <span class="hl-string">"  [WARN] $UTENTE NON trovato"</span>
+        scrivi_log <span class="hl-string">"WARN"</span> <span class="hl-string">"Utente $UTENTE assente"</span>
     <span class="hl-keyword">fi</span>
 <span class="hl-keyword">done</span>
 
+<span class="hl-keyword">echo</span> <span class="hl-string">""</span>
 genera_report
 scrivi_log <span class="hl-string">"INFO"</span> <span class="hl-string">"Toolkit completato"</span>
 <span class="hl-keyword">echo</span> <span class="hl-string">"========================="</span></pre>
