@@ -427,6 +427,27 @@
         </ol>
       </div>
 
+      <div class="box box-tip" style="margin-top:1.5rem;">
+        <strong>💡 <code>bash -x</code> — Modalità debug</strong>
+        <p><code>bash -x script.sh</code> esegue lo script stampando ogni comando preceduto da <code>+</code>, prima di eseguirlo. Indispensabile quando lo script non si comporta come previsto e non si capisce perché.</p>
+        <div class="code-wrapper" style="margin-top:0.75rem;">
+          <div class="code-header">
+            <span>Esempio di output con -x</span>
+          </div>
+          <pre><span class="hl-comment"># Lancio:</span>  bash -x mio_script.sh
+
+<span class="hl-comment"># Output che vedrai:</span>
++ NOME=mario
++ ETA=25
++ echo 'Ciao mario'
+Ciao mario
++ [ 25 -gt 18 ]
++ echo 'Sei maggiorenne'
+Sei maggiorenne</pre>
+        </div>
+        <p style="margin-top:0.6rem;">Per attivare il debug solo su una sezione: <code>set -x</code> per iniziare, <code>set +x</code> per terminare.</p>
+      </div>
+
       <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--prog-border);">
         <a href="#lab" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.65rem 1.4rem;background:rgba(124,92,252,0.12);color:var(--prog-accent);border:1px solid var(--prog-accent);border-radius:6px;font-weight:600;font-size:0.88rem;text-decoration:none;transition:all 0.2s;font-family:'Sora',sans-serif;">🔬 Vai al Laboratorio →</a>
         <span style="margin-left:1rem;font-size:0.78rem;color:var(--prog-muted);">11 script progressivi con file di supporto scaricabili</span>
@@ -503,6 +524,48 @@
           <tr><td><code>RISULTATO=$(comando)</code></td><td>Salva l'output di un comando in una variabile</td></tr>
         </tbody>
       </table>
+
+
+      <h3>Virgolette: <code>'</code> Singole vs <code>"</code> Doppie</h3>
+      <p>La scelta delle virgolette determina se le variabili vengono <strong>espanse</strong> o trattate come testo letterale. È una delle fonti di errore più comuni in Bash.</p>
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>Confronto diretto</span>
+          <button class="copy-btn" onclick="copyCode('var-quotes')">Copia</button>
+        </div>
+        <pre id="var-quotes"><span class="hl-variable">NOME</span>=<span class="hl-string">"mario"</span>
+
+<span class="hl-comment"># Virgolette DOPPIE: le variabili vengono espanse</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Ciao $NOME"</span>    <span class="hl-comment"># → Ciao mario</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"$NOME"</span>         <span class="hl-comment"># → mario</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"2+2=$(( 2+2 ))"</span> <span class="hl-comment"># → 2+2=4  (anche $() viene espanso)</span>
+
+<span class="hl-comment"># Virgolette SINGOLE: tutto è letterale, nessuna espansione</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">'Ciao $NOME'</span>    <span class="hl-comment"># → Ciao $NOME  (letterale)</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">'$NOME'</span>         <span class="hl-comment"># → $NOME</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">'2+2=$(( 2+2 ))'</span> <span class="hl-comment"># → 2+2=$(( 2+2 ))  (tutto letterale)</span></pre>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Tipo</th><th>Comportamento</th><th>Quando usarle</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>"doppie"</code></td>
+            <td>Variabili e <code>$()</code> vengono espansi</td>
+            <td>Quasi sempre — proteggono anche gli spazi nei valori</td>
+          </tr>
+          <tr>
+            <td><code>'singole'</code></td>
+            <td>Tutto letterale, nessuna espansione</td>
+            <td>Quando si vuole il testo esatto, es. pattern per <code>grep</code> o <code>sed</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="box box-tip">
+        <strong>💡 Regola pratica</strong>
+        <p>Usa sempre le <strong>doppie</strong> attorno alle variabili: <code>"$VAR"</code>. Le singole servono solo quando vuoi che il testo arrivi esattamente com'è scritto, senza che Bash lo interpreti.</p>
+      </div>
 
       <h3>Variabili Globali e d'Ambiente</h3>
       <p>Se dichiari una variabile nel terminale (<code>MIA_VAR="valore"</code>), è <strong>locale</strong> — esiste solo nel processo corrente. Per renderla <strong>globale</strong> ed ereditabile dagli script usa <code>export</code>.</p>
@@ -851,6 +914,38 @@
 <span class="hl-keyword">echo</span> <span class="hl-string">"Elaborazione completata"</span>
 <span class="hl-keyword">exit</span> <span class="hl-num">0</span></pre>
       </div>
+
+      <h3>Operatori <code>&&</code> e <code>||</code></h3>
+      <p>Permettono di concatenare comandi in base al loro esito senza scrivere un <code>if</code> esplicito. Usano il codice di uscita: <code>&&</code> procede solo in caso di <strong>successo</strong> (exit 0), <code>||</code> solo in caso di <strong>errore</strong> (exit ≠ 0).</p>
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>&& e || in pratica</span>
+          <button class="copy-btn" onclick="copyCode('ctrl-andor')">Copia</button>
+        </div>
+        <pre id="ctrl-andor"><span class="hl-comment"># && — esegue il secondo SOLO se il primo ha successo (exit 0)</span>
+<span class="hl-keyword">mkdir</span> logs && <span class="hl-keyword">echo</span> <span class="hl-string">"Cartella creata"</span>
+<span class="hl-keyword">cd</span> progetto && <span class="hl-keyword">bash</span> setup.sh     <span class="hl-comment"># setup.sh gira solo se cd riesce</span>
+
+<span class="hl-comment"># || — esegue il secondo SOLO se il primo fallisce (exit ≠ 0)</span>
+<span class="hl-keyword">mkdir</span> logs || <span class="hl-keyword">echo</span> <span class="hl-string">"Cartella già esistente"</span>
+<span class="hl-keyword">mkdir</span> logs || <span class="hl-keyword">exit</span> <span class="hl-num">1</span>             <span class="hl-comment"># esce se mkdir fallisce</span>
+
+<span class="hl-comment"># Forma compatta equivalente a: if [ -z "$NOME" ]; then exit 1; fi</span>
+[ -z <span class="hl-string">"$NOME"</span> ] && <span class="hl-keyword">exit</span> <span class="hl-num">1</span>
+
+<span class="hl-comment"># Combinati: prova A, se fallisce prova B</span>
+<span class="hl-keyword">cp</span> file.txt backup/ || <span class="hl-keyword">cp</span> file.txt /tmp/</pre>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Operatore</th><th>Esegue il secondo se…</th><th>Equivale a</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>A && B</code></td><td>A ha successo (exit 0)</td><td><code>if A; then B; fi</code></td></tr>
+          <tr><td><code>A || B</code></td><td>A fallisce (exit ≠ 0)</td><td><code>if ! A; then B; fi</code></td></tr>
+        </tbody>
+      </table>
+
       <div class="box box-tip">
         <strong>💡 if come test di comando</strong>
         <p><code>if comando; then</code> — oltre alle condizioni tra <code>[ ]</code>, <code>if</code> può testare direttamente il codice di uscita di qualsiasi comando: se restituisce 0 (successo) il ramo <code>then</code> viene eseguito. La negazione si scrive <code>if ! comando; then</code>. Esempio: <code>if ! mkdir dir; then echo "Errore"; fi</code>.</p>
@@ -968,23 +1063,36 @@ saluta <span class="hl-string">"Alice"</span> <span class="hl-string">"en"</span
       </div>
 
       <h3>Pipe: <code>|</code></h3>
-      <p>Collega lo <em>stdout</em> di un comando allo <em>stdin</em> del successivo, creando una catena di elaborazione senza file temporanei. I dati fluiscono direttamente tra i processi.</p>
+      <p>Collega lo <em>stdout</em> di un comando allo <em>stdin</em> del successivo. I dati fluiscono direttamente tra processi, senza file temporanei. Si costruisce la catena passo per passo.</p>
+
+      <h3 style="font-size:0.95rem;margin-top:1.5rem;">Pipeline: costruzione passo per passo</h3>
+      <p>Il punto di partenza è quasi sempre <code>grep</code>. Ogni <code>|</code> aggiunto trasforma il risultato in modo diverso.</p>
       <div class="code-wrapper">
         <div class="code-header">
-          <span>Esempi di pipe</span>
-          <button class="copy-btn" onclick="copyCode('pipe-pipe')">Copia</button>
+          <span>Da grep alla catena completa</span>
+          <button class="copy-btn" onclick="copyCode('pipe-pipeline')">Copia</button>
         </div>
-        <pre id="pipe-pipe"><span class="hl-comment"># Conta quante righe di un file contengono "errore"</span>
-<span class="hl-keyword">grep</span> <span class="hl-string">"errore"</span> log.txt | <span class="hl-keyword">wc</span> -l
+        <pre id="pipe-pipeline"><span class="hl-comment"># Passo 1 — grep da solo: trova e stampa le righe corrispondenti</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"WARN"</span> logs/errori.log
 
-<span class="hl-comment"># Lista file, ordina alfabeticamente, mostra i primi 5</span>
-<span class="hl-keyword">ls</span> -la | <span class="hl-keyword">sort</span> | <span class="hl-keyword">head</span> -5
+<span class="hl-comment"># Passo 2 — | wc -l: non stampa le righe, le conta</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"WARN"</span> logs/errori.log | <span class="hl-keyword">wc</span> -l
 
-<span class="hl-comment"># Cerca processi attivi per nome</span>
-<span class="hl-keyword">ps</span> aux | <span class="hl-keyword">grep</span> <span class="hl-string">"bash"</span>
+<span class="hl-comment"># Passo 3 — | sort: ordina i risultati alfabeticamente</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"WARN"</span> logs/errori.log | <span class="hl-keyword">sort</span>
 
-<span class="hl-comment"># Catena: elenca .sh → filtra per "backup" → conta risultati</span>
-<span class="hl-keyword">ls</span> *.sh | <span class="hl-keyword">grep</span> <span class="hl-string">"backup"</span> | <span class="hl-keyword">wc</span> -l</pre>
+<span class="hl-comment"># Passo 4 — | head -3: mostra solo i primi 3</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"WARN"</span> logs/errori.log | <span class="hl-keyword">sort</span> | <span class="hl-keyword">head</span> -3
+
+<span class="hl-comment"># Passo 5 — | cut: estrae il terzo campo (separatore spazio)</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"WARN"</span> logs/errori.log | <span class="hl-keyword">cut</span> -d<span class="hl-string">' '</span> -f3
+
+<span class="hl-comment"># Esempio reale: utenti unici presenti nel log accessi</span>
+<span class="hl-keyword">cat</span> logs/accessi.log | <span class="hl-keyword">cut</span> -d<span class="hl-string">' '</span> -f3 | <span class="hl-keyword">sort</span> | <span class="hl-keyword">uniq</span></pre>
+      </div>
+      <div class="box box-tip">
+        <strong>💡 Modello mentale della pipe</strong>
+        <p>Ogni <code>|</code> prende lo <em>stdout</em> del comando a sinistra e lo passa come <em>stdin</em> al comando a destra. Il primo comando legge dal file, ogni successivo legge dall'output del precedente. Si può concatenare quanti comandi si vuole: ognuno fa una cosa sola e la fa bene.</p>
       </div>
 
       <h3>Scartare l'Output: <code>/dev/null</code></h3>
@@ -1003,6 +1111,29 @@ saluta <span class="hl-string">"Alice"</span> <span class="hl-string">"en"</span
 <span class="hl-comment"># &amp;&gt;/dev/null scarta sia stdout che stderr</span>
 <span class="hl-keyword">comando_silenzioso</span> &amp;&gt;/dev/null</pre>
       </div>
+
+      <h3>Scrivere su stderr: <code>>&2</code></h3>
+      <p>Per convenzione i messaggi di errore vanno su <strong>stderr</strong> (canale 2), non su stdout (canale 1). Questo separa l'output utile dai messaggi diagnostici — fondamentale quando l'output dello script viene catturato con <code>$()</code>.</p>
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>>&2 in pratica</span>
+          <button class="copy-btn" onclick="copyCode('pipe-stderr')">Copia</button>
+        </div>
+        <pre id="pipe-stderr"><span class="hl-comment"># Messaggio di errore su stderr — non viene catturato da $()</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Errore: file non trovato"</span> &gt;&amp;<span class="hl-num">2</span>
+
+<span class="hl-comment"># Confronto: stdout vs stderr</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Output normale"</span>          <span class="hl-comment"># → va su stdout (canale 1)</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Messaggio di errore"</span> &gt;&amp;<span class="hl-num">2</span>  <span class="hl-comment"># → va su stderr (canale 2)</span>
+
+<span class="hl-comment"># Perché è importante: se catturi l'output con $(), solo stdout entra</span>
+<span class="hl-variable">RISULTATO</span>=<span class="hl-string">$(bash script.sh)</span>     <span class="hl-comment"># $RISULTATO contiene solo stdout</span>
+                                  <span class="hl-comment"># gli errori appaiono comunque a schermo</span>
+
+<span class="hl-comment"># Per silenziare anche stderr: redirigilo verso /dev/null</span>
+<span class="hl-keyword">bash</span> script.sh <span class="hl-num">2</span>&gt;/dev/null</pre>
+      </div>
+
       <div class="box box-tip">
         <strong>💡 Subshell <code>$()</code></strong>
         <p><code>$(comando)</code> esegue un comando e <em>cattura</em> il suo stdout come stringa da assegnare a una variabile — niente va su schermo. È una forma di ridirezione "in memoria". Già usato in tutti gli script: <code>DATA=$(date +%Y-%m-%d)</code>, <code>MEDIA=$(awk ...)</code>, <code>STATO=$(cat "$FILE")</code>.</p>
@@ -1942,7 +2073,7 @@ scrivi_log <span class="hl-string">"INFO"</span> <span class="hl-string">"Toolki
       { cmd: "diff", category: "TEXT", desc: "Compara due file riga per riga.", example: "diff file1.txt file2.txt", flag: "-u (unified format)" },
       { cmd: "sed", category: "TEXT", desc: "Stream editor: sostituisce testo.", example: "sed 's/old/new/' file.txt", flag: "-i (modifica in place)" },
       { cmd: "awk", category: "TEXT", desc: "Elabora file strutturati colonna per colonna.", example: "awk '{print $1}' file.txt", flag: "-F (separatore)" },
-      { cmd: "cut", category: "TEXT", desc: "Estrae colonne specifiche.", example: "cut -d',' -f1 file.csv", flag: "-d (delimitatore), -f (campi)" },
+      { cmd: "cut", category: "TEXT", desc: "Estrae uno o più campi da righe di testo strutturate.", example: "echo 'mario 42 roma' | cut -d' ' -f2", flag: "-d (delimitatore), -f (numero campo/i)" },
       { cmd: "ps", category: "SYS", desc: "Process Status: mostra processi attivi.", example: "ps aux", flag: "aux (dettagliato)" },
       { cmd: "kill", category: "SYS", desc: "Termina un processo tramite PID.", example: "kill -9 1234", flag: "-9 (force)" },
       { cmd: "top", category: "SYS", desc: "Mostra in tempo reale processi e risorse.", example: "top", flag: "Nessuno" },
