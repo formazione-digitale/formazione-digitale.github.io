@@ -300,6 +300,11 @@
     }
     #back-to-top.visible { opacity: 1; pointer-events: auto; }
     #back-to-top:hover { background: #6a4ee0; }
+
+    /* ── COSTRUTTI NAV ── */
+    .costrutti-nav { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1rem 0 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--prog-border); }
+    .costrutti-chip { padding: 4px 12px; border-radius: 20px; font-size: 0.74rem; font-family: 'Space Mono', monospace; border: 1px solid var(--prog-border); color: var(--prog-muted); text-decoration: none; transition: all 0.18s; white-space: nowrap; }
+    .costrutti-chip:hover { border-color: var(--prog-accent); color: var(--prog-accent); background: rgba(124,92,252,0.06); }
   </style>
 </head>
 <body>
@@ -713,7 +718,21 @@ Sei maggiorenne</pre>
       <h2>Costrutti di Controllo e Flusso</h2>
       <p>I costrutti logici permettono di prendere decisioni, ripetere operazioni e ricevere dati dall'esterno. Sono i mattoni di qualsiasi script non banale — il laboratorio li usa tutti; questa sezione li presenta in modo sistematico.</p>
 
-      <h3>if / elif / else</h3>
+      <nav class="costrutti-nav">
+        <a class="costrutti-chip" href="#ctrl-if">if / elif</a>
+        <a class="costrutti-chip" href="#ctrl-comp">Comparatori</a>
+        <a class="costrutti-chip" href="#ctrl-for">for</a>
+        <a class="costrutti-chip" href="#ctrl-while">while</a>
+        <a class="costrutti-chip" href="#ctrl-readn">read -n 1</a>
+        <a class="costrutti-chip" href="#ctrl-array">Array</a>
+        <a class="costrutti-chip" href="#ctrl-params">Parametri</a>
+        <a class="costrutti-chip" href="#ctrl-exit">Exit codes</a>
+        <a class="costrutti-chip" href="#ctrl-andor">&amp;&amp; / ||</a>
+        <a class="costrutti-chip" href="#ctrl-func">Funzioni</a>
+        <a class="costrutti-chip" href="#ctrl-script">Script esterno</a>
+      </nav>
+
+      <h3 id="ctrl-if">if / elif / else</h3>
       <p>Esegue un blocco di codice solo se una condizione è vera. Le condizioni si scrivono tra parentesi quadre <code>[ ]</code> seguite da <code>; then</code>. Il blocco termina con <code>fi</code> (<em>if</em> al contrario).</p>
       <div class="code-wrapper">
         <div class="code-header">
@@ -732,7 +751,7 @@ Sei maggiorenne</pre>
 <span class="hl-keyword">fi</span></pre>
       </div>
 
-      <h3>Tabella Comparatori</h3>
+      <h3 id="ctrl-comp">Tabella Comparatori</h3>
       <p>Le condizioni all'interno di <code>[ ]</code> usano operatori specifici per interi, stringhe e file.</p>
       <table>
         <thead>
@@ -781,6 +800,16 @@ Sei maggiorenne</pre>
 <span class="hl-comment"># for su file tramite glob: *.txt si espande prima del ciclo</span>
 <span class="hl-keyword">for</span> <span class="hl-variable">FILE</span> <span class="hl-keyword">in</span> *.txt; <span class="hl-keyword">do</span>
     <span class="hl-keyword">echo</span> <span class="hl-string">"File trovato: $FILE"</span>
+<span class="hl-keyword">done</span>
+
+<span class="hl-comment"># for su sequenza numerica: {1..5} genera 1 2 3 4 5</span>
+<span class="hl-keyword">for</span> <span class="hl-variable">I</span> <span class="hl-keyword">in</span> {1..5}; <span class="hl-keyword">do</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"Iterazione $I"</span>
+<span class="hl-keyword">done</span>
+
+<span class="hl-comment"># Con step opzionale: {0..10..2} genera 0 2 4 6 8 10</span>
+<span class="hl-keyword">for</span> <span class="hl-variable">I</span> <span class="hl-keyword">in</span> {0..10..2}; <span class="hl-keyword">do</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"$I"</span>
 <span class="hl-keyword">done</span></pre>
       </div>
 
