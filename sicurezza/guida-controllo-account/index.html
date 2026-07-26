@@ -186,7 +186,7 @@
 }
 .checklist-item.checked .checklist-box { background: var(--green-dark); border-color: var(--green-dark); }
 .checklist-item.checked .checklist-box::after { content: '✓'; color: #fff; font-size: .8rem; font-weight: 700; }
-.checklist-text { font-size: .88rem; line-height: 1.5; color: var(--gray-dark); flex: 1; }
+.checklist-text { font-size: .88rem; line-height: 1.5; color: var(--gray-dark) !important; flex: 1; }
 .checklist-item.checked .checklist-text { color: var(--gray-mid); text-decoration: line-through; }
 .checklist-progress {
   padding: .85rem 1.25rem;
@@ -237,7 +237,7 @@
       <li><a class="nav-item" href="#s5" onclick="closeSidebar()"><span class="nav-num">5</span><span class="nav-text">Apple ID e Microsoft</span></a></li>
       <li><a class="nav-item" href="#s6" onclick="closeSidebar()"><span class="nav-num">6</span><span class="nav-text">Accessi non autorizzati</span></a></li>
       <li><a class="nav-item" href="#s7" onclick="closeSidebar()"><span class="nav-num">7</span><span class="nav-text">Cedere il telefono</span></a></li>
-      <li><a class="nav-item" href="#s8" onclick="closeSidebar()"><span class="nav-num">✓</span><span class="nav-text">Checklist — Cosa controllare subito</span></a></li>
+      <li><a class="nav-item" href="#s8" onclick="closeSidebar()"><span class="nav-num">✓</span><span class="nav-text">Checklist — Cosa controllare</span></a></li>
     </ul>
     <hr class="sidebar-divider">
     <div class="sidebar-meta">
@@ -647,54 +647,54 @@
 
         <div class="checklist-group-label">🔵 Google</div>
         <div class="checklist-items">
-          <label class="checklist-item" onclick="toggleCheck(this,0)">
-            <input type="checkbox"><div class="checklist-box"></div>
-            <span class="checklist-text">Ho aperto myaccount.google.com → Sicurezza e accesso → I tuoi dispositivi e verificato tutti gli accessi</span>
-          </label>
-          <label class="checklist-item" onclick="toggleCheck(this,1)">
-            <input type="checkbox"><div class="checklist-box"></div>
-            <span class="checklist-text">Ho rimosso i dispositivi che non riconosco o che non uso più</span>
-          </label>
-          <label class="checklist-item" onclick="toggleCheck(this,2)">
-            <input type="checkbox"><div class="checklist-box"></div>
-            <span class="checklist-text">Ho controllato le app di terze parti e rimosso quelle non necessarie</span>
-          </label>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-box"></div>
+          <span class="checklist-text">Ho aperto myaccount.google.com → Sicurezza e accesso → I tuoi dispositivi e verificato tutti gli accessi</span>
+        </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-box"></div>
+          <span class="checklist-text">Ho rimosso i dispositivi che non riconosco o che non uso più</span>
+        </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-box"></div>
+          <span class="checklist-text">Ho controllato le app di terze parti e rimosso quelle non necessarie</span>
+        </div>
         </div>
 
         <div class="checklist-group-label">📘 Facebook e Instagram</div>
         <div class="checklist-items">
-          <label class="checklist-item" onclick="toggleCheck(this,3)">
-            <input type="checkbox"><div class="checklist-box"></div>
-            <span class="checklist-text">Ho verificato "Dove hai effettuato l'accesso" su Facebook e disconnesso le sessioni non riconosciute</span>
-          </label>
-          <label class="checklist-item" onclick="toggleCheck(this,4)">
-            <input type="checkbox"><div class="checklist-box"></div>
-            <span class="checklist-text">Ho controllato gli accessi attivi su Instagram tramite Account Center → Password e sicurezza</span>
-          </label>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-box"></div>
+          <span class="checklist-text">Ho verificato "Dove hai effettuato l'accesso" su Facebook e disconnesso le sessioni non riconosciute</span>
+        </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-box"></div>
+          <span class="checklist-text">Ho controllato gli accessi attivi su Instagram tramite Account Center → Password e sicurezza</span>
+        </div>
         </div>
 
         <div class="checklist-group-label">📧 Email</div>
         <div class="checklist-items">
-          <label class="checklist-item" onclick="toggleCheck(this,5)">
-            <input type="checkbox"><div class="checklist-box"></div>
-            <span class="checklist-text">Ho verificato gli accessi recenti al mio account email principale</span>
-          </label>
-          <label class="checklist-item" onclick="toggleCheck(this,6)">
-            <input type="checkbox"><div class="checklist-box"></div>
-            <span class="checklist-text">Ho confermato che email e numero di telefono di recupero siano corretti</span>
-          </label>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-box"></div>
+          <span class="checklist-text">Ho verificato gli accessi recenti al mio account email principale</span>
+        </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-box"></div>
+          <span class="checklist-text">Ho confermato che email e numero di telefono di recupero siano corretti</span>
+        </div>
         </div>
 
         <div class="checklist-group-label">📱 Dispositivi</div>
         <div class="checklist-items">
-          <label class="checklist-item" onclick="toggleCheck(this,7)">
-            <input type="checkbox"><div class="checklist-box"></div>
-            <span class="checklist-text">Ho controllato i dispositivi collegati al mio Apple ID o account Microsoft</span>
-          </label>
-          <label class="checklist-item" onclick="toggleCheck(this,8)">
-            <input type="checkbox"><div class="checklist-box"></div>
-            <span class="checklist-text">Il blocco schermo automatico del mio telefono è attivo (massimo 1 minuto di inattività)</span>
-          </label>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-box"></div>
+          <span class="checklist-text">Ho controllato i dispositivi collegati al mio Apple ID o account Microsoft</span>
+        </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+          <div class="checklist-box"></div>
+          <span class="checklist-text">Il blocco schermo automatico del mio telefono è attivo (massimo 1 minuto di inattività)</span>
+        </div>
         </div>
 
         <div class="checklist-progress">
