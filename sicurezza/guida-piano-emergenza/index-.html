@@ -209,8 +209,8 @@
   .guide-header, .guide-sidebar, .sidebar-overlay,
   .guide-hero, nav, .related-link, footer,
   #hamburger, .hero-badge, .back-to-top { display: none !important; }
-  .guide-layout { display: block !important; margin: 0 !important; }
-  .guide-main { display: block !important; margin: 0 !important; max-width: 100%; padding: 0; }
+  .guide-layout { display: block; }
+  .guide-main { margin: 0; max-width: 100%; padding: 0; }
   .guide-section { page-break-inside: avoid; }
   .guide-section:not(#s7) { display: none; }
   .piano-card { border: 2px solid #000; }
@@ -228,7 +228,7 @@
   </a>
   <div class="guide-header-center">Piano di emergenza digitale</div>
   <div class="guide-header-right">
-    <button class="hamburger" id="hamburger" aria-label="Apri menu sezioni" aria-expanded="false" aria-controls="guide-sidebar" onclick="toggleSidebar()">
+    <button class="hamburger" id="hamburger" aria-label="Apri menu sezioni" onclick="toggleSidebar()">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -353,14 +353,9 @@
         </div>
       </div>
 
-      <div class="box box-info">
-        <div class="box-label">Annota il codice IMEI del tuo telefono</div>
-        <p>L'IMEI è un codice univoco a 15 cifre che identifica il tuo telefono. In caso di furto, inserirlo nella denuncia alle forze dell'ordine permette agli operatori di inserire il dispositivo nella <strong>Blacklist IMEI nazionale</strong>, rendendolo inutilizzabile con qualsiasi SIM sul territorio italiano. Trovi il codice IMEI digitando <strong>*#06#</strong> sul tastierino del telefono, oppure sulla scatola originale. Annotalo adesso nel piano stampabile (Sezione 7).</p>
-      </div>
-
       <div class="box box-warn">
         <div class="box-label">Prima di cancellare da remoto</div>
-        <p><strong>Regola d'oro: blocca prima, cancella solo se sei certo di non ritrovarlo.</strong> Su Android la cancellazione remota rimuove anche la possibilità di tracciamento. Su iPhone invece, anche dopo il wipe remoto, l'Activation Lock resta attivo e il telefono continua a essere localizzabile tramite la rete "Dov'è" (se vicino ad altri dispositivi Apple). In entrambi i casi, non puoi annullare una cancellazione.</p>
+        <p>La cancellazione remota è definitiva e impedisce il tracciamento. Se pensi di poter recuperare il telefono (es. lo hai dimenticato in un posto che puoi raggiungere), <strong>blocca senza cancellare</strong> — puoi sempre cancellare dopo. Non puoi annullare una cancellazione.</p>
       </div>
     </section>
 
@@ -561,7 +556,6 @@
           <div class="piano-field"><span class="piano-field-label">Sistema:</span><span class="piano-field-line"></span></div>
           <div class="piano-field"><span class="piano-field-label">Account principale (email):</span><span class="piano-field-line"></span></div>
           <div class="piano-field"><span class="piano-field-label">"Dov'è" / "Trova dispositivo" attivo?</span><span class="piano-field-line"></span></div>
-          <div class="piano-field"><span class="piano-field-label">Codice IMEI (*#06#):</span><span class="piano-field-line"></span></div>
         </div>
 
         <div class="piano-section">
@@ -612,7 +606,7 @@
         <div class="piano-section">
           <div class="piano-section-title">📞 Contatti di emergenza</div>
           <div class="piano-field"><span class="piano-field-label">Polizia Postale online:</span><span class="piano-field-line">commissariatodips.it</span></div>
-          <div class="piano-field"><span class="piano-field-label">Emergenze:</span><span class="piano-field-line">112 — Numero Unico Emergenze</span></div>
+          <div class="piano-field"><span class="piano-field-label">Polizia / Carabinieri:</span><span class="piano-field-line">112 / 113</span></div>
           <div class="piano-field"><span class="piano-field-label">Garante Privacy:</span><span class="piano-field-line">garanteprivacy.it</span></div>
           <div class="piano-field"><span class="piano-field-label">ABF (controversie banca):</span><span class="piano-field-line">arbitrobancariofinanziario.it</span></div>
         </div>
@@ -643,15 +637,12 @@
 <script src="/scripts/ui.js" defer></script>
 <script>
 function toggleSidebar() {
-  const btn = document.getElementById('hamburger');
   document.getElementById('guide-sidebar').classList.toggle('is-open');
   document.getElementById('sidebar-overlay').classList.toggle('is-open');
-  btn.setAttribute('aria-expanded', btn.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
 }
 function closeSidebar() {
   document.getElementById('guide-sidebar').classList.remove('is-open');
   document.getElementById('sidebar-overlay').classList.remove('is-open');
-  document.getElementById('hamburger').setAttribute('aria-expanded', 'false');
 }
 (function() {
   const sections = document.querySelectorAll('.guide-section[id]');

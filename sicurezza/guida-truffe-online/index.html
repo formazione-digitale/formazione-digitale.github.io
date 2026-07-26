@@ -222,7 +222,7 @@
   </a>
   <div class="guide-header-center">Le trappole online</div>
   <div class="guide-header-right">
-    <button class="hamburger" id="hamburger" aria-label="Apri menu sezioni" onclick="toggleSidebar()">
+    <button class="hamburger" id="hamburger" aria-label="Apri menu sezioni" aria-expanded="false" aria-controls="guide-sidebar" onclick="toggleSidebar()">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -439,6 +439,11 @@
         <p>I truffatori possono <strong>falsificare il numero mittente</strong> — una tecnica chiamata SMS spoofing. Il tuo telefono potrebbe mostrare "Intesa Sanpaolo" come mittente anche se il messaggio non viene dalla vera banca. Non fidarti del nome del mittente per valutare l'autenticità.</p>
       </div>
 
+      <div class="box box-warn">
+        <div class="box-label">Attenzione anche alle chiamate: il vishing</div>
+        <p>I truffatori possono falsificare anche il <strong>numero di telefono chiamante</strong>: sul tuo display può comparire il numero verde reale della tua banca, ma dall'altra parte c'è un truffatore che finge di essere un operatore della sicurezza. Se ricevi una chiamata inaspettata da chi dice di essere la tua banca: <strong>riaggancia e richiama tu</strong> il numero che trovi sul retro della carta o sul sito ufficiale. La vera banca non si offenderà mai.</p>
+      </div>
+
       <h3 class="sub-title">Come comportarsi</h3>
       <ol class="steps-list">
         <li><strong>Non cliccare il link</strong> nell'SMS — nemmeno per "vedere cosa c'è".</li>
@@ -584,7 +589,7 @@
               <li>Se sei su telefono, vai su Impostazioni → App → Browser e cancella cache e dati.</li>
               <li>Esegui una scansione con un antivirus aggiornato (Windows Defender su PC è sufficiente).</li>
               <li>Monitora i tuoi account nei giorni successivi per attività anomale.</li>
-              <li>In molti casi, il clic da solo non causa danni — dipende dal sito e dal dispositivo.</li>
+              <li>In molti casi, il clic da solo non causa danni — dipende dal sito e dal dispositivo. <strong>Eccezione importante:</strong> se dopo il clic parte il download automatico di un file, <strong>non aprirlo</strong> in nessun caso — eliminalo immediatamente.</li>
             </ul>
           </div>
         </div>
@@ -649,12 +654,15 @@
 <script src="/scripts/ui.js" defer></script>
 <script>
 function toggleSidebar() {
+  const btn = document.getElementById('hamburger');
   document.getElementById('guide-sidebar').classList.toggle('is-open');
   document.getElementById('sidebar-overlay').classList.toggle('is-open');
+  btn.setAttribute('aria-expanded', btn.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
 }
 function closeSidebar() {
   document.getElementById('guide-sidebar').classList.remove('is-open');
   document.getElementById('sidebar-overlay').classList.remove('is-open');
+  document.getElementById('hamburger').setAttribute('aria-expanded', 'false');
 }
 (function() {
   const sections = document.querySelectorAll('.guide-section[id]');

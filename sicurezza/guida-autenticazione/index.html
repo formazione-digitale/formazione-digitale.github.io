@@ -227,7 +227,7 @@
   </a>
   <div class="guide-header-center">Password, 2FA e SPID</div>
   <div class="guide-header-right">
-    <button class="hamburger" id="hamburger" aria-label="Apri menu sezioni" onclick="toggleSidebar()">
+    <button class="hamburger" id="hamburger" aria-label="Apri menu sezioni" aria-expanded="false" aria-controls="guide-sidebar" onclick="toggleSidebar()">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -493,6 +493,11 @@
         <li>L'account appare nell'app con un codice a 6 cifre. Inserisci quel codice in Google per confermare che tutto funziona.</li>
         <li><strong>Salva i codici di backup</strong> che Google ti fornisce — stampali o scrivili su carta e conservali in un posto sicuro.</li>
       </ol>
+
+      <div class="box box-info">
+        <div class="box-label">Codici a 6 cifre o notifica "Approva"?</div>
+        <p>Non tutte le app authenticator funzionano allo stesso modo. Alcune (come Microsoft Authenticator) possono mostrare una <strong>notifica push</strong> invece del codice: compare un messaggio "Approva questo accesso?" che basta toccare per confermare. È lo stesso secondo fattore in una forma più comoda — nessun codice da digitare. Anche PosteID usa questo meccanismo per alcuni accessi SPID. Se vedi una notifica anziché un numero, è normale: tocca "Approva" se sei tu ad accedere, "Rifiuta" se non sei stato tu.</p>
+      </div>
     </section>
 
     <!-- ═══ S5 ═══ -->
@@ -786,12 +791,15 @@
 <script>
 /* ── Sidebar ── */
 function toggleSidebar() {
+  const btn = document.getElementById('hamburger');
   document.getElementById('guide-sidebar').classList.toggle('is-open');
   document.getElementById('sidebar-overlay').classList.toggle('is-open');
+  btn.setAttribute('aria-expanded', btn.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
 }
 function closeSidebar() {
   document.getElementById('guide-sidebar').classList.remove('is-open');
   document.getElementById('sidebar-overlay').classList.remove('is-open');
+  document.getElementById('hamburger').setAttribute('aria-expanded', 'false');
 }
 
 /* ── Highlight nav item attivo ── */
