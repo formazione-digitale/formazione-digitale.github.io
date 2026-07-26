@@ -104,18 +104,18 @@
 }
 .steps-list li {
   counter-increment: steps;
-  display: flex; align-items: flex-start; gap: .85rem;
+  position: relative;
+  padding-left: 38px;
   font-size: .9rem; line-height: 1.6; color: var(--gray-dark);
   overflow-wrap: break-word; word-break: break-word;
 }
 .steps-list li::before {
   content: counter(steps);
+  position: absolute; left: 0; top: .1rem;
   display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
   width: 26px; height: 26px; border-radius: 50%;
-  background: var(--blue-mid);
-  color: #fff; font-size: .75rem; font-weight: 700;
-  margin-top: .15rem;
+  background: var(--blue-mid); color: #fff;
+  font-size: .75rem; font-weight: 700;
 }
 .steps-list li strong { color: var(--blue-dark); }
 
