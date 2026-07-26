@@ -232,12 +232,12 @@
     <ul class="sidebar-nav" id="sidebar-nav">
       <li><a class="nav-item active" href="#s1" onclick="closeSidebar()"><span class="nav-num">1</span><span class="nav-text">Cosa significa essere "connesso"</span></a></li>
       <li><a class="nav-item" href="#s2" onclick="closeSidebar()"><span class="nav-num">2</span><span class="nav-text">I tuoi account Google</span></a></li>
-      <li><a class="nav-item" href="#s3" onclick="closeSidebar()"><span class="nav-num">3</span><span class="nav-text">Facebook e Instagram</span></a></li>
+      <li><a class="nav-item" href="#s3" onclick="closeSidebar()"><span class="nav-num">3</span><span class="nav-text">Facebook, Instagram, WhatsApp</span></a></li>
       <li><a class="nav-item" href="#s4" onclick="closeSidebar()"><span class="nav-num">4</span><span class="nav-text">Il tuo account email</span></a></li>
       <li><a class="nav-item" href="#s5" onclick="closeSidebar()"><span class="nav-num">5</span><span class="nav-text">Apple ID e Microsoft</span></a></li>
       <li><a class="nav-item" href="#s6" onclick="closeSidebar()"><span class="nav-num">6</span><span class="nav-text">Accessi non autorizzati</span></a></li>
       <li><a class="nav-item" href="#s7" onclick="closeSidebar()"><span class="nav-num">7</span><span class="nav-text">Cedere il telefono</span></a></li>
-      <li><a class="nav-item" href="#s8" onclick="closeSidebar()"><span class="nav-num">✓</span><span class="nav-text">Checklist — Cosa controllare</span></a></li>
+      <li><a class="nav-item" href="#s8" onclick="closeSidebar()"><span class="nav-num">✓</span><span class="nav-text">Checklist — Cosa controllare subito</span></a></li>
     </ul>
     <hr class="sidebar-divider">
     <div class="sidebar-meta">
@@ -393,7 +393,7 @@
       <div class="section-header">
         <div class="section-num">3</div>
         <div class="section-titles">
-          <h2 class="section-title">Facebook e Instagram</h2>
+          <h2 class="section-title">Facebook, Instagram e WhatsApp</h2>
           <p class="section-subtitle">Come vedere dove sei connesso e terminare le sessioni non volute</p>
         </div>
       </div>
@@ -421,6 +421,27 @@
       <div class="box box-info">
         <div class="box-label">Le posizioni sembrano strane?</div>
         <p>Facebook mostra la posizione basandosi sull'indirizzo IP. Se usi una VPN o sei connesso a una rete con sede altrove, la posizione può risultare diversa. <strong>Prima di allarmarti, controlla data e tipo di dispositivo</strong>: se è il tuo telefono con la data di oggi, è quasi certamente normale.</p>
+      </div>
+
+      <h3 class="sub-title">WhatsApp — dispositivi collegati</h3>
+      <p>WhatsApp permette di usare il proprio account su più dispositivi contemporaneamente — browser, PC, tablet. Ogni connessione aperta è una potenziale porta d'accesso: i tuoi messaggi, i tuoi contatti, le tue foto. Verificare periodicamente cosa è collegato richiede meno di due minuti.</p>
+
+      <ol class="steps-list">
+        <li>Apri WhatsApp sul telefono. Tocca i tre puntini ⋮ in alto a destra (Android) oppure <strong>Impostazioni</strong> in basso a destra (iPhone).</li>
+        <li>Scegli <strong>"Dispositivi collegati"</strong>.</li>
+        <li>Vedrai la lista di tutti i dispositivi attivi: browser, sistema operativo, data e ora dell'ultimo accesso.</li>
+        <li>Per disconnettere un dispositivo specifico: toccalo e scegli <strong>"Disconnetti"</strong>.</li>
+        <li>Per uscire da tutto in una volta: tocca <strong>"Disconnetti da tutti i dispositivi"</strong> in fondo alla lista.</li>
+      </ol>
+
+      <div class="box box-warn">
+        <div class="box-label">Mai lasciare WhatsApp Web su un PC condiviso</div>
+        <p>Se hai usato WhatsApp Web su un computer di lavoro, scolastico o di un amico, è probabile che la sessione sia ancora aperta. Disconnettiti sempre prima di lasciare quel dispositivo — o fallo adesso dalla lista dei dispositivi collegati sul telefono.</p>
+      </div>
+
+      <div class="box box-tip">
+        <div class="box-label">Non vedi la voce "Dispositivi collegati"?</div>
+        <p>Assicurati di avere WhatsApp aggiornato all'ultima versione. Se usi ancora la versione precedente (non multi-device), la funzione potrebbe apparire come <strong>"WhatsApp Web"</strong> con lo stesso percorso.</p>
       </div>
     </section>
 
@@ -648,57 +669,73 @@
         <div class="checklist-group-label">🔵 Google</div>
         <div class="checklist-items">
           <div class="checklist-item" onclick="toggleCheck(this)">
-          <div class="checklist-box"></div>
-          <span class="checklist-text">Ho aperto myaccount.google.com → Sicurezza e accesso → I tuoi dispositivi e verificato tutti gli accessi</span>
-        </div>
+            <div class="checklist-box"></div>
+            <span class="checklist-text">Ho aperto myaccount.google.com → Sicurezza e accesso → I tuoi dispositivi e verificato tutti gli accessi</span>
+          </div>
           <div class="checklist-item" onclick="toggleCheck(this)">
-          <div class="checklist-box"></div>
-          <span class="checklist-text">Ho rimosso i dispositivi che non riconosco o che non uso più</span>
-        </div>
+            <div class="checklist-box"></div>
+            <span class="checklist-text">Ho rimosso i dispositivi che non riconosco o che non uso più</span>
+          </div>
           <div class="checklist-item" onclick="toggleCheck(this)">
-          <div class="checklist-box"></div>
-          <span class="checklist-text">Ho controllato le app di terze parti e rimosso quelle non necessarie</span>
-        </div>
+            <div class="checklist-box"></div>
+            <span class="checklist-text">Ho controllato le app di terze parti e rimosso quelle non necessarie</span>
+          </div>
         </div>
 
-        <div class="checklist-group-label">📘 Facebook e Instagram</div>
+        <div class="checklist-group-label">📘 Social e messaggistica</div>
         <div class="checklist-items">
           <div class="checklist-item" onclick="toggleCheck(this)">
-          <div class="checklist-box"></div>
-          <span class="checklist-text">Ho verificato "Dove hai effettuato l'accesso" su Facebook e disconnesso le sessioni non riconosciute</span>
-        </div>
+            <div class="checklist-box"></div>
+            <span class="checklist-text">Ho verificato "Dove hai effettuato l'accesso" su Facebook e disconnesso le sessioni non riconosciute</span>
+          </div>
           <div class="checklist-item" onclick="toggleCheck(this)">
-          <div class="checklist-box"></div>
-          <span class="checklist-text">Ho controllato gli accessi attivi su Instagram tramite Account Center → Password e sicurezza</span>
-        </div>
+            <div class="checklist-box"></div>
+            <span class="checklist-text">Ho controllato gli accessi attivi su Instagram tramite Account Center → Password e sicurezza</span>
+          </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <div class="checklist-box"></div>
+            <span class="checklist-text">Ho aperto WhatsApp → Dispositivi collegati e disconnesso quelli che non riconosco</span>
+          </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <div class="checklist-box"></div>
+            <span class="checklist-text">Ho attivato la verifica in due passaggi su WhatsApp (Impostazioni → Account → Verifica in due passaggi)</span>
+          </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <div class="checklist-box"></div>
+            <span class="checklist-text">Foto profilo WhatsApp → "Solo i miei contatti" (Impostazioni → Privacy → Foto del profilo)</span>
+          </div>
+          <div class="checklist-item" onclick="toggleCheck(this)">
+            <div class="checklist-box"></div>
+            <span class="checklist-text">Ultimo accesso WhatsApp → "Solo i miei contatti" (Impostazioni → Privacy → Ultimo accesso)</span>
+          </div>
         </div>
 
         <div class="checklist-group-label">📧 Email</div>
         <div class="checklist-items">
           <div class="checklist-item" onclick="toggleCheck(this)">
-          <div class="checklist-box"></div>
-          <span class="checklist-text">Ho verificato gli accessi recenti al mio account email principale</span>
-        </div>
+            <div class="checklist-box"></div>
+            <span class="checklist-text">Ho verificato gli accessi recenti al mio account email principale</span>
+          </div>
           <div class="checklist-item" onclick="toggleCheck(this)">
-          <div class="checklist-box"></div>
-          <span class="checklist-text">Ho confermato che email e numero di telefono di recupero siano corretti</span>
-        </div>
+            <div class="checklist-box"></div>
+            <span class="checklist-text">Ho confermato che email e numero di telefono di recupero siano corretti</span>
+          </div>
         </div>
 
         <div class="checklist-group-label">📱 Dispositivi</div>
         <div class="checklist-items">
           <div class="checklist-item" onclick="toggleCheck(this)">
-          <div class="checklist-box"></div>
-          <span class="checklist-text">Ho controllato i dispositivi collegati al mio Apple ID o account Microsoft</span>
-        </div>
+            <div class="checklist-box"></div>
+            <span class="checklist-text">Ho controllato i dispositivi collegati al mio Apple ID o account Microsoft</span>
+          </div>
           <div class="checklist-item" onclick="toggleCheck(this)">
-          <div class="checklist-box"></div>
-          <span class="checklist-text">Il blocco schermo automatico del mio telefono è attivo (massimo 1 minuto di inattività)</span>
-        </div>
+            <div class="checklist-box"></div>
+            <span class="checklist-text">Il blocco schermo automatico del mio telefono è attivo (massimo 1 minuto di inattività)</span>
+          </div>
         </div>
 
         <div class="checklist-progress">
-          <span id="progress-label">0 di 9 completati</span>
+          <span id="progress-label">0 di 13 completati</span>
           <div class="progress-bar-wrap">
             <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
           </div>
@@ -761,8 +798,8 @@ function closeSidebar() {
 function toggleCheck(el) {
   el.classList.toggle('checked');
   const done = document.querySelectorAll('.checklist-item.checked').length;
-  const pct  = Math.round((done / 9) * 100);
-  document.getElementById('progress-label').textContent = done + ' di 9 completati';
+  const pct  = Math.round((done / 13) * 100);
+  document.getElementById('progress-label').textContent = done + ' di 13 completati';
   document.getElementById('progress-fill').style.width  = pct + '%';
   document.getElementById('progress-pct').textContent   = pct + '%';
 }
