@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sicurezza Digitale — Formazione Digitale</title>
+  <meta name="description" content="8 risorse sulla sicurezza digitale: guide pratiche, pillole e il percorso completo 'Sicurezza per tutti i giorni' in 4 moduli.">
+  <meta name="author" content="Cristiano De Pasquale">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://formazione-digitale.it/sicurezza/">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="//gc.zgo.at">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1F4E79">
+
+  <meta property="og:title" content="Sicurezza Digitale — Formazione Digitale">
+  <meta property="og:description" content="8 risorse sulla sicurezza digitale: guide pratiche, pillole e percorso completo in 4 moduli.">
+  <meta property="og:url" content="https://formazione-digitale.it/sicurezza/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Formazione Digitale">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Sicurezza Digitale — Formazione Digitale">
+  <meta name="twitter:description" content="8 risorse: guide pratiche, pillole e percorso in 4 moduli.">
+  <meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Sicurezza Digitale",
+    "description": "8 risorse sulla sicurezza digitale: account, autenticazione, truffe online, piano di emergenza e altro.",
+    "url": "https://formazione-digitale.it/sicurezza/",
+    "publisher": {
+      "@type": "WebSite",
+      "name": "Formazione Digitale",
+      "url": "https://formazione-digitale.it"
+    }
+  }
+  </script>
+
+  <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+  <link rel="stylesheet" href="/css/shared.css?v=3">
+
+  <style>
+    /* ── HEADER HUB — due colonne ────────────────────────────────────── */
+    .hub-header {
+      background: linear-gradient(135deg, var(--blue-dark) 0%, #2A6099 100%);
+      color: #fff;
+      padding: 3.5rem 2rem;
+      border-radius: 0;
+      margin-bottom: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .hub-header-text h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 5vw, 2.4rem);
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .hub-header-text p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .hub-header-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .hub-header-meta strong {
+      color: var(--blue-light);
+      font-weight: 600;
+    }
+
+    .hub-header-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media(max-width: 900px) {
+      .hub-header {
+        grid-template-columns: 1fr;
+        padding: 2.5rem 1.5rem;
+        gap: 1.5rem;
+      }
+      .hub-header-visual { display: none; }
+    }
+
+    /* ── INTRO ────────────────────────────────────────────────────────── */
+    .hub-intro {
+      max-width: 960px;
+      margin: 0 auto 3rem;
+      padding: 0 2rem;
+    }
+
+    .hub-intro h2 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--blue-dark);
+      margin-bottom: 1rem;
+    }
+
+    .hub-intro p {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: #3a3a3a;
+      margin-bottom: 0.85rem;
+    }
+
+    .hub-intro-highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .highlight-item {
+      background: var(--blue-pale);
+      border: 1px solid var(--blue-light);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+    }
+
+    .highlight-item strong {
+      color: var(--blue-dark);
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .highlight-item p {
+      font-size: 0.85rem;
+      color: var(--gray-mid);
+      margin: 0;
+    }
+
+    @media(max-width: 900px) {
+      .hub-intro { padding: 0 1.5rem; }
+      .hub-intro h2 { font-size: 1.2rem; }
+    }
+
+    /* ── PERCORSO CONSIGLIATO ────────────────────────────────────────── */
+    .hub-path {
+      background: var(--white);
+      border: 1px solid var(--blue-light);
+      border-radius: 10px;
+      padding: 2rem;
+      max-width: 960px;
+      margin: 0 auto 3rem;
+    }
+
+    .hub-path h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--blue-dark);
+      margin-bottom: 1.25rem;
+    }
+
+    .path-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .path-step {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .path-num {
+      background: var(--blue-mid);
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .path-content strong {
+      color: var(--blue-dark);
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .path-content p {
+      font-size: 0.85rem;
+      color: var(--gray-mid);
+      margin: 0;
+    }
+
+    @media(max-width: 900px) {
+      .hub-path { margin: 0 1.5rem 3rem; padding: 1.5rem; }
+    }
+
+    /* ── RISORSE ──────────────────────────────────────────────────────── */
+    .hub-resources {
+      max-width: 960px;
+      margin: 0 auto 3rem;
+      padding: 0 2rem;
+    }
+
+    .hub-resources h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: var(--blue-dark);
+      margin-bottom: 1.5rem;
+    }
+
+    .resources-subgroup {
+      margin-bottom: 2.5rem;
+    }
+
+    .subgroup-header {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      color: var(--blue-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .subgroup-icon { font-size: 1.1rem; }
+
+    .subgroup-desc {
+      font-size: 0.85rem;
+      color: var(--gray-mid);
+      margin-bottom: 1rem;
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .resource-card {
+      background: #fff;
+      border: 1px solid var(--blue-light);
+      border-radius: 10px;
+      padding: 1.25rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .resource-card:hover {
+      border-color: var(--blue-mid);
+      box-shadow: 0 4px 20px rgba(31,78,121,0.12);
+      transform: translateY(-3px);
+    }
+
+    .resource-head {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .resource-icon { font-size: 1.5rem; }
+
+    .resource-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--blue-dark);
+    }
+
+    .resource-body { flex: 1; }
+
+    .resource-desc {
+      font-size: 0.85rem;
+      color: #3a3a3a;
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+
+    .resource-meta {
+      font-size: 0.78rem;
+      color: var(--gray-mid);
+      font-style: italic;
+    }
+
+    /* Badge modulo per le card del percorso */
+    .resource-module {
+      display: inline-block;
+      background: var(--blue-dark);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.15rem 0.55rem;
+      border-radius: 20px;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    @media(max-width: 900px) {
+      .hub-resources { padding: 0 1.5rem; }
+      .resources-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── TAB RISORSE ─────────────────────────────────────────────── */
+    .risorse-label {
+      max-width: 960px; margin: 0 auto 0.6rem;
+      padding: 0 2rem;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--blue-mid);
+    }
+    .hub-tabs {
+      display: flex; max-width: 960px;
+      margin: 0 auto; padding: 0 2rem;
+      border-bottom: 2px solid var(--blue-light);
+      margin-bottom: 0;
+    }
+    .hub-tab {
+      padding: 0.7rem 1.5rem; font-size: 0.88rem; font-weight: 600;
+      color: var(--gray-mid); background: none; border: none;
+      border-bottom: 3px solid transparent; margin-bottom: -2px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .hub-tab:hover { color: var(--blue-dark); }
+    .hub-tab.active { color: var(--blue-mid); border-bottom-color: var(--blue-mid); }
+    .hub-panel { display: none; }
+    .hub-panel.active { display: block; }
+
+    /* ── MAPPA D3 ─────────────────────────────────────────────────── */
+    .hub-map-wrap {
+      max-width: 960px; margin: 2rem auto 3rem; padding: 0 2rem;
+    }
+    #hub-map-container {
+      background: #0d1117; border-radius: 12px;
+      width: 100%; height: 520px; position: relative; overflow: hidden;
+    }
+    #hub-map-svg { width: 100%; height: 100%; display: block; }
+    #hub-tooltip {
+      position: absolute; background: rgba(20,24,40,0.95);
+      color: #d4d8f0; padding: 8px 12px; border-radius: 6px;
+      font-size: 0.78rem; pointer-events: none; opacity: 0;
+      transition: opacity 0.15s; max-width: 200px; line-height: 1.5;
+    }
+    #hub-tooltip strong { display: block; margin-bottom: 2px; }
+    .hub-map-hint {
+      text-align: right; font-size: 0.72rem; color: var(--gray-mid);
+      padding: 0.4rem 0 0; font-style: italic;
+    }
+    @media(max-width: 600px) {
+      .risorse-label { padding: 0 1.5rem; }
+      .hub-tabs { padding: 0 1.5rem; }
+      .hub-tab { padding: 0.6rem 1rem; font-size: 0.82rem; }
+      .hub-map-wrap { padding: 0 1.5rem; }
+      #hub-map-container { height: 400px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADER ────────────────────────────────────────────────────── -->
+  <div class="hub-header">
+    <div class="hub-header-text">
+      <a href="/" style="display:inline-block;margin-bottom:1.2rem;font-size:.82rem;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.55)'">← Portale</a>
+      <h1>Sicurezza digitale</h1>
+      <p>Proteggi i tuoi account, riconosci le truffe, scegli le password giuste e sai cosa fare quando qualcosa va storto. Guide pratiche e un percorso completo in 4 moduli.</p>
+      <div class="hub-header-meta">
+        <div>🔒 <strong>8 risorse</strong> disponibili</div>
+        <div>📚 Percorso guidato in 4 moduli</div>
+        <div>💡 Livello base · aggiornato luglio 2026</div>
+      </div>
+    </div>
+    <div class="hub-header-visual">
+      <div style="background:rgba(5,15,35,.65);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:1.5rem;display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:240px;height:auto;">
+          <!-- Scudo esterno -->
+          <path d="M140 20 L240 60 L240 150 Q240 220 140 260 Q40 220 40 150 L40 60 Z"
+            fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.85)" stroke-width="2.5" stroke-linejoin="round"/>
+          <!-- Scudo interno -->
+          <path d="M140 45 L215 75 L215 148 Q215 200 140 232 Q65 200 65 148 L65 75 Z"
+            fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.5)" stroke-width="1.5" stroke-linejoin="round"/>
+          <!-- Corpo lucchetto -->
+          <rect x="108" y="135" width="64" height="52" rx="6"
+            fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.9)" stroke-width="2.2"/>
+          <!-- Arco lucchetto -->
+          <path d="M118 135 L118 115 Q118 95 140 95 Q162 95 162 115 L162 135"
+            fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.8" stroke-linecap="round"/>
+          <!-- Buco serratura -->
+          <circle cx="140" cy="158" r="7" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2"/>
+          <line x1="140" y1="165" x2="140" y2="177" stroke="rgba(255,255,255,.9)" stroke-width="2" stroke-linecap="round"/>
+          <!-- Linee decorative scudo -->
+          <line x1="90" y1="90" x2="70" y2="75" stroke="rgba(255,255,255,.35)" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="190" y1="90" x2="210" y2="75" stroke="rgba(255,255,255,.35)" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="80" y1="180" x2="55" y2="190" stroke="rgba(255,255,255,.35)" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="200" y1="180" x2="225" y2="190" stroke="rgba(255,255,255,.35)" stroke-width="1" stroke-dasharray="3,3"/>
+          <!-- Puntini terminali -->
+          <circle cx="70" cy="75" r="2.5" fill="rgba(255,255,255,.7)"/>
+          <circle cx="210" cy="75" r="2.5" fill="rgba(255,255,255,.7)"/>
+          <circle cx="55" cy="190" r="2.5" fill="rgba(255,255,255,.7)"/>
+          <circle cx="225" cy="190" r="2.5" fill="rgba(255,255,255,.7)"/>
+          <!-- Stelle / sparkle decorative -->
+          <circle cx="58" cy="120" r="2" fill="rgba(255,255,255,.5)"/>
+          <circle cx="222" cy="120" r="2" fill="rgba(255,255,255,.5)"/>
+          <circle cx="140" cy="30" r="1.5" fill="rgba(255,255,255,.4)"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── INTRO ────────────────────────────────────────────────────── -->
+  <div class="hub-intro">
+    <h2>Cosa trovi qui</h2>
+    <p>
+      Dalla verifica di chi ha accesso ai tuoi account alle password sicure, dall'autenticazione con SPID al riconoscimento delle truffe online, fino al piano da seguire quando qualcosa va storto.
+      Le risorse sono pensate per chi usa quotidianamente smartphone e PC — senza presupporre conoscenze tecniche.
+    </p>
+
+    <div class="hub-intro-highlights">
+      <div class="highlight-item">
+        <strong>Controllo degli accessi</strong>
+        <p>Sessioni attive, logout corretto, cosa fare prima di cedere il telefono</p>
+      </div>
+      <div class="highlight-item">
+        <strong>Password e autenticazione</strong>
+        <p>Passphrase, gestore di password, 2FA, SPID, QR code, CIE</p>
+      </div>
+      <div class="highlight-item">
+        <strong>Truffe e inganni</strong>
+        <p>Phishing, smishing, truffe WhatsApp, siti contraffatti, come verificare</p>
+      </div>
+      <div class="highlight-item">
+        <strong>Emergenze digitali</strong>
+        <p>Telefono rubato, account violato, identità compromessa — piano stampabile</p>
+      </div>
+      <div class="highlight-item">
+        <strong>Principi e attacchi</strong>
+        <p>Triade CIA, crittografia, PKI, SPID, mappa completa degli attacchi informatici</p>
+      </div>
+      <div class="highlight-item">
+        <strong>Pillola rapida</strong>
+        <p>6 mosse essenziali per stare al sicuro — lettura in 5 minuti</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="risorse-label">RISORSE DISPONIBILI</div>
+  <div class="hub-tabs">
+    <button class="hub-tab active" data-panel="panel-map">🗺 Mappa</button>
+    <button class="hub-tab" data-panel="panel-list">📋 Lista</button>
+  </div>
+
+  <!-- ── PANEL MAPPA ───────────────────────────────────────────────── -->
+  <div id="panel-map" class="hub-panel active">
+    <div class="hub-map-wrap">
+      <div id="hub-map-container">
+        <svg id="hub-map-svg"></svg>
+        <div id="hub-tooltip"></div>
+      </div>
+      <p class="hub-map-hint">Trascina i nodi · Hover per dettagli · Click per aprire</p>
+    </div>
+  </div>
+
+  <!-- ── PANEL LISTA ───────────────────────────────────────────────── -->
+  <div id="panel-list" class="hub-panel">
+
+    <!-- Percorso consigliato -->
+    <div class="hub-path">
+      <h3>📍 Percorso consigliato — Sicurezza per tutti i giorni</h3>
+      <div class="path-steps">
+        <div class="path-step">
+          <div class="path-num">1</div>
+          <div class="path-content">
+            <strong>Chi ha accesso ai tuoi account?</strong>
+            <p>Parti da qui: verifica le sessioni attive su Google, Facebook, email e Apple ID. Fai il logout corretto, controlla le app collegate.</p>
+          </div>
+        </div>
+        <div class="path-step">
+          <div class="path-num">2</div>
+          <div class="path-content">
+            <strong>Chiavi, lucchetti e doppi lucchetti</strong>
+            <p>Password sicure, gestore di password, autenticazione a due fattori, SPID con comparazione provider 2026, QR code e CIE.</p>
+          </div>
+        </div>
+        <div class="path-step">
+          <div class="path-num">3</div>
+          <div class="path-content">
+            <strong>Le trappole online</strong>
+            <p>Phishing, smishing, truffe WhatsApp, siti contraffatti. Come riconoscerli e cosa fare se hai già cliccato.</p>
+          </div>
+        </div>
+        <div class="path-step">
+          <div class="path-num">4</div>
+          <div class="path-content">
+            <strong>Piano di emergenza digitale</strong>
+            <p>Telefono rubato, account violato, identità compromessa. Cosa fare nei primi 10 minuti — piano stampabile con numeri utili.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Risorse per sottoarea -->
+    <div class="hub-resources">
+      <h3>📚 Tutte le risorse</h3>
+
+      <!-- SOTTOAREA 1: Risorse generali -->
+      <div class="resources-subgroup">
+        <div class="subgroup-header">
+          <span class="subgroup-icon">🔒</span>
+          Risorse generali
+        </div>
+        <p class="subgroup-desc">Guide e pillole di cybersicurezza per tutti i livelli — dal principiante al tecnico.</p>
+        <div class="resources-grid">
+
+          <a href="/sicurezza/guida-cybersicurezza/" class="resource-card">
+            <div class="resource-head">
+              <div class="resource-icon">🔐</div>
+              <div class="resource-title">Cybersicurezza personale</div>
+            </div>
+            <div class="resource-body">
+              <p class="resource-desc">Phishing, password sicure, 2FA, VPN, backup e piano d'azione mensile. La guida di partenza per tutti.</p>
+              <div class="resource-meta">10 sezioni · ~35 min · Livello base</div>
+            </div>
+          </a>
+
+          <a href="/sicurezza/pillola-cybersicurezza/" class="resource-card">
+            <div class="resource-head">
+              <div class="resource-icon">⚡</div>
+              <div class="resource-title">6 mosse per stare al sicuro</div>
+            </div>
+            <div class="resource-body">
+              <p class="resource-desc">Le sei azioni più importanti per proteggere subito account e dispositivi. Lettura in 5 minuti.</p>
+              <div class="resource-meta">Pillola · ~5 min · Livello base</div>
+            </div>
+          </a>
+
+          <a href="/sicurezza/guida-principi-sicurezza/" class="resource-card">
+            <div class="resource-head">
+              <div class="resource-icon">🛡️</div>
+              <div class="resource-title">Principi di sicurezza informatica</div>
+            </div>
+            <div class="resource-body">
+              <p class="resource-desc">Triade CIA, crittografia simmetrica e asimmetrica, certificati digitali, PKI, autenticazione e SPID.</p>
+              <div class="resource-meta">9 sezioni · ~30 min · Intermedio</div>
+            </div>
+          </a>
+
+          <a href="/sicurezza/guida-attacchi-informatici/" class="resource-card">
+            <div class="resource-head">
+              <div class="resource-icon">⚔️</div>
+              <div class="resource-title">Mappa degli attacchi informatici</div>
+            </div>
+            <div class="resource-body">
+              <p class="resource-desc">Malware, ransomware, DDoS, SQL injection, phishing e social engineering — panoramica completa per studenti.</p>
+              <div class="resource-meta">Livello tecnico · per studenti ITIS/AFM</div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- SOTTOAREA 2: Percorso didattico -->
+      <div class="resources-subgroup">
+        <div class="subgroup-header">
+          <span class="subgroup-icon">📚</span>
+          Percorso — Sicurezza digitale per tutti i giorni
+        </div>
+        <p class="subgroup-desc">Quattro guide in sequenza — segui l'ordine per un apprendimento progressivo.</p>
+        <div class="resources-grid">
+
+          <a href="/sicurezza/guida-controllo-account/" class="resource-card">
+            <div class="resource-head">
+              <div class="resource-icon">🔑</div>
+              <div class="resource-title">Chi ha accesso ai tuoi account?</div>
+            </div>
+            <div class="resource-body">
+              <span class="resource-module">Modulo 1 di 4</span>
+              <p class="resource-desc">Sessioni attive, logout corretto, controllo dispositivi collegati. Checklist interattiva inclusa.</p>
+              <div class="resource-meta">8 sezioni · ~30 min · Checklist</div>
+            </div>
+          </a>
+
+          <a href="/sicurezza/guida-autenticazione/" class="resource-card">
+            <div class="resource-head">
+              <div class="resource-icon">🔐</div>
+              <div class="resource-title">Chiavi, lucchetti e doppi lucchetti</div>
+            </div>
+            <div class="resource-body">
+              <span class="resource-module">Modulo 2 di 4</span>
+              <p class="resource-desc">Password, gestore, 2FA, app authenticator, SPID con tabella provider 2026, QR code, CIE.</p>
+              <div class="resource-meta">9 sezioni · ~35 min · Tabella provider SPID</div>
+            </div>
+          </a>
+
+          <a href="/sicurezza/guida-truffe-online/" class="resource-card">
+            <div class="resource-head">
+              <div class="resource-icon">🎣</div>
+              <div class="resource-title">Le trappole online</div>
+            </div>
+            <div class="resource-body">
+              <span class="resource-module">Modulo 3 di 4</span>
+              <p class="resource-desc">Phishing, smishing, truffe WhatsApp, siti falsi, come verificare un sito. Con esempi reali.</p>
+              <div class="resource-meta">7 sezioni · ~30 min · Esempi reali</div>
+            </div>
+          </a>
+
+          <a href="/sicurezza/guida-piano-emergenza/" class="resource-card">
+            <div class="resource-head">
+              <div class="resource-icon">🆘</div>
+              <div class="resource-title">Piano di emergenza digitale</div>
+            </div>
+            <div class="resource-body">
+              <span class="resource-module">Modulo 4 di 4</span>
+              <p class="resource-desc">Telefono rubato, account violato, identità compromessa. Piano stampabile con contatti utili.</p>
+              <div class="resource-meta">7 sezioni · ~25 min · Piano stampabile</div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </div><!-- /hub-resources -->
+
+  </div><!-- /panel-list -->
+
+  <!-- ── D3 MAPPA ──────────────────────────────────────────────────── -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+  <script>
+  (function () {
+    'use strict';
+
+    const GROUPS = [
+      { id: 'grp_generale', label: 'Risorse\ngenerali',  color: '#2E75B6', r: 32 },
+      { id: 'grp_percorso', label: 'Percorso\ndidattico', color: '#1E6B3C', r: 32 },
+    ];
+
+    const RISORSE = [
+      { id: '/sicurezza/guida-cybersicurezza/',     label: 'Cybersicurezza',       emoji: '🔐', group: 'grp_generale' },
+      { id: '/sicurezza/pillola-cybersicurezza/',   label: '6 Mosse',              emoji: '⚡', group: 'grp_generale' },
+      { id: '/sicurezza/guida-principi-sicurezza/', label: 'Principi Sicurezza',   emoji: '🛡️', group: 'grp_generale' },
+      { id: '/sicurezza/guida-attacchi-informatici/', label: 'Attacchi',           emoji: '⚔️', group: 'grp_generale' },
+      { id: '/sicurezza/guida-controllo-account/',  label: 'Controllo Account',    emoji: '🔑', group: 'grp_percorso' },
+      { id: '/sicurezza/guida-autenticazione/',     label: 'Autenticazione',       emoji: '🔐', group: 'grp_percorso' },
+      { id: '/sicurezza/guida-truffe-online/',      label: 'Truffe Online',        emoji: '🎣', group: 'grp_percorso' },
+      { id: '/sicurezza/guida-piano-emergenza/',    label: 'Piano Emergenza',      emoji: '🆘', group: 'grp_percorso' },
+    ];
+
+    function renderMap() {
+      const container = document.getElementById('hub-map-container');
+      const svg       = d3.select('#hub-map-svg');
+      const tooltip   = document.getElementById('hub-tooltip');
+      const W = container.clientWidth  || 900;
+      const H = container.clientHeight || 520;
+
+      svg.selectAll('*').remove();
+
+      const hubNode = {
+        id: '__hub__', label: 'Sicurezza', type: 'hub', r: 38,
+        x: W / 2, y: H / 2, fx: W / 2, fy: H / 2
+      };
+
+      const groupNodes = GROUPS.map(g => ({
+        ...g, type: 'group',
+        x: W / 2 + (Math.random() - 0.5) * 120,
+        y: H / 2 + (Math.random() - 0.5) * 120
+      }));
+
+      const resourceNodes = RISORSE.map(r => ({
+        ...r, type: 'risorsa', path: r.id, r: 22,
+        x: W / 2 + (Math.random() - 0.5) * 200,
+        y: H / 2 + (Math.random() - 0.5) * 200
+      }));
+
+      const nodes = [hubNode, ...groupNodes, ...resourceNodes];
+
+      const links = [
+        ...GROUPS.map(g  => ({ source: '__hub__', target: g.id,  ltype: 'hg' })),
+        ...RISORSE.map(r => ({ source: r.group,   target: r.id,  ltype: 'gr' }))
+      ];
+
+      const sim = d3.forceSimulation(nodes)
+        .force('link', d3.forceLink(links).id(d => d.id)
+          .distance(d => d.ltype === 'hg' ? 150 : 95)
+          .strength(0.9))
+        .force('charge', d3.forceManyBody().strength(-280))
+        .force('center',  d3.forceCenter(W / 2, H / 2))
+        .force('collide', d3.forceCollide(d => d.r + 16));
+
+      const g = svg.append('g');
+
+      svg.call(d3.zoom()
+        .scaleExtent([0.4, 2.5])
+        .on('zoom', e => g.attr('transform', e.transform))
+      );
+
+      const link = g.append('g').selectAll('line').data(links).join('line')
+        .attr('stroke', d => d.ltype === 'hg' ? '#2e3350' : '#1e2840')
+        .attr('stroke-width', d => d.ltype === 'hg' ? 2 : 1.5)
+        .attr('stroke-dasharray', '5,4');
+
+      const grpColor = id => { const grp = GROUPS.find(g => g.id === id); return grp ? grp.color : '#2E75B6'; };
+
+      const node = g.append('g').selectAll('g').data(nodes).join('g')
+        .style('cursor', d => d.path ? 'pointer' : 'default')
+        .call(d3.drag()
+          .on('start', (e, d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+          .on('drag',  (e, d) => { d.fx = e.x; d.fy = e.y; })
+          .on('end',   (e, d) => {
+            if (!e.active) sim.alphaTarget(0);
+            if (d.type !== 'hub') { d.fx = null; d.fy = null; }
+          })
+        )
+        .on('click',     (e, d) => { if (d.path) window.location.href = d.path; })
+        .on('mouseover', (e, d) => {
+          if (d.type === 'hub' || d.type === 'group') return;
+          tooltip.style.opacity = '1';
+          tooltip.innerHTML = `<strong>${d.emoji} ${d.label}</strong>`;
+        })
+        .on('mousemove', e => {
+          const rect = container.getBoundingClientRect();
+          let x = e.clientX - rect.left + 12;
+          let y = e.clientY - rect.top  - 10;
+          if (x + 180 > W) x -= 190;
+          tooltip.style.left = x + 'px';
+          tooltip.style.top  = y + 'px';
+        })
+        .on('mouseout', () => { tooltip.style.opacity = '0'; });
+
+      node.append('circle')
+        .attr('r', d => d.r)
+        .attr('fill', d => {
+          if (d.type === 'hub')    return '#2E75B6';
+          if (d.type === 'group')  return d.color;
+          return grpColor(d.group);
+        })
+        .attr('fill-opacity', d => d.type === 'hub' ? 0.3 : d.type === 'group' ? 0.2 : 0.12)
+        .attr('stroke', d => {
+          if (d.type === 'hub')   return '#2E75B6';
+          if (d.type === 'group') return d.color;
+          return grpColor(d.group);
+        })
+        .attr('stroke-width', d => d.type === 'hub' ? 3 : d.type === 'group' ? 2.5 : 1.5);
+
+      node.filter(d => d.type === 'risorsa')
+        .append('text')
+        .attr('text-anchor', 'middle')
+        .attr('dy', '-0.15em')
+        .attr('font-size', '0.95rem')
+        .text(d => d.emoji);
+
+      node.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('dy', d => d.type === 'risorsa' ? '1.5em' : '0.35em')
+        .attr('fill', '#d4d8f0')
+        .attr('font-size', d => d.type === 'hub' ? '0.72rem' : d.type === 'group' ? '0.67rem' : '0.61rem')
+        .attr('font-weight', d => d.type !== 'risorsa' ? '700' : '400')
+        .attr('font-family', 'Sora, DM Sans, sans-serif')
+        .each(function (d) {
+          if (d.type === 'risorsa') {
+            const lbl = d.label.length > 18 ? d.label.slice(0, 16) + '…' : d.label;
+            d3.select(this).text(lbl);
+          } else {
+            const lines = d.label.split('\n');
+            d3.select(this).text('');
+            lines.forEach((line, i) => {
+              d3.select(this).append('tspan')
+                .attr('x', 0)
+                .attr('dy', i === 0 ? `-${(lines.length - 1) * 0.6}em` : '1.2em')
+                .text(line);
+            });
+          }
+        });
+
+      sim.on('tick', () => {
+        link
+          .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+          .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+        node.attr('transform', d => `translate(${d.x},${d.y})`);
+      });
+    }
+
+    document.querySelectorAll('.hub-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.hub-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.hub-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.panel).classList.add('active');
+      });
+    });
+
+    renderMap();
+  })();
+  </script>
+
+  <!-- ── FOOTER ────────────────────────────────────────────────── -->
+  <footer>
+    <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
+    Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+    <p style="margin-top:.5rem;font-size:.78rem;">
+      <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+      <a href="/cookie-policy.html">Cookie Policy</a>
+    </p>
+  </footer>
+
+  <script src="/scripts/ui.js" defer></script>
+</body>
+</html>

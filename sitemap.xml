@@ -224,7 +224,7 @@
   </url>
   <url>
     <loc>https://formazione-digitale.it/sistemi/bash-programming/</loc>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-07-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -261,6 +261,36 @@
   <url>
     <loc>https://formazione-digitale.it/project-management/gantt-planner/</loc>
     <lastmod>2026-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://formazione-digitale.it/sicurezza/guida-attacchi-informatici/</loc>
+    <lastmod>2026-07-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://formazione-digitale.it/sicurezza/guida-controllo-account/</loc>
+    <lastmod>2026-07-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://formazione-digitale.it/sicurezza/guida-autenticazione/</loc>
+    <lastmod>2026-07-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://formazione-digitale.it/sicurezza/guida-truffe-online/</loc>
+    <lastmod>2026-07-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://formazione-digitale.it/sicurezza/guida-piano-emergenza/</loc>
+    <lastmod>2026-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -365,7 +365,9 @@
         "digcompedu": [
             "DCEdu 6.4",
             "DCEdu 6.1"
-        ]
+        ],
+        "hub": "/sicurezza/",
+        "order": 1
     },
     {
         "path": "/networking/hfs-server/",
@@ -505,7 +507,9 @@
         ],
         "digcompedu": [
             "DCEdu 6.4"
-        ]
+        ],
+        "hub": "/sicurezza/",
+        "order": 3
     },
     {
         "path": "/sicurezza/pillola-cybersicurezza/",
@@ -541,7 +545,9 @@
         ],
         "digcompedu": [
             "DCEdu 6.4"
-        ]
+        ],
+        "hub": "/sicurezza/",
+        "order": 2
     },
     {
         "path": "/competenze-digitali/pillola-wikipedia-speedrun/",
@@ -1203,7 +1209,7 @@
             "bash",
             "shell",
             "linux",
-            "unix",	
+            "unix",
             "command-line",
             "cli",
             "script",
@@ -1509,5 +1515,200 @@
             "DCEdu 4.1",
             "DCEdu 6.1"
         ]
+    },
+    {
+        "path": "/sicurezza/guida-attacchi-informatici/",
+        "label": "Mappa degli Attacchi Informatici",
+        "short": "Attacchi Informatici",
+        "cat": "guide",
+        "emoji": "⚔️",
+        "tags": [
+            "attacchi informatici",
+            "malware",
+            "ransomware",
+            "ddos",
+            "sql injection",
+            "xss",
+            "phishing",
+            "social engineering",
+            "sicurezza",
+            "cybersecurity",
+            "itis",
+            "afm"
+        ],
+        "meta": "Panoramica completa · Livello tecnico",
+        "description": "Panoramica delle principali tipologie di attacco informatico: malware, ransomware, DDoS, SQL injection, phishing e social engineering.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 4.1",
+            "DC 4.2"
+        ],
+        "digcomp_level": "intermediate",
+        "digcomp_areas": [
+            "sicurezza"
+        ],
+        "digcompedu": [
+            "DCEdu 6.4"
+        ],
+        "hub": "/sicurezza/",
+        "order": 4
+    },
+    {
+        "path": "/sicurezza/guida-controllo-account/",
+        "label": "Chi ha accesso ai tuoi account?",
+        "short": "Controllo Account",
+        "cat": "guide",
+        "emoji": "🔑",
+        "tags": [
+            "account",
+            "sessioni",
+            "logout",
+            "dispositivi",
+            "google",
+            "facebook",
+            "email",
+            "apple id",
+            "sicurezza",
+            "privacy",
+            "controllo",
+            "sessioni attive"
+        ],
+        "meta": "8 sezioni · ~30 min · Checklist · Livello base",
+        "description": "Verifica le sessioni attive su Google, Facebook, email e Apple ID. Come fare il logout corretto e cosa fare prima di dare il telefono a qualcuno.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 4.1",
+            "DC 4.2",
+            "DC 2.6"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "sicurezza",
+            "comunicazione"
+        ],
+        "digcompedu": [
+            "DCEdu 6.4"
+        ],
+        "hub": "/sicurezza/",
+        "order": 5
+    },
+    {
+        "path": "/sicurezza/guida-autenticazione/",
+        "label": "Chiavi, lucchetti e doppi lucchetti",
+        "short": "Autenticazione",
+        "cat": "guide",
+        "emoji": "🔐",
+        "tags": [
+            "password",
+            "2fa",
+            "autenticazione",
+            "spid",
+            "qr code",
+            "cie",
+            "provider spid",
+            "gestore password",
+            "app authenticator",
+            "identità digitale",
+            "bitwarden",
+            "sicurezza",
+            "doppio lucchetto"
+        ],
+        "meta": "9 sezioni · ~35 min · Tabella provider SPID · Livello base",
+        "description": "Password sicure, gestore di password, 2FA con app authenticator, SPID con comparazione provider 2026, QR code e CIE.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 4.1",
+            "DC 4.2",
+            "DC 2.6"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "sicurezza",
+            "comunicazione"
+        ],
+        "digcompedu": [
+            "DCEdu 6.4"
+        ],
+        "hub": "/sicurezza/",
+        "order": 6
+    },
+    {
+        "path": "/sicurezza/guida-truffe-online/",
+        "label": "Le trappole online",
+        "short": "Truffe Online",
+        "cat": "guide",
+        "emoji": "🎣",
+        "tags": [
+            "phishing",
+            "smishing",
+            "truffa online",
+            "whatsapp truffa",
+            "sito falso",
+            "spoofing",
+            "email truffa",
+            "sicurezza",
+            "polizia postale",
+            "trustpilot",
+            "link sospetti"
+        ],
+        "meta": "7 sezioni · ~30 min · Esempi reali · Livello base",
+        "description": "Come riconoscere email di phishing, SMS truffa, truffe WhatsApp e siti contraffatti. Con esempi reali e sequenza d'azione per chi ha già cliccato.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 4.2",
+            "DC 1.2",
+            "DC 2.6"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "sicurezza",
+            "informazioni",
+            "comunicazione"
+        ],
+        "digcompedu": [
+            "DCEdu 6.4"
+        ],
+        "hub": "/sicurezza/",
+        "order": 7
+    },
+    {
+        "path": "/sicurezza/guida-piano-emergenza/",
+        "label": "Piano di emergenza digitale",
+        "short": "Piano Emergenza",
+        "cat": "guide",
+        "emoji": "🆘",
+        "tags": [
+            "emergenza",
+            "telefono rubato",
+            "account violato",
+            "identità digitale",
+            "piano d'azione",
+            "polizia postale",
+            "blocco remoto",
+            "recupero account",
+            "sicurezza"
+        ],
+        "meta": "7 sezioni · ~25 min · Piano stampabile · Livello base",
+        "description": "Cosa fare nei primi 10 minuti se il telefono viene rubato o un account violato. Piano d'azione stampabile con contatti utili.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 4.1",
+            "DC 4.2",
+            "DC 2.6"
+        ],
+        "digcomp_level": "foundation",
+        "digcomp_areas": [
+            "sicurezza"
+        ],
+        "digcompedu": [
+            "DCEdu 6.4"
+        ],
+        "hub": "/sicurezza/",
+        "order": 8
     }
 ]

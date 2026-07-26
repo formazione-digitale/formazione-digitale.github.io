@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Password, 2FA e SPID: proteggi i tuoi accessi · Formazione Digitale</title>
+<meta name="description" content="Scopri come creare password sicure, attivare il 2FA, scegliere il provider SPID giusto nel 2026 e capire cos'è il QR code. Guida pratica per chi parte da zero.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#1F4E79">
+<link rel="canonical" href="https://formazione-digitale.it/sicurezza/guida-autenticazione/">
+<link rel="icon" type="image/png" href="/img/favicon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="//gc.zgo.at">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+
+<meta property="og:title" content="Password, 2FA e SPID: proteggi i tuoi accessi · Formazione Digitale">
+<meta property="og:description" content="Come creare password sicure, attivare il 2FA, scegliere il provider SPID nel 2026 e usare il QR code. Guida pratica per principianti.">
+<meta property="og:url" content="https://formazione-digitale.it/sicurezza/guida-autenticazione/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Password, 2FA e SPID: proteggi i tuoi accessi · Formazione Digitale">
+<meta name="twitter:description" content="Password sicure, 2FA, SPID e QR code: guida pratica per proteggere i tuoi accessi digitali.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Password, 2FA e SPID: proteggi i tuoi accessi",
+  "description": "Guida pratica su come creare password sicure, attivare l'autenticazione a due fattori, scegliere il provider SPID nel 2026, capire il QR code e usare la CIE.",
+  "url": "https://formazione-digitale.it/sicurezza/guida-autenticazione/",
+  "inLanguage": "it",
+  "educationalLevel": "Foundation",
+  "author": {
+    "@type": "Person",
+    "name": "Cristiano De Pasquale",
+    "jobTitle": "Docente di Informatica"
+  },
+  "provider": {
+    "@type": "WebSite",
+    "name": "Formazione Digitale",
+    "url": "https://formazione-digitale.it"
+  },
+  "keywords": "password sicura, 2FA, autenticazione due fattori, SPID, provider SPID 2026, QR code, CIE, gestore password, app authenticator, identità digitale"
+}
+</script>
+
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="stylesheet" href="/css/shared.css?v=3">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   CSS SPECIFICO — Guida Autenticazione
+   SOLO componenti NON presenti in shared.css v3.
+═══════════════════════════════════════════════════════════ */
+
+/* ── Hero ────────────────────────────────────────────────── */
+.guide-hero {
+  background: linear-gradient(135deg, var(--blue-dark) 0%, #2A6099 100%);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 24px rgba(31,78,121,.22);
+}
+.guide-hero-eyebrow {
+  font-size: .72rem; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--blue-light); margin-bottom: .5rem;
+}
+.guide-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  color: #fff; line-height: 1.1; margin-bottom: .5rem;
+}
+.guide-hero-title em { font-style: italic; color: var(--blue-light); }
+.guide-hero-sub {
+  font-size: .95rem; color: rgba(255,255,255,.75);
+  line-height: 1.65; max-width: 600px;
+}
+.guide-hero-badges { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.25rem; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: .3rem;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.22);
+  color: rgba(255,255,255,.85);
+  font-size: .72rem; font-weight: 500;
+  padding: .28rem .7rem; border-radius: 20px;
+}
+
+/* ── Varianti highlight-card ─────────────────────────────── */
+.highlight-card.hc-red   { border-top: 3px solid var(--red-mid); }
+.highlight-card.hc-amber { border-top: 3px solid var(--amber-dark); }
+.highlight-card.hc-green { border-top: 3px solid var(--green-dark); }
+.highlight-card.hc-blue  { border-top: 3px solid var(--blue-mid); }
+
+/* ── Steps list numerata ─────────────────────────────────── */
+.steps-list {
+  list-style: none; counter-reset: steps;
+  margin: 1rem 0; display: flex; flex-direction: column; gap: .7rem;
+  padding: 0;
+}
+.steps-list li {
+  counter-increment: steps;
+  display: flex; align-items: flex-start; gap: .85rem;
+  font-size: .9rem; line-height: 1.6; color: var(--gray-dark);
+  overflow-wrap: break-word; word-break: break-word;
+}
+.steps-list li::before {
+  content: counter(steps);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--blue-mid);
+  color: #fff; font-size: .75rem; font-weight: 700;
+  margin-top: .15rem;
+}
+.steps-list li strong { color: var(--blue-dark); }
+
+/* ── Livelli SPID ────────────────────────────────────────── */
+.spid-levels {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: .85rem; margin: 1.25rem 0;
+}
+@media(max-width:600px) { .spid-levels { grid-template-columns: 1fr; } }
+.spid-level {
+  border-radius: var(--radius); padding: 1.1rem;
+  border: 1px solid var(--blue-light);
+}
+.spid-level-1 { background: var(--green-light); border-left: 4px solid var(--green-dark); }
+.spid-level-2 { background: var(--amber-light); border-left: 4px solid var(--amber-dark); }
+.spid-level-3 { background: var(--blue-pale);   border-left: 4px solid var(--blue-mid); }
+.spid-level-num {
+  font-family: var(--font-display); font-size: 1.5rem;
+  margin-bottom: .3rem;
+}
+.spid-level-1 .spid-level-num { color: var(--green-dark); }
+.spid-level-2 .spid-level-num { color: var(--amber-dark); }
+.spid-level-3 .spid-level-num { color: var(--blue-dark); }
+.spid-level-title {
+  font-weight: 700; font-size: .88rem; margin-bottom: .3rem;
+}
+.spid-level-1 .spid-level-title { color: var(--green-dark); }
+.spid-level-2 .spid-level-title { color: var(--amber-dark); }
+.spid-level-3 .spid-level-title { color: var(--blue-dark); }
+.spid-level-desc { font-size: .8rem; line-height: 1.55; color: var(--gray-mid); }
+.spid-level-tag {
+  display: inline-block; margin-top: .5rem;
+  font-size: .68rem; font-weight: 700; padding: .18rem .55rem;
+  border-radius: 20px; text-transform: uppercase; letter-spacing: .06em;
+}
+.spid-level-1 .spid-level-tag { background: var(--green-dark); color: #fff; }
+.spid-level-2 .spid-level-tag { background: var(--amber-dark); color: #fff; }
+.spid-level-3 .spid-level-tag { background: var(--blue-mid); color: #fff; }
+
+/* ── Tabella provider SPID ───────────────────────────────── */
+.provider-table-wrap { overflow-x: auto; margin: 1.25rem 0; }
+.provider-table {
+  width: 100%; border-collapse: collapse;
+  font-size: .83rem; min-width: 560px;
+}
+.provider-table th {
+  background: var(--blue-dark); color: #fff;
+  padding: .6rem .9rem; text-align: left;
+  font-size: .72rem; letter-spacing: .06em; text-transform: uppercase;
+}
+.provider-table td {
+  padding: .6rem .9rem; border-bottom: 1px solid var(--blue-light);
+  vertical-align: top; line-height: 1.5;
+}
+.provider-table tr:last-child td { border-bottom: none; }
+.provider-table tr:nth-child(even) td { background: var(--blue-pale); }
+.badge-free { display: inline-block; background: var(--green-light); color: var(--green-dark); font-size: .68rem; font-weight: 700; padding: .15rem .5rem; border-radius: 20px; }
+.badge-paid { display: inline-block; background: var(--amber-light); color: var(--amber-dark); font-size: .68rem; font-weight: 700; padding: .15rem .5rem; border-radius: 20px; }
+.badge-rec  { display: inline-block; background: var(--blue-dark); color: #fff; font-size: .68rem; font-weight: 700; padding: .15rem .5rem; border-radius: 20px; }
+
+/* ── Fattori di autenticazione ───────────────────────────── */
+.factors-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: .85rem; margin: 1.25rem 0;
+}
+@media(max-width:540px) { .factors-grid { grid-template-columns: 1fr; } }
+.factor-card {
+  background: #fff; border: 1px solid var(--blue-light);
+  border-radius: var(--radius); padding: 1rem .9rem; text-align: center;
+}
+.factor-icon { font-size: 1.8rem; margin-bottom: .4rem; }
+.factor-type {
+  font-size: .68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--blue-mid); margin-bottom: .2rem;
+}
+.factor-label { font-weight: 700; font-size: .88rem; color: var(--blue-dark); margin-bottom: .3rem; }
+.factor-example { font-size: .78rem; color: var(--gray-mid); line-height: 1.5; }
+
+/* ── Confronto 2FA ───────────────────────────────────────── */
+.twofa-compare {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1rem; margin: 1.25rem 0;
+}
+@media(max-width:540px) { .twofa-compare { grid-template-columns: 1fr; } }
+.twofa-card {
+  border-radius: var(--radius); padding: 1rem 1.1rem;
+  border: 1px solid var(--blue-light);
+}
+.twofa-card.preferred { border-color: var(--green-dark); background: var(--green-light); }
+.twofa-card.fallback  { border-color: var(--amber-dark); background: var(--amber-light); }
+.twofa-card-title {
+  font-weight: 700; font-size: .9rem; margin-bottom: .5rem;
+  display: flex; align-items: center; gap: .4rem;
+}
+.twofa-card.preferred .twofa-card-title { color: var(--green-dark); }
+.twofa-card.fallback  .twofa-card-title { color: var(--amber-dark); }
+.twofa-card ul { padding-left: 1.1rem; font-size: .82rem; line-height: 1.7; }
+.twofa-card.preferred ul { color: var(--green-dark); }
+.twofa-card.fallback  ul { color: var(--amber-dark); }
+</style>
+</head>
+<body>
+
+<!-- ════ HEADER ════ -->
+<header class="guide-header">
+  <a class="guide-header-back" href="/">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Formazione Digitale
+  </a>
+  <div class="guide-header-center">Password, 2FA e SPID</div>
+  <div class="guide-header-right">
+    <button class="hamburger" id="hamburger" aria-label="Apri menu sezioni" onclick="toggleSidebar()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ════ LAYOUT ════ -->
+<div class="guide-layout">
+
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="guide-sidebar" id="guide-sidebar">
+    <div class="sidebar-label">Sezioni</div>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li><a class="nav-item active" href="#s1" onclick="closeSidebar()"><span class="nav-num">1</span><span class="nav-text">La password giusta</span></a></li>
+      <li><a class="nav-item" href="#s2" onclick="closeSidebar()"><span class="nav-num">2</span><span class="nav-text">Il gestore di password</span></a></li>
+      <li><a class="nav-item" href="#s3" onclick="closeSidebar()"><span class="nav-num">3</span><span class="nav-text">Il doppio lucchetto: 2FA</span></a></li>
+      <li><a class="nav-item" href="#s4" onclick="closeSidebar()"><span class="nav-num">4</span><span class="nav-text">App authenticator</span></a></li>
+      <li><a class="nav-item" href="#s5" onclick="closeSidebar()"><span class="nav-num">5</span><span class="nav-text">SMS come 2FA</span></a></li>
+      <li><a class="nav-item" href="#s6" onclick="closeSidebar()"><span class="nav-num">6</span><span class="nav-text">SPID: cos'è e i livelli</span></a></li>
+      <li><a class="nav-item" href="#s7" onclick="closeSidebar()"><span class="nav-num">7</span><span class="nav-text">Scegliere il provider</span></a></li>
+      <li><a class="nav-item" href="#s8" onclick="closeSidebar()"><span class="nav-num">8</span><span class="nav-text">Il QR code</span></a></li>
+      <li><a class="nav-item" href="#s9" onclick="closeSidebar()"><span class="nav-num">9</span><span class="nav-text">La CIE</span></a></li>
+    </ul>
+    <hr class="sidebar-divider">
+    <div class="sidebar-meta">
+      <strong>Guida Autenticazione</strong><br>
+      🔐 Sicurezza digitale<br>
+      ⏱ ~35 min di lettura<br>
+      📊 Livello base<br>
+      🗓 Aggiornata luglio 2026
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="guide-main">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="Percorso" style="margin-bottom:1.25rem;font-size:.82rem;color:var(--gray-mid);">
+      <table style="border:none;border-collapse:collapse;">
+        <tr>
+          <td style="padding:0 .5rem 0 0;border:none;"><a href="/" style="color:var(--blue-mid);text-decoration:none;">🏠 Home</a></td>
+          <td style="padding:0 .5rem;border:none;">›</td>
+          <td style="padding:0 .5rem;border:none;"><a href="/sicurezza/" style="color:var(--blue-mid);text-decoration:none;">🔒 Sicurezza</a></td>
+          <td style="padding:0 .5rem;border:none;">›</td>
+          <td style="padding:0;border:none;color:var(--gray-dark);font-weight:600;">Password, 2FA e SPID</td>
+        </tr>
+      </table>
+    </nav>
+
+    <!-- Hero -->
+    <div class="guide-hero">
+      <div class="guide-hero-eyebrow">Formazione Digitale · Guida completa · Sicurezza</div>
+      <h1 class="guide-hero-title">Chiavi, lucchetti<br><em>e doppi lucchetti</em></h1>
+      <p class="guide-hero-sub">Come creare password che non si dimenticano e non si indovinano, attivare il 2FA, scegliere il provider SPID giusto nel 2026 e capire cosa fa il QR code quando lo inquadri con il telefono.</p>
+      <div class="guide-hero-badges">
+        <span class="hero-badge">🔐 Autenticazione</span>
+        <span class="hero-badge">💡 Livello base</span>
+        <span class="hero-badge">⏱ ~35 minuti</span>
+        <span class="hero-badge">🗓 Aggiornata 2026</span>
+        <span class="hero-badge">🇮🇹 SPID incluso</span>
+      </div>
+    </div>
+
+    <!-- ═══ S1 ═══ -->
+    <section class="guide-section" id="s1">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div class="section-titles">
+          <h2 class="section-title">La password giusta</h2>
+          <p class="section-subtitle">Non "lunga" — giusta. C'è differenza</p>
+        </div>
+      </div>
+
+      <p>Per anni ci hanno detto di usare password lunghe, con maiuscole, numeri e simboli. Il risultato? Tutti usano <strong>Rossi1980!</strong> o <strong>Milano@2024</strong> — password che sembrano forti ma sono prevedibilissime.</p>
+      <p>Una buona password ha due caratteristiche: è <strong>difficile da indovinare per un computer</strong> e <strong>facile da ricordare per te</strong>. Sono obiettivi compatibili, ma richiedono un approccio diverso.</p>
+
+      <h3 class="sub-title">Il metodo della passphrase</h3>
+      <p>Invece di una parola storpiata, usa <strong>quattro parole casuali separate da un trattino o uno spazio</strong>. Esempio: <em>tavolo-nuvola-scarpa-fiume</em>. È più lunga di qualsiasi password "complessa", impossibile da indovinare, e puoi immaginarla come una scena assurda che ti aiuta a ricordarla.</p>
+
+      <div class="box box-tip">
+        <div class="box-label">Come scegliere le 4 parole</div>
+        <p>Devono essere casuali — non "cane-casa-amore-Italia" che sono troppo comuni. Apri un libro a caso, prendi la prima parola di 4 pagine diverse. Oppure usa un dado e una lista di parole (metodo Diceware). L'imprevedibilità è tutto.</p>
+      </div>
+
+      <h3 class="sub-title">Le password da evitare sempre</h3>
+
+      <div class="highlight-grid">
+        <div class="highlight-card hc-red">
+          <div class="hc-emoji">📅</div>
+          <div class="hc-title">Date e nomi</div>
+          <div class="hc-body">Data di nascita, nome del figlio o del cane. Un attaccante le prova per prime — le trova sui social in 30 secondi.</div>
+        </div>
+        <div class="highlight-card hc-red">
+          <div class="hc-emoji">🔢</div>
+          <div class="hc-title">Sequenze ovvie</div>
+          <div class="hc-body">"123456", "qwerty", "password", "abc123". Sono nella prima riga di ogni lista di attacco automatico.</div>
+        </div>
+        <div class="highlight-card hc-amber">
+          <div class="hc-emoji">♻️</div>
+          <div class="hc-title">La stessa ovunque</div>
+          <div class="hc-body">Se un sito viene violato e la tua password finisce in una lista pubblica, tutti i tuoi account con quella password sono a rischio.</div>
+        </div>
+      </div>
+
+      <h3 class="sub-title">La regola più importante: una password diversa per ogni account</h3>
+      <p>Non importa quanto sia forte la tua password: se la riusi, un attacco a un sito qualsiasi può compromettere tutti gli altri. L'email e la banca devono avere password uniche, mai usate altrove. Per gestire password diverse senza impazzire, serve lo strumento della prossima sezione.</p>
+
+      <div class="box box-info">
+        <div class="box-label">Il tuo account è già stato violato?</div>
+        <p>Vai su <strong>haveibeenpwned.com</strong>, inserisci il tuo indirizzo email e scopri se è comparso in qualche database rubato. È gratuito, sicuro e gestito da un ricercatore di sicurezza indipendente. Se il tuo indirizzo compare: cambia subito la password di quell'account.</p>
+      </div>
+    </section>
+
+    <!-- ═══ S2 ═══ -->
+    <section class="guide-section" id="s2">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div class="section-titles">
+          <h2 class="section-title">Il gestore di password</h2>
+          <p class="section-subtitle">L'unico strumento che ti permette di avere password diverse e non ricordarle tutte</p>
+        </div>
+      </div>
+
+      <p>Un <strong>gestore di password</strong> (o password manager) è un programma che memorizza tutte le tue password in modo sicuro, le protegge con un'unica password principale, e le inserisce automaticamente quando accedi a un sito. Tu devi ricordare solo una password: quella del gestore.</p>
+
+      <h3 class="sub-title">Perché non è pericoloso</h3>
+      <p>La preoccupazione comune è: "E se hackerebbero il gestore?" I gestori seri cifrano le password sul tuo dispositivo <em>prima</em> di sincronizzarle — il server non vede mai le tue password in chiaro. È molto più sicuro di usare la stessa password dappertutto o di tenerle in un foglio di carta.</p>
+
+      <div class="box box-warn">
+        <div class="box-label">Cosa NON è un gestore di password</div>
+        <p>Non è un file Excel con le password. Non è un notes sullo smartphone. Non è la rubrica del telefono con le password scritte come "note". Queste soluzioni non cifrano nulla e sono vulnerabili se il dispositivo viene perso o rubato.</p>
+      </div>
+
+      <h3 class="sub-title">Quale scegliere</h3>
+
+      <div class="highlight-grid">
+        <div class="highlight-card hc-green">
+          <div class="hc-emoji">🔓</div>
+          <div class="hc-title">Bitwarden</div>
+          <div class="hc-body">Gratuito, open source, disponibile su tutti i dispositivi. La scelta consigliata per chi parte da zero. Piano gratuito illimitato.</div>
+        </div>
+        <div class="highlight-card hc-blue">
+          <div class="hc-emoji">🌐</div>
+          <div class="hc-title">Gestore del browser</div>
+          <div class="hc-body">Chrome, Firefox e Safari hanno un gestore integrato. Comodo, gratuito, ma legato al browser. Buon punto di partenza.</div>
+        </div>
+        <div class="highlight-card hc-amber">
+          <div class="hc-emoji">💼</div>
+          <div class="hc-title">1Password / Dashlane</div>
+          <div class="hc-body">Versioni a pagamento (~3€/mese) con funzioni avanzate. Ottimi, ma non indispensabili per uso personale.</div>
+        </div>
+      </div>
+
+      <h3 class="sub-title">Come iniziare con Bitwarden</h3>
+      <ol class="steps-list">
+        <li>Vai su <strong>bitwarden.com</strong> e crea un account gratuito con la tua email.</li>
+        <li>Scegli una <strong>password principale forte e memorabile</strong> — usa il metodo passphrase della sezione precedente. Questa è l'unica password che devi ricordare a memoria.</li>
+        <li>Installa l'<strong>estensione del browser</strong> (Chrome, Firefox, Safari) — si aggiunge con un clic dal sito ufficiale.</li>
+        <li>Installa l'<strong>app sul telefono</strong> — disponibile su App Store e Google Play.</li>
+        <li>Inizia ad aggiungere le tue password man mano che accedi ai siti — Bitwarden te lo propone automaticamente.</li>
+      </ol>
+
+      <div class="box box-tip">
+        <div class="box-label">La password principale: trattala come le chiavi di casa</div>
+        <p>Scrivila su carta e conservala in un posto fisico sicuro (non sul telefono, non in email). Se la dimentichi e non hai un metodo di recupero, perdi l'accesso a tutto. Una volta sola, cartaceo, custodito bene.</p>
+      </div>
+    </section>
+
+    <!-- ═══ S3 ═══ -->
+    <section class="guide-section" id="s3">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div class="section-titles">
+          <h2 class="section-title">Il doppio lucchetto: il 2FA</h2>
+          <p class="section-subtitle">Perché una sola password non basta più</p>
+        </div>
+      </div>
+
+      <p>Immagina di avere una cassaforte con due serrature diverse, che richiedono due chiavi diverse. Anche se qualcuno ruba una delle tue chiavi, senza l'altra non entra. Questo è il principio del <strong>2FA — autenticazione a due fattori</strong>.</p>
+      <p>Con il 2FA attivo, per accedere a un account servono due cose: la password (qualcosa che <em>sai</em>) e un codice temporaneo generato sul tuo telefono (qualcosa che <em>hai</em>). Chi conosce la tua password ma non ha il tuo telefono non entra.</p>
+
+      <h3 class="sub-title">I tre fattori di autenticazione</h3>
+
+      <div class="factors-grid">
+        <div class="factor-card">
+          <div class="factor-icon">🧠</div>
+          <div class="factor-type">Fattore 1</div>
+          <div class="factor-label">Qualcosa che sai</div>
+          <div class="factor-example">Password, PIN, risposta a una domanda segreta</div>
+        </div>
+        <div class="factor-card">
+          <div class="factor-icon">📱</div>
+          <div class="factor-type">Fattore 2</div>
+          <div class="factor-label">Qualcosa che hai</div>
+          <div class="factor-example">Telefono con app authenticator, SMS, chiave hardware (YubiKey)</div>
+        </div>
+        <div class="factor-card">
+          <div class="factor-icon">👁️</div>
+          <div class="factor-type">Fattore 3</div>
+          <div class="factor-label">Qualcosa che sei</div>
+          <div class="factor-example">Impronta digitale, volto, iride — la biometria</div>
+        </div>
+      </div>
+
+      <div class="box box-note">
+        <div class="box-label">Il 3FA esiste, ma non lo userai</div>
+        <p>L'autenticazione a tre fattori (tutti e tre i fattori insieme) esiste in contesti ad altissima sicurezza: banche centrali, sistemi militari, dati sanitari critici. Per la vita quotidiana il 2FA è più che sufficiente.</p>
+      </div>
+
+      <h3 class="sub-title">Come si usa nella pratica</h3>
+      <p>Quando attivi il 2FA su un account (es. Gmail), ogni volta che accedi da un dispositivo nuovo o sconosciuto, dopo aver inserito la password ti viene chiesto un codice di 6 cifre che cambia ogni 30 secondi. Lo trovi sull'app authenticator sul tuo telefono. Inserisci il codice, e sei dentro.</p>
+
+      <div class="box box-tip">
+        <div class="box-label">Da dove iniziare</div>
+        <p>Attiva il 2FA prima di tutto sull'<strong>account email principale</strong> — è la chiave di tutti gli altri account. Poi sull'account Google o Apple. Poi, gradualmente, su banca e social. Non devi fare tutto subito.</p>
+      </div>
+    </section>
+
+    <!-- ═══ S4 ═══ -->
+    <section class="guide-section" id="s4">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div class="section-titles">
+          <h2 class="section-title">App authenticator</h2>
+          <p class="section-subtitle">Il modo più sicuro per ricevere i codici 2FA</p>
+        </div>
+      </div>
+
+      <p>Un'app authenticator è un'applicazione sul tuo telefono che genera <strong>codici temporanei di 6 cifre</strong> — cambiano ogni 30 secondi e sono legati al tuo specifico account. Non servono connessione internet né SIM: l'app funziona anche offline.</p>
+
+      <h3 class="sub-title">Quale app scegliere</h3>
+
+      <div class="highlight-grid">
+        <div class="highlight-card hc-blue">
+          <div class="hc-emoji">🔷</div>
+          <div class="hc-title">Microsoft Authenticator</div>
+          <div class="hc-body">Gratuita, backup automatico su cloud, interfaccia intuitiva. Consigliata perché salva i codici in caso di cambio telefono.</div>
+        </div>
+        <div class="highlight-card hc-green">
+          <div class="hc-emoji">🔐</div>
+          <div class="hc-title">Authy</div>
+          <div class="hc-body">Gratuita, backup cloud integrato, disponibile su più dispositivi contemporaneamente. Ottima alternativa.</div>
+        </div>
+        <div class="highlight-card hc-amber">
+          <div class="hc-emoji">🔴</div>
+          <div class="hc-title">Google Authenticator</div>
+          <div class="hc-body">Funziona bene, ma storicamente senza backup automatico. Ha aggiunto il backup cloud nel 2023 — ora più usabile.</div>
+        </div>
+      </div>
+
+      <div class="box box-warn">
+        <div class="box-label">Cosa succede se perdi il telefono?</div>
+        <p>Se non hai abilitato il backup dell'app, perdere il telefono significa perdere l'accesso agli account con 2FA. Per questo: scegli un'app con backup cloud (Microsoft Authenticator o Authy) e <strong>salva i codici di backup</strong> che ogni servizio ti fornisce al momento dell'attivazione del 2FA — sono una serie di codici monouso da usare in caso di emergenza.</p>
+      </div>
+
+      <h3 class="sub-title">Come attivare il 2FA con app authenticator su Gmail</h3>
+      <ol class="steps-list">
+        <li>Installa <strong>Microsoft Authenticator</strong> o <strong>Authy</strong> sul telefono dall'App Store o Google Play.</li>
+        <li>Sul computer, vai su <strong>myaccount.google.com → Sicurezza e accesso → Verifica in due passaggi</strong>.</li>
+        <li>Clicca su <strong>"Inizia"</strong> e segui la procedura guidata. Google ti proporrà diversi metodi — scegli <strong>"App Authenticator"</strong>.</li>
+        <li>Google mostra un <strong>QR code</strong> sullo schermo (spiegato nella sezione 8). Apri l'app authenticator, tocca il tasto "+" e inquadra il QR code con la fotocamera.</li>
+        <li>L'account appare nell'app con un codice a 6 cifre. Inserisci quel codice in Google per confermare che tutto funziona.</li>
+        <li><strong>Salva i codici di backup</strong> che Google ti fornisce — stampali o scrivili su carta e conservali in un posto sicuro.</li>
+      </ol>
+    </section>
+
+    <!-- ═══ S5 ═══ -->
+    <section class="guide-section" id="s5">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div class="section-titles">
+          <h2 class="section-title">SMS come 2FA</h2>
+          <p class="section-subtitle">Meglio dell'app o peggio? La risposta onesta</p>
+        </div>
+      </div>
+
+      <p>Molti servizi offrono il 2FA via SMS: dopo la password ti mandano un codice sul telefono. È il sistema più diffuso perché non richiede di installare nulla. Ma ha dei limiti.</p>
+
+      <div class="twofa-compare">
+        <div class="twofa-card preferred">
+          <div class="twofa-card-title">✅ App authenticator — preferibile</div>
+          <ul>
+            <li>Funziona senza connessione</li>
+            <li>Non intercettabile da terzi</li>
+            <li>Non dipende dal numero di telefono</li>
+            <li>Immune al SIM swapping</li>
+          </ul>
+        </div>
+        <div class="twofa-card fallback">
+          <div class="twofa-card-title">⚠️ SMS — usabile ma meno sicuro</div>
+          <ul>
+            <li>Vulnerabile al SIM swapping</li>
+            <li>Intercettabile su reti compromesse</li>
+            <li>Dipende dalla copertura telefonica</li>
+            <li>Ma: molto meglio di nessun 2FA</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="box box-info">
+        <div class="box-label">Cos'è il SIM swapping</div>
+        <p>Un attaccante convince il tuo operatore telefonico — spesso con dati personali rubati — di essere te, e fa trasferire il tuo numero su una SIM di sua proprietà. Da quel momento riceve tutti i tuoi SMS, inclusi i codici 2FA. È raro ma reale. <strong>Se il servizio offre entrambe le opzioni, scegli sempre l'app.</strong></p>
+      </div>
+
+      <p>La regola pratica: usa l'app authenticator dove puoi. Usa SMS dove l'app non è disponibile. Usa entrambi se ti viene offerta la scelta. Non usare nessuno dei due solo se il servizio non lo supporta — in quel caso, priorità ancora maggiore a una password forte e unica.</p>
+    </section>
+
+    <!-- ═══ S6 ═══ -->
+    <section class="guide-section" id="s6">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <div class="section-titles">
+          <h2 class="section-title">SPID — cos'è e i tre livelli</h2>
+          <p class="section-subtitle">L'identità digitale italiana per accedere ai servizi della Pubblica Amministrazione</p>
+        </div>
+      </div>
+
+      <p>Lo <strong>SPID</strong> — Sistema Pubblico di Identità Digitale — è una coppia di credenziali (username e password) che permette di accedere con un'unica identità a tutti i servizi online della Pubblica Amministrazione italiana: INPS, Agenzia delle Entrate, fascicolo sanitario, bonus, concorsi pubblici, Università, Comune e molto altro.</p>
+      <p>Non è un'app — è un'identità. La gestisce uno dei provider autorizzati da AGID (l'agenzia governativa del digitale), e funziona su qualsiasi sito che espone il pulsante "Entra con SPID".</p>
+
+      <h3 class="sub-title">I tre livelli di sicurezza</h3>
+
+      <div class="spid-levels">
+        <div class="spid-level spid-level-1">
+          <div class="spid-level-num">1</div>
+          <div class="spid-level-title">Solo username e password</div>
+          <div class="spid-level-desc">Per servizi di consultazione base. Raro nella pratica — quasi tutti i servizi richiedono almeno il livello 2.</div>
+          <span class="spid-level-tag">Base</span>
+        </div>
+        <div class="spid-level spid-level-2">
+          <div class="spid-level-num">2</div>
+          <div class="spid-level-title">Password + codice OTP</div>
+          <div class="spid-level-desc">Il livello usato nella quasi totalità dei casi (INPS, Agenzia Entrate…). Il codice OTP arriva via SMS o app authenticator, oppure viene generato via QR code.</div>
+          <span class="spid-level-tag">Standard</span>
+        </div>
+        <div class="spid-level spid-level-3">
+          <div class="spid-level-num">3</div>
+          <div class="spid-level-title">Password + dispositivo fisico</div>
+          <div class="spid-level-desc">Smart card o chiave crittografica. Riservato ad operazioni ad altissima sensibilità. Praticamente mai richiesto al cittadino comune.</div>
+          <span class="spid-level-tag">Avanzato</span>
+        </div>
+      </div>
+
+      <div class="box box-info">
+        <div class="box-label">SPID e 2FA: la connessione</div>
+        <p>Lo SPID livello 2 è, a tutti gli effetti, un sistema di autenticazione a due fattori: password (fattore 1) + codice temporaneo (fattore 2). La differenza rispetto al 2FA classico è che qui il sistema è standardizzato a livello nazionale e riconosciuto dalla PA.</p>
+      </div>
+    </section>
+
+    <!-- ═══ S7 ═══ -->
+    <section class="guide-section" id="s7">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <div class="section-titles">
+          <h2 class="section-title">Scegliere il provider SPID</h2>
+          <p class="section-subtitle">Cosa è cambiato nel 2026 e quale conviene attivare</p>
+        </div>
+      </div>
+
+      <p>Lo SPID si attiva tramite uno dei provider autorizzati da AGID. Fino al 2025 era quasi tutto gratuito; dal 2026 la situazione è cambiata. Ecco il quadro aggiornato.</p>
+
+      <div class="box box-warn">
+        <div class="box-label">Novità 2026</div>
+        <p>Poste Italiane — il provider più usato con oltre 25 milioni di utenti — ha introdotto un canone di <strong>6€/anno dal secondo anno</strong>. Altri provider (Aruba, InfoCert) hanno fatto lo stesso. Restano opzioni gratuite, ma richiedono di avere la CIE con chip NFC attivo.</p>
+      </div>
+
+      <h3 class="sub-title">Confronto provider — luglio 2026</h3>
+
+      <div class="provider-table-wrap">
+        <table class="provider-table">
+          <thead>
+            <tr>
+              <th>Provider</th>
+              <th>Canone annuo</th>
+              <th>Identificazione gratuita</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Namirial</strong> <span class="badge-rec">Consigliato</span></td>
+              <td><span class="badge-free">Gratuito</span></td>
+              <td>Con CIE via NFC o firma digitale</td>
+              <td>Attivazione rapida, buona app. Webcam a pagamento (~15€).</td>
+            </tr>
+            <tr>
+              <td><strong>Sielte ID</strong></td>
+              <td><span class="badge-free">Gratuito</span></td>
+              <td>Con CIE, CNS o firma digitale</td>
+              <td>Sempre gratuito per cittadini. Meno diffuso, ma affidabile.</td>
+            </tr>
+            <tr>
+              <td><strong>TIM ID</strong></td>
+              <td><span class="badge-free">Gratuito</span></td>
+              <td>Identificazione online</td>
+              <td>Gratuito per uso personale. Può richiedere numero TIM per alcune procedure.</td>
+            </tr>
+            <tr>
+              <td><strong>Lepida</strong></td>
+              <td><span class="badge-free">Gratuito</span></td>
+              <td>Con CIE o CNS</td>
+              <td>Principalmente per residenti in Emilia-Romagna e regioni convenzionate.</td>
+            </tr>
+            <tr>
+              <td><strong>PosteID</strong> (Poste Italiane)</td>
+              <td><span class="badge-paid">6€/anno</span> (1° anno gratis)</td>
+              <td>In ufficio postale (6€), online se cliente Poste</td>
+              <td>Il più usato e supportato. Rete capillare di sportelli fisici. Esenzioni per over 75, minorenni e residenti all'estero.</td>
+            </tr>
+            <tr>
+              <td><strong>Aruba ID</strong></td>
+              <td><span class="badge-paid">~6€/anno</span> (1° anno gratis)</td>
+              <td>Con CNS (gratis), CIE a pagamento</td>
+              <td>Integra bene con altri servizi Aruba (PEC, fatturazione). Webcam tra le più care (~30€).</td>
+            </tr>
+            <tr>
+              <td><strong>InfoCert</strong></td>
+              <td><span class="badge-paid">~6€/anno</span> (1° anno gratis)</td>
+              <td>Dipende dal metodo</td>
+              <td>Storico provider, buona assistenza. Canone dal 2° anno.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="font-size:.78rem;color:var(--gray-mid);margin-top:.5rem;">⚠️ Prezzi e condizioni possono variare. Verifica sempre sul sito ufficiale del provider prima di procedere.</p>
+
+      <h3 class="sub-title">Come scegliere</h3>
+
+      <div class="highlight-grid">
+        <div class="highlight-card hc-green">
+          <div class="hc-emoji">📲</div>
+          <div class="hc-title">Hai la CIE con NFC?</div>
+          <div class="hc-body">Scegli Namirial o Sielte: attivazione gratuita in pochi minuti dall'app, senza uscire di casa.</div>
+        </div>
+        <div class="highlight-card hc-blue">
+          <div class="hc-emoji">🏤</div>
+          <div class="hc-title">Preferisci uno sportello fisico?</div>
+          <div class="hc-body">PosteID in ufficio postale è il percorso più guidato, ma costa 6€ e richiede appuntamento.</div>
+        </div>
+        <div class="highlight-card hc-amber">
+          <div class="hc-emoji">🌐</div>
+          <div class="hc-title">Vuoi farlo online senza CIE?</div>
+          <div class="hc-body">Namirial o TIM ID via webcam: processo online con operatore. Costo variabile (10-20€ per l'identificazione).</div>
+        </div>
+      </div>
+
+      <h3 class="sub-title">Attivazione con CIE — il percorso consigliato</h3>
+      <ol class="steps-list">
+        <li>Verifica che il tuo telefono abbia <strong>NFC attivo</strong> (quasi tutti gli smartphone moderni ce l'hanno — cerca "NFC" nelle impostazioni).</li>
+        <li>Vai sul sito di <strong>Namirial</strong> (namiriaid.it) e clicca su "Attiva SPID".</li>
+        <li>Scegli il metodo di riconoscimento: <strong>"CIE — Carta d'Identità Elettronica"</strong>.</li>
+        <li>Installa l'app Namirial ID sul telefono, segui la procedura guidata e <strong>appoggia la CIE sul retro del telefono</strong> quando richiesto.</li>
+        <li>Crea username, password e scegli il metodo per i codici OTP (app authenticator o SMS).</li>
+        <li>Il tuo SPID è pronto. Testa subito l'accesso su un servizio come <strong>inps.it</strong>.</li>
+      </ol>
+    </section>
+
+    <!-- ═══ S8 ═══ -->
+    <section class="guide-section" id="s8">
+      <div class="section-header">
+        <div class="section-num">8</div>
+        <div class="section-titles">
+          <h2 class="section-title">Il QR code</h2>
+          <p class="section-subtitle">Quel quadrato con i puntini: cosa fa e quando usarlo in sicurezza</p>
+        </div>
+      </div>
+
+      <p>Un <strong>QR code</strong> è un'immagine che contiene informazioni codificate — un po' come un codice a barre, ma in versione quadrata e molto più capiente. Il telefono lo "legge" con la fotocamera e interpreta il contenuto: può essere un link, un testo, dati di accesso, o istruzioni per un'app.</p>
+
+      <h3 class="sub-title">Come si usa nella pratica digitale</h3>
+
+      <div class="highlight-grid">
+        <div class="highlight-card hc-blue">
+          <div class="hc-emoji">🔐</div>
+          <div class="hc-title">SPID livello 2</div>
+          <div class="hc-body">Alcuni provider mostrano un QR code al momento del login. Inquadri con l'app SPID sul telefono e confermi l'accesso — senza digitare codici.</div>
+        </div>
+        <div class="highlight-card hc-green">
+          <div class="hc-emoji">🔑</div>
+          <div class="hc-title">App authenticator</div>
+          <div class="hc-body">Quando attivi il 2FA su un sito, il sito mostra un QR code. Lo inquadri con Google Authenticator o Microsoft Authenticator per collegare l'account all'app.</div>
+        </div>
+        <div class="highlight-card hc-amber">
+          <div class="hc-emoji">💬</div>
+          <div class="hc-title">WhatsApp Web</div>
+          <div class="hc-body">Per usare WhatsApp dal computer, il sito mostra un QR code. Inquadri con l'app dal telefono e il computer viene collegato al tuo account.</div>
+        </div>
+      </div>
+
+      <h3 class="sub-title">Come si legge un QR code</h3>
+      <p>Su quasi tutti gli smartphone moderni basta aprire la <strong>fotocamera</strong> e puntarla sul QR code — appare automaticamente un link o una notifica da toccare. Se non funziona, cerca "lettore QR" nell'app store: ce ne sono molti gratuiti.</p>
+
+      <h3 class="sub-title">Quando NON inquadrare un QR code</h3>
+      <div class="box box-warn">
+        <div class="box-label">QR code e sicurezza</div>
+        <p>Un QR code può contenere qualsiasi link — anche uno pericoloso. Non inquadrare QR code trovati su volantini sconosciuti, ricevuti via email da mittenti non verificati, o affissi in luoghi pubblici sopra adesivi (tecnica usata per sostituire QR code legittimi). Prima di toccare il link che appare, leggi l'URL e chiediti: mi aspettavo questo sito?</p>
+      </div>
+    </section>
+
+    <!-- ═══ S9 ═══ -->
+    <section class="guide-section" id="s9">
+      <div class="section-header">
+        <div class="section-num">9</div>
+        <div class="section-titles">
+          <h2 class="section-title">La CIE</h2>
+          <p class="section-subtitle">La carta d'identità elettronica come alternativa allo SPID</p>
+        </div>
+      </div>
+
+      <p>La <strong>CIE — Carta d'Identità Elettronica</strong> è la versione digitale della carta d'identità italiana. Oltre alla funzione classica come documento fisico, contiene un <strong>chip NFC</strong> che permette di usarla per autenticarsi online — senza bisogno di SPID.</p>
+      <p>Dal 2021 la CIE è accettata come metodo di accesso alternativo allo SPID su tutti i siti della Pubblica Amministrazione. Per molti utilizzi è equivalente al livello 2 di SPID.</p>
+
+      <h3 class="sub-title">Come funziona</h3>
+      <ol class="steps-list">
+        <li>Installa l'app <strong>CIEid</strong> dal tuo app store (sviluppata dal Ministero dell'Interno — è quella ufficiale).</li>
+        <li>Apri l'app e segui la procedura di primo avvio: ti chiede di <strong>appoggiare la CIE al retro del telefono</strong> per leggerla via NFC.</li>
+        <li>Inserisci il <strong>PIN</strong> della CIE — ti è stato consegnato in busta chiusa al comune al momento del rilascio della carta.</li>
+        <li>Quando un sito offre "Entra con CIE", clicca, inquadra il QR code con l'app CIEid e conferma. Sei dentro.</li>
+      </ol>
+
+      <div class="box box-info">
+        <div class="box-label">CIE o SPID: quale conviene?</div>
+        <p>La CIE non ha canoni annuali — la paghi una volta sola al comune (circa 22€) e dura 10 anni. Non richiede provider, non ha abbonamenti. Lo svantaggio: se hai dimenticato il PIN o non hai NFC sul telefono, ti blocchi. SPID è più flessibile da dispositivi diversi. Soluzione ideale: averli entrambi.</p>
+      </div>
+
+      <div class="box box-warn">
+        <div class="box-label">PIN della CIE: non perderlo</div>
+        <p>Il PIN viene consegnato in due parti: metà nella busta consegnata allo sportello, metà per posta (o tutto insieme, dipende dal comune). Se lo perdi, devi andare fisicamente al comune per ottenere il PUK e reimpostarlo. Conservalo in un posto sicuro — insieme alla password principale del gestore di password.</p>
+      </div>
+    </section>
+
+    <a class="related-link" href="/sicurezza/guida-controllo-account/">
+      <div class="related-link-icon">🔑</div>
+      <div class="related-link-text">
+        <strong>Hai già verificato chi ha accesso ai tuoi account?</strong>
+        <span>La guida precedente spiega come controllare le sessioni attive su Google, Facebook, email e Apple ID — e come chiuderle a distanza.</span>
+      </div>
+      <div class="related-link-arrow">→</div>
+    </a>
+
+  </main>
+</div>
+
+<footer>
+  <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
+  Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem;">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<script src="/scripts/ui.js" defer></script>
+<script>
+/* ── Sidebar ── */
+function toggleSidebar() {
+  document.getElementById('guide-sidebar').classList.toggle('is-open');
+  document.getElementById('sidebar-overlay').classList.toggle('is-open');
+}
+function closeSidebar() {
+  document.getElementById('guide-sidebar').classList.remove('is-open');
+  document.getElementById('sidebar-overlay').classList.remove('is-open');
+}
+
+/* ── Highlight nav item attivo ── */
+(function() {
+  const sections = document.querySelectorAll('.guide-section[id]');
+  const navItems = document.querySelectorAll('.nav-item');
+  function onScroll() {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+    navItems.forEach(n => n.classList.toggle('active', n.getAttribute('href') === '#' + current));
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
+</script>
+</body>
+</html>

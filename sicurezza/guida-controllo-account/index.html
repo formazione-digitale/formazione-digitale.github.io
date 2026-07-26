@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chi ha accesso ai tuoi account? Verifica e proteggi i tuoi dispositivi · Formazione Digitale</title>
+<meta name="description" content="Scopri come verificare chi è connesso ai tuoi account Google, Facebook, email e Apple ID, come fare il logout corretto e cosa fare prima di dare il telefono a qualcuno.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#1F4E79">
+<link rel="canonical" href="https://formazione-digitale.it/sicurezza/guida-controllo-account/">
+<link rel="icon" type="image/png" href="/img/favicon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="//gc.zgo.at">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+
+<meta property="og:title" content="Chi ha accesso ai tuoi account? · Formazione Digitale">
+<meta property="og:description" content="Verifica chi è connesso ai tuoi account Google, Facebook, email e Apple ID. Guida pratica per controllare le sessioni attive e proteggere i tuoi dispositivi.">
+<meta property="og:url" content="https://formazione-digitale.it/sicurezza/guida-controllo-account/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chi ha accesso ai tuoi account? · Formazione Digitale">
+<meta name="twitter:description" content="Verifica chi è connesso ai tuoi account, come fare il logout corretto e cosa controllare prima di dare il telefono a qualcuno.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Chi ha accesso ai tuoi account? Verifica e proteggi i tuoi dispositivi",
+  "description": "Guida pratica per verificare le sessioni attive su Google, Facebook, Instagram, email e Apple ID, riconoscere accessi non autorizzati e proteggere i propri dispositivi.",
+  "url": "https://formazione-digitale.it/sicurezza/guida-controllo-account/",
+  "inLanguage": "it",
+  "educationalLevel": "Foundation",
+  "author": {
+    "@type": "Person",
+    "name": "Cristiano De Pasquale",
+    "jobTitle": "Docente di Informatica"
+  },
+  "provider": {
+    "@type": "WebSite",
+    "name": "Formazione Digitale",
+    "url": "https://formazione-digitale.it"
+  },
+  "keywords": "account, sessioni attive, logout, Google, Facebook, Instagram, email, Apple ID, Microsoft, dispositivi, accesso non autorizzato, sicurezza, privacy"
+}
+</script>
+
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="stylesheet" href="/css/shared.css?v=3">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   CSS SPECIFICO — Guida Controllo Account
+   SOLO componenti NON presenti in shared.css v3.
+   Non ridefinire: .section-header, .section-num, .section-titles,
+   .section-title, .section-subtitle, .sub-title, .highlight-grid,
+   .highlight-card, .box-*, .guide-section, .related-link
+═══════════════════════════════════════════════════════════ */
+
+/* ── Hero (non in shared.css) ────────────────────────────── */
+.guide-hero {
+  background: linear-gradient(135deg, var(--blue-dark) 0%, #2A6099 100%);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 24px rgba(31,78,121,.22);
+}
+.guide-hero-eyebrow {
+  font-size: .72rem; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--blue-light); margin-bottom: .5rem;
+}
+.guide-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  color: #fff; line-height: 1.1; margin-bottom: .5rem;
+}
+.guide-hero-title em { font-style: italic; color: var(--blue-light); }
+.guide-hero-sub {
+  font-size: .95rem; color: rgba(255,255,255,.75);
+  line-height: 1.65; max-width: 600px;
+}
+.guide-hero-badges { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.25rem; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: .3rem;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.22);
+  color: rgba(255,255,255,.85);
+  font-size: .72rem; font-weight: 500;
+  padding: .28rem .7rem; border-radius: 20px;
+}
+
+/* ── Varianti highlight-card (shared.css ha solo quella base) */
+.highlight-card.hc-red   { border-top: 3px solid var(--red-mid); }
+.highlight-card.hc-amber { border-top: 3px solid var(--amber-dark); }
+.highlight-card.hc-green { border-top: 3px solid var(--green-dark); }
+.highlight-card.hc-blue  { border-top: 3px solid var(--blue-mid); }
+
+/* ── Steps list numerata (non in shared.css) ─────────────── */
+.steps-list {
+  list-style: none; counter-reset: steps;
+  margin: 1rem 0; display: flex; flex-direction: column; gap: .7rem;
+  padding: 0;
+}
+.steps-list li {
+  counter-increment: steps;
+  display: flex; align-items: flex-start; gap: .85rem;
+  font-size: .9rem; line-height: 1.6; color: var(--gray-dark);
+  overflow-wrap: break-word; word-break: break-word;
+}
+.steps-list li::before {
+  content: counter(steps);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--blue-mid);
+  color: #fff; font-size: .75rem; font-weight: 700;
+  margin-top: .15rem;
+}
+.steps-list li strong { color: var(--blue-dark); }
+
+/* ── Scenario card (componente nuovo) ────────────────────── */
+.scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem; margin: 1.25rem 0;
+}
+.scenario-card {
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  overflow: hidden; background: #fff;
+}
+.scenario-head {
+  background: var(--blue-dark); color: #fff;
+  padding: .7rem 1rem;
+  font-weight: 700; font-size: .88rem;
+  display: flex; gap: .5rem; align-items: center;
+}
+.scenario-body { padding: 1rem; display: flex; flex-direction: column; gap: .75rem; }
+.scenario-block { font-size: .82rem; line-height: 1.6; color: var(--gray-dark); }
+.scenario-block-label {
+  display: block; font-size: .68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .07em;
+  margin-bottom: .25rem;
+}
+.scenario-block-label.before { color: var(--amber-dark); }
+.scenario-block-label.after  { color: var(--green-dark); }
+
+/* ── Checklist interattiva (componente nuovo) ────────────── */
+.checklist-wrap {
+  background: #fff;
+  border: 2px solid var(--blue-light);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 1.25rem 0;
+  box-shadow: 0 4px 16px rgba(31,78,121,.08);
+}
+.checklist-header {
+  background: var(--blue-dark); color: #fff;
+  padding: .9rem 1.25rem;
+  font-family: var(--font-display); font-size: 1rem;
+}
+.checklist-group-label {
+  font-size: .7rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--gray-mid);
+  padding: .85rem 1.25rem .35rem;
+  border-top: 1px solid var(--blue-light);
+}
+.checklist-group-label:first-of-type { border-top: none; padding-top: .7rem; }
+.checklist-items { padding: 0 1.25rem .4rem; }
+.checklist-item {
+  display: flex; align-items: flex-start; gap: .9rem;
+  cursor: pointer; user-select: none;
+  padding: .55rem 0; border-bottom: 1px solid #f0f4f8;
+}
+.checklist-item:last-child { border-bottom: none; }
+.checklist-item input[type="checkbox"] { display: none; }
+.checklist-box {
+  width: 22px; height: 22px; flex-shrink: 0;
+  border: 2px solid var(--blue-light); border-radius: 5px;
+  background: #fff; display: flex; align-items: center; justify-content: center;
+  transition: all .2s; margin-top: .1rem;
+}
+.checklist-item.checked .checklist-box { background: var(--green-dark); border-color: var(--green-dark); }
+.checklist-item.checked .checklist-box::after { content: '✓'; color: #fff; font-size: .8rem; font-weight: 700; }
+.checklist-text { font-size: .88rem; line-height: 1.5; color: var(--gray-dark); flex: 1; }
+.checklist-item.checked .checklist-text { color: var(--gray-mid); text-decoration: line-through; }
+.checklist-progress {
+  padding: .85rem 1.25rem;
+  background: var(--blue-pale); border-top: 1px solid var(--blue-light);
+  font-size: .82rem; color: var(--blue-dark); font-weight: 600;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.progress-bar-wrap {
+  height: 6px; background: var(--blue-light);
+  border-radius: 3px; flex: 1; margin: 0 1rem; overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%; background: var(--green-dark);
+  border-radius: 3px; transition: width .3s ease;
+}
+</style>
+</head>
+<body>
+
+<!-- ════ HEADER ════ -->
+<header class="guide-header">
+  <a class="guide-header-back" href="/">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Formazione Digitale
+  </a>
+  <div class="guide-header-center">Chi ha accesso ai tuoi account?</div>
+  <div class="guide-header-right">
+    <button class="hamburger" id="hamburger" aria-label="Apri menu sezioni" onclick="toggleSidebar()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ════ LAYOUT ════ -->
+<div class="guide-layout">
+
+  <!-- Overlay mobile (fuori dall'aside) -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="guide-sidebar" id="guide-sidebar">
+    <div class="sidebar-label">Sezioni</div>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li><a class="nav-item active" href="#s1" onclick="closeSidebar()"><span class="nav-num">1</span><span class="nav-text">Cosa significa essere "connesso"</span></a></li>
+      <li><a class="nav-item" href="#s2" onclick="closeSidebar()"><span class="nav-num">2</span><span class="nav-text">I tuoi account Google</span></a></li>
+      <li><a class="nav-item" href="#s3" onclick="closeSidebar()"><span class="nav-num">3</span><span class="nav-text">Facebook e Instagram</span></a></li>
+      <li><a class="nav-item" href="#s4" onclick="closeSidebar()"><span class="nav-num">4</span><span class="nav-text">Il tuo account email</span></a></li>
+      <li><a class="nav-item" href="#s5" onclick="closeSidebar()"><span class="nav-num">5</span><span class="nav-text">Apple ID e Microsoft</span></a></li>
+      <li><a class="nav-item" href="#s6" onclick="closeSidebar()"><span class="nav-num">6</span><span class="nav-text">Accessi non autorizzati</span></a></li>
+      <li><a class="nav-item" href="#s7" onclick="closeSidebar()"><span class="nav-num">7</span><span class="nav-text">Cedere il telefono</span></a></li>
+      <li><a class="nav-item" href="#s8" onclick="closeSidebar()"><span class="nav-num">✓</span><span class="nav-text">Checklist — Cosa controllare subito</span></a></li>
+    </ul>
+    <hr class="sidebar-divider">
+    <div class="sidebar-meta">
+      <strong>Guida Controllo Account</strong><br>
+      🔑 Sicurezza digitale<br>
+      ⏱ ~30 min di lettura<br>
+      📊 Livello base<br>
+      🗓 Aggiornata luglio 2026
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="guide-main">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="Percorso" style="margin-bottom:1.25rem;font-size:.82rem;color:var(--gray-mid);">
+      <table style="border:none;border-collapse:collapse;">
+        <tr>
+          <td style="padding:0 .5rem 0 0;border:none;"><a href="/" style="color:var(--blue-mid);text-decoration:none;">🏠 Home</a></td>
+          <td style="padding:0 .5rem;border:none;">›</td>
+          <td style="padding:0 .5rem;border:none;"><a href="/sicurezza/" style="color:var(--blue-mid);text-decoration:none;">🔒 Sicurezza</a></td>
+          <td style="padding:0 .5rem;border:none;">›</td>
+          <td style="padding:0;border:none;color:var(--gray-dark);font-weight:600;">Chi ha accesso ai tuoi account?</td>
+        </tr>
+      </table>
+    </nav>
+
+    <!-- Hero -->
+    <div class="guide-hero">
+      <div class="guide-hero-eyebrow">Formazione Digitale · Guida completa · Sicurezza</div>
+      <h1 class="guide-hero-title">Chi ha accesso<br><em>ai tuoi account?</em></h1>
+      <p class="guide-hero-sub">Verifica le sessioni attive su Google, Facebook, email e Apple ID. Scopri come fare il logout corretto e cosa controllare prima di dare il telefono a qualcuno.</p>
+      <div class="guide-hero-badges">
+        <span class="hero-badge">🔑 Sicurezza</span>
+        <span class="hero-badge">💡 Livello base</span>
+        <span class="hero-badge">⏱ ~30 minuti</span>
+        <span class="hero-badge">✅ Checklist inclusa</span>
+        <span class="hero-badge">🗓 Aggiornata 2026</span>
+      </div>
+    </div>
+
+    <!-- ═══ S1 ═══ -->
+    <section class="guide-section" id="s1">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div class="section-titles">
+          <h2 class="section-title">Cosa significa essere "connesso"</h2>
+          <p class="section-subtitle">Account e dispositivo non sono la stessa cosa</p>
+        </div>
+      </div>
+
+      <p>C'è un malinteso molto comune: molte persone pensano che per accedere ai propri account qualcuno abbia bisogno del loro telefono in mano. Non è così.</p>
+      <p>Un <strong>account</strong> (Google, Facebook, email…) è come una cassaforte nel cloud — esiste su un server, non dentro il tuo telefono. Il tuo telefono è solo uno degli strumenti che usi per aprirla. Ma quella cassaforte può essere aperta anche da un altro dispositivo, in un altro posto, da un'altra persona — se ha le credenziali giuste, o se hai dimenticato di chiudere la porta.</p>
+
+      <h3 class="sub-title">Cos'è una sessione</h3>
+      <p>Ogni volta che accedi a un account — dal tuo telefono, dal computer di un amico, da un bar — si crea una <strong>sessione</strong>. La sessione è come lasciare una porta aperta: finché non esci esplicitamente (logout), chiunque torni su quel dispositivo può continuare a usare il tuo account senza dover inserire nessuna password.</p>
+
+      <div class="box box-info">
+        <div class="box-label">L'analogia della chiave</div>
+        <p>Immagina il tuo account come un appartamento. La password è la chiave. Ma se entri e non chiudi a chiave la porta, chiunque può entrare dopo di te — senza chiave. Il logout è l'equivalente digitale di chiudere a chiave quando esci.</p>
+      </div>
+
+      <h3 class="sub-title">Perché questo ti riguarda</h3>
+      <p>Hai mai fatto accesso a Facebook dal computer di qualcuno e poi te ne sei andato senza uscire? Hai mai lasciato il tuo telefono sbloccato a un figlio, un amico, un collega? Hai mai usato un computer in vacanza per controllare le email? In tutti questi casi la sessione potrebbe essere ancora aperta.</p>
+
+      <div class="highlight-grid">
+        <div class="highlight-card hc-red">
+          <div class="hc-emoji">📱</div>
+          <div class="hc-title">Sessione aperta sul telefono di un amico</div>
+          <div class="hc-body">Hai controllato le email da casa sua e hai dimenticato di uscire. La prossima volta che apre il browser, vede la tua posta.</div>
+        </div>
+        <div class="highlight-card hc-red">
+          <div class="hc-emoji">💻</div>
+          <div class="hc-title">PC condiviso in ufficio o in vacanza</div>
+          <div class="hc-body">I computer condivisi raramente cancellano la cronologia automaticamente. Il tuo accesso può restare attivo per giorni.</div>
+        </div>
+        <div class="highlight-card hc-amber">
+          <div class="hc-emoji">🔧</div>
+          <div class="hc-title">Telefono portato in assistenza</div>
+          <div class="hc-body">Se porti il telefono sbloccato e con gli account aperti, il tecnico ha accesso a tutto durante la riparazione.</div>
+        </div>
+        <div class="highlight-card hc-amber">
+          <div class="hc-emoji">👶</div>
+          <div class="hc-title">Telefono passato a un bambino</div>
+          <div class="hc-body">I bambini esplorano. Con il telefono sbloccato possono accedere — anche per sbaglio — ai tuoi messaggi o acquisti.</div>
+        </div>
+      </div>
+
+      <p>La buona notizia è che quasi tutti i servizi ti permettono di vedere esattamente dove e quando sei connesso — e di chiudere le sessioni che non riconosci, anche a distanza. Vediamo come.</p>
+
+      <div class="box box-note">
+        <div class="box-label">Connessioni e reti</div>
+        <p>Verificare le sessioni è utile, ma non sufficiente se la connessione è compromessa. HTTP vs HTTPS, reti WiFi pubbliche e come riconoscere un sito contraffatto sono trattati nella <strong>Guida alle Connessioni Sicure</strong> — in preparazione sul portale.</p>
+      </div>
+    </section>
+
+    <!-- ═══ S2 ═══ -->
+    <section class="guide-section" id="s2">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div class="section-titles">
+          <h2 class="section-title">I tuoi account Google</h2>
+          <p class="section-subtitle">Dove vedere e gestire tutti i tuoi accessi, dal browser o dal telefono</p>
+        </div>
+      </div>
+
+      <p>Google è spesso l'account più importante che hai: controlla l'email (Gmail), le foto, i documenti, il calendario e molto altro. È anche quello a cui si collegano molti altri servizi. Verificare chi vi ha accesso è la prima cosa da fare.</p>
+
+      <h3 class="sub-title">Controlla i tuoi dispositivi collegati</h3>
+      <ol class="steps-list">
+        <li>Apri il browser e vai su <strong>myaccount.google.com</strong> — oppure su Gmail clicca sull'icona del tuo profilo in alto a destra e scegli "Gestisci il tuo account Google".</li>
+        <li>Nella barra in cima, clicca su <strong>Sicurezza e accesso</strong>.</li>
+        <li>Scorri verso il basso fino alla sezione <strong>"I tuoi dispositivi"</strong> e clicca su "Gestisci tutti i dispositivi".</li>
+        <li>Vedrai la lista di tutti i dispositivi con una sessione attiva: tipo, browser o app, data e posizione approssimativa dell'ultimo accesso.</li>
+      </ol>
+
+      <div class="box box-info">
+        <div class="box-label">Cosa trovi nella lista</div>
+        <p>Per ogni dispositivo: tipo (telefono, computer, tablet), nome del browser o app, data e ora dell'ultimo accesso, posizione approssimativa (città, non indirizzo esatto). <strong>Non allarmarti subito per posizioni "strane"</strong> — Google a volte sbaglia città perché usa l'IP del tuo operatore, che può avere sede altrove.</p>
+      </div>
+
+      <p style="font-size:.85rem;color:var(--gray-mid);">💡 Scorciatoia: puoi raggiungere la stessa pagina direttamente da <strong>google.com/devices</strong>.</p>
+
+      <h3 class="sub-title">Come rimuovere un dispositivo che non riconosci</h3>
+      <ol class="steps-list">
+        <li>Nella lista dei dispositivi, clicca su quello che non riconosci.</li>
+        <li>Comparirà un pannello con i dettagli. Clicca su <strong>"Non riconosci questo dispositivo?"</strong> oppure su <strong>"Esci"</strong>.</li>
+        <li>Google terminerà quella sessione immediatamente.</li>
+        <li>Se hai dubbi sull'intera situazione, usa <strong>"Esci da tutti i dispositivi"</strong> per chiudere tutto in una volta (tranne la sessione attuale).</li>
+      </ol>
+
+      <div class="box box-warn">
+        <p>Se esci da tutti i dispositivi, dovrai reinserire la password la prossima volta che apri Gmail o un altro servizio Google sul telefono. È un piccolo inconveniente — ma è la mossa giusta se sospetti qualcosa.</p>
+      </div>
+
+      <h3 class="sub-title">Le app che hanno accesso al tuo Google</h3>
+      <p>Quando installi un'app e scegli "Accedi con Google", quella app riceve una chiave di accesso al tuo account. Anche se disinstalli l'app, quella chiave potrebbe restare attiva.</p>
+      <ol class="steps-list">
+        <li>Torna su <strong>myaccount.google.com → Sicurezza e accesso</strong>.</li>
+        <li>Scorri fino a <strong>"App di terze parti con accesso al tuo account"</strong> e clicca su "Gestisci accesso di terze parti".</li>
+        <li>Per ciascuna app puoi leggere cosa può fare (es. "vedere il tuo calendario", "leggere le tue email").</li>
+        <li>Per rimuovere un'app non usata: clicca su di essa e poi su <strong>"Rimuovi accesso"</strong>.</li>
+      </ol>
+
+      <div class="box box-tip">
+        <div class="box-label">Buona abitudine</div>
+        <p>Fai questa verifica ogni 6 mesi. Le app cambiano, i permessi si accumulano. Rimuovere quelle che non usi è un piccolo atto di igiene digitale.</p>
+      </div>
+    </section>
+
+    <!-- ═══ S3 ═══ -->
+    <section class="guide-section" id="s3">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div class="section-titles">
+          <h2 class="section-title">Facebook e Instagram</h2>
+          <p class="section-subtitle">Come vedere dove sei connesso e terminare le sessioni non volute</p>
+        </div>
+      </div>
+
+      <h3 class="sub-title">Facebook — percorso classico</h3>
+      <p>Il percorso tradizionale funziona su tutti gli account, anche senza Instagram collegato.</p>
+      <ol class="steps-list">
+        <li>Apri Facebook. Vai su <strong>Impostazioni e privacy → Impostazioni</strong> (menu ☰ o foto profilo).</li>
+        <li>Nella colonna sinistra cerca <strong>"Sicurezza e accesso"</strong>.</li>
+        <li>Sotto <strong>"Dove hai effettuato l'accesso"</strong> trovi la lista completa: dispositivo, browser, posizione, data.</li>
+        <li>Per terminare una sessione: clicca sui tre puntini accanto al dispositivo → <strong>"Disconnetti"</strong>.</li>
+        <li>Per uscire da tutto: <strong>"Disconnetti da tutte le sessioni"</strong> in fondo alla lista.</li>
+      </ol>
+
+      <h3 class="sub-title">Facebook e Instagram — Centro Gestione Account</h3>
+      <p>Meta ha spostato molte impostazioni di sicurezza nel <strong>Centro Gestione Account</strong> — un pannello unificato per Facebook e Instagram. Se hai i due account collegati, questo è il percorso più completo.</p>
+      <ol class="steps-list">
+        <li>Da Facebook o Instagram: vai su <strong>Impostazioni → Account Center</strong> (o "Centro gestione account").</li>
+        <li>Scegli <strong>Password e sicurezza</strong>.</li>
+        <li>Clicca su <strong>"Dove hai eseguito l'accesso"</strong> e seleziona l'account che vuoi controllare (Facebook o Instagram).</li>
+        <li>Vedrai la lista dei dispositivi attivi con data e posizione. Per ciascuno puoi scegliere di disconnetterti.</li>
+        <li>Per uscire da tutto: usa <strong>"Esci da tutte le sessioni"</strong> in fondo alla lista.</li>
+      </ol>
+
+      <div class="box box-info">
+        <div class="box-label">Le posizioni sembrano strane?</div>
+        <p>Facebook mostra la posizione basandosi sull'indirizzo IP. Se usi una VPN o sei connesso a una rete con sede altrove, la posizione può risultare diversa. <strong>Prima di allarmarti, controlla data e tipo di dispositivo</strong>: se è il tuo telefono con la data di oggi, è quasi certamente normale.</p>
+      </div>
+    </section>
+
+    <!-- ═══ S4 ═══ -->
+    <section class="guide-section" id="s4">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div class="section-titles">
+          <h2 class="section-title">Il tuo account email</h2>
+          <p class="section-subtitle">L'email è la chiave di tutto — merita un'attenzione particolare</p>
+        </div>
+      </div>
+
+      <p>L'account email è il più importante di tutti: quasi tutti gli altri account usano l'email per recuperare la password. Chi controlla la tua email può resettare qualsiasi altro account.</p>
+
+      <h3 class="sub-title">Gmail</h3>
+      <p>Per Gmail la gestione accessi è centralizzata in Google (vedi Sezione 2). Gmail offre però anche un controllo rapido direttamente dalla posta:</p>
+      <ol class="steps-list">
+        <li>Apri Gmail nel browser. Scorri tutto in fondo alla pagina — in basso a destra trovi <strong>"Ultima attività account"</strong>.</li>
+        <li>Clicca su <strong>"Dettagli"</strong>: si apre una finestra con tutti gli accessi recenti, tipo e posizione.</li>
+        <li>Se vedi qualcosa di sospetto: <strong>"Disconnetti tutte le altre sessioni web"</strong> nella stessa finestra.</li>
+      </ol>
+
+      <h3 class="sub-title">Outlook e Hotmail (Microsoft)</h3>
+      <ol class="steps-list">
+        <li>Vai su <strong>account.microsoft.com</strong> e accedi.</li>
+        <li>Clicca su <strong>Sicurezza → "Attività di accesso recente"</strong>.</li>
+        <li>Vedrai la lista degli accessi con data, dispositivo e posizione.</li>
+        <li>Se c'è un accesso non tuo: puoi segnalarlo direttamente — Microsoft ti guida nei passaggi per proteggere l'account.</li>
+      </ol>
+
+      <h3 class="sub-title">Libero, Virgilio, TIM e altri provider italiani</h3>
+      <p>Il percorso generale è: accedi alla webmail dal browser → cerca <strong>Impostazioni → Sicurezza</strong> oppure <strong>Account → Accessi recenti</strong>. Se non trovi nulla, cerca "sessioni" o "dispositivi" nella barra di ricerca delle impostazioni.</p>
+
+      <div class="box box-tip">
+        <div class="box-label">Considera di usare Gmail o Outlook</div>
+        <p>Se usi ancora un indirizzo Libero o Virgilio creato 15 anni fa, valuta il passaggio a un provider moderno. Gmail e Outlook offrono strumenti di sicurezza molto più completi — e sono gratuiti.</p>
+      </div>
+    </section>
+
+    <!-- ═══ S5 ═══ -->
+    <section class="guide-section" id="s5">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div class="section-titles">
+          <h2 class="section-title">Apple ID e account Microsoft</h2>
+          <p class="section-subtitle">Gli account che gestiscono i dispositivi, non solo le app</p>
+        </div>
+      </div>
+
+      <p>Apple ID e account Microsoft controllano i <em>dispositivi stessi</em>. Un iPhone collegato al tuo Apple ID può essere bloccato, localizzato o cancellato a distanza — il che è una protezione preziosa, ma significa che devi sapere esattamente chi ha accesso a questi account.</p>
+
+      <h3 class="sub-title">Apple ID — controlla i dispositivi collegati</h3>
+      <ol class="steps-list">
+        <li>Su iPhone o iPad: vai su <strong>Impostazioni</strong> e tocca il tuo nome in cima.</li>
+        <li>Scorri verso il basso: vedrai la lista di tutti i dispositivi collegati (iPhone, iPad, Mac, Apple Watch…).</li>
+        <li>Tocca un dispositivo per vedere i dettagli: modello, sistema operativo, stato "Dov'è?".</li>
+        <li>Per rimuovere un dispositivo non tuo: tocca <strong>"Rimuovi dall'account"</strong> in fondo ai dettagli.</li>
+      </ol>
+      <p>Dal browser puoi fare la stessa cosa su <strong>appleid.apple.com → Dispositivi</strong>.</p>
+
+      <div class="box box-warn">
+        <div class="box-label">Dispositivo venduto o regalato?</div>
+        <p>Se hai venduto un iPhone senza prima rimuoverlo dall'Apple ID, quella persona potrebbe ancora risultare nella tua lista. Rimuovilo subito da <strong>Impostazioni → [tuo nome] → [nome dispositivo] → Rimuovi dall'account</strong>.</p>
+      </div>
+
+      <h3 class="sub-title">Account Microsoft — controlla i dispositivi</h3>
+      <ol class="steps-list">
+        <li>Vai su <strong>account.microsoft.com</strong>.</li>
+        <li>Clicca su <strong>Dispositivi</strong> nel menu in alto.</li>
+        <li>Vedrai tutti i PC, tablet e telefoni Windows collegati al tuo account.</li>
+        <li>Per rimuovere un dispositivo: <strong>"Rimuovi dispositivo"</strong>. Il dispositivo sarà scollegato da OneDrive e Microsoft 365.</li>
+      </ol>
+      <p>Per gli accessi recenti (non solo i dispositivi): <strong>account.microsoft.com → Sicurezza → Attività di accesso recente</strong>.</p>
+    </section>
+
+    <!-- ═══ S6 ═══ -->
+    <section class="guide-section" id="s6">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <div class="section-titles">
+          <h2 class="section-title">Riconosci un accesso non autorizzato</h2>
+          <p class="section-subtitle">I segnali da non ignorare e la sequenza di azioni da seguire</p>
+        </div>
+      </div>
+
+      <p>Non sempre un accesso non autorizzato è immediatamente ovvio. A volte ci si accorge di qualcosa solo giorni dopo. Ecco i segnali più comuni.</p>
+
+      <div class="highlight-grid">
+        <div class="highlight-card hc-red">
+          <div class="hc-emoji">📧</div>
+          <div class="hc-title">Email inviata che non hai mandato</div>
+          <div class="hc-body">Trovi messaggi nella cartella "Inviati" che non ricordi di aver scritto.</div>
+        </div>
+        <div class="highlight-card hc-red">
+          <div class="hc-emoji">🔑</div>
+          <div class="hc-title">Reset password non richiesto</div>
+          <div class="hc-body">Ricevi "Hai richiesto di reimpostare la password?" quando non hai fatto nulla.</div>
+        </div>
+        <div class="highlight-card hc-red">
+          <div class="hc-emoji">💬</div>
+          <div class="hc-title">Messaggi inviati a tua insaputa</div>
+          <div class="hc-body">Amici ti scrivono chiedendo di un messaggio strano che hanno ricevuto da te.</div>
+        </div>
+        <div class="highlight-card hc-amber">
+          <div class="hc-emoji">🌍</div>
+          <div class="hc-title">Accesso da luogo sconosciuto</div>
+          <div class="hc-body">Notifica "Nuovo accesso da [città lontana]" — soprattutto se il fuso orario è diverso.</div>
+        </div>
+        <div class="highlight-card hc-amber">
+          <div class="hc-emoji">❤️</div>
+          <div class="hc-title">Attività social non tue</div>
+          <div class="hc-body">Like, commenti, post o nuovi "amici" che non hai aggiunto tu.</div>
+        </div>
+        <div class="highlight-card hc-amber">
+          <div class="hc-emoji">🛒</div>
+          <div class="hc-title">Acquisti non riconosciuti</div>
+          <div class="hc-body">Nell'App Store o Play Store trovi acquisti che non hai fatto tu.</div>
+        </div>
+      </div>
+
+      <h3 class="sub-title">Cosa fare immediatamente — la sequenza conta</h3>
+
+      <div class="box box-warn">
+        <div class="box-label">Prima regola: non farti prendere dal panico</div>
+        <p>Il panico porta a fare mosse sbagliate — o a non fare nulla perché si è sopraffatti. Segui questa sequenza nell'ordine, un passo alla volta.</p>
+      </div>
+
+      <ol class="steps-list">
+        <li><strong>Cambia subito la password</strong> dell'account interessato — qualcosa che non hai mai usato altrove. Se non riesci ad accedere perché è già stata cambiata, usa "Password dimenticata".</li>
+        <li><strong>Esci da tutti i dispositivi</strong> — chiudi l'accesso a chiunque stia usando il tuo account in quel momento.</li>
+        <li><strong>Attiva il 2FA</strong> se non l'hai ancora fatto — anche con la password appena cambiata, il 2FA impedisce futuri accessi. Ne parleremo nella prossima guida.</li>
+        <li><strong>Verifica email e numero di recupero</strong> collegati all'account — un attaccante potrebbe averli cambiati per impedirti di rientrare.</li>
+        <li><strong>Controlla gli altri account</strong> se usavi la stessa password — cambiale tutte.</li>
+        <li><strong>Segnala l'accesso</strong> direttamente al provider — ogni piattaforma ha una procedura dedicata per aiutarti a recuperare e proteggere l'account.</li>
+      </ol>
+    </section>
+
+    <!-- ═══ S7 ═══ -->
+    <section class="guide-section" id="s7">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <div class="section-titles">
+          <h2 class="section-title">Prima di dare il telefono a qualcuno</h2>
+          <p class="section-subtitle">Quattro situazioni concrete e cosa fare in ciascuna</p>
+        </div>
+      </div>
+
+      <p>Non tutti gli accessi non autorizzati vengono dall'esterno. Spesso il rischio è più vicino: il tecnico della riparazione, un bambino che vuole giocare, un amico per una telefonata. Ogni situazione richiede una risposta diversa.</p>
+
+      <div class="scenario-grid">
+        <div class="scenario-card">
+          <div class="scenario-head">🔧 Tecnico di assistenza</div>
+          <div class="scenario-body">
+            <div class="scenario-block">
+              <span class="scenario-block-label before">Prima di consegnarlo</span>
+              Fai un backup completo (iCloud o Google Backup). Se possibile, togli il tuo account Apple o Google e fai un reset di fabbrica — riconsegnerai il telefono "pulito". Se non puoi (es. il telefono non si accende), cambia le password appena lo riprendi.
+            </div>
+            <div class="scenario-block">
+              <span class="scenario-block-label after">Quando lo riprendi</span>
+              Verifica i dispositivi collegati su Google e Apple ID. Controlla se ci sono nuove app installate. Cambia le password se hai qualsiasi dubbio.
+            </div>
+          </div>
+        </div>
+
+        <div class="scenario-card">
+          <div class="scenario-head">👥 Amico o familiare</div>
+          <div class="scenario-body">
+            <div class="scenario-block">
+              <span class="scenario-block-label before">Per una telefonata rapida</span>
+              Tieni attivo il blocco schermo automatico (30 secondi). Apri tu stesso l'app telefono e lasciagliela. Non lasciare il telefono sbloccato in giro.
+            </div>
+            <div class="scenario-block">
+              <span class="scenario-block-label after">Per uso prolungato</span>
+              Su Android puoi attivare l'"account ospite" dalle impostazioni rapide. In alternativa, rimani presente.
+            </div>
+          </div>
+        </div>
+
+        <div class="scenario-card">
+          <div class="scenario-head">👶 Bambini e ragazzi</div>
+          <div class="scenario-body">
+            <div class="scenario-block">
+              <span class="scenario-block-label before">Per uso occasionale</span>
+              Su iPhone: <strong>Modalità guidata</strong> (Impostazioni → Accessibilità → Modalità guidata) blocca il telefono su una sola app. Su Android: "Blocco app" o "Modalità bambino" nelle impostazioni.
+            </div>
+            <div class="scenario-block">
+              <span class="scenario-block-label after">Per uso regolare</span>
+              Crea un account Google separato per il bambino con <strong>Family Link</strong> — controlli le app e i contenuti accessibili.
+            </div>
+          </div>
+        </div>
+
+        <div class="scenario-card">
+          <div class="scenario-head">💰 Vendita o regalo</div>
+          <div class="scenario-body">
+            <div class="scenario-block">
+              <span class="scenario-block-label before">L'ordine è obbligatorio</span>
+              1. Fai un backup. 2. Rimuovi l'Apple ID (Impostazioni → [nome] → Esci) <em>oppure</em> l'account Google (Impostazioni → Account). 3. Fai il reset di fabbrica. Prima togli l'account, poi il reset — mai l'inverso.
+            </div>
+            <div class="scenario-block">
+              <span class="scenario-block-label after">Perché l'ordine conta</span>
+              Se fai il reset prima di rimuovere l'Apple ID, il telefono resta bloccato sull'Activation Lock — il nuovo proprietario non riuscirà ad attivarlo.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ S8 ═══ -->
+    <section class="guide-section" id="s8">
+      <div class="section-header">
+        <div class="section-num">✓</div>
+        <div class="section-titles">
+          <h2 class="section-title">Checklist — Cosa controllare subito</h2>
+          <p class="section-subtitle">Spunta man mano che completi ogni verifica</p>
+        </div>
+      </div>
+
+      <p>Dedicaci 20 minuti — preferibilmente dal computer, dove le impostazioni sono più facili da raggiungere.</p>
+
+      <div class="checklist-wrap">
+        <div class="checklist-header">📋 La mia verifica degli accessi</div>
+
+        <div class="checklist-group-label">🔵 Google</div>
+        <div class="checklist-items">
+          <label class="checklist-item" onclick="toggleCheck(this,0)">
+            <input type="checkbox"><div class="checklist-box"></div>
+            <span class="checklist-text">Ho aperto myaccount.google.com → Sicurezza e accesso → I tuoi dispositivi e verificato tutti gli accessi</span>
+          </label>
+          <label class="checklist-item" onclick="toggleCheck(this,1)">
+            <input type="checkbox"><div class="checklist-box"></div>
+            <span class="checklist-text">Ho rimosso i dispositivi che non riconosco o che non uso più</span>
+          </label>
+          <label class="checklist-item" onclick="toggleCheck(this,2)">
+            <input type="checkbox"><div class="checklist-box"></div>
+            <span class="checklist-text">Ho controllato le app di terze parti e rimosso quelle non necessarie</span>
+          </label>
+        </div>
+
+        <div class="checklist-group-label">📘 Facebook e Instagram</div>
+        <div class="checklist-items">
+          <label class="checklist-item" onclick="toggleCheck(this,3)">
+            <input type="checkbox"><div class="checklist-box"></div>
+            <span class="checklist-text">Ho verificato "Dove hai effettuato l'accesso" su Facebook e disconnesso le sessioni non riconosciute</span>
+          </label>
+          <label class="checklist-item" onclick="toggleCheck(this,4)">
+            <input type="checkbox"><div class="checklist-box"></div>
+            <span class="checklist-text">Ho controllato gli accessi attivi su Instagram tramite Account Center → Password e sicurezza</span>
+          </label>
+        </div>
+
+        <div class="checklist-group-label">📧 Email</div>
+        <div class="checklist-items">
+          <label class="checklist-item" onclick="toggleCheck(this,5)">
+            <input type="checkbox"><div class="checklist-box"></div>
+            <span class="checklist-text">Ho verificato gli accessi recenti al mio account email principale</span>
+          </label>
+          <label class="checklist-item" onclick="toggleCheck(this,6)">
+            <input type="checkbox"><div class="checklist-box"></div>
+            <span class="checklist-text">Ho confermato che email e numero di telefono di recupero siano corretti</span>
+          </label>
+        </div>
+
+        <div class="checklist-group-label">📱 Dispositivi</div>
+        <div class="checklist-items">
+          <label class="checklist-item" onclick="toggleCheck(this,7)">
+            <input type="checkbox"><div class="checklist-box"></div>
+            <span class="checklist-text">Ho controllato i dispositivi collegati al mio Apple ID o account Microsoft</span>
+          </label>
+          <label class="checklist-item" onclick="toggleCheck(this,8)">
+            <input type="checkbox"><div class="checklist-box"></div>
+            <span class="checklist-text">Il blocco schermo automatico del mio telefono è attivo (massimo 1 minuto di inattività)</span>
+          </label>
+        </div>
+
+        <div class="checklist-progress">
+          <span id="progress-label">0 di 9 completati</span>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+          </div>
+          <span id="progress-pct">0%</span>
+        </div>
+      </div>
+
+      <div class="box box-tip">
+        <div class="box-label">Fatto tutto? Ottimo punto di partenza.</div>
+        <p>Hai appena fatto qualcosa che la maggior parte delle persone non fa mai. Il passo successivo è proteggere questi accessi con password solide e l'autenticazione a due fattori — argomento della prossima guida.</p>
+      </div>
+    </section>
+
+    <a class="related-link" href="/sicurezza/guida-cybersicurezza/">
+      <div class="related-link-icon">🔒</div>
+      <div class="related-link-text">
+        <strong>Vuoi approfondire la sicurezza dei tuoi account?</strong>
+        <span>La Guida alla Cybersicurezza Personale copre password sicure, 2FA, VPN, backup e molto altro.</span>
+      </div>
+      <div class="related-link-arrow">→</div>
+    </a>
+
+  </main>
+</div>
+
+<footer>
+  <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
+  Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem;">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<script src="/scripts/ui.js" defer></script>
+<script>
+/* ── Sidebar ── */
+function toggleSidebar() {
+  document.getElementById('guide-sidebar').classList.toggle('is-open');
+  document.getElementById('sidebar-overlay').classList.toggle('is-open');
+}
+function closeSidebar() {
+  document.getElementById('guide-sidebar').classList.remove('is-open');
+  document.getElementById('sidebar-overlay').classList.remove('is-open');
+}
+
+/* ── Highlight nav item attivo allo scroll ── */
+(function() {
+  const sections = document.querySelectorAll('.guide-section[id]');
+  const navItems = document.querySelectorAll('.nav-item');
+  function onScroll() {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+    navItems.forEach(n => n.classList.toggle('active', n.getAttribute('href') === '#' + current));
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
+
+/* ── Checklist ── */
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+  const done = document.querySelectorAll('.checklist-item.checked').length;
+  const pct  = Math.round((done / 9) * 100);
+  document.getElementById('progress-label').textContent = done + ' di 9 completati';
+  document.getElementById('progress-fill').style.width  = pct + '%';
+  document.getElementById('progress-pct').textContent   = pct + '%';
+}
+</script>
+</body>
+</html>

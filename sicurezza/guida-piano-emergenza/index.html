@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piano di emergenza digitale: telefono rubato, account violato · Formazione Digitale</title>
+<meta name="description" content="Cosa fare nei primi 10 minuti se ti rubano il telefono, se un account viene violato o se qualcuno usa la tua identità online. Guida pratica con piano d'azione stampabile.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#1F4E79">
+<link rel="canonical" href="https://formazione-digitale.it/sicurezza/guida-piano-emergenza/">
+<link rel="icon" type="image/png" href="/img/favicon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="//gc.zgo.at">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+
+<meta property="og:title" content="Piano di emergenza digitale · Formazione Digitale">
+<meta property="og:description" content="Telefono rubato, account violato, identità digitale compromessa: cosa fare, in quale ordine, a chi rivolgersi. Con piano stampabile.">
+<meta property="og:url" content="https://formazione-digitale.it/sicurezza/guida-piano-emergenza/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Piano di emergenza digitale · Formazione Digitale">
+<meta name="twitter:description" content="Telefono rubato, account violato: cosa fare nei primi 10 minuti. Piano d'azione stampabile incluso.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Piano di emergenza digitale: telefono rubato, account violato",
+  "description": "Guida pratica su cosa fare nei primi 10 minuti se il telefono viene rubato, se un account viene violato o se qualcuno usa la tua identità digitale. Include piano d'azione stampabile con contatti utili.",
+  "url": "https://formazione-digitale.it/sicurezza/guida-piano-emergenza/",
+  "inLanguage": "it",
+  "educationalLevel": "Foundation",
+  "author": {
+    "@type": "Person",
+    "name": "Cristiano De Pasquale",
+    "jobTitle": "Docente di Informatica"
+  },
+  "provider": {
+    "@type": "WebSite",
+    "name": "Formazione Digitale",
+    "url": "https://formazione-digitale.it"
+  },
+  "keywords": "telefono rubato cosa fare, account violato recupero, furto identità digitale, piano emergenza digitale, polizia postale, blocco remoto iPhone Android"
+}
+</script>
+
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="stylesheet" href="/css/shared.css?v=3">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   CSS SPECIFICO — Guida Piano Emergenza
+   SOLO componenti NON presenti in shared.css v3.
+═══════════════════════════════════════════════════════════ */
+
+/* ── Hero ────────────────────────────────────────────────── */
+.guide-hero {
+  background: linear-gradient(135deg, #2C3E50 0%, #3D566E 100%);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,.25);
+}
+.guide-hero-eyebrow {
+  font-size: .72rem; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: #a8c0d6; margin-bottom: .5rem;
+}
+.guide-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  color: #fff; line-height: 1.1; margin-bottom: .5rem;
+}
+.guide-hero-title em { font-style: italic; color: #a8c0d6; }
+.guide-hero-sub {
+  font-size: .95rem; color: rgba(255,255,255,.75);
+  line-height: 1.65; max-width: 600px;
+}
+.guide-hero-badges { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.25rem; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: .3rem;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.22);
+  color: rgba(255,255,255,.85);
+  font-size: .72rem; font-weight: 500;
+  padding: .28rem .7rem; border-radius: 20px;
+}
+
+/* ── Varianti highlight-card ─────────────────────────────── */
+.highlight-card.hc-red   { border-top: 3px solid var(--red-mid); }
+.highlight-card.hc-amber { border-top: 3px solid var(--amber-dark); }
+.highlight-card.hc-green { border-top: 3px solid var(--green-dark); }
+.highlight-card.hc-blue  { border-top: 3px solid var(--blue-mid); }
+
+/* ── Steps list numerata ─────────────────────────────────── */
+.steps-list {
+  list-style: none; counter-reset: steps;
+  margin: 1rem 0; display: flex; flex-direction: column; gap: .7rem;
+  padding: 0;
+}
+.steps-list li {
+  counter-increment: steps;
+  display: flex; align-items: flex-start; gap: .85rem;
+  font-size: .9rem; line-height: 1.6; color: var(--gray-dark);
+  overflow-wrap: break-word; word-break: break-word;
+}
+.steps-list li::before {
+  content: counter(steps);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+  background: var(--blue-mid); color: #fff;
+  font-size: .75rem; font-weight: 700; margin-top: .15rem;
+}
+.steps-list li strong { color: var(--blue-dark); }
+
+/* ── Minuti critici (S2) ─────────────────────────────────── */
+.minuti-grid {
+  display: flex; flex-direction: column; gap: .6rem; margin: 1.25rem 0;
+}
+.minuto-row {
+  display: flex; gap: 1rem; align-items: flex-start;
+  background: #fff; border: 1px solid var(--blue-light);
+  border-radius: var(--radius); padding: .8rem 1rem;
+}
+.minuto-badge {
+  flex-shrink: 0; background: var(--blue-dark); color: #fff;
+  border-radius: 6px; padding: .25rem .6rem;
+  font-size: .72rem; font-weight: 700; white-space: nowrap;
+  margin-top: .1rem;
+}
+.minuto-row.urgente { border-left: 4px solid var(--red-dark); }
+.minuto-row.urgente .minuto-badge { background: var(--red-dark); }
+.minuto-row.importante { border-left: 4px solid var(--amber-dark); }
+.minuto-row.importante .minuto-badge { background: var(--amber-dark); }
+.minuto-row.normale { border-left: 4px solid var(--green-dark); }
+.minuto-row.normale .minuto-badge { background: var(--green-dark); }
+.minuto-text { font-size: .88rem; line-height: 1.6; }
+.minuto-text strong { color: var(--blue-dark); }
+
+/* ── Piano stampabile (S7) ───────────────────────────────── */
+.piano-card {
+  border: 2px solid var(--blue-dark);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 1.25rem 0;
+  background: #fff;
+}
+.piano-card-header {
+  background: var(--blue-dark); color: #fff;
+  padding: .9rem 1.25rem;
+  font-family: var(--font-display); font-size: 1.05rem;
+  display: flex; align-items: center; gap: .6rem;
+}
+.piano-section {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--blue-light);
+}
+.piano-section:last-child { border-bottom: none; }
+.piano-section-title {
+  font-size: .7rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--blue-mid); margin-bottom: .6rem;
+}
+.piano-field {
+  display: flex; align-items: baseline; gap: .5rem;
+  margin-bottom: .5rem; font-size: .85rem;
+}
+.piano-field-label { color: var(--gray-mid); min-width: 160px; flex-shrink: 0; font-size: .8rem; }
+.piano-field-line {
+  flex: 1; border-bottom: 1px solid #ccc; min-height: 1.2em;
+}
+.piano-steps {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: .3rem;
+}
+.piano-steps li {
+  font-size: .82rem; line-height: 1.55; color: var(--gray-dark);
+  display: flex; gap: .5rem; align-items: flex-start;
+}
+.piano-steps li::before {
+  content: attr(data-n);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--blue-dark); color: #fff;
+  font-size: .68rem; font-weight: 700;
+}
+
+/* ── Contatti utili ──────────────────────────────────────── */
+.contacts-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: .85rem; margin: 1.25rem 0;
+}
+.contact-card {
+  border: 1px solid var(--blue-light); border-radius: var(--radius);
+  padding: 1rem; background: #fff;
+}
+.contact-icon { font-size: 1.5rem; margin-bottom: .4rem; }
+.contact-name { font-weight: 700; font-size: .88rem; color: var(--blue-dark); margin-bottom: .2rem; }
+.contact-detail { font-size: .8rem; color: var(--gray-mid); line-height: 1.55; }
+.contact-detail strong { color: var(--gray-dark); }
+
+/* ── Stampa ──────────────────────────────────────────────── */
+@media print {
+  .guide-header, .guide-sidebar, .sidebar-overlay,
+  .guide-hero, nav, .related-link, footer,
+  #hamburger, .hero-badge, .back-to-top { display: none !important; }
+  .guide-layout { display: block; }
+  .guide-main { margin: 0; max-width: 100%; padding: 0; }
+  .guide-section { page-break-inside: avoid; }
+  .guide-section:not(#s7) { display: none; }
+  .piano-card { border: 2px solid #000; }
+  body { font-size: 11pt; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════ HEADER ════ -->
+<header class="guide-header">
+  <a class="guide-header-back" href="/">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Formazione Digitale
+  </a>
+  <div class="guide-header-center">Piano di emergenza digitale</div>
+  <div class="guide-header-right">
+    <button class="hamburger" id="hamburger" aria-label="Apri menu sezioni" onclick="toggleSidebar()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="guide-layout">
+
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <aside class="guide-sidebar" id="guide-sidebar">
+    <div class="sidebar-label">Sezioni</div>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li><a class="nav-item active" href="#s1" onclick="closeSidebar()"><span class="nav-num">1</span><span class="nav-text">Prepara il piano adesso</span></a></li>
+      <li><a class="nav-item" href="#s2" onclick="closeSidebar()"><span class="nav-num">2</span><span class="nav-text">Telefono rubato o perso</span></a></li>
+      <li><a class="nav-item" href="#s3" onclick="closeSidebar()"><span class="nav-num">3</span><span class="nav-text">Account violato</span></a></li>
+      <li><a class="nav-item" href="#s4" onclick="closeSidebar()"><span class="nav-num">4</span><span class="nav-text">Identità digitale compromessa</span></a></li>
+      <li><a class="nav-item" href="#s5" onclick="closeSidebar()"><span class="nav-num">5</span><span class="nav-text">Dati bancari rubati</span></a></li>
+      <li><a class="nav-item" href="#s6" onclick="closeSidebar()"><span class="nav-num">6</span><span class="nav-text">A chi rivolgersi</span></a></li>
+      <li><a class="nav-item" href="#s7" onclick="closeSidebar()"><span class="nav-num">📋</span><span class="nav-text">Il tuo piano stampabile</span></a></li>
+    </ul>
+    <hr class="sidebar-divider">
+    <div class="sidebar-meta">
+      <strong>Piano di emergenza</strong><br>
+      🆘 Sicurezza digitale<br>
+      ⏱ ~25 min di lettura<br>
+      📊 Livello base<br>
+      🗓 Aggiornato luglio 2026
+    </div>
+  </aside>
+
+  <main class="guide-main">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="Percorso" style="margin-bottom:1.25rem;font-size:.82rem;color:var(--gray-mid);">
+      <table style="border:none;border-collapse:collapse;">
+        <tr>
+          <td style="padding:0 .5rem 0 0;border:none;"><a href="/" style="color:var(--blue-mid);text-decoration:none;">🏠 Home</a></td>
+          <td style="padding:0 .5rem;border:none;">›</td>
+          <td style="padding:0 .5rem;border:none;"><a href="/sicurezza/" style="color:var(--blue-mid);text-decoration:none;">🔒 Sicurezza</a></td>
+          <td style="padding:0 .5rem;border:none;">›</td>
+          <td style="padding:0;border:none;color:var(--gray-dark);font-weight:600;">Piano di emergenza digitale</td>
+        </tr>
+      </table>
+    </nav>
+
+    <!-- Hero -->
+    <div class="guide-hero">
+      <div class="guide-hero-eyebrow">Formazione Digitale · Guida completa · Sicurezza</div>
+      <h1 class="guide-hero-title">Se succede<br><em>qualcosa</em></h1>
+      <p class="guide-hero-sub">Telefono rubato, account violato, qualcuno che usa la tua identità online. Cosa fare, in quale ordine, senza farsi prendere dal panico — e un piano scritto da tenere a portata di mano.</p>
+      <div class="guide-hero-badges">
+        <span class="hero-badge">🆘 Emergenza</span>
+        <span class="hero-badge">💡 Livello base</span>
+        <span class="hero-badge">⏱ ~25 minuti</span>
+        <span class="hero-badge">🖨️ Piano stampabile</span>
+        <span class="hero-badge">🗓 Aggiornato 2026</span>
+      </div>
+    </div>
+
+    <!-- ═══ S1 ═══ -->
+    <section class="guide-section" id="s1">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div class="section-titles">
+          <h2 class="section-title">Prepara il piano adesso</h2>
+          <p class="section-subtitle">Le cose da fare oggi, con calma — non quando sei nel panico</p>
+        </div>
+      </div>
+
+      <p>Il momento peggiore per cercare il numero della banca è quando la carta è appena stata clonata. Il momento peggiore per capire come bloccare il telefono da remoto è quando ti è stato rubato. Le emergenze digitali si gestiscono meglio con un piano preparato in anticipo.</p>
+      <p>Questa sezione è la lista di cose da fare <strong>adesso, con calma</strong>. Le sezioni successive spiegano cosa fare <em>quando</em> succede qualcosa.</p>
+
+      <h3 class="sub-title">Da fare prima che succeda qualcosa</h3>
+
+      <ol class="steps-list">
+        <li><strong>Attiva "Dov'è" (iPhone) o "Trova il mio dispositivo" (Android)</strong> sul tuo telefono — ti permette di bloccarlo e cancellarlo da remoto in caso di furto. Controlla che sia attivo oggi, non domani.</li>
+        <li><strong>Annota i numeri di emergenza</strong> su carta: numero della banca per blocco carta, numero dell'operatore telefonico per blocco SIM. Questi numeri ti servono quando non hai il telefono.</li>
+        <li><strong>Salva i codici di backup</strong> del 2FA per i tuoi account principali (Gmail, banca, SPID) in un posto fisico sicuro — non solo sul telefono.</li>
+        <li><strong>Configura il recupero account</strong> su Google e Apple: vai nelle impostazioni di sicurezza e verifica che email di recupero e numero di telefono siano aggiornati.</li>
+        <li><strong>Fai un backup recente</strong> del telefono su iCloud o Google Foto — così se il dispositivo viene cancellato da remoto non perdi tutto.</li>
+        <li><strong>Compila il piano stampabile</strong> in fondo a questa guida (Sezione 7) e tienilo in un cassetto. Non sul telefono.</li>
+      </ol>
+
+      <div class="box box-tip">
+        <div class="box-label">Il principio chiave</div>
+        <p>Tutto quello che ti serve durante un'emergenza digitale — numeri di telefono, codici di backup, password di recupero — deve esistere anche su carta, fuori dal dispositivo che potrebbe essere perso o bloccato. Un foglio in un cassetto vale più di mille app.</p>
+      </div>
+    </section>
+
+    <!-- ═══ S2 ═══ -->
+    <section class="guide-section" id="s2">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div class="section-titles">
+          <h2 class="section-title">Telefono rubato o perso</h2>
+          <p class="section-subtitle">I primi 10 minuti sono decisivi</p>
+        </div>
+      </div>
+
+      <p>Hai il telefono rubato o non riesci più a trovarlo. Il tempo conta: ogni minuto in più lascia a qualcun altro accesso ai tuoi account, alla tua email, alla tua banca. Agisci in questo ordine.</p>
+
+      <div class="minuti-grid">
+        <div class="minuto-row urgente">
+          <div class="minuto-badge">0–2 min</div>
+          <div class="minuto-text"><strong>Blocca il telefono da remoto.</strong> Da qualsiasi altro dispositivo: iPhone → icloud.com/find o app "Dov'è" su altro Apple. Android → android.com/find con il tuo account Google. Seleziona "Blocca dispositivo" — imposta un PIN temporaneo se non ne hai uno.</div>
+        </div>
+        <div class="minuto-row urgente">
+          <div class="minuto-badge">2–5 min</div>
+          <div class="minuto-text"><strong>Cambia la password dell'account principale</strong> (Google o Apple ID) da un altro dispositivo. Se qualcuno ha il tuo telefono sbloccato e tu cambi la password, viene disconnesso.</div>
+        </div>
+        <div class="minuto-row urgente">
+          <div class="minuto-badge">5–10 min</div>
+          <div class="minuto-text"><strong>Chiama la banca</strong> se hai app di home banking sul telefono. Chiedi il blocco cautelativo dell'accesso mobile e monitora le transazioni. Il numero è sul retro della carta o sul sito ufficiale — non cercarlo su Google in questo momento, vai sul sito che conosci già.</div>
+        </div>
+        <div class="minuto-row importante">
+          <div class="minuto-badge">10–30 min</div>
+          <div class="minuto-text"><strong>Chiama l'operatore telefonico</strong> per bloccare la SIM — impedisce il SIM swapping e l'uso del tuo numero per ricevere codici 2FA. TIM: 119, Vodafone: 190, WindTre: 159, Iliad: app o sito.</div>
+        </div>
+        <div class="minuto-row normale">
+          <div class="minuto-badge">Dopo</div>
+          <div class="minuto-text"><strong>Esci da tutte le sessioni attive</strong> su Google, Facebook, email (vedi Guida 1 — Chi ha accesso ai tuoi account). Poi valuta se cancellare il dispositivo da remoto — fallo solo se sei sicuro di non ritrovarlo.</div>
+        </div>
+      </div>
+
+      <div class="box box-warn">
+        <div class="box-label">Prima di cancellare da remoto</div>
+        <p>La cancellazione remota è definitiva e impedisce il tracciamento. Se pensi di poter recuperare il telefono (es. lo hai dimenticato in un posto che puoi raggiungere), <strong>blocca senza cancellare</strong> — puoi sempre cancellare dopo. Non puoi annullare una cancellazione.</p>
+      </div>
+    </section>
+
+    <!-- ═══ S3 ═══ -->
+    <section class="guide-section" id="s3">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div class="section-titles">
+          <h2 class="section-title">Account violato</h2>
+          <p class="section-subtitle">Non riesci ad accedere, o noti attività che non hai fatto tu</p>
+        </div>
+      </div>
+
+      <p>Ci sono due scenari distinti: riesci ancora ad accedere all'account (qualcuno è entrato ma non ha cambiato la password), oppure non riesci più ad accedere (la password è stata cambiata). La sequenza d'azione è diversa.</p>
+
+      <h3 class="sub-title">Riesci ancora ad accedere</h3>
+      <ol class="steps-list">
+        <li><strong>Cambia subito la password</strong> — scegli qualcosa di nuovo, mai usato altrove.</li>
+        <li><strong>Esci da tutti i dispositivi</strong> — in Google: myaccount.google.com → Sicurezza e accesso → I tuoi dispositivi → Esci da tutti. Su Facebook: Impostazioni → Sicurezza e accesso → Disconnetti da tutte le sessioni.</li>
+        <li><strong>Controlla email e numero di recupero</strong> — un attaccante potrebbe averli già cambiati per rimanere dentro. Ripristina quelli corretti.</li>
+        <li><strong>Attiva il 2FA</strong> se non è già attivo. Con il 2FA attivo, conoscere la password non basta per accedere.</li>
+        <li><strong>Verifica le attività recenti</strong> — email inviate, post pubblicati, acquisti effettuati — per capire cosa ha fatto chi è entrato.</li>
+      </ol>
+
+      <h3 class="sub-title">Non riesci più ad accedere</h3>
+      <ol class="steps-list">
+        <li>Usa subito la funzione <strong>"Password dimenticata"</strong> o <strong>"Recupera account"</strong> sul sito ufficiale — fallo da un dispositivo e una rete di cui ti fidi.</li>
+        <li>Il recupero avviene via email o numero di telefono di backup — per questo è fondamentale averli configurati in anticipo (vedi Sezione 1).</li>
+        <li>Se l'email di recupero è stata cambiata: Google e Facebook hanno procedure di verifica dell'identità con documenti. Cerca "recupero account" + nome del servizio sul sito ufficiale.</li>
+        <li>Una volta rientrato: cambia password, esci da tutti i dispositivi, attiva il 2FA, verifica le impostazioni di sicurezza.</li>
+      </ol>
+
+      <div class="highlight-grid">
+        <div class="highlight-card hc-blue">
+          <div class="hc-emoji">📧</div>
+          <div class="hc-title">Recupero Gmail</div>
+          <div class="hc-body">accounts.google.com/signin/recovery — Google verifica l'identità con domande sull'account, dispositivi usati in passato, codici di backup.</div>
+        </div>
+        <div class="highlight-card hc-blue">
+          <div class="hc-emoji">📘</div>
+          <div class="hc-title">Recupero Facebook</div>
+          <div class="hc-body">facebook.com/login/identify — puoi identificarti con email, telefono, nome o profilo di un amico di fiducia designato in precedenza.</div>
+        </div>
+        <div class="highlight-card hc-amber">
+          <div class="hc-emoji">📱</div>
+          <div class="hc-title">Recupero Apple ID</div>
+          <div class="hc-body">iforgot.apple.com — se hai configurato un Contatto di recupero o una Chiave di recupero in precedenza, puoi usarli. Altrimenti, processo con Apple Support.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ S4 ═══ -->
+    <section class="guide-section" id="s4">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div class="section-titles">
+          <h2 class="section-title">Identità digitale compromessa</h2>
+          <p class="section-subtitle">Qualcuno finge di essere te online</p>
+        </div>
+      </div>
+
+      <p>È diverso da un account violato: in questo caso qualcuno ha creato profili falsi a tuo nome, sta contattando i tuoi conoscenti fingendosi te, oppure ha usato i tuoi dati per registrare account o commettere frodi.</p>
+
+      <h3 class="sub-title">Profilo social clonato</h3>
+      <p>Qualcuno ha copiato la tua foto e il tuo nome su Facebook, Instagram o WhatsApp e sta contattando i tuoi amici.</p>
+      <ol class="steps-list">
+        <li><strong>Avvisa i tuoi contatti</strong> — pubblica sui tuoi profili reali un avviso: "Attenzione, c'è un profilo falso a mio nome. Non rispondete e non cliccate link."</li>
+        <li><strong>Segnala il profilo falso</strong> direttamente alla piattaforma — ogni social ha un pulsante "Segnala" → "Impersonificazione". Allega screenshot e link al tuo profilo vero.</li>
+        <li><strong>Metti la tua foto profilo privata</strong> (solo amici o solo tu) per rendere più difficile la clonazione futura.</li>
+        <li>Se il falso profilo sta causando danni concreti (richieste di denaro, diffamazione), fai una <strong>denuncia alla Polizia Postale</strong> — conserva tutti gli screenshot prima che il profilo venga rimosso.</li>
+      </ol>
+
+      <h3 class="sub-title">Uso dei tuoi dati per frodi</h3>
+      <p>Scopri che qualcuno ha usato il tuo codice fiscale, i tuoi dati o il tuo numero di telefono per aprire contratti, richiedere prestiti o registrare account.</p>
+      <ol class="steps-list">
+        <li><strong>Fai una denuncia alle forze dell'ordine</strong> — Polizia Postale per le frodi informatiche, o Polizia/Carabinieri per le frodi più ampie. La denuncia è il documento che ti tutela.</li>
+        <li><strong>Informa il Garante Privacy</strong> (garante privacy.it) se i tuoi dati personali sono stati usati illecitamente da un'azienda o un servizio.</li>
+        <li>Contatta le società coinvolte (banca, operatore telefonico, ecc.) con la copia della denuncia per bloccare i contratti fraudolenti.</li>
+        <li>Verifica la tua <strong>posizione creditizia</strong> su CRIF (eurisc.it) — puoi richiedere un report gratuito una volta l'anno per vedere se ci sono finanziamenti aperti a tuo nome.</li>
+      </ol>
+    </section>
+
+    <!-- ═══ S5 ═══ -->
+    <section class="guide-section" id="s5">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div class="section-titles">
+          <h2 class="section-title">Dati bancari rubati</h2>
+          <p class="section-subtitle">Ogni minuto conta — la sequenza esatta</p>
+        </div>
+      </div>
+
+      <p>Hai inserito i dati della carta su un sito falso, hai risposto a un SMS truffa con i dati del conto, o hai notato transazioni che non hai fatto. Agisci immediatamente.</p>
+
+      <ol class="steps-list">
+        <li><strong>Chiama la banca adesso</strong> — il numero è sul retro della carta o sul sito ufficiale che conosci già. Chiedi il blocco immediato della carta e l'avvio della procedura antifrode. Non perdere tempo a cercare email o fare screenshot prima di chiamare.</li>
+        <li><strong>Blocca la carta anche dall'app</strong> se ce l'hai ancora — molte banche permettono il blocco immediato in autonomia. Ma chiama comunque: servono istruzioni per il passo successivo.</li>
+        <li><strong>Fai uno screenshot di tutto</strong> — il sito falso, l'email o SMS truffa, le transazioni non autorizzate, l'importo e la data. Questi documenti ti servono per la denuncia e per il rimborso.</li>
+        <li><strong>Fai denuncia alla Polizia Postale</strong> su commissariatodips.it oppure di persona. La denuncia è necessaria per attivare la procedura di rimborso con la banca.</li>
+        <li>Chiedi alla banca di avviare la procedura di <strong>chargeback</strong> — il rimborso delle transazioni non autorizzate. Con la denuncia in mano, hai diritto a richiederlo.</li>
+      </ol>
+
+      <div class="box box-info">
+        <div class="box-label">I tempi di rimborso</div>
+        <p>In Italia, per le transazioni fraudolente con carta, la normativa PSD2 prevede il rimborso entro 1 giorno lavorativo per le operazioni non autorizzate, salvo che la banca dimostri dolo o negligenza grave del cliente. La denuncia tempestiva e la documentazione sono fondamentali per ottenere il rimborso.</p>
+      </div>
+    </section>
+
+    <!-- ═══ S6 ═══ -->
+    <section class="guide-section" id="s6">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <div class="section-titles">
+          <h2 class="section-title">A chi rivolgersi</h2>
+          <p class="section-subtitle">I contatti giusti per ogni tipo di problema</p>
+        </div>
+      </div>
+
+      <div class="contacts-grid">
+        <div class="contact-card">
+          <div class="contact-icon">👮</div>
+          <div class="contact-name">Polizia Postale</div>
+          <div class="contact-detail">
+            Truffe online, phishing, furto d'identità digitale, account violati, profili clonati.<br>
+            <strong>Segnalazione online:</strong> commissariatodips.it<br>
+            <strong>Sportelli fisici:</strong> nelle Questure principali
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">🔒</div>
+          <div class="contact-name">Garante Privacy</div>
+          <div class="contact-detail">
+            Uso illecito dei tuoi dati personali da parte di aziende o enti.<br>
+            <strong>Sito:</strong> garanteprivacy.it<br>
+            <strong>Reclamo online</strong> disponibile
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">🏦</div>
+          <div class="contact-name">La tua banca</div>
+          <div class="contact-detail">
+            Blocco carta, transazioni non autorizzate, chargeback.<br>
+            <strong>Numero:</strong> sul retro della carta<br>
+            Attivo 24h per i blocchi d'emergenza
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">📱</div>
+          <div class="contact-name">Operatore telefonico</div>
+          <div class="contact-detail">
+            Blocco SIM, sostituzione SIM, segnalazione numeri truffaldini.<br>
+            <strong>TIM:</strong> 119 · <strong>Vodafone:</strong> 190<br>
+            <strong>WindTre:</strong> 159 · <strong>Iliad:</strong> app/sito
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">⚖️</div>
+          <div class="contact-name">Arbitro Bancario Finanziario</div>
+          <div class="contact-detail">
+            Se la banca non rimborsa le transazioni fraudolente, puoi ricorrere all'ABF — gratuito e alternativo al tribunale.<br>
+            <strong>Sito:</strong> arbitrobancariofinanziario.it
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">📊</div>
+          <div class="contact-name">CRIF / Eurisc</div>
+          <div class="contact-detail">
+            Verifica se ci sono finanziamenti aperti a tuo nome senza tua autorizzazione.<br>
+            <strong>Sito:</strong> eurisc.it<br>
+            Report gratuito una volta l'anno
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ S7 ═══ -->
+    <section class="guide-section" id="s7">
+      <div class="section-header">
+        <div class="section-num">📋</div>
+        <div class="section-titles">
+          <h2 class="section-title">Il tuo piano stampabile</h2>
+          <p class="section-subtitle">Compilalo adesso e tienilo fuori dal telefono</p>
+        </div>
+      </div>
+
+      <p>Questo piano è inutile se rimane solo digitale. <strong>Stampalo, compilalo a penna e mettilo in un cassetto</strong> — insieme ai codici di backup del 2FA e ai numeri di emergenza della banca. Serve esattamente quando il telefono non c'è o non funziona.</p>
+
+      <p style="font-size:.85rem;color:var(--blue-mid);margin-bottom:1rem;">
+        💡 Per stampare solo questo piano: <strong>File → Stampa</strong> dal browser — la pagina è ottimizzata per stampare solo questa sezione.
+      </p>
+
+      <div class="piano-card">
+        <div class="piano-card-header">📋 Piano di emergenza digitale — compilato il: ___________</div>
+
+        <div class="piano-section">
+          <div class="piano-section-title">📱 Il mio telefono</div>
+          <div class="piano-field"><span class="piano-field-label">Modello:</span><span class="piano-field-line"></span></div>
+          <div class="piano-field"><span class="piano-field-label">Sistema:</span><span class="piano-field-line"></span></div>
+          <div class="piano-field"><span class="piano-field-label">Account principale (email):</span><span class="piano-field-line"></span></div>
+          <div class="piano-field"><span class="piano-field-label">"Dov'è" / "Trova dispositivo" attivo?</span><span class="piano-field-line"></span></div>
+        </div>
+
+        <div class="piano-section">
+          <div class="piano-section-title">🏦 La mia banca</div>
+          <div class="piano-field"><span class="piano-field-label">Banca:</span><span class="piano-field-line"></span></div>
+          <div class="piano-field"><span class="piano-field-label">Numero blocco carta (24h):</span><span class="piano-field-line"></span></div>
+          <div class="piano-field"><span class="piano-field-label">Numero cliente:</span><span class="piano-field-line"></span></div>
+        </div>
+
+        <div class="piano-section">
+          <div class="piano-section-title">📡 Il mio operatore telefonico</div>
+          <div class="piano-field"><span class="piano-field-label">Operatore:</span><span class="piano-field-line"></span></div>
+          <div class="piano-field"><span class="piano-field-label">Numero blocco SIM:</span><span class="piano-field-line"></span></div>
+          <div class="piano-field"><span class="piano-field-label">PUK della SIM:</span><span class="piano-field-line"></span></div>
+        </div>
+
+        <div class="piano-section">
+          <div class="piano-section-title">🔑 Account principali — email di recupero o numero backup</div>
+          <div class="piano-field"><span class="piano-field-label">Gmail / Google:</span><span class="piano-field-line"></span></div>
+          <div class="piano-field"><span class="piano-field-label">Apple ID:</span><span class="piano-field-line"></span></div>
+          <div class="piano-field"><span class="piano-field-label">Facebook:</span><span class="piano-field-line"></span></div>
+          <div class="piano-field"><span class="piano-field-label">Email principale:</span><span class="piano-field-line"></span></div>
+          <div class="piano-field"><span class="piano-field-label">SPID (provider):</span><span class="piano-field-line"></span></div>
+        </div>
+
+        <div class="piano-section">
+          <div class="piano-section-title">🆘 Se ti rubano il telefono — fai in questo ordine</div>
+          <ul class="piano-steps">
+            <li data-n="1">Blocca da remoto: icloud.com/find (iPhone) oppure android.com/find (Android)</li>
+            <li data-n="2">Cambia la password dell'account Google o Apple ID da un altro dispositivo</li>
+            <li data-n="3">Chiama la banca — numero qui sopra — chiedi blocco cautelativo accesso mobile</li>
+            <li data-n="4">Chiama l'operatore — numero qui sopra — blocca la SIM</li>
+            <li data-n="5">Esci da tutte le sessioni attive su Google, Facebook, email</li>
+          </ul>
+        </div>
+
+        <div class="piano-section">
+          <div class="piano-section-title">🆘 Se un account viene violato — fai in questo ordine</div>
+          <ul class="piano-steps">
+            <li data-n="1">Prova "Password dimenticata" sul sito ufficiale</li>
+            <li data-n="2">Cambia la password appena rientrato</li>
+            <li data-n="3">Esci da tutti i dispositivi</li>
+            <li data-n="4">Verifica email e numero di recupero nelle impostazioni</li>
+            <li data-n="5">Attiva il 2FA se non è già attivo</li>
+          </ul>
+        </div>
+
+        <div class="piano-section">
+          <div class="piano-section-title">📞 Contatti di emergenza</div>
+          <div class="piano-field"><span class="piano-field-label">Polizia Postale online:</span><span class="piano-field-line">commissariatodips.it</span></div>
+          <div class="piano-field"><span class="piano-field-label">Polizia / Carabinieri:</span><span class="piano-field-line">112 / 113</span></div>
+          <div class="piano-field"><span class="piano-field-label">Garante Privacy:</span><span class="piano-field-line">garanteprivacy.it</span></div>
+          <div class="piano-field"><span class="piano-field-label">ABF (controversie banca):</span><span class="piano-field-line">arbitrobancariofinanziario.it</span></div>
+        </div>
+      </div>
+    </section>
+
+    <a class="related-link" href="/sicurezza/guida-controllo-account/">
+      <div class="related-link-icon">🔑</div>
+      <div class="related-link-text">
+        <strong>Inizia dalla prevenzione</strong>
+        <span>Verifica chi ha accesso ai tuoi account adesso, prima che succeda qualcosa. La prima guida del percorso spiega come controllare le sessioni attive su tutti i tuoi account principali.</span>
+      </div>
+      <div class="related-link-arrow">→</div>
+    </a>
+
+  </main>
+</div>
+
+<footer>
+  <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
+  Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem;">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<script src="/scripts/ui.js" defer></script>
+<script>
+function toggleSidebar() {
+  document.getElementById('guide-sidebar').classList.toggle('is-open');
+  document.getElementById('sidebar-overlay').classList.toggle('is-open');
+}
+function closeSidebar() {
+  document.getElementById('guide-sidebar').classList.remove('is-open');
+  document.getElementById('sidebar-overlay').classList.remove('is-open');
+}
+(function() {
+  const sections = document.querySelectorAll('.guide-section[id]');
+  const navItems = document.querySelectorAll('.nav-item');
+  function onScroll() {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+    navItems.forEach(n => n.classList.toggle('active', n.getAttribute('href') === '#' + current));
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
+</script>
+</body>
+</html>

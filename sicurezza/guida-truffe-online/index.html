@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riconoscere le truffe online: phishing, smishing e siti falsi · Formazione Digitale</title>
+<meta name="description" content="Come riconoscere email di phishing, SMS truffa, truffe WhatsApp e siti contraffatti. Guida pratica con esempi reali e cosa fare se hai già cliccato.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#1F4E79">
+<link rel="canonical" href="https://formazione-digitale.it/sicurezza/guida-truffe-online/">
+<link rel="icon" type="image/png" href="/img/favicon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="//gc.zgo.at">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+
+<meta property="og:title" content="Riconoscere le truffe online · Formazione Digitale">
+<meta property="og:description" content="Phishing, smishing, truffe WhatsApp, siti falsi: come riconoscerli e cosa fare se hai già cliccato. Guida pratica con esempi reali.">
+<meta property="og:url" content="https://formazione-digitale.it/sicurezza/guida-truffe-online/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Riconoscere le truffe online · Formazione Digitale">
+<meta name="twitter:description" content="Phishing, smishing, truffe WhatsApp e siti falsi: riconoscerli e reagire correttamente.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Riconoscere le truffe online: phishing, smishing e siti falsi",
+  "description": "Guida pratica per riconoscere email di phishing, SMS truffa, truffe WhatsApp e siti contraffatti, con esempi reali e sequenza d'azione per chi ha già cliccato.",
+  "url": "https://formazione-digitale.it/sicurezza/guida-truffe-online/",
+  "inLanguage": "it",
+  "educationalLevel": "Foundation",
+  "author": {
+    "@type": "Person",
+    "name": "Cristiano De Pasquale",
+    "jobTitle": "Docente di Informatica"
+  },
+  "provider": {
+    "@type": "WebSite",
+    "name": "Formazione Digitale",
+    "url": "https://formazione-digitale.it"
+  },
+  "keywords": "phishing, smishing, truffa online, sito falso, spoofing, WhatsApp truffa, email truffa, sicurezza digitale, polizia postale"
+}
+</script>
+
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="stylesheet" href="/css/shared.css?v=3">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   CSS SPECIFICO — Guida Truffe Online
+   SOLO componenti NON presenti in shared.css v3.
+═══════════════════════════════════════════════════════════ */
+
+/* ── Hero ────────────────────────────────────────────────── */
+.guide-hero {
+  background: linear-gradient(135deg, #6B1A1A 0%, #9B2C2C 100%);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 24px rgba(107,26,26,.3);
+}
+.guide-hero-eyebrow {
+  font-size: .72rem; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: #f9b8b8; margin-bottom: .5rem;
+}
+.guide-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  color: #fff; line-height: 1.1; margin-bottom: .5rem;
+}
+.guide-hero-title em { font-style: italic; color: #ffd0d0; }
+.guide-hero-sub {
+  font-size: .95rem; color: rgba(255,255,255,.8);
+  line-height: 1.65; max-width: 600px;
+}
+.guide-hero-badges { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.25rem; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: .3rem;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  color: rgba(255,255,255,.9);
+  font-size: .72rem; font-weight: 500;
+  padding: .28rem .7rem; border-radius: 20px;
+}
+
+/* ── Varianti highlight-card ─────────────────────────────── */
+.highlight-card.hc-red   { border-top: 3px solid var(--red-mid); }
+.highlight-card.hc-amber { border-top: 3px solid var(--amber-dark); }
+.highlight-card.hc-green { border-top: 3px solid var(--green-dark); }
+.highlight-card.hc-blue  { border-top: 3px solid var(--blue-mid); }
+
+/* ── Steps list numerata ─────────────────────────────────── */
+.steps-list {
+  list-style: none; counter-reset: steps;
+  margin: 1rem 0; display: flex; flex-direction: column; gap: .7rem;
+  padding: 0;
+}
+.steps-list li {
+  counter-increment: steps;
+  display: flex; align-items: flex-start; gap: .85rem;
+  font-size: .9rem; line-height: 1.6; color: var(--gray-dark);
+  overflow-wrap: break-word; word-break: break-word;
+}
+.steps-list li::before {
+  content: counter(steps);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+  background: var(--blue-mid); color: #fff;
+  font-size: .75rem; font-weight: 700; margin-top: .15rem;
+}
+.steps-list li strong { color: var(--blue-dark); }
+
+/* ── Leve psicologiche ───────────────────────────────────── */
+.leva-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: .85rem; margin: 1.25rem 0;
+}
+@media(max-width:540px) { .leva-grid { grid-template-columns: 1fr; } }
+.leva-card {
+  border-radius: var(--radius); padding: 1.1rem;
+  border-left: 4px solid;
+}
+.leva-urgenza { background: var(--red-light);   border-color: var(--red-mid); }
+.leva-autorita { background: var(--blue-pale);   border-color: var(--blue-mid); }
+.leva-paura   { background: var(--amber-light); border-color: var(--amber-dark); }
+.leva-guadagno { background: var(--green-light); border-color: var(--green-dark); }
+.leva-emoji { font-size: 1.4rem; margin-bottom: .3rem; }
+.leva-title {
+  font-weight: 700; font-size: .9rem; margin-bottom: .25rem;
+}
+.leva-urgenza .leva-title  { color: var(--red-dark); }
+.leva-autorita .leva-title { color: var(--blue-dark); }
+.leva-paura  .leva-title   { color: var(--amber-dark); }
+.leva-guadagno .leva-title { color: var(--green-dark); }
+.leva-example {
+  font-size: .8rem; font-style: italic;
+  border-radius: 4px; padding: .3rem .6rem; margin-top: .4rem;
+}
+.leva-urgenza .leva-example  { background: rgba(192,57,43,.08); color: var(--red-dark); }
+.leva-autorita .leva-example { background: rgba(46,117,182,.1); color: var(--blue-dark); }
+.leva-paura  .leva-example   { background: rgba(125,78,0,.08); color: var(--amber-dark); }
+.leva-guadagno .leva-example { background: rgba(30,107,60,.08); color: var(--green-dark); }
+
+/* ── Mockup email sospetta ───────────────────────────────── */
+.email-mockup {
+  border: 1px solid #ddd; border-radius: var(--radius);
+  overflow: hidden; margin: 1.25rem 0;
+  font-size: .83rem; box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+.email-mockup-bar {
+  background: #f0f0f0; padding: .5rem .9rem;
+  font-size: .72rem; color: var(--gray-mid);
+  border-bottom: 1px solid #ddd;
+  display: flex; gap: .4rem; align-items: center;
+}
+.email-dot { width: 10px; height: 10px; border-radius: 50%; }
+.email-dot.red { background: #ff5f56; }
+.email-dot.yellow { background: #ffbd2e; }
+.email-dot.green { background: #27c93f; }
+.email-header {
+  background: #fafafa; padding: .75rem 1rem;
+  border-bottom: 1px solid #eee;
+}
+.email-row { display: flex; gap: .6rem; margin-bottom: .3rem; font-size: .82rem; }
+.email-row:last-child { margin-bottom: 0; }
+.email-label { color: var(--gray-mid); min-width: 50px; flex-shrink: 0; }
+.email-value { color: var(--gray-dark); overflow-wrap: break-word; word-break: break-all; }
+.email-value.bad { color: var(--red-dark); font-weight: 600; }
+.email-body { padding: 1rem; background: #fff; line-height: 1.75; }
+.email-flag {
+  background: var(--red-light); border-left: 3px solid var(--red-dark);
+  padding: .3rem .75rem; font-size: .76rem; color: var(--red-dark);
+  font-weight: 600; margin: .25rem -1rem;
+}
+
+/* ── SMS mockup ──────────────────────────────────────────── */
+.sms-wrap { max-width: 340px; margin: 1.25rem 0; }
+.sms-sender { font-size: .72rem; color: var(--gray-mid); margin-bottom: .3rem; text-align: left; }
+.sms-bubble {
+  background: #e5e5ea; border-radius: 18px 18px 18px 4px;
+  padding: .75rem 1rem; font-size: .88rem; line-height: 1.65;
+  color: var(--gray-dark);
+}
+.sms-bubble a { color: var(--red-dark); text-decoration: underline; }
+
+/* ── Casi d'azione (S7) ──────────────────────────────────── */
+.case-grid {
+  display: flex; flex-direction: column; gap: 1rem; margin: 1.25rem 0;
+}
+.case-card { border-radius: var(--radius); overflow: hidden; border: 1px solid; }
+.case-card.low    { border-color: var(--amber-dark); }
+.case-card.medium { border-color: var(--red-mid); }
+.case-card.high   { border-color: var(--red-dark); }
+.case-head {
+  padding: .7rem 1rem; font-weight: 700; font-size: .88rem;
+  display: flex; align-items: center; gap: .5rem;
+}
+.case-card.low    .case-head { background: var(--amber-light); color: var(--amber-dark); }
+.case-card.medium .case-head { background: var(--red-light);   color: var(--red-dark); }
+.case-card.high   .case-head { background: var(--red-dark);    color: #fff; }
+.case-body { padding: .9rem 1rem; background: #fff; }
+.case-body ul { padding-left: 1.1rem; font-size: .88rem; line-height: 1.75; color: var(--gray-dark); }
+.case-body ul li { margin-bottom: .2rem; }
+</style>
+</head>
+<body>
+
+<!-- ════ HEADER ════ -->
+<header class="guide-header">
+  <a class="guide-header-back" href="/">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Formazione Digitale
+  </a>
+  <div class="guide-header-center">Le trappole online</div>
+  <div class="guide-header-right">
+    <button class="hamburger" id="hamburger" aria-label="Apri menu sezioni" onclick="toggleSidebar()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="guide-layout">
+
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <aside class="guide-sidebar" id="guide-sidebar">
+    <div class="sidebar-label">Sezioni</div>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li><a class="nav-item active" href="#s1" onclick="closeSidebar()"><span class="nav-num">1</span><span class="nav-text">Come funziona una truffa</span></a></li>
+      <li><a class="nav-item" href="#s2" onclick="closeSidebar()"><span class="nav-num">2</span><span class="nav-text">Phishing via email</span></a></li>
+      <li><a class="nav-item" href="#s3" onclick="closeSidebar()"><span class="nav-num">3</span><span class="nav-text">Smishing (SMS)</span></a></li>
+      <li><a class="nav-item" href="#s4" onclick="closeSidebar()"><span class="nav-num">4</span><span class="nav-text">Truffe su WhatsApp</span></a></li>
+      <li><a class="nav-item" href="#s5" onclick="closeSidebar()"><span class="nav-num">5</span><span class="nav-text">Siti contraffatti</span></a></li>
+      <li><a class="nav-item" href="#s6" onclick="closeSidebar()"><span class="nav-num">6</span><span class="nav-text">Verificare un sito</span></a></li>
+      <li><a class="nav-item" href="#s7" onclick="closeSidebar()"><span class="nav-num">7</span><span class="nav-text">Ho già cliccato</span></a></li>
+    </ul>
+    <hr class="sidebar-divider">
+    <div class="sidebar-meta">
+      <strong>Guida Truffe Online</strong><br>
+      🎣 Sicurezza digitale<br>
+      ⏱ ~30 min di lettura<br>
+      📊 Livello base<br>
+      🗓 Aggiornata luglio 2026
+    </div>
+  </aside>
+
+  <main class="guide-main">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="Percorso" style="margin-bottom:1.25rem;font-size:.82rem;color:var(--gray-mid);">
+      <table style="border:none;border-collapse:collapse;">
+        <tr>
+          <td style="padding:0 .5rem 0 0;border:none;"><a href="/" style="color:var(--blue-mid);text-decoration:none;">🏠 Home</a></td>
+          <td style="padding:0 .5rem;border:none;">›</td>
+          <td style="padding:0 .5rem;border:none;"><a href="/sicurezza/" style="color:var(--blue-mid);text-decoration:none;">🔒 Sicurezza</a></td>
+          <td style="padding:0 .5rem;border:none;">›</td>
+          <td style="padding:0;border:none;color:var(--gray-dark);font-weight:600;">Le trappole online</td>
+        </tr>
+      </table>
+    </nav>
+
+    <!-- Hero -->
+    <div class="guide-hero">
+      <div class="guide-hero-eyebrow">Formazione Digitale · Guida completa · Sicurezza</div>
+      <h1 class="guide-hero-title">Le trappole<br><em>online</em></h1>
+      <p class="guide-hero-sub">Phishing, smishing, truffe WhatsApp e siti contraffatti: come riconoscerli prima di cadere nella trappola — e cosa fare se hai già cliccato.</p>
+      <div class="guide-hero-badges">
+        <span class="hero-badge">🎣 Truffe digitali</span>
+        <span class="hero-badge">💡 Livello base</span>
+        <span class="hero-badge">⏱ ~30 minuti</span>
+        <span class="hero-badge">⚡ Esempi reali</span>
+        <span class="hero-badge">🗓 Aggiornata 2026</span>
+      </div>
+    </div>
+
+    <!-- ═══ S1 ═══ -->
+    <section class="guide-section" id="s1">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div class="section-titles">
+          <h2 class="section-title">Come funziona una truffa online</h2>
+          <p class="section-subtitle">Non sfruttano la stupidità — sfruttano le emozioni</p>
+        </div>
+      </div>
+
+      <p>Le truffe online non sono riservate a chi è ingenuo o poco istruito. Funzionano perché sfruttano meccanismi psicologici universali — gli stessi che ci fanno comprare qualcosa in saldo per paura di perderlo, o rispondere subito a un messaggio urgente senza pensarci.</p>
+      <p>Capire queste leve è il primo passo per difendersi: quando le riconosci, puoi fermarti prima di agire.</p>
+
+      <h3 class="sub-title">Le quattro leve della truffa</h3>
+
+      <div class="leva-grid">
+        <div class="leva-card leva-urgenza">
+          <div class="leva-emoji">⏰</div>
+          <div class="leva-title">Urgenza</div>
+          <p style="font-size:.82rem;color:var(--red-dark);margin-bottom:.3rem;">Non hai tempo per pensare — devi agire adesso.</p>
+          <div class="leva-example">"Il tuo account verrà sospeso entro 24 ore se non verifichi i dati."</div>
+        </div>
+        <div class="leva-card leva-autorita">
+          <div class="leva-emoji">🏛️</div>
+          <div class="leva-title">Autorità</div>
+          <p style="font-size:.82rem;color:var(--blue-dark);margin-bottom:.3rem;">Il messaggio sembra provenire da un'istituzione di fiducia.</p>
+          <div class="leva-example">"La tua banca ha rilevato un accesso sospetto. Clicca qui per confermare."</div>
+        </div>
+        <div class="leva-card leva-paura">
+          <div class="leva-emoji">😰</div>
+          <div class="leva-title">Paura</div>
+          <p style="font-size:.82rem;color:var(--amber-dark);margin-bottom:.3rem;">Ti fanno credere che stai perdendo qualcosa di importante.</p>
+          <div class="leva-example">"Il tuo pacco è bloccato in dogana. Paga €2,50 di spese o verrà restituito."</div>
+        </div>
+        <div class="leva-card leva-guadagno">
+          <div class="leva-emoji">🎁</div>
+          <div class="leva-title">Guadagno</div>
+          <p style="font-size:.82rem;color:var(--green-dark);margin-bottom:.3rem;">Hai vinto, hai diritto a un rimborso, hai ricevuto un regalo.</p>
+          <div class="leva-example">"Complimenti! Sei stato selezionato per ricevere un buono Amazon da €500."</div>
+        </div>
+      </div>
+
+      <div class="box box-tip">
+        <div class="box-label">La regola d'oro</div>
+        <p>Ogni volta che senti <strong>urgenza</strong> davanti a un messaggio digitale, fermati. L'urgenza è quasi sempre artificiale — costruita per impedirti di ragionare. Una banca vera, Poste, INPS non ti chiedono dati sensibili via email o SMS.</p>
+      </div>
+    </section>
+
+    <!-- ═══ S2 ═══ -->
+    <section class="guide-section" id="s2">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div class="section-titles">
+          <h2 class="section-title">Phishing via email</h2>
+          <p class="section-subtitle">L'amo digitale più diffuso — e come riconoscerlo prima di abboccare</p>
+        </div>
+      </div>
+
+      <p>Il <strong>phishing</strong> è una truffa via email in cui il mittente si finge qualcuno di cui ti fidi — la tua banca, Amazon, INPS, Poste Italiane — per farti cliccare su un link falso o rivelare le tue credenziali.</p>
+      <p>Il termine viene dall'inglese "fishing" (pesca): il truffatore lancia l'amo sperando che qualcuno abbocchi. E spedisce milioni di email, perché anche solo l'1% di risposte è sufficiente.</p>
+
+      <h3 class="sub-title">Esempio di email di phishing analizzata</h3>
+
+      <div class="email-mockup">
+        <div class="email-mockup-bar">
+          <span class="email-dot red"></span>
+          <span class="email-dot yellow"></span>
+          <span class="email-dot green"></span>
+          <span style="margin-left:.5rem;">Posta in arrivo</span>
+        </div>
+        <div class="email-header">
+          <div class="email-row">
+            <span class="email-label">Da:</span>
+            <span class="email-value bad">noreply@poste-sicurezza.net</span>
+          </div>
+          <div class="email-row">
+            <span class="email-label">A:</span>
+            <span class="email-value">mario.rossi@email.it</span>
+          </div>
+          <div class="email-row">
+            <span class="email-label">Oggetto:</span>
+            <span class="email-value bad">⚠️ URGENTE: Accesso sospetto al tuo conto PostePay</span>
+          </div>
+        </div>
+        <div class="email-body">
+          <div class="email-flag">🚩 Mittente: "poste-sicurezza.net" — non è il dominio ufficiale di Poste Italiane (poste.it)</div>
+          <p>Gentile Cliente,</p>
+          <p>Abbiamo rilevato un <strong>accesso non autorizzato</strong> al tuo account PostePay da un dispositivo sconosciuto (Roma, IP: 91.234.xx.xx).</p>
+          <div class="email-flag">🚩 Urgenza artificiale — vuole che tu agisca senza pensare</div>
+          <p>Per <strong>proteggere immediatamente il tuo conto</strong>, devi verificare la tua identità entro le prossime <strong>2 ore</strong>, altrimenti il conto verrà temporaneamente bloccato.</p>
+          <p>👉 <span style="color:var(--red-dark);text-decoration:underline;">Clicca qui per verificare il tuo account</span></p>
+          <div class="email-flag">🚩 Il link porta su un sito falso, non su poste.it</div>
+          <p style="font-size:.78rem;color:var(--gray-mid);">Poste Italiane S.p.A. — Questo messaggio è automatico, non rispondere.</p>
+        </div>
+      </div>
+
+      <h3 class="sub-title">I segnali da cercare sempre</h3>
+
+      <div class="highlight-grid">
+        <div class="highlight-card hc-red">
+          <div class="hc-emoji">📧</div>
+          <div class="hc-title">Mittente sospetto</div>
+          <div class="hc-body">Il nome visualizzato può essere "Poste Italiane" ma l'indirizzo vero è un dominio strano. Controlla sempre l'indirizzo completo.</div>
+        </div>
+        <div class="highlight-card hc-red">
+          <div class="hc-emoji">🔗</div>
+          <div class="hc-title">Link che non tornano</div>
+          <div class="hc-body">Passa il mouse sul link (senza cliccare) e guarda in basso a sinistra: l'URL che appare corrisponde al sito dichiarato?</div>
+        </div>
+        <div class="highlight-card hc-amber">
+          <div class="hc-emoji">✍️</div>
+          <div class="hc-title">Errori ed errori strani</div>
+          <div class="hc-body">Refusi, spazi irregolari, caratteri accentati mancanti, frasi tradotte male. Le email ufficiali sono sempre corrette.</div>
+        </div>
+      </div>
+
+      <div class="box box-warn">
+        <div class="box-label">Cosa fare con un'email sospetta</div>
+        <p><strong>Non cliccare</strong> nessun link. <strong>Non scaricare</strong> allegati. <strong>Non rispondere</strong>. Se l'email riguarda un servizio che usi davvero (banca, INPS…), apri il sito ufficiale digitando tu stesso l'indirizzo nel browser, e accedi da lì per verificare se c'è davvero un problema. Segnala l'email come spam o phishing.</p>
+      </div>
+    </section>
+
+    <!-- ═══ S3 ═══ -->
+    <section class="guide-section" id="s3">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div class="section-titles">
+          <h2 class="section-title">Smishing — le truffe via SMS</h2>
+          <p class="section-subtitle">Il phishing arrivato sul telefono</p>
+        </div>
+      </div>
+
+      <p>Lo <strong>smishing</strong> (SMS + phishing) è la versione del phishing che arriva come messaggio di testo. È particolarmente insidioso perché gli SMS sembrano più personali delle email, e molti li leggono senza la stessa attenzione critica.</p>
+
+      <h3 class="sub-title">Esempi tipici nel 2026</h3>
+
+      <div class="sms-wrap">
+        <div class="sms-sender">BancaXYZ · oggi 14:32</div>
+        <div class="sms-bubble">
+          Operazione sospetta rilevata sul tuo conto. Blocca subito l'accesso:<br>
+          <a href="#">http://bancaxyz-sicurezza.com/verifica</a>
+        </div>
+      </div>
+
+      <div class="sms-wrap" style="margin-top:1rem;">
+        <div class="sms-sender">Poste · oggi 09:15</div>
+        <div class="sms-bubble">
+          Il tuo pacco è in attesa di consegna. Sono richiesti €1,99 per le spese doganali. Clicca qui:<br>
+          <a href="#">https://poste-tracking.net/paga</a>
+        </div>
+      </div>
+
+      <div class="box box-info">
+        <div class="box-label">Il numero sembra ufficiale?</div>
+        <p>I truffatori possono <strong>falsificare il numero mittente</strong> — una tecnica chiamata SMS spoofing. Il tuo telefono potrebbe mostrare "Intesa Sanpaolo" come mittente anche se il messaggio non viene dalla vera banca. Non fidarti del nome del mittente per valutare l'autenticità.</p>
+      </div>
+
+      <h3 class="sub-title">Come comportarsi</h3>
+      <ol class="steps-list">
+        <li><strong>Non cliccare il link</strong> nell'SMS — nemmeno per "vedere cosa c'è".</li>
+        <li>Se il messaggio riguarda un tuo ordine o un tuo conto, <strong>vai direttamente sul sito ufficiale</strong> digitando tu l'indirizzo, e controlla lì.</li>
+        <li>Per i pacchi: usa il codice di tracciamento sul sito ufficiale del corriere (BRT, SDA, DHL…) — non i link negli SMS.</li>
+        <li><strong>Segnala il numero</strong> come spam nel tuo telefono e ignora il messaggio.</li>
+      </ol>
+    </section>
+
+    <!-- ═══ S4 ═══ -->
+    <section class="guide-section" id="s4">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div class="section-titles">
+          <h2 class="section-title">Truffe su WhatsApp</h2>
+          <p class="section-subtitle">Messaggi da chi conosci — ma non è chi pensi</p>
+        </div>
+      </div>
+
+      <p>WhatsApp è diventato uno dei canali preferiti dai truffatori perché i messaggi arrivano da contatti reali o da numeri che sembrano conosciuti, abbassando le difese. Le truffe più diffuse in Italia nel 2026.</p>
+
+      <h3 class="sub-title">"Ciao mamma, ho cambiato numero"</h3>
+      <p>Ricevi un messaggio da un numero sconosciuto: <em>"Ciao mamma, ho rotto il telefono, questo è il mio nuovo numero. Puoi farmi un bonifico urgente? Ti spiego dopo."</em></p>
+      <p>La truffa funziona sulla leva della famiglia e dell'urgenza. Il truffatore non sa il tuo nome — spera che tu lo completi. Se rispondi "Chi sei?", risponderà con il nome di tuo figlio o nipote.</p>
+
+      <div class="box box-tip">
+        <div class="box-label">La contromossa: chiama</div>
+        <p>Qualunque richiesta di denaro arrivata via testo va verificata con una <strong>chiamata vocale</strong> al numero che conosci già — non al nuovo numero del messaggio. Se non riesci a raggiungerli, aspetta. Nessuna emergenza vera richiede un bonifico immediato via chat.</p>
+      </div>
+
+      <h3 class="sub-title">Link sospetti nei gruppi</h3>
+      <p>Nei gruppi WhatsApp circolano spesso link del tipo "Hai vinto un buono Esselunga", "Guarda questo video di te", "Rinnova la tua iscrizione". Cliccando si può installare malware, venire reindirizzati a siti di phishing, o essere iscritti a servizi a pagamento.</p>
+
+      <div class="box box-warn">
+        <div class="box-label">Regola per i link nei gruppi</div>
+        <p>Se non aspettavi quel link e non sai esattamente cosa fa, <strong>non cliccare</strong>. Neanche se viene da un contatto che conosci — il suo account potrebbe essere stato compromesso. Chiedi conferma direttamente alla persona prima di aprire qualsiasi link.</p>
+      </div>
+
+      <h3 class="sub-title">Profilo clonato</h3>
+      <p>Un truffatore scarica la tua foto profilo da WhatsApp (o dai social), crea un account con lo stesso nome e la stessa foto, e contatta i tuoi amici fingendosi te — chiedendo denaro, informazioni o facendogli cliccare link.</p>
+      <p>Se un tuo amico ti dice "Mi hai scritto su WhatsApp da un numero strano", è probabile che qualcuno stia usando la tua identità. Avvisa subito i tuoi contatti e fai impostare la privacy della foto profilo su "Solo i miei contatti" (Impostazioni → Privacy → Foto profilo).</p>
+    </section>
+
+    <!-- ═══ S5 ═══ -->
+    <section class="guide-section" id="s5">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div class="section-titles">
+          <h2 class="section-title">Siti contraffatti</h2>
+          <p class="section-subtitle">Copie perfette dei siti che conosci — con un dettaglio sbagliato</p>
+        </div>
+      </div>
+
+      <p>Un sito contraffatto (o <strong>spoofed</strong>) è una copia quasi identica di un sito legittimo — stessa grafica, stessi colori, stesse immagini. L'obiettivo è farti inserire username, password o dati della carta di credito, che vengono immediatamente rubati.</p>
+
+      <h3 class="sub-title">Come riconoscere un URL sospetto</h3>
+      <p>Il dettaglio da guardare sempre è l'<strong>indirizzo nella barra del browser</strong>. I truffatori usano varianti sottili che a colpo d'occhio sembrano corrette.</p>
+
+      <div class="highlight-grid">
+        <div class="highlight-card hc-red">
+          <div class="hc-emoji">🔢</div>
+          <div class="hc-title">Lettere sostituite con numeri</div>
+          <div class="hc-body">amaz<strong>0</strong>n.it invece di amaz<strong>o</strong>n.it. La "o" diventa "0". Difficile da notare di fretta.</div>
+        </div>
+        <div class="highlight-card hc-red">
+          <div class="hc-emoji">➕</div>
+          <div class="hc-title">Parole aggiunte al dominio</div>
+          <div class="hc-body">poste<strong>-sicurezza</strong>.it oppure <strong>login-</strong>intesasanpaolo.com. Il nome vero è lì, ma non è il dominio principale.</div>
+        </div>
+        <div class="highlight-card hc-amber">
+          <div class="hc-emoji">🌍</div>
+          <div class="hc-title">Estensione diversa</div>
+          <div class="hc-body">amazon.it è legittimo. amazon<strong>.net</strong>, amazon<strong>.org</strong>, amazon<strong>.co</strong> sono spesso falsi.</div>
+        </div>
+      </div>
+
+      <div class="box box-warn">
+        <div class="box-label">Il lucchetto HTTPS non basta</div>
+        <p>Il lucchetto 🔒 nella barra del browser significa che la <strong>connessione è cifrata</strong> — non che il sito è legittimo. Un sito truffaldino può avere il lucchetto. L'HTTPS protegge il tragitto dei dati, non la destinazione. Un sito falso con lucchetto ruba i tuoi dati in modo "sicuro" verso i truffatori.</p>
+      </div>
+
+      <h3 class="sub-title">Altri segnali di un sito falso</h3>
+      <p>Oltre all'URL, cerca: testi con errori ortografici, immagini sgranate o pixelate, mancanza di dati aziendali (Partita IVA, indirizzo, contatti reali), prezzi troppo bassi per essere veri, metodi di pagamento insoliti (solo bonifico, solo criptovalute, solo gift card).</p>
+    </section>
+
+    <!-- ═══ S6 ═══ -->
+    <section class="guide-section" id="s6">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <div class="section-titles">
+          <h2 class="section-title">Come verificare un sito</h2>
+          <p class="section-subtitle">Strumenti gratuiti per controllare prima di inserire qualsiasi dato</p>
+        </div>
+      </div>
+
+      <p>Prima di acquistare su un sito che non conosci, o di inserire le tue credenziali su una pagina che ti sembra strana, hai a disposizione strumenti semplici e gratuiti.</p>
+
+      <h3 class="sub-title">Trustpilot — recensioni degli utenti</h3>
+      <p>Vai su <strong>trustpilot.com</strong> e cerca il nome del sito. Trustpilot raccoglie recensioni di acquirenti reali. Cosa cercare: valutazione media, numero di recensioni, data delle più recenti, risposte dell'azienda ai commenti negativi.</p>
+
+      <div class="box box-warn">
+        <div class="box-label">Attenzione alle recensioni false</div>
+        <p>Anche Trustpilot può contenere recensioni acquistate. Segnali di allarme: tutte le recensioni sono 5 stelle, sono state scritte nello stesso periodo, il testo è generico e identico. Quando i numeri sembrano troppo perfetti, approfondisci.</p>
+      </div>
+
+      <h3 class="sub-title">Google — la ricerca è il tuo alleato</h3>
+      <p>Cerca il nome del sito seguito da parole come <strong>"truffa"</strong>, <strong>"opinioni"</strong>, <strong>"è affidabile"</strong>. Le vittime di truffe tendono a raccontare la loro esperienza online — forum, Reddit, social. Se non trovi nulla di negativo su un sito attivo da anni, è un buon segnale. Se trovi molte segnalazioni recenti, fermati.</p>
+
+      <h3 class="sub-title">VirusTotal e Google Safe Browsing</h3>
+      <ol class="steps-list">
+        <li>Vai su <strong>virustotal.com</strong>, incolla l'URL del sito nella barra di ricerca e clicca invio. Il servizio controlla il sito contro 70+ database di sicurezza e ti dice se è stato segnalato come pericoloso.</li>
+        <li>In alternativa, su Google cerca <strong>"Google Safe Browsing"</strong> e usa lo strumento di verifica — digiti l'URL e Google ti dice se il sito è nella sua lista di siti pericolosi.</li>
+      </ol>
+
+      <h3 class="sub-title">Whois — quando è stato creato il sito?</h3>
+      <p>I siti truffaldini spesso esistono da poche settimane. Vai su <strong>whois.domaintools.com</strong>, digita il dominio e cerca "Created" o "Registration Date". Un sito che vende prodotti di marca da 3 settimane è un segnale di allarme forte.</p>
+
+      <div class="box box-tip">
+        <div class="box-label">Regola pratica veloce</div>
+        <p>Se stai per inserire dati su un sito nuovo o sconosciuto: <strong>30 secondi su Google</strong> ("nome sito truffa") e <strong>30 secondi su Trustpilot</strong> bastano a smaschera la maggior parte delle truffe. Fallo prima di ogni acquisto su siti che non conosci.</p>
+      </div>
+    </section>
+
+    <!-- ═══ S7 ═══ -->
+    <section class="guide-section" id="s7">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <div class="section-titles">
+          <h2 class="section-title">Ho già cliccato — cosa faccio?</h2>
+          <p class="section-subtitle">La sequenza d'azione per ogni scenario. Senza panico</p>
+        </div>
+      </div>
+
+      <p>Se ti accorgi di aver interagito con qualcosa di sospetto, la cosa più importante è <strong>non farti prendere dal panico</strong> e agire nell'ordine giusto. La gravità della situazione dipende da cosa hai fatto dopo il clic.</p>
+
+      <div class="case-grid">
+
+        <div class="case-card low">
+          <div class="case-head">⚠️ Caso 1 — Ho solo cliccato sul link, non ho inserito nulla</div>
+          <div class="case-body">
+            <ul>
+              <li>Chiudi immediatamente la pagina senza toccare nulla.</li>
+              <li>Se sei su telefono, vai su Impostazioni → App → Browser e cancella cache e dati.</li>
+              <li>Esegui una scansione con un antivirus aggiornato (Windows Defender su PC è sufficiente).</li>
+              <li>Monitora i tuoi account nei giorni successivi per attività anomale.</li>
+              <li>In molti casi, il clic da solo non causa danni — dipende dal sito e dal dispositivo.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="case-card medium">
+          <div class="case-head">🚨 Caso 2 — Ho inserito username e password</div>
+          <div class="case-body">
+            <ul>
+              <li><strong>Cambia subito la password</strong> dell'account interessato — accedi al vero sito digitando tu l'indirizzo.</li>
+              <li><strong>Cambia la stessa password su tutti gli altri siti</strong> dove la riusi (per questo è fondamentale non riusare le password).</li>
+              <li><strong>Attiva il 2FA</strong> sull'account se non l'hai già fatto.</li>
+              <li>Controlla l'email di recupero collegata all'account — un attaccante potrebbe averla già cambiata.</li>
+              <li>Segnala l'accaduto al vero servizio (banca, provider email, ecc.) — spesso hanno procedure di supporto dedicate.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="case-card high">
+          <div class="case-head">🆘 Caso 3 — Ho inserito dati bancari o della carta</div>
+          <div class="case-body">
+            <ul>
+              <li><strong>Chiama immediatamente la banca</strong> — il numero è sul retro della carta o sul sito ufficiale. Non usare numeri trovati nell'email sospetta.</li>
+              <li>Chiedi il <strong>blocco immediato della carta</strong> e il monitoraggio del conto.</li>
+              <li>Fai una <strong>denuncia alla Polizia Postale</strong> su commissariatodips.it — è necessaria per eventuali rimborsi e per fermare altri truffati.</li>
+              <li>Conserva tutto: screenshot dell'email o SMS, URL del sito, data e ora.</li>
+              <li>Se hai già transazioni non autorizzate, chiedi alla banca di avviare la procedura di <strong>chargeback</strong>.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="box box-info">
+        <div class="box-label">Dove segnalare</div>
+        <p><strong>Polizia Postale:</strong> commissariatodips.it — segnalazione online di truffe informatiche, phishing, furto d'identità.<br>
+        <strong>AGCM:</strong> agcm.it — per truffe commerciali e pubblicità ingannevole.<br>
+        <strong>Arbitro Bancario Finanziario:</strong> arbitrobancariofinanziario.it — per controversie con la banca sui rimborsi.</p>
+      </div>
+    </section>
+
+    <a class="related-link" href="/sicurezza/guida-autenticazione/">
+      <div class="related-link-icon">🔐</div>
+      <div class="related-link-text">
+        <strong>Hai già attivato il 2FA sui tuoi account?</strong>
+        <span>La guida su password, 2FA e SPID spiega come aggiungere un secondo livello di protezione — così anche se una truffa cattura la tua password, non basta per entrare.</span>
+      </div>
+      <div class="related-link-arrow">→</div>
+    </a>
+
+  </main>
+</div>
+
+<footer>
+  <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
+  Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem;">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<script src="/scripts/ui.js" defer></script>
+<script>
+function toggleSidebar() {
+  document.getElementById('guide-sidebar').classList.toggle('is-open');
+  document.getElementById('sidebar-overlay').classList.toggle('is-open');
+}
+function closeSidebar() {
+  document.getElementById('guide-sidebar').classList.remove('is-open');
+  document.getElementById('sidebar-overlay').classList.remove('is-open');
+}
+(function() {
+  const sections = document.querySelectorAll('.guide-section[id]');
+  const navItems = document.querySelectorAll('.nav-item');
+  function onScroll() {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+    navItems.forEach(n => n.classList.toggle('active', n.getAttribute('href') === '#' + current));
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
+</script>
+</body>
+</html>
