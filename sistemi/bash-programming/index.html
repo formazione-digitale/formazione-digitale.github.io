@@ -820,7 +820,16 @@ Sei maggiorenne</pre>
           <span>while read e while true</span>
           <button class="copy-btn" onclick="copyCode('ctrl-while')">Copia</button>
         </div>
-        <pre id="ctrl-while"><span class="hl-comment"># while read: legge un file riga per riga</span>
+        <pre id="ctrl-while"><span class="hl-comment"># while con condizione esplicita su variabile di controllo</span>
+<span class="hl-comment"># la condizione viene rivalutata ad ogni iterazione:</span>
+<span class="hl-comment"># senza modificare CONTATORE dentro il ciclo si ottiene un loop infinito</span>
+<span class="hl-variable">CONTATORE</span>=<span class="hl-num">0</span>
+<span class="hl-keyword">while</span> [ <span class="hl-string">"$CONTATORE"</span> -lt <span class="hl-num">5</span> ]; <span class="hl-keyword">do</span>
+    <span class="hl-keyword">echo</span> <span class="hl-string">"Iterazione $CONTATORE"</span>
+    <span class="hl-variable">CONTATORE</span>=$(( CONTATORE + <span class="hl-num">1</span> ))
+<span class="hl-keyword">done</span>
+
+<span class="hl-comment"># while read: legge un file riga per riga</span>
 <span class="hl-comment"># il simbolo &lt; redirige il file verso l'input del ciclo</span>
 <span class="hl-keyword">while</span> <span class="hl-keyword">read</span> <span class="hl-variable">RIGA</span>; <span class="hl-keyword">do</span>
     <span class="hl-keyword">echo</span> <span class="hl-string">"→ $RIGA"</span>

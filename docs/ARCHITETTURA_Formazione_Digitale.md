@@ -1,7 +1,7 @@
 ---
 title: "Formazione Digitale — Architettura del Progetto"
 author: "Cristiano De Pasquale"
-date: "Giugno 2026"
+date: "Luglio 2026"
 geometry: "margin=2.5cm"
 fontsize: 11pt
 toc: true
@@ -17,6 +17,8 @@ linkcolor: "blue"
 
 **Formazione Digitale** è un portale statico di alfabetizzazione digitale che eroga guide pratiche, strumenti interattivi e pillole di contenuto. Le risorse sono libere, gratuite e senza prerequisiti. Il portale è usato come riferimento didattico per studenti e docenti — portale di riferimento scolastico istituzionale (IIS Einaudi Chiari, BS).
 
+Il portale opera su due livelli simultanei: come repository OER pubblico accessibile a chiunque tramite ricerca organica, e come ambiente didattico istituzionale con materiale attivamente utilizzato con studenti e docenti dell'istituto.
+
 | Campo | Valore |
 |---|---|
 | URL live | https://formazione-digitale.it |
@@ -25,8 +27,10 @@ linkcolor: "blue"
 | Deploy | Vercel Edge Network — pubblicazione automatica da branch main |
 | Dominio | formazione-digitale.it — registrato su Aruba, maggio 2026 |
 | Stack | HTML puro + CSS + JS vanilla — zero framework, zero build step |
-| Autore | Cristiano De Pasquale — Docente di Informatica, IIS Einaudi Chiari (BS) |
+| Autore | Cristiano De Pasquale — Docente di Informatica, Formatore ICDL AICA, Referente TC ALZD0001, IIS Einaudi Chiari (BS) |
 | Licenza | Uso libero e non commerciale |
+| Risorse attive | 45 (luglio 2026) |
+| Hub attive | 4 (Database, Sicurezza, Sistemi, Programmazione) |
 
 ---
 
@@ -89,15 +93,17 @@ formazione-digitale/
 |--- .github/
 |   \--- workflows/
 |       \--- supabase-keep-alive.yml
-|--- sicurezza/
-|   |--- pillola-cybersicurezza/
-|   \--- guida-cybersicurezza/
+|--- sicurezza/                       <- HUB (index.html proprio, escluso da manifest)
+|   |--- index.html                  <- Header due colonne, mappa D3, percorso consigliato
+|   |--- guida-cybersicurezza/
+|   \--- pillola-cybersicurezza/
 |--- competenze-digitali/
 |   |--- pillola-wikipedia-speedrun/
 |   |--- pillola-valutazione-fonti/
 |   |--- pillola-aggiornamento-digitale/
 |   |--- pillola-netiquette/
-|   |--- strumento-valutazione-fonti/
+|   |--- pillola-deepfake/
+|   |--- strumento-verifica-fonti/
 |   \--- strumento-autovalutazione-digcompedu/
 |--- intelligenza-artificiale/
 |   |--- guida-prompting/
@@ -126,9 +132,18 @@ formazione-digitale/
 |   |--- kanban-tool/
 |   \--- gantt-planner/              <- Pagina download Excel/Google Fogli
 |--- networking/
+|   |--- guida-ipv4/
+|   |--- guida-router-cisco/         <- in progress
 |   |--- subnet-calculator/
 |   \--- hfs-server/
-|--- sistemi/
+|--- sistemi/                        <- HUB (index.html proprio, escluso da manifest)
+|   |--- index.html                  <- Header due colonne, mappa D3, percorso consigliato
+|   |--- logica-booleana/
+|   |--- algoritmi-scheduling/
+|   |--- dimensionamento-files/
+|   |--- teoria-del-campionamento/
+|   |--- bash-programming/
+|   |--- architettura-pc/
 |   \--- codifica-binaria/
 \--- icdl/                           <- Pagine istituzionali — noindex, active:false
     |--- index.html
@@ -342,7 +357,7 @@ Il dark mode è raccomandato. Il costo reale non è tecnico — è di manutenzio
 
 | Tier | Pagine | Strategia |
 |---|---|---|
-| **Tier 1 — Risposta automatica** | index.html, mappa-risorse.html, guide IA, Subnet, BEP, `database/index.html` (hub), `programmazione/index.html` (hub) | Variabili dark in `shared.css` |
+| **Tier 1 — Risposta automatica** | index.html, mappa-risorse.html, guide IA, Subnet, BEP, `database/index.html` (hub), `programmazione/index.html` (hub), `sicurezza/index.html` (hub), `sistemi/index.html` (hub) | Variabili dark in `shared.css` |
 | **Tier 2 — Intervento mirato** | guida-marketing, hfs-server, codifica-binaria, `mappa-aree.html` (standalone, non carica shared.css) | Revisione colori hardcoded inline |
 | **Tier 3 — Escludere** | guida-libreoffice-base-query, guida-modello-logico, guida-database (usano `shared-extended.css`) · guida-word (tema Microsoft) | `data-theme-lock="true"` — il bottone toggle non appare |
 
@@ -396,7 +411,14 @@ Introdotto il 18/06/2026. Quando un'area tematica raggiunge 3+ risorse correlate
 | Home (`index.html`) | La hub è rappresentata da una **card-area wide** (`.card-area-wrap`), prima riga di "Guide complete". Non ha `data-cat`/`data-tags`, niente classe `.card` — invisibile a `filterAll()` e `updateStats()` |
 | `mappa-aree.html` | Click sul nodo area centrale, in vista dettaglio, naviga all'hub **solo se `hasHub: true`** — altrimenti tooltip "Risorse raggruppate per area" senza promettere nulla |
 
-**Hub attualmente esistenti:** `database/` (3 guide: Basi di Dati, Modello Logico, LibreOffice Base — Guida alle query), `programmazione/` (2 guide: Algoritmi di Ordinamento, Algoritmi di Ricerca).
+**Hub attualmente esistenti (luglio 2026):**
+
+| Area | Hub | Risorse principali |
+|---|---|---|
+| `database/` | Sì | 3 guide: Basi di Dati, Modello Logico, LibreOffice Base — Guida alle query |
+| `programmazione/` | Sì | 2 guide: Algoritmi di Ordinamento, Algoritmi di Ricerca (con visualizzatore animato) |
+| `sicurezza/` | Sì | Guida Cybersicurezza, Pillola Cybersicurezza |
+| `sistemi/` | Sì | 10 risorse: logica booleana, scheduling, dimensionamento files, campionamento, bash, architettura PC, codifica binaria + strumenti numerici |
 
 **Percorso consigliato nella hub:** sequenza didattica scritta a mano nell'HTML, indipendente dal campo `order` del manifest — permette di anticipare risorse "coming soon" (es. Modello Fisico prima di LibreOffice Query nella hub Database, SQL in fondo) senza che il manifest debba conoscerle in anticipo.
 
@@ -557,6 +579,13 @@ MATERIALE_DIDATTICO\NEUTRALINO\bep-tool\
 - [OK] `genera_sitemap.py` — bump automatico `CACHE_VERSION` in `sw.js` ad ogni lancio (18/06/2026)
 - [OK] `sw.js` — Cache First esplicito per `manifest.json`/`aree.json` (ricerca federata funziona offline) (19/06/2026)
 - [OK] `genera_sitemap.py` — aggiunta `mappa-aree.html` alle pagine fisse (19/06/2026)
+- [OK] Hub `sicurezza/` creata — index.html con D3 force-graph, percorso consigliato (luglio 2026)
+- [OK] Hub `sistemi/` creata — index.html con D3 force-graph, 10 risorse attive (luglio 2026)
+- [OK] Pillola Deepfake — aggiunta in `competenze-digitali/` (luglio 2026)
+- [OK] Guide networking — `guida-ipv4` aggiunta; `guida-router-cisco` in progress (luglio 2026)
+- [OK] Gap DigComp/DigCompEdu analizzato — DC mancanti: 2.5, 3.3, 4.3, 4.4; DCEdu mancanti: 1.1, 1.2, 4.2, 4.3, 5.1, 5.2 (luglio 2026)
+- [OK] 45 risorse attive raggiunte (luglio 2026)
+- [OK] Paper DIDAMATICA 2026 — stesura full paper completata (luglio 2026)
 
 ---
 
@@ -565,10 +594,12 @@ MATERIALE_DIDATTICO\NEUTRALINO\bep-tool\
 - Cancellare PNG orfani in `guida-libreoffice-base-query/img/` dopo verifica manuale (`find_orphan_png.py --delete`)
 - `index.html` — verificare se `formazione-digitale-logo.png` è ancora presente o già convertito in WebP
 - BEP tool web — aggiungere bottone Manuale (modale) e bottone download app desktop nell'hero
-- Gap DigComp/DigCompEdu — analizzare quali competenze restano scoperte dal catalogo risorse attuale prima di pianificare nuovi contenuti (discusso 18/06/2026, non ancora svolto)
+- Gap DigComp/DigCompEdu — analisi completata (luglio 2026). DC non presidiate: **2.5** (Netiquette), **3.3** (Copyright), **4.3** (Salute digitale), **4.4** (Ambiente). DCEdu non presidiate: **1.1**, **1.2** (comunicazione organizzativa), **4.2**, **4.3** (analisi evidenze), **5.1**, **5.2** (accessibilità/personalizzazione)
 - Guida Modello Fisico database — "coming soon" nel percorso consigliato della hub Database
 - Guida LibreOffice Base — Creazione e gestione di un Database (seconda guida LibreOffice, per distinguerla da "Guida alle query")
 - Guida SQL — "coming soon" in fondo al percorso consigliato della hub Database
+- Guida Router Cisco — scope TBD (basic config only vs. static routing)
+- **Sottomissione paper DIDAMATICA 2026 — entro 10 agosto 2026** (EasyChair: didamatica2026)
 
 ---
 
@@ -624,6 +655,38 @@ MATERIALE_DIDATTICO\NEUTRALINO\bep-tool\
 
 - `role="heading" aria-level="1"` sui `cover-title` con `replace_in_files.py`
 - Nuovi contenuti: Pillola PageSpeed · Pillola Triade CIA
+
+---
+
+# Disseminazione scientifica
+
+## DIDAMATICA 2026
+
+| Campo | Valore |
+|---|---|
+| Convegno | DIDAMATICA 2026 — AI Literacy ed Etica: la sfida del mondo dell'Istruzione per un nuovo Umanesimo |
+| Organizzatore | AICA in collaborazione con MIM, patrocinio Università di Padova |
+| Sede | Palazzo della Salute, Padova, 7–8 ottobre 2026 |
+| Tipologia contributo | Full Paper (10 pagine) — formato EasyChair EPiC |
+| Temi principali | G (Formazione docenti / DigCompEdu) + B (AI Literacy / DigComp 2.2) |
+| Titolo paper | *Un portale open-access per la AI Literacy nell'istruzione secondaria: dal bisogno formativo alla mappatura su DigComp 2.2 e DigCompEdu* |
+| Autore | Cristiano De Pasquale — info@formazione-digitale.it |
+| Piattaforma sottomissione | EasyChair — https://easychair.org/conferences/?conf=didamatica2026 |
+| Scadenza | 10 agosto 2026 |
+| Stato | In revisione finale — da sottomettere |
+
+**Dati del portale citati nel paper (al 30/07/2026):**
+
+| Metrica | Valore |
+|---|---|
+| Risorse attive | 45 |
+| Pageview totali (65 giorni) | 1.340 |
+| Copertura DigComp 2.2 | 17/21 competenze (81%) |
+| Copertura DigCompEdu | 16/22 competenze (73%) |
+| Esami ICDL erogati (mar–giu 2026) | 80 |
+| Tasso superamento ICDL | 83% |
+
+**File di lavoro:** `DIDAMATICA2026_paper.md` (documento di lavoro con tracking approvazioni) · `DIDAMATICA2026_paper.docx` (versione formattata EasyChair)
 
 ---
 
@@ -725,4 +788,4 @@ MATERIALE_DIDATTICO\NEUTRALINO\bep-tool\
 
 ---
 
-*Documento aggiornato 19/06/2026 · Formazione Digitale*
+*Documento aggiornato 31/07/2026 · Formazione Digitale*
