@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mappa degli Attacchi Informatici — Formazione Digitale</title>
+  <meta name="description" content="Panoramica delle principali tipologie di attacco informatico: malware, ransomware, DDoS, SQL injection, phishing e social engineering.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://formazione-digitale.it/sicurezza/guida-attacchi-informatici/">
+  <link rel="dns-prefetch" href="//gc.zgo.at">
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Mappa degli Attacchi Informatici">
+  <meta property="og:description" content="Panoramica delle principali tipologie di attacco informatico: malware, ransomware, DDoS, SQL injection, phishing e social engineering.">
+  <meta property="og:url" content="https://formazione-digitale.it/sicurezza/guida-attacchi-informatici/">
+  <meta property="og:type" content="article">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/shared.css?v=3">
+
+  <!-- GoatCounter -->
+  <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+  <style>
+    /* ── Colori badge sicurezza ── */
+    .badge-red  { background: var(--red-dark);   color: #fff; }
+    .badge-amber{ background: var(--amber-dark);  color: #fff; }
+
+    /* ── Hero badges ── */
+    .hero-badge {
+      display: inline-block;
+      background: rgba(183,28,28,.08);
+      color: var(--red-dark);
+      border: 1px solid rgba(183,28,28,.2);
+      border-radius: 20px;
+      font-size: .78rem;
+      font-weight: 600;
+      padding: .25rem .75rem;
+      margin: .2rem .15rem;
+    }
+
+    /* ── Categoria attacco ── */
+    .attack-category {
+      display: inline-block;
+      background: var(--red-dark);
+      color: #fff;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      padding: .15rem .55rem;
+      border-radius: 4px;
+      margin-bottom: .6rem;
+    }
+
+    /* ── Card attacco ── */
+    .attack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 1.2rem 0;
+    }
+    .attack-card {
+      border: 1.5px solid var(--blue-light);
+      border-radius: var(--radius);
+      padding: 1rem 1.1rem;
+      background: #fff;
+    }
+    .attack-card-icon { font-size: 1.6rem; margin-bottom: .4rem; }
+    .attack-card-title { font-weight: 700; color: var(--blue-dark); margin-bottom: .3rem; font-size: .95rem; }
+    .attack-card-desc  { font-size: .85rem; color: var(--gray-mid); line-height: 1.5; }
+
+    /* ── Livello di rischio ── */
+    .risk-badge {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 700;
+      padding: .1rem .5rem;
+      border-radius: 3px;
+      margin-bottom: .5rem;
+    }
+    .risk-alto   { background: #FDE8E8; color: #8B0000; }
+    .risk-medio  { background: var(--amber-light); color: var(--amber-dark); }
+    .risk-basso  { background: var(--green-light); color: var(--green-dark); }
+
+    /* ── Step difesa ── */
+    .defense-step {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      padding: .9rem 1rem;
+      background: var(--blue-pale);
+      border-radius: var(--radius);
+      border-left: 4px solid var(--blue-mid);
+    }
+    .defense-step-num {
+      flex-shrink: 0;
+      width: 2rem; height: 2rem;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: .9rem;
+    }
+    .defense-step-body strong { color: var(--blue-dark); display: block; margin-bottom: .2rem; }
+    .defense-step-body { font-size: .9rem; line-height: 1.55; }
+
+    /* ── Schema tassonomia ── */
+    .taxonomy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: .8rem;
+      margin: 1rem 0;
+    }
+    .taxonomy-item {
+      text-align: center;
+      padding: 1rem .8rem;
+      border-radius: var(--radius);
+      border: 2px solid;
+    }
+    .taxonomy-item.rete    { border-color: #1F4E79; background: #EBF3FC; color: #1F4E79; }
+    .taxonomy-item.malware { border-color: #8B0000; background: #FDE8E8; color: #8B0000; }
+    .taxonomy-item.social  { border-color: #7D4E00; background: #FFF3CD; color: #7D4E00; }
+    .taxonomy-item.app     { border-color: #4A148C; background: #F3E5F5; color: #4A148C; }
+    .taxonomy-item.brute   { border-color: #1E6B3C; background: #E8F5EE; color: #1E6B3C; }
+    .taxonomy-item-emoji   { font-size: 1.8rem; display: block; margin-bottom: .4rem; }
+    .taxonomy-item-label   { font-weight: 700; font-size: .88rem; display: block; }
+    .taxonomy-item-count   { font-size: .78rem; margin-top: .2rem; opacity: .75; }
+
+    /* ── Box link ── */
+    .box-link {
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+      background: var(--blue-pale);
+      border: 1.5px solid var(--blue-light);
+      border-radius: var(--radius);
+      padding: 1rem 1.1rem;
+      margin: 1rem 0;
+    }
+    .box-link .box-icon { font-size: 1.3rem; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="guide-header" id="guide-header">
+  <div class="guide-header-left">
+    <a href="/sicurezza/" class="guide-back">← Hub Sicurezza</a>
+    <div class="guide-header-sep"></div>
+    <div class="guide-header-title">Attacchi Informatici</div>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleSidebar()" aria-label="Menu sezioni">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<div class="guide-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="guide-sidebar" id="guide-sidebar">
+    <div class="sidebar-label">Sezioni</div>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li><a class="nav-item active" href="#s1" onclick="closeSidebar()"><span class="nav-num">1</span><span class="nav-text">Panoramica</span></a></li>
+      <li><a class="nav-item" href="#s2" onclick="closeSidebar()"><span class="nav-num">2</span><span class="nav-text">Attacchi di rete</span></a></li>
+      <li><a class="nav-item" href="#s3" onclick="closeSidebar()"><span class="nav-num">3</span><span class="nav-text">Malware</span></a></li>
+      <li><a class="nav-item" href="#s4" onclick="closeSidebar()"><span class="nav-num">4</span><span class="nav-text">Social engineering</span></a></li>
+      <li><a class="nav-item" href="#s5" onclick="closeSidebar()"><span class="nav-num">5</span><span class="nav-text">Attacchi applicativi</span></a></li>
+      <li><a class="nav-item" href="#s6" onclick="closeSidebar()"><span class="nav-num">6</span><span class="nav-text">Brute force</span></a></li>
+      <li><a class="nav-item" href="#s7" onclick="closeSidebar()"><span class="nav-num">7</span><span class="nav-text">Come proteggersi</span></a></li>
+    </ul>
+    <hr class="sidebar-divider">
+    <div class="sidebar-meta">
+      <strong>Attacchi Informatici</strong><br>
+      📖 Guida completa<br>
+      ⏱ ~30 min di lettura<br>
+      📊 Livello tecnico<br>
+      🗓 Aggiornata 2026
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <!-- MAIN -->
+  <main class="guide-main">
+
+    <!-- HERO -->
+    <div class="guide-hero">
+      <div class="guide-hero-eyebrow">Formazione Digitale · Guida completa · Sicurezza</div>
+      <h1 class="guide-hero-title">Mappa degli Attacchi Informatici</h1>
+      <p class="guide-hero-sub">Le principali tipologie di attacco informatico — definizioni, esempi reali e meccanismi di funzionamento. Dal DoS al ransomware, dal phishing alla SQL injection.</p>
+      <div class="guide-hero-badges">
+        <span class="hero-badge">⚔️ Sicurezza</span>
+        <span class="hero-badge">📊 Livello tecnico</span>
+        <span class="hero-badge">⏱ ~30 minuti</span>
+        <span class="hero-badge">🗓 Aggiornata 2026</span>
+      </div>
+    </div>
+
+    <!-- S1 — PANORAMICA -->
+    <section class="guide-section" id="s1">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div class="section-titles">
+          <h2 class="section-title">Panoramica: come si classificano gli attacchi</h2>
+          <div class="section-subtitle">Cinque famiglie, centinaia di tecniche</div>
+        </div>
+      </div>
+
+      <p>Gli attacchi informatici si possono classificare in base all'<strong>obiettivo</strong> e al <strong>punto di ingresso</strong> sfruttato. Conoscere la tassonomia aiuta a capire quali difese sono efficaci contro quali minacce — non esiste una misura unica che protegga da tutto.</p>
+
+      <div class="taxonomy-grid">
+        <div class="taxonomy-item rete">
+          <span class="taxonomy-item-emoji">🌐</span>
+          <span class="taxonomy-item-label">Attacchi di rete</span>
+          <span class="taxonomy-item-count">DoS, DDoS, MitM, Sniffing</span>
+        </div>
+        <div class="taxonomy-item malware">
+          <span class="taxonomy-item-emoji">🦠</span>
+          <span class="taxonomy-item-label">Malware</span>
+          <span class="taxonomy-item-count">Virus, Ransomware, Trojan, Worm</span>
+        </div>
+        <div class="taxonomy-item social">
+          <span class="taxonomy-item-emoji">🎭</span>
+          <span class="taxonomy-item-label">Social engineering</span>
+          <span class="taxonomy-item-count">Phishing, Vishing, Baiting</span>
+        </div>
+        <div class="taxonomy-item app">
+          <span class="taxonomy-item-emoji">💻</span>
+          <span class="taxonomy-item-label">Attacchi applicativi</span>
+          <span class="taxonomy-item-count">SQL injection, XSS, CSRF</span>
+        </div>
+        <div class="taxonomy-item brute">
+          <span class="taxonomy-item-emoji">🔑</span>
+          <span class="taxonomy-item-label">Credential attacks</span>
+          <span class="taxonomy-item-count">Brute force, Stuffing</span>
+        </div>
+      </div>
+
+      <div class="box box-info">
+        <div class="box-label">Attacco vs minaccia vs vulnerabilità</div>
+        <p>Una <strong>vulnerabilità</strong> è una debolezza (nel codice, nella configurazione, nel comportamento umano). Una <strong>minaccia</strong> è chi potrebbe sfruttarla. Un <strong>attacco</strong> è il tentativo concreto di farlo. La sicurezza informatica lavora su tutti e tre i livelli.</p>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- S2 — ATTACCHI DI RETE -->
+    <section class="guide-section" id="s2">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div class="section-titles">
+          <h2 class="section-title">Attacchi di rete</h2>
+          <div class="section-subtitle">Sfruttano l'infrastruttura di comunicazione</div>
+        </div>
+      </div>
+
+      <p>Gli attacchi di rete prendono di mira i protocolli e i canali attraverso cui transitano i dati. L'obiettivo può essere rendere un servizio irraggiungibile, intercettare le comunicazioni o reindirizzare il traffico verso destinazioni malevole.</p>
+
+      <h3 class="sub-title">DoS — Denial of Service</h3>
+      <span class="risk-badge risk-medio">Rischio: medio</span>
+      <p>L'attaccante <strong>satura le risorse del bersaglio</strong> — larghezza di banda, CPU, connessioni aperte — fino a renderlo irraggiungibile per gli utenti legittimi. Un singolo computer genera il traffico d'attacco.</p>
+      <div class="box box-note">
+        <div class="box-label">Esempio</div>
+        <p>Un server web regge normalmente 1.000 connessioni simultanee. L'attaccante ne apre 100.000 lasciandole "mezze aperte" (SYN flood): il server esaurisce le risorse e non risponde più ai visitatori reali.</p>
+      </div>
+
+      <h3 class="sub-title">DDoS — Distributed Denial of Service</h3>
+      <span class="risk-badge risk-alto">Rischio: alto</span>
+      <p>Come il DoS, ma il traffico proviene da <strong>migliaia di macchine compromesse</strong> (botnet) distribuite in tutto il mondo. Molto più difficile da bloccare perché non esiste un singolo indirizzo IP da filtrare.</p>
+      <div class="box box-warn">
+        <div class="box-label">Caso reale — Mirai Botnet (2016)</div>
+        <p>Un attacco DDoS da oltre 1 Tbps ha messo offline il provider DNS Dyn, rendendo irraggiungibili per ore servizi come Twitter, Netflix e Reddit. L'attacco usava una botnet di 600.000 dispositivi IoT (telecamere di sicurezza, router) con credenziali di default mai cambiate.</p>
+      </div>
+
+      <h3 class="sub-title">Man-in-the-Middle (MitM)</h3>
+      <span class="risk-badge risk-alto">Rischio: alto</span>
+      <p>L'attaccante si <strong>interpone fisicamente o logicamente tra due parti</strong> che credono di comunicare direttamente. Può leggere, modificare o iniettare messaggi in entrambe le direzioni senza che le vittime se ne accorgano.</p>
+
+      <div class="two-col">
+        <div>
+          <strong>ARP Spoofing</strong>
+          <p style="font-size:.9rem;margin-top:.3rem;">L'attaccante invia risposte ARP false sulla rete locale associando il proprio indirizzo MAC all'IP del gateway. Il traffico della vittima passa attraverso la macchina dell'attaccante prima di raggiungere internet.</p>
+        </div>
+        <div>
+          <strong>SSL Stripping</strong>
+          <p style="font-size:.9rem;margin-top:.3rem;">L'attaccante intercetta la connessione HTTPS e la "degrada" a HTTP verso la vittima, mantenendo HTTPS solo verso il server. La vittima vede il sito come HTTP e trasmette dati in chiaro.</p>
+        </div>
+      </div>
+
+      <h3 class="sub-title">DNS Spoofing / DNS Cache Poisoning</h3>
+      <span class="risk-badge risk-alto">Rischio: alto</span>
+      <p>L'attaccante corrompendo le tabelle DNS associa un nome di dominio legittimo (es. <em>banca.it</em>) a un indirizzo IP malevolo. La vittima digita l'URL corretto ma viene reindirizzata a un sito clone controllato dall'attaccante.</p>
+
+      <h3 class="sub-title">Sniffing</h3>
+      <span class="risk-badge risk-medio">Rischio: medio</span>
+      <p>Tecnica di <strong>intercettazione passiva</strong> del traffico di rete. Su reti non cifrate (HTTP, FTP, telnet) è possibile catturare credenziali, cookie di sessione e contenuti in chiaro con strumenti come Wireshark.</p>
+
+      <div class="box box-tip">
+        <div class="box-label">Contromisure attacchi di rete</div>
+        <p>HTTPS ovunque · VPN su reti pubbliche · DNSSEC per la validazione delle risposte DNS · CDN e firewall applicativi contro DDoS · Segmentazione della rete locale.</p>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- S3 — MALWARE -->
+    <section class="guide-section" id="s3">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div class="section-titles">
+          <h2 class="section-title">Malware</h2>
+          <div class="section-subtitle">Software progettato per causare danni o ottenere accesso non autorizzato</div>
+        </div>
+      </div>
+
+      <p><strong>Malware</strong> (contrazione di <em>malicious software</em>) è un termine ombrello che indica qualsiasi programma progettato per danneggiare un sistema, sottrarre dati o ottenere accesso non autorizzato. Si distinguono per comportamento, vettore di infezione e obiettivo.</p>
+
+      <div class="attack-grid">
+        <div class="attack-card">
+          <div class="attack-card-icon">🦠</div>
+          <div class="attack-card-title">Virus</div>
+          <div class="attack-card-desc">Si replica allegandosi a file legittimi. Si diffonde quando il file infetto viene eseguito o copiato su altri sistemi. Richiede un'azione dell'utente per propagarsi.</div>
+        </div>
+        <div class="attack-card">
+          <div class="attack-card-icon">🐴</div>
+          <div class="attack-card-title">Trojan</div>
+          <div class="attack-card-desc">Si maschera da software legittimo (un gioco, un'utility, un allegato). Una volta installato, apre una "porta sul retro" (<em>backdoor</em>) per l'attaccante o scarica altri malware.</div>
+        </div>
+        <div class="attack-card">
+          <div class="attack-card-icon">🔒</div>
+          <div class="attack-card-title">Ransomware</div>
+          <div class="attack-card-desc">Cifra tutti i file accessibili e chiede un riscatto (spesso in criptovaluta) per la chiave di decifratura. Uno degli attacchi più devastanti per aziende e istituzioni.</div>
+        </div>
+        <div class="attack-card">
+          <div class="attack-card-icon">🪱</div>
+          <div class="attack-card-title">Worm</div>
+          <div class="attack-card-desc">Si propaga autonomamente in rete sfruttando vulnerabilità, senza bisogno di un file host o dell'interazione dell'utente. Può infettare centinaia di macchine in pochi minuti.</div>
+        </div>
+        <div class="attack-card">
+          <div class="attack-card-icon">🕵️</div>
+          <div class="attack-card-title">Spyware</div>
+          <div class="attack-card-desc">Raccoglie informazioni sull'utente (abitudini di navigazione, credenziali, dati personali) e le trasmette all'attaccante. Spesso installato in bundle con software gratuito.</div>
+        </div>
+        <div class="attack-card">
+          <div class="attack-card-icon">⌨️</div>
+          <div class="attack-card-title">Keylogger</div>
+          <div class="attack-card-desc">Registra ogni tasto premuto dalla vittima: password, messaggi, numero di carta di credito. Può essere software o hardware (un piccolo dispositivo fisico collegato tra tastiera e PC).</div>
+        </div>
+        <div class="attack-card">
+          <div class="attack-card-icon">🌲</div>
+          <div class="attack-card-title">Rootkit</div>
+          <div class="attack-card-desc">Si nasconde nel sistema operativo a livello profondo (kernel), rendendo invisibile la propria presenza e quella di altri malware. Estremamente difficile da rilevare e rimuovere.</div>
+        </div>
+        <div class="attack-card">
+          <div class="attack-card-icon">📢</div>
+          <div class="attack-card-title">Adware</div>
+          <div class="attack-card-desc">Mostra pubblicità indesiderata, spesso reindirizzando le ricerche o iniettando banner nei siti web visitati. Meno pericoloso ma fastidioso e potenzialmente vettore di altri malware.</div>
+        </div>
+      </div>
+
+      <div class="box box-warn">
+        <div class="box-label">Caso reale — WannaCry (2017)</div>
+        <p>Il ransomware WannaCry ha colpito oltre 300.000 computer in 150 paesi in poche ore, sfruttando una vulnerabilità di Windows chiamata <em>EternalBlue</em> (sviluppata dall'NSA e poi trafugata). Ha paralizzato ospedali del NHS britannico, Telefónica, FedEx e centinaia di altre organizzazioni. Il riscatto richiesto era di 300$ in Bitcoin per sistema. Chi aveva installato la patch di sicurezza rilasciata da Microsoft due mesi prima non fu colpito.</p>
+      </div>
+
+      <div class="box box-tip">
+        <div class="box-label">Contromisure malware</div>
+        <p>Antivirus aggiornato · Sistema operativo e applicazioni sempre aggiornati · Non aprire allegati da mittenti sconosciuti · Backup regolari offline (i ransomware cifrano anche i backup connessi alla rete) · Principio del minimo privilegio.</p>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- S4 — SOCIAL ENGINEERING -->
+    <section class="guide-section" id="s4">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div class="section-titles">
+          <h2 class="section-title">Social engineering</h2>
+          <div class="section-subtitle">L'attaccante più efficace sfrutta l'essere umano, non la tecnologia</div>
+        </div>
+      </div>
+
+      <p>Il <strong>social engineering</strong> è l'arte di manipolare le persone affinché compiano azioni o rivelino informazioni che normalmente non rivelerebbero. Non sfrutta vulnerabilità nel software, ma nella psicologia umana: fiducia, urgenza, paura, autorità, curiosità.</p>
+
+      <div class="box box-note">
+        <div class="box-label">Perché funziona</div>
+        <p>"Puoi avere la tecnologia migliore, i firewall migliori, i dispositivi di rilevamento delle intrusioni migliori e il personale di sicurezza più qualificato: tutto questo non conta nulla se qualcuno chiama un dipendente e convince a dargli la password." — Kevin Mitnick, ex hacker e consulente di sicurezza.</p>
+      </div>
+
+      <h3 class="sub-title">Phishing</h3>
+      <span class="risk-badge risk-alto">Rischio: alto</span>
+      <p>Email o messaggi che imitano comunicazioni di enti affidabili (banca, INPS, corriere, Apple, Google) per indurre la vittima a cliccare su un link malevolo o a fornire credenziali su un sito clone.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Variante</th><th>Canale</th><th>Caratteristica distintiva</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Phishing</strong></td><td>Email</td><td>Invio massivo, bersaglio generico</td></tr>
+            <tr><td><strong>Spear phishing</strong></td><td>Email</td><td>Bersaglio specifico, messaggio personalizzato con dati reali sulla vittima</td></tr>
+            <tr><td><strong>Whaling</strong></td><td>Email</td><td>Bersaglio: dirigenti e figure apicali (CEO fraud)</td></tr>
+            <tr><td><strong>Vishing</strong></td><td>Telefono/VoIP</td><td>L'attaccante si finge operatore bancario, polizia, supporto tecnico</td></tr>
+            <tr><td><strong>Smishing</strong></td><td>SMS</td><td>Link malevolo via SMS che imita notifiche di consegna, avvisi bancari</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub-title">Shoulder surfing</h3>
+      <span class="risk-badge risk-basso">Rischio: basso-medio</span>
+      <p>Tecnica semplicissima: l'attaccante <strong>spia fisicamente lo schermo o la tastiera</strong> della vittima — sull'autobus, in un bar, in una sala d'attesa — per catturare PIN, password o informazioni sensibili.</p>
+
+      <h3 class="sub-title">Baiting</h3>
+      <span class="risk-badge risk-medio">Rischio: medio</span>
+      <p>L'attaccante lascia in luoghi pubblici (parcheggi, reception, corridoi aziendali) <strong>chiavette USB infette</strong> con etichette allettanti ("Stipendi 2026", "Foto personali", "Riservato"). La curiosità spinge le vittime a inserirle nel proprio PC.</p>
+
+      <h3 class="sub-title">Pretexting</h3>
+      <span class="risk-badge risk-medio">Rischio: medio</span>
+      <p>L'attaccante crea un <strong>pretesto credibile</strong> per ottenere informazioni: si finge un collega nuovo, un tecnico IT, un ispettore, un giornalista. Spesso coinvolge più telefonate o email successive per costruire fiducia progressivamente.</p>
+
+      <div class="dodont">
+        <div class="do-col">
+          <div class="do-col-head">✓ Come riconoscerlo</div>
+          <div class="do-col-body">
+            <ul>
+              <li>Urgenza insolita: "Il tuo account verrà bloccato entro 24 ore"</li>
+              <li>Mittente sospetto anche con nome familiare (controlla il dominio reale)</li>
+              <li>Link che non corrispondono al dominio ufficiale al passaggio del mouse</li>
+              <li>Richiesta di credenziali, codici OTP o pagamenti "urgenti"</li>
+              <li>Errori grammaticali o tono insolito per quella comunicazione</li>
+            </ul>
+          </div>
+        </div>
+        <div class="dont-col">
+          <div class="dont-col-head">✗ Errori comuni</div>
+          <div class="dont-col-body">
+            <ul>
+              <li>Fidarsi del nome del mittente senza verificare l'indirizzo completo</li>
+              <li>Cliccare su link nelle email invece di andare direttamente sul sito</li>
+              <li>Inserire credenziali su pagine raggiungibili solo da un link email</li>
+              <li>Eseguire istruzioni telefoniche da chi afferma di essere "il supporto IT"</li>
+              <li>Usare USB trovate in luoghi pubblici</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- S5 — ATTACCHI APPLICATIVI -->
+    <section class="guide-section" id="s5">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div class="section-titles">
+          <h2 class="section-title">Attacchi applicativi</h2>
+          <div class="section-subtitle">Sfruttano vulnerabilità nel codice delle applicazioni web</div>
+        </div>
+      </div>
+
+      <p>Gli attacchi applicativi prendono di mira errori di programmazione nelle applicazioni web. Sono tra le categorie più comuni: il progetto OWASP (Open Web Application Security Project) documenta ogni anno le dieci vulnerabilità più critiche nelle applicazioni web.</p>
+
+      <h3 class="sub-title">SQL Injection</h3>
+      <span class="risk-badge risk-alto">Rischio: alto</span>
+      <p>L'attaccante inserisce <strong>codice SQL malevolo</strong> in un campo di input (form di login, barra di ricerca, URL) non correttamente validato. Se il codice viene eseguito dal database, l'attaccante può leggere, modificare o cancellare dati, aggirare l'autenticazione o eseguire comandi sul server.</p>
+
+      <div class="box box-note">
+        <div class="box-label">Come funziona — esempio semplificato</div>
+        <p>Un form di login esegue questa query: <code>SELECT * FROM utenti WHERE email='[input]' AND password='[input]'</code>. Se l'attaccante inserisce come email <code>' OR '1'='1</code>, la query diventa sempre vera e bypassa la verifica della password.</p>
+      </div>
+
+      <h3 class="sub-title">XSS — Cross-Site Scripting</h3>
+      <span class="risk-badge risk-alto">Rischio: alto</span>
+      <p>L'attaccante inietta <strong>codice JavaScript malevolo</strong> in una pagina web che verrà eseguito nel browser di altri utenti. Può essere usato per rubare cookie di sessione, reindirizzare l'utente, modificare il contenuto della pagina o registrare i tasti premuti.</p>
+
+      <div class="two-col">
+        <div>
+          <strong>XSS Reflected</strong>
+          <p style="font-size:.9rem;margin-top:.3rem;">Il codice malevolo è nell'URL inviato alla vittima. Il server lo "riflette" nella risposta HTML senza sanitizzarlo. Richiede che la vittima clicchi su un link appositamente costruito.</p>
+        </div>
+        <div>
+          <strong>XSS Stored</strong>
+          <p style="font-size:.9rem;margin-top:.3rem;">Il codice malevolo viene salvato nel database (commento, profilo utente, messaggio) e mostrato a tutti gli utenti che visitano quella pagina. Più pericoloso perché non richiede un link specifico.</p>
+        </div>
+      </div>
+
+      <h3 class="sub-title">CSRF — Cross-Site Request Forgery</h3>
+      <span class="risk-badge risk-medio">Rischio: medio</span>
+      <p>L'attaccante induce un utente <strong>già autenticato</strong> su un sito (es. la propria banca) a inviare involontariamente una richiesta malevola. Il browser della vittima trasmette automaticamente i cookie di sessione, rendendo la richiesta apparentemente legittima.</p>
+      <div class="box box-note">
+        <div class="box-label">Esempio</div>
+        <p>L'utente è loggato nella banca online. Visita una pagina malevola che contiene un'immagine invisibile con src="https://banca.it/bonifico?importo=500&conto=attaccante". Il browser carica l'immagine inviando la richiesta con i cookie bancari: il bonifico viene eseguito.</p>
+      </div>
+
+      <h3 class="sub-title">Buffer Overflow</h3>
+      <span class="risk-badge risk-alto">Rischio: alto (su software non aggiornato)</span>
+      <p>L'attaccante invia <strong>più dati di quanti un buffer possa contenere</strong>. I dati in eccesso sovrascrivono zone di memoria adiacenti, potenzialmente modificando il flusso di esecuzione del programma. Tecnica classica per ottenere l'esecuzione di codice arbitrario sul server.</p>
+
+      <h3 class="sub-title">Command Injection</h3>
+      <span class="risk-badge risk-alto">Rischio: alto</span>
+      <p>Simile alla SQL injection, ma l'input malevolo viene eseguito come <strong>comando del sistema operativo</strong> invece che come query SQL. Se un'applicazione web passa l'input dell'utente direttamente a una shell, l'attaccante può eseguire qualsiasi comando con i privilegi del server.</p>
+
+      <div class="box box-tip">
+        <div class="box-label">Contromisure attacchi applicativi</div>
+        <p>Validazione e sanitizzazione di tutti gli input · Prepared statements per le query SQL · Content Security Policy (CSP) contro XSS · Token CSRF nelle form · Web Application Firewall (WAF) · Aggiornamenti regolari delle dipendenze.</p>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- S6 — BRUTE FORCE -->
+    <section class="guide-section" id="s6">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <div class="section-titles">
+          <h2 class="section-title">Brute force e attacchi alle credenziali</h2>
+          <div class="section-subtitle">Quando l'attaccante punta direttamente alle password</div>
+        </div>
+      </div>
+
+      <p>Questi attacchi non sfruttano vulnerabilità nel codice ma tentano direttamente di <strong>indovinare o ottenere le credenziali</strong> di accesso. La loro efficacia dipende dalla qualità delle password utilizzate e dalla presenza di meccanismi di protezione.</p>
+
+      <div class="attack-grid">
+        <div class="attack-card">
+          <div class="attack-card-icon">🔨</div>
+          <div class="attack-card-title">Brute Force</div>
+          <div class="attack-card-desc">Prova sistematicamente tutte le combinazioni possibili di caratteri. Lento ma infallibile: una password di 6 caratteri numerici ha 1 milione di combinazioni — testabili in pochi secondi.</div>
+        </div>
+        <div class="attack-card">
+          <div class="attack-card-icon">📖</div>
+          <div class="attack-card-title">Dictionary Attack</div>
+          <div class="attack-card-desc">Usa un dizionario di parole comuni, nomi, date e varianti ("password1", "admin123"). Molto più veloce del brute force puro perché sfrutta la prevedibilità umana nella scelta delle password.</div>
+        </div>
+        <div class="attack-card">
+          <div class="attack-card-icon">📋</div>
+          <div class="attack-card-title">Credential Stuffing</div>
+          <div class="attack-card-desc">Usa coppie email/password ottenute da violazioni di dati (data breach) di altri siti. Sfrutta il fatto che molti utenti riutilizzano le stesse credenziali su più servizi.</div>
+        </div>
+        <div class="attack-card">
+          <div class="attack-card-icon">🌈</div>
+          <div class="attack-card-title">Rainbow Table</div>
+          <div class="attack-card-desc">Tabelle precalcolate che mappano hash di password ai valori originali. Permette di invertire rapidamente l'hashing di password comuni, aggirando la cifratura se non viene usato il "salt".</div>
+        </div>
+      </div>
+
+      <div class="box box-info">
+        <div class="box-label">I data breach come carburante</div>
+        <p>Ogni anno decine di aziende subiscono violazioni di dati. I database con miliardi di credenziali vengono venduti o pubblicati online. Puoi verificare se la tua email è coinvolta su <strong>haveibeenpwned.com</strong>. Se sì, cambia immediatamente le password su tutti i servizi dove usi le stesse credenziali.</p>
+      </div>
+
+      <div class="box box-tip">
+        <div class="box-label">Contromisure</div>
+        <p>Password lunghe e uniche per ogni servizio (usa un password manager) · Autenticazione a due fattori (2FA) · Rate limiting e blocco account dopo N tentativi falliti · Monitoraggio dei data breach · CAPTCHA per scoraggiare i bot.</p>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- S7 — COME PROTEGGERSI -->
+    <section class="guide-section" id="s7">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <div class="section-titles">
+          <h2 class="section-title">Come proteggersi — difesa a strati</h2>
+          <div class="section-subtitle">Nessuna misura singola è sufficiente: la sicurezza si costruisce a livelli</div>
+        </div>
+      </div>
+
+      <p>Il principio cardine della sicurezza informatica è la <strong>difesa in profondità</strong> (<em>defense in depth</em>): predisporre più livelli di protezione sovrapposti, in modo che se uno fallisce gli altri contengano il danno.</p>
+
+      <div class="defense-step">
+        <div class="defense-step-num">1</div>
+        <div class="defense-step-body">
+          <strong>Aggiornamenti costanti</strong>
+          La maggior parte degli attacchi sfrutta vulnerabilità già note e già corrette. Aggiornare sistema operativo, browser e applicazioni elimina questi vettori.
+        </div>
+      </div>
+      <div class="defense-step">
+        <div class="defense-step-num">2</div>
+        <div class="defense-step-body">
+          <strong>Password robuste e uniche + password manager</strong>
+          Una password diversa per ogni servizio, lunga almeno 16 caratteri, rende inutili credential stuffing e dictionary attack. Un password manager risolve il problema della memorizzazione.
+        </div>
+      </div>
+      <div class="defense-step">
+        <div class="defense-step-num">3</div>
+        <div class="defense-step-body">
+          <strong>Autenticazione a due fattori (2FA)</strong>
+          Anche se una password viene compromessa, il 2FA impedisce l'accesso senza il secondo fattore (app authenticator, SMS, chiave hardware). È la misura singola con il miglior rapporto effort/beneficio.
+        </div>
+      </div>
+      <div class="defense-step">
+        <div class="defense-step-num">4</div>
+        <div class="defense-step-body">
+          <strong>Backup regolari e offline</strong>
+          Un backup recente e non connesso alla rete rende il ransomware praticamente innocuo: si ripristina il sistema senza pagare il riscatto. La regola 3-2-1 (3 copie, 2 supporti diversi, 1 offsite) è lo standard.
+        </div>
+      </div>
+      <div class="defense-step">
+        <div class="defense-step-num">5</div>
+        <div class="defense-step-body">
+          <strong>Principio del minimo privilegio</strong>
+          Ogni utente, processo e sistema deve avere solo i permessi strettamente necessari. Se un account viene compromesso, il danno potenziale è limitato a ciò che quell'account poteva fare.
+        </div>
+      </div>
+      <div class="defense-step">
+        <div class="defense-step-num">6</div>
+        <div class="defense-step-body">
+          <strong>Formazione e consapevolezza</strong>
+          Il social engineering funziona perché le persone non riconoscono i segnali. La formazione degli utenti è la difesa più efficace contro phishing, vishing e pretexting.
+        </div>
+      </div>
+      <div class="defense-step">
+        <div class="defense-step-num">7</div>
+        <div class="defense-step-body">
+          <strong>Monitoraggio e incident response</strong>
+          Rilevare un attacco in corso (SIEM, IDS/IPS, log analysis) e avere un piano di risposta pronto riduce drasticamente il danno. Non "se" ma "quando" succederà: prepararsi è obbligatorio.
+        </div>
+      </div>
+
+      <div class="box-link">
+        <div class="box-icon">🔗</div>
+        <div>Per le misure pratiche di sicurezza quotidiana → <a href="/sicurezza/guida-cybersicurezza/">Guida alla Cybersicurezza Personale</a></div>
+      </div>
+      <div class="box-link">
+        <div class="box-icon">🔗</div>
+        <div>Per i fondamenti teorici (CIA, crittografia, PKI) → <a href="/sicurezza/guida-principi-sicurezza/">Principi di Sicurezza Informatica</a></div>
+      </div>
+
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
+  Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem;">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<script src="/scripts/ui.js" defer></script>
+<script>
+function toggleSidebar() {
+  document.getElementById('guide-sidebar').classList.toggle('is-open');
+  document.getElementById('sidebar-overlay').classList.toggle('is-open');
+}
+function closeSidebar() {
+  document.getElementById('guide-sidebar').classList.remove('is-open');
+  document.getElementById('sidebar-overlay').classList.remove('is-open');
+}
+
+// Evidenzia voce sidebar in base alla sezione visibile
+const sections = document.querySelectorAll('.guide-section');
+const navItems = document.querySelectorAll('.nav-item');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navItems.forEach(item => {
+        item.classList.toggle('active', item.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
