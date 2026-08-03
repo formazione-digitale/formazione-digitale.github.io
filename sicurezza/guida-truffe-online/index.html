@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Riconoscere le truffe online: phishing, smishing e siti falsi · Formazione Digitale</title>
-<meta name="description" content="Come riconoscere email di phishing, SMS truffa, truffe WhatsApp e siti contraffatti. Guida pratica con esempi reali e cosa fare se hai già cliccato.">
+<title>Le truffe online: guida completa · Formazione Digitale</title>
+<meta name="description" content="Phishing, smishing, vishing, acquisti online falsi, romance scam e investment scam: guida completa con esempi reali e cosa fare subito.">
 <meta name="author" content="Cristiano De Pasquale">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#1F4E79">
@@ -15,24 +15,24 @@
 <link rel="dns-prefetch" href="//gc.zgo.at">
 <link rel="dns-prefetch" href="//fonts.googleapis.com">
 
-<meta property="og:title" content="Riconoscere le truffe online · Formazione Digitale">
-<meta property="og:description" content="Phishing, smishing, truffe WhatsApp, siti falsi: come riconoscerli e cosa fare se hai già cliccato. Guida pratica con esempi reali.">
+<meta property="og:title" content="Le truffe online: guida completa · Formazione Digitale">
+<meta property="og:description" content="Phishing, smishing, vishing, acquisti falsi, romance scam, crypto scam e minacce emergenti: guida completa con esempi reali.">
 <meta property="og:url" content="https://formazione-digitale.it/sicurezza/guida-truffe-online/">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
 <meta property="og:locale" content="it_IT">
 <meta property="og:site_name" content="Formazione Digitale">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Riconoscere le truffe online · Formazione Digitale">
-<meta name="twitter:description" content="Phishing, smishing, truffe WhatsApp e siti falsi: riconoscerli e reagire correttamente.">
+<meta name="twitter:title" content="Le truffe online: guida completa · Formazione Digitale">
+<meta name="twitter:description" content="Guida completa alle truffe online: phishing, smishing, vishing, acquisti falsi, romance scam e minacce emergenti.">
 <meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "LearningResource",
-  "name": "Riconoscere le truffe online: phishing, smishing e siti falsi",
-  "description": "Guida pratica per riconoscere email di phishing, SMS truffa, truffe WhatsApp e siti contraffatti, con esempi reali e sequenza d'azione per chi ha già cliccato.",
+  "name": "Le truffe online: guida completa",
+  "description": "Guida completa su phishing, smishing, vishing, acquisti online falsi, romance scam, investment scam e minacce emergenti, con esempi reali e sequenza d'azione.",
   "url": "https://formazione-digitale.it/sicurezza/guida-truffe-online/",
   "inLanguage": "it",
   "educationalLevel": "Foundation",
@@ -46,7 +46,7 @@
     "name": "Formazione Digitale",
     "url": "https://formazione-digitale.it"
   },
-  "keywords": "phishing, smishing, truffa online, sito falso, spoofing, WhatsApp truffa, email truffa, sicurezza digitale, polizia postale"
+  "keywords": "phishing, smishing, vishing, truffa online, sito falso, acquisti online truffa, romance scam, catfishing, investment scam, criptovalute truffa, sextortion, quishing, malvertising, SIM swapping, deepfake, sicurezza digitale"
 }
 </script>
 
@@ -210,6 +210,100 @@
 .case-body { padding: .9rem 1rem; background: #fff; }
 .case-body ul { padding-left: 1.1rem; font-size: .88rem; line-height: 1.75; color: var(--gray-dark); }
 .case-body ul li { margin-bottom: .2rem; }
+
+/* ── TOC Index analitico ───────────────────────────────────────── */
+.guide-toc {
+  background: var(--gray-light);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid #e8e8e8;
+}
+.guide-toc-header {
+  font-size: .78rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .08em;
+  color: var(--gray-mid); margin-bottom: .85rem;
+}
+.toc-row { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .4rem; }
+.toc-row:last-child { margin-bottom: 0; }
+.toc-chip {
+  display: inline-flex; align-items: center; gap: .25rem;
+  background: #fff; border: 1px solid var(--blue-light);
+  color: var(--blue-dark); font-size: .78rem; font-weight: 600;
+  padding: .3rem .75rem; border-radius: 20px;
+  text-decoration: none;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.toc-chip:hover { background: var(--blue-mid); border-color: var(--blue-mid); color: #fff; }
+.toc-chip-muted { background: #fff; border-color: #ddd; color: var(--gray-mid); font-weight: 500; }
+.toc-chip-muted:hover { background: var(--gray-dark); border-color: var(--gray-dark); color: #fff; }
+.toc-divider { font-size: .72rem; color: var(--gray-mid); margin: .5rem 0 .4rem; font-style: italic; }
+
+/* ── Demo link e modal ─────────────────────────────────────── */
+.demo-link {
+  color: var(--red-dark); text-decoration: underline;
+  cursor: pointer; background: none; border: none;
+  font: inherit; padding: 0; display: inline;
+}
+.demo-link:hover { opacity: .8; }
+#demo-modal-backdrop {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.5); z-index: 900;
+}
+#demo-modal-backdrop.is-open { display: block; }
+#demo-modal {
+  display: none; position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff; border-radius: var(--radius);
+  padding: 1.75rem; max-width: 400px;
+  width: calc(100% - 2rem); z-index: 901;
+  box-shadow: 0 8px 32px rgba(0,0,0,.25);
+  text-align: center;
+}
+#demo-modal.is-open { display: block; }
+.demo-modal-icon { font-size: 2.5rem; margin-bottom: .5rem; }
+.demo-modal-title {
+  font-family: var(--font-display); font-size: 1.15rem;
+  font-weight: 700; color: var(--red-dark); margin-bottom: .5rem;
+}
+.demo-modal-url {
+  background: var(--red-light); border-radius: 6px;
+  padding: .4rem .8rem; font-size: .78rem;
+  font-family: monospace; color: var(--red-dark);
+  word-break: break-all; margin-bottom: .75rem;
+}
+.demo-modal-body {
+  font-size: .85rem; line-height: 1.65;
+  color: var(--gray-dark); margin-bottom: 1.1rem;
+  text-align: left;
+}
+.demo-modal-close {
+  background: var(--blue-mid); color: #fff;
+  border: none; border-radius: 6px;
+  padding: .55rem 1.25rem; font-size: .88rem;
+  font-weight: 600; cursor: pointer;
+  font-family: var(--font-body); transition: background .15s;
+}
+.demo-modal-close:hover { background: var(--blue-dark); }
+
+/* ── Nota cards (S9 — minacce emergenti) ───────────────────────── */
+.nota-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: .9rem; margin: 1.25rem 0;
+}
+.nota-card {
+  background: var(--gray-light); border: 1px solid #e0e0e0;
+  border-radius: var(--radius); padding: 1.1rem 1.1rem .9rem;
+}
+.nota-card-head { display: flex; align-items: center; gap: .5rem; margin-bottom: .5rem; }
+.nota-card-emoji { font-size: 1.4rem; line-height: 1; }
+.nota-card-title { font-weight: 700; font-size: .88rem; color: var(--gray-dark); }
+.nota-card-body { font-size: .82rem; line-height: 1.65; color: #555; }
+.nota-card-body strong { color: var(--gray-dark); }
+.nota-card-body p { margin: 0 0 .4rem; }
+.nota-card-body p:last-child { margin-bottom: 0; }
 </style>
 </head>
 <body>
@@ -237,17 +331,21 @@
     <ul class="sidebar-nav" id="sidebar-nav">
       <li><a class="nav-item active" href="#s1" onclick="closeSidebar()"><span class="nav-num">1</span><span class="nav-text">Come funziona una truffa</span></a></li>
       <li><a class="nav-item" href="#s2" onclick="closeSidebar()"><span class="nav-num">2</span><span class="nav-text">Phishing via email</span></a></li>
-      <li><a class="nav-item" href="#s3" onclick="closeSidebar()"><span class="nav-num">3</span><span class="nav-text">Smishing (SMS)</span></a></li>
+      <li><a class="nav-item" href="#s3" onclick="closeSidebar()"><span class="nav-num">3</span><span class="nav-text">Smishing e vishing</span></a></li>
       <li><a class="nav-item" href="#s4" onclick="closeSidebar()"><span class="nav-num">4</span><span class="nav-text">Truffe su WhatsApp</span></a></li>
       <li><a class="nav-item" href="#s5" onclick="closeSidebar()"><span class="nav-num">5</span><span class="nav-text">Siti contraffatti</span></a></li>
-      <li><a class="nav-item" href="#s6" onclick="closeSidebar()"><span class="nav-num">6</span><span class="nav-text">Verificare un sito</span></a></li>
-      <li><a class="nav-item" href="#s7" onclick="closeSidebar()"><span class="nav-num">7</span><span class="nav-text">Ho già cliccato</span></a></li>
+      <li><a class="nav-item" href="#s6" onclick="closeSidebar()"><span class="nav-num">6</span><span class="nav-text">Acquisti online</span></a></li>
+      <li><a class="nav-item" href="#s7" onclick="closeSidebar()"><span class="nav-num">7</span><span class="nav-text">Romance scam</span></a></li>
+      <li><a class="nav-item" href="#s8" onclick="closeSidebar()"><span class="nav-num">8</span><span class="nav-text">Trading e criptovalute</span></a></li>
+      <li><a class="nav-item" href="#s9" onclick="closeSidebar()"><span class="nav-num">9</span><span class="nav-text">Minacce emergenti</span></a></li>
+      <li><a class="nav-item" href="#s10" onclick="closeSidebar()"><span class="nav-num">10</span><span class="nav-text">Verificare un sito</span></a></li>
+      <li><a class="nav-item" href="#s11" onclick="closeSidebar()"><span class="nav-num">11</span><span class="nav-text">Ho già cliccato</span></a></li>
     </ul>
     <hr class="sidebar-divider">
     <div class="sidebar-meta">
       <strong>Guida Truffe Online</strong><br>
       🎣 Sicurezza digitale<br>
-      ⏱ ~30 min di lettura<br>
+      ⏱ ~55 min di lettura<br>
       📊 Livello base<br>
       🗓 Aggiornata luglio 2026
     </div>
@@ -272,7 +370,7 @@
     <div class="guide-hero">
       <div class="guide-hero-eyebrow">Formazione Digitale · Guida completa · Sicurezza</div>
       <h1 class="guide-hero-title">Le trappole<br><em>online</em></h1>
-      <p class="guide-hero-sub">Phishing, smishing, truffe WhatsApp e siti contraffatti: come riconoscerli prima di cadere nella trappola — e cosa fare se hai già cliccato.</p>
+      <p class="guide-hero-sub">Phishing, smishing, vishing, truffe WhatsApp, acquisti online falsi, romance scam e molto altro: come riconoscerli prima di cadere nella trappola — e cosa fare se hai già interagito.</p>
       <div class="guide-hero-badges">
         <span class="hero-badge">🎣 Truffe digitali</span>
         <span class="hero-badge">💡 Livello base</span>
@@ -281,6 +379,30 @@
         <span class="hero-badge">🗓 Aggiornata 2026</span>
       </div>
     </div>
+
+
+    <!-- ═══ TOC INDEX ═══ -->
+    <nav class="guide-toc" aria-label="Indice per tipologia di truffa">
+      <div class="guide-toc-header">📋 Vai direttamente alla truffa che ti interessa</div>
+      <div class="toc-row">
+        <a class="toc-chip" href="#s2">🎣 Phishing (email)</a>
+        <a class="toc-chip" href="#s3">📱 Smishing (SMS)</a>
+        <a class="toc-chip" href="#s3-vishing">📞 Vishing (chiamate)</a>
+        <a class="toc-chip" href="#s4">💬 Truffe WhatsApp</a>
+        <a class="toc-chip" href="#s5">🌐 Siti contraffatti</a>
+        <a class="toc-chip" href="#s6">🛒 Acquisti online</a>
+        <a class="toc-chip" href="#s7">❤️ Romance scam</a>
+        <a class="toc-chip" href="#s8">📈 Trading / Crypto</a>
+      </div>
+      <div class="toc-divider">Note — minacce emergenti</div>
+      <div class="toc-row">
+        <a class="toc-chip toc-chip-muted" href="#s9">🔒 Sextortion</a>
+        <a class="toc-chip toc-chip-muted" href="#s9">📷 Quishing (QR)</a>
+        <a class="toc-chip toc-chip-muted" href="#s9">🔍 Malvertising</a>
+        <a class="toc-chip toc-chip-muted" href="#s9">📵 SIM swapping</a>
+        <a class="toc-chip toc-chip-muted" href="#s9">🤖 Deepfake / AI</a>
+      </div>
+    </nav>
 
     <!-- ═══ S1 ═══ -->
     <section class="guide-section" id="s1">
@@ -409,8 +531,8 @@
       <div class="section-header">
         <div class="section-num">3</div>
         <div class="section-titles">
-          <h2 class="section-title">Smishing — le truffe via SMS</h2>
-          <p class="section-subtitle">Il phishing arrivato sul telefono</p>
+          <h2 class="section-title">Smishing e vishing</h2>
+          <p class="section-subtitle">Le truffe via SMS e per telefono — il phishing fuori dallo schermo</p>
         </div>
       </div>
 
@@ -422,7 +544,7 @@
         <div class="sms-sender">BancaXYZ · oggi 14:32</div>
         <div class="sms-bubble">
           Operazione sospetta rilevata sul tuo conto. Blocca subito l'accesso:<br>
-          <a href="#">http://bancaxyz-sicurezza.com/verifica</a>
+          <button class="demo-link" onclick="openDemoModal('http://bancaxyz-sicurezza.com/verifica')">http://bancaxyz-sicurezza.com/verifica</button>
         </div>
       </div>
 
@@ -430,7 +552,7 @@
         <div class="sms-sender">Poste · oggi 09:15</div>
         <div class="sms-bubble">
           Il tuo pacco è in attesa di consegna. Sono richiesti €1,99 per le spese doganali. Clicca qui:<br>
-          <a href="#">https://poste-tracking.net/paga</a>
+          <button class="demo-link" onclick="openDemoModal('https://poste-tracking.net/paga')">https://poste-tracking.net/paga</button>
         </div>
       </div>
 
@@ -439,18 +561,28 @@
         <p>I truffatori possono <strong>falsificare il numero mittente</strong> — una tecnica chiamata SMS spoofing. Il tuo telefono potrebbe mostrare "Intesa Sanpaolo" come mittente anche se il messaggio non viene dalla vera banca. Non fidarti del nome del mittente per valutare l'autenticità.</p>
       </div>
 
-      <div class="box box-warn">
-        <div class="box-label">Attenzione anche alle chiamate: il vishing</div>
-        <p>I truffatori possono falsificare anche il <strong>numero di telefono chiamante</strong>: sul tuo display può comparire il numero verde reale della tua banca, ma dall'altra parte c'è un truffatore che finge di essere un operatore della sicurezza. Se ricevi una chiamata inaspettata da chi dice di essere la tua banca: <strong>riaggancia e richiama tu</strong> il numero che trovi sul retro della carta o sul sito ufficiale. La vera banca non si offenderà mai.</p>
-      </div>
-
-      <h3 class="sub-title">Come comportarsi</h3>
+      <h3 class="sub-title">Come comportarsi con un SMS sospetto</h3>
       <ol class="steps-list">
-        <li><strong>Non cliccare il link</strong> nell'SMS — nemmeno per "vedere cosa c'è".</li>
+        <li><strong>Non cliccare il link</strong> nell'SMS — nemmeno per “vedere cosa c'è”.</li>
         <li>Se il messaggio riguarda un tuo ordine o un tuo conto, <strong>vai direttamente sul sito ufficiale</strong> digitando tu l'indirizzo, e controlla lì.</li>
         <li>Per i pacchi: usa il codice di tracciamento sul sito ufficiale del corriere (BRT, SDA, DHL…) — non i link negli SMS.</li>
         <li><strong>Segnala il numero</strong> come spam nel tuo telefono e ignora il messaggio.</li>
       </ol>
+
+      <h3 class="sub-title" id="s3-vishing">Vishing — le truffe per telefono</h3>
+      <p>Il <strong>vishing</strong> (voice + phishing) è la versione sonora del phishing: qualcuno ti chiama fingendosi un operatore della tua banca, dell'INPS, della Polizia Postale o di un corriere. La voce dal vivo crea un senso di urgenza e credibilità che un messaggio scritto fatica a replicare.</p>
+      <p>Come nello smishing, i truffatori possono <strong>falsificare il numero chiamante</strong>: sul display può comparire il numero verde reale della tua banca, ma dall'altra parte c'è un impostore.</p>
+
+      <div class="box box-warn">
+        <div class="box-label">📞 Esempio tipico di vishing</div>
+        <p><em>“Buongiorno, sono Marco della divisione antifrode di Intesa Sanpaolo. Abbiamo rilevato un accesso sospetto al suo conto da Napoli. Per bloccare l'operazione, ho bisogno che mi legga il codice OTP che le arriverà via SMS tra pochi secondi.”</em></p>
+        <p style="margin-top:.5rem;font-size:.85rem;color:var(--gray-mid);">Cosa sta succedendo: il truffatore vuole usare il tuo OTP per autorizzare un bonifico fraudolento. Riagganciare immediatamente è la risposta corretta.</p>
+      </div>
+
+      <div class="box box-tip">
+        <div class="box-label">La regola del vishing</div>
+        <p>Nessuna banca, nessun ente pubblico, nessun operatore telefonico ti chiederà mai <strong>codici OTP, PIN o password per telefono</strong>. Se ricevi una chiamata del genere: <strong>riaggancia senza sentirti in obbligo di spiegare</strong>, poi richiama tu il numero ufficiale che trovi sul sito o sul retro della carta. La vera banca non si offende.</p>
+      </div>
     </section>
 
     <!-- ═══ S4 ═══ -->
@@ -534,6 +666,250 @@
       <div class="section-header">
         <div class="section-num">6</div>
         <div class="section-titles">
+          <h2 class="section-title">Truffe negli acquisti online</h2>
+          <p class="section-subtitle">Negozi fantasma, marketplace insidiosi e pagamenti che spariscono</p>
+        </div>
+      </div>
+
+      <p>Con la crescita dell'e-commerce sono proliferati siti di vendita costruiti appositamente per truffare. Due scenari principali: il <strong>negozio online falso</strong> (un sito che imita un vero shop) e le <strong>truffe sui marketplace peer-to-peer</strong> come Subito.it o Facebook Marketplace.</p>
+
+      <h3 class="sub-title">Negozi online falsi</h3>
+      <p>Siti che vendono prodotti mai esistenti — spesso in periodi di punta (Black Friday, Natale, saldi estivi) quando l'attenzione si abbassa. Paghi, aspetti, non arriva nulla. Quando provi a contattare l'assistenza, il sito è già sparito.</p>
+
+      <div class="highlight-grid">
+        <div class="highlight-card hc-red">
+          <div class="hc-emoji">💸</div>
+          <div class="hc-title">Prezzi impossibili</div>
+          <div class="hc-body">iPhone a 199 €, scarpe firmate a 15 €, elettrodomestici a un terzo del prezzo di mercato. Se il prezzo è irreale, il prodotto probabilmente non esiste.</div>
+        </div>
+        <div class="highlight-card hc-red">
+          <div class="hc-emoji">💳</div>
+          <div class="hc-title">Solo bonifico o crypto</div>
+          <div class="hc-body">I negozi legittimi accettano carta di credito e PayPal. Se l'unico metodo è bonifico, ricarica PostePay o criptovaluta, è un segnale molto forte.</div>
+        </div>
+        <div class="highlight-card hc-amber">
+          <div class="hc-emoji">🏢</div>
+          <div class="hc-title">Nessun dato societario</div>
+          <div class="hc-body">Partita IVA, indirizzo fisico, ragione sociale: ogni e-commerce legale in Italia deve mostrarli. Se non li trovi, o sembrano inventati, fermati.</div>
+        </div>
+        <div class="highlight-card hc-amber">
+          <div class="hc-emoji">🗓️</div>
+          <div class="hc-title">Sito appena nato</div>
+          <div class="hc-body">Un sito che vende abbigliamento firmato ma esiste da 3 settimane? Verifica la data di registrazione del dominio con Whois (vedi sezione 10).</div>
+        </div>
+      </div>
+
+      <h3 class="sub-title">Truffe sui marketplace (Subito.it, Facebook Marketplace)</h3>
+      <p>La truffa può venire sia dal <strong>venditore</strong> che dall'<strong>acquirente</strong>.</p>
+
+      <div class="box box-warn">
+        <div class="box-label">Venditore fantasma</div>
+        <p>Pubblica un annuncio allettante (auto, bici, smartphone), chiede un pagamento anticipato via bonifico o ricarica, poi sparisce. Spesso si trova “all'estero per lavoro” e propone la spedizione tramite un corriere “di fiducia” — che non esiste.</p>
+      </div>
+
+      <div class="box box-warn">
+        <div class="box-label">Acquirente truffatore</div>
+        <p>Vuole comprare il tuo oggetto, ti manda uno screenshot di un bonifico “in elaborazione” e ti chiede di spedire subito. Il bonifico non arriverà mai. Variante: ti manda un link a una finta piattaforma di <em>pagamento protetto</em> — che raccoglie i tuoi dati bancari.</p>
+      </div>
+
+      <div class="box box-tip">
+        <div class="box-label">Regola dei marketplace</div>
+        <p>Come venditore: <strong>vedi i soldi sul conto prima di spedire</strong>, senza eccezioni. Preferisci la consegna a mano per oggetti di valore. Non accettare link a piattaforme di pagamento esterne — usa solo i sistemi integrati nella piattaforma (es. Subito Pagamenti).</p>
+      </div>
+
+      <div class="box box-info">
+        <div class="box-label">📞 Nota — Tech support scam</div>
+        <p>Mentre navighi, un popup può occupare tutto lo schermo con un finto avviso antivirus: <em>“Il tuo PC è infetto! Chiama subito il numero verde Microsoft”</em>. Non chiamare: Microsoft e Apple non ti contattano mai così. Chiudi il browser con <strong>Alt+F4</strong> o forza la chiusura dal Task Manager. Se il popup resiste, riavvia il dispositivo.</p>
+      </div>
+    </section>
+
+    <!-- ═══ S7 ═══ -->
+    <section class="guide-section" id="s7">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <div class="section-titles">
+          <h2 class="section-title">Romance scam e catfishing</h2>
+          <p class="section-subtitle">Quando la truffa si maschera da storia d'amore</p>
+        </div>
+      </div>
+
+      <p>Il <strong>romance scam</strong> (truffa sentimentale) è una delle forme più devastanti di frode online: il truffatore costruisce nel tempo una relazione emotiva, guadagna la fiducia della vittima, poi chiede denaro. Il <strong>catfishing</strong> è la tecnica usata: un'identità completamente falsa, costruita con foto rubate e storie inventate.</p>
+      <p>Non è una truffa “per ingenui”: colpisce persone di ogni livello di istruzione, spesso in momenti di solitudine o di transizione della vita.</p>
+
+      <h3 class="sub-title">Come funziona — la sequenza tipica</h3>
+      <ol class="steps-list">
+        <li><strong>Il contatto:</strong> un profilo attraente scrive su un social, un'app di dating o LinkedIn. Foto professionali, storia credibile (medico in missione, ingegnere offshore, militare all'estero).</li>
+        <li><strong>La costruzione del rapporto:</strong> messaggi quotidiani, attenzioni costanti, confidenze reciproche. Il truffatore investe settimane o mesi per creare un legame emotivo reale.</li>
+        <li><strong>L'ostacolo alla videochiamata:</strong> la qualità è sempre pessima, la connessione cade, la webcam è rotta. In realtà non può mostrarti il viso — non è quello nelle foto.</li>
+        <li><strong>La crisi:</strong> un'emergenza improvvisa (incidente, operazione medica, problema doganale) richiede denaro urgente. Spesso la prima richiesta è piccola, per testare la disponibilità.</li>
+        <li><strong>L'escalation:</strong> le richieste aumentano. Ogni volta c'è una nuova crisi. Ogni somma inviata è definitivamente persa.</li>
+      </ol>
+
+      <h3 class="sub-title">Segnali d'allarme</h3>
+
+      <div class="highlight-grid">
+        <div class="highlight-card hc-red">
+          <div class="hc-emoji">📸</div>
+          <div class="hc-title">Foto da modello/modella</div>
+          <div class="hc-body">Foto troppo belle, troppo professionali. Fai una ricerca per immagini inversa su Google: se la stessa foto appare su altri profili con nomi diversi, è falsa.</div>
+        </div>
+        <div class="highlight-card hc-red">
+          <div class="hc-emoji">✈️</div>
+          <div class="hc-title">Sempre “all'estero”</div>
+          <div class="hc-body">Non può vederti di persona perché è su una piattaforma petrolifera, in missione militare o in zona di guerra. Queste storie giustificano la videochiamata impossibile e le richieste di denaro.</div>
+        </div>
+        <div class="highlight-card hc-amber">
+          <div class="hc-emoji">💬</div>
+          <div class="hc-title">Vuole uscire dalla piattaforma</div>
+          <div class="hc-body">Dopo pochi messaggi propone di continuare su WhatsApp o Telegram, uscendo dai sistemi che potrebbero segnalare il suo account truffaldino.</div>
+        </div>
+        <div class="highlight-card hc-amber">
+          <div class="hc-emoji">💸</div>
+          <div class="hc-title">La prima richiesta di denaro</div>
+          <div class="hc-body">Qualunque richiesta economica da qualcuno che non hai mai incontrato di persona è un segnale netto, indipendentemente da quanto il legame sembri reale.</div>
+        </div>
+      </div>
+
+      <div class="box box-tip">
+        <div class="box-label">Come verificare un profilo sospetto</div>
+        <p>Fai una <strong>ricerca per immagini inversa</strong>: su Google Immagini, clicca l'icona della fotocamera e incolla l'URL della foto profilo. Se la stessa foto appare su altri profili con nomi diversi, hai la conferma. Su smartphone: tieni premuta la foto → “Cerca questa immagine”.</p>
+      </div>
+
+      <div class="box box-warn">
+        <div class="box-label">Se ti rendi conto di essere in una romance scam</div>
+        <p>Interrompi ogni contatto senza sentirti in obbligo di spiegare. Non inviare altro denaro anche se ti viene promesso il rimborso — non arriverà. Segnala il profilo sulla piattaforma e presenta denuncia alla Polizia Postale su <strong>commissariatodips.it</strong>. Non vergognarti: queste truffe sono progettate da professionisti.</p>
+      </div>
+    </section>
+
+    <!-- ═══ S8 ═══ -->
+    <section class="guide-section" id="s8">
+      <div class="section-header">
+        <div class="section-num">8</div>
+        <div class="section-titles">
+          <h2 class="section-title">Truffe su trading e criptovalute</h2>
+          <p class="section-subtitle">Guadagni garantiti, piattaforme fantasma e soldi che non si possono prelevare</p>
+        </div>
+      </div>
+
+      <p>Le <strong>investment scam</strong> sono cresciute enormemente con la diffusione delle criptovalute. Promettono rendimenti impossibili su piattaforme dall'aspetto professionale, poi spariscono con i fondi depositati.</p>
+      <p>Spesso iniziano via Instagram, Telegram o LinkedIn — e a volte sono il secondo atto di un romance scam: prima si guadagna la fiducia, poi si introduce un'opportunità esclusiva.</p>
+
+      <h3 class="sub-title">Come funziona la truffa</h3>
+      <ol class="steps-list">
+        <li><strong>Il contatto:</strong> qualcuno condivide screenshot di guadagni straordinari o ti contatta direttamente offrendo di “insegnarti a investire”.</li>
+        <li><strong>Il primo deposito:</strong> ti invitano su una piattaforma dall'aspetto professionale e a depositare una piccola somma. I “guadagni” appaiono subito sulla dashboard — ma sono numeri virtuali, non soldi reali.</li>
+        <li><strong>La pressione ad aumentare:</strong> vedendo i profitti, ti chiedono di investire di più. Ogni volta che vuoi prelevare compare un ostacolo: commissioni da pagare, tasse da versare, livelli da sbloccare.</li>
+        <li><strong>La sparizione:</strong> quando hai depositato tutto il possibile, la piattaforma diventa irraggiungibile o ti blocca l'accesso. Il denaro è perso.</li>
+      </ol>
+
+      <h3 class="sub-title">Segnali d'allarme</h3>
+
+      <div class="highlight-grid">
+        <div class="highlight-card hc-red">
+          <div class="hc-emoji">📊</div>
+          <div class="hc-title">Rendimenti garantiti</div>
+          <div class="hc-body">“30% al mese garantito”, “zero rischi”. Nessun investimento legale garantisce rendimenti. In Italia prometterli è illegale. È sempre un segnale di truffa.</div>
+        </div>
+        <div class="highlight-card hc-red">
+          <div class="hc-emoji">🚫</div>
+          <div class="hc-title">Prelievo impossibile</div>
+          <div class="hc-body">Ti vengono richieste “commissioni” o “tasse” per prelevare i tuoi soldi. Un intermediario legale non blocca mai i fondi del cliente né chiede pagamenti extra per sbloccarli.</div>
+        </div>
+        <div class="highlight-card hc-amber">
+          <div class="hc-emoji">🏦</div>
+          <div class="hc-title">Non registrata CONSOB</div>
+          <div class="hc-body">In Italia chi offre servizi di investimento deve essere autorizzato dalla CONSOB. Verifica sempre su consob.it → Intermediari autorizzati prima di depositare qualsiasi somma.</div>
+        </div>
+        <div class="highlight-card hc-amber">
+          <div class="hc-emoji">⏰</div>
+          <div class="hc-title">Urgenza artificiale</div>
+          <div class="hc-body">“L'offerta scade tra 24 ore”, “solo altri 3 posti disponibili”. La pressione temporale è costruita per impedirti di fare ricerche o chiedere consiglio.</div>
+        </div>
+      </div>
+
+      <div class="box box-info">
+        <div class="box-label">Verifica su CONSOB prima di investire</div>
+        <p>Il sito ufficiale della Commissione Nazionale per le Società e la Borsa (<strong>consob.it</strong>) pubblica sia l'elenco degli intermediari autorizzati sia un archivio di <strong>avvertenze agli investitori</strong> — con i nomi delle piattaforme già identificate come fraudolente. Controllalo sempre prima di registrarti su una nuova piattaforma di trading.</p>
+      </div>
+    </section>
+
+    <!-- ═══ S9 ═══ -->
+    <section class="guide-section" id="s9">
+      <div class="section-header">
+        <div class="section-num">9</div>
+        <div class="section-titles">
+          <h2 class="section-title">Minacce emergenti</h2>
+          <p class="section-subtitle">Truffe in crescita o meno diffuse — ma da conoscere</p>
+        </div>
+      </div>
+
+      <p>Queste minacce sono reali ma meno frequenti nell'esperienza quotidiana rispetto alle precedenti, o abbastanza nuove da non aver ancora raggiunto la massa critica. Vale la pena conoscerle per non essere colti di sorpresa.</p>
+
+      <div class="nota-grid">
+
+        <div class="nota-card">
+          <div class="nota-card-head">
+            <div class="nota-card-emoji">🔒</div>
+            <div class="nota-card-title">Sextortion</div>
+          </div>
+          <div class="nota-card-body">
+            <p>Ricevi un'email con <strong>una tua password reale</strong> (rubata da un vecchio data breach) e la minaccia di divulgare video intimi registrati dalla tua webcam. Il video non esiste — è un bluff standardizzato inviato a milioni di persone.</p>
+            <p><strong>Cosa fare:</strong> ignora e non pagare. Cambia la password citata se la usi ancora. Verifica le tue credenziali su <strong>haveibeenpwned.com</strong>.</p>
+          </div>
+        </div>
+
+        <div class="nota-card">
+          <div class="nota-card-head">
+            <div class="nota-card-emoji">📷</div>
+            <div class="nota-card-title">Quishing (QR code)</div>
+          </div>
+          <div class="nota-card-body">
+            <p>QR code malevoli incollati su <strong>parchimetri, menu di ristoranti, volantini</strong> — o inviati via email al posto di un link. Portano a siti di phishing o avviano download di malware.</p>
+            <p><strong>Cosa fare:</strong> verifica fisicamente che il codice non sia un adesivo sopra l'originale. Usa un'app che mostra l'URL di destinazione prima di aprirlo.</p>
+          </div>
+        </div>
+
+        <div class="nota-card">
+          <div class="nota-card-head">
+            <div class="nota-card-emoji">🔍</div>
+            <div class="nota-card-title">Malvertising</div>
+          </div>
+          <div class="nota-card-body">
+            <p>I truffatori acquistano <strong>annunci sponsorizzati su Google</strong> per clonare siti bancari o di servizi pubblici. Il link “Sponsorizzato” può comparire in cima cercando “Intesa Sanpaolo” o “INPS login”.</p>
+            <p><strong>Cosa fare:</strong> per accedere a banca, INPS o servizi sensibili, <strong>digita sempre l'URL direttamente</strong> nella barra del browser — mai dai risultati di ricerca.</p>
+          </div>
+        </div>
+
+        <div class="nota-card">
+          <div class="nota-card-head">
+            <div class="nota-card-emoji">📵</div>
+            <div class="nota-card-title">SIM swapping</div>
+          </div>
+          <div class="nota-card-body">
+            <p>Il truffatore convince il tuo operatore a trasferire il tuo numero su una SIM diversa, intercettando gli <strong>SMS con i codici OTP</strong> per accedere ai tuoi conti.</p>
+            <p><strong>Sintomo:</strong> il telefono perde il segnale improvvisamente. <strong>Cosa fare:</strong> chiama subito l'operatore. Usa app di autenticazione (Google Authenticator, Aegis) invece degli SMS per il 2FA.</p>
+          </div>
+        </div>
+
+        <div class="nota-card">
+          <div class="nota-card-head">
+            <div class="nota-card-emoji">🤖</div>
+            <div class="nota-card-title">Deepfake e voice cloning</div>
+          </div>
+          <div class="nota-card-body">
+            <p>L'intelligenza artificiale permette di <strong>clonare la voce</strong> di una persona partendo da pochi secondi di audio (un video social basta). Usata per messaggi vocali o chiamate WhatsApp che sembrano di un familiare o di un dirigente.</p>
+            <p><strong>Cosa fare:</strong> stabilisci con i tuoi familiari una <strong>parola d'ordine segreta</strong> da usare per confermare richieste urgenti di denaro per telefono.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══ S10 ═══ -->
+    <section class="guide-section" id="s10">
+      <div class="section-header">
+        <div class="section-num">10</div>
+        <div class="section-titles">
           <h2 class="section-title">Come verificare un sito</h2>
           <p class="section-subtitle">Strumenti gratuiti per controllare prima di inserire qualsiasi dato</p>
         </div>
@@ -550,27 +926,27 @@
       </div>
 
       <h3 class="sub-title">Google — la ricerca è il tuo alleato</h3>
-      <p>Cerca il nome del sito seguito da parole come <strong>"truffa"</strong>, <strong>"opinioni"</strong>, <strong>"è affidabile"</strong>. Le vittime di truffe tendono a raccontare la loro esperienza online — forum, Reddit, social. Se non trovi nulla di negativo su un sito attivo da anni, è un buon segnale. Se trovi molte segnalazioni recenti, fermati.</p>
+      <p>Cerca il nome del sito seguito da parole come <strong>“truffa”</strong>, <strong>“opinioni”</strong>, <strong>“è affidabile”</strong>. Le vittime di truffe tendono a raccontare la loro esperienza online — forum, Reddit, social. Se non trovi nulla di negativo su un sito attivo da anni, è un buon segnale. Se trovi molte segnalazioni recenti, fermati.</p>
 
       <h3 class="sub-title">VirusTotal e Google Safe Browsing</h3>
       <ol class="steps-list">
         <li>Vai su <strong>virustotal.com</strong>, incolla l'URL del sito nella barra di ricerca e clicca invio. Il servizio controlla il sito contro 70+ database di sicurezza e ti dice se è stato segnalato come pericoloso.</li>
-        <li>In alternativa, su Google cerca <strong>"Google Safe Browsing"</strong> e usa lo strumento di verifica — digiti l'URL e Google ti dice se il sito è nella sua lista di siti pericolosi.</li>
+        <li>In alternativa, su Google cerca <strong>“Google Safe Browsing”</strong> e usa lo strumento di verifica — digiti l'URL e Google ti dice se il sito è nella sua lista di siti pericolosi.</li>
       </ol>
 
       <h3 class="sub-title">Whois — quando è stato creato il sito?</h3>
-      <p>I siti truffaldini spesso esistono da poche settimane. Vai su <strong>whois.domaintools.com</strong>, digita il dominio e cerca "Created" o "Registration Date". Un sito che vende prodotti di marca da 3 settimane è un segnale di allarme forte.</p>
+      <p>I siti truffaldini spesso esistono da poche settimane. Vai su <strong>whois.domaintools.com</strong>, digita il dominio e cerca “Created” o “Registration Date”. Un sito che vende prodotti di marca da 3 settimane è un segnale di allarme forte.</p>
 
       <div class="box box-tip">
         <div class="box-label">Regola pratica veloce</div>
-        <p>Se stai per inserire dati su un sito nuovo o sconosciuto: <strong>30 secondi su Google</strong> ("nome sito truffa") e <strong>30 secondi su Trustpilot</strong> bastano a smaschera la maggior parte delle truffe. Fallo prima di ogni acquisto su siti che non conosci.</p>
+        <p>Se stai per inserire dati su un sito nuovo o sconosciuto: <strong>30 secondi su Google</strong> (“nome sito truffa”) e <strong>30 secondi su Trustpilot</strong> bastano a smascherare la maggior parte delle truffe. Fallo prima di ogni acquisto su siti che non conosci.</p>
       </div>
     </section>
 
-    <!-- ═══ S7 ═══ -->
-    <section class="guide-section" id="s7">
+    <!-- ═══ S11 ═══ -->
+    <section class="guide-section" id="s11">
       <div class="section-header">
-        <div class="section-num">7</div>
+        <div class="section-num">11</div>
         <div class="section-titles">
           <h2 class="section-title">Ho già cliccato — cosa faccio?</h2>
           <p class="section-subtitle">La sequenza d'azione per ogni scenario. Senza panico</p>
@@ -651,8 +1027,32 @@
   </p>
 </footer>
 
+<!-- ═══ DEMO MODAL ═══ -->
+<div id="demo-modal-backdrop" onclick="closeDemoModal()"></div>
+<div id="demo-modal" role="dialog" aria-modal="true" aria-labelledby="demo-modal-title" tabindex="-1">
+  <div class="demo-modal-icon">⚠️</div>
+  <div class="demo-modal-title" id="demo-modal-title">Link dimostrativo</div>
+  <div class="demo-modal-url" id="demo-modal-url"></div>
+  <p class="demo-modal-body">In una truffa reale, questo link porterebbe a un sito contraffatto progettato per rubare credenziali o dati bancari. Visivamente non si distinguerebbe da un sito legittimo.</p>
+  <button class="demo-modal-close" onclick="closeDemoModal()">Ho capito — chiudi</button>
+</div>
+
 <script src="/scripts/ui.js" defer></script>
 <script>
+// Modal link dimostrativi
+function openDemoModal(urlText) {
+  document.getElementById('demo-modal-url').textContent = urlText;
+  document.getElementById('demo-modal-backdrop').classList.add('is-open');
+  document.getElementById('demo-modal').classList.add('is-open');
+  document.getElementById('demo-modal').focus();
+}
+function closeDemoModal() {
+  document.getElementById('demo-modal-backdrop').classList.remove('is-open');
+  document.getElementById('demo-modal').classList.remove('is-open');
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeDemoModal();
+});
 function toggleSidebar() {
   const btn = document.getElementById('hamburger');
   document.getElementById('guide-sidebar').classList.toggle('is-open');

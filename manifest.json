@@ -26,9 +26,6 @@
             "DC 3.2"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "creazione"
-        ],
         "digcompedu": [
             "DCEdu 2.2",
             "DCEdu 6.2",
@@ -65,10 +62,6 @@
             "DC 3.1"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "informazioni",
-            "creazione"
-        ],
         "digcompedu": [
             "DCEdu 2.2",
             "DCEdu 3.4",
@@ -103,9 +96,6 @@
             "DC 5.2"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 2.2",
             "DCEdu 6.5"
@@ -137,10 +127,6 @@
             "DC 5.2"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "comunicazione",
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 2.2",
             "DCEdu 6.5"
@@ -176,9 +162,6 @@
             "DC 5.2"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 2.2",
             "DCEdu 6.5"
@@ -209,11 +192,6 @@
             "DC 5.2"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "informazioni",
-            "creazione",
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 6.1",
             "DCEdu 6.3"
@@ -250,10 +228,6 @@
         "digcompedu": [
             "DCEdu 2.1",
             "DCEdu 3.4"
-        ],
-        "digcomp_areas": [
-            "comunicazione",
-            "creazione"
         ]
     },
     {
@@ -280,10 +254,6 @@
             "DC 5.3"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "creazione",
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 3.1",
             "DCEdu 6.3",
@@ -317,10 +287,6 @@
             "DC 5.3"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "informazioni",
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 2.1",
             "DCEdu 3.3",
@@ -359,9 +325,6 @@
             "DC 2.6"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "sicurezza"
-        ],
         "digcompedu": [
             "DCEdu 6.4",
             "DCEdu 6.1"
@@ -394,10 +357,6 @@
             "DC 5.1"
         ],
         "digcomp_level": "advanced",
-        "digcomp_areas": [
-            "comunicazione",
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 2.3",
             "DCEdu 3.1",
@@ -430,10 +389,6 @@
             "DC 5.1"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "creazione",
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 6.5"
         ]
@@ -466,10 +421,6 @@
             "DC 5.2"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "informazioni",
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 6.1"
         ]
@@ -502,9 +453,6 @@
             "DC 4.2"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "sicurezza"
-        ],
         "digcompedu": [
             "DCEdu 6.4"
         ],
@@ -540,9 +488,6 @@
             "DC 4.2"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "sicurezza"
-        ],
         "digcompedu": [
             "DCEdu 6.4"
         ],
@@ -576,10 +521,6 @@
             "DC 2.1"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "informazione",
-            "comunicazione"
-        ],
         "digcompedu": [
             "DCEdu 3.1"
         ]
@@ -609,9 +550,6 @@
             "DC 1.1"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "informazioni"
-        ],
         "digcompedu": [
             "DCEdu 6.1",
             "DCEdu 3.2"
@@ -640,9 +578,6 @@
             "DC 5.4"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 1.4",
             "DCEdu 6.1"
@@ -674,9 +609,6 @@
             "DC 2.4"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "comunicazione"
-        ],
         "digcompedu": [
             "DCEdu 6.4"
         ]
@@ -708,11 +640,6 @@
             "DC 4.2"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "informazioni",
-            "comunicazione",
-            "sicurezza"
-        ],
         "digcompedu": [
             "DCEdu 6.1"
         ]
@@ -743,10 +670,6 @@
             "DC 5.3"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "creazione",
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 2.2",
             "DCEdu 3.4"
@@ -779,10 +702,6 @@
             "DC 1.3"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "informazioni",
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 5.3",
             "DCEdu 6.5"
@@ -813,10 +732,6 @@
             "DC 5.1"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "creazione",
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 6.5"
         ]
@@ -844,9 +759,6 @@
             "DC 5.2"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 2.2",
             "DCEdu 6.5"
@@ -883,11 +795,6 @@
             "DC 5.2"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "informazioni",
-            "creazione",
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 2.2",
             "DCEdu 6.5"
@@ -922,10 +829,6 @@
             "DC 5.2"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "informazioni",
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 6.1",
             "DCEdu 6.5"
@@ -964,10 +867,6 @@
             "DC 5.1"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "creazione",
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 6.5"
         ],
@@ -1004,10 +903,6 @@
             "DC 5.1"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "creazione",
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 6.5"
         ],
@@ -1040,10 +935,6 @@
             "DC 5.1"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "creazione",
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 6.5"
         ],
@@ -1079,10 +970,6 @@
             "DC 5.1"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "creazione",
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 6.5"
         ],
@@ -1117,9 +1004,6 @@
             "DC 1.3"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "informazioni"
-        ],
         "digcompedu": [
             "DCEdu 6.5"
         ]
@@ -1148,9 +1032,6 @@
             "DC 5.1"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 6.5"
         ]
@@ -1189,11 +1070,6 @@
             "DC 5.2"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "informazioni",
-            "sicurezza",
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 2.2",
             "DCEdu 6.5"
@@ -1231,11 +1107,6 @@
             "DC 5.2"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "creazione",
-            "problem-solving",
-            "sicurezza"
-        ],
         "digcompedu": [
             "DCEdu 2.2",
             "DCEdu 6.2",
@@ -1270,9 +1141,6 @@
             "DC 5.4"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 1.3",
             "DCEdu 1.4"
@@ -1306,9 +1174,6 @@
             "DC 1.1"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "informazioni"
-        ],
         "digcompedu": [
             "DCEdu 6.1",
             "DCEdu 4.1"
@@ -1340,10 +1205,6 @@
             "DC 3.1"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "comunicazione",
-            "creazione"
-        ],
         "digcompedu": [
             "DCEdu 3.4"
         ]
@@ -1373,9 +1234,6 @@
             "DC 5.4"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 1.4"
         ]
@@ -1404,9 +1262,6 @@
             "DC 5.4"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 1.4"
         ]
@@ -1438,9 +1293,6 @@
             "DC 5.2"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 2.2",
             "DCEdu 6.5"
@@ -1472,9 +1324,6 @@
             "DC 5.2"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 2.2",
             "DCEdu 6.5"
@@ -1506,10 +1355,6 @@
             "DC 5.2"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "creazione",
-            "problem-solving"
-        ],
         "digcompedu": [
             "DCEdu 3.1",
             "DCEdu 4.1",
@@ -1545,9 +1390,6 @@
             "DC 4.2"
         ],
         "digcomp_level": "intermediate",
-        "digcomp_areas": [
-            "sicurezza"
-        ],
         "digcompedu": [
             "DCEdu 6.4"
         ],
@@ -1584,10 +1426,6 @@
             "DC 2.6"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "sicurezza",
-            "comunicazione"
-        ],
         "digcompedu": [
             "DCEdu 6.4"
         ],
@@ -1625,10 +1463,6 @@
             "DC 2.6"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "sicurezza",
-            "comunicazione"
-        ],
         "digcompedu": [
             "DCEdu 6.4"
         ],
@@ -1664,11 +1498,6 @@
             "DC 2.6"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "sicurezza",
-            "informazioni",
-            "comunicazione"
-        ],
         "digcompedu": [
             "DCEdu 6.4"
         ],
@@ -1702,9 +1531,6 @@
             "DC 2.6"
         ],
         "digcomp_level": "foundation",
-        "digcomp_areas": [
-            "sicurezza"
-        ],
         "digcompedu": [
             "DCEdu 6.4"
         ],
