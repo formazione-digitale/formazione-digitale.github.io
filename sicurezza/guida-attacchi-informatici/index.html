@@ -5,18 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mappa degli Attacchi Informatici — Formazione Digitale</title>
   <meta name="description" content="Panoramica delle principali tipologie di attacco informatico: malware, ransomware, DDoS, SQL injection, phishing e social engineering.">
+  <meta name="author" content="Cristiano De Pasquale">
   <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#1F4E79">
   <link rel="canonical" href="https://formazione-digitale.it/sicurezza/guida-attacchi-informatici/">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="dns-prefetch" href="//gc.zgo.at">
   <link rel="dns-prefetch" href="//fonts.googleapis.com">
-  <link rel="manifest" href="/site.webmanifest">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Mappa degli Attacchi Informatici">
   <meta property="og:description" content="Panoramica delle principali tipologie di attacco informatico: malware, ransomware, DDoS, SQL injection, phishing e social engineering.">
   <meta property="og:url" content="https://formazione-digitale.it/sicurezza/guida-attacchi-informatici/">
   <meta property="og:type" content="article">
-
+  <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Formazione Digitale">
+  
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -152,15 +159,18 @@
 <body>
 
 <!-- HEADER -->
-<header class="guide-header" id="guide-header">
-  <div class="guide-header-left">
-    <a href="/sicurezza/" class="guide-back">← Hub Sicurezza</a>
-    <div class="guide-header-sep"></div>
-    <div class="guide-header-title">Attacchi Informatici</div>
+<!-- ════ HEADER ════ -->
+<header class="guide-header">
+  <a class="guide-header-back" href="/">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Formazione Digitale
+  </a>
+  <div class="guide-header-center">Guida agli attacchi informatici</div>
+  <div class="guide-header-right">
+    <button class="hamburger" id="hamburger" aria-label="Apri menu sezioni" aria-expanded="false" aria-controls="guide-sidebar" onclick="toggleSidebar()">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-  <button class="hamburger" id="hamburger" onclick="toggleSidebar()" aria-label="Menu sezioni">
-    <span></span><span></span><span></span>
-  </button>
 </header>
 
 <div class="guide-layout">
