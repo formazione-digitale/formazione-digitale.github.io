@@ -205,16 +205,18 @@
         "emoji": "📋",
         "tags": [
             "project management",
+			"gpo",
             "gpoi",
             "gantt",
             "kanban",
+			"waterfall",
+			"agile",
+			"progetti",
             "progetto",
             "pianificazione",
             "collaborazione",
             "sal",
-            "capitolato",
-            "afm",
-            "rim"
+            "capitolato"
         ],
         "meta": "8 sezioni · ~35 min",
         "description": "Ciclo di vita, Gantt, Kanban board, SAL e Capitolato. Guida completa alla gestione digitale dei progetti per AFM e RIM.",
