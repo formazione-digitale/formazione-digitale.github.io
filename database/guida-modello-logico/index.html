@@ -1,14 +1,57 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modello Logico Relazionale — Formazione Digitale</title>
-  <meta name="description" content="Dal diagramma E-R alle tabelle relazionali: chiavi primarie, chiavi esterne, relazioni 1:N e N:M con esercizi interattivi.">
-  <link rel="stylesheet" href="/css/shared-extended.css?v=1">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modello Logico Relazionale — Dal diagramma E-R alle tabelle · Formazione Digitale</title>
+<meta name="description" content="Dal diagramma E-R alle tabelle relazionali: chiavi primarie, chiavi esterne, relazioni 1:N e N:M con esercizi interattivi. Guida completa per indirizzi AFM e RIM.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#1a1a18">
+<link rel="canonical" href="https://formazione-digitale.it/database/guida-modello-logico/">
+<link rel="icon" type="image/png" href="/img/favicon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="dns-prefetch" href="//gc.zgo.at">
+<meta property="og:title" content="Modello Logico Relazionale · Formazione Digitale">
+<meta property="og:description" content="Dal diagramma E-R alle tabelle relazionali: chiavi primarie, chiavi esterne, relazioni 1:N e N:M.">
+<meta property="og:url" content="https://formazione-digitale.it/database/guida-modello-logico/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Modello Logico Relazionale · Formazione Digitale">
+<meta name="twitter:description" content="Dal diagramma E-R alle tabelle relazionali. Guida completa per AFM e RIM.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Modello Logico Relazionale — Dal diagramma E-R alle tabelle",
+  "description": "Dal diagramma E-R alle tabelle relazionali: chiavi primarie, chiavi esterne, relazioni 1:N e N:M con esercizi interattivi. Guida completa per indirizzi AFM e RIM.",
+  "url": "https://formazione-digitale.it/database/guida-modello-logico/",
+  "inLanguage": "it",
+  "educationalLevel": "Foundation",
+  "author": {
+    "@type": "Person",
+    "name": "Cristiano De Pasquale",
+    "jobTitle": "Docente di Informatica"
+  },
+  "provider": {
+    "@type": "WebSite",
+    "name": "Formazione Digitale",
+    "url": "https://formazione-digitale.it"
+  },
+  "keywords": "modello logico, modello relazionale, diagramma E-R, chiave primaria, chiave esterna, relazioni 1:N, relazioni N:M, normalizzazione, database, basi di dati, AFM, RIM"
+}
+</script>
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- Solo shared-extended — NON caricare shared.css (sistemi incompatibili) -->
+<link rel="stylesheet" href="/css/shared-extended.css?v=1">
+<style>
     /* ── VARIABILI LOCALI ── */
     :root {
       --db-blue:    #1c4f8a;
