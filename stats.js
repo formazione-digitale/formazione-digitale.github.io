@@ -21,6 +21,8 @@ const gcLegacy = [
   { path: '/marketing/guida-marketing',                                       mergeWith: '/marketing/guida-marketing/' },
   { path: '/marketing/bep-tool.html',                                         mergeWith: '/marketing/break-even-point-tool/' },
   { path: '/sicurezza/cybersicurezza-personale/',                             mergeWith: '/sicurezza/pillola-cybersicurezza/' },
+  { path: '/gestione-progetti/guida-gestione-progetti',                       mergeWith: '/project-management/guida-gestione-progetti/' },
+  { path: '/marketing/kanban-tool',                                           mergeWith: '/project-management/kanban-tool/' },
 ];
 
 // ── Non modificare da qui in poi ────────────────────────────────
