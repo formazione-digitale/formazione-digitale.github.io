@@ -528,6 +528,49 @@ main { max-width: 1040px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
 /* ── CARD-AREA WIDE — hub di navigazione (Database, Programmazione) ──
    Escluse deliberatamente da .card: non hanno data-cat/data-tags,
    quindi filterAll() e updateStats() le ignorano completamente. ── */
+
+/* ── PERCORSI DIDATTICI (details collassabile) ── */
+.percorsi-details {
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.percorsi-summary {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .85rem 1.25rem;
+  cursor: pointer;
+  background: var(--gray-light);
+  user-select: none;
+  list-style: none;
+}
+.percorsi-summary::-webkit-details-marker { display: none; }
+.percorsi-summary:hover { background: #eef2f8; }
+.percorsi-summary-icon { font-size: 1.1rem; flex-shrink: 0; }
+.percorsi-summary-title {
+  font-weight: 700;
+  color: var(--blue-dark);
+  font-size: .95rem;
+  flex-shrink: 0;
+}
+.percorsi-summary-sub { font-size: .8rem; color: var(--gray-mid); }
+.percorsi-summary-arrow {
+  margin-left: auto;
+  font-size: 1.3rem;
+  color: var(--blue-mid);
+  transition: transform .2s;
+  font-weight: 700;
+  line-height: 1;
+}
+.percorsi-details[open] .percorsi-summary-arrow { transform: rotate(90deg); }
+.percorsi-details .card-area-wrap {
+  padding: 1rem 1rem .25rem;
+  border-top: 1px solid var(--blue-light);
+  margin-bottom: 0;
+}
+
 .card-area-wrap { margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.85rem; }
 .card-area {
   display: flex; align-items: stretch;
@@ -547,12 +590,15 @@ main { max-width: 1040px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
   font-size: .76rem; font-weight: 700; padding: .35rem .9rem;
   border-radius: 20px; white-space: nowrap; flex-shrink: 0;
 }
-.card-area-db   .card-area-band  { background: #d64f2a; }
-.card-area-db   .card-area-badge { background: #fde8e0; color: #d64f2a; }
-.card-area-prog .card-area-band  { background: #7c5cfc; }
-.card-area-prog .card-area-badge { background: #ece6ff; color: #7c5cfc; }
-.card-area-sic  .card-area-band  { background: #1F4E79; }
-.card-area-sic  .card-area-badge { background: #D6E8F7; color: #1F4E79; }
+.card-area-db       .card-area-band  { background: #d64f2a; }
+.card-area-db       .card-area-badge { background: #fde8e0; color: #d64f2a; }
+.card-area-prog     .card-area-band  { background: #7c5cfc; }
+.card-area-prog     .card-area-badge { background: #ece6ff; color: #7c5cfc; }
+.card-area-sistemi  .card-area-band  { background: #1a7a6e; }
+.card-area-sistemi  .card-area-badge { background: #d4f0ed; color: #1a7a6e; }
+.card-area-sic      .card-area-band  { background: #1F4E79; }
+.card-area-sic    .card-area-badge { background: #D6E8F7; color: #1F4E79; }
+
 
 /* ── TIPO 1 · CARD-FEATURED ─────────────────────────────── */
 .card-featured {
@@ -985,15 +1031,16 @@ body.modal-open { overflow: hidden; }
 
   <div id="no-results">Nessuna risorsa trovata per questa ricerca.</div>
 
-  <!-- ── GUIDE ─────────────────────────────────────────────── -->
-  <div id="section-guide">
-    <div class="sec-header" id="guide">
-      <div class="sec-label guides">Guide complete</div>
-      <div class="sec-count" id="label-count-guide">1 risorsa</div>
-    </div>
-
-    <!-- ── AREE TEMATICHE — hub di navigazione, escluse da filtro/conteggio ── -->
-    <div class="card-area-wrap">
+     <!-- ── AREE TEMATICHE — hub di navigazione, escluse da filtro/conteggio ── -->
+    <details class="percorsi-details" id="percorsi-details">
+      <summary class="percorsi-summary">
+        <span class="percorsi-summary-icon">🗺</span>
+        <span class="percorsi-summary-title">Percorsi didattici completi</span>
+        <span class="percorsi-summary-sub">4 aree tematiche con percorsi guidati - clicka per i dettagli</span>
+        <span class="percorsi-summary-arrow">›</span>
+      </summary>
+      
+      <div class="card-area-wrap">
       <a href="/database/" class="card-area card-area-db">
         <div class="card-area-band"></div>
         <div class="card-area-body">
@@ -1002,19 +1049,18 @@ body.modal-open { overflow: hidden; }
             <div class="card-area-title">Database Relazionali</div>
             <div class="card-area-desc">Modello E-R, modello logico, query in LibreOffice Base. Dalla teoria alla pratica.</div>
           </div>
-          <div class="card-area-badge">3 guide →</div>
+          <div class="card-area-badge">3 risorse →</div>
         </div>
       </a>
-
       <a href="/programmazione/" class="card-area card-area-prog">
         <div class="card-area-band"></div>
         <div class="card-area-body">
           <div class="card-area-icon">💻</div>
           <div class="card-area-text">
             <div class="card-area-title">Programmazione C++</div>
-            <div class="card-area-desc">Algoritmi di ordinamento e ricerca con visualizzatore animato. Per terzo/quarto SIA e Programmazione I.</div>
+            <div class="card-area-desc">Strutture dati, gestione file e algoritmi in C++ con visualizzatori interattivi. Per terzo e quarto anno ITIS/SIA.</div>
           </div>
-          <div class="card-area-badge">2 guide →</div>
+          <div class="card-area-badge">5 risorse →</div>
         </div>
       </a>
       <a href="/sistemi/" class="card-area card-area-sistemi">
@@ -1022,13 +1068,12 @@ body.modal-open { overflow: hidden; }
         <div class="card-area-body">
           <div class="card-area-icon">⚙️</div>
           <div class="card-area-text">
-            <div class="card-area-title">Sistemi Numerici e Computazionali</div>
-            <div class="card-area-desc">10 risorse interattive: architettura PC, codifica binaria, aritmetica, dimensionamento file, campionamento, logica booleana, conversioni, parsing, scheduling, Bash.</div>
+            <div class="card-area-title">Sistemi e Infrastrutture Digitali</div>
+            <div class="card-area-desc">Risorse interattive su architettura PC, sistemi numerici, logica booleana, programmazione Bash e algoritmi di sistema.</div>
           </div>
           <div class="card-area-badge">10 risorse →</div>
         </div>
       </a>
-
       <a href="/sicurezza/" class="card-area card-area-sic">
         <div class="card-area-band"></div>
         <div class="card-area-body">
@@ -1041,6 +1086,15 @@ body.modal-open { overflow: hidden; }
         </div>
       </a>
 
+    </div>
+    </details>
+
+  <!-- ── GUIDE ─────────────────────────────────────────────── -->
+  <div id="section-guide">
+
+    <div class="sec-header" id="guide">
+      <div class="sec-label guides">Guide didattiche</div>
+      <div class="sec-count" id="label-count-guide">1 risorsa</div>
     </div>
 
     <div class="cards cards-2" id="cards-guide">
@@ -1118,7 +1172,7 @@ body.modal-open { overflow: hidden; }
 
   <div class="card card-active" data-cat="guide" data-tags="project management gpoi gantt kanban progetto pianificazione collaborazione afm rim">
       <div class="card-badge-strip badge-blue"></div>
-      <a href="/project-management/guida-gestione-progetti/" target="_blank">
+      <a href="/project-management/guida-gestione-progetti/">
         <div class="card-body">
           <div class="card-icon">📋</div>
           <div class="card-category cat-guide">Guida completa</div>
