@@ -1,5 +1,5 @@
 Elenco del percorso delle cartelle per il volume Acer
-Numero di serie del volume: 000000EB-544D:3F7C
+Numero di serie del volume: 0000008D-544D:3F7C
 C:.
 |   .gitignore
 |   .nojekyll
@@ -63,7 +63,6 @@ C:.
 |   |   
 |   +---guida-database
 |   |   |   index.html
-|   |   |   index_OLD.html
 |   |   |   
 |   |   +---download
 |   |   |       database_intro.pdf
@@ -164,12 +163,20 @@ C:.
 |           
 +---programmazione
 |   |   index.html
-|   |   programmazione_index.html
 |   |   
 |   +---algoritmi-ordinamento
 |   |       index.html
 |   |       
-|   \---algoritmi-ricerca
+|   +---algoritmi-ricerca
+|   |       index.html
+|   |       
+|   +---gestione-file
+|   |       index.html
+|   |       
+|   +---strutture-dati-dinamiche
+|   |       index.html
+|   |       
+|   \---strutture-dati-statiche
 |           index.html
 |           
 +---project-management
@@ -212,6 +219,9 @@ C:.
 +---sicurezza
 |   |   index.html
 |   |   
+|   +---guida-attacchi-informatici
+|   |       index.html
+|   |       
 |   +---guida-autenticazione
 |   |       index.html
 |   |       
@@ -221,7 +231,6 @@ C:.
 |   +---guida-cybersicurezza
 |   |       index.html
 |   |       
-|   +---guida-minacce-informatiche
 |   +---guida-piano-emergenza
 |   |       index.html
 |   |       
@@ -250,7 +259,6 @@ C:.
 |   |       index.html
 |   |       
 |   +---bash-programming
-|   |       index-.html
 |   |       index.html
 |   |       lab_bash.zip
 |   |       
@@ -258,7 +266,6 @@ C:.
 |   |       index.html
 |   |       
 |   +---conversioni-di-base
-|   |       conversioni-di-base.index.html
 |   |       index.html
 |   |       
 |   +---dimensionamento-files
@@ -271,5 +278,6 @@ C:.
 |           index.html
 |           
 \---stats
+        index-.html
         index.html
         

@@ -205,13 +205,13 @@
         "emoji": "📋",
         "tags": [
             "project management",
-			"gpo",
+            "gpo",
             "gpoi",
             "gantt",
             "kanban",
-			"waterfall",
-			"agile",
-			"progetti",
+            "waterfall",
+            "agile",
+            "progetti",
             "progetto",
             "pianificazione",
             "collaborazione",
@@ -1269,6 +1269,115 @@
         ]
     },
     {
+        "path": "/programmazione/strutture-dati-statiche/",
+        "label": "Strutture Dati Statiche in C++",
+        "short": "Strutture Statiche",
+        "cat": "guide",
+        "emoji": "🏛",
+        "tags": [
+            "c++",
+            "array",
+            "matrice",
+            "struct",
+            "stack",
+            "coda",
+            "strutture dati",
+            "allocazione statica",
+            "programmazione",
+            "itis",
+            "sia"
+        ],
+        "meta": "7 sezioni · 4 visualizzatori · 3° anno ITIS/SIA",
+        "description": "Array, matrici, struct, stack e coda su array in C++. Visualizzatori interattivi e codice commentato riga per riga.",
+        "featured": false,
+        "active": true,
+        "hub": "/programmazione/",
+        "order": 1,
+        "digcomp": [
+            "DC 5.1",
+            "DC 5.2"
+        ],
+        "digcomp_level": "foundation",
+        "digcompedu": [
+            "DCEdu 2.2",
+            "DCEdu 6.5"
+        ]
+    },
+    {
+        "path": "/programmazione/strutture-dati-dinamiche/",
+        "label": "Strutture Dati Dinamiche in C++",
+        "short": "Strutture Dinamiche",
+        "cat": "guide",
+        "emoji": "🔗",
+        "tags": [
+            "c++",
+            "puntatori",
+            "lista concatenata",
+            "new",
+            "delete",
+            "strutture dati dinamiche",
+            "stack con nodi",
+            "coda con nodi",
+            "heap",
+            "programmazione",
+            "itis",
+            "sia"
+        ],
+        "meta": "5 sezioni · 3 visualizzatori step-by-step · 4° anno ITIS/SIA",
+        "description": "Puntatori, lista concatenata con inserimento ordinato, stack e coda con nodi in C++. Ogni operazione mostrata passo per passo.",
+        "featured": false,
+        "active": true,
+        "hub": "/programmazione/",
+        "order": 2,
+        "digcomp": [
+            "DC 5.1",
+            "DC 5.2"
+        ],
+        "digcomp_level": "intermediate",
+        "digcompedu": [
+            "DCEdu 2.2",
+            "DCEdu 6.5"
+        ]
+    },
+    {
+        "path": "/programmazione/gestione-file/",
+        "label": "Gestione File in C++",
+        "short": "Gestione File",
+        "cat": "guide",
+        "emoji": "📂",
+        "tags": [
+            "c++",
+            "file",
+            "fstream",
+            "ofstream",
+            "ifstream",
+            "file di testo",
+            "file binari",
+            "file di record",
+            "seekg",
+            "seekp",
+            "accesso diretto",
+            "programmazione",
+            "itis",
+            "sia"
+        ],
+        "meta": "4 sezioni · 2 visualizzatori · 4° anno ITIS/SIA",
+        "description": "File di testo, file binari e file di record in C++. Accesso diretto per posizione con seekg/seekp e gestione degli errori.",
+        "featured": false,
+        "active": true,
+        "hub": "/programmazione/",
+        "order": 3,
+        "digcomp": [
+            "DC 5.1",
+            "DC 5.2"
+        ],
+        "digcomp_level": "intermediate",
+        "digcompedu": [
+            "DCEdu 2.2",
+            "DCEdu 6.5"
+        ]
+    },
+    {
         "path": "/programmazione/algoritmi-ordinamento/",
         "label": "Algoritmi di Ordinamento in C++",
         "short": "Algoritmi Ordinamento",
@@ -1289,7 +1398,7 @@
         "featured": false,
         "active": true,
         "hub": "/programmazione/",
-        "order": 1,
+        "order": 4,
         "digcomp": [
             "DC 5.1",
             "DC 5.2"
@@ -1320,7 +1429,7 @@
         "featured": false,
         "active": true,
         "hub": "/programmazione/",
-        "order": 2,
+        "order": 5,
         "digcomp": [
             "DC 5.1",
             "DC 5.2"

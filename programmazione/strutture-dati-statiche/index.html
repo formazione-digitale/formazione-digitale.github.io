@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strutture Dati Statiche in C++ — Formazione Digitale</title>
+  <meta name="description" content="Array, matrici, struct, stack e coda in C++: allocazione statica, codice commentato e visualizzatori interattivi. Terzo anno SIA.">
+  <meta name="author" content="Cristiano De Pasquale">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://formazione-digitale.it/programmazione/strutture-dati-statiche/">
+  <link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="//gc.zgo.at">
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#7c5cfc">
+  <meta property="og:title" content="Strutture Dati Statiche in C++ — Formazione Digitale">
+  <meta property="og:description" content="Array, matrici, struct, stack e coda in C++ con visualizzatori interattivi. Gratis.">
+  <meta property="og:url" content="https://formazione-digitale.it/programmazione/strutture-dati-statiche/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Formazione Digitale">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Strutture Dati Statiche in C++ — Formazione Digitale">
+  <meta name="twitter:description" content="Array, matrici, struct, stack e coda in C++ con visualizzatori interattivi.">
+  <meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"LearningResource","name":"Strutture Dati Statiche in C++","description":"Array, matrici, struct, stack e coda su array in C++. Teoria, codice commentato e visualizzatori interattivi.","url":"https://formazione-digitale.it/programmazione/strutture-dati-statiche/","inLanguage":"it","educationalLevel":"beginner","teaches":["Array","Matrici","Struct","Stack","Coda","C++"],"author":{"@type":"Person","name":"Cristiano De Pasquale"},"publisher":{"@type":"Organization","name":"Formazione Digitale","url":"https://formazione-digitale.it"},"isPartOf":{"@type":"WebSite","name":"Formazione Digitale","url":"https://formazione-digitale.it"}}
+  </script>
+  <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/shared-extended.css?v=1">
+  <style>
+    :root{--prog-bg:#0f1117;--prog-surface:#1a1d27;--prog-card:#21253a;--prog-border:#2e3350;--prog-accent:#7c5cfc;--prog-accent2:#56cfb2;--prog-accent3:#f9a03f;--prog-red:#e05c5c;--prog-text:#d4d8f0;--prog-muted:#7a7f9a;--prog-code-bg:#131620;--kw-type:#79b8ff;--kw-keyword:#f97583;--kw-comment:#6a737d;--kw-string:#9ecbff;--kw-number:#b392f0;--kw-func:#56cfb2}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Sora',sans-serif;background:var(--prog-bg);color:var(--prog-text);line-height:1.75}
+    header{background:var(--prog-surface);border-bottom:3px solid var(--prog-accent);padding:2.5rem 2rem 2rem;position:relative;overflow:hidden}
+    header::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:var(--prog-accent);opacity:.07;pointer-events:none}
+    .header-back-link{display:inline-flex;align-items:center;gap:5px;font-size:.78rem;color:var(--prog-muted);text-decoration:none;transition:color .2s;position:absolute;top:1rem;left:1.5rem}
+    .header-back-link:hover{color:var(--prog-text)}
+    .header-badge{display:inline-block;font-family:'Space Mono',monospace;font-size:.68rem;background:var(--prog-accent);color:#fff;padding:3px 10px;border-radius:3px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+    header h1{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:700;letter-spacing:-.02em;line-height:1.15;color:#fff}
+    header h1 span{color:var(--prog-accent)}
+    header p{margin-top:.75rem;color:var(--prog-muted);font-size:.95rem;max-width:620px}
+    .header-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.25rem}
+    .header-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:4px 12px;border-radius:20px;font-family:'Space Mono',monospace;font-size:.72rem;color:var(--prog-muted)}
+    .toc-wrap{position:sticky;top:0;z-index:100;background:#1a1a18;border-bottom:3px solid var(--prog-accent)}
+    nav.toc{padding:.7rem 1.5rem;display:flex;flex-wrap:wrap;gap:.25rem;align-items:center;justify-content:center;max-width:980px;margin:0 auto}
+    nav.toc a{font-size:.82rem;font-family:'Sora',sans-serif;font-weight:500;color:#aaa9a0;text-decoration:none;padding:5px 13px;border-radius:20px;border:1px solid transparent;transition:all .18s;white-space:nowrap}
+    nav.toc a:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2)}
+    nav.toc a.active{background:var(--prog-accent);color:#fff;border-color:var(--prog-accent);font-weight:700}
+    @media(max-width:600px){nav.toc{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav.toc::-webkit-scrollbar{display:none}}
+    main{max-width:980px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+    section{margin-bottom:4.5rem;scroll-margin-top:70px}
+    .section-label{font-family:'Space Mono',monospace;font-size:.82rem;font-weight:700;color:var(--prog-accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.5rem}
+    h2{font-size:1.65rem;font-weight:700;color:#fff;letter-spacing:-.02em;border-bottom:2px solid var(--prog-border);padding-bottom:.6rem;margin-bottom:1.5rem}
+    h3{font-size:1.1rem;font-weight:600;color:var(--prog-accent2);margin:2rem 0 .8rem}
+    p{margin-bottom:1rem;color:var(--prog-text);font-size:.97rem;line-height:1.85}
+    code{font-family:'Space Mono',monospace;font-size:.85em;color:var(--prog-accent2)}
+    .box{border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0;font-size:.92rem;border-left:3px solid;line-height:1.75}
+    .box-info{background:rgba(86,207,178,.08);border-color:var(--prog-accent2)}
+    .box-warn{background:rgba(249,160,63,.08);border-color:var(--prog-accent3)}
+    .box-tip{background:rgba(124,92,252,.08);border-color:var(--prog-accent)}
+    .box-red{background:rgba(224,92,92,.08);border-color:var(--prog-red)}
+    .box strong{display:block;margin-bottom:.35rem;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;opacity:.8}
+    .code-block{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:8px;margin:1.5rem 0;overflow:hidden}
+    .code-header{background:var(--prog-card);padding:.5rem 1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--prog-border)}
+    .code-lang{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--prog-muted);letter-spacing:.1em;text-transform:uppercase}
+    .code-dots{display:flex;gap:5px}
+    .code-dot{width:10px;height:10px;border-radius:50%}
+    .dot-r{background:#e05c5c}.dot-y{background:#f9a03f}.dot-g{background:#56cfb2}
+    pre{padding:1.25rem 1.5rem;overflow-x:auto;font-family:'Space Mono',monospace;font-size:.83rem;line-height:1.65;tab-size:4;color:var(--prog-text)}
+    .kw{color:var(--kw-keyword);font-weight:700}.tp{color:var(--kw-type)}.fn{color:var(--kw-func)}.cm{color:var(--kw-comment);font-style:italic}.nm{color:var(--kw-number)}.st{color:var(--kw-string)}.pp{color:#ff9f43}
+    /* families */
+    .families-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.25rem 0}
+    .family-card{background:var(--prog-card);border:1px solid var(--prog-border);border-radius:8px;padding:1rem 1.25rem}
+    .family-card.active-family{border-color:var(--prog-accent);border-left:3px solid var(--prog-accent)}
+    .family-card h4{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+    .family-card p{font-size:.82rem;color:var(--prog-muted);margin:0;line-height:1.6}
+    @media(max-width:600px){.families-grid{grid-template-columns:1fr}}
+    /* adt table */
+    .adt-table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-size:.88rem;border-radius:8px;overflow:hidden;border:1px solid var(--prog-border)}
+    .adt-table th{background:var(--prog-card);color:var(--prog-accent);padding:.65rem 1rem;text-align:left;font-family:'Space Mono',monospace;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;border-bottom:2px solid var(--prog-border)}
+    .adt-table td{padding:.6rem 1rem;border-bottom:1px solid var(--prog-border);vertical-align:middle;color:var(--prog-text)}
+    .adt-table tr:last-child td{border-bottom:none}
+    .adt-table tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+    .adt-table td:first-child{font-family:'Space Mono',monospace;color:var(--prog-accent2);font-weight:700;white-space:nowrap}
+    /* tool */
+    .tool-box{background:var(--prog-surface);border:1px solid var(--prog-border);border-radius:12px;overflow:hidden;margin:2rem 0}
+    .tool-header{background:var(--prog-card);padding:.75rem 1.25rem;border-bottom:1px solid var(--prog-border);display:flex;align-items:center;gap:.75rem}
+    .tool-title{font-family:'Space Mono',monospace;font-size:.8rem;font-weight:700;color:var(--prog-accent2)}
+    .tool-subtitle{font-size:.78rem;color:var(--prog-muted)}
+    .tool-body{padding:1.5rem}
+    .tool-msg{font-family:'Space Mono',monospace;font-size:.82rem;color:var(--prog-accent2);padding:.6rem 1.25rem;border-top:1px solid var(--prog-border);background:rgba(0,0,0,.1);min-height:2.4rem}
+    .tool-hint{font-size:.78rem;color:var(--prog-muted);margin-top:.75rem;font-style:italic}
+    .tool-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:6px;border:1px solid var(--prog-border);background:var(--prog-surface);color:var(--prog-text);font-family:'Sora',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .18s}
+    .tool-btn:hover{border-color:var(--prog-accent);color:var(--prog-accent)}
+    .tool-btn:disabled{opacity:.35;cursor:not-allowed}
+    .tool-btn.primary{background:var(--prog-accent);border-color:var(--prog-accent);color:#fff}
+    .tool-btn.primary:hover{background:#6a4ee0}
+    .tool-btn.danger{background:rgba(224,92,92,.1);border-color:var(--prog-red);color:var(--prog-red)}
+    .tool-btn.danger:hover{background:rgba(224,92,92,.2)}
+    .tool-input{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:6px;color:var(--prog-accent2);font-family:'Space Mono',monospace;font-size:.95rem;font-weight:700;text-align:center;padding:6px 10px;transition:border-color .18s}
+    .tool-input:focus{outline:none;border-color:var(--prog-accent)}
+    /* vettore visivo */
+    .vv-gen-row{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-bottom:1.25rem}
+    .vv-gen-label{font-size:.85rem;color:var(--prog-text)}
+    .vv-wrapper{overflow-x:auto;padding-bottom:.25rem}
+    .vv-indices-row,.vv-cells-row{display:flex;gap:0;min-width:min-content}
+    .vv-idx-label{width:60px;text-align:center;font-family:'Space Mono',monospace;font-size:.72rem;color:var(--prog-muted);padding-bottom:4px;flex-shrink:0}
+    .vv-cell{width:60px;height:60px;background:var(--prog-card);border:2px solid var(--prog-border);border-right:none;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:1.05rem;font-weight:700;color:var(--prog-text);cursor:pointer;transition:all .2s;user-select:none;flex-shrink:0}
+    .vv-cell:last-child{border-right:2px solid var(--prog-border)}
+    .vv-cell:hover{background:rgba(124,92,252,.15);border-color:var(--prog-accent);color:#fff;position:relative;z-index:1}
+    .vv-cell.active{background:rgba(86,207,178,.18);border:2px solid var(--prog-accent2);color:var(--prog-accent2);transform:translateY(-4px);box-shadow:0 8px 20px rgba(86,207,178,.15);position:relative;z-index:2}
+    .vv-cell.editing{background:rgba(86,207,178,.10);border:2px solid var(--prog-accent2);padding:0;transform:translateY(-4px)}
+    .vv-cell-input{width:100%;height:100%;background:transparent;border:none;color:var(--prog-accent2);font-family:'Space Mono',monospace;font-size:1.05rem;font-weight:700;text-align:center;outline:none;-webkit-appearance:none;-moz-appearance:textfield}
+    .vv-cell-input::-webkit-inner-spin-button,.vv-cell-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+    /* copy button */
+    .copy-btn{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--prog-muted);background:none;border:1px solid var(--prog-border);border-radius:4px;padding:2px 8px;cursor:pointer;transition:all .18s;white-space:nowrap}
+    .copy-btn:hover{color:var(--prog-accent2);border-color:var(--prog-accent2)}
+    .copy-btn.copied{color:var(--prog-accent2);border-color:var(--prog-accent2)}
+    .vv-controls{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:1.25rem}
+    .vv-input-group{display:flex;align-items:center;gap:.4rem;font-family:'Space Mono',monospace;font-size:1rem;color:var(--prog-text)}
+    .vv-result{font-family:'Space Mono',monospace;font-size:1.05rem;padding:6px 14px;background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:6px;min-width:200px;text-align:center}
+    .vv-err{font-family:'Space Mono',monospace;font-size:.8rem;color:var(--prog-red);display:none;margin-top:.4rem}
+    /* matrice */
+    .grid-gen-row{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-bottom:1.25rem}
+    .grid2d-wrapper{overflow-x:auto}
+    .grid2d-col-header,.grid2d-row{display:flex;gap:0}
+    .grid2d-corner{width:52px;height:36px;flex-shrink:0}
+    .grid2d-col-label{width:68px;height:32px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:.7rem;color:var(--prog-muted);flex-shrink:0}
+    .grid2d-row-label{width:52px;height:54px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:.7rem;color:var(--prog-muted);flex-shrink:0}
+    .grid2d-cell{width:68px;height:54px;background:var(--prog-card);border:1px solid var(--prog-border);border-right:none;border-bottom:none;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:.9rem;font-weight:700;color:var(--prog-text);cursor:pointer;transition:all .18s;flex-shrink:0}
+    .grid2d-cell.last-col{border-right:1px solid var(--prog-border)}
+    .grid2d-cell.last-row{border-bottom:1px solid var(--prog-border)}
+    .grid2d-cell:hover{background:rgba(124,92,252,.1);border-color:var(--prog-accent)}
+    .grid2d-cell.active{background:rgba(86,207,178,.25);color:var(--prog-accent2);border:2px solid var(--prog-accent2)!important}
+    .grid2d-cell.hi-row{background:rgba(86,207,178,.07)}
+    .grid2d-cell.hi-col{background:rgba(124,92,252,.07)}
+    .grid2d-info{margin-top:1rem;font-family:'Space Mono',monospace;font-size:1rem;padding:8px 16px;background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:6px;min-height:2.2rem;color:var(--prog-text)}
+    .grid2d-info .gi-row{color:var(--prog-accent2)}.grid2d-info .gi-col{color:var(--prog-accent3)}.grid2d-info .gi-val{color:#fff;font-size:1.1rem}
+    /* struct card */
+    .struct-record-card{background:var(--prog-card);border:1px solid var(--prog-border);border-radius:8px;overflow:hidden;margin:1.25rem 0;max-width:420px}
+    .src-header{background:var(--prog-surface);padding:.55rem 1rem;border-bottom:1px solid var(--prog-border);font-family:'Space Mono',monospace;font-size:.75rem;color:var(--prog-accent);letter-spacing:.08em}
+    .src-field{display:grid;grid-template-columns:90px 110px 1fr;padding:.5rem 1rem;border-bottom:1px solid var(--prog-border);font-family:'Space Mono',monospace;font-size:.82rem}
+    .src-field:last-child{border-bottom:none}
+    .src-type{color:var(--kw-type)}.src-name{color:var(--prog-text);font-weight:600}.src-val{color:var(--prog-accent3)}
+    /* array di struct table */
+    .as-table-wrap{overflow-x:auto;margin:1.25rem 0}
+    .as-table{border-collapse:collapse;font-family:'Space Mono',monospace;font-size:.82rem;border:1px solid var(--prog-border);border-radius:8px;overflow:hidden;min-width:400px}
+    .as-table th{background:var(--prog-card);color:var(--prog-accent);padding:.6rem 1rem;text-align:left;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;border-bottom:2px solid var(--prog-border)}
+    .as-table td{padding:.55rem 1rem;border-bottom:1px solid var(--prog-border);color:var(--prog-text)}
+    .as-table tr:last-child td{border-bottom:none}
+    .as-table tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+    .as-table .as-idx{color:var(--prog-muted);font-weight:700}
+    .as-table-caption{font-size:.78rem;color:var(--prog-muted);margin-top:.5rem;font-style:italic}
+    /* stack */
+    .stack-layout{display:flex;gap:2.5rem;align-items:flex-start;flex-wrap:wrap}
+    .stack-visual-col{flex:0 0 auto}.stack-info-col{flex:1;min-width:200px}
+    .stack-label-top{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--prog-accent2);text-align:center;margin-bottom:4px}
+    .stack-label-base{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--prog-muted);margin-top:4px;text-align:center}
+    .stack-visual{display:flex;flex-direction:column;gap:0;width:180px}
+    .stack-slot{height:52px;background:var(--prog-card);border:2px solid var(--prog-border);border-bottom:none;display:flex;align-items:center;justify-content:space-between;padding:0 .9rem;transition:background .2s,border-color .2s;position:relative}
+    .stack-slot:last-child{border-bottom:2px solid var(--prog-border)}
+    .stack-slot.filled{background:rgba(124,92,252,.07)}
+    .stack-slot.is-top{background:rgba(86,207,178,.14);border-color:var(--prog-accent2);border-bottom:2px solid var(--prog-accent2)}
+    .stack-slot-val{font-family:'Space Mono',monospace;font-size:1.1rem;font-weight:700;color:var(--prog-text);min-width:2ch}
+    .stack-slot-idx{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--prog-muted)}
+    .stack-top-arrow{position:absolute;right:-52px;font-family:'Space Mono',monospace;font-size:.72rem;color:var(--prog-accent2);white-space:nowrap;display:none;top:50%;transform:translateY(-50%)}
+    .stack-slot.is-top .stack-top-arrow{display:inline}
+    .stack-controls{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-bottom:1rem}
+    .stack-state{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:6px;padding:.75rem 1rem;font-family:'Space Mono',monospace;font-size:.82rem;color:var(--prog-text);line-height:2}
+    .stack-state span{color:var(--prog-accent2)}
+    /* coda */
+    .coda-pointers{display:flex;gap:0;overflow-x:auto}
+    .coda-ptr{min-width:60px;height:24px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;color:transparent;flex-shrink:0}
+    .coda-ptr.show-head{color:var(--prog-accent2)}.coda-ptr.show-tail{color:var(--prog-accent3)}
+    .coda-visual{display:flex;gap:0;overflow-x:auto;padding-bottom:.5rem}
+    .coda-slot{min-width:60px;height:70px;background:var(--prog-card);border:2px solid var(--prog-border);border-right:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:0 .4rem;transition:background .2s,border-color .2s;flex-shrink:0}
+    .coda-slot:last-child{border-right:2px solid var(--prog-border)}
+    .coda-slot.filled{background:rgba(124,92,252,.07)}
+    .coda-slot.is-head{background:rgba(86,207,178,.14);border-top-color:var(--prog-accent2);border-left-color:var(--prog-accent2);border-bottom-color:var(--prog-accent2);border-right:2px solid var(--prog-accent2)}
+    .coda-slot.is-tail{background:rgba(249,160,63,.12);border-top-color:var(--prog-accent3);border-left-color:var(--prog-accent3);border-bottom-color:var(--prog-accent3);border-right:2px solid var(--prog-accent3)}
+    .coda-slot.head-tail{border-color:var(--prog-accent2);background:rgba(86,207,178,.18)}
+    .coda-slot-val{font-family:'Space Mono',monospace;font-size:1.05rem;font-weight:700;color:var(--prog-text);min-height:1.3em}
+    .coda-slot-idx{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--prog-muted)}
+    .coda-controls{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-top:1rem;margin-bottom:.75rem}
+    .coda-state{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:6px;padding:.75rem 1rem;font-family:'Space Mono',monospace;font-size:.82rem;color:var(--prog-text);line-height:2;margin-top:.75rem}
+    .coda-state span{color:var(--prog-accent3)}
+    .coda-note{font-size:.76rem;color:var(--prog-muted);font-style:italic;margin-top:.5rem}
+    footer{text-align:center;padding:2.5rem 1rem;color:var(--prog-muted);font-size:.85rem;border-top:1px solid var(--prog-border);margin-top:2rem}
+    footer a{color:var(--prog-accent);text-decoration:none}
+    footer a:hover{text-decoration:underline}
+    .back-to-top{position:fixed;bottom:1.5rem;right:1.5rem;width:40px;height:40px;border-radius:50%;background:var(--prog-accent);color:#fff;border:none;font-size:1.1rem;cursor:pointer;opacity:0;transform:translateY(10px);transition:all .25s;z-index:200}
+    .back-to-top.visible{opacity:1;transform:translateY(0)}
+    /* page-nav */
+    .page-nav{display:flex;gap:1rem;align-items:center;margin-top:1rem;font-size:.8rem;flex-wrap:wrap}
+    .page-nav a{color:var(--prog-accent);text-decoration:none;border:1px solid rgba(124,92,252,.3);padding:4px 12px;border-radius:20px;transition:all .18s}
+    .page-nav a:hover{background:rgba(124,92,252,.15);border-color:var(--prog-accent)}
+    .page-nav-sep{color:var(--prog-border)}
+    /* header SVG decorativo */
+    .header-deco-svg{position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);opacity:.42;pointer-events:none}
+    @media(max-width:780px){.header-deco-svg{display:none}}
+    /* array di struct visivo */
+    .as-vis-wrap{overflow-x:auto;margin:1.25rem 0}
+    .as-vis-top{display:flex;gap:0;margin-bottom:4px}
+    .as-vis-idx-lbl{width:130px;flex-shrink:0;text-align:center;font-family:'Space Mono',monospace;font-size:.72rem;color:var(--prog-muted)}
+    .as-vis-cells{display:flex;gap:0}
+    .as-vis-cell{width:130px;height:130px;flex-shrink:0;background:var(--prog-card);border:2px solid var(--prog-border);border-right:none;display:flex;flex-direction:column;overflow:hidden}
+    .as-vis-cells .as-vis-cell:last-child{border-right:2px solid var(--prog-border)}
+    .as-vis-empty{background:transparent;border-style:dashed;opacity:.5;align-items:center;justify-content:center}
+    .as-empty-lbl{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--prog-muted);font-style:italic;text-align:center;padding:.5rem}
+    .as-field{flex:1;display:flex;flex-direction:column;justify-content:center;padding:.2rem .55rem;border-bottom:1px solid var(--prog-border)}
+    .as-field:last-child{border-bottom:none}
+    .as-fname{font-family:'Space Mono',monospace;font-size:.58rem;color:var(--prog-muted);letter-spacing:.04em}
+    .as-fval{font-family:'Space Mono',monospace;font-size:.85rem;font-weight:700;color:var(--prog-text);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .as-table-caption{font-size:.78rem;color:var(--prog-muted);margin-top:1rem;font-style:italic}
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="/programmazione/" class="header-back-link">&#x2190; Programmazione</a>
+  <div class="header-badge">C++ &middot; Strutture Dati</div>
+  <h1>Strutture Dati <span>Statiche</span></h1>
+  <p>Array, matrici, struct, stack e coda su array &mdash; tutta l&apos;allocazione statica in C++ con codice commentato e visualizzatori interattivi.</p>
+  <div class="header-pills">
+    <span class="header-pill">&#127891; 3&deg; anno ITIS/SIA</span>
+    <span class="header-pill">&#127959; Allocazione statica</span>
+    <span class="header-pill">&#9200; ~60 min</span>
+    <span class="header-pill">&#128295; 4 visualizzatori</span>
+  </div>
+  <div class="page-nav">
+    <a href="/programmazione/strutture-dati-dinamiche/">&#8594; Strutture Dinamiche</a>
+  </div>
+  <!-- SVG decorativo: array 1D con una cella evidenziata -->
+  <svg class="header-deco-svg" viewBox="0 0 252 90" width="340" height="120" xmlns="http://www.w3.org/2000/svg">
+    <!-- indici -->
+    <text x="22"  y="13" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="9" text-anchor="middle">[0]</text>
+    <text x="70"  y="13" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="9" text-anchor="middle">[1]</text>
+    <text x="118" y="13" fill="#56cfb2" font-family="Space Mono,monospace" font-size="9" text-anchor="middle">[2]</text>
+    <text x="166" y="13" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="9" text-anchor="middle">[3]</text>
+    <text x="214" y="13" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="9" text-anchor="middle">[4]</text>
+    <!-- celle -->
+    <rect x="0"   y="18" width="44" height="44" rx="5" fill="#21253a" stroke="#2e3350" stroke-width="2"/>
+    <rect x="48"  y="18" width="44" height="44" rx="5" fill="#21253a" stroke="#2e3350" stroke-width="2"/>
+    <rect x="96"  y="14" width="44" height="52" rx="5" fill="rgba(86,207,178,0.12)" stroke="#56cfb2" stroke-width="2"/>
+    <rect x="144" y="18" width="44" height="44" rx="5" fill="#21253a" stroke="#2e3350" stroke-width="2"/>
+    <rect x="192" y="18" width="44" height="44" rx="5" fill="#21253a" stroke="#2e3350" stroke-width="2"/>
+    <!-- valori -->
+    <text x="22"  y="45" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="15" font-weight="700" text-anchor="middle">42</text>
+    <text x="70"  y="45" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="15" font-weight="700" text-anchor="middle">15</text>
+    <text x="118" y="45" fill="#56cfb2" font-family="Space Mono,monospace" font-size="15" font-weight="700" text-anchor="middle">8</text>
+    <text x="166" y="45" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="15" font-weight="700" text-anchor="middle">23</text>
+    <text x="214" y="45" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="15" font-weight="700" text-anchor="middle">7</text>
+    <!-- etichetta -->
+    <text x="126" y="82" fill="#2e3350" font-family="Space Mono,monospace" font-size="9" text-anchor="middle">int arr[5]</text>
+  </svg>
+</header>
+
+<div class="toc-wrap">
+  <nav class="toc" id="toc">
+    <a href="#intro" class="active">Introduzione</a>
+    <a href="#array1d">Array 1D</a>
+    <a href="#array2d">Array 2D</a>
+    <a href="#struct">Struct</a>
+    <a href="#array-struct">Array di struct</a>
+    <a href="#stack">Stack</a>
+    <a href="#coda">Coda</a>
+  </nav>
+</div>
+
+<main>
+
+<section id="intro">
+  <div class="section-label">00 &mdash; Perch&eacute;</div>
+  <h2>Perch&eacute; le strutture dati?</h2>
+  <p>Immagina di dover gestire i voti di una classe di 30 studenti. Senza strutture dati servirebbe una variabile per ogni studente &mdash; <code>int voto1, voto2, ..., voto30</code> &mdash; con 30 dichiarazioni separate, 30 istruzioni di input, 30 condizioni in ogni algoritmo. Il codice diventa ingestibile al primo problema reale.</p>
+  <p>Le <strong>strutture dati</strong> risolvono questo problema organizzando dati correlati in modo sistematico. Con un array bastano una dichiarazione e un ciclo <code>for</code> per operare su tutti i 30 voti. Tre vantaggi immediati: il codice &egrave; pi&ugrave; leggibile, pi&ugrave; breve e funziona allo stesso modo per 30 o per 3000 studenti.</p>
+  <div class="box box-info">
+    <strong>&#128204; Due famiglie principali</strong>
+    <div class="families-grid" style="margin-top:.75rem">
+      <div class="family-card active-family">
+        <h4>&#127959; Statiche &mdash; questa pagina</h4>
+        <p>Dimensione fissata a compile time. Memoria nello stack. Pi&ugrave; semplici da usare, meno flessibili.</p>
+      </div>
+      <div class="family-card">
+        <h4>&#128279; Dinamiche &mdash; pagina successiva</h4>
+        <p>Dimensione variabile a runtime. Memoria nell&apos;heap con <code>new</code> / <code>delete</code>. Pi&ugrave; flessibili, richiedono gestione esplicita della memoria.</p>
+      </div>
+    </div>
+  </div>
+  <p>Questa pagina copre: <strong>array monodimensionale</strong>, <strong>array bidimensionale (matrice)</strong>, <strong>struct</strong>, <strong>array di struct</strong>, <strong>stack su array</strong> e <strong>coda su array</strong>.</p>
+</section>
+
+<section id="array1d">
+  <div class="section-label">01 &mdash; Struttura</div>
+  <h2>Array monodimensionale</h2>
+  <p>Un array &egrave; una sequenza di elementi dello <strong>stesso tipo</strong>, memorizzati in celle contigue in memoria. Ogni cella &egrave; identificata da un <strong>indice intero</strong> che parte da <code>0</code> e arriva a <code>n-1</code>. L&apos;accesso a qualsiasi elemento &egrave; <strong>O(1)</strong>: il programma calcola l&apos;indirizzo direttamente dall&apos;indice, senza scorrere nulla.</p>
+  <div class="box box-warn">
+    <strong>&#9888; La dimensione &egrave; fissa e nota a compile time</strong>
+    In C++ la dimensione di un array statico deve essere una costante intera &mdash; non una variabile. Il compilatore deve sapere quanto spazio riservare nello stack prima di eseguire il programma.
+    <br><br>
+    <code>int n = 5; &nbsp;int arr[n];</code> &nbsp;<span style="color:var(--prog-red)">// &#10060; errore &mdash; n non &egrave; una costante</span><br>
+    <code>const int N = 5; &nbsp;int arr[N];</code> &nbsp;<span style="color:var(--prog-accent2)">// &#10004; corretto</span>
+    <br><br>
+    Per array a dimensione variabile (stabilita a runtime) si usa l&apos;allocazione dinamica con <code>new</code> &mdash; argomento della pagina sulle strutture dinamiche.
+  </div>
+  <h3>Dichiarazione e inizializzazione</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; dichiarazione</span></div>
+    <pre><span class="kw">const</span> <span class="tp">int</span> N = <span class="nm">5</span>;
+<span class="tp">int</span> voti[N];                        <span class="cm">// non inizializzato (valori indeterminati)</span>
+<span class="tp">int</span> voti[N] = {<span class="nm">7</span>, <span class="nm">8</span>, <span class="nm">6</span>, <span class="nm">9</span>, <span class="nm">5</span>};   <span class="cm">// con valori iniziali</span>
+<span class="tp">int</span> voti[]  = {<span class="nm">7</span>, <span class="nm">8</span>, <span class="nm">6</span>, <span class="nm">9</span>, <span class="nm">5</span>};   <span class="cm">// dimensione dedotta: n=5</span>
+<span class="tp">int</span> voti[N] = {};                   <span class="cm">// tutti gli elementi a zero</span></pre>
+  </div>
+  <h3>Accesso e iterazione</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; accesso per indice</span></div>
+    <pre>voti[<span class="nm">0</span>] = <span class="nm">10</span>;             <span class="cm">// modifica il primo elemento</span>
+cout &lt;&lt; voti[<span class="nm">2</span>];          <span class="cm">// stampa il terzo elemento (indice 2)</span>
+<span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; N; i++) {
+    cout &lt;&lt; <span class="st">"voti["</span> &lt;&lt; i &lt;&lt; <span class="st">"] = "</span> &lt;&lt; voti[i] &lt;&lt; endl;
+}</pre>
+  </div>
+  <div class="box box-red">
+    <strong>&#9888; Out of bounds &mdash; comportamento indefinito</strong>
+    Accedere a un indice negativo o &ge; n non genera un errore in C++: il programma legge o scrive memoria arbitraria. Il risultato &egrave; imprevedibile. Il compilatore non controlla i limiti &mdash; &egrave; responsabilit&agrave; del programmatore.
+  </div>
+  <h3>Array e funzioni</h3>
+  <p>Passare un array a una funzione significa passare l&apos;<strong>indirizzo del primo elemento</strong>, non una copia. Le modifiche apportate dentro la funzione si riflettono sull&apos;array originale. Per questo non occorre restituire l&apos;array con <code>return</code>: &egrave; gi&agrave; passato per riferimento implicitamente.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; array_funzioni.cpp</span></div>
+    <pre><span class="pp">#include &lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="cm">// modifica l'array originale &mdash; le modifiche restano dopo la chiamata</span>
+<span class="tp">void</span> <span class="fn">raddoppia</span>(<span class="tp">int</span> arr[], <span class="tp">int</span> n) {
+    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; n; i++)
+        arr[i] *= <span class="nm">2</span>;
+}
+
+<span class="cm">// const protegge da modifiche involontarie &mdash; lettura sola</span>
+<span class="tp">float</span> <span class="fn">calcolaMedia</span>(<span class="kw">const</span> <span class="tp">int</span> arr[], <span class="tp">int</span> n) {
+    <span class="tp">int</span> somma = <span class="nm">0</span>;
+    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; n; i++) somma += arr[i];
+    <span class="kw">return</span> (<span class="tp">float</span>)somma / n;
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="kw">const</span> <span class="tp">int</span> N = <span class="nm">5</span>;
+    <span class="tp">int</span> voti[N] = {<span class="nm">7</span>, <span class="nm">8</span>, <span class="nm">6</span>, <span class="nm">9</span>, <span class="nm">5</span>};
+    cout &lt;&lt; <span class="st">"Media: "</span> &lt;&lt; <span class="fn">calcolaMedia</span>(voti, N) &lt;&lt; endl;  <span class="cm">// 7.0</span>
+    <span class="fn">raddoppia</span>(voti, N);   <span class="cm">// voti ora &egrave; {14, 16, 12, 18, 10}</span>
+    cout &lt;&lt; <span class="st">"Media dopo raddoppio: "</span> &lt;&lt; <span class="fn">calcolaMedia</span>(voti, N) &lt;&lt; endl; <span class="cm">// 14.0</span>
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+  <div class="box box-info">
+    <strong>&#128204; Cosa succede davvero quando passi un array a una funzione</strong>
+    Quando scrivi <code>raddoppia(voti, N)</code>, il C++ non copia l&apos;intero array: passa solo l&apos;<strong>indirizzo del primo elemento</strong>. Dentro la funzione, <code>arr[i]</code> e <code>voti[i]</code> puntano alla <strong>stessa cella di memoria</strong>. Scrivere <code>arr[i] *= 2</code> modifica direttamente l&apos;elemento originale &mdash; la modifica &egrave; visibile nel chiamante anche dopo che la funzione &egrave; terminata. Non serve usare <code>return</code> per &ldquo;restituire&rdquo; l&apos;array modificato: &egrave; gi&agrave; lì.
+  </div>
+  <div class="box box-tip">
+    <strong>&#128161; Non si pu&ograve; restituire un array locale con return</strong>
+    Scrivere <code>int* f() { int arr[5]; return arr; }</code> &egrave; un errore: l&apos;array locale viene distrutto quando la funzione termina e il puntatore diventa invalido. La soluzione &egrave; modificare l&apos;array passato come parametro &mdash; che vive nel chiamante e non viene distrutto.
+  </div>
+  <h3>&#128295; Vettore Visivo</h3>
+  <p>Imposta la dimensione (1&ndash;10) e genera un array con valori casuali. <strong>Clicca su una cella per modificarne il valore.</strong> Digita un indice per evidenziare la posizione corrispondente.</p>
+  <div class="tool-box">
+    <div class="tool-header"><span class="tool-title">&#128295; Vettore Visivo</span><span class="tool-subtitle">Dimensione libera &middot; Valori modificabili</span></div>
+    <div class="tool-body">
+      <div class="vv-gen-row">
+        <span class="vv-gen-label">Dimensione (1&ndash;10):</span>
+        <input type="number" class="tool-input" id="vv-dim" min="1" max="10" value="6" style="width:60px">
+        <button class="tool-btn primary" id="vv-gen">&#127922; Genera casuale</button>
+      </div>
+      <div class="vv-wrapper">
+        <div class="vv-indices-row" id="vv-indices"></div>
+        <div class="vv-cells-row" id="vv-cells"></div>
+      </div>
+      <div class="vv-controls">
+        <div class="vv-input-group">
+          <span>arr[</span>
+          <input type="number" class="tool-input" id="vv-input" min="0" value="0" style="width:56px">
+          <span>]</span>
+        </div>
+        <div class="vv-result" id="vv-result">Genera un array per iniziare</div>
+      </div>
+      <div class="vv-err" id="vv-err">Indice fuori range &mdash; valori validi: 0 &hellip; n-1</div>
+      <p class="tool-hint">&#128161; Clicca su una cella per modificare il valore &middot; Usa &#9166; e Esc per confermare o annullare</p>
+    </div>
+    <div class="tool-msg" id="vv-msg">Imposta la dimensione e premi Genera.</div>
+  </div>
+</section>
+
+<section id="array2d">
+  <div class="section-label">02 &mdash; Struttura</div>
+  <h2>Array bidimensionale (matrice)</h2>
+  <p>Un array bidimensionale &egrave; un <strong>array di array</strong>: ogni elemento &egrave; identificato da due indici, <code>riga</code> e <code>colonna</code>. Si dichiara con <code>tipo nome[RIGHE][COLONNE]</code>. In memoria gli elementi sono contigui, memorizzati <strong>riga per riga</strong> (row-major): prima tutti gli elementi della riga 0, poi della riga 1, e cos&igrave; via.</p>
+  <h3>Dichiarazione e inizializzazione</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; dichiarazione matrice</span></div>
+    <pre><span class="kw">const</span> <span class="tp">int</span> RIGHE = <span class="nm">3</span>, COLONNE = <span class="nm">4</span>;
+<span class="tp">int</span> m[RIGHE][COLONNE];   <span class="cm">// matrice 3x4 non inizializzata</span>
+<span class="tp">int</span> m[<span class="nm">3</span>][<span class="nm">4</span>] = {
+    { <span class="nm">1</span>,  <span class="nm">2</span>,  <span class="nm">3</span>,  <span class="nm">4</span>},   <span class="cm">// riga 0</span>
+    { <span class="nm">5</span>,  <span class="nm">6</span>,  <span class="nm">7</span>,  <span class="nm">8</span>},   <span class="cm">// riga 1</span>
+    { <span class="nm">9</span>, <span class="nm">10</span>, <span class="nm">11</span>, <span class="nm">12</span>}    <span class="cm">// riga 2</span>
+};</pre>
+  </div>
+  <h3>Accesso e ciclo annidato</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; accesso e stampa</span></div>
+    <pre>m[<span class="nm">0</span>][<span class="nm">0</span>] = <span class="nm">1</span>;   <span class="cm">// prima riga, prima colonna</span>
+m[<span class="nm">2</span>][<span class="nm">3</span>] = <span class="nm">12</span>;  <span class="cm">// terza riga, quarta colonna</span>
+<span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; RIGHE; i++) {
+    <span class="kw">for</span> (<span class="tp">int</span> j = <span class="nm">0</span>; j &lt; COLONNE; j++)
+        cout &lt;&lt; m[i][j] &lt;&lt; <span class="st">"\t"</span>;
+    cout &lt;&lt; endl;
+}</pre>
+  </div>
+  <h3>Passare una matrice a una funzione</h3>
+  <p>Per passare un array bidimensionale a una funzione, il numero di <strong>colonne &egrave; obbligatorio</strong> nella firma &mdash; il compilatore ne ha bisogno per calcolare l&apos;indirizzo di ogni cella. Il numero di righe si passa come parametro separato.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; matrice_funzione.cpp</span></div>
+    <pre><span class="pp">#include &lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+<span class="kw">const</span> <span class="tp">int</span> COLONNE = <span class="nm">4</span>;
+
+<span class="cm">// le colonne DEVONO essere specificate nella firma</span>
+<span class="tp">void</span> <span class="fn">stampaMatrice</span>(<span class="kw">const</span> <span class="tp">int</span> m[][COLONNE], <span class="tp">int</span> righe) {
+    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; righe; i++) {
+        <span class="kw">for</span> (<span class="tp">int</span> j = <span class="nm">0</span>; j &lt; COLONNE; j++)
+            cout &lt;&lt; m[i][j] &lt;&lt; <span class="st">"\t"</span>;
+        cout &lt;&lt; endl;
+    }
+}
+
+<span class="tp">int</span> <span class="fn">sommaMatrice</span>(<span class="kw">const</span> <span class="tp">int</span> m[][COLONNE], <span class="tp">int</span> righe) {
+    <span class="tp">int</span> tot = <span class="nm">0</span>;
+    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; righe; i++)
+        <span class="kw">for</span> (<span class="tp">int</span> j = <span class="nm">0</span>; j &lt; COLONNE; j++)
+            tot += m[i][j];
+    <span class="kw">return</span> tot;
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> m[<span class="nm">3</span>][COLONNE] = {{<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>,<span class="nm">4</span>},{<span class="nm">5</span>,<span class="nm">6</span>,<span class="nm">7</span>,<span class="nm">8</span>},{<span class="nm">9</span>,<span class="nm">10</span>,<span class="nm">11</span>,<span class="nm">12</span>}};
+    <span class="fn">stampaMatrice</span>(m, <span class="nm">3</span>);
+    cout &lt;&lt; <span class="st">"Somma: "</span> &lt;&lt; <span class="fn">sommaMatrice</span>(m, <span class="nm">3</span>) &lt;&lt; endl;  <span class="cm">// 78</span>
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+  <h3>&#128295; Matrice Visiva</h3>
+  <p>Scegli righe e colonne (max 6&times;6), genera con valori casuali, poi clicca su una cella per vedere i suoi indici.</p>
+  <div class="tool-box">
+    <div class="tool-header"><span class="tool-title">&#128295; Matrice Visiva</span><span class="tool-subtitle">Dimensioni configurabili &middot; Clicca per leggere m[i][j]</span></div>
+    <div class="tool-body">
+      <div class="grid-gen-row">
+        <span class="vv-gen-label">Righe (1&ndash;6):</span>
+        <input type="number" class="tool-input" id="grid-rows" min="1" max="6" value="3" style="width:55px">
+        <span class="vv-gen-label">Colonne (1&ndash;6):</span>
+        <input type="number" class="tool-input" id="grid-cols" min="1" max="6" value="4" style="width:55px">
+        <button class="tool-btn primary" id="grid-gen">&#127922; Genera casuale</button>
+      </div>
+      <div class="grid2d-wrapper" id="grid2d-wrapper">
+        <p style="color:var(--prog-muted);font-size:.85rem">Premi &ldquo;Genera casuale&rdquo; per creare la matrice.</p>
+      </div>
+      <div class="grid2d-info" id="grid2d-info" style="display:none"></div>
+    </div>
+    <div class="tool-msg" id="grid2d-msg">Imposta le dimensioni e premi Genera.</div>
+  </div>
+</section>
+
+<section id="struct">
+  <div class="section-label">03 &mdash; Struttura</div>
+  <h2>Struct (record)</h2>
+  <p>In informatica, un <strong>record</strong> &egrave; una struttura dati che raccoglie informazioni di tipo diverso (eterogenee) relative a una singola entit&agrave;. In C++ il record si chiama <strong>struct</strong>. Il concetto &egrave; identico a quello di record in un database: ogni campo ha un nome e un tipo, e insieme descrivono un oggetto del mondo reale.</p>
+  <table class="adt-table" style="max-width:500px">
+    <thead><tr><th>Database (tabella Studenti)</th><th>C++ struct Studente</th></tr></thead>
+    <tbody>
+      <tr><td>Campo <code>matricola INT</code></td><td><code>int matricola;</code></td></tr>
+      <tr><td>Campo <code>nome VARCHAR(30)</code></td><td><code>char nome[30];</code></td></tr>
+      <tr><td>Campo <code>media FLOAT</code></td><td><code>float media;</code></td></tr>
+      <tr><td>Un record = una riga della tabella</td><td>Una variabile di tipo <code>Studente</code></td></tr>
+    </tbody>
+  </table>
+  <h3>struct e typedef struct &mdash; differenza</h3>
+  <p>In C++ esistono due modi per definire una struct. Il risultato &egrave; equivalente, ma la sintassi cambia.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; struct vs typedef struct</span></div>
+    <pre><span class="cm">// FORMA 1 &mdash; struct classica C++</span>
+<span class="kw">struct</span> <span class="tp">Studente</span> {
+    <span class="tp">int</span>   matricola;
+    <span class="tp">char</span>  nome[<span class="nm">30</span>];
+    <span class="tp">float</span> media;
+};
+<span class="tp">Studente</span> s1;          <span class="cm">// &#10004; C++ standard (senza "struct" davanti)</span>
+<span class="kw">struct</span> <span class="tp">Studente</span> s1;   <span class="cm">// &#10004; stile C (pi&ugrave; verboso)</span>
+
+
+<span class="cm">// FORMA 2 &mdash; typedef struct (stile C, comune nei libri scolastici)</span>
+<span class="kw">typedef struct</span> {
+    <span class="tp">int</span>   matricola;
+    <span class="tp">char</span>  nome[<span class="nm">30</span>];
+    <span class="tp">float</span> media;
+} <span class="tp">Studente</span>;             <span class="cm">// "Studente" &egrave; un alias del tipo anonimo</span>
+<span class="tp">Studente</span> s1;          <span class="cm">// &#10004; unico modo valido</span>
+<span class="kw">struct</span> <span class="tp">Studente</span> s1;   <span class="cm">// &#10060; errore &mdash; non esiste "struct Studente"</span>
+
+
+<span class="cm">// In questo corso useremo typedef struct per coerenza con i testi adottati.</span></pre>
+  </div>
+  <h3>Dichiarazione, operatore punto e accesso ai campi</h3>
+  <p>L&apos;<strong>operatore punto</strong> (<code>.</code>) &egrave; il modo per accedere ai singoli campi di una variabile struct. Si legge come &ldquo;della variabile, il campo&rdquo;: <code>s1.media</code> &egrave; &ldquo;di s1, la media&rdquo;. &Egrave; il collegamento diretto tra la variabile e il suo dato interno.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; accesso ai campi</span></div>
+    <pre><span class="tp">Studente</span> s1;                     <span class="cm">// dichiarazione &mdash; spazio nello stack</span>
+<span class="cm">// operatore punto: variabile.campo</span>
+s1.matricola = <span class="nm">101</span>;
+s1.media     = <span class="nm">8.5f</span>;
+strcpy(s1.nome, <span class="st">"Anna Bianchi"</span>);  <span class="cm">// per char[] si usa strcpy, non =</span>
+
+<span class="cm">// inizializzazione diretta (stesso ordine dei campi)</span>
+<span class="tp">Studente</span> s2 = {<span class="nm">102</span>, <span class="st">"Mario Rossi"</span>, <span class="nm">7.8f</span>};
+cout &lt;&lt; s2.matricola &lt;&lt; <span class="st">" "</span> &lt;&lt; s2.nome &lt;&lt; <span class="st">" "</span> &lt;&lt; s2.media &lt;&lt; endl;</pre>
+  </div>
+  <p>Cos&igrave; appare in memoria la variabile <code>s1</code> dopo l&apos;inizializzazione:</p>
+  <div class="struct-record-card">
+    <div class="src-header">Studente s1 &mdash; una variabile, tre campi</div>
+    <div class="src-field"><span class="src-type">int</span><span class="src-name">matricola</span><span class="src-val">101</span></div>
+    <div class="src-field"><span class="src-type">char[30]</span><span class="src-name">nome</span><span class="src-val">"Anna Bianchi"</span></div>
+    <div class="src-field"><span class="src-type">float</span><span class="src-name">media</span><span class="src-val">8.5</span></div>
+  </div>
+  <h3>Esempio completo</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; struct_studente.cpp</span></div>
+    <pre><span class="pp">#include &lt;iostream&gt;</span>
+<span class="pp">#include &lt;cstring&gt;</span>
+<span class="kw">using namespace</span> std;
+<span class="kw">typedef struct</span> { <span class="tp">int</span> matricola; <span class="tp">char</span> nome[<span class="nm">30</span>]; <span class="tp">float</span> media; } <span class="tp">Studente</span>;
+<span class="tp">void</span> <span class="fn">stampa</span>(<span class="tp">Studente</span> s) {
+    cout &lt;&lt; s.matricola &lt;&lt; <span class="st">" | "</span> &lt;&lt; s.nome &lt;&lt; <span class="st">" | "</span> &lt;&lt; s.media &lt;&lt; endl;
+}
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">Studente</span> s1 = {<span class="nm">101</span>, <span class="st">"Anna Bianchi"</span>, <span class="nm">8.5f</span>};
+    <span class="tp">Studente</span> s2 = {<span class="nm">102</span>, <span class="st">"Mario Rossi"</span>,  <span class="nm">7.2f</span>};
+    <span class="fn">stampa</span>(s1); <span class="fn">stampa</span>(s2);
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+</section>
+
+<section id="array-struct">
+  <div class="section-label">04 &mdash; Struttura</div>
+  <h2>Array di struct</h2>
+  <p>Combinando array e struct si ottiene una struttura dati potente: un array in cui ogni cella contiene un record completo. &Egrave; l&apos;equivalente diretto di una <strong>tabella di database in memoria</strong> &mdash; righe di dati strutturati, accessibili per indice in O(1).</p>
+  <h3>Rappresentazione visiva</h3>
+  <p>Ogni cella dell&apos;array contiene un record completo. Le celle sono affiancate orizzontalmente con gli indici sopra &mdash; esattamente come un array semplice, ma ogni slot &egrave; una struct con tre campi.</p>
+  <div class="as-vis-wrap">
+    <!-- indici sopra -->
+    <div class="as-vis-top">
+      <div class="as-vis-idx-lbl">[0]</div>
+      <div class="as-vis-idx-lbl">[1]</div>
+      <div class="as-vis-idx-lbl">[2]</div>
+      <div class="as-vis-idx-lbl">[3]</div>
+      <div class="as-vis-idx-lbl">[4]</div>
+    </div>
+    <!-- celle -->
+    <div class="as-vis-cells">
+      <div class="as-vis-cell">
+        <div class="as-field"><span class="as-fname">matricola</span><span class="as-fval">101</span></div>
+        <div class="as-field"><span class="as-fname">nome</span><span class="as-fval">Anna Bianchi</span></div>
+        <div class="as-field"><span class="as-fname">media</span><span class="as-fval">8.5</span></div>
+      </div>
+      <div class="as-vis-cell">
+        <div class="as-field"><span class="as-fname">matricola</span><span class="as-fval">102</span></div>
+        <div class="as-field"><span class="as-fname">nome</span><span class="as-fval">Mario Rossi</span></div>
+        <div class="as-field"><span class="as-fname">media</span><span class="as-fval">7.2</span></div>
+      </div>
+      <div class="as-vis-cell">
+        <div class="as-field"><span class="as-fname">matricola</span><span class="as-fval">103</span></div>
+        <div class="as-field"><span class="as-fname">nome</span><span class="as-fval">Luca Verdi</span></div>
+        <div class="as-field"><span class="as-fname">media</span><span class="as-fval">9.1</span></div>
+      </div>
+      <div class="as-vis-cell as-vis-empty"><div class="as-empty-lbl">slot<br>libero</div></div>
+      <div class="as-vis-cell as-vis-empty"><div class="as-empty-lbl">slot<br>libero</div></div>
+    </div>
+    <p class="as-table-caption">Ogni cella = una variabile <code>Studente</code> &middot; Ogni campo visibile separatamente &middot; <code>classe[1].nome</code> &rarr; "Mario Rossi"</p>
+  </div>
+  <h3>Dichiarazione</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; array di struct</span></div>
+    <pre><span class="kw">const</span> <span class="tp">int</span> MAX = <span class="nm">30</span>;
+<span class="tp">Studente</span> classe[MAX];   <span class="cm">// array di 30 record Studente</span>
+<span class="tp">Studente</span> classe[<span class="nm">3</span>] = {
+    {<span class="nm">101</span>, <span class="st">"Anna Bianchi"</span>, <span class="nm">8.5f</span>},
+    {<span class="nm">102</span>, <span class="st">"Mario Rossi"</span>,  <span class="nm">7.2f</span>},
+    {<span class="nm">103</span>, <span class="st">"Luca Verdi"</span>,   <span class="nm">9.1f</span>}
+};
+cout &lt;&lt; classe[<span class="nm">0</span>].nome;      <span class="cm">// "Anna Bianchi"</span>
+cout &lt;&lt; classe[<span class="nm">2</span>].matricola;  <span class="cm">// 103</span></pre>
+  </div>
+  <h3>Inserimento di un nuovo record</h3>
+  <p>Con un array di struct si usa un <strong>contatore</strong> (<code>n</code>) che tiene traccia di quanti elementi sono stati effettivamente inseriti. Il contatore va passato per riferimento (<code>&amp;</code>) affinch&eacute; la funzione possa aggiornarlo.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; inserisci record</span></div>
+    <pre><span class="tp">void</span> <span class="fn">inserisci</span>(<span class="tp">Studente</span> cl[], <span class="tp">int</span>&amp; n, <span class="tp">int</span> mat, <span class="kw">const</span> <span class="tp">char</span>* nome, <span class="tp">float</span> media) {
+    <span class="kw">if</span> (n &gt;= MAX) { cout &lt;&lt; <span class="st">"Array pieno!"</span> &lt;&lt; endl; <span class="kw">return</span>; }
+    cl[n].matricola = mat;
+    strcpy(cl[n].nome, nome);
+    cl[n].media     = media;
+    n++;   <span class="cm">// il contatore aggiornato si riflette nel chiamante</span>
+}
+<span class="cm">// utilizzo:</span>
+<span class="tp">int</span> n = <span class="nm">0</span>;
+<span class="fn">inserisci</span>(classe, n, <span class="nm">101</span>, <span class="st">"Anna Bianchi"</span>, <span class="nm">8.5f</span>);
+<span class="fn">inserisci</span>(classe, n, <span class="nm">102</span>, <span class="st">"Mario Rossi"</span>,  <span class="nm">7.2f</span>);
+cout &lt;&lt; <span class="st">"Studenti inseriti: "</span> &lt;&lt; n &lt;&lt; endl;  <span class="cm">// 2</span></pre>
+  </div>
+  <h3>Iterazione e ricerca</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; array_struct_completo.cpp</span></div>
+    <pre><span class="pp">#include &lt;iostream&gt;</span>
+<span class="pp">#include &lt;cstring&gt;</span>
+<span class="kw">using namespace</span> std;
+<span class="kw">typedef struct</span> { <span class="tp">int</span> matricola; <span class="tp">char</span> nome[<span class="nm">30</span>]; <span class="tp">float</span> media; } <span class="tp">Studente</span>;
+<span class="kw">const</span> <span class="tp">int</span> MAX = <span class="nm">30</span>;
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">Studente</span> classe[MAX];
+    <span class="tp">int</span> n = <span class="nm">0</span>;
+    classe[n++] = {<span class="nm">101</span>, <span class="st">"Anna Bianchi"</span>, <span class="nm">8.5f</span>};
+    classe[n++] = {<span class="nm">102</span>, <span class="st">"Mario Rossi"</span>,  <span class="nm">7.2f</span>};
+    classe[n++] = {<span class="nm">103</span>, <span class="st">"Luca Verdi"</span>,   <span class="nm">9.1f</span>};
+    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; n; i++)
+        cout &lt;&lt; classe[i].matricola &lt;&lt; <span class="st">" | "</span> &lt;&lt; classe[i].nome &lt;&lt; <span class="st">" | "</span> &lt;&lt; classe[i].media &lt;&lt; endl;
+    <span class="tp">int</span> cerca = <span class="nm">102</span>;
+    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; n; i++) {
+        <span class="kw">if</span> (classe[i].matricola == cerca) { cout &lt;&lt; <span class="st">"Trovato: "</span> &lt;&lt; classe[i].nome &lt;&lt; endl; <span class="kw">break</span>; }
+    }
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+  <div class="box box-tip">
+    <strong>&#128161; Passare array di struct a una funzione</strong>
+    Come per gli array semplici, si passa il puntatore al primo elemento. Usare <code>const Studente cl[]</code> per le funzioni che non devono modificare i dati. Ricordare di passare sempre anche il contatore <code>n</code> degli elementi effettivi.
+  </div>
+</section>
+
+<section id="stack">
+  <div class="section-label">05 &mdash; Struttura</div>
+  <h2>Stack (pila)</h2>
+  <p>Uno stack &egrave; una struttura dati <strong>LIFO</strong> (Last In, First Out): l&apos;ultimo elemento inserito &egrave; il primo ad essere estratto, come una pila di piatti. Applicazioni: cronologia &ldquo;Annulla&rdquo;, gestione delle chiamate a funzione, parsing di espressioni matematiche.</p>
+  <h3>Operazioni ADT</h3>
+  <table class="adt-table">
+    <thead><tr><th>Operazione</th><th>Descrizione</th><th>Precondizione</th></tr></thead>
+    <tbody>
+      <tr><td>push(x)</td><td>Inserisce x in cima alla pila</td><td>Pila non piena</td></tr>
+      <tr><td>pop()</td><td>Rimuove e restituisce l&apos;elemento in cima</td><td>Pila non vuota</td></tr>
+      <tr><td>top()</td><td>Restituisce l&apos;elemento in cima senza rimuoverlo</td><td>Pila non vuota</td></tr>
+      <tr><td>isEmpty()</td><td>Vero se la pila non contiene elementi</td><td>&mdash;</td></tr>
+      <tr><td>isFull()</td><td>Vero se la pila ha raggiunto la capacit&agrave; massima</td><td>&mdash;</td></tr>
+    </tbody>
+  </table>
+  <div class="box box-info">
+    <strong>&#128204; Convenzione: top = -1</strong>
+    L&apos;indice <code>top</code> viene inizializzato a <code>-1</code> per indicare la pila vuota. Prima di ogni push si incrementa <code>top</code>, poi si inserisce: <code>arr[++top] = val</code>. Prima di ogni pop si legge il valore, poi si decrementa: <code>return arr[top--]</code>.
+  </div>
+  <h3>Implementazione in C++</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; stack_array.cpp</span></div>
+    <pre><span class="pp">#include &lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+<span class="kw">const</span> <span class="tp">int</span> MAX = <span class="nm">5</span>;
+<span class="kw">typedef struct</span> { <span class="tp">int</span> arr[MAX]; <span class="tp">int</span> top; } <span class="tp">Stack</span>;
+<span class="tp">void</span> <span class="fn">init</span>(<span class="tp">Stack</span> &amp;s)         { s.top = -<span class="nm">1</span>; }
+<span class="tp">bool</span> <span class="fn">isEmpty</span>(<span class="tp">Stack</span> &amp;s)     { <span class="kw">return</span> s.top == -<span class="nm">1</span>; }
+<span class="tp">bool</span> <span class="fn">isFull</span>(<span class="tp">Stack</span> &amp;s)      { <span class="kw">return</span> s.top == MAX - <span class="nm">1</span>; }
+<span class="tp">void</span> <span class="fn">push</span>(<span class="tp">Stack</span> &amp;s, <span class="tp">int</span> v) { <span class="kw">if</span> (!<span class="fn">isFull</span>(s))  s.arr[++s.top] = v; }
+<span class="tp">int</span>  <span class="fn">pop</span>(<span class="tp">Stack</span> &amp;s)          { <span class="kw">if</span> (!<span class="fn">isEmpty</span>(s)) <span class="kw">return</span> s.arr[s.top--]; <span class="kw">return</span> -<span class="nm">1</span>; }
+<span class="tp">int</span>  <span class="fn">top</span>(<span class="tp">Stack</span> &amp;s)          { <span class="kw">if</span> (!<span class="fn">isEmpty</span>(s)) <span class="kw">return</span> s.arr[s.top];   <span class="kw">return</span> -<span class="nm">1</span>; }
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">Stack</span> s; <span class="fn">init</span>(s);
+    <span class="fn">push</span>(s, <span class="nm">10</span>); <span class="fn">push</span>(s, <span class="nm">25</span>); <span class="fn">push</span>(s, <span class="nm">7</span>);
+    cout &lt;&lt; <span class="fn">top</span>(s) &lt;&lt; endl;  <span class="cm">// 7</span>
+    cout &lt;&lt; <span class="fn">pop</span>(s) &lt;&lt; endl;  <span class="cm">// 7</span>
+    cout &lt;&lt; <span class="fn">top</span>(s) &lt;&lt; endl;  <span class="cm">// 25</span>
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+  <h3>&#128295; Prova le operazioni (max 5 elementi)</h3>
+  <div class="tool-box">
+    <div class="tool-header"><span class="tool-title">&#128295; Stack Interattivo</span><span class="tool-subtitle">LIFO &mdash; Last In, First Out</span></div>
+    <div class="tool-body">
+      <div class="stack-layout">
+        <div class="stack-visual-col">
+          <div class="stack-label-top">&#9660; cima (push/pop)</div>
+          <div class="stack-visual">
+            <div class="stack-slot" data-slot="4"><span class="stack-slot-idx">[4]</span><span class="stack-slot-val" id="sv4"></span><span class="stack-top-arrow">&#8592; top</span></div>
+            <div class="stack-slot" data-slot="3"><span class="stack-slot-idx">[3]</span><span class="stack-slot-val" id="sv3"></span><span class="stack-top-arrow">&#8592; top</span></div>
+            <div class="stack-slot" data-slot="2"><span class="stack-slot-idx">[2]</span><span class="stack-slot-val" id="sv2"></span><span class="stack-top-arrow">&#8592; top</span></div>
+            <div class="stack-slot" data-slot="1"><span class="stack-slot-idx">[1]</span><span class="stack-slot-val" id="sv1"></span><span class="stack-top-arrow">&#8592; top</span></div>
+            <div class="stack-slot last-slot" data-slot="0"><span class="stack-slot-idx">[0]</span><span class="stack-slot-val" id="sv0"></span><span class="stack-top-arrow">&#8592; top</span></div>
+          </div>
+          <div class="stack-label-base">&#8593; base</div>
+        </div>
+        <div class="stack-info-col">
+          <div class="stack-controls">
+            <input type="number" class="tool-input" id="stack-input" placeholder="valore">
+            <button class="tool-btn primary" id="stack-push">Push &#8593;</button>
+            <button class="tool-btn danger"   id="stack-pop">Pop &#8595;</button>
+            <button class="tool-btn"          id="stack-reset">&#8635; Reset</button>
+          </div>
+          <div class="stack-state" id="stack-state">top = &mdash;<br>isEmpty() = vero<br>isFull()&nbsp; = falso</div>
+        </div>
+      </div>
+    </div>
+    <div class="tool-msg" id="stack-msg">Pila inizializzata &mdash; top = -1.</div>
+  </div>
+</section>
+
+<section id="coda">
+  <div class="section-label">06 &mdash; Struttura</div>
+  <h2>Coda (queue)</h2>
+  <p>Una coda &egrave; una struttura dati <strong>FIFO</strong> (First In, First Out): il primo elemento inserito &egrave; il primo ad essere estratto, come la coda allo sportello. Applicazioni: code di stampa, buffer di rete, scheduling dei processi.</p>
+  <h3>Operazioni ADT</h3>
+  <table class="adt-table">
+    <thead><tr><th>Operazione</th><th>Descrizione</th><th>Precondizione</th></tr></thead>
+    <tbody>
+      <tr><td>enqueue(x)</td><td>Inserisce x in fondo alla coda</td><td>Coda non piena</td></tr>
+      <tr><td>dequeue()</td><td>Rimuove e restituisce l&apos;elemento in testa</td><td>Coda non vuota</td></tr>
+      <tr><td>front()</td><td>Restituisce l&apos;elemento in testa senza rimuoverlo</td><td>Coda non vuota</td></tr>
+      <tr><td>isEmpty()</td><td>Vero se la coda non contiene elementi</td><td>&mdash;</td></tr>
+      <tr><td>isFull()</td><td>Vero se la coda ha raggiunto la capacit&agrave; massima</td><td>&mdash;</td></tr>
+    </tbody>
+  </table>
+  <div class="box box-info">
+    <strong>&#128204; Convenzione: testa e coda</strong>
+    <code>testa</code> indica l&apos;indice del primo elemento da estrarre. <code>coda</code> indica l&apos;indice dell&apos;ultimo elemento inserito (inizializzato a <code>-1</code> per coda vuota). Ogni <code>enqueue</code> incrementa <code>coda</code>; ogni <code>dequeue</code> incrementa <code>testa</code>. In questa implementazione lineare la coda non &egrave; riutilizzabile &mdash; per questo esiste la coda circolare.
+  </div>
+  <h3>Implementazione in C++</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; coda_array.cpp</span></div>
+    <pre><span class="pp">#include &lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+<span class="kw">const</span> <span class="tp">int</span> MAX = <span class="nm">10</span>;
+<span class="kw">typedef struct</span> { <span class="tp">int</span> arr[MAX]; <span class="tp">int</span> testa; <span class="tp">int</span> coda; <span class="tp">int</span> count; } <span class="tp">Coda</span>;
+<span class="tp">void</span> <span class="fn">init</span>(<span class="tp">Coda</span> &amp;q)    { q.testa=<span class="nm">0</span>; q.coda=-<span class="nm">1</span>; q.count=<span class="nm">0</span>; }
+<span class="tp">bool</span> <span class="fn">isEmpty</span>(<span class="tp">Coda</span> &amp;q) { <span class="kw">return</span> q.count==<span class="nm">0</span>; }
+<span class="tp">bool</span> <span class="fn">isFull</span>(<span class="tp">Coda</span> &amp;q)  { <span class="kw">return</span> q.count==MAX; }
+<span class="tp">void</span> <span class="fn">enqueue</span>(<span class="tp">Coda</span> &amp;q, <span class="tp">int</span> v) {
+    <span class="kw">if</span> (<span class="fn">isFull</span>(q)) { cout &lt;&lt; <span class="st">"Coda piena!"</span> &lt;&lt; endl; <span class="kw">return</span>; }
+    q.arr[++q.coda] = v; q.count++;
+}
+<span class="tp">int</span> <span class="fn">dequeue</span>(<span class="tp">Coda</span> &amp;q) {
+    <span class="kw">if</span> (<span class="fn">isEmpty</span>(q)) { cout &lt;&lt; <span class="st">"Coda vuota!"</span> &lt;&lt; endl; <span class="kw">return</span> -<span class="nm">1</span>; }
+    <span class="tp">int</span> v = q.arr[q.testa++]; q.count--;
+    <span class="kw">return</span> v;
+}
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">Coda</span> q; <span class="fn">init</span>(q);
+    <span class="fn">enqueue</span>(q, <span class="nm">5</span>); <span class="fn">enqueue</span>(q, <span class="nm">3</span>); <span class="fn">enqueue</span>(q, <span class="nm">8</span>);
+    cout &lt;&lt; <span class="fn">dequeue</span>(q) &lt;&lt; endl;  <span class="cm">// 5</span>
+    cout &lt;&lt; <span class="fn">dequeue</span>(q) &lt;&lt; endl;  <span class="cm">// 3</span>
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+  <h3>&#128295; Prova le operazioni (10 slot)</h3>
+  <div class="tool-box">
+    <div class="tool-header"><span class="tool-title">&#128295; Coda Interattiva (10 slot)</span><span class="tool-subtitle">FIFO &mdash; First In, First Out</span></div>
+    <div class="tool-body">
+      <div class="coda-pointers" id="coda-pointers">
+        <div class="coda-ptr" id="cp0"></div><div class="coda-ptr" id="cp1"></div>
+        <div class="coda-ptr" id="cp2"></div><div class="coda-ptr" id="cp3"></div>
+        <div class="coda-ptr" id="cp4"></div><div class="coda-ptr" id="cp5"></div>
+        <div class="coda-ptr" id="cp6"></div><div class="coda-ptr" id="cp7"></div>
+        <div class="coda-ptr" id="cp8"></div><div class="coda-ptr" id="cp9"></div>
+      </div>
+      <div class="coda-visual" id="coda-visual">
+        <div class="coda-slot" data-slot="0"><div class="coda-slot-val" id="qv0"></div><div class="coda-slot-idx">[0]</div></div>
+        <div class="coda-slot" data-slot="1"><div class="coda-slot-val" id="qv1"></div><div class="coda-slot-idx">[1]</div></div>
+        <div class="coda-slot" data-slot="2"><div class="coda-slot-val" id="qv2"></div><div class="coda-slot-idx">[2]</div></div>
+        <div class="coda-slot" data-slot="3"><div class="coda-slot-val" id="qv3"></div><div class="coda-slot-idx">[3]</div></div>
+        <div class="coda-slot" data-slot="4"><div class="coda-slot-val" id="qv4"></div><div class="coda-slot-idx">[4]</div></div>
+        <div class="coda-slot" data-slot="5"><div class="coda-slot-val" id="qv5"></div><div class="coda-slot-idx">[5]</div></div>
+        <div class="coda-slot" data-slot="6"><div class="coda-slot-val" id="qv6"></div><div class="coda-slot-idx">[6]</div></div>
+        <div class="coda-slot" data-slot="7"><div class="coda-slot-val" id="qv7"></div><div class="coda-slot-idx">[7]</div></div>
+        <div class="coda-slot" data-slot="8"><div class="coda-slot-val" id="qv8"></div><div class="coda-slot-idx">[8]</div></div>
+        <div class="coda-slot" data-slot="9"><div class="coda-slot-val" id="qv9"></div><div class="coda-slot-idx">[9]</div></div>
+      </div>
+      <div class="coda-controls">
+        <input type="number" class="tool-input" id="coda-input" placeholder="valore">
+        <button class="tool-btn primary" id="coda-enqueue">Enqueue &#8594;</button>
+        <button class="tool-btn danger"   id="coda-dequeue">&#8592; Dequeue</button>
+        <button class="tool-btn"          id="coda-reset">&#8635; Reset</button>
+      </div>
+      <div class="coda-state" id="coda-state">testa = 0 &nbsp;|&nbsp; coda = -1 &nbsp;|&nbsp; count = <span>0</span></div>
+      <p class="coda-note">Il visualizzatore scorre gli elementi a sinistra dopo ogni Dequeue per chiarezza grafica. Nel codice C++ con array lineare, &egrave; l&apos;indice <code>testa</code> a scorrere verso destra.</p>
+    </div>
+    <div class="tool-msg" id="coda-msg">Coda inizializzata &mdash; testa = 0, coda = -1.</div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <strong>Formazione Digitale</strong> &middot;
+  <a href="/programmazione/">&#8592; Programmazione</a> &middot;
+  <a href="/">Home</a><br>
+  Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ═══ TOOL 1 — VETTORE VISIVO ═══ */
+  (function initVV(){
+    var vals=[];
+    var idxRow=document.getElementById('vv-indices');
+    var cellRow=document.getElementById('vv-cells');
+    var dimInp=document.getElementById('vv-dim');
+    var genBtn=document.getElementById('vv-gen');
+    var idxInp=document.getElementById('vv-input');
+    var resultEl=document.getElementById('vv-result');
+    var errEl=document.getElementById('vv-err');
+    var msgEl=document.getElementById('vv-msg');
+
+    function rnd(){return Math.floor(Math.random()*99)+1;}
+
+    function renderCells(){
+      idxRow.innerHTML=''; cellRow.innerHTML='';
+      vals.forEach(function(val,i){
+        var lbl=document.createElement('div');
+        lbl.className='vv-idx-label'; lbl.textContent='['+i+']';
+        idxRow.appendChild(lbl);
+        var cell=document.createElement('div');
+        cell.className='vv-cell'; cell.dataset.idx=i; cell.textContent=val;
+        cell.addEventListener('click',function(){makeEditable(cell,i);});
+        cellRow.appendChild(cell);
+      });
+      idxInp.max=vals.length-1;
+      highlight(parseInt(idxInp.value)||0);
+    }
+
+    function makeEditable(cell,i){
+      if(cell.querySelector('input'))return;
+      /* un solo stato attivo: rimuovi highlight da tutte le celle */
+      cellRow.querySelectorAll('.vv-cell').forEach(function(c){c.classList.remove('active');});
+      errEl.style.display='none';
+      /* aggiorna l'input indice per rispecchiare la cella in edit */
+      idxInp.value=i;
+      cell.classList.add('editing');
+      var old=vals[i];
+      var inp=document.createElement('input');
+      inp.type='number'; inp.className='vv-cell-input'; inp.value=old;
+      cell.textContent=''; cell.appendChild(inp);
+      inp.focus(); inp.select();
+      function done(){
+        var v=parseInt(inp.value);
+        vals[i]=isNaN(v)?old:v;
+        cell.classList.remove('editing');
+        cell.textContent=vals[i];
+        /* al termine evidenzia la cella appena modificata */
+        highlight(i);
+        msgEl.textContent='arr['+i+'] modificato \u2192 '+vals[i]+'.';
+      }
+      inp.addEventListener('blur',done);
+      inp.addEventListener('keydown',function(e){
+        if(e.key==='Enter') inp.blur();
+        if(e.key==='Escape'){vals[i]=old; inp.blur();}
+      });
+    }
+
+    function highlight(idx){
+      var cells=cellRow.querySelectorAll('.vv-cell');
+      cells.forEach(function(c){c.classList.remove('active');});
+      if(vals.length===0){resultEl.textContent='Genera un array per iniziare';return;}
+      if(isNaN(idx)||idx<0||idx>=vals.length){
+        errEl.style.display='block';
+        resultEl.innerHTML='arr['+idx+'] \u2192 <span style="color:var(--prog-red)">FUORI RANGE</span>';
+      } else {
+        errEl.style.display='none';
+        cells[idx].classList.add('active');
+        resultEl.innerHTML='arr[<span style="color:var(--prog-accent2)">'+idx+'</span>] = <span style="color:var(--prog-accent3);font-weight:700">'+vals[idx]+'</span>';
+      }
+    }
+
+    genBtn.addEventListener('click',function(){
+      var n=Math.max(1,Math.min(10,parseInt(dimInp.value)||6));
+      dimInp.value=n;
+      vals=[];
+      for(var i=0;i<n;i++) vals.push(rnd());
+      renderCells();
+      idxInp.value=0;
+      msgEl.textContent='Array di '+n+' elementi generato. Clicca sulle celle per modificare i valori.';
+    });
+
+    idxInp.addEventListener('input',function(){highlight(parseInt(idxInp.value));});
+    genBtn.click();
+  })();
+
+  /* ═══ TOOL 2 — MATRICE VISIVA ═══ */
+  (function initGrid(){
+    var gridData=[]; var curRows=0,curCols=0;
+    var genBtn=document.getElementById('grid-gen');
+    var rowsInp=document.getElementById('grid-rows');
+    var colsInp=document.getElementById('grid-cols');
+    var wrapper=document.getElementById('grid2d-wrapper');
+    var infoEl=document.getElementById('grid2d-info');
+    var msgEl=document.getElementById('grid2d-msg');
+
+    function rnd(){return Math.floor(Math.random()*99)+1;}
+
+    function generate(){
+      curRows=Math.max(1,Math.min(6,parseInt(rowsInp.value)||3));
+      curCols=Math.max(1,Math.min(6,parseInt(colsInp.value)||4));
+      rowsInp.value=curRows; colsInp.value=curCols;
+      gridData=[];
+      for(var i=0;i<curRows;i++){gridData[i]=[];for(var j=0;j<curCols;j++) gridData[i][j]=rnd();}
+      renderMatrix();
+      msgEl.textContent='Matrice '+curRows+'\xD7'+curCols+' generata. Clicca su una cella.';
+    }
+
+    function renderMatrix(){
+      wrapper.innerHTML=''; infoEl.style.display='none';
+      var hRow=document.createElement('div'); hRow.className='grid2d-col-header';
+      var corner=document.createElement('div'); corner.className='grid2d-corner';
+      hRow.appendChild(corner);
+      for(var j=0;j<curCols;j++){
+        var lbl=document.createElement('div'); lbl.className='grid2d-col-label'; lbl.textContent='col '+j; hRow.appendChild(lbl);
+      }
+      wrapper.appendChild(hRow);
+      for(var i=0;i<curRows;i++){
+        var row=document.createElement('div'); row.className='grid2d-row';
+        var rl=document.createElement('div'); rl.className='grid2d-row-label'; rl.textContent='riga '+i; row.appendChild(rl);
+        for(var j=0;j<curCols;j++){
+          var cell=document.createElement('div'); cell.className='grid2d-cell';
+          if(j===curCols-1) cell.classList.add('last-col');
+          if(i===curRows-1) cell.classList.add('last-row');
+          cell.dataset.row=i; cell.dataset.col=j; cell.textContent=gridData[i][j];
+          (function(ri,ci,c){
+            c.addEventListener('click',function(){
+              if(c.querySelector('input'))return;
+              /* click = edit inline, esattamente come nel Vettore Visivo */
+              var old=gridData[ri][ci];
+              c.style.padding='0';
+              c.style.border='2px solid var(--prog-accent2)';
+              var inp=document.createElement('input');
+              inp.type='number';
+              inp.style.cssText='width:100%;height:100%;background:transparent;border:none;color:var(--prog-accent2);font-family:Space Mono,monospace;font-size:.9rem;font-weight:700;text-align:center;outline:none;-webkit-appearance:none;-moz-appearance:textfield';
+              c.textContent=''; c.appendChild(inp);
+              inp.focus(); inp.select();
+              function done(){
+                var v=parseInt(inp.value);
+                gridData[ri][ci]=isNaN(v)?old:v;
+                c.style.padding=''; c.style.border='';
+                c.textContent=gridData[ri][ci];
+                selectCell(ri,ci);
+                msgEl.textContent='m['+ri+']['+ci+'] modificato \u2192 '+gridData[ri][ci]+'.';
+              }
+              inp.addEventListener('blur',done);
+              inp.addEventListener('keydown',function(e){
+                if(e.key==='Enter') inp.blur();
+                if(e.key==='Escape'){gridData[ri][ci]=old; inp.blur();}
+              });
+            });
+          })(i,j,cell);
+          row.appendChild(cell);
+        }
+        wrapper.appendChild(row);
+      }
+    }
+
+    function selectCell(r,c){
+      wrapper.querySelectorAll('.grid2d-cell').forEach(function(cell){
+        cell.classList.remove('active','hi-row','hi-col');
+        var cr=parseInt(cell.dataset.row),cc=parseInt(cell.dataset.col);
+        if(cr===r&&cc===c) cell.classList.add('active');
+        else if(cr===r) cell.classList.add('hi-row');
+        else if(cc===c) cell.classList.add('hi-col');
+      });
+      infoEl.style.display='block';
+      infoEl.innerHTML='m[<span class="gi-row">'+r+'</span>][<span class="gi-col">'+c+'</span>] = <span class="gi-val">'+gridData[r][c]+'</span>';
+    }
+
+    genBtn.addEventListener('click',generate);
+    generate();
+  })();
+
+  /* ═══ TOOL 3 — STACK ═══ */
+  (function initStack(){
+    var MAX=5; var arr=new Array(MAX).fill(null); var top=-1;
+    var pushInput=document.getElementById('stack-input');
+    var pushBtn=document.getElementById('stack-push');
+    var popBtn=document.getElementById('stack-pop');
+    var resetBtn=document.getElementById('stack-reset');
+    var stateEl=document.getElementById('stack-state');
+    var msgEl=document.getElementById('stack-msg');
+
+    function getSlot(i){return document.querySelector('.stack-slot[data-slot="'+i+'"]');}
+    function getVal(i){return document.getElementById('sv'+i);}
+
+    function render(){
+      for(var i=0;i<MAX;i++){
+        getSlot(i).classList.toggle('filled',arr[i]!==null);
+        getSlot(i).classList.toggle('is-top',i===top&&top>=0);
+        getVal(i).textContent=arr[i]!==null?arr[i]:'';
+      }
+      var empty=top===-1,full=top===MAX-1;
+      stateEl.innerHTML='top = <span>'+(top>=0?top:'\u22121')+'</span><br>isEmpty() = '+(empty?'vero':'falso')+'<br>isFull()&nbsp; = '+(full?'vero':'falso');
+      pushBtn.disabled=full; popBtn.disabled=empty;
+    }
+
+    pushBtn.addEventListener('click',function(){
+      var v=parseInt(pushInput.value);
+      if(isNaN(v)){msgEl.textContent='Inserisci un numero intero.';return;}
+      if(top===MAX-1){msgEl.textContent='Pila piena \u2014 impossibile fare push.';return;}
+      arr[++top]=v; pushInput.value='';
+      msgEl.textContent='push('+v+') \u2192 arr['+top+'] = '+v+', top = '+top+'.';
+      render();
+    });
+
+    popBtn.addEventListener('click',function(){
+      if(top===-1){msgEl.textContent='Pila vuota \u2014 impossibile fare pop.';return;}
+      var v=arr[top]; arr[top--]=null;
+      msgEl.textContent='pop() \u2192 rimosso '+v+', top = '+(top>=0?top:-1)+'.';
+      render();
+    });
+
+    resetBtn.addEventListener('click',function(){
+      arr.fill(null); top=-1; pushInput.value='';
+      msgEl.textContent='Pila svuotata \u2014 top = -1.';
+      render();
+    });
+
+    render();
+  })();
+
+  /* ═══ TOOL 4 — CODA (10 slot, shift) ═══ */
+  (function initCoda(){
+    var MAX=10; var queue=[];
+    var enqInput=document.getElementById('coda-input');
+    var enqBtn=document.getElementById('coda-enqueue');
+    var deqBtn=document.getElementById('coda-dequeue');
+    var resetBtn=document.getElementById('coda-reset');
+    var stateEl=document.getElementById('coda-state');
+    var msgEl=document.getElementById('coda-msg');
+
+    function getSlot(i){return document.querySelector('.coda-slot[data-slot="'+i+'"]');}
+    function getVal(i){return document.getElementById('qv'+i);}
+    function getPtr(i){return document.getElementById('cp'+i);}
+
+    function render(){
+      var cnt=queue.length;
+      for(var i=0;i<MAX;i++){
+        var filled=i<cnt;
+        var isTesta=filled&&i===0;
+        var isCoda=filled&&i===cnt-1;
+        getVal(i).textContent=filled?queue[i]:'';
+        var slot=getSlot(i);
+        slot.classList.toggle('filled',filled);
+        slot.classList.toggle('is-head',isTesta&&!isCoda);
+        slot.classList.toggle('is-tail',isCoda&&!isTesta);
+        slot.classList.toggle('head-tail',isTesta&&isCoda);
+        var ptr=getPtr(i);
+        ptr.className='coda-ptr';
+        if(isTesta&&isCoda){ptr.classList.add('show-head');ptr.textContent='\u25BC t=c';}
+        else if(isTesta){ptr.classList.add('show-head');ptr.textContent='\u25BC testa';}
+        else if(isCoda){ptr.classList.add('show-tail');ptr.textContent='\u25BC coda';}
+        else{ptr.textContent='';}
+      }
+      stateEl.innerHTML='testa = '+(cnt>0?0:0)+' &nbsp;|&nbsp; coda = '+(cnt>0?cnt-1:-1)+' &nbsp;|&nbsp; count = <span>'+cnt+'</span>';
+      enqBtn.disabled=cnt>=MAX; deqBtn.disabled=cnt===0;
+    }
+
+    enqBtn.addEventListener('click',function(){
+      var v=parseInt(enqInput.value);
+      if(isNaN(v)){msgEl.textContent='Inserisci un numero intero.';return;}
+      if(queue.length>=MAX){msgEl.textContent='Coda piena \u2014 impossibile fare enqueue.';return;}
+      queue.push(v); enqInput.value='';
+      msgEl.textContent='enqueue('+v+') \u2192 inserito in posizione '+(queue.length-1)+', count = '+queue.length+'.';
+      render();
+    });
+
+    deqBtn.addEventListener('click',function(){
+      if(queue.length===0){msgEl.textContent='Coda vuota \u2014 impossibile fare dequeue.';return;}
+      var v=queue.shift();
+      msgEl.textContent='dequeue() \u2192 estratto '+v+', count = '+queue.length+'.';
+      render();
+    });
+
+    resetBtn.addEventListener('click',function(){
+      queue=[]; enqInput.value='';
+      msgEl.textContent='Coda svuotata \u2014 testa = 0, coda = -1.';
+      render();
+    });
+
+    render();
+  })();
+
+  /* ═══ COPIA CODICE ═══ */
+  document.querySelectorAll('.code-block').forEach(function(block){
+    var header=block.querySelector('.code-header');
+    var pre=block.querySelector('pre');
+    if(!header||!pre)return;
+    var btn=document.createElement('button');
+    btn.className='copy-btn'; btn.textContent='Copia';
+    btn.addEventListener('click',function(){
+      var text=pre.innerText;
+      navigator.clipboard.writeText(text).then(function(){
+        btn.textContent='\u2713 Copiato'; btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copia';btn.classList.remove('copied');},2000);
+      });
+    });
+    header.appendChild(btn);
+  });
+
+  /* ═══ TOC ═══ */
+  var tocLinks=document.querySelectorAll('#toc a');
+  var sections=document.querySelectorAll('section[id]');
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        tocLinks.forEach(function(a){a.classList.remove('active');});
+        var a=document.querySelector('#toc a[href="#'+e.target.id+'"]');
+        if(a) a.classList.add('active');
+      }
+    });
+  },{rootMargin:'-10% 0px -80% 0px',threshold:0});
+  sections.forEach(function(s){obs.observe(s);});
+  tocLinks.forEach(function(a){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      var t=document.querySelector(a.getAttribute('href'));
+      if(t) t.scrollIntoView({behavior:'smooth'});
+    });
+  });
+  var btt=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btt.classList.toggle('visible',window.scrollY>300);});
+})();
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>

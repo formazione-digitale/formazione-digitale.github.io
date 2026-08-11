@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestione File in C++ — Formazione Digitale</title>
+  <meta name="description" content="File di testo, file binari e file di record in C++: fstream, accesso diretto, gestione errori. 4° anno ITIS/SIA.">
+  <meta name="author" content="Cristiano De Pasquale">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://formazione-digitale.it/programmazione/gestione-file/">
+  <link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="//gc.zgo.at">
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#7c5cfc">
+  <meta property="og:title" content="Gestione File in C++ — Formazione Digitale">
+  <meta property="og:description" content="File di testo, file binari e file di record in C++ con visualizzatori interattivi.">
+  <meta property="og:url" content="https://formazione-digitale.it/programmazione/gestione-file/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Formazione Digitale">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Gestione File in C++ — Formazione Digitale">
+  <meta name="twitter:description" content="File di testo, file binari e file di record in C++ con visualizzatori interattivi.">
+  <meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"LearningResource","name":"Gestione File in C++","url":"https://formazione-digitale.it/programmazione/gestione-file/","inLanguage":"it","educationalLevel":"intermediate","teaches":["fstream","ifstream","ofstream","File di testo","File binari","File di record","seekg","seekp","C++"],"author":{"@type":"Person","name":"Cristiano De Pasquale"},"publisher":{"@type":"Organization","name":"Formazione Digitale","url":"https://formazione-digitale.it"}}
+  </script>
+  <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/shared-extended.css?v=1">
+  <style>
+    :root{--prog-bg:#0f1117;--prog-surface:#1a1d27;--prog-card:#21253a;--prog-border:#2e3350;--prog-accent:#7c5cfc;--prog-accent2:#56cfb2;--prog-accent3:#f9a03f;--prog-red:#e05c5c;--prog-text:#d4d8f0;--prog-muted:#7a7f9a;--prog-code-bg:#131620;--kw-type:#79b8ff;--kw-keyword:#f97583;--kw-comment:#6a737d;--kw-string:#9ecbff;--kw-number:#b392f0;--kw-func:#56cfb2}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Sora',sans-serif;background:var(--prog-bg);color:var(--prog-text);line-height:1.75}
+    header{background:var(--prog-surface);border-bottom:3px solid var(--prog-accent);padding:2.5rem 2rem 2rem;position:relative;overflow:hidden}
+    header::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:var(--prog-accent);opacity:.07;pointer-events:none}
+    .header-back-link{display:inline-flex;align-items:center;gap:5px;font-size:.78rem;color:var(--prog-muted);text-decoration:none;transition:color .2s;position:absolute;top:1rem;left:1.5rem}
+    .header-back-link:hover{color:var(--prog-text)}
+    .header-badge{display:inline-block;font-family:'Space Mono',monospace;font-size:.68rem;background:var(--prog-accent);color:#fff;padding:3px 10px;border-radius:3px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+    header h1{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:700;letter-spacing:-.02em;line-height:1.15;color:#fff}
+    header h1 span{color:var(--prog-accent)}
+    header p{margin-top:.75rem;color:var(--prog-muted);font-size:.95rem;max-width:620px}
+    .header-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.25rem}
+    .header-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:4px 12px;border-radius:20px;font-family:'Space Mono',monospace;font-size:.72rem;color:var(--prog-muted)}
+    .page-nav{display:flex;gap:1rem;align-items:center;margin-top:1rem;font-size:.8rem;flex-wrap:wrap}
+    .page-nav a{color:var(--prog-accent);text-decoration:none;border:1px solid rgba(124,92,252,.3);padding:4px 12px;border-radius:20px;transition:all .18s}
+    .page-nav a:hover{background:rgba(124,92,252,.15);border-color:var(--prog-accent)}
+    .page-nav-sep{color:var(--prog-border)}
+    .toc-wrap{position:sticky;top:0;z-index:100;background:#1a1a18;border-bottom:3px solid var(--prog-accent)}
+    nav.toc{padding:.7rem 1.5rem;display:flex;flex-wrap:wrap;gap:.25rem;align-items:center;justify-content:center;max-width:980px;margin:0 auto}
+    nav.toc a{font-size:.82rem;font-family:'Sora',sans-serif;font-weight:500;color:#aaa9a0;text-decoration:none;padding:5px 13px;border-radius:20px;border:1px solid transparent;transition:all .18s;white-space:nowrap}
+    nav.toc a:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2)}
+    nav.toc a.active{background:var(--prog-accent);color:#fff;border-color:var(--prog-accent);font-weight:700}
+    @media(max-width:600px){nav.toc{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav.toc::-webkit-scrollbar{display:none}}
+    main{max-width:980px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+    section{margin-bottom:4.5rem;scroll-margin-top:70px}
+    .section-label{font-family:'Space Mono',monospace;font-size:.82rem;font-weight:700;color:var(--prog-accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.5rem}
+    h2{font-size:1.65rem;font-weight:700;color:#fff;letter-spacing:-.02em;border-bottom:2px solid var(--prog-border);padding-bottom:.6rem;margin-bottom:1.5rem}
+    h3{font-size:1.1rem;font-weight:600;color:var(--prog-accent2);margin:2rem 0 .8rem}
+    p{margin-bottom:1rem;color:var(--prog-text);font-size:.97rem;line-height:1.85}
+    code{font-family:'Space Mono',monospace;font-size:.85em;color:var(--prog-accent2)}
+    .box{border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0;font-size:.92rem;border-left:3px solid;line-height:1.75}
+    .box-info{background:rgba(86,207,178,.08);border-color:var(--prog-accent2)}
+    .box-warn{background:rgba(249,160,63,.08);border-color:var(--prog-accent3)}
+    .box-tip{background:rgba(124,92,252,.08);border-color:var(--prog-accent)}
+    .box-red{background:rgba(224,92,92,.08);border-color:var(--prog-red)}
+    .box strong{display:block;margin-bottom:.35rem;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;opacity:.8}
+    .code-block{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:8px;margin:1.5rem 0;overflow:hidden}
+    .code-header{background:var(--prog-card);padding:.5rem 1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--prog-border)}
+    .code-lang{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--prog-muted);letter-spacing:.1em;text-transform:uppercase}
+    .code-dots{display:flex;gap:5px}
+    .code-dot{width:10px;height:10px;border-radius:50%}
+    .dot-r{background:#e05c5c}.dot-y{background:#f9a03f}.dot-g{background:#56cfb2}
+    pre{padding:1.25rem 1.5rem;overflow-x:auto;font-family:'Space Mono',monospace;font-size:.83rem;line-height:1.65;tab-size:4;color:var(--prog-text)}
+    .kw{color:var(--kw-keyword);font-weight:700}.tp{color:var(--kw-type)}.fn{color:var(--kw-func)}.cm{color:var(--kw-comment);font-style:italic}.nm{color:var(--kw-number)}.st{color:var(--kw-string)}.pp{color:#ff9f43}
+    /* tabelle */
+    .adt-table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-size:.88rem;border-radius:8px;overflow:hidden;border:1px solid var(--prog-border)}
+    .adt-table th{background:var(--prog-card);color:var(--prog-accent);padding:.65rem 1rem;text-align:left;font-family:'Space Mono',monospace;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;border-bottom:2px solid var(--prog-border)}
+    .adt-table td{padding:.6rem 1rem;border-bottom:1px solid var(--prog-border);vertical-align:middle;color:var(--prog-text)}
+    .adt-table tr:last-child td{border-bottom:none}
+    .adt-table tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+    .adt-table td:first-child{font-family:'Space Mono',monospace;color:var(--prog-accent2);font-weight:700;white-space:nowrap}
+    /* tool */
+    .tool-box{background:var(--prog-surface);border:1px solid var(--prog-border);border-radius:12px;overflow:hidden;margin:2rem 0}
+    .tool-header{background:var(--prog-card);padding:.75rem 1.25rem;border-bottom:1px solid var(--prog-border);display:flex;align-items:center;gap:.75rem}
+    .tool-title{font-family:'Space Mono',monospace;font-size:.8rem;font-weight:700;color:var(--prog-accent2)}
+    .tool-subtitle{font-size:.78rem;color:var(--prog-muted)}
+    .tool-body{padding:1.5rem}
+    .tool-msg{font-family:'Space Mono',monospace;font-size:.82rem;color:var(--prog-accent2);padding:.6rem 1.25rem;border-top:1px solid var(--prog-border);background:rgba(0,0,0,.1);min-height:2.4rem}
+    .tool-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:6px;border:1px solid var(--prog-border);background:var(--prog-surface);color:var(--prog-text);font-family:'Sora',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .18s}
+    .tool-btn:hover{border-color:var(--prog-accent);color:var(--prog-accent)}
+    .tool-btn:disabled{opacity:.35;cursor:not-allowed}
+    .tool-btn.primary{background:var(--prog-accent);border-color:var(--prog-accent);color:#fff}
+    .tool-btn.primary:hover{background:#6a4ee0}
+    .tool-btn.danger{background:rgba(224,92,92,.1);border-color:var(--prog-red);color:var(--prog-red)}
+    .tool-btn.danger:hover{background:rgba(224,92,92,.2)}
+    .tool-btn.secondary{border-color:var(--prog-accent3);color:var(--prog-accent3)}
+    .tool-btn.secondary:hover{background:rgba(249,160,63,.1)}
+    .tool-input{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:6px;color:var(--prog-accent2);font-family:'Space Mono',monospace;font-size:.95rem;font-weight:700;text-align:center;padding:6px 10px;transition:border-color .18s}
+    .tool-input:focus{outline:none;border-color:var(--prog-accent)}
+    .copy-btn{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--prog-muted);background:none;border:1px solid var(--prog-border);border-radius:4px;padding:2px 8px;cursor:pointer;transition:all .18s;white-space:nowrap}
+    .copy-btn:hover{color:var(--prog-accent2);border-color:var(--prog-accent2)}
+    .copy-btn.copied{color:var(--prog-accent2);border-color:var(--prog-accent2)}
+    /* ══ SIMULATORE FILE TESTO ══ */
+    .ft-layout{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+    @media(max-width:640px){.ft-layout{grid-template-columns:1fr}}
+    .ft-panel-label{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--prog-accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+    .ft-file-area{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:6px;padding:.75rem 1rem;min-height:140px;font-family:'Space Mono',monospace;font-size:.82rem;color:var(--prog-text);white-space:pre-wrap;overflow-y:auto;max-height:200px}
+    .ft-file-line{display:flex;gap:.5rem;align-items:baseline;border-bottom:1px solid rgba(255,255,255,.04);padding:2px 0}
+    .ft-line-num{color:var(--prog-muted);min-width:1.5em;text-align:right;user-select:none}
+    .ft-line-val{color:var(--kw-string)}
+    .ft-read-area{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:6px;padding:.75rem 1rem;min-height:140px;font-family:'Space Mono',monospace;font-size:.82rem;color:var(--prog-text);overflow-y:auto;max-height:200px}
+    .ft-read-line{color:var(--prog-muted)}
+    .ft-read-line span{color:var(--prog-accent2)}
+    .ft-controls{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-bottom:1.25rem}
+    .ft-text-input{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:6px;color:var(--prog-text);font-family:'Sora',sans-serif;font-size:.88rem;padding:7px 12px;flex:1;min-width:140px;transition:border-color .18s}
+    .ft-text-input:focus{outline:none;border-color:var(--prog-accent)}
+    .ft-empty{color:var(--prog-muted);font-style:italic;font-size:.82rem}
+    /* ══ VISUALIZZATORE RECORD ══ */
+    .rec-form{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-bottom:1.25rem;padding:.75rem;background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:8px}
+    .rec-field{display:flex;flex-direction:column;gap:3px}
+    .rec-field label{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--prog-muted);letter-spacing:.05em;text-transform:uppercase}
+    .rec-input{background:var(--prog-card);border:1px solid var(--prog-border);border-radius:6px;color:var(--prog-text);font-family:'Space Mono',monospace;font-size:.85rem;padding:5px 8px;width:90px;transition:border-color .18s}
+    .rec-input.wide{width:150px}
+    .rec-input:focus{outline:none;border-color:var(--prog-accent)}
+    .rec-table{width:100%;border-collapse:collapse;font-family:'Space Mono',monospace;font-size:.82rem;border:1px solid var(--prog-border);border-radius:8px;overflow:hidden;margin:1rem 0}
+    .rec-table th{background:var(--prog-card);color:var(--prog-accent);padding:.55rem .75rem;text-align:left;font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;border-bottom:2px solid var(--prog-border)}
+    .rec-table td{padding:.5rem .75rem;border-bottom:1px solid var(--prog-border);color:var(--prog-text);vertical-align:middle}
+    .rec-table tr:last-child td{border-bottom:none}
+    .rec-table tr.selected td{background:rgba(86,207,178,.1);color:var(--prog-accent2)}
+    .rec-table .rec-idx{color:var(--prog-muted);font-weight:700}
+    .rec-table .rec-offset{color:var(--prog-accent3);font-size:.75rem}
+    .rec-seek-box{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:8px;padding:1rem;margin-top:1rem;font-family:'Space Mono',monospace;font-size:.85rem}
+    .rec-seek-line{color:var(--prog-muted);line-height:2}
+    .rec-seek-line .hl-func{color:var(--kw-func)}
+    .rec-seek-line .hl-num{color:var(--kw-number)}
+    .rec-seek-line .hl-val{color:var(--prog-accent2);font-weight:700}
+    .rec-access-controls{display:flex;gap:.5rem;align-items:center;margin-top:.75rem;flex-wrap:wrap}
+    footer{text-align:center;padding:2.5rem 1rem;color:var(--prog-muted);font-size:.85rem;border-top:1px solid var(--prog-border);margin-top:2rem}
+    footer a{color:var(--prog-accent);text-decoration:none}
+    footer a:hover{text-decoration:underline}
+    .footer-nav{margin-bottom:.75rem;font-size:.82rem}
+    .back-to-top{position:fixed;bottom:1.5rem;right:1.5rem;width:40px;height:40px;border-radius:50%;background:var(--prog-accent);color:#fff;border:none;font-size:1.1rem;cursor:pointer;opacity:0;transform:translateY(10px);transition:all .25s;z-index:200}
+    .back-to-top.visible{opacity:1;transform:translateY(0)}
+    @media(max-width:600px){main{padding:1.5rem 1rem 4rem}}
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="/programmazione/" class="header-back-link">&#x2190; Programmazione</a>
+  <div class="header-badge">C++ &middot; File</div>
+  <h1>Gestione <span>File</span></h1>
+  <p>File di testo, file binari e file di record in C++ &mdash; dalla scrittura con <code>ofstream</code> all&apos;accesso diretto con <code>seekg()</code>, con gestione degli errori e visualizzatori interattivi.</p>
+  <div class="header-pills">
+    <span class="header-pill">&#127891; 4&deg; anno ITIS/SIA</span>
+    <span class="header-pill">&#128194; Persistenza dei dati</span>
+    <span class="header-pill">&#9200; ~50 min</span>
+    <span class="header-pill">&#128295; 2 visualizzatori</span>
+  </div>
+  <div class="page-nav">
+    <a href="/programmazione/strutture-dati-dinamiche/">&#x2190; Strutture Dinamiche</a>
+    <span class="page-nav-sep">|</span>
+    <a href="/programmazione/">Hub Programmazione</a>
+  </div>
+</header>
+
+<div class="toc-wrap">
+  <nav class="toc" id="toc">
+    <a href="#intro" class="active">Introduzione</a>
+    <a href="#testo">File di testo</a>
+    <a href="#binari">File binari</a>
+    <a href="#record">File di record</a>
+  </nav>
+</div>
+
+<main>
+
+<!-- ══ INTRODUZIONE ══ -->
+<section id="intro">
+  <div class="section-label">00 &mdash; Perch&eacute;</div>
+  <h2>Perch&eacute; i file?</h2>
+
+  <p>Tutto ci&ograve; che si memorizza in variabili, array o struct esiste <strong>solo durante l&apos;esecuzione</strong> del programma. Appena il programma termina, quei dati spariscono. I <strong>file</strong> risolvono il problema della <em>persistenza</em>: scrivere dati su disco significa conservarli tra un&apos;esecuzione e la successiva, condividerli con altri programmi o stamparli.</p>
+
+  <div class="box box-info">
+    <strong>&#128204; Due categorie di file in C++</strong>
+    <strong style="display:inline;font-size:inherit;letter-spacing:0;text-transform:none;opacity:1">File di testo</strong> &mdash; contenuto leggibile con qualsiasi editor, ogni dato &egrave; convertito in caratteri ASCII. Adatti per log, configurazioni, scambio di dati semplici.<br><br>
+    <strong style="display:inline;font-size:inherit;letter-spacing:0;text-transform:none;opacity:1">File binari</strong> &mdash; contenuto scritto byte per byte, identico alla rappresentazione in memoria. Pi&ugrave; compatti e veloci da leggere/scrivere, non leggibili direttamente. Adatti per struct, array numerici, dati strutturati.
+  </div>
+
+  <h3>Le tre classi stream</h3>
+  <table class="adt-table">
+    <thead><tr><th>Classe</th><th>Uso</th><th>Include</th></tr></thead>
+    <tbody>
+      <tr><td>ofstream</td><td>Scrittura su file (output)</td><td>&lt;fstream&gt;</td></tr>
+      <tr><td>ifstream</td><td>Lettura da file (input)</td><td>&lt;fstream&gt;</td></tr>
+      <tr><td>fstream</td><td>Lettura e scrittura (entrambe)</td><td>&lt;fstream&gt;</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Modalit&agrave; di apertura</h3>
+  <table class="adt-table">
+    <thead><tr><th>Flag</th><th>Significato</th><th>Default per</th></tr></thead>
+    <tbody>
+      <tr><td>ios::in</td><td>Apre in lettura</td><td>ifstream</td></tr>
+      <tr><td>ios::out</td><td>Apre in scrittura (sovrascrive)</td><td>ofstream</td></tr>
+      <tr><td>ios::app</td><td>Aggiunge in fondo senza sovrascrivere</td><td>&mdash;</td></tr>
+      <tr><td>ios::trunc</td><td>Svuota il file all&apos;apertura</td><td>ofstream</td></tr>
+      <tr><td>ios::binary</td><td>Modalit&agrave; binaria (nessuna conversione)</td><td>&mdash;</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══ FILE DI TESTO ══ -->
+<section id="testo">
+  <div class="section-label">01 &mdash; Struttura</div>
+  <h2>File di testo</h2>
+
+  <p>In un file di testo ogni valore viene convertito nella sua rappresentazione a caratteri prima di essere scritto. L&apos;operatore <code>&lt;&lt;</code> funziona esattamente come con <code>cout</code>, e <code>&gt;&gt;</code> come con <code>cin</code>.</p>
+
+  <h3>Scrittura e lettura &mdash; esempio base</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; file_testo_base.cpp</span></div>
+    <pre><span class="pp">#include &lt;iostream&gt;</span>
+<span class="pp">#include &lt;fstream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="cm">// scrittura: ofstream crea il file se non esiste</span>
+    <span class="tp">ofstream</span> out(<span class="st">"dati.txt"</span>);
+    out &lt;&lt; <span class="st">"Mario Rossi"</span> &lt;&lt; endl;
+    out &lt;&lt; <span class="nm">7.5</span> &lt;&lt; endl;
+    out.<span class="fn">close</span>();
+
+    <span class="cm">// lettura: ifstream apre il file esistente</span>
+    <span class="tp">ifstream</span> in(<span class="st">"dati.txt"</span>);
+    <span class="tp">string</span>  nome;
+    <span class="tp">float</span>   media;
+    getline(in, nome);   <span class="cm">// legge una riga intera</span>
+    in &gt;&gt; media;         <span class="cm">// legge il valore numerico</span>
+    in.<span class="fn">close</span>();
+
+    cout &lt;&lt; nome &lt;&lt; <span class="st">" | "</span> &lt;&lt; media &lt;&lt; endl;
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+
+  <h3>Gestione degli errori e pattern completo</h3>
+  <p>Aprire un file pu&ograve; fallire: file inesistente, permessi insufficienti, disco pieno. Il metodo <code>is_open()</code> verifica se l&apos;apertura &egrave; riuscita &mdash; va sempre controllato prima di usare lo stream.</p>
+
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; file_testo_completo.cpp</span></div>
+    <pre><span class="pp">#include &lt;iostream&gt;</span>
+<span class="pp">#include &lt;fstream&gt;</span>
+<span class="pp">#include &lt;string&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="cm">// ── SCRITTURA ──────────────────────────────────────</span>
+    <span class="tp">ofstream</span> out(<span class="st">"voti.txt"</span>);
+    <span class="kw">if</span> (!out.<span class="fn">is_open</span>()) {
+        cerr &lt;&lt; <span class="st">"Errore: impossibile creare il file."</span> &lt;&lt; endl;
+        <span class="kw">return</span> <span class="nm">1</span>;
+    }
+    out &lt;&lt; <span class="st">"Anna Bianchi"</span> &lt;&lt; endl &lt;&lt; <span class="nm">8</span> &lt;&lt; endl;
+    out &lt;&lt; <span class="st">"Mario Rossi"</span>  &lt;&lt; endl &lt;&lt; <span class="nm">7</span> &lt;&lt; endl;
+    out &lt;&lt; <span class="st">"Luca Verdi"</span>   &lt;&lt; endl &lt;&lt; <span class="nm">9</span> &lt;&lt; endl;
+    out.<span class="fn">close</span>();
+
+    <span class="cm">// ── LETTURA RIGA PER RIGA ──────────────────────────</span>
+    <span class="tp">ifstream</span> in(<span class="st">"voti.txt"</span>);
+    <span class="kw">if</span> (!in.<span class="fn">is_open</span>()) {
+        cerr &lt;&lt; <span class="st">"Errore: file non trovato."</span> &lt;&lt; endl;
+        <span class="kw">return</span> <span class="nm">1</span>;
+    }
+    <span class="tp">string</span> nome;
+    <span class="tp">int</span>    voto;
+    <span class="kw">while</span> (getline(in, nome)) {         <span class="cm">// legge il nome</span>
+        <span class="kw">if</span> (!(in &gt;&gt; voto)) <span class="kw">break</span>;       <span class="cm">// legge il voto</span>
+        in.<span class="fn">ignore</span>();                    <span class="cm">// NECESSARIO: scarta il '\n' lasciato da operator>> dopo il numero, altrimenti il getline successivo leggerebbe una riga vuota</span>
+        cout &lt;&lt; nome &lt;&lt; <span class="st">": "</span> &lt;&lt; voto &lt;&lt; endl;
+    }
+    in.<span class="fn">close</span>();
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+
+  <h3>Modalit&agrave; append &mdash; aggiungere senza sovrascrivere</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; append</span></div>
+    <pre><span class="cm">// ios::app posiziona il cursore in fondo prima di ogni scrittura</span>
+<span class="tp">ofstream</span> out(<span class="st">"voti.txt"</span>, ios::<span class="fn">app</span>);
+<span class="kw">if</span> (!out.<span class="fn">is_open</span>()) { cerr &lt;&lt; <span class="st">"Errore apertura."</span> &lt;&lt; endl; <span class="kw">return</span> <span class="nm">1</span>; }
+out &lt;&lt; <span class="st">"Sara Neri"</span> &lt;&lt; endl &lt;&lt; <span class="nm">9</span> &lt;&lt; endl;
+out.<span class="fn">close</span>();
+cout &lt;&lt; <span class="st">"Dati aggiunti con successo."</span> &lt;&lt; endl;
+<span class="cm">// il file ora contiene i dati precedenti + Sara Neri</span></pre>
+  </div>
+
+  <h3>&#128295; Simulatore File di Testo</h3>
+  <p>Aggiungi righe al file simulato, scegli se sovrascrivere o aggiungere in fondo, poi simula la lettura con <code>getline()</code>.</p>
+
+  <div class="tool-box">
+    <div class="tool-header">
+      <span class="tool-title">&#128295; Simulatore File di Testo</span>
+      <span class="tool-subtitle">ofstream &middot; ifstream &middot; getline()</span>
+    </div>
+    <div class="tool-body">
+      <!-- controlli scrittura -->
+      <div class="ft-controls">
+        <input type="text" class="ft-text-input" id="ft-input" placeholder="Testo da scrivere...">
+        <button class="tool-btn primary" id="ft-write">&#9997; Scrivi (out)</button>
+        <button class="tool-btn secondary" id="ft-append">&#43; Append</button>
+        <button class="tool-btn danger" id="ft-reset">&#8635; Reset</button>
+      </div>
+      <!-- layout a due colonne -->
+      <div class="ft-layout">
+        <!-- file simulato -->
+        <div>
+          <div class="ft-panel-label">&#128196; dati.txt (su disco)</div>
+          <div class="ft-file-area" id="ft-file">
+            <span class="ft-empty">File vuoto</span>
+          </div>
+        </div>
+        <!-- lettura simulata -->
+        <div>
+          <div class="ft-panel-label" style="justify-content:space-between">
+            &#128065; Lettura con getline()
+            <button class="tool-btn" id="ft-read" style="padding:3px 10px;font-size:.75rem">Leggi</button>
+          </div>
+          <div class="ft-read-area" id="ft-read-area">
+            <span class="ft-empty">Premi Leggi per simulare ifstream</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tool-msg" id="ft-msg">Scrivi del testo e premi Scrivi o Append.</div>
+  </div>
+</section>
+
+<!-- ══ FILE BINARI ══ -->
+<section id="binari">
+  <div class="section-label">02 &mdash; Struttura</div>
+  <h2>File binari</h2>
+
+  <p>In un file binario i dati vengono scritti <strong>byte per byte</strong> esattamente come sono in memoria, senza alcuna conversione. Un <code>int</code> occupa sempre 4 byte, un <code>float</code> sempre 4 byte. Risultato: file pi&ugrave; compatti, lettura/scrittura pi&ugrave; veloci, contenuto non leggibile con un editor.</p>
+
+  <div class="box box-warn">
+    <strong>&#9888; Portabilit&agrave;</strong>
+    I file binari dipendono dall&apos;architettura della macchina (endianness, dimensione dei tipi). Un file scritto su un sistema a 64 bit potrebbe non essere leggibile correttamente su un sistema a 32 bit con una struct diversamente allineata. Per scambio di dati tra sistemi diversi si preferisce il formato testo.
+  </div>
+
+  <h3>Scrittura binaria &mdash; esempio base</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; binario_base.cpp</span></div>
+    <pre><span class="pp">#include &lt;fstream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> dati[] = {<span class="nm">10</span>, <span class="nm">25</span>, <span class="nm">7</span>, <span class="nm">42</span>};
+
+    <span class="cm">// scrittura binaria: ios::binary disabilita le conversioni</span>
+    <span class="tp">ofstream</span> out(<span class="st">"numeri.bin"</span>, ios::<span class="fn">binary</span>);
+    out.<span class="fn">write</span>(reinterpret_cast&lt;<span class="kw">const</span> <span class="tp">char</span>*&gt;(dati), <span class="kw">sizeof</span>(dati));
+    out.<span class="fn">close</span>();
+
+    <span class="cm">// lettura binaria</span>
+    <span class="tp">int</span> letti[<span class="nm">4</span>];
+    <span class="tp">ifstream</span> in(<span class="st">"numeri.bin"</span>, ios::<span class="fn">binary</span>);
+    in.<span class="fn">read</span>(reinterpret_cast&lt;<span class="tp">char</span>*&gt;(letti), <span class="kw">sizeof</span>(letti));
+    in.<span class="fn">close</span>();
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+
+  <h3>Con gestione degli errori</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; binario_completo.cpp</span></div>
+    <pre><span class="pp">#include &lt;iostream&gt;</span>
+<span class="pp">#include &lt;fstream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> dati[] = {<span class="nm">10</span>, <span class="nm">25</span>, <span class="nm">7</span>, <span class="nm">42</span>};
+    <span class="kw">const</span> <span class="tp">int</span> N = <span class="kw">sizeof</span>(dati) / <span class="kw">sizeof</span>(dati[<span class="nm">0</span>]);
+
+    <span class="cm">// ── SCRITTURA ──────────────────────────────────────</span>
+    <span class="tp">ofstream</span> out(<span class="st">"numeri.bin"</span>, ios::<span class="fn">binary</span>);
+    <span class="kw">if</span> (!out.<span class="fn">is_open</span>()) {
+        cerr &lt;&lt; <span class="st">"Errore: impossibile aprire in scrittura."</span> &lt;&lt; endl;
+        <span class="kw">return</span> <span class="nm">1</span>;
+    }
+    out.<span class="fn">write</span>(reinterpret_cast&lt;<span class="kw">const</span> <span class="tp">char</span>*&gt;(dati), <span class="kw">sizeof</span>(dati));
+    <span class="kw">if</span> (!out.<span class="fn">good</span>()) {
+        cerr &lt;&lt; <span class="st">"Errore durante la scrittura."</span> &lt;&lt; endl;
+        <span class="kw">return</span> <span class="nm">1</span>;
+    }
+    out.<span class="fn">close</span>();
+
+    <span class="cm">// ── LETTURA ────────────────────────────────────────</span>
+    <span class="tp">int</span> letti[N];
+    <span class="tp">ifstream</span> in(<span class="st">"numeri.bin"</span>, ios::<span class="fn">binary</span>);
+    <span class="kw">if</span> (!in.<span class="fn">is_open</span>()) {
+        cerr &lt;&lt; <span class="st">"Errore: file non trovato."</span> &lt;&lt; endl;
+        <span class="kw">return</span> <span class="nm">1</span>;
+    }
+    in.<span class="fn">read</span>(reinterpret_cast&lt;<span class="tp">char</span>*&gt;(letti), <span class="kw">sizeof</span>(letti));
+    <span class="kw">if</span> (in) {   <span class="cm">// lettura riuscita: lo stream &egrave; ancora in stato valido</span>
+        <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; N; i++)
+            cout &lt;&lt; letti[i] &lt;&lt; <span class="st">" "</span>;
+        cout &lt;&lt; endl;
+    } <span class="kw">else</span> {
+        cerr &lt;&lt; <span class="st">"Errore durante la lettura del file binario."</span> &lt;&lt; endl;
+        <span class="kw">return</span> <span class="nm">1</span>;
+    }
+    in.<span class="fn">close</span>();
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+
+  <div class="box box-tip">
+    <strong>&#128161; reinterpret_cast&lt;char*&gt; &mdash; perch&eacute;?</strong>
+    <code>write()</code> e <code>read()</code> lavorano su sequenze di <code>char</code> (byte grezzi). <code>reinterpret_cast</code> dice al compilatore di trattare il puntatore al nostro dato come un puntatore a byte, senza modificarne il contenuto. &Egrave; il modo corretto per accedere alla rappresentazione binaria di qualsiasi tipo.
+  </div>
+</section>
+
+<!-- ══ FILE DI RECORD ══ -->
+<section id="record">
+  <div class="section-label">03 &mdash; Struttura</div>
+  <h2>File di record</h2>
+
+  <p>Il caso d&apos;uso pi&ugrave; comune in ambito SIA: salvare su file un intero array di struct e rileggerlo in un&apos;altra esecuzione. Ogni struct &egrave; un <strong>record a dimensione fissa</strong>, il che permette l&apos;<strong>accesso diretto</strong> per posizione senza leggere tutto il file.</p>
+
+  <h3>Scrittura e lettura sequenziale</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; record_base.cpp</span></div>
+    <pre><span class="pp">#include &lt;fstream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="kw">typedef struct</span> { <span class="tp">int</span> matricola; <span class="tp">char</span> nome[<span class="nm">30</span>]; <span class="tp">float</span> media; } <span class="tp">Studente</span>;
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">Studente</span> classe[<span class="nm">3</span>] = {
+        {<span class="nm">101</span>, <span class="st">"Anna Bianchi"</span>, <span class="nm">8.5f</span>},
+        {<span class="nm">102</span>, <span class="st">"Mario Rossi"</span>,  <span class="nm">7.2f</span>},
+        {<span class="nm">103</span>, <span class="st">"Luca Verdi"</span>,   <span class="nm">9.1f</span>}
+    };
+
+    <span class="cm">// scrittura: ogni struct &egrave; scritta come blocco di byte</span>
+    <span class="tp">ofstream</span> out(<span class="st">"studenti.dat"</span>, ios::<span class="fn">binary</span>);
+    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; <span class="nm">3</span>; i++)
+        out.<span class="fn">write</span>(reinterpret_cast&lt;<span class="kw">const</span> <span class="tp">char</span>*&gt;(&amp;classe[i]), <span class="kw">sizeof</span>(<span class="tp">Studente</span>));
+    out.<span class="fn">close</span>();
+
+    <span class="cm">// lettura sequenziale</span>
+    <span class="tp">Studente</span> s;
+    <span class="tp">ifstream</span> in(<span class="st">"studenti.dat"</span>, ios::<span class="fn">binary</span>);
+    <span class="kw">while</span> (in.<span class="fn">read</span>(reinterpret_cast&lt;<span class="tp">char</span>*&gt;(&amp;s), <span class="kw">sizeof</span>(<span class="tp">Studente</span>)))
+        cout &lt;&lt; s.matricola &lt;&lt; <span class="st">" "</span> &lt;&lt; s.nome &lt;&lt; <span class="st">" "</span> &lt;&lt; s.media &lt;&lt; endl;
+    in.<span class="fn">close</span>();
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+
+  <h3>Accesso diretto per posizione</h3>
+  <p>Poich&eacute; ogni record ha dimensione fissa (<code>sizeof(Studente)</code> byte), l&apos;offset del record di indice <code>n</code> &egrave; esattamente <code>n &times; sizeof(Studente)</code> byte dall&apos;inizio del file. Con <code>seekg()</code> si salta direttamente a quella posizione senza leggere tutto il file &mdash; <strong>O(1)</strong> invece di O(n).</p>
+
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; accesso_diretto.cpp</span></div>
+    <pre><span class="pp">#include &lt;iostream&gt;</span>
+<span class="pp">#include &lt;fstream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="kw">typedef struct</span> { <span class="tp">int</span> matricola; <span class="tp">char</span> nome[<span class="nm">30</span>]; <span class="tp">float</span> media; } <span class="tp">Studente</span>;
+
+<span class="cm">// legge il record in posizione n (indice base 0)</span>
+<span class="tp">bool</span> <span class="fn">leggiRecord</span>(<span class="tp">ifstream</span>&amp; in, <span class="tp">int</span> n, <span class="tp">Studente</span>&amp; s) {
+    in.<span class="fn">clear</span>();                                          <span class="cm">// resetta eventuali flag di errore (es. EOF da lettura precedente)</span>
+    in.<span class="fn">seekg</span>((<span class="tp">long</span>)n * <span class="kw">sizeof</span>(<span class="tp">Studente</span>), ios::<span class="fn">beg</span>);
+    in.<span class="fn">read</span>(reinterpret_cast&lt;<span class="tp">char</span>*&gt;(&amp;s), <span class="kw">sizeof</span>(<span class="tp">Studente</span>));
+    <span class="kw">return</span> (<span class="tp">bool</span>)in;                                       <span class="cm">// vero se la lettura &egrave; riuscita</span>
+}
+
+<span class="cm">// modifica il record in posizione n</span>
+<span class="tp">bool</span> <span class="fn">modificaRecord</span>(<span class="tp">fstream</span>&amp; f, <span class="tp">int</span> n, <span class="kw">const</span> <span class="tp">Studente</span>&amp; s) {
+    f.<span class="fn">clear</span>();                                            <span class="cm">// resetta eventuali flag di errore prima del seek</span>
+    f.<span class="fn">seekp</span>((<span class="tp">long</span>)n * <span class="kw">sizeof</span>(<span class="tp">Studente</span>), ios::<span class="fn">beg</span>);
+    f.<span class="fn">write</span>(reinterpret_cast&lt;<span class="kw">const</span> <span class="tp">char</span>*&gt;(&amp;s), <span class="kw">sizeof</span>(<span class="tp">Studente</span>));
+    <span class="kw">return</span> f.<span class="fn">good</span>();  <span class="cm">// good() &egrave; vero solo se lo stream non ha errori E non &egrave; EOF: pi&ugrave; rigoroso di (bool)stream</span>
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="cm">// lettura diretta del secondo record (indice 1)</span>
+    <span class="tp">Studente</span> s;
+    <span class="tp">ifstream</span> in(<span class="st">"studenti.dat"</span>, ios::<span class="fn">binary</span>);
+    <span class="kw">if</span> (!in.<span class="fn">is_open</span>()) { cerr &lt;&lt; <span class="st">"File non trovato."</span> &lt;&lt; endl; <span class="kw">return</span> <span class="nm">1</span>; }
+
+    <span class="kw">if</span> (<span class="fn">leggiRecord</span>(in, <span class="nm">1</span>, s))
+        cout &lt;&lt; s.nome &lt;&lt; <span class="st">" | "</span> &lt;&lt; s.media &lt;&lt; endl;  <span class="cm">// Mario Rossi | 7.2</span>
+    in.<span class="fn">close</span>();
+
+    <span class="cm">// modifica del terzo record (indice 2) con fstream</span>
+    <span class="tp">fstream</span> f(<span class="st">"studenti.dat"</span>, ios::<span class="fn">binary</span> | ios::<span class="fn">in</span> | ios::<span class="fn">out</span>);
+    <span class="kw">if</span> (!f.<span class="fn">is_open</span>()) { cerr &lt;&lt; <span class="st">"Errore apertura."</span> &lt;&lt; endl; <span class="kw">return</span> <span class="nm">1</span>; }
+    <span class="tp">Studente</span> nuovo = {<span class="nm">103</span>, <span class="st">"Luca Verdi"</span>, <span class="nm">9.8f</span>};  <span class="cm">// aggiorno la media</span>
+    <span class="fn">modificaRecord</span>(f, <span class="nm">2</span>, nuovo);
+    f.<span class="fn">close</span>();
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+
+  <h3>&#128295; Visualizzatore Record</h3>
+  <p>Aggiungi record, poi usa l&apos;accesso diretto per selezionarne uno per indice. Il visualizzatore mostra l&apos;offset in byte calcolato con <code>n &times; sizeof(Studente)</code>.</p>
+
+  <div class="tool-box">
+    <div class="tool-header">
+      <span class="tool-title">&#128295; Visualizzatore Record</span>
+      <span class="tool-subtitle">Accesso diretto &middot; seekg(n &times; sizeof(Studente), ios::beg)</span>
+    </div>
+    <div class="tool-body">
+      <!-- form aggiunta record -->
+      <div class="rec-form">
+        <div class="rec-field">
+          <label>Matricola</label>
+          <input type="number" class="rec-input" id="rec-mat" value="101" min="1">
+        </div>
+        <div class="rec-field">
+          <label>Nome</label>
+          <input type="text" class="rec-input wide" id="rec-nome" value="Anna Bianchi" maxlength="29">
+        </div>
+        <div class="rec-field">
+          <label>Media</label>
+          <input type="number" class="rec-input" id="rec-media" value="8.5" step="0.1" min="0" max="10">
+        </div>
+        <button class="tool-btn primary" id="rec-add" style="align-self:flex-end">+ Aggiungi</button>
+        <button class="tool-btn danger"  id="rec-reset" style="align-self:flex-end">&#8635; Reset</button>
+      </div>
+
+      <!-- tabella record -->
+      <table class="rec-table" id="rec-table">
+        <thead>
+          <tr>
+            <th>Indice</th>
+            <th>Matricola</th>
+            <th>Nome</th>
+            <th>Media</th>
+            <th>Offset nel file</th>
+          </tr>
+        </thead>
+        <tbody id="rec-tbody">
+          <tr><td colspan="5" style="text-align:center;color:var(--prog-muted);font-style:italic;padding:1.5rem">Nessun record &mdash; aggiungi il primo</td></tr>
+        </tbody>
+      </table>
+
+      <!-- accesso diretto -->
+      <div class="rec-access-controls">
+        <span style="font-size:.88rem;color:var(--prog-text)">Leggi record [</span>
+        <input type="number" class="tool-input" id="rec-seek-idx" value="0" min="0" style="width:60px">
+        <span style="font-size:.88rem;color:var(--prog-text)">]</span>
+        <button class="tool-btn secondary" id="rec-seek-btn">seekg + read</button>
+      </div>
+
+      <div class="rec-seek-box" id="rec-seek-box" style="display:none">
+        <div class="rec-seek-line" id="rec-seek-line1"></div>
+        <div class="rec-seek-line" id="rec-seek-line2"></div>
+        <div class="rec-seek-line" id="rec-seek-line3"></div>
+      </div>
+    </div>
+    <div class="tool-msg" id="rec-msg">Aggiungi record per iniziare.</div>
+  </div>
+
+  <div class="box box-info">
+    <strong>&#128204; sizeof(Studente) &mdash; un valore dipendente dal compilatore</strong>
+    Per la struct <code>{int matricola; char nome[30]; float media;}</code>: int = 4 byte, char[30] = 30 byte, float = 4 byte, pi&ugrave; eventuali 2 byte di padding per allineare al confine di 4 byte. Risultato tipico: <strong>40 byte</strong>. Il visualizzatore usa questo valore. Nella pratica, usare sempre <code>sizeof(Studente)</code> e mai un numero fisso.
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-nav">
+    <a href="/programmazione/strutture-dati-dinamiche/">&#8592; Strutture Dinamiche</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/programmazione/">Hub Programmazione</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/">Home</a>
+  </div>
+  <strong>Formazione Digitale</strong> &mdash; Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ═══════════════════════════════════════════
+     TOOL 1 — SIMULATORE FILE DI TESTO
+  ═══════════════════════════════════════════ */
+  (function initFileTesto(){
+    var fileLines = [];   /* contenuto simulato del file */
+
+    var inputEl  = document.getElementById('ft-input');
+    var btnWrite = document.getElementById('ft-write');
+    var btnApp   = document.getElementById('ft-append');
+    var btnReset = document.getElementById('ft-reset');
+    var btnRead  = document.getElementById('ft-read');
+    var fileArea = document.getElementById('ft-file');
+    var readArea = document.getElementById('ft-read-area');
+    var msgEl    = document.getElementById('ft-msg');
+
+    function renderFile(){
+      if(fileLines.length===0){
+        fileArea.innerHTML='<span class="ft-empty">File vuoto</span>';
+        return;
+      }
+      fileArea.innerHTML=fileLines.map(function(line,i){
+        return '<div class="ft-file-line">'
+          +'<span class="ft-line-num">'+(i)+'</span>'
+          +'<span class="ft-line-val">'+escHtml(line)+'</span>'
+          +'</div>';
+      }).join('');
+    }
+
+    function escHtml(s){
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    function getText(){
+      var t=inputEl.value.trim();
+      if(!t){msgEl.textContent='Inserisci del testo prima.';return null;}
+      return t;
+    }
+
+    btnWrite.addEventListener('click',function(){
+      var t=getText(); if(!t)return;
+      fileLines=[t]; inputEl.value='';
+      renderFile();
+      readArea.innerHTML='<span class="ft-empty">Premi Leggi per simulare ifstream</span>';
+      msgEl.textContent='ofstream out("dati.txt") \u2014 file sovrascritto con 1 riga.';
+    });
+
+    btnApp.addEventListener('click',function(){
+      var t=getText(); if(!t)return;
+      fileLines.push(t); inputEl.value='';
+      renderFile();
+      msgEl.textContent='ofstream out("dati.txt", ios::app) \u2014 riga aggiunta in fondo. Totale: '+fileLines.length+'.';
+    });
+
+    btnReset.addEventListener('click',function(){
+      fileLines=[];
+      renderFile();
+      readArea.innerHTML='<span class="ft-empty">Premi Leggi per simulare ifstream</span>';
+      msgEl.textContent='File eliminato \u2014 fileLines = [].';
+    });
+
+    btnRead.addEventListener('click',function(){
+      if(fileLines.length===0){
+        readArea.innerHTML='<span class="ft-empty">File vuoto \u2014 nessun dato da leggere</span>';
+        msgEl.textContent='ifstream in("dati.txt") \u2014 file vuoto o non trovato.';
+        return;
+      }
+      readArea.innerHTML=fileLines.map(function(line,i){
+        return '<div class="ft-read-line">'
+          +'getline(in, riga) \u2192 <span>'+escHtml(line)+'</span>'
+          +'</div>';
+      }).join('')+'<div class="ft-read-line" style="margin-top:.25rem">in.eof() \u2192 <span>true</span> &mdash; in.close()</div>';
+      msgEl.textContent='ifstream in("dati.txt") \u2014 lette '+fileLines.length+' righe con getline().';
+    });
+
+    renderFile();
+  })();
+
+  /* ═══════════════════════════════════════════
+     TOOL 2 — VISUALIZZATORE RECORD
+  ═══════════════════════════════════════════ */
+  (function initRecord(){
+    var SIZEOF_STUDENTE = 40; /* int(4) + char[30](30) + float(4) + padding(2) */
+    var records = [];
+    var selected = -1;
+
+    var matInp   = document.getElementById('rec-mat');
+    var nomeInp  = document.getElementById('rec-nome');
+    var mediaInp = document.getElementById('rec-media');
+    var addBtn   = document.getElementById('rec-add');
+    var resetBtn = document.getElementById('rec-reset');
+    var tbody    = document.getElementById('rec-tbody');
+    var seekIdxInp = document.getElementById('rec-seek-idx');
+    var seekBtn  = document.getElementById('rec-seek-btn');
+    var seekBox  = document.getElementById('rec-seek-box');
+    var seekL1   = document.getElementById('rec-seek-line1');
+    var seekL2   = document.getElementById('rec-seek-line2');
+    var seekL3   = document.getElementById('rec-seek-line3');
+    var msgEl    = document.getElementById('rec-msg');
+
+    function renderTable(){
+      if(records.length===0){
+        tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--prog-muted);font-style:italic;padding:1.5rem">Nessun record &mdash; aggiungi il primo</td></tr>';
+        return;
+      }
+      tbody.innerHTML=records.map(function(r,i){
+        var offset=i*SIZEOF_STUDENTE;
+        return '<tr class="'+(i===selected?'selected':'')+'">'
+          +'<td class="rec-idx">['+i+']</td>'
+          +'<td>'+r.mat+'</td>'
+          +'<td>'+escHtml(r.nome)+'</td>'
+          +'<td>'+r.media.toFixed(1)+'</td>'
+          +'<td class="rec-offset">'+offset+' byte</td>'
+          +'</tr>';
+      }).join('');
+    }
+
+    function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+    addBtn.addEventListener('click',function(){
+      var mat  = parseInt(matInp.value);
+      var nome = nomeInp.value.trim().slice(0,29);
+      var med  = parseFloat(mediaInp.value);
+      if(isNaN(mat)||!nome||isNaN(med)){msgEl.textContent='Compila tutti i campi.';return;}
+      records.push({mat:mat, nome:nome, media:med});
+      seekIdxInp.max=records.length-1;
+      selected=-1;
+      seekBox.style.display='none';
+      renderTable();
+      msgEl.textContent='Record ['+( records.length-1)+'] scritto a offset '+(( records.length-1)*SIZEOF_STUDENTE)+' byte \u2014 out.write(&s, sizeof(Studente)).';
+    });
+
+    resetBtn.addEventListener('click',function(){
+      records=[]; selected=-1;
+      seekBox.style.display='none';
+      renderTable();
+      msgEl.textContent='File di record azzerato.';
+    });
+
+    seekBtn.addEventListener('click',function(){
+      var n=parseInt(seekIdxInp.value);
+      if(isNaN(n)||n<0||n>=records.length){
+        msgEl.textContent='Indice '+n+' fuori range (0 \u2026 '+(records.length-1)+').';
+        return;
+      }
+      var offset=n*SIZEOF_STUDENTE;
+      var r=records[n];
+      selected=n;
+      renderTable();
+      seekBox.style.display='block';
+      seekL1.innerHTML='<span class="hl-func">seekg</span>(<span class="hl-num">'+n+'</span> \u00d7 sizeof(Studente) = <span class="hl-num">'+offset+'</span>, ios::beg)';
+      seekL2.innerHTML='<span class="hl-func">read</span>(&s, sizeof(Studente))  \u2192  <span class="hl-num">'+SIZEOF_STUDENTE+'</span> byte letti';
+      seekL3.innerHTML='s = { <span class="hl-val">'+r.mat+'</span>, <span class="hl-val">"'+escHtml(r.nome)+'"</span>, <span class="hl-val">'+r.media.toFixed(1)+'</span> }';
+      msgEl.textContent='Accesso diretto al record ['+n+'] \u2014 O(1), nessuna scansione.';
+    });
+
+    renderTable();
+  })();
+
+  /* ═══ COPIA CODICE ═══ */
+  document.querySelectorAll('.code-block').forEach(function(block){
+    var header=block.querySelector('.code-header');
+    var pre=block.querySelector('pre');
+    if(!header||!pre)return;
+    var btn=document.createElement('button');
+    btn.className='copy-btn'; btn.textContent='Copia';
+    btn.addEventListener('click',function(){
+      navigator.clipboard.writeText(pre.innerText).then(function(){
+        btn.textContent='\u2713 Copiato'; btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copia';btn.classList.remove('copied');},2000);
+      });
+    });
+    header.appendChild(btn);
+  });
+
+  /* ═══ TOC ═══ */
+  var tocLinks=document.querySelectorAll('#toc a');
+  var sections=document.querySelectorAll('section[id]');
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        tocLinks.forEach(function(a){a.classList.remove('active');});
+        var a=document.querySelector('#toc a[href="#'+e.target.id+'"]');
+        if(a) a.classList.add('active');
+      }
+    });
+  },{rootMargin:'-10% 0px -80% 0px',threshold:0});
+  sections.forEach(function(s){obs.observe(s);});
+  tocLinks.forEach(function(a){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      var t=document.querySelector(a.getAttribute('href'));
+      if(t) t.scrollIntoView({behavior:'smooth'});
+    });
+  });
+  var btt=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btt.classList.toggle('visible',window.scrollY>300);});
+})();
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>

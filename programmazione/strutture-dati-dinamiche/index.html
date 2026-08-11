@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strutture Dati Dinamiche in C++ — Formazione Digitale</title>
+  <meta name="description" content="Puntatori, lista concatenata, stack e coda con nodi in C++: allocazione dinamica con new/delete, codice commentato e visualizzatori interattivi. 4° anno ITIS/SIA.">
+  <meta name="author" content="Cristiano De Pasquale">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://formazione-digitale.it/programmazione/strutture-dati-dinamiche/">
+  <link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="//gc.zgo.at">
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#7c5cfc">
+  <meta property="og:title" content="Strutture Dati Dinamiche in C++ — Formazione Digitale">
+  <meta property="og:description" content="Puntatori, lista concatenata, stack e coda con nodi in C++ con visualizzatori interattivi.">
+  <meta property="og:url" content="https://formazione-digitale.it/programmazione/strutture-dati-dinamiche/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Formazione Digitale">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Strutture Dati Dinamiche in C++ — Formazione Digitale">
+  <meta name="twitter:description" content="Puntatori, lista concatenata, stack e coda con nodi in C++ con visualizzatori interattivi.">
+  <meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Strutture Dati Dinamiche in C++","url":"https://formazione-digitale.it/programmazione/strutture-dati-dinamiche/","inLanguage":"it","educationalLevel":"intermediate","teaches":["Puntatori","new","delete","Lista concatenata","Stack","Coda","C++"],"author":{"@type":"Person","name":"Cristiano De Pasquale"},"publisher":{"@type":"Organization","name":"Formazione Digitale","url":"https://formazione-digitale.it"}}</script>
+  <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/shared-extended.css?v=1">
+  <style>
+    :root{--prog-bg:#0f1117;--prog-surface:#1a1d27;--prog-card:#21253a;--prog-border:#2e3350;--prog-accent:#7c5cfc;--prog-accent2:#56cfb2;--prog-accent3:#f9a03f;--prog-red:#e05c5c;--prog-text:#d4d8f0;--prog-muted:#7a7f9a;--prog-code-bg:#131620;--kw-type:#79b8ff;--kw-keyword:#f97583;--kw-comment:#6a737d;--kw-string:#9ecbff;--kw-number:#b392f0;--kw-func:#56cfb2}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Sora',sans-serif;background:var(--prog-bg);color:var(--prog-text);line-height:1.75}
+    header{background:var(--prog-surface);border-bottom:3px solid var(--prog-accent);padding:2.5rem 2rem 2rem;position:relative;overflow:hidden}
+    header::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:var(--prog-accent);opacity:.07;pointer-events:none}
+    .header-back-link{display:inline-flex;align-items:center;gap:5px;font-size:.78rem;color:var(--prog-muted);text-decoration:none;transition:color .2s;position:absolute;top:1rem;left:1.5rem}
+    .header-back-link:hover{color:var(--prog-text)}
+    .header-badge{display:inline-block;font-family:'Space Mono',monospace;font-size:.68rem;background:var(--prog-accent);color:#fff;padding:3px 10px;border-radius:3px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+    header h1{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:700;letter-spacing:-.02em;line-height:1.15;color:#fff}
+    header h1 span{color:var(--prog-accent)}
+    header p{margin-top:.75rem;color:var(--prog-muted);font-size:.95rem;max-width:620px}
+    .header-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.25rem}
+    .header-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:4px 12px;border-radius:20px;font-family:'Space Mono',monospace;font-size:.72rem;color:var(--prog-muted)}
+    .page-nav{display:flex;gap:1rem;align-items:center;margin-top:1rem;font-size:.8rem;flex-wrap:wrap}
+    .page-nav a{color:var(--prog-accent);text-decoration:none;border:1px solid rgba(124,92,252,.3);padding:4px 12px;border-radius:20px;transition:all .18s}
+    .page-nav a:hover{background:rgba(124,92,252,.15);border-color:var(--prog-accent)}
+    .header-deco-svg{position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);opacity:.42;pointer-events:none}
+    @media(max-width:780px){.header-deco-svg{display:none}}
+    .toc-wrap{position:sticky;top:0;z-index:100;background:#1a1a18;border-bottom:3px solid var(--prog-accent)}
+    nav.toc{padding:.7rem 1.5rem;display:flex;flex-wrap:wrap;gap:.25rem;align-items:center;justify-content:center;max-width:980px;margin:0 auto}
+    nav.toc a{font-size:.82rem;font-family:'Sora',sans-serif;font-weight:500;color:#aaa9a0;text-decoration:none;padding:5px 13px;border-radius:20px;border:1px solid transparent;transition:all .18s;white-space:nowrap}
+    nav.toc a:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2)}
+    nav.toc a.active{background:var(--prog-accent);color:#fff;border-color:var(--prog-accent);font-weight:700}
+    @media(max-width:600px){nav.toc{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav.toc::-webkit-scrollbar{display:none}}
+    main{max-width:980px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+    section{margin-bottom:4.5rem;scroll-margin-top:70px}
+    .section-label{font-family:'Space Mono',monospace;font-size:.82rem;font-weight:700;color:var(--prog-accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.5rem}
+    h2{font-size:1.65rem;font-weight:700;color:#fff;letter-spacing:-.02em;border-bottom:2px solid var(--prog-border);padding-bottom:.6rem;margin-bottom:1.5rem}
+    h3{font-size:1.1rem;font-weight:600;color:var(--prog-accent2);margin:2rem 0 .8rem}
+    p{margin-bottom:1rem;color:var(--prog-text);font-size:.97rem;line-height:1.85}
+    code{font-family:'Space Mono',monospace;font-size:.85em;color:var(--prog-accent2)}
+    .box{border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0;font-size:.92rem;border-left:3px solid;line-height:1.75}
+    .box-info{background:rgba(86,207,178,.08);border-color:var(--prog-accent2)}
+    .box-warn{background:rgba(249,160,63,.08);border-color:var(--prog-accent3)}
+    .box-tip{background:rgba(124,92,252,.08);border-color:var(--prog-accent)}
+    .box-red{background:rgba(224,92,92,.08);border-color:var(--prog-red)}
+    .box strong{display:block;margin-bottom:.35rem;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;opacity:.8}
+    .code-block{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:8px;margin:1.5rem 0;overflow:hidden}
+    .code-header{background:var(--prog-card);padding:.5rem 1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--prog-border)}
+    .code-lang{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--prog-muted);letter-spacing:.1em;text-transform:uppercase}
+    .code-dots{display:flex;gap:5px}.code-dot{width:10px;height:10px;border-radius:50%}
+    .dot-r{background:#e05c5c}.dot-y{background:#f9a03f}.dot-g{background:#56cfb2}
+    pre{padding:1.25rem 1.5rem;overflow-x:auto;font-family:'Space Mono',monospace;font-size:.83rem;line-height:1.65;tab-size:4;color:var(--prog-text)}
+    .kw{color:var(--kw-keyword);font-weight:700}.tp{color:var(--kw-type)}.fn{color:var(--kw-func)}.cm{color:var(--kw-comment);font-style:italic}.nm{color:var(--kw-number)}.st{color:var(--kw-string)}.pp{color:#ff9f43}
+    /* cheatsheet */
+    .cheat-table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-size:.88rem;border-radius:8px;overflow:hidden;border:1px solid var(--prog-border)}
+    .cheat-table th{background:var(--prog-card);color:var(--prog-accent);padding:.65rem 1rem;text-align:left;font-family:'Space Mono',monospace;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;border-bottom:2px solid var(--prog-border)}
+    .cheat-table td{padding:.6rem 1rem;border-bottom:1px solid var(--prog-border);vertical-align:middle;color:var(--prog-text)}
+    .cheat-table tr:last-child td{border-bottom:none}
+    .cheat-table tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+    .cheat-table td:first-child{font-family:'Space Mono',monospace;color:var(--kw-type);font-weight:700;white-space:nowrap}
+    .cheat-amp{display:inline-block;background:rgba(255,255,255,.08);border:1px solid var(--prog-border);border-radius:4px;padding:1px 8px;font-family:'Space Mono',monospace;font-size:.9rem;color:var(--kw-type);font-weight:700;letter-spacing:.05em}
+    .cheat-table td:last-child{font-family:'Space Mono',monospace;color:var(--kw-func);font-size:.82rem}
+    /* malloc details */
+    .malloc-details{background:var(--prog-card);border:1px solid var(--prog-border);border-radius:8px;margin:1.25rem 0;overflow:hidden}
+    .malloc-details summary{padding:.85rem 1.25rem;cursor:pointer;font-family:'Space Mono',monospace;font-size:.85rem;color:var(--prog-accent);font-weight:700;list-style:none;display:flex;align-items:center;gap:.5rem;user-select:none}
+    .malloc-details summary::before{content:'\25BA';font-size:.7rem;transition:transform .2s}
+    .malloc-details[open] summary::before{transform:rotate(90deg)}
+    .malloc-details summary::-webkit-details-marker{display:none}
+    .malloc-details[open] summary{border-bottom:1px solid var(--prog-border)}
+    .malloc-body{padding:1.25rem}
+    .malloc-body p{font-size:.9rem;margin-bottom:.75rem}
+    /* cmp table */
+    .cmp-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.82rem;border-radius:8px;overflow:hidden;border:1px solid var(--prog-border)}
+    .cmp-table th{background:var(--prog-surface);color:var(--prog-accent);padding:.55rem .75rem;text-align:left;font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid var(--prog-border)}
+    .cmp-table td{padding:.5rem .75rem;border-bottom:1px solid var(--prog-border);color:var(--prog-text);font-family:'Space Mono',monospace;font-size:.78rem}
+    .cmp-table tr:last-child td{border-bottom:none}
+    .cmp-table td:first-child{color:var(--kw-keyword);font-weight:700}
+    .cmp-table td:nth-child(2){color:var(--prog-accent2)}
+    /* adt table */
+    .adt-table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-size:.88rem;border-radius:8px;overflow:hidden;border:1px solid var(--prog-border)}
+    .adt-table th{background:var(--prog-card);color:var(--prog-accent);padding:.65rem 1rem;text-align:left;font-family:'Space Mono',monospace;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;border-bottom:2px solid var(--prog-border)}
+    .adt-table td{padding:.6rem 1rem;border-bottom:1px solid var(--prog-border);vertical-align:middle;color:var(--prog-text)}
+    .adt-table tr:last-child td{border-bottom:none}
+    .adt-table tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+    .adt-table td:first-child{font-family:'Space Mono',monospace;color:var(--prog-accent2);font-weight:700;white-space:nowrap}
+    /* tool */
+    .tool-box{background:var(--prog-surface);border:1px solid var(--prog-border);border-radius:12px;overflow:hidden;margin:2rem 0}
+    .tool-header{background:var(--prog-card);padding:.75rem 1.25rem;border-bottom:1px solid var(--prog-border);display:flex;align-items:center;gap:.75rem}
+    .tool-title{font-family:'Space Mono',monospace;font-size:.8rem;font-weight:700;color:var(--prog-accent2)}
+    .tool-subtitle{font-size:.78rem;color:var(--prog-muted)}
+    .tool-body{padding:1.5rem}
+    .tool-msg{font-family:'Space Mono',monospace;font-size:.82rem;color:var(--prog-accent2);padding:.6rem 1.25rem;border-top:1px solid var(--prog-border);background:rgba(0,0,0,.1);min-height:2.4rem}
+    .tool-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:6px;border:1px solid var(--prog-border);background:var(--prog-surface);color:var(--prog-text);font-family:'Sora',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .18s}
+    .tool-btn:hover{border-color:var(--prog-accent);color:var(--prog-accent)}
+    .tool-btn:disabled{opacity:.35;cursor:not-allowed}
+    .tool-btn.primary{background:var(--prog-accent);border-color:var(--prog-accent);color:#fff}
+    .tool-btn.primary:hover{background:#6a4ee0}
+    .tool-btn.danger{background:rgba(224,92,92,.1);border-color:var(--prog-red);color:var(--prog-red)}
+    .tool-btn.danger:hover{background:rgba(224,92,92,.2)}
+    .tool-btn.secondary{border-color:var(--prog-accent3);color:var(--prog-accent3)}
+    .tool-btn.secondary:hover{background:rgba(249,160,63,.1)}
+    .tool-btn.success{background:rgba(86,207,178,.15);border-color:var(--prog-accent2);color:var(--prog-accent2)}
+    .tool-input{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:6px;color:var(--prog-accent2);font-family:'Space Mono',monospace;font-size:.95rem;font-weight:700;text-align:center;padding:6px 10px;transition:border-color .18s}
+    .tool-input:focus{outline:none;border-color:var(--prog-accent)}
+    .copy-btn{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--prog-muted);background:none;border:1px solid var(--prog-border);border-radius:4px;padding:2px 8px;cursor:pointer;transition:all .18s;white-space:nowrap}
+    .copy-btn:hover{color:var(--prog-accent2);border-color:var(--prog-accent2)}
+    .copy-btn.copied{color:var(--prog-accent2);border-color:var(--prog-accent2)}
+    /* ══ NODI (condivisi lista + coda) ══ */
+    .lista-controls,.coda-controls-top{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-bottom:1.25rem}
+    .lista-area,.coda-area{overflow-x:auto;padding:.5rem 0 1rem;min-height:110px}
+    .lista-nodes,.coda-nodes{display:flex;align-items:flex-end;gap:0;min-width:min-content;padding-top:1.8rem}
+    .ln-empty{font-family:'Space Mono',monospace;font-size:.85rem;color:var(--prog-muted);font-style:italic;align-self:center;padding:.5rem 0}
+    .ln-col{display:flex;flex-direction:column;align-items:center;gap:0}
+    .ln-node-labels{display:flex;flex-direction:column;align-items:center;gap:1px;min-height:1.7rem;margin-bottom:4px}
+    .lbl-testa{font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;color:var(--prog-accent2);white-space:nowrap}
+    .lbl-curr{font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;color:var(--prog-accent3);white-space:nowrap}
+    .lbl-nuovo{font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;color:var(--prog-accent);white-space:nowrap}
+    .lbl-target{font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;color:var(--prog-red);white-space:nowrap}
+    .lbl-found{font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;color:var(--prog-accent2);white-space:nowrap}
+    .lbl-muted{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--prog-muted);white-space:nowrap}
+    .ln-box{display:flex;border:2px solid var(--prog-border);border-radius:6px;overflow:hidden;transition:border-color .2s}
+    .ln-col.is-head  .ln-box{border-color:var(--prog-accent2)}
+    .ln-col.is-nuovo .ln-box{border-color:var(--prog-accent);background:rgba(124,92,252,.1)}
+    .ln-col.is-target .ln-box{border-color:var(--prog-red);opacity:.65}
+    .ln-col.is-found .ln-box{border-color:var(--prog-accent2);background:rgba(86,207,178,.12)}
+    .ln-val{width:52px;height:52px;background:var(--prog-card);display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:1.05rem;font-weight:700;color:var(--prog-text);border-right:2px solid var(--prog-border)}
+    .ln-ptr{width:34px;height:52px;background:var(--prog-card);display:flex;align-items:center;justify-content:center;font-size:.95rem;color:var(--prog-accent);font-family:'Space Mono',monospace}
+    .ln-arrow{font-family:'Space Mono',monospace;font-size:1.1rem;color:var(--prog-accent);padding:0 4px;align-self:flex-end;margin-bottom:13px;flex-shrink:0}
+    .ln-null{font-family:'Space Mono',monospace;font-size:.85rem;color:var(--prog-muted);align-self:flex-end;margin-bottom:16px;padding-left:4px}
+    /* separatore nodo staccato */
+    .ln-spacer{width:2px;height:56px;background:repeating-linear-gradient(to bottom,var(--prog-border) 0,var(--prog-border) 5px,transparent 5px,transparent 10px);margin:0 20px;align-self:flex-end;margin-bottom:13px;flex-shrink:0}
+    /* step controls */
+    .step-ctrl{display:none;gap:.5rem;align-items:center;flex-wrap:wrap;margin-top:1rem;padding:.75rem;background:rgba(124,92,252,.06);border:1px solid rgba(124,92,252,.25);border-radius:8px}
+    .step-info{font-family:'Space Mono',monospace;font-size:.75rem;color:var(--prog-muted);flex:1}
+    /* ══ STACK CON NODI ══ */
+    .sn-layout{display:flex;gap:2.5rem;align-items:flex-start;flex-wrap:wrap}
+    .sn-visual-col{flex:0 0 auto}.sn-info-col{flex:1;min-width:200px}
+    .sn-top-label{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--prog-accent2);text-align:center;margin-bottom:6px}
+    .sn-null-label{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--prog-muted);margin-top:6px;text-align:center}
+    .sn-nodes{display:flex;flex-direction:column;align-items:center;gap:0}
+    .sn-node-wrap{display:flex;flex-direction:column;align-items:center;gap:0}
+    .sn-box{display:flex;border:2px solid var(--prog-border);border-radius:6px;overflow:hidden;transition:border-color .2s;width:148px}
+    .sn-node-wrap.is-top .sn-box{border-color:var(--prog-accent2)}
+    .sn-val{flex:1;height:50px;background:var(--prog-card);display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:1.05rem;font-weight:700;color:var(--prog-text);border-right:2px solid var(--prog-border)}
+    .sn-ptr{width:34px;height:50px;background:var(--prog-card);display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--prog-accent);font-family:'Space Mono',monospace}
+    .sn-connector{width:2px;height:12px;background:var(--prog-border);margin-left:37px}
+    .sn-controls{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-bottom:1rem}
+    .sn-state{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:6px;padding:.75rem 1rem;font-family:'Space Mono',monospace;font-size:.82rem;color:var(--prog-text);line-height:2}
+    .sn-state span{color:var(--prog-accent2)}
+    /* coda state box */
+    .qn-state{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:6px;padding:.75rem 1rem;font-family:'Space Mono',monospace;font-size:.82rem;color:var(--prog-text);line-height:2;margin-top:.75rem}
+    .qn-state .qs-testa{color:var(--prog-accent2)}.qn-state .qs-coda{color:var(--prog-accent3)}
+    footer{text-align:center;padding:2.5rem 1rem;color:var(--prog-muted);font-size:.85rem;border-top:1px solid var(--prog-border);margin-top:2rem}
+    footer a{color:var(--prog-accent);text-decoration:none}
+    footer a:hover{text-decoration:underline}
+    .footer-nav{margin-bottom:.75rem;font-size:.82rem}
+    .back-to-top{position:fixed;bottom:1.5rem;right:1.5rem;width:40px;height:40px;border-radius:50%;background:var(--prog-accent);color:#fff;border:none;font-size:1.1rem;cursor:pointer;opacity:0;transform:translateY(10px);transition:all .25s;z-index:200}
+    .back-to-top.visible{opacity:1;transform:translateY(0)}
+    @media(max-width:600px){main{padding:1.5rem 1rem 4rem}.sn-layout{gap:1.5rem}}
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="/programmazione/" class="header-back-link">&#x2190; Programmazione</a>
+  <div class="header-badge">C++ &middot; Strutture Dati</div>
+  <h1>Strutture Dati <span>Dinamiche</span></h1>
+  <p>Puntatori, nodi e allocazione in heap &mdash; lista concatenata con step-by-step, stack e coda senza capacit&agrave; fissa.</p>
+  <div class="header-pills">
+    <span class="header-pill">&#127891; 4&deg; anno ITIS/SIA</span>
+    <span class="header-pill">&#128279; Allocazione dinamica</span>
+    <span class="header-pill">&#9200; ~60 min</span>
+    <span class="header-pill">&#128295; 3 visualizzatori</span>
+  </div>
+  <div class="page-nav">
+    <a href="/programmazione/strutture-dati-statiche/">&#8592; Strutture Statiche</a>
+  </div>
+  <!-- SVG decorativo: lista concatenata -->
+  <svg class="header-deco-svg" viewBox="0 0 242 62" width="340" height="87" xmlns="http://www.w3.org/2000/svg">
+    <text x="19" y="13" fill="#56cfb2" font-family="Space Mono,monospace" font-size="8" text-anchor="middle">&#9660; testa</text>
+    <rect x="0" y="18" width="38" height="34" rx="4" fill="rgba(86,207,178,0.1)" stroke="#56cfb2" stroke-width="2"/>
+    <text x="19" y="40" fill="#56cfb2" font-family="Space Mono,monospace" font-size="13" font-weight="700" text-anchor="middle">15</text>
+    <rect x="38" y="18" width="14" height="34" fill="#21253a" stroke="#56cfb2" stroke-width="2"/>
+    <text x="45" y="40" fill="#7c5cfc" font-family="Space Mono,monospace" font-size="9" text-anchor="middle">&#8594;</text>
+    <text x="59" y="40" fill="#7c5cfc" font-family="Space Mono,monospace" font-size="12" text-anchor="middle">&#8594;</text>
+    <rect x="66" y="18" width="38" height="34" rx="4" fill="#21253a" stroke="#2e3350" stroke-width="2"/>
+    <text x="85" y="40" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="13" font-weight="700" text-anchor="middle">8</text>
+    <rect x="104" y="18" width="14" height="34" fill="#21253a" stroke="#2e3350" stroke-width="2"/>
+    <text x="111" y="40" fill="#7c5cfc" font-family="Space Mono,monospace" font-size="9" text-anchor="middle">&#8594;</text>
+    <text x="125" y="40" fill="#7c5cfc" font-family="Space Mono,monospace" font-size="12" text-anchor="middle">&#8594;</text>
+    <rect x="132" y="18" width="38" height="34" rx="4" fill="#21253a" stroke="#2e3350" stroke-width="2"/>
+    <text x="151" y="40" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="13" font-weight="700" text-anchor="middle">23</text>
+    <rect x="170" y="18" width="14" height="34" fill="#21253a" stroke="#2e3350" stroke-width="2"/>
+    <text x="177" y="40" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="9" text-anchor="middle">&#8709;</text>
+    <text x="188" y="40" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="8">&#8594; nullptr</text>
+    <text x="121" y="60" fill="#2e3350" font-family="Space Mono,monospace" font-size="8" text-anchor="middle">Nodo* testa</text>
+  </svg>
+</header>
+
+<div class="toc-wrap">
+  <nav class="toc" id="toc">
+    <a href="#puntatori" class="active">Puntatori</a>
+    <a href="#nodo">Il nodo</a>
+    <a href="#lista">Lista concatenata</a>
+    <a href="#stack">Stack</a>
+    <a href="#coda">Coda</a>
+  </nav>
+</div>
+
+<main>
+
+<!-- ══ PUNTATORI ══ -->
+<section id="puntatori">
+  <div class="section-label">01 &mdash; Fondamenta</div>
+  <h2>Puntatori</h2>
+  <p>Un <strong>puntatore</strong> &egrave; una variabile che contiene l&apos;<strong>indirizzo di memoria</strong> di un&apos;altra variabile. Mentre una variabile normale memorizza un valore (<code>int x = 42</code>), un puntatore memorizza dove quel valore si trova in memoria. Sono la base di tutte le strutture dati dinamiche.</p>
+
+  <h3>Operatori e comandi &mdash; riferimento rapido</h3>
+  <table class="cheat-table">
+    <thead><tr><th>Operatore / Comando</th><th>Significato</th><th>Esempio</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>* (dichiarazione)</td>
+        <td>Dichiara che la variabile &egrave; un <strong>puntatore</strong> del tipo indicato: contiene un indirizzo di memoria, non un valore diretto</td>
+        <td>int* p;</td>
+      </tr>
+      <tr>
+        <td>* (espressione)</td>
+        <td>Leggi o scrivi il valore all&apos;indirizzo contenuto nel puntatore (dereferenziazione). <code>*p = 42</code> scrive 42 nella cella di memoria puntata da p</td>
+        <td>*p = 42;</td>
+      </tr>
+      <tr>
+        <td><span class="cheat-amp">&amp;</span></td>
+        <td>Restituisce l&apos;indirizzo di memoria di una variabile esistente &mdash; serve per inizializzare un puntatore con l&apos;indirizzo di una variabile gi&agrave; in memoria</td>
+        <td>int* p = &amp;x;</td>
+      </tr>
+      <tr>
+        <td>-&gt;</td>
+        <td>Accede a un campo di una struct tramite puntatore. Equivale a <code>(*p).campo</code> ma pi&ugrave; leggibile</td>
+        <td>nodo-&gt;valore</td>
+      </tr>
+      <tr>
+        <td>new</td>
+        <td>Alloca memoria in heap per un oggetto e restituisce il suo indirizzo. La memoria <strong>rimane occupata</strong> finch&eacute; non si chiama <code>delete</code> &mdash; il programmatore &egrave; responsabile</td>
+        <td>Nodo* n = new Nodo;</td>
+      </tr>
+      <tr>
+        <td>delete</td>
+        <td>Libera la memoria di un singolo oggetto allocato con <code>new</code>. Usare sempre <code>p = nullptr</code> dopo per evitare puntatori invalidi</td>
+        <td>delete p; p = nullptr;</td>
+      </tr>
+      <tr>
+        <td>delete[]</td>
+        <td>Libera la memoria di un array allocato con <code>new[]</code>. Non intercambiabile con <code>delete</code></td>
+        <td>delete[] arr;</td>
+      </tr>
+      <tr>
+        <td>nullptr</td>
+        <td>Puntatore nullo &mdash; nessun indirizzo valido. Usato per indicare &ldquo;non punta a nulla&rdquo; e come valore di terminazione nelle catene di nodi</td>
+        <td>p = nullptr;</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <details class="malloc-details">
+    <summary>Un occhio alla sintassi classica: perch&eacute; non usiamo malloc, calloc, realloc, free?</summary>
+    <div class="malloc-body">
+      <p>Queste funzioni vengono dal linguaggio <strong>C</strong> e funzionano anche in C++, ma sono superate. <code>malloc</code> alloca byte grezzi senza chiamare costruttori, restituisce <code>void*</code> che richiede un cast esplicito e va accoppiato solo con <code>free</code> &mdash; mai con <code>delete</code>.</p>
+      <table class="cmp-table">
+        <thead><tr><th>C (evitare)</th><th>C++ moderno (usare)</th><th>Differenza chiave</th></tr></thead>
+        <tbody>
+          <tr><td>malloc(size)</td><td>new Tipo</td><td>new chiama il costruttore; malloc no</td></tr>
+          <tr><td>calloc(n, size)</td><td>new Tipo[n]</td><td>new[] inizializza gli oggetti</td></tr>
+          <tr><td>realloc(ptr, size)</td><td>&mdash;</td><td>non ha equivalente sicuro in C++</td></tr>
+          <tr><td>free(ptr)</td><td>delete ptr</td><td>delete chiama il distruttore; free no</td></tr>
+        </tbody>
+      </table>
+      <p>In questo corso usiamo C++ &mdash; <code>new</code> e <code>delete</code> sono la scelta corretta.</p>
+    </div>
+  </details>
+
+  <h3>Dichiarazione e operatori fondamentali</h3>
+  <div class="box box-warn">
+    <strong>&#128161; Solo dimostrativo</strong>
+    Lo snippet seguente serve esclusivamente a mostrare cosa restituisce ogni operazione sui puntatori. Nella pratica non si usa un puntatore per modificare una variabile locale gi&agrave; disponibile direttamente: si scriverebbe semplicemente <code>x = 100</code>. L&apos;utilit&agrave; reale dei puntatori emerge con <code>new</code>, le struct e le funzioni.
+  </div>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; puntatori_base.cpp</span></div>
+    <pre><span class="pp">#include &lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> x = <span class="nm">42</span>;
+    <span class="tp">int</span>* p = &amp;x;  <span class="cm">// p ora contiene l'indirizzo di memoria di x</span>
+
+    cout &lt;&lt; x    &lt;&lt; endl;  <span class="cm">// 42       &mdash; valore di x letto direttamente</span>
+    cout &lt;&lt; &amp;x   &lt;&lt; endl;  <span class="cm">// 0x...    &mdash; indirizzo di x in memoria (esadecimale)</span>
+    cout &lt;&lt; p    &lt;&lt; endl;  <span class="cm">// 0x...    &mdash; contenuto di p: lo stesso indirizzo di &amp;x</span>
+    cout &lt;&lt; *p   &lt;&lt; endl;  <span class="cm">// 42       &mdash; *p: vai all'indirizzo in p e leggi il valore</span>
+
+    *p = <span class="nm">100</span>;  <span class="cm">// vai all'indirizzo in p (= &amp;x) e SCRIVI 100 in quella cella.</span>
+              <span class="cm">// Equivale a "x = 100" ma fatto tramite puntatore.</span>
+              <span class="cm">// Questo dimostra la dereferenziazione in scrittura.</span>
+    cout &lt;&lt; x    &lt;&lt; endl;  <span class="cm">// 100      &mdash; x &egrave; cambiato perch&eacute; p puntava a lui</span>
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+
+  <h3>Allocazione dinamica &mdash; new e delete</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; new e delete</span></div>
+    <pre><span class="tp">int</span>* p = <span class="kw">new</span> <span class="tp">int</span>;       <span class="cm">// riserva spazio per un int in heap, restituisce l'indirizzo</span>
+*p = <span class="nm">42</span>;                 <span class="cm">// scrivi 42 nella cella appena allocata</span>
+cout &lt;&lt; *p &lt;&lt; endl;      <span class="cm">// 42</span>
+<span class="kw">delete</span> p;                 <span class="cm">// OBBLIGATORIO: libera la memoria, altrimenti memory leak</span>
+p = <span class="kw">nullptr</span>;             <span class="cm">// buona prassi: evita uso accidentale dopo delete</span>
+
+<span class="tp">int</span>* q = <span class="kw">new</span> <span class="tp">int</span>(<span class="nm">99</span>);   <span class="cm">// alloca e inizializza in un solo passo</span>
+<span class="kw">delete</span> q; q = <span class="kw">nullptr</span>;</pre>
+  </div>
+
+  <div class="box box-red">
+    <strong>&#9888; Memory leak &mdash; la trappola pi&ugrave; comune</strong>
+    Se si perde il puntatore a una zona di heap senza aver chiamato <code>delete</code>, quella memoria rimane occupata per tutta la durata del programma. Ogni <code>new</code> deve avere il suo <code>delete</code>.
+  </div>
+
+  <h3>Il puntatore nullptr</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; nullptr</span></div>
+    <pre><span class="tp">int</span>* p = <span class="kw">nullptr</span>;   <span class="cm">// puntatore che non punta a nessun indirizzo valido</span>
+<span class="kw">if</span> (p != <span class="kw">nullptr</span>) {
+    cout &lt;&lt; *p;     <span class="cm">// sicuro: accediamo solo se p &egrave; valido</span>
+}
+<span class="cm">// dereferenziare nullptr = segmentation fault a runtime</span></pre>
+  </div>
+</section>
+
+<!-- ══ IL NODO ══ -->
+<section id="nodo">
+  <div class="section-label">02 &mdash; Fondamenta</div>
+  <h2>Il nodo</h2>
+  <p>Un <strong>nodo</strong> &egrave; la struttura elementare da cui si costruiscono tutte le strutture dinamiche. &Egrave; una struct con due campi: il <strong>dato</strong> da memorizzare e un <strong>puntatore al nodo successivo</strong>. La struct si riferisce a s&eacute; stessa &mdash; struttura ricorsiva.</p>
+
+  <h3>Definizione e creazione</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; nodo.cpp</span></div>
+    <pre><span class="kw">struct</span> <span class="tp">Nodo</span> {
+    <span class="tp">int</span>   valore;   <span class="cm">// campo dati: il valore intero memorizzato nel nodo</span>
+    <span class="tp">Nodo</span>* next;     <span class="cm">// puntatore al nodo successivo (nullptr = fine catena)</span>
+};                  <span class="cm">// la struct si riferisce a s&eacute; stessa: struttura ricorsiva</span>
+
+<span class="tp">Nodo</span>* n1 = <span class="kw">new</span> <span class="tp">Nodo</span>;   <span class="cm">// alloca un nodo in heap, restituisce l'indirizzo &rarr; n1</span>
+n1-&gt;valore = <span class="nm">15</span>;       <span class="cm">// tramite n1, scrivi 15 nel campo valore di quel nodo</span>
+n1-&gt;next   = <span class="kw">nullptr</span>;  <span class="cm">// tramite n1, nessun successore per ora</span>
+
+<span class="tp">Nodo</span>* n2 = <span class="kw">new</span> <span class="tp">Nodo</span>;   <span class="cm">// alloca un secondo nodo in heap &rarr; n2</span>
+n2-&gt;valore = <span class="nm">8</span>;        <span class="cm">// scrivi 8 nel campo valore di n2</span>
+n2-&gt;next   = <span class="kw">nullptr</span>;  <span class="cm">// n2 &egrave; l'ultimo nodo: nessun successore</span>
+
+n1-&gt;next = n2;          <span class="cm">// collega i nodi: n1&rarr;next ora punta a n2 &rarr; catena n1&rarr;n2&rarr;nullptr</span>
+
+cout &lt;&lt; n1-&gt;valore        &lt;&lt; endl;  <span class="cm">// legge n1.valore        &rarr; 15</span>
+cout &lt;&lt; n1-&gt;next-&gt;valore  &lt;&lt; endl;  <span class="cm">// n1-&gt;next &egrave; n2, quindi n2.valore &rarr; 8</span></pre>
+  </div>
+
+  <div class="box box-info">
+    <strong>&#128204; Il punto . e la freccia -&gt;</strong>
+    Con variabili struct normali si usa il punto: <code>s.valore</code>. Con puntatori si usa la freccia: <code>p-&gt;valore</code>, equivalente a <code>(*p).valore</code>. Nella pratica si usa sempre <code>-&gt;</code> con i puntatori.
+  </div>
+
+  <h3>Iterazione su una catena</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; percorrere una catena</span></div>
+    <pre><span class="tp">Nodo</span>* curr = testa;   <span class="cm">// curr inizia dalla testa della lista</span>
+<span class="kw">while</span> (curr != <span class="kw">nullptr</span>) {   <span class="cm">// continua finch&eacute; non si raggiunge la fine</span>
+    cout &lt;&lt; curr-&gt;valore &lt;&lt; <span class="st">" "</span>;
+    curr = curr-&gt;next;        <span class="cm">// avanza: curr ora punta al nodo successivo</span>
+}
+<span class="cm">// il ciclo termina quando curr &egrave; nullptr: nessun successore</span></pre>
+  </div>
+</section>
+
+<!-- ══ LISTA CONCATENATA ══ -->
+<section id="lista">
+  <div class="section-label">03 &mdash; Struttura</div>
+  <h2>Lista concatenata</h2>
+  <p>Una <strong>lista concatenata</strong> &egrave; una sequenza di nodi in cui ogni nodo punta al successivo. Non occupa celle contigue in memoria: ogni nodo vive in un punto qualsiasi dell&apos;heap. Il punto di accesso &egrave; il puntatore <code>testa</code>. Se <code>testa == nullptr</code> la lista &egrave; vuota.</p>
+
+  <div class="box box-tip">
+    <strong>&#128161; Vantaggio chiave rispetto all&apos;array</strong>
+    Inserire in testa a una lista &egrave; O(1): basta far puntare il nuovo nodo al vecchio primo e aggiornare <code>testa</code>. In un array la stessa operazione &egrave; O(n) perch&eacute; richiede di spostare tutti gli elementi. Di contro, accedere all&apos;i-esimo elemento della lista &egrave; O(n): non esiste l&apos;indice diretto.
+  </div>
+
+  <h3>Implementazione completa</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; lista_concatenata.cpp</span></div>
+    <pre><span class="pp">#include &lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+<span class="kw">struct</span> <span class="tp">Nodo</span> { <span class="tp">int</span> valore; <span class="tp">Nodo</span>* next; };
+
+<span class="cm">// inserimento in testa &mdash; O(1)</span>
+<span class="tp">void</span> <span class="fn">inserisciTesta</span>(<span class="tp">Nodo</span>*&amp; testa, <span class="tp">int</span> val) {
+    <span class="tp">Nodo</span>* nuovo  = <span class="kw">new</span> <span class="tp">Nodo</span>;
+    nuovo-&gt;valore = val;
+    nuovo-&gt;next   = testa;  <span class="cm">// nuovo &rarr; vecchio primo</span>
+    testa         = nuovo;
+}
+
+<span class="cm">// inserimento in coda &mdash; O(n)</span>
+<span class="tp">void</span> <span class="fn">inserisciCoda</span>(<span class="tp">Nodo</span>*&amp; testa, <span class="tp">int</span> val) {
+    <span class="tp">Nodo</span>* nuovo = <span class="kw">new</span> <span class="tp">Nodo</span>;
+    nuovo-&gt;valore = val; nuovo-&gt;next = <span class="kw">nullptr</span>;
+    <span class="kw">if</span> (testa == <span class="kw">nullptr</span>) { testa = nuovo; <span class="kw">return</span>; }
+    <span class="tp">Nodo</span>* curr = testa;
+    <span class="kw">while</span> (curr-&gt;next != <span class="kw">nullptr</span>) curr = curr-&gt;next;
+    curr-&gt;next = nuovo;
+}
+
+<span class="cm">// inserimento ordinato (crescente) &mdash; O(n)</span>
+<span class="tp">void</span> <span class="fn">inserisciOrdinato</span>(<span class="tp">Nodo</span>*&amp; testa, <span class="tp">int</span> val) {
+    <span class="tp">Nodo</span>* nuovo = <span class="kw">new</span> <span class="tp">Nodo</span>;
+    nuovo-&gt;valore = val; nuovo-&gt;next = <span class="kw">nullptr</span>;
+    <span class="kw">if</span> (testa == <span class="kw">nullptr</span> || val &lt;= testa-&gt;valore) {
+        nuovo-&gt;next = testa; testa = nuovo; <span class="kw">return</span>;
+    }
+    <span class="tp">Nodo</span>* curr = testa;
+    <span class="kw">while</span> (curr-&gt;next != <span class="kw">nullptr</span> &amp;&amp; curr-&gt;next-&gt;valore &lt; val)
+        curr = curr-&gt;next;  <span class="cm">// confronto su curr-&gt;NEXT-&gt;valore, non curr-&gt;valore</span>
+    nuovo-&gt;next = curr-&gt;next;  <span class="cm">// PRIMA: nuovo punta al resto (due puntatori allo stesso nodo)</span>
+    curr-&gt;next  = nuovo;       <span class="cm">// DOPO: curr punta a nuovo (se invertissi perderei il resto!)</span>
+}
+
+<span class="cm">// cancellazione per valore &mdash; O(n)</span>
+<span class="tp">void</span> <span class="fn">cancella</span>(<span class="tp">Nodo</span>*&amp; testa, <span class="tp">int</span> val) {
+    <span class="kw">if</span> (testa == <span class="kw">nullptr</span>) <span class="kw">return</span>;
+    <span class="kw">if</span> (testa-&gt;valore == val) {
+        <span class="tp">Nodo</span>* tmp = testa; testa = testa-&gt;next; <span class="kw">delete</span> tmp; <span class="kw">return</span>;
+    }
+    <span class="tp">Nodo</span>* curr = testa;
+    <span class="kw">while</span> (curr-&gt;next != <span class="kw">nullptr</span> &amp;&amp; curr-&gt;next-&gt;valore != val)
+        curr = curr-&gt;next;
+    <span class="kw">if</span> (curr-&gt;next != <span class="kw">nullptr</span>) {
+        <span class="tp">Nodo</span>* tmp = curr-&gt;next;
+        curr-&gt;next = tmp-&gt;next;
+        <span class="kw">delete</span> tmp;
+    }
+}
+
+<span class="tp">void</span> <span class="fn">libera</span>(<span class="tp">Nodo</span>*&amp; testa) {
+    <span class="kw">while</span> (testa != <span class="kw">nullptr</span>) {
+        <span class="tp">Nodo</span>* tmp = testa; testa = testa-&gt;next; <span class="kw">delete</span> tmp;
+    }
+}</pre>
+  </div>
+
+  <div class="box box-tip">
+    <strong>&#128161; L&apos;ordine di esecuzione nell&apos;inserimento ordinato &egrave; critico</strong>
+    Si esegue <code>nuovo&rarr;next = curr&rarr;next</code> <strong>prima</strong> di <code>curr&rarr;next = nuovo</code>. Perch&eacute;? Subito dopo il primo passo, sia <code>curr&rarr;next</code> che <code>nuovo&rarr;next</code> puntano allo stesso nodo successivo &mdash; il riferimento al resto della lista &egrave; al sicuro. Solo allora possiamo sovrascrivere <code>curr&rarr;next</code>. Invertire i due passi causa la <strong>perdita permanente</strong> del resto della lista &mdash; bug classico da esame.
+  </div>
+
+  <h3>&#128295; Lista Interattiva &mdash; passo per passo</h3>
+  <p>Il nodo <code>nuovo</code> viene mostrato <strong>staccato</strong> prima di essere collegato. Il puntatore <code>&#9660; testa</code> &egrave; sempre visibile. Per l&apos;inserimento ordinato, il passo 2 mostra esplicitamente i <strong>due puntatori</strong> che raggiungono lo stesso nodo.</p>
+
+  <div class="tool-box">
+    <div class="tool-header">
+      <span class="tool-title">&#128295; Lista Concatenata</span>
+      <span class="tool-subtitle">testa &rarr; [val|&rarr;] &rarr; [val|&rarr;] &rarr; nullptr</span>
+    </div>
+    <div class="tool-body">
+      <div class="lista-controls">
+        <input type="number" class="tool-input" id="lista-input" placeholder="valore" style="width:72px">
+        <button class="tool-btn primary"   id="lista-ins-testa">+ Testa</button>
+        <button class="tool-btn primary"   id="lista-ins-coda">+ Coda</button>
+        <button class="tool-btn primary"   id="lista-ins-ord">+ Ordinato</button>
+        <button class="tool-btn danger"    id="lista-cancella">Cancella</button>
+        <button class="tool-btn secondary" id="lista-cerca">Cerca</button>
+        <button class="tool-btn"           id="lista-reset">&#8635; Reset</button>
+      </div>
+      <div class="lista-area">
+        <div class="lista-nodes" id="lista-nodes">
+          <span class="ln-empty">Lista vuota &mdash; testa = nullptr</span>
+        </div>
+      </div>
+      <div class="step-ctrl" id="lista-step-ctrl">
+        <span class="step-info" id="lista-step-info"></span>
+        <button class="tool-btn success" id="lista-next">Avanti &rarr;</button>
+        <button class="tool-btn"         id="lista-skip">Salta</button>
+      </div>
+    </div>
+    <div class="tool-msg" id="lista-msg">Inserisci un valore per iniziare.</div>
+  </div>
+</section>
+
+<!-- ══ STACK CON NODI ══ -->
+<section id="stack">
+  <div class="section-label">04 &mdash; Struttura</div>
+  <h2>Stack con nodi</h2>
+  <p>Lo stack con allocazione dinamica usa la stessa logica <strong>LIFO</strong> della versione su array, ma ogni elemento &egrave; un nodo allocato con <code>new</code>. <code>push</code> aggiunge un nodo davanti a <code>top</code>, <code>pop</code> lo rimuove e chiama <code>delete</code>. Non esistono <code>MAX</code> n&eacute; <code>isFull()</code>.</p>
+
+  <h3>Confronto con la versione su array</h3>
+  <table class="adt-table">
+    <thead><tr><th>Caratteristica</th><th>Stack su array</th><th>Stack con nodi</th></tr></thead>
+    <tbody>
+      <tr><td>Capacit&agrave;</td><td>Fissa (MAX compilata)</td><td>Limitata solo dalla RAM</td></tr>
+      <tr><td>isFull()</td><td>Necessaria</td><td>Non esiste</td></tr>
+      <tr><td>Memoria</td><td>MAX &times; sizeof(int) sempre</td><td>Solo gli elementi inseriti</td></tr>
+      <tr><td>Overhead push/pop</td><td>O(1) puro</td><td>O(1) + new/delete</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Implementazione in C++</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; stack_nodi.cpp</span></div>
+    <pre><span class="kw">struct</span> <span class="tp">Nodo</span> { <span class="tp">int</span> valore; <span class="tp">Nodo</span>* next; };
+<span class="kw">struct</span> <span class="tp">Stack</span> { <span class="tp">Nodo</span>* top; };
+
+<span class="tp">void</span> <span class="fn">init</span>(<span class="tp">Stack</span>&amp; s)    { s.top = <span class="kw">nullptr</span>; }
+<span class="tp">bool</span> <span class="fn">isEmpty</span>(<span class="tp">Stack</span>&amp; s) { <span class="kw">return</span> s.top == <span class="kw">nullptr</span>; }
+
+<span class="tp">void</span> <span class="fn">push</span>(<span class="tp">Stack</span>&amp; s, <span class="tp">int</span> val) {
+    <span class="tp">Nodo</span>* nuovo   = <span class="kw">new</span> <span class="tp">Nodo</span>;
+    nuovo-&gt;valore = val;
+    nuovo-&gt;next   = s.top;  <span class="cm">// nuovo punta al vecchio top</span>
+    s.top         = nuovo;
+}
+
+<span class="tp">int</span> <span class="fn">pop</span>(<span class="tp">Stack</span>&amp; s) {
+    <span class="kw">if</span> (<span class="fn">isEmpty</span>(s)) { cout &lt;&lt; <span class="st">"Errore!"</span> &lt;&lt; endl; <span class="kw">return</span> -<span class="nm">1</span>; }
+    <span class="tp">int</span>   val = s.top-&gt;valore;
+    <span class="tp">Nodo</span>* tmp = s.top;
+    s.top     = s.top-&gt;next;
+    <span class="kw">delete</span> tmp;
+    <span class="kw">return</span> val;
+}</pre>
+  </div>
+
+  <h3>&#128295; Prova le operazioni (max 6 nodi)</h3>
+  <div class="tool-box">
+    <div class="tool-header"><span class="tool-title">&#128295; Stack con nodi</span><span class="tool-subtitle">LIFO &mdash; top &rarr; [val|&darr;] &rarr; nullptr</span></div>
+    <div class="tool-body">
+      <div class="sn-layout">
+        <div class="sn-visual-col">
+          <div class="sn-top-label" id="sn-top-label">top = nullptr</div>
+          <div class="sn-nodes" id="sn-nodes"></div>
+          <div class="sn-null-label" id="sn-null-label" style="display:none">&#8595; nullptr</div>
+        </div>
+        <div class="sn-info-col">
+          <div class="sn-controls">
+            <input type="number" class="tool-input" id="sn-input" placeholder="valore">
+            <button class="tool-btn primary" id="sn-push">Push &#8593;</button>
+            <button class="tool-btn danger"  id="sn-pop">Pop + delete</button>
+            <button class="tool-btn"         id="sn-reset">&#8635; Reset</button>
+          </div>
+          <div class="sn-state" id="sn-state">isEmpty() = <span>vero</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="tool-msg" id="sn-msg">Pila inizializzata &mdash; top = nullptr.</div>
+  </div>
+</section>
+
+<!-- ══ CODA CON NODI ══ -->
+<section id="coda">
+  <div class="section-label">05 &mdash; Struttura</div>
+  <h2>Coda con nodi</h2>
+  <p>La coda dinamica &egrave; <strong>FIFO</strong>: si inserisce in fondo e si estrae dalla testa. Due puntatori separati (<code>testa</code> e <code>coda</code>) tengono traccia degli estremi della catena di nodi &mdash; non una struct separata, solo due puntatori passati per riferimento alle funzioni.</p>
+
+  <h3>Confronto con la versione su array</h3>
+  <table class="adt-table">
+    <thead><tr><th>Caratteristica</th><th>Coda su array</th><th>Coda con nodi</th></tr></thead>
+    <tbody>
+      <tr><td>Capacit&agrave;</td><td>Fissa (MAX compilata)</td><td>Limitata solo dalla RAM</td></tr>
+      <tr><td>isFull()</td><td>Necessaria</td><td>Non esiste</td></tr>
+      <tr><td>Riutilizzo spazio</td><td>Richiede coda circolare</td><td>Ogni nodo si dealloca dopo dequeue</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Implementazione in C++</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; coda_nodi.cpp</span></div>
+    <pre><span class="pp">#include &lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="cm">/* Nodo: il mattone base, identico alla lista concatenata */</span>
+<span class="kw">struct</span> <span class="tp">Nodo</span> {
+    <span class="tp">int</span>   valore;  <span class="cm">// dato memorizzato</span>
+    <span class="tp">Nodo</span>* next;    <span class="cm">// puntatore al successivo (nullptr = fine catena)</span>
+};
+
+<span class="cm">/* Non serve una struct Coda: bastano due puntatori separati.
+   testa &rarr; nodo da cui si estrae (dequeue) &mdash; avanza verso destra
+   coda  &rarr; nodo dove si inserisce (enqueue) &mdash; avanza verso destra
+   Le funzioni li ricevono per riferimento (&amp;) perch&eacute; devono modificarli nel chiamante. */</span>
+
+<span class="tp">bool</span> <span class="fn">isEmpty</span>(<span class="tp">Nodo</span>* testa) {
+    <span class="kw">return</span> testa == <span class="kw">nullptr</span>;   <span class="cm">// coda vuota se testa non punta a nessun nodo</span>
+}
+
+<span class="tp">void</span> <span class="fn">enqueue</span>(<span class="tp">Nodo</span>*&amp; testa, <span class="tp">Nodo</span>*&amp; coda, <span class="tp">int</span> val) {
+    <span class="tp">Nodo</span>* nuovo   = <span class="kw">new</span> <span class="tp">Nodo</span>;  <span class="cm">// alloca il nodo in heap</span>
+    nuovo-&gt;valore = val;         <span class="cm">// inizializza il dato</span>
+    nuovo-&gt;next   = <span class="kw">nullptr</span>;    <span class="cm">// &egrave; l'ultimo: nessun successore</span>
+    <span class="kw">if</span> (<span class="fn">isEmpty</span>(testa)) {
+        testa = coda = nuovo;    <span class="cm">// primo nodo: testa e coda coincidono</span>
+        <span class="kw">return</span>;
+    }
+    coda-&gt;next = nuovo;          <span class="cm">// aggancia nuovo in fondo alla catena</span>
+    coda       = nuovo;          <span class="cm">// coda avanza al nuovo ultimo nodo</span>
+}
+
+<span class="tp">int</span> <span class="fn">dequeue</span>(<span class="tp">Nodo</span>*&amp; testa, <span class="tp">Nodo</span>*&amp; coda) {
+    <span class="kw">if</span> (<span class="fn">isEmpty</span>(testa)) { cout &lt;&lt; <span class="st">"Errore!"</span> &lt;&lt; endl; <span class="kw">return</span> -<span class="nm">1</span>; }
+    <span class="tp">int</span>   val  = testa-&gt;valore;  <span class="cm">// salva il valore da restituire</span>
+    <span class="tp">Nodo</span>* tmp  = testa;          <span class="cm">// segnaposto: serve per fare delete dopo</span>
+    testa      = testa-&gt;next;    <span class="cm">// testa avanza al nodo successivo</span>
+    <span class="kw">if</span> (testa == <span class="kw">nullptr</span>)
+        coda = <span class="kw">nullptr</span>;         <span class="cm">// coda svuotata: anche coda &rarr; nullptr (altrimenti punta a memoria liberata!)</span>
+    <span class="kw">delete</span> tmp;                  <span class="cm">// libera il nodo rimosso &mdash; FONDAMENTALE</span>
+    <span class="kw">return</span> val;
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">Nodo</span>* testa = <span class="kw">nullptr</span>;       <span class="cm">// coda vuota all'inizio</span>
+    <span class="tp">Nodo</span>* coda  = <span class="kw">nullptr</span>;
+
+    <span class="fn">enqueue</span>(testa, coda, <span class="nm">5</span>);     <span class="cm">// testa &rarr; [5|&empty;] &larr; coda</span>
+    <span class="fn">enqueue</span>(testa, coda, <span class="nm">3</span>);     <span class="cm">// testa &rarr; [5|&rarr;] &rarr; [3|&empty;] &larr; coda</span>
+    <span class="fn">enqueue</span>(testa, coda, <span class="nm">8</span>);     <span class="cm">// testa &rarr; [5|&rarr;] &rarr; [3|&rarr;] &rarr; [8|&empty;] &larr; coda</span>
+    cout &lt;&lt; <span class="fn">dequeue</span>(testa, coda) &lt;&lt; endl;  <span class="cm">// estrae 5, delete, testa avanza a [3]</span>
+    cout &lt;&lt; <span class="fn">dequeue</span>(testa, coda) &lt;&lt; endl;  <span class="cm">// estrae 3, delete, testa avanza a [8]</span>
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+
+  <h3>&#128295; Prova le operazioni (max 7 nodi)</h3>
+  <p>Ogni enqueue e dequeue &egrave; mostrato <strong>passo per passo</strong>: vedi il nodo <code>nuovo</code> staccato prima del collegamento, e il puntatore <code>tmp</code> isolato prima del delete.</p>
+  <div class="tool-box">
+    <div class="tool-header">
+      <span class="tool-title">&#128295; Coda con nodi</span>
+      <span class="tool-subtitle">FIFO &mdash; testa &rarr; [val|&rarr;] &rarr; &hellip; &rarr; [val|&empty;] &larr; coda</span>
+    </div>
+    <div class="tool-body">
+      <div class="coda-area">
+        <div class="coda-nodes" id="coda-nodes">
+          <span class="ln-empty">Coda vuota &mdash; testa = nullptr, coda = nullptr</span>
+        </div>
+      </div>
+      <div class="coda-controls-top" style="margin-top:1rem">
+        <input type="number" class="tool-input" id="qn-input" placeholder="valore">
+        <button class="tool-btn primary" id="qn-enqueue">Enqueue &rarr;</button>
+        <button class="tool-btn danger"  id="qn-dequeue">&larr; Dequeue + delete</button>
+        <button class="tool-btn"         id="qn-reset">&#8635; Reset</button>
+      </div>
+      <div class="step-ctrl" id="coda-step-ctrl">
+        <span class="step-info" id="coda-step-info"></span>
+        <button class="tool-btn success" id="coda-next">Avanti &rarr;</button>
+        <button class="tool-btn"         id="coda-skip">Salta</button>
+      </div>
+      <div class="qn-state" id="qn-state">
+        testa = <span class="qs-testa">nullptr</span> &nbsp;|&nbsp; coda = <span class="qs-coda">nullptr</span>
+      </div>
+    </div>
+    <div class="tool-msg" id="qn-msg">Coda inizializzata &mdash; testa = nullptr, coda = nullptr.</div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-nav">
+    <a href="/programmazione/strutture-dati-statiche/">&#8592; Strutture Statiche</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/programmazione/">Hub Programmazione</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/">Home</a>
+  </div>
+  <strong>Formazione Digitale</strong> &mdash; Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+
+<script>
+(function(){
+'use strict';
+
+/* ═══════════════════════════════════════════════════
+   RENDER ENGINE — condiviso da lista e coda
+   step = { nodes:[], nuovoStaccato:null, tmpStaccato:null }
+   node = { val, labels:[{text,cls}], isNuovo, isTarget, isFound }
+═══════════════════════════════════════════════════ */
+var LBL = {
+  testa:  {text:'\u25BC testa',    cls:'lbl-testa'},
+  curr:   {text:'\u25BC curr',     cls:'lbl-curr'},
+  nuovo:  {text:'\u25BC nuovo',    cls:'lbl-nuovo'},
+  target: {text:'\u25BC elimina',  cls:'lbl-target'},
+  found:  {text:'\u2713 trovato',  cls:'lbl-found'},
+  coda_l: {text:'\u25BC coda',     cls:'lbl-curr'},
+  tmp:    {text:'\u25BC tmp',      cls:'lbl-muted'},
+  due_ptr:{text:'\u2190 2 ptr qui',cls:'lbl-muted'}
+};
+
+function mkLabel(lbl){
+  var s=document.createElement('span');
+  s.className=lbl.cls; s.textContent=lbl.text; return s;
+}
+
+function mkNodeCol(node, forceNull){
+  var col=document.createElement('div');
+  col.className='ln-col';
+  if(node.isNuovo)  col.classList.add('is-nuovo');
+  if(node.isTarget) col.classList.add('is-target');
+  if(node.isFound)  col.classList.add('is-found');
+  if(node.labels && node.labels.length>0 && !node.isNuovo && !node.isTarget)
+    col.classList.add('is-head');
+
+  var ld=document.createElement('div'); ld.className='ln-node-labels';
+  (node.labels||[]).forEach(function(lbl){ld.appendChild(mkLabel(lbl));});
+  col.appendChild(ld);
+
+  var box=document.createElement('div'); box.className='ln-box';
+  var ptrChar=forceNull?'\u2205':(node.isLast?'\u2205':'\u2192');
+  if(node.forceNull) ptrChar='\u2205';
+  box.innerHTML='<div class="ln-val">'+node.val+'</div><div class="ln-ptr">'+ptrChar+'</div>';
+  col.appendChild(box);
+  return col;
+}
+function mkArrow(){var s=document.createElement('span');s.className='ln-arrow';s.textContent='\u2192';return s;}
+function mkNull(){var s=document.createElement('span');s.className='ln-null';s.textContent='\u2192 nullptr';return s;}
+function mkSpacer(){var s=document.createElement('div');s.className='ln-spacer';return s;}
+
+function renderStep(step, container, emptyMsg){
+  container.innerHTML='';
+  var nodes=step.nodes||[];
+  var nuovoSt=step.nuovoStaccato||null;
+  var tmpSt=step.tmpStaccato||null;
+
+  if(nodes.length===0&&!nuovoSt&&!tmpSt){
+    container.innerHTML='<span class="ln-empty">'+(emptyMsg||'Lista vuota \u2014 testa = nullptr')+'</span>';
+    return;
+  }
+
+  /* tmp isolato (sinistra) */
+  if(tmpSt){
+    var tc=mkNodeCol(tmpSt,true); container.appendChild(tc);
+    container.appendChild(mkSpacer());
+  }
+
+  /* lista principale */
+  nodes.forEach(function(node,i){
+    var isLast=(i===nodes.length-1);
+    node.isLast=isLast;
+    var col=mkNodeCol(node,false); container.appendChild(col);
+    if(!isLast) container.appendChild(mkArrow());
+  });
+  if(nodes.length>0) container.appendChild(mkNull());
+
+  /* nuovo staccato (destra) */
+  if(nuovoSt){
+    container.appendChild(mkSpacer());
+    nuovoSt.forceNull=true; nuovoSt.isLast=true;
+    container.appendChild(mkNodeCol(nuovoSt,true));
+    container.appendChild(mkNull());
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   TOOL 1 — LISTA CONCATENATA (step-by-step)
+═══════════════════════════════════════════════════ */
+(function initLista(){
+  var MAX=8; var lista=[];
+  var opActive=false,opSteps=[],opIdx=0,opFinal=[];
+
+  var container =document.getElementById('lista-nodes');
+  var inputEl   =document.getElementById('lista-input');
+  var msgEl     =document.getElementById('lista-msg');
+  var stepCtrl  =document.getElementById('lista-step-ctrl');
+  var stepInfo  =document.getElementById('lista-step-info');
+  var btnNext   =document.getElementById('lista-next');
+  var btnSkip   =document.getElementById('lista-skip');
+  var opBtns=[
+    document.getElementById('lista-ins-testa'),
+    document.getElementById('lista-ins-coda'),
+    document.getElementById('lista-ins-ord'),
+    document.getElementById('lista-cancella'),
+    document.getElementById('lista-cerca'),
+    document.getElementById('lista-reset')
+  ];
+
+  function committed(){
+    if(lista.length===0){
+      container.innerHTML='<span class="ln-empty">Lista vuota \u2014 testa = nullptr</span>';
+    } else {
+      renderStep({nodes:lista.map(function(v,i){
+        return{val:v, labels:i===0?[LBL.testa]:[], isNuovo:false};
+      })}, container);
+    }
+    opBtns[0].disabled=lista.length>=MAX;
+    opBtns[1].disabled=lista.length>=MAX;
+    opBtns[2].disabled=lista.length>=MAX;
+  }
+
+  function startOp(steps,final){
+    opActive=true; opSteps=steps; opIdx=0; opFinal=final;
+    opBtns.forEach(function(b){b.disabled=true;});
+    stepCtrl.style.display='flex';
+    applyStep(steps[0]); updateInfo();
+  }
+  function applyStep(s){
+    renderStep(s,container);
+    msgEl.textContent=s.msg;
+    btnNext.textContent=opIdx<opSteps.length-1?'Avanti \u2192':'Applica \u2713';
+  }
+  function updateInfo(){stepInfo.textContent='Passo '+(opIdx+1)+' di '+opSteps.length;}
+  function finishOp(){
+    lista=opFinal.slice(); opActive=false;
+    stepCtrl.style.display='none';
+    opBtns.forEach(function(b){b.disabled=false;});
+    committed();
+  }
+
+  btnNext.addEventListener('click',function(){
+    opIdx++; if(opIdx>=opSteps.length){finishOp();return;}
+    applyStep(opSteps[opIdx]); updateInfo();
+  });
+  btnSkip.addEventListener('click',function(){finishOp();msgEl.textContent='Operazione completata.';});
+
+  function getVal(){
+    var v=parseInt(inputEl.value);
+    if(isNaN(v)){msgEl.textContent='Inserisci un numero intero.';return null;}
+    return v;
+  }
+  function tNode(v,i){return{val:v,labels:i===0?[LBL.testa]:[],isNuovo:false};}
+
+  /* ── + TESTA ── */
+  opBtns[0].addEventListener('click',function(){
+    var v=getVal(); if(v===null)return;
+    if(lista.length>=MAX){msgEl.textContent='Limite visivo raggiunto.';return;}
+    inputEl.value='';
+    var L=lista.slice();
+    if(L.length===0){
+      startOp([{nodes:[{val:v,labels:[LBL.nuovo,LBL.testa],isNuovo:true}],
+        msg:'Lista vuota: new Nodo, testa = nuovo. Premi Applica.'}],[v]);
+      return;
+    }
+    var s0nodes=L.map(tNode);
+    startOp([
+      {nodes:s0nodes, nuovoStaccato:{val:v,labels:[LBL.nuovo],isNuovo:true},
+       msg:'Passo 1/3 \u2014 new Nodo: alloco ['+v+'] in heap. nuovo\u2192next = nullptr. Il nodo esiste ma non \u00e8 ancora collegato alla lista.'},
+      {nodes:[{val:v,labels:[LBL.nuovo],isNuovo:true}].concat(L.map(function(x,i){return{val:x,labels:i===0?[LBL.testa]:[]};})),
+       msg:'Passo 2/3 \u2014 nuovo\u2192next = testa: il nuovo nodo punta al vecchio primo ['+L[0]+']. In questo istante DUE riferimenti puntano a ['+L[0]+']: testa e nuovo\u2192next.'},
+      {nodes:[{val:v,labels:[LBL.testa]}].concat(L.map(function(x){return{val:x,labels:[]};})),
+       msg:'Passo 3/3 \u2014 testa = nuovo: testa ora punta a ['+v+']. Premi Applica per confermare.'}
+    ],[v].concat(L));
+  });
+
+  /* ── + CODA ── */
+  opBtns[1].addEventListener('click',function(){
+    var v=getVal(); if(v===null)return;
+    if(lista.length>=MAX){msgEl.textContent='Limite visivo raggiunto.';return;}
+    inputEl.value='';
+    var L=lista.slice();
+    if(L.length===0){
+      startOp([{nodes:[{val:v,labels:[LBL.nuovo,LBL.testa],isNuovo:true}],
+        msg:'Lista vuota: new Nodo, testa = nuovo. Premi Applica.'}],[v]);
+      return;
+    }
+    var last=L.length-1;
+    startOp([
+      {nodes:L.map(function(x,i){return{val:x,labels:i===0?[LBL.testa]:(i===last?[LBL.curr]:[])  };}),
+       nuovoStaccato:{val:v,labels:[LBL.nuovo],isNuovo:true},
+       msg:'Passo 1/4 \u2014 new Nodo: alloco ['+v+'] in heap. curr scorre fino all\'ultimo nodo ['+L[last]+']. nuovo\u2192next = nullptr.'},
+      {nodes:L.map(function(x,i){return{val:x,labels:i===0?[LBL.testa]:(i===last?[LBL.curr]:[])};}).concat([{val:v,labels:[LBL.nuovo],isNuovo:true}]),
+       msg:'Passo 2/4 \u2014 curr\u2192next = nuovo: l\'ultimo nodo ora punta a ['+v+']. Il collegamento \u00e8 fatto.'},
+      {nodes:L.map(function(x,i){return{val:x,labels:i===0?[LBL.testa]:[]};}).concat([{val:v,labels:[LBL.coda_l]}]),
+       msg:'Passo 3/4 \u2014 coda = nuovo: il puntatore coda avanza al nuovo ultimo nodo ['+v+'].'},
+      {nodes:[{val:v,labels:[LBL.testa]}].concat(L.slice(1)).concat([{val:v,labels:[]}]).slice(0,L.length+1).map(function(x,i){
+        var base=L.concat([v]); return{val:base[i],labels:i===0?[LBL.testa]:[]};
+      }),
+       msg:'Passo 4/4 \u2014 inserimento in coda completato. Premi Applica per confermare.'}
+    ],L.concat([v]));
+  });
+
+  /* ── + ORDINATO ── */
+  opBtns[2].addEventListener('click',function(){
+    var v=getVal(); if(v===null)return;
+    if(lista.length>=MAX){msgEl.textContent='Limite visivo raggiunto.';return;}
+    inputEl.value='';
+    var L=lista.slice();
+    if(L.length===0){
+      startOp([{nodes:[{val:v,labels:[LBL.nuovo,LBL.testa],isNuovo:true}],
+        msg:'Lista vuota: new Nodo, testa = nuovo. Premi Applica.'}],[v]);
+      return;
+    }
+    var pos=L.length;
+    for(var i=0;i<L.length;i++){if(v<=L[i]){pos=i;break;}}
+    var final=L.slice(0,pos).concat([v]).concat(L.slice(pos));
+    if(pos===0){
+      startOp([
+        {nodes:L.map(tNode), nuovoStaccato:{val:v,labels:[LBL.nuovo],isNuovo:true},
+         msg:'Passo 1/4 \u2014 ['+v+'] \u2264 testa\u2192valore: inserisco in testa.'},
+        {nodes:[{val:v,labels:[LBL.nuovo],isNuovo:true}].concat(L.map(function(x,i){return{val:x,labels:i===0?[LBL.testa]:[]};})),
+         msg:'Passo 2/4 \u2014 nuovo\u2192next = testa.'},
+        {nodes:[{val:v,labels:[LBL.testa]}].concat(L.map(function(x){return{val:x,labels:[]};})),
+         msg:'Passo 3/4 \u2014 testa = nuovo. Premi Applica.'},
+        {nodes:final.map(function(x,i){return{val:x,labels:i===0?[LBL.testa]:[]};}),
+         msg:'Passo 4/4 \u2014 lista ordinata. Premi Applica per confermare.'}
+      ],final);
+      return;
+    }
+    var currIdx=pos-1;
+    /* Step 0: lista con curr sul predecessore, nuovo staccato */
+    var s0=L.map(function(x,i){return{val:x,labels:i===0?[LBL.testa]:(i===currIdx?[LBL.curr]:[])};});
+    /* Step 1 (nuovo->next = curr->next): curr + nuovo + L[pos] con label "2 ptr" */
+    var s1=[];
+    L.forEach(function(x,i){
+      var lbs=i===0?[LBL.testa]:(i===currIdx?[LBL.curr]:[]);
+      if(i===pos) lbs=[LBL.due_ptr];
+      s1.push({val:x,labels:lbs});
+      if(i===currIdx){s1.push({val:v,labels:[LBL.nuovo],isNuovo:true});}
+    });
+    /* Step 2 (curr->next = nuovo): curr now points to nuovo */
+    var s2=[];
+    L.forEach(function(x,i){
+      var lbs=i===0?[LBL.testa]:[];
+      s2.push({val:x,labels:lbs});
+      if(i===currIdx){s2.push({val:v,labels:[LBL.nuovo]});}
+    });
+    /* Step 3 final */
+    var s3=final.map(function(x,i){return{val:x,labels:i===0?[LBL.testa]:[]};});
+    startOp([
+      {nodes:s0, nuovoStaccato:{val:v,labels:[LBL.nuovo],isNuovo:true},
+       msg:'Passo 1/4 \u2014 curr scorre la lista. ATTENZIONE: il confronto avviene su curr\u2192next\u2192valore (non curr\u2192valore). Ci fermiamo sul predecessore, cio\u00e8 il nodo dopo il quale inserire. Ci fermiamo quando curr\u2192next\u2192valore \u2265 '+v+'.'},
+      {nodes:s1,
+       msg:'Passo 2/4 \u2014 nuovo\u2192next = curr\u2192next: ['+v+'] punta a ['+L[pos]+']. In questo istante DUE puntatori raggiungono ['+L[pos]+']: curr\u2192next e nuovo\u2192next. Il riferimento al resto della lista \u00e8 al sicuro. Solo ora possiamo modificare curr\u2192next.'},
+      {nodes:s2,
+       msg:'Passo 3/4 \u2014 curr\u2192next = nuovo: curr ora punta a ['+v+']. L\'innesto \u00e8 completo. \u26a0 Invertire i passi 2 e 3 causa la perdita permanente del resto della lista \u2014 bug classico da esame!'},
+      {nodes:s3,
+       msg:'Passo 4/4 \u2014 lista ordinata. \u25BC testa su ['+final[0]+']. Premi Applica per confermare.'}
+    ],final);
+  });
+
+  /* ── CANCELLA ── */
+  opBtns[3].addEventListener('click',function(){
+    var v=getVal(); if(v===null)return;
+    inputEl.value='';
+    var L=lista.slice();
+    if(L.length===0){msgEl.textContent='Lista vuota.';return;}
+    var idx=-1;
+    for(var i=0;i<L.length;i++){if(L[i]===v){idx=i;break;}}
+    if(idx===-1){committed();msgEl.textContent=v+' non trovato.';return;}
+    if(idx===0){
+      var s0=[{val:L[0],labels:[LBL.testa,LBL.target],isTarget:true}]
+        .concat(L.slice(1).map(function(x,i){return{val:x,labels:i===0?[{text:'\u25BC nuova testa',cls:'lbl-testa'}]:[]};}));
+      var sf=L.slice(1).map(function(x,i){return{val:x,labels:i===0?[LBL.testa]:[]};});
+      startOp([
+        {nodes:s0, msg:'Passo 1/2 \u2014 ['+v+'] \u00e8 in testa. Nodo* tmp = testa; testa = testa\u2192next; il nodo ['+v+'] \u00e8 ora isolato.'},
+        {nodes:sf.length?sf:[], msg:'Passo 2/2 \u2014 delete tmp: memoria liberata. Premi Applica per confermare.'}
+      ],L.slice(1));
+      return;
+    }
+    var pred=idx-1;
+    var s0=L.map(function(x,i){return{val:x,labels:i===0?[LBL.testa]:(i===pred?[LBL.curr]:[]),isTarget:i===idx};});
+    var s1=L.map(function(x,i){return{val:x,labels:i===0?[LBL.testa]:(i===pred?[{text:'curr\u2192next = tmp\u2192next',cls:'lbl-curr'}]:[]),isTarget:i===idx};});
+    var final=L.filter(function(_,i){return i!==idx;});
+    var sf=final.map(function(x,i){return{val:x,labels:i===0?[LBL.testa]:[]};});
+    startOp([
+      {nodes:s0, msg:'Passo 1/3 \u2014 curr scorre fino al predecessore di ['+v+']. Nodo* tmp = curr\u2192next; (tmp punta a ['+v+']).'},
+      {nodes:s1, msg:'Passo 2/3 \u2014 curr\u2192next = tmp\u2192next: salto il nodo da eliminare. tmp \u00e8 ora isolato dalla catena.'},
+      {nodes:sf.length?sf:[], msg:'Passo 3/3 \u2014 delete tmp: memoria liberata. Premi Applica per confermare.'}
+    ],final);
+  });
+
+  /* ── CERCA ── */
+  opBtns[4].addEventListener('click',function(){
+    var v=getVal(); if(v===null)return;
+    inputEl.value='';
+    var L=lista.slice();
+    if(L.length===0){msgEl.textContent='Lista vuota.';return;}
+    var idx=-1;
+    for(var i=0;i<L.length;i++){if(L[i]===v){idx=i;break;}}
+    renderStep({nodes:L.map(function(x,i){
+      return{val:x,labels:i===0?[LBL.testa]:[],isFound:idx>=0&&i===idx};
+    })},container);
+    msgEl.textContent=idx===-1?v+' non trovato \u2014 scansione O(n) completa.':v+' trovato in posizione '+idx+' \u2014 scansione O(n).';
+  });
+
+  /* ── RESET ── */
+  opBtns[5].addEventListener('click',function(){
+    lista=[]; inputEl.value='';
+    if(opActive){opActive=false;stepCtrl.style.display='none';opBtns.forEach(function(b){b.disabled=false;});}
+    committed();
+    msgEl.textContent='Lista svuotata \u2014 testa = nullptr.';
+  });
+
+  committed();
+})();
+
+/* ═══════════════════════════════════════════════════
+   TOOL 2 — STACK CON NODI
+═══════════════════════════════════════════════════ */
+(function initStackNodi(){
+  var MAX=6; var stack=[];
+  var nodesEl  =document.getElementById('sn-nodes');
+  var topLabel =document.getElementById('sn-top-label');
+  var nullLabel=document.getElementById('sn-null-label');
+  var inputEl  =document.getElementById('sn-input');
+  var pushBtn  =document.getElementById('sn-push');
+  var popBtn   =document.getElementById('sn-pop');
+  var resetBtn =document.getElementById('sn-reset');
+  var stateEl  =document.getElementById('sn-state');
+  var msgEl    =document.getElementById('sn-msg');
+
+  function render(){
+    nodesEl.innerHTML='';
+    if(stack.length===0){
+      topLabel.textContent='top = nullptr'; nullLabel.style.display='none';
+      stateEl.innerHTML='isEmpty() = <span>vero</span>';
+      popBtn.disabled=true; pushBtn.disabled=false; return;
+    }
+    topLabel.textContent='\u25BC top'; nullLabel.style.display='block';
+    stack.forEach(function(val,i){
+      var wrap=document.createElement('div');
+      wrap.className='sn-node-wrap'+(i===0?' is-top':'');
+      var box=document.createElement('div'); box.className='sn-box';
+      box.innerHTML='<div class="sn-val">'+val+'</div><div class="sn-ptr">'+(i<stack.length-1?'\u2193':'\u2205')+'</div>';
+      wrap.appendChild(box); nodesEl.appendChild(wrap);
+      if(i<stack.length-1){var c=document.createElement('div');c.className='sn-connector';nodesEl.appendChild(c);}
+    });
+    stateEl.innerHTML='top \u2192 ['+stack[0]+']\u2193<br>isEmpty() = <span>falso</span>';
+    popBtn.disabled=false; pushBtn.disabled=stack.length>=MAX;
+  }
+
+  pushBtn.addEventListener('click',function(){
+    var v=parseInt(inputEl.value);
+    if(isNaN(v)){msgEl.textContent='Inserisci un numero intero.';return;}
+    if(stack.length>=MAX){msgEl.textContent='Limite visivo raggiunto.';return;}
+    stack.unshift(v); inputEl.value='';
+    msgEl.textContent='push('+v+') \u2014 new Nodo allocato, top aggiornato a ['+v+'].';
+    render();
+  });
+  popBtn.addEventListener('click',function(){
+    if(stack.length===0){msgEl.textContent='Pila vuota.';return;}
+    var val=stack.shift();
+    msgEl.textContent='pop() \u2192 estratto '+val+', delete eseguito, top aggiornato.';
+    render();
+  });
+  resetBtn.addEventListener('click',function(){
+    stack=[]; inputEl.value=''; msgEl.textContent='Pila svuotata \u2014 top = nullptr.'; render();
+  });
+  render();
+})();
+
+/* ═══════════════════════════════════════════════════
+   TOOL 3 — CODA CON NODI (step-by-step)
+═══════════════════════════════════════════════════ */
+(function initCodaNodi(){
+  var MAX=7; var coda=[];
+  var opActive=false,opSteps=[],opIdx=0,opFinal=[];
+
+  var container=document.getElementById('coda-nodes');
+  var inputEl  =document.getElementById('qn-input');
+  var enqBtn   =document.getElementById('qn-enqueue');
+  var deqBtn   =document.getElementById('qn-dequeue');
+  var resetBtn =document.getElementById('qn-reset');
+  var stateEl  =document.getElementById('qn-state');
+  var msgEl    =document.getElementById('qn-msg');
+  var stepCtrl =document.getElementById('coda-step-ctrl');
+  var stepInfo =document.getElementById('coda-step-info');
+  var btnNext  =document.getElementById('coda-next');
+  var btnSkip  =document.getElementById('coda-skip');
+  var opBtns   =[enqBtn,deqBtn,resetBtn];
+
+  function updateState(){
+    if(coda.length===0){
+      stateEl.innerHTML='testa = <span class="qs-testa">nullptr</span> &nbsp;|&nbsp; coda = <span class="qs-coda">nullptr</span>';
+    } else {
+      stateEl.innerHTML='testa \u2192 <span class="qs-testa">['+coda[0]+']</span> &nbsp;|&nbsp; coda \u2192 <span class="qs-coda">['+coda[coda.length-1]+']</span>';
+    }
+  }
+
+  function committed(){
+    if(coda.length===0){
+      container.innerHTML='<span class="ln-empty">Coda vuota \u2014 testa = nullptr, coda = nullptr</span>';
+    } else {
+      var last=coda.length-1;
+      renderStep({nodes:coda.map(function(v,i){
+        return{val:v,labels:i===0?[LBL.testa]:(i===last?[LBL.coda_l]:[])};
+      })},container,'Coda vuota');
+    }
+    updateState();
+    enqBtn.disabled=coda.length>=MAX;
+    deqBtn.disabled=coda.length===0;
+  }
+
+  function startOp(steps,final){
+    opActive=true; opSteps=steps; opIdx=0; opFinal=final;
+    opBtns.forEach(function(b){b.disabled=true;});
+    stepCtrl.style.display='flex';
+    applyStep(steps[0]); updateStepInfo();
+  }
+  function applyStep(s){
+    renderStep(s,container,'Coda vuota');
+    msgEl.textContent=s.msg;
+    btnNext.textContent=opIdx<opSteps.length-1?'Avanti \u2192':'Applica \u2713';
+  }
+  function updateStepInfo(){stepInfo.textContent='Passo '+(opIdx+1)+' di '+opSteps.length;}
+  function finishOp(){
+    coda=opFinal.slice(); opActive=false;
+    stepCtrl.style.display='none';
+    opBtns.forEach(function(b){b.disabled=false;});
+    committed();
+  }
+
+  btnNext.addEventListener('click',function(){
+    opIdx++; if(opIdx>=opSteps.length){finishOp();return;}
+    applyStep(opSteps[opIdx]); updateStepInfo();
+  });
+  btnSkip.addEventListener('click',function(){finishOp();msgEl.textContent='Operazione completata.';});
+
+  /* ── ENQUEUE ── */
+  enqBtn.addEventListener('click',function(){
+    var v=parseInt(inputEl.value);
+    if(isNaN(v)){msgEl.textContent='Inserisci un numero intero.';return;}
+    if(coda.length>=MAX){msgEl.textContent='Limite visivo raggiunto.';return;}
+    inputEl.value='';
+    var L=coda.slice(); var last=L.length-1;
+    if(L.length===0){
+      startOp([{nodes:[{val:v,labels:[LBL.nuovo,LBL.testa,LBL.coda_l],isNuovo:true}],
+        msg:'Coda vuota: new Nodo, testa = coda = nuovo. Premi Applica.'}],[v]);
+      return;
+    }
+    startOp([
+      {nodes:L.map(function(x,i){return{val:x,labels:i===0?[LBL.testa]:(i===last?[LBL.coda_l]:[])  };}),
+       nuovoStaccato:{val:v,labels:[LBL.nuovo],isNuovo:true},
+       msg:'Passo 1/4 \u2014 new Nodo: alloco ['+v+'] in heap. nuovo\u2192next = nullptr. Il nodo esiste ma non \u00e8 ancora collegato.'},
+      {nodes:L.map(function(x,i){return{val:x,labels:i===0?[LBL.testa]:(i===last?[LBL.coda_l]:[])}; }).concat([{val:v,labels:[LBL.nuovo],isNuovo:true}]),
+       msg:'Passo 2/4 \u2014 coda\u2192next = nuovo: l\'ultimo nodo ['+L[last]+'] ora punta a ['+v+']. Il collegamento \u00e8 fatto.'},
+      {nodes:L.map(function(x,i){return{val:x,labels:i===0?[LBL.testa]:[]};}).concat([{val:v,labels:[LBL.coda_l]}]),
+       msg:'Passo 3/4 \u2014 coda = nuovo: il puntatore coda avanza al nuovo ultimo nodo ['+v+'].'},
+      {nodes:L.concat([v]).map(function(x,i){return{val:x,labels:i===0?[LBL.testa]:(i===L.length?[LBL.coda_l]:[])  };}),
+       msg:'Passo 4/4 \u2014 enqueue completato. \u25BC testa su ['+L[0]+']. Premi Applica per confermare.'}
+    ],L.concat([v]));
+  });
+
+  /* ── DEQUEUE ── */
+  deqBtn.addEventListener('click',function(){
+    var L=coda.slice();
+    if(L.length===0){msgEl.textContent='Coda vuota.';return;}
+    var val=L[0]; var rest=L.slice(1); var last=L.length-1;
+    /* step 1: tmp e testa entrambi sul primo nodo */
+    var s1=L.map(function(x,i){return{val:x,labels:i===0?[LBL.testa,LBL.tmp]:(i===last?[LBL.coda_l]:[])};});
+    /* step 2: testa avanza, tmp isolato */
+    var s2nodes=rest.map(function(x,i){return{val:x,labels:i===0?[LBL.testa]:(i===rest.length-1?[LBL.coda_l]:[])};});
+    /* step 3: final */
+    var s3=rest.map(function(x,i){return{val:x,labels:i===0?[LBL.testa]:(i===rest.length-1?[LBL.coda_l]:[])};});
+    startOp([
+      {nodes:s1,
+       msg:'Passo 1/3 \u2014 Nodo* tmp = testa: creo un puntatore temporaneo al primo nodo ['+val+']. Senza tmp perderei l\'indirizzo dopo aver spostato testa.'},
+      {nodes:s2nodes.length?s2nodes:[],
+       tmpStaccato:{val:val,labels:[LBL.tmp],isTarget:true},
+       msg:'Passo 2/3 \u2014 testa = testa\u2192next: testa avanza a '+(rest.length>0?'['+rest[0]+']':'nullptr')+'. tmp punta ancora al nodo da eliminare ['+val+'] (ora scollegato dalla catena).'},
+      {nodes:s3.length?s3:[],
+       msg:'Passo 3/3 \u2014 delete tmp: memoria del nodo ['+val+'] liberata. Premi Applica per confermare.'}
+    ],rest);
+  });
+
+  /* ── RESET ── */
+  resetBtn.addEventListener('click',function(){
+    coda=[]; inputEl.value='';
+    if(opActive){opActive=false;stepCtrl.style.display='none';opBtns.forEach(function(b){b.disabled=false;});}
+    committed();
+    msgEl.textContent='Coda svuotata \u2014 testa = nullptr, coda = nullptr.';
+  });
+
+  committed();
+})();
+
+/* ═══ COPIA CODICE ═══ */
+document.querySelectorAll('.code-block').forEach(function(block){
+  var header=block.querySelector('.code-header');
+  var pre=block.querySelector('pre');
+  if(!header||!pre)return;
+  var btn=document.createElement('button');
+  btn.className='copy-btn'; btn.textContent='Copia';
+  btn.addEventListener('click',function(){
+    navigator.clipboard.writeText(pre.innerText).then(function(){
+      btn.textContent='\u2713 Copiato'; btn.classList.add('copied');
+      setTimeout(function(){btn.textContent='Copia';btn.classList.remove('copied');},2000);
+    });
+  });
+  header.appendChild(btn);
+});
+
+/* ═══ TOC ═══ */
+var tocLinks=document.querySelectorAll('#toc a');
+var sections=document.querySelectorAll('section[id]');
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      tocLinks.forEach(function(a){a.classList.remove('active');});
+      var a=document.querySelector('#toc a[href="#'+e.target.id+'"]');
+      if(a) a.classList.add('active');
+    }
+  });
+},{rootMargin:'-10% 0px -80% 0px',threshold:0});
+sections.forEach(function(s){obs.observe(s);});
+tocLinks.forEach(function(a){
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    var t=document.querySelector(a.getAttribute('href'));
+    if(t) t.scrollIntoView({behavior:'smooth'});
+  });
+});
+var btt=document.getElementById('back-to-top');
+window.addEventListener('scroll',function(){btt.classList.toggle('visible',window.scrollY>300);});
+})();
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>
