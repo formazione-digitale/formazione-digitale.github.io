@@ -148,6 +148,7 @@ main {
   transform: translateX(3px);
   box-shadow: 0 4px 20px rgba(31,78,121,.13);
 }
+a.rank-item { text-decoration: none; color: inherit; cursor: pointer; }
 .rank-item.rank-1 { border-left-color: #F5A623; }
 .rank-item.rank-2 { border-left-color: #9B9B9B; }
 .rank-item.rank-3 { border-left-color: #C87941; }
@@ -403,7 +404,7 @@ async function caricaStats() {
       const catStr  = categoriaFromPath(p.path);
       const rankCls = pos <= 3 ? `rank-${pos}` : pos <= 10 ? 'rank-top' : '';
       return `
-        <div class="rank-item ${rankCls}">
+        <a href="${p.path}" class="rank-item ${rankCls}">
           <span class="rank-pos">${pos}</span>
           <span class="rank-medal">${medaglia(pos)}</span>
           <div class="rank-info">
@@ -417,7 +418,7 @@ async function caricaStats() {
             ${p.count.toLocaleString('it-IT')}
             <small>pageview</small>
           </div>
-        </div>`;
+        </a>`;
     }).join('');
 
     // 7. Anima barre
