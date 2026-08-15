@@ -559,6 +559,151 @@ body.aula-mode .toc-grid{display:none}
     <div class="box-label">⚠ Il collo di bottiglia di Von Neumann</div>
     <p>CPU e memoria condividono lo stesso bus per dati <em>e</em> istruzioni. La CPU aspetta che la memoria risponda ad ogni accesso. Le soluzioni moderne (pipeline, cache, architettura Harvard modificata) mitigano il problema ma non lo eliminano: è strutturale nel modello.</p>
   </div>
+  <div class="sub-title">Architettura Harvard — la soluzione al bottleneck</div>
+  <p>Nel <strong>modello Harvard</strong> (Harvard Mark I, 1944) la memoria è divisa in due spazi fisicamente separati con bus distinti: uno per le istruzioni e uno per i dati. La CPU può leggere la prossima istruzione e accedere a un dato <em>nello stesso ciclo di clock</em> — eliminando il collo di bottiglia strutturale di Von Neumann.</p>
+  <p class="svg-hint">👆 Clicca su ogni componente per la descrizione.</p>
+  <div class="svg-wrap">
+    <svg viewBox="0 0 700 448" xmlns="http://www.w3.org/2000/svg" aria-label="Confronto Von Neumann vs Harvard e Harvard Modificata">
+
+      <!-- CORNICI SEPARATORI DEI 3 MODELLI -->
+      <rect x="5" y="18" width="335" height="175" rx="8" fill="rgba(31,78,121,.04)" stroke="rgba(31,78,121,.22)" stroke-width="1.2"/>
+      <rect x="356" y="18" width="337" height="175" rx="8" fill="rgba(31,78,121,.04)" stroke="rgba(31,78,121,.22)" stroke-width="1.2"/>
+      <rect x="5" y="204" width="690" height="242" rx="8" fill="rgba(31,78,121,.04)" stroke="rgba(31,78,121,.22)" stroke-width="1.2"/>
+
+      <!-- LABELS PANNELLI -->
+      <text x="169" y="16" font-family="sans-serif" font-size="11" font-weight="700" fill="#7EC8E3" text-anchor="middle" letter-spacing=".08em">VON NEUMANN</text>
+      <text x="531" y="16" font-family="sans-serif" font-size="11" font-weight="700" fill="#7EC8E3" text-anchor="middle" letter-spacing=".08em">HARVARD</text>
+
+      <!-- CPU Von Neumann -->
+      <g class="svg-el" onclick="svgInfo('hvd','vn_cpu');event.stopPropagation()">
+        <rect class="shape" x="15" y="28" width="130" height="105" rx="8" fill="#1F4E79" stroke="#3E85C6" stroke-width="1.8"/>
+        <text x="80" y="74" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">CPU</text>
+        <text x="80" y="90" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,.6)" text-anchor="middle">CU · ALU · Registri</text>
+        <text x="80" y="105" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,.38)" text-anchor="middle">Program Counter</text>
+      </g>
+
+      <!-- Memoria Unificata Von Neumann -->
+      <g class="svg-el" onclick="svgInfo('hvd','vn_mem');event.stopPropagation()">
+        <rect class="shape" x="195" y="28" width="128" height="105" rx="8" fill="#154060" stroke="#3E85C6" stroke-width="1.8"/>
+        <text x="259" y="60" font-family="sans-serif" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">Memoria</text>
+        <text x="259" y="74" font-family="sans-serif" font-size="7.5" fill="rgba(255,255,255,.6)" text-anchor="middle">Centrale — RAM</text>
+        <rect x="208" y="82" width="102" height="10" rx="2" fill="#2A5F90" opacity=".85"/>
+        <text x="259" y="90" font-family="sans-serif" font-size="7" fill="rgba(255,255,255,.75)" text-anchor="middle">LOAD 4 ← istruzione</text>
+        <rect x="208" y="96" width="102" height="10" rx="2" fill="#2A5F90" opacity=".58"/>
+        <text x="259" y="104" font-family="sans-serif" font-size="7" fill="rgba(255,255,255,.52)" text-anchor="middle">10 ← dato</text>
+        <rect x="208" y="110" width="102" height="10" rx="2" fill="#2A5F90" opacity=".35"/>
+        <text x="259" y="118" font-family="sans-serif" font-size="7" fill="rgba(255,255,255,.35)" text-anchor="middle">5 ← dato</text>
+      </g>
+
+      <!-- Connettori verticali CPU/MEM → bus VN -->
+      <line x1="80" y1="133" x2="80" y2="156" stroke="#e05050" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <line x1="259" y1="133" x2="259" y2="156" stroke="#e05050" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+      <!-- Bus condiviso Von Neumann -->
+      <g class="svg-el" onclick="svgInfo('hvd','vn_bus');event.stopPropagation()">
+        <rect class="shape" x="15" y="156" width="308" height="17" rx="4" fill="#3a1510" stroke="#e05050" stroke-width="1.5"/>
+        <text x="169" y="168" font-family="sans-serif" font-size="8.5" font-weight="700" fill="#FFA726" text-anchor="middle">BUS CONDIVISO — istruzioni e dati</text>
+      </g>
+      <text x="169" y="185" font-family="sans-serif" font-size="8" fill="#e07050" text-anchor="middle">⚠ accesso sequenziale — collo di bottiglia</text>
+
+      <!-- CPU Harvard -->
+      <g class="svg-el" onclick="svgInfo('hvd','h_cpu');event.stopPropagation()">
+        <rect class="shape" x="362" y="28" width="120" height="115" rx="8" fill="#1F4E79" stroke="#3E85C6" stroke-width="1.8"/>
+        <text x="422" y="80" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">CPU</text>
+        <text x="422" y="96" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,.6)" text-anchor="middle">CU · ALU · Registri</text>
+        <text x="422" y="111" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,.38)" text-anchor="middle">Program Counter</text>
+      </g>
+
+      <!-- Memoria Istruzioni Harvard (verde) -->
+      <g class="svg-el" onclick="svgInfo('hvd','h_imem');event.stopPropagation()">
+        <rect class="shape" x="516" y="28" width="170" height="50" rx="8" fill="#1E4030" stroke="#4CAF50" stroke-width="1.8"/>
+        <text x="601" y="50" font-family="sans-serif" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">Mem. Istruzioni</text>
+        <text x="601" y="65" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,.55)" text-anchor="middle">solo codice eseguibile</text>
+      </g>
+
+      <!-- Memoria Dati Harvard (blu) -->
+      <g class="svg-el" onclick="svgInfo('hvd','h_dmem');event.stopPropagation()">
+        <rect class="shape" x="516" y="88" width="170" height="50" rx="8" fill="#1a3a6a" stroke="#2E75B6" stroke-width="1.8"/>
+        <text x="601" y="110" font-family="sans-serif" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">Mem. Dati</text>
+        <text x="601" y="125" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,.55)" text-anchor="middle">variabili, valori, stack</text>
+      </g>
+
+      <!-- Bus istruzioni Harvard (I-BUS, verde) -->
+      <g class="svg-el" onclick="svgInfo('hvd','h_ibus');event.stopPropagation()">
+        <rect class="shape" x="482" y="47" width="34" height="13" rx="3" fill="#0f2a10" stroke="#4CAF50" stroke-width="1.3"/>
+        <text x="499" y="57" font-family="sans-serif" font-size="7" font-weight="700" fill="#66BB6A" text-anchor="middle">I-BUS</text>
+      </g>
+      <polygon points="513,49 520,53 513,57" fill="#4CAF50"/>
+
+      <!-- Bus dati Harvard (D-BUS, blu) -->
+      <g class="svg-el" onclick="svgInfo('hvd','h_dbus');event.stopPropagation()">
+        <rect class="shape" x="482" y="107" width="34" height="13" rx="3" fill="#0d1e3a" stroke="#2E75B6" stroke-width="1.3"/>
+        <text x="499" y="117" font-family="sans-serif" font-size="7" font-weight="700" fill="#7EC8E3" text-anchor="middle">D-BUS</text>
+      </g>
+      <polygon points="513,109 520,113 513,117" fill="#2E75B6"/>
+
+      <!-- OK label Harvard -->
+      <text x="531" y="158" font-family="sans-serif" font-size="8" fill="#66BB6A" text-anchor="middle">✓ accesso simultaneo — nessun collo di bottiglia</text>
+
+      <!-- ═══ SEZIONE HARVARD MODIFICATA ═══ -->
+
+      <!-- Divisore orizzontale -->
+      <line x1="20" y1="200" x2="680" y2="200" stroke="rgba(255,255,255,.12)" stroke-width="1" stroke-dasharray="6,4"/>
+
+      <!-- Titolo sezione -->
+      <text x="350" y="218" font-family="sans-serif" font-size="10" font-weight="700" fill="#7EC8E3" text-anchor="middle" letter-spacing=".08em">HARVARD MODIFICATA — NEI PROCESSORI MODERNI</text>
+
+      <!-- CPU die (bordo tratteggiato) -->
+      <rect x="150" y="228" width="400" height="88" rx="10" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1.5" stroke-dasharray="6,3"/>
+      <text x="350" y="242" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,.28)" text-anchor="middle" letter-spacing=".05em">CPU die</text>
+
+      <!-- L1 I-cache (verde, Harvard) -->
+      <g class="svg-el" onclick="svgInfo('hvd','hmod_l1i');event.stopPropagation()">
+        <rect class="shape" x="162" y="248" width="156" height="60" rx="7" fill="#1E4030" stroke="#4CAF50" stroke-width="1.6"/>
+        <text x="240" y="275" font-family="sans-serif" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">L1 I-cache</text>
+        <text x="240" y="290" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,.6)" text-anchor="middle">Instruction Cache</text>
+        <text x="240" y="303" font-family="sans-serif" font-size="7.5" fill="#66BB6A" text-anchor="middle">← Harvard</text>
+      </g>
+
+      <!-- L1 D-cache (blu, Harvard) -->
+      <g class="svg-el" onclick="svgInfo('hvd','hmod_l1d');event.stopPropagation()">
+        <rect class="shape" x="382" y="248" width="156" height="60" rx="7" fill="#1a3a6a" stroke="#2E75B6" stroke-width="1.6"/>
+        <text x="460" y="275" font-family="sans-serif" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">L1 D-cache</text>
+        <text x="460" y="290" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,.6)" text-anchor="middle">Data Cache</text>
+        <text x="460" y="303" font-family="sans-serif" font-size="7.5" fill="#7EC8E3" text-anchor="middle">← Harvard</text>
+      </g>
+
+      <!-- Separatore interno tra L1-I e L1-D -->
+      <line x1="350" y1="252" x2="350" y2="306" stroke="rgba(255,255,255,.14)" stroke-width="1"/>
+      <text x="350" y="276" font-family="sans-serif" font-size="7" fill="rgba(255,255,255,.28)" text-anchor="middle">bus</text>
+      <text x="350" y="287" font-family="sans-serif" font-size="7" fill="rgba(255,255,255,.28)" text-anchor="middle">sep.</text>
+
+      <!-- Freccia giù da die a L2/L3 -->
+      <line x1="350" y1="316" x2="350" y2="346" stroke="rgba(255,255,255,.32)" stroke-width="1.5"/>
+      <polygon points="344,343 350,352 356,343" fill="rgba(255,255,255,.32)"/>
+      <!-- L2/L3 Cache (Von Neumann, bus condiviso) -->
+      <g class="svg-el" onclick="svgInfo('hvd','hmod_l2');event.stopPropagation()">
+        <rect class="shape" x="100" y="354" width="500" height="30" rx="7" fill="#0d1e2e" stroke="#4A90D9" stroke-width="1.4" stroke-dasharray="5,3"/>
+        <text x="350" y="373" font-family="sans-serif" font-size="10" font-weight="600" fill="#7EC8E3" text-anchor="middle">L2 / L3 Cache — condivisa · Von Neumann</text>
+      </g>
+
+      <!-- Freccia giù da L2/L3 a RAM -->
+      <line x1="350" y1="384" x2="350" y2="399" stroke="rgba(255,255,255,.32)" stroke-width="1.5"/>
+      <polygon points="344,397 350,406 356,397" fill="rgba(255,255,255,.32)"/>
+
+      <!-- RAM (Von Neumann) -->
+      <g class="svg-el" onclick="svgInfo('hvd','hmod_ram');event.stopPropagation()">
+        <rect class="shape" x="60" y="408" width="580" height="27" rx="7" fill="#154060" stroke="#3E85C6" stroke-width="1.6"/>
+        <text x="350" y="426" font-family="sans-serif" font-size="10" font-weight="600" fill="rgba(255,255,255,.9)" text-anchor="middle">RAM — Memoria Centrale · Von Neumann</text>
+      </g>
+
+    </svg>
+    <div id="si-hvd" class="svg-info"><div class="sip-hint">👆 Clicca su un componente per la descrizione</div></div>
+  </div>
+  <div class="box box-info">
+    <div class="box-label">💡 Harvard Modificata — il meglio dei due modelli</div>
+    <p>I processori moderni usano un'architettura ibrida: la cache <strong>L1 è divisa</strong> in I-cache (istruzioni) e D-cache (dati) secondo il principio Harvard — accesso simultaneo, nessun conflitto. Dalla <strong>L2 in poi la memoria è unificata</strong> come Von Neumann — un solo spazio di indirizzamento per la RAM semplifica enormemente la programmazione. → Vedi <a href="#s33">sezione 3.3 — Cache L1, L2, L3</a> per i valori di latenza e capacità.</p>
+  </div>
 </section>
 <hr class="section-divider">
 <section class="guide-section" id="s21">
@@ -884,40 +1029,40 @@ body.aula-mode .toc-grid{display:none}
   <p>Non esiste una memoria "perfetta": rapida, capiente ed economica contemporaneamente. La soluzione è usare memorie diverse organizzate in <strong>gerarchia</strong>: le più veloci (e costose) vicino alla CPU, le più capienti (e lente) lontano. Il sistema operativo gestisce automaticamente il movimento dei dati tra i livelli.</p>
   <p class="svg-hint">👆 Clicca su ogni livello per latenza, capacità e tecnologia.</p>
   <div class="svg-wrap">
-    <svg viewBox="0 0 580 325" xmlns="http://www.w3.org/2000/svg" aria-label="Piramide gerarchia memorie">
-      <text x="8" y="28" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.35)" text-anchor="start">↑ veloce</text>
-      <text x="8" y="295" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.35)" text-anchor="start">↓ lento</text>
-      <text x="572" y="28" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.35)" text-anchor="end">piccolo ↑</text>
-      <text x="572" y="295" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.35)" text-anchor="end">grande ↓</text>
+    <svg viewBox="0 0 580 260" xmlns="http://www.w3.org/2000/svg" aria-label="Piramide gerarchia memorie">
+      <text x="8" y="22" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.35)" text-anchor="start">↑ veloce</text>
+      <text x="8" y="236" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.35)" text-anchor="start">↓ lento</text>
+      <text x="572" y="22" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.35)" text-anchor="end">piccolo ↑</text>
+      <text x="572" y="236" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.35)" text-anchor="end">grande ↓</text>
       <g class="svg-el" onclick="svgInfo('pyr','hdd');event.stopPropagation()">
-        <polygon class="shape" points="69,256 511,256 550,305 30,305" fill="#5A1A1A"/>
-        <text x="290" y="285" font-family="sans-serif" font-size="12" font-weight="600" fill="rgba(255,255,255,.85)" text-anchor="middle">HDD / NAS</text>
+        <polygon class="shape" points="69,205 511,205 550,244 30,244" fill="#5A1A1A"/>
+        <text x="290" y="228" font-family="sans-serif" font-size="12" font-weight="600" fill="rgba(255,255,255,.85)" text-anchor="middle">HDD / NAS</text>
       </g>
       <g class="svg-el" onclick="svgInfo('pyr','ssd');event.stopPropagation()">
-        <polygon class="shape" points="106,215 474,215 511,256 69,256" fill="#7A5020"/>
-        <text x="290" y="240" font-family="sans-serif" font-size="12" font-weight="600" fill="rgba(255,255,255,.88)" text-anchor="middle">SSD / NVMe</text>
+        <polygon class="shape" points="106,172 474,172 511,205 69,205" fill="#7A5020"/>
+        <text x="290" y="192" font-family="sans-serif" font-size="12" font-weight="600" fill="rgba(255,255,255,.88)" text-anchor="middle">SSD / NVMe</text>
       </g>
       <g class="svg-el" onclick="svgInfo('pyr','ram');event.stopPropagation()">
-        <polygon class="shape" points="143,174 437,174 474,215 106,215" fill="#2A6040"/>
-        <text x="290" y="198" font-family="sans-serif" font-size="12" font-weight="600" fill="rgba(255,255,255,.9)" text-anchor="middle">RAM — Memoria Centrale</text>
+        <polygon class="shape" points="143,139 437,139 474,172 106,172" fill="#2A6040"/>
+        <text x="290" y="158" font-family="sans-serif" font-size="12" font-weight="600" fill="rgba(255,255,255,.9)" text-anchor="middle">RAM — Memoria Centrale</text>
       </g>
       <g class="svg-el" onclick="svgInfo('pyr','l3');event.stopPropagation()">
-        <polygon class="shape" points="180,133 400,133 437,174 143,174" fill="#1A4060"/>
-        <text x="290" y="157" font-family="sans-serif" font-size="11.5" font-weight="600" fill="rgba(255,255,255,.9)" text-anchor="middle">Cache L3</text>
+        <polygon class="shape" points="180,106 400,106 437,139 143,139" fill="#1A4060"/>
+        <text x="290" y="126" font-family="sans-serif" font-size="11.5" font-weight="600" fill="rgba(255,255,255,.9)" text-anchor="middle">Cache L3</text>
       </g>
       <g class="svg-el" onclick="svgInfo('pyr','l2');event.stopPropagation()">
-        <polygon class="shape" points="216,92 364,92 400,133 180,133" fill="#1F4E79"/>
-        <text x="290" y="116" font-family="sans-serif" font-size="11" font-weight="600" fill="rgba(255,255,255,.9)" text-anchor="middle">Cache L2</text>
+        <polygon class="shape" points="216,74 364,74 400,106 180,106" fill="#1F4E79"/>
+        <text x="290" y="93" font-family="sans-serif" font-size="11" font-weight="600" fill="rgba(255,255,255,.9)" text-anchor="middle">Cache L2</text>
       </g>
       <g class="svg-el" onclick="svgInfo('pyr','l1');event.stopPropagation()">
-        <polygon class="shape" points="253,51 327,51 364,92 216,92" fill="#2E75B6"/>
-        <text x="290" y="75" font-family="sans-serif" font-size="10" font-weight="600" fill="#fff" text-anchor="middle">Cache L1</text>
+        <polygon class="shape" points="253,41 327,41 364,74 216,74" fill="#2E75B6"/>
+        <text x="290" y="60" font-family="sans-serif" font-size="10" font-weight="600" fill="#fff" text-anchor="middle">Cache L1</text>
       </g>
       <g class="svg-el" onclick="svgInfo('pyr','regs');event.stopPropagation()">
-        <polygon class="shape" points="290,10 253,51 327,51" fill="#5B9BD5"/>
-        <text x="290" y="43" font-family="sans-serif" font-size="8.5" font-weight="700" fill="#fff" text-anchor="middle">REG</text>
+        <polygon class="shape" points="290,8 253,41 327,41" fill="#5B9BD5"/>
+        <text x="290" y="34" font-family="sans-serif" font-size="8.5" font-weight="700" fill="#fff" text-anchor="middle">REG</text>
       </g>
-      <text x="290" y="318" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,.25)" text-anchor="middle">ogni livello è 10–100× più lento e molto più capiente del livello superiore</text>
+      <text x="290" y="254" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,.25)" text-anchor="middle">ogni livello è 10–100× più lento e molto più capiente del livello superiore</text>
     </svg>
     <div id="si-pyr" class="svg-info"><div class="sip-hint">👆 Clicca su un livello della piramide</div></div>
   </div>
@@ -2671,6 +2816,20 @@ const SVG_DATA={
     busd:{label:'Bidirezionale · trasporta valori', title:'Bus Dati',    desc:'Trasferisce i dati tra CPU, memoria e I/O. Bidirezionale: in lettura i dati vanno dalla memoria alla CPU; in scrittura dalla CPU alla memoria. Larghezza in bit determina il throughput: a 64 bit si trasferiscono 8 byte per ciclo.'},
     busa:{label:'Unidirezionale · CPU → Memoria',   title:'Bus Indirizzi',desc:'La CPU specifica l\'indirizzo da leggere o scrivere. Unidirezionale: solo la CPU genera indirizzi. Con N linee si indirizzano 2^N locazioni. A 32 bit: max 4 GB; a 36 bit: 64 GB; a 40 bit: 1 TB. La larghezza ha limitato gli indirizzi fisici nei sistemi a 32 bit.'},
     busc:{label:'Segnali di coordinamento',         title:'Bus Controllo', desc:'Coordina le operazioni: MEMRD/MEMWR (lettura/scrittura memoria), IORD/IOWR (porte I/O), IRQ (interruzione periferica), BUSRQ/BUSACK (arbitraggio multi-master), RESET. Senza questi segnali gli altri bus sarebbero privi di significato.'}
+  },
+  hvd:{
+    vn_cpu:   {label:'Modello Von Neumann',            title:'CPU (Von Neumann)',               desc:'La CPU accede alla stessa memoria per leggere sia le istruzioni da eseguire sia i dati da elaborare. I due accessi condividono lo stesso bus: non possono avvenire contemporaneamente. La CU deve attendere che ogni fetch sia completo prima di poter accedere ai dati operandi.'},
+    vn_mem:   {label:'Memoria unificata',              title:'Memoria Centrale — Von Neumann',  desc:'Programma (istruzioni) e dati risiedono nello stesso spazio di indirizzamento e sullo stesso chip di RAM. Questo semplifica enormemente la programmazione — un unico puntatore indirizza qualsiasi locazione — ma crea contesa sul bus: la CPU non può leggere istruzione e dato contemporaneamente.'},
+    vn_bus:   {label:'Il collo di bottiglia',          title:'Bus Condiviso — Von Neumann',     desc:'Unico canale fisico usato sia per trasportare le istruzioni (fetch) sia per leggere/scrivere dati (execute). In ogni ciclo il bus può fare una sola cosa. Questo collo di bottiglia — il "Von Neumann bottleneck" — è strutturale: non si elimina aumentando la frequenza di clock. Si mitiga con cache e pipeline.'},
+    h_cpu:    {label:'Modello Harvard',                title:'CPU (Harvard)',                   desc:'Nella CPU di un\'architettura Harvard sono presenti due percorsi distinti verso la memoria: uno dedicato al codice (I-BUS → Mem. Istruzioni) e uno dedicato ai dati (D-BUS → Mem. Dati). La CU può avviare il fetch dell\'istruzione successiva mentre l\'ALU accede ai dati dell\'istruzione corrente.'},
+    h_imem:   {label:'Dedicata al codice',             title:'Memoria Istruzioni — Harvard',    desc:'Contiene esclusivamente il codice eseguibile del programma. Fisicamente separata dalla memoria dati: diverso chip, diverso bus, diverso spazio di indirizzamento. L\'accesso è tipicamente in sola lettura durante l\'esecuzione. Nei microcontrollori (es. AVR, PIC) questa separazione è totale anche a livello di tecnologia: Flash per le istruzioni, SRAM per i dati.'},
+    h_dmem:   {label:'Dedicata ai dati',               title:'Memoria Dati — Harvard',          desc:'Contiene variabili, parametri, stack e heap del programma. Accessibile in lettura e scrittura dalla CPU tramite il D-BUS dedicato. Avendo un bus proprio, la CPU può leggere un dato mentre il bus istruzioni porta la prossima istruzione: i due trasferimenti avvengono in parallelo nello stesso ciclo di clock.'},
+    h_ibus:   {label:'Canale dedicato al codice',      title:'I-BUS — Bus Istruzioni',          desc:'Bus fisicamente separato che collega la CPU alla Memoria Istruzioni. Trasporta solo fetch di istruzioni: opcode e indirizzi di salto. Non essendo mai usato per i dati, non entra mai in conflitto con il D-BUS. La larghezza del bus istruzioni può essere ottimizzata per la dimensione delle istruzioni (es. 16 o 32 bit fissi in RISC).'},
+    h_dbus:   {label:'Canale dedicato ai dati',        title:'D-BUS — Bus Dati',                desc:'Bus fisicamente separato che collega la CPU alla Memoria Dati. Trasporta letture e scritture di variabili, parametri e risultati. Può operare contemporaneamente all\'I-BUS: mentre l\'I-BUS porta l\'istruzione N+1, il D-BUS completa l\'accesso al dato dell\'istruzione N. Questo parallelismo è la chiave delle prestazioni Harvard.'},
+    hmod_l1i: {label:'Harvard a livello L1',           title:'L1 I-cache — Instruction Cache',  desc:'Cache di primo livello dedicata alle istruzioni, integrata nel die della CPU accanto all\'Unità di Controllo. Latenza: 1–4 cicli di clock. Capacità: 16–64 KB per core. Alimenta la pipeline con un flusso continuo di istruzioni senza conflitti con gli accessi ai dati. Un I-cache miss significa scalare alla L2 (condivisa) con costo aggiuntivo di 4–12 ns.'},
+    hmod_l1d: {label:'Harvard a livello L1',           title:'L1 D-cache — Data Cache',         desc:'Cache di primo livello dedicata ai dati, integrata nel die accanto all\'ALU. Latenza: 1–4 cicli di clock. Capacità: 16–64 KB per core. Grazie alla separazione dalla I-cache, ALU e CU possono accedere ai rispettivi cache nello stesso ciclo senza arbitraggio. Hit rate tipico >95%: un D-cache miss forza l\'accesso alla L2 o, nel caso peggiore, alla RAM.'},
+    hmod_l2:  {label:'Von Neumann da L2 in su',        title:'L2 / L3 Cache — condivisa',       desc:'Dalla L2 in poi la cache è unificata: istruzioni e dati condividono lo stesso spazio. Si torna al principio Von Neumann. Questo è accettabile perché L2 e L3 sono molto più veloci della RAM (4–40 ns vs 40–100 ns) e la probabilità di conflitto simultaneo I/D è staticamente bassa. La L3 è condivisa tra tutti i core e permette la comunicazione inter-core senza accedere alla RAM.'},
+    hmod_ram: {label:'Von Neumann: unico spazio',      title:'RAM — Memoria Centrale',          desc:'La RAM è completamente Von Neumann: un unico spazio di indirizzamento per istruzioni e dati. Questo semplifica il modello di programmazione (un solo tipo di puntatore, librerie caricabili dinamicamente, codice auto-modificante) e riduce il costo hardware. Le prestazioni sono protette dagli strati di cache Harvard (L1) che intercettano la stragrande maggioranza degli accessi prima che raggiungano la RAM.'}
   },
   mobo:{
     socket: {label:'Processore',        title:'Socket CPU',           desc:'Connettore della scheda madre che ospita il processore. Il socket determina la compatibilita CPU-scheda madre: LGA1700 (Intel 12-14a gen), LGA1851 (Intel 15a gen), AM5 (AMD Ryzen 7000+). LGA = Land Grid Array (pin sul socket); PGA = Pin Grid Array (pin sulla CPU). Il socket include il meccanismo di bloccaggio (ILM) e le guide per il montaggio del dissipatore.'},
