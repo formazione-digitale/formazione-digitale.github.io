@@ -368,6 +368,7 @@
       <a href="#commands">Comandi Bash</a>
       <a href="#costrutti">Costrutti Logici</a>
       <a href="#pipe">Pipe &amp; Ridirezione</a>
+      <a href="#regex">Espressioni Regolari</a>
       <a href="#permessi">Permessi &amp; Sicurezza</a>
       <a href="#lab">Laboratorio Script</a>
     </nav>
@@ -1178,8 +1179,82 @@ saluta <span class="hl-string">"Alice"</span> <span class="hl-string">"en"</span
       </div>
     </section>
 
+    <section id="regex">
+      <div class="section-label">07 - ESPRESSIONI REGOLARI</div>
+      <h2>Espressioni Regolari</h2>
+      <p>Le espressioni regolari (regex) non sono una funzionalità di Bash — sono un linguaggio di pattern indipendente, riconosciuto da <code>grep</code>, <code>sed</code>, <code>awk</code>, editor di testo e linguaggi di programmazione. In Bash le usiamo principalmente con <code>grep</code> per filtrare righe in base a una struttura, non solo a una parola esatta.</p>
+            <h3>Tabella dei simboli</h3>
+      <table>
+        <thead>
+          <tr><th>Simbolo</th><th>Significato</th><th>Esempio</th><th>Match</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>^</code></td><td>Inizio riga</td><td><code>^A</code></td><td>Righe che iniziano con A</td></tr>
+          <tr><td><code>$</code></td><td>Fine riga</td><td><code>error$</code></td><td>Righe che finiscono con error</td></tr>
+          <tr><td><code>[0-9]</code></td><td>Una cifra decimale</td><td><code>[0-9]</code></td><td>Qualsiasi cifra da 0 a 9</td></tr>
+          <tr><td><code>[A-Z]</code></td><td>Una lettera maiuscola</td><td><code>[A-Z]</code></td><td>Qualsiasi lettera da A a Z</td></tr>
+          <tr><td><code>[a-z]</code></td><td>Una lettera minuscola</td><td><code>[a-z]</code></td><td>Qualsiasi lettera da a a z</td></tr>
+          <tr><td><code>[A-Za-z]</code></td><td>Una lettera qualsiasi (maiuscola o minuscola)</td><td><code>[A-Za-z]</code></td><td>A, b, Z, m… — <strong>un solo carattere</strong></td></tr>
+          <tr><td><code>.</code></td><td>Un qualsiasi carattere singolo <em>tranne il newline</em></td><td><code>a.c</code></td><td>abc, a1c, a-c… ma non a↵c</td></tr>
+          <tr><td><code>*</code></td><td>Zero o più occorrenze del precedente (illimitato)</td><td><code>colou*r</code></td><td>color, colour, colouur…</td></tr>
+          <tr><td><code>\?</code></td><td>Zero o una occorrenza del precedente (al massimo una)</td><td><code>colou\?r</code></td><td>color, colour — ma non colouur</td></tr>
+          <tr><td><code>\+</code></td><td>Una o più occorrenze del precedente (almeno una)</td><td><code>[0-9]\+</code></td><td>1, 42, 123…</td></tr>
+          <tr><td><code>\{n\}</code></td><td>Esattamente n ripetizioni</td><td><code>[0-9]\{2\}</code></td><td>00–99 (esattamente due cifre)</td></tr>
+          <tr><td><code>\&gt;</code></td><td>Fine parola</td><td><code>ERROR\&gt;</code></td><td>ERROR ma non ERRORI</td></tr>
+        </tbody>
+      </table>
+      <div class="box box-warn">
+        <strong>⚠️ [A-Za-z] ≠ [A-Z][a-z]</strong>
+        <p><code>[A-Za-z]</code> è una <strong>classe</strong> che matcha un singolo carattere alfabetico (maiuscolo o minuscolo). <code>[A-Z][a-z]</code> sono <strong>due classi consecutive</strong>: matcha esattamente due caratteri, una maiuscola seguita da una minuscola — come "Ma", "Ab", "Lo". Non sono equivalenti.</p>
+      </div>
+      <div class="box box-tip">
+        <strong>💡 Il punto <code>.</code> non è davvero "qualsiasi"</strong>
+        <p>Il punto esclude il newline (<code>\n</code>). In pratica con <code>grep</code> non fa differenza — grep lavora riga per riga e il newline non compare mai nel testo analizzato. Ma in altri contesti (sed, awk, Python, JavaScript) questa distinzione può causare bug non ovvi.</p>
+      </div>
+      <div class="box box-tip">
+        <strong>💡 * vs \? vs \+</strong>
+        <p>Tre quantificatori, tre soglie diverse: <code>*</code> accetta da zero a infinito, <code>\?</code> accetta zero o uno (utile per varianti opzionali come <code>colou\?r</code>), <code>\+</code> richiede almeno uno. In BRE (grep senza <code>-E</code>) il backslash è obbligatorio per <code>\?</code> e <code>\+</code> — senza di esso sono caratteri letterali.</p>
+      </div>
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>Esempi pratici con grep</span>
+          <button class="copy-btn" onclick="copyCode('pipe-regex')">Copia</button>
+        </div>
+        <pre id="pipe-regex"><span class="hl-comment"># Righe che iniziano con A</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"^A"</span> log.txt
+
+<span class="hl-comment"># Righe che finiscono con ERROR</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"ERROR$"</span> log.txt
+
+<span class="hl-comment"># Orario hh:mm — due cifre, due punti, due cifre</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"[0-9][0-9]:[0-9][0-9]"</span> log.txt
+
+<span class="hl-comment"># Stessa cosa con \{n\} — più compatto</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"[0-9]\{2\}:[0-9]\{2\}"</span> log.txt
+
+<span class="hl-comment"># .* = qualsiasi sequenza: righe con START e poi END (qualsiasi cosa in mezzo)</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"START.*END"</span> log.txt
+
+<span class="hl-comment"># \+ = almeno una cifra: righe che contengono un numero</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"[0-9]\+"</span> log.txt
+
+<span class="hl-comment"># \> = fine parola: ERROR ma non ERRORI, ERRORE ecc.</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"ERROR\>"</span> log.txt | <span class="hl-keyword">wc</span> -l
+
+<span class="hl-comment"># \< = inizio parola, \> = fine parola</span>
+<span class="hl-comment"># Parole che iniziano per A e finiscono per e (Ante, Aule, Aste…)</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"\<A[a-z]*e\>"</span> log.txt</pre>
+      </div>
+      <div class="box box-tip">
+        <strong>💡 Regex senza flag <code>-E</code></strong>
+        <p>Gli esempi usano grep in modalità standard (BRE — Basic Regular Expressions). Alcuni simboli come <code>\+</code> richiedono il backslash proprio in questa modalità; con <code>grep -E</code> (ERE) si scrivono senza: <code>+</code> invece di <code>\+</code>, <code>{2}</code> invece di <code>\{2\}</code>. Per ora rimaniamo sulla modalità standard, che funziona identicamente su tutti i sistemi.</p>
+      </div>
+
+
+    </section>
+
     <section id="permessi">
-      <div class="section-label">07 - PERMESSI & SICUREZZA</div>
+      <div class="section-label">08 - PERMESSI & SICUREZZA</div>
       <h2>Sicurezza, Permessi File & Notazione Ottale</h2>
       <p>In ambiente Linux/POSIX, la sicurezza è governata da una matrice di permessi assegnata a ogni file e cartella. I permessi si dividono in tre classi di utenti:</p>
       <ul>
@@ -1253,10 +1328,10 @@ saluta <span class="hl-string">"Alice"</span> <span class="hl-string">"en"</span
     </section>
 
     <section id="lab">
-      <div class="section-label">08 - LABORATORIO SCRIPT</div>
+      <div class="section-label">09 - LABORATORIO SCRIPT</div>
       <h2>Laboratorio Script Progressivo</h2>
       <p style="margin-top:-0.5rem;margin-bottom:1.5rem;"><a href="#intro" style="font-size:0.78rem;color:var(--prog-muted);text-decoration:none;font-family:'Space Mono',monospace;transition:color 0.2s;" onmouseover="this.style.color='var(--prog-accent)'" onmouseout="this.style.color='var(--prog-muted)'">↑ torna alla guida</a></p>
-      <p>Dodici script con difficoltà crescente, organizzati per tema. Ogni script introduce nuovi costrutti Bash. Gli script di <em>File &amp; Dati</em> che leggono file esterni e quelli di <em>Strutture Avanzate</em> richiedono i file inclusi nello ZIP.</p>
+      <p>Tredici script con difficoltà crescente, organizzati per tema. Ogni script introduce nuovi costrutti Bash. Gli script di <em>File &amp; Dati</em> che leggono file esterni e quelli di <em>Strutture Avanzate</em> richiedono i file inclusi nello ZIP.</p>
 
       <div class="box box-info">
         <strong>📦 File di supporto — ServerLab</strong>
@@ -1271,7 +1346,7 @@ saluta <span class="hl-string">"Alice"</span> <span class="hl-string">"en"</span
 
       <div class="lab-download-row">
         <a href="lab_bash.zip" download class="btn-download" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;">📥 Scarica lab_bash.zip</a>
-        <span style="font-size:0.82rem;color:var(--prog-muted);">Necessario per gli script 6 e 9–12</span>
+        <span style="font-size:0.82rem;color:var(--prog-muted);">Necessario per gli script 6, 9–12 e 13</span>
       </div>
 
       <div class="lab-layout">
@@ -1775,7 +1850,95 @@ saluta <span class="hl-string">"Alice"</span> <span class="hl-string">"en"</span
           </div>
             </div>
           </details>
-          <!-- ═══ lab9: contatore.sh ═══ -->
+    
+          <!-- ═══ lab13: grep_regex.sh ═══ -->
+          <details id="lab13">
+            <summary>
+              <span class="lab-sum-name">grep_regex.sh</span>
+              <span class="lab-sum-desc">— Ricerca con Regex</span>
+              <span class="lab-group-badge">File &amp; Dati</span>
+            </summary>
+            <div class="lab-detail-body">
+              <h3>Script 13: grep_regex.sh — Pattern di Ricerca sui Log</h3>
+              <p>Applica le espressioni regolari ai file di log del ServerLab con <code>grep</code>. Ogni comando dimostra un simbolo regex diverso sugli stessi dati — confronta gli output per capire cosa filtra ogni pattern.</p>
+
+              <h3>Parte 1 — <code>logs/errori.log</code></h3>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span>grep_regex.sh — errori.log</span>
+                  <button class="copy-btn" onclick="copyCode('lab13-errori')">Copia</button>
+                </div>
+                <pre id="lab13-errori"><span class="hl-shebang">#!/bin/bash</span>
+<span class="hl-comment"># grep_regex.sh — ricerca con regex sui file di log</span>
+<span class="hl-comment"># Prerequisito: esegui da ~/lab_bash/</span>
+
+<span class="hl-keyword">echo</span> <span class="hl-string">"=== RICERCHE SU errori.log ==="</span>
+
+<span class="hl-comment"># 1. Ricerca semplice: include anche ERRORI_parser e simili</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"--- 1. grep ERROR (include varianti) ---"</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"ERROR"</span> logs/errori.log
+<span class="hl-keyword">echo</span> <span class="hl-string">""</span>
+
+<span class="hl-comment"># 2. \&gt; = fine parola: ERROR ma NON ERRORI, ERRORI_parser</span>
+<span class="hl-comment">#    Confronta con il risultato 1 per vedere la differenza</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"--- 2. grep ERROR\&gt; (solo parola ERROR) ---"</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"ERROR\&gt;"</span> logs/errori.log
+<span class="hl-keyword">echo</span> <span class="hl-string">""</span>
+
+<span class="hl-comment"># 3. ^ = inizio riga: solo le righe del 16 luglio</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"--- 3. ^ inizio riga: log del 2026-07-16 ---"</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"^2026-07-16"</span> logs/errori.log
+<span class="hl-keyword">echo</span> <span class="hl-string">""</span>
+
+<span class="hl-comment"># 4. [0-9]\{2\}:[0-9]\{2\} = orario hh:mm</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"--- 4. orario hh:mm ---"</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"[0-9]\{2\}:[0-9]\{2\}"</span> logs/errori.log | <span class="hl-keyword">head</span> -5
+<span class="hl-keyword">echo</span> <span class="hl-string">""</span>
+
+<span class="hl-comment"># 5. Conta solo le righe con ERROR (parola esatta)</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"--- 5. Conteggio righe ERROR ---"</span>
+<span class="hl-variable">N</span>=<span class="hl-string">$(grep "ERROR\&gt;" logs/errori.log | wc -l)</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"Trovate: $N righe con ERROR"</span></pre>
+              </div>
+
+              <h3>Parte 2 — <code>logs/accessi.log</code></h3>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span>grep_regex.sh — accessi.log</span>
+                  <button class="copy-btn" onclick="copyCode('lab13-accessi')">Copia</button>
+                </div>
+                <pre id="lab13-accessi"><span class="hl-keyword">echo</span> <span class="hl-string">"=== RICERCHE SU accessi.log ==="</span>
+
+<span class="hl-comment"># 6. $ = fine riga: solo accessi di tipo LOGIN</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"--- 6. $ fine riga: solo LOGIN ---"</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"LOGIN$"</span> logs/accessi.log
+<span class="hl-keyword">echo</span> <span class="hl-string">""</span>
+
+<span class="hl-comment"># 7. Ricerca per utente</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"--- 7. Tutte le righe di mario ---"</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"mario"</span> logs/accessi.log
+<span class="hl-keyword">echo</span> <span class="hl-string">""</span>
+
+<span class="hl-comment"># 8. Pipeline: utenti unici con LOGIN</span>
+<span class="hl-comment">#    grep filtra → cut estrae il nome → sort ordina → uniq toglie duplicati</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"--- 8. Utenti unici con LOGIN ---"</span>
+<span class="hl-keyword">grep</span> <span class="hl-string">"LOGIN$"</span> logs/accessi.log | <span class="hl-keyword">cut</span> -d<span class="hl-string">' '</span> -f3 | <span class="hl-keyword">sort</span> | <span class="hl-keyword">uniq</span>
+
+<span class="hl-keyword">echo</span> <span class="hl-string">""</span>
+<span class="hl-keyword">echo</span> <span class="hl-string">"=== Fine ricerche ==="</span></pre>
+              </div>
+
+              <div class="box box-tip">
+                <strong>💡 Confronta i risultati 1 e 2</strong>
+                <p>Il comando 1 restituisce anche le righe con <code>ERRORI_parser</code>. Il comando 2 con <code>ERROR\&gt;</code> filtra solo la parola esatta. Confrontare i due output è il modo più diretto per capire cosa fa <code>\&gt;</code>.</p>
+              </div>
+              <div class="box box-warn">
+                <strong>⚠️ Prerequisito</strong>
+                <p>Esegui da <code>~/lab_bash/</code>. Richiede lo ZIP aggiornato (<code>logs/accessi.log</code> 24 righe, <code>logs/errori.log</code> 17 righe).</p>
+              </div>
+            </div>
+          </details>
+      <!-- ═══ lab9: contatore.sh ═══ -->
           <details id="lab9">
             <summary>
               <span class="lab-sum-name">contatore.sh</span>
