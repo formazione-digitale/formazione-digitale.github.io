@@ -433,13 +433,20 @@
       .viz-speed   { margin-left: 0; width: 100%; }
       .num-block   { width: 42px; height: 42px; font-size: 0.95rem; }
     }
+  
+    .page-nav{display:flex;gap:1rem;align-items:center;margin-top:1rem;font-size:.8rem;flex-wrap:wrap}
+    .page-nav a{color:var(--prog-accent);text-decoration:none;border:1px solid rgba(124,92,252,.3);padding:4px 12px;border-radius:20px;transition:all .18s}
+    .page-nav a:hover{background:rgba(124,92,252,.15);border-color:var(--prog-accent)}
+    .header-deco-svg{position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);opacity:.45;pointer-events:none}
+    @media(max-width:780px){.header-deco-svg{display:none}}
+      .footer-nav{margin-bottom:.75rem;font-size:.82rem}
   </style>
 </head>
 <body>
 
 <!-- ══ HEADER ══ -->
 <header>
-  <a href="/index.html" class="header-back-link">← Portale</a>
+  <a href="/programmazione/" class="header-back-link">&#8592; Programmazione</a>
   <div class="header-badge">C++ · Programmazione</div>
   <h1>Algoritmi di <span>Ordinamento</span></h1>
   <p>Bubble Sort, Selection Sort, Insertion Sort — teoria, codice C++ commentato e visualizzatore animato passo-passo.</p>
@@ -449,6 +456,32 @@
     <span class="header-pill">⏱ ~45 min</span>
     <span class="header-pill">📊 Complessità O(n²)</span>
   </div>
+  <div class="page-nav">
+    <a href="/programmazione/gestione-file/">&#8592; Gestione File</a>
+    <a href="/programmazione/algoritmi-ricerca/">&#8646; Algoritmi di Ricerca</a>
+  </div>
+  <!-- SVG decorativo: barre sorting con scambio in evidenza -->
+  <svg class="header-deco-svg" viewBox="0 0 200 90" width="280" height="126" xmlns="http://www.w3.org/2000/svg">
+    <!-- barre ordinate crescenti -->
+    <rect x="10"  y="70" width="18" height="14" rx="2" fill="#2e3350"/>
+    <rect x="32"  y="58" width="18" height="26" rx="2" fill="#2e3350"/>
+    <rect x="54"  y="44" width="18" height="40" rx="2" fill="#2e3350"/>
+    <!-- barra corrente (swap in corso) evidenziata viola -->
+    <rect x="76"  y="28" width="18" height="56" rx="2" fill="#7c5cfc"/>
+    <!-- barra già in posizione (verde) -->
+    <rect x="98"  y="18" width="18" height="66" rx="2" fill="#56cfb2"/>
+    <!-- barre ancora da ordinare -->
+    <rect x="120" y="36" width="18" height="48" rx="2" fill="#2e3350"/>
+    <rect x="142" y="50" width="18" height="34" rx="2" fill="#2e3350"/>
+    <rect x="164" y="62" width="18" height="22" rx="2" fill="#2e3350"/>
+    <!-- freccia scambio tra le due barre evidenziate -->
+    <path d="M85,22 C85,10 107,10 107,22" fill="none" stroke="#f9a03f" stroke-width="2" stroke-dasharray="3,2"/>
+    <polygon points="80,24 85,18 90,24" fill="#f9a03f"/>
+    <polygon points="102,24 107,18 112,24" fill="#f9a03f"/>
+    <!-- label -->
+    <text x="76" y="88" fill="#7c5cfc" font-family="Space Mono,monospace" font-size="7" text-anchor="middle">swap</text>
+    <text x="98" y="88" fill="#56cfb2" font-family="Space Mono,monospace" font-size="7" text-anchor="middle">ok</text>
+  </svg>
 </header>
 
 <!-- ══ TOC ══ -->
@@ -805,6 +838,15 @@
 
 <!-- ══ FOOTER ══ -->
 <footer>
+  <div class="footer-nav">
+    <a href="/programmazione/gestione-file/">&#8592; Gestione File</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/programmazione/algoritmi-ricerca/">&#8646; Algoritmi di Ricerca</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/programmazione/">Hub Programmazione</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/">Home</a>
+  </div>
   <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
   Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
   <p style="margin-top:.5rem;font-size:.78rem;">

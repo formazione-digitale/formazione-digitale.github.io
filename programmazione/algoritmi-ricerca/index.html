@@ -285,6 +285,13 @@
       .search-block { width: 40px; height: 40px; font-size: 0.85rem; }
       .ptr-cell { width: 40px; }
     }
+  
+    .page-nav{display:flex;gap:1rem;align-items:center;margin-top:1rem;font-size:.8rem;flex-wrap:wrap}
+    .page-nav a{color:var(--prog-accent);text-decoration:none;border:1px solid rgba(124,92,252,.3);padding:4px 12px;border-radius:20px;transition:all .18s}
+    .page-nav a:hover{background:rgba(124,92,252,.15);border-color:var(--prog-accent)}
+    .header-deco-svg{position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);opacity:.45;pointer-events:none}
+    @media(max-width:780px){.header-deco-svg{display:none}}
+      .footer-nav{margin-bottom:.75rem;font-size:.82rem}
   </style>
 </head>
 <body>
@@ -301,6 +308,67 @@
     <span class="header-pill">⏱ ~30 min</span>
     <span class="header-pill">🔍 Ricerca su array</span>
   </div>
+  <div class="page-nav">
+    <a href="/programmazione/gestione-file/">&#8592; Gestione File</a>
+    <a href="/programmazione/algoritmi-ordinamento/">&#8646; Algoritmi di Ordinamento</a>
+  </div>
+  <!-- SVG decorativo: array con lo/mid/hi per ricerca binaria -->
+  <svg class="header-deco-svg" viewBox="0 0 240 80" width="320" height="107" xmlns="http://www.w3.org/2000/svg">
+    <!-- celle array -->
+    <rect x="4"   y="22" width="28" height="28" rx="3" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+    <text x="18"  y="41" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="10" text-anchor="middle">3</text>
+    <rect x="36"  y="22" width="28" height="28" rx="3" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+    <text x="50"  y="41" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="10" text-anchor="middle">7</text>
+    <rect x="68"  y="22" width="28" height="28" rx="3" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+    <text x="82"  y="41" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="10" text-anchor="middle">12</text>
+    <rect x="100" y="22" width="28" height="28" rx="3" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+    <text x="114" y="41" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="10" text-anchor="middle">19</text>
+    <!-- mid evidenziato viola -->
+    <rect x="132" y="20" width="28" height="32" rx="3" fill="rgba(124,92,252,.2)" stroke="#7c5cfc" stroke-width="2"/>
+    <text x="146" y="41" fill="#7c5cfc" font-family="Space Mono,monospace" font-size="10" text-anchor="middle" font-weight="700">25</text>
+    <rect x="164" y="22" width="28" height="28" rx="3" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+    <text x="178" y="41" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="10" text-anchor="middle">31</text>
+    <rect x="196" y="22" width="28" height="28" rx="3" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+    <text x="210" y="41" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="10" text-anchor="middle">42</text>
+    <!-- indici lo, mid, hi -->
+    <text x="4"   y="16" fill="#56cfb2" font-family="Space Mono,monospace" font-size="7">lo</text>
+    <text x="139" y="15" fill="#7c5cfc" font-family="Space Mono,monospace" font-size="7" text-anchor="middle">mid</text>
+    <text x="210" y="16" fill="#f9a03f" font-family="Space Mono,monospace" font-size="7" text-anchor="middle">hi</text>
+    <!-- indicatori freccia -->
+    <line x1="18"  y1="17" x2="18"  y2="22" stroke="#56cfb2" stroke-width="1.5"/>
+    <line x1="146" y1="16" x2="146" y2="20" stroke="#7c5cfc" stroke-width="1.5"/>
+    <line x1="210" y1="17" x2="210" y2="22" stroke="#f9a03f" stroke-width="1.5"/>
+    <!-- cerca x=25 -->
+    <text x="4" y="72" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="7">cerca x = </text>
+    <text x="57" y="72" fill="#7c5cfc" font-family="Space Mono,monospace" font-size="7" font-weight="700">25</text>
+    <text x="72" y="72" fill="#56cfb2" font-family="Space Mono,monospace" font-size="7"> → trovato in mid!</text>
+  </svg>
+
+  <svg class="header-deco-svg" viewBox="0 0 240 80" width="320" height="107" xmlns="http://www.w3.org/2000/svg">
+    <rect x="4"   y="22" width="28" height="28" rx="3" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+    <text x="18"  y="41" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="10" text-anchor="middle">3</text>
+    <rect x="36"  y="22" width="28" height="28" rx="3" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+    <text x="50"  y="41" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="10" text-anchor="middle">7</text>
+    <rect x="68"  y="22" width="28" height="28" rx="3" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+    <text x="82"  y="41" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="10" text-anchor="middle">12</text>
+    <rect x="100" y="22" width="28" height="28" rx="3" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+    <text x="114" y="41" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="10" text-anchor="middle">19</text>
+    <rect x="132" y="20" width="28" height="32" rx="3" fill="rgba(124,92,252,.2)" stroke="#7c5cfc" stroke-width="2"/>
+    <text x="146" y="41" fill="#7c5cfc" font-family="Space Mono,monospace" font-size="10" text-anchor="middle" font-weight="700">25</text>
+    <rect x="164" y="22" width="28" height="28" rx="3" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+    <text x="178" y="41" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="10" text-anchor="middle">31</text>
+    <rect x="196" y="22" width="28" height="28" rx="3" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+    <text x="210" y="41" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="10" text-anchor="middle">42</text>
+    <text x="4"   y="16" fill="#56cfb2" font-family="Space Mono,monospace" font-size="7">lo</text>
+    <text x="139" y="15" fill="#7c5cfc" font-family="Space Mono,monospace" font-size="7" text-anchor="middle">mid</text>
+    <text x="210" y="16" fill="#f9a03f" font-family="Space Mono,monospace" font-size="7" text-anchor="middle">hi</text>
+    <line x1="18"  y1="17" x2="18"  y2="22" stroke="#56cfb2" stroke-width="1.5"/>
+    <line x1="146" y1="16" x2="146" y2="20" stroke="#7c5cfc" stroke-width="1.5"/>
+    <line x1="210" y1="17" x2="210" y2="22" stroke="#f9a03f" stroke-width="1.5"/>
+    <text x="4" y="72" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="7">cerca x = </text>
+    <text x="57" y="72" fill="#7c5cfc" font-family="Space Mono,monospace" font-size="7" font-weight="700">25</text>
+    <text x="72" y="72" fill="#56cfb2" font-family="Space Mono,monospace" font-size="7"> → trovato in mid!</text>
+  </svg>
 </header>
 
 <!-- ══ TOC ══ -->
@@ -556,6 +624,15 @@
 
 <!-- ══ FOOTER ══ -->
 <footer>
+  <div class="footer-nav">
+    <a href="/programmazione/gestione-file/">&#8592; Gestione File</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/programmazione/algoritmi-ordinamento/">&#8646; Algoritmi di Ordinamento</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/programmazione/">Hub Programmazione</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/">Home</a>
+  </div>
   <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
   Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
   <p style="margin-top:.5rem;font-size:.78rem;">

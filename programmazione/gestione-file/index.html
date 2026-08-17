@@ -43,7 +43,9 @@
     .header-badge{display:inline-block;font-family:'Space Mono',monospace;font-size:.68rem;background:var(--prog-accent);color:#fff;padding:3px 10px;border-radius:3px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
     header h1{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:700;letter-spacing:-.02em;line-height:1.15;color:#fff}
     header h1 span{color:var(--prog-accent)}
-    header p{margin-top:.75rem;color:var(--prog-muted);font-size:.95rem;max-width:620px}
+    header p{margin-top:.75rem;color:var(--prog-muted);font-size:.95rem;max-width:900px}
+    .header-deco-svg{position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);opacity:.4;pointer-events:none}
+    @media(max-width:780px){.header-deco-svg{display:none}}
     .header-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.25rem}
     .header-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:4px 12px;border-radius:20px;font-family:'Space Mono',monospace;font-size:.72rem;color:var(--prog-muted)}
     .page-nav{display:flex;gap:1rem;align-items:center;margin-top:1rem;font-size:.8rem;flex-wrap:wrap}
@@ -163,10 +165,37 @@
     <span class="header-pill">&#128295; 2 visualizzatori</span>
   </div>
   <div class="page-nav">
-    <a href="/programmazione/strutture-dati-dinamiche/">&#x2190; Strutture Dinamiche</a>
-    <span class="page-nav-sep">|</span>
-    <a href="/programmazione/">Hub Programmazione</a>
+    <a href="/programmazione/strutture-dati-dinamiche/">&#8592; Strutture Dinamiche</a>
   </div>
+  <svg class="header-deco-svg" viewBox="0 0 160 100" width="320" height="200" xmlns="http://www.w3.org/2000/svg">
+    <!-- file binario (sfondo) -->
+    <rect x="30" y="18" width="70" height="82" rx="4" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+    <polyline points="78,18 78,34 94,34" fill="none" stroke="#2e3350" stroke-width="1.5"/>
+    <polygon points="78,18 94,34 94,34 78,34" fill="#2e3350"/>
+    <text x="40" y="55" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="7">01001101</text>
+    <text x="40" y="66" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="7">11010010</text>
+    <text x="40" y="77" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="7">00110101</text>
+    <!-- file di testo (medio) -->
+    <rect x="18" y="10" width="70" height="82" rx="4" fill="#1a1d27" stroke="#2e3350" stroke-width="1.5"/>
+    <polyline points="66,10 66,26 82,26" fill="none" stroke="#2e3350" stroke-width="1.5"/>
+    <polygon points="66,10 82,26 82,26 66,26" fill="#2e3350"/>
+    <text x="28" y="45" fill="#56cfb2" font-family="Space Mono,monospace" font-size="7">Mario Rossi</text>
+    <text x="28" y="56" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="7">8.5</text>
+    <text x="28" y="67" fill="#56cfb2" font-family="Space Mono,monospace" font-size="7">Anna Bianchi</text>
+    <text x="28" y="78" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="7">9.0</text>
+    <!-- file di record (primo piano) -->
+    <rect x="6" y="2" width="70" height="82" rx="4" fill="#21253a" stroke="#7c5cfc" stroke-width="1.8"/>
+    <polyline points="54,2 54,18 70,18" fill="none" stroke="#7c5cfc" stroke-width="1.5"/>
+    <polygon points="54,2 70,18 70,18 54,18" fill="#7c5cfc"/>
+    <text x="10" y="6" fill="#7c5cfc" font-family="Space Mono,monospace" font-size="5.5">studenti.dat</text>
+    <rect x="12" y="25" width="56" height="10" rx="2" fill="rgba(124,92,252,.15)" stroke="rgba(124,92,252,.3)" stroke-width="1"/>
+    <text x="15" y="33" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="6">101 | Rossi | 8.5</text>
+    <rect x="12" y="38" width="56" height="10" rx="2" fill="rgba(124,92,252,.08)" stroke="rgba(124,92,252,.2)" stroke-width="1"/>
+    <text x="15" y="46" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="6">102 | Verdi | 7.0</text>
+    <rect x="12" y="51" width="56" height="10" rx="2" fill="rgba(124,92,252,.08)" stroke="rgba(124,92,252,.2)" stroke-width="1"/>
+    <text x="15" y="59" fill="#7a7f9a" font-family="Space Mono,monospace" font-size="6">103 | Neri  | 9.2</text>
+    <text x="12" y="78" fill="#7c5cfc" font-family="Space Mono,monospace" font-size="5.5">seekg(n*sizeof(S))</text>
+  </svg>
 </header>
 
 <div class="toc-wrap">

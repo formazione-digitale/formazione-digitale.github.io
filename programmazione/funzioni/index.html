@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Funzioni e Passaggio Parametri in C++ — Formazione Digitale</title>
+  <meta name="description" content="Funzioni in C++: anatomia, passaggio per valore, riferimento, const riferimento e puntatore. Array mono e bidimensionali. Simulatore interattivo.">
+  <meta name="author" content="Cristiano De Pasquale">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://formazione-digitale.it/programmazione/funzioni/">
+  <link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="//gc.zgo.at">
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#7c5cfc">
+  <meta property="og:title" content="Funzioni e Passaggio Parametri in C++ — Formazione Digitale">
+  <meta property="og:description" content="Tutti i modi di passare parametri in C++ con simulatore interattivo. 3&deg; anno ITIS/SIA.">
+  <meta property="og:url" content="https://formazione-digitale.it/programmazione/funzioni/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Formazione Digitale">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"LearningResource","name":"Funzioni e Passaggio Parametri in C++","url":"https://formazione-digitale.it/programmazione/funzioni/","inLanguage":"it","educationalLevel":"beginner","teaches":["funzioni","passaggio per valore","passaggio per riferimento","const riferimento","passaggio per puntatore","array monodimensionale","array bidimensionale","prototipo","C++"],"author":{"@type":"Person","name":"Cristiano De Pasquale"},"publisher":{"@type":"Organization","name":"Formazione Digitale","url":"https://formazione-digitale.it"}}
+  </script>
+  <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/shared-extended.css?v=1">
+  <style>
+    :root{--prog-bg:#0f1117;--prog-surface:#1a1d27;--prog-card:#21253a;--prog-border:#2e3350;--prog-accent:#7c5cfc;--prog-accent2:#56cfb2;--prog-accent3:#f9a03f;--prog-red:#e05c5c;--prog-text:#d4d8f0;--prog-muted:#7a7f9a;--prog-code-bg:#131620;--kw-type:#79b8ff;--kw-keyword:#f97583;--kw-comment:#6a737d;--kw-string:#9ecbff;--kw-number:#b392f0;--kw-func:#56cfb2}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Sora',sans-serif;background:var(--prog-bg);color:var(--prog-text);line-height:1.75}
+    header{background:var(--prog-surface);border-bottom:3px solid var(--prog-accent);padding:2.5rem 2rem 2rem;position:relative;overflow:hidden}
+    header::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:var(--prog-accent);opacity:.07;pointer-events:none}
+    .header-back-link{display:inline-flex;align-items:center;gap:5px;font-size:.78rem;color:var(--prog-muted);text-decoration:none;transition:color .2s;position:absolute;top:1rem;left:1.5rem}
+    .header-back-link:hover{color:var(--prog-text)}
+    .header-badge{display:inline-block;font-family:'Space Mono',monospace;font-size:.68rem;background:var(--prog-accent);color:#fff;padding:3px 10px;border-radius:3px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+    header h1{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:700;letter-spacing:-.02em;line-height:1.15;color:#fff}
+    header h1 span{color:var(--prog-accent)}
+    header p{margin-top:.75rem;color:var(--prog-muted);font-size:.95rem;max-width:620px}
+    .header-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.25rem}
+    .header-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:4px 12px;border-radius:20px;font-family:'Space Mono',monospace;font-size:.72rem;color:var(--prog-muted)}
+    .page-nav{display:flex;gap:1rem;align-items:center;margin-top:1rem;font-size:.8rem;flex-wrap:wrap}
+    .page-nav a{color:var(--prog-accent);text-decoration:none;border:1px solid rgba(124,92,252,.3);padding:4px 12px;border-radius:20px;transition:all .18s}
+    .page-nav a:hover{background:rgba(124,92,252,.15);border-color:var(--prog-accent)}
+    .header-deco-svg{position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);opacity:.35;pointer-events:none}
+    @media(max-width:780px){.header-deco-svg{display:none}}
+    .toc-wrap{position:sticky;top:0;z-index:100;background:#1a1a18;border-bottom:3px solid var(--prog-accent)}
+    nav.toc{padding:.7rem 1.5rem;display:flex;flex-wrap:wrap;gap:.25rem;align-items:center;justify-content:center;max-width:980px;margin:0 auto}
+    nav.toc a{font-size:.82rem;font-family:'Sora',sans-serif;font-weight:500;color:#aaa9a0;text-decoration:none;padding:5px 13px;border-radius:20px;border:1px solid transparent;transition:all .18s;white-space:nowrap}
+    nav.toc a:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2)}
+    nav.toc a.active{background:var(--prog-accent);color:#fff;border-color:var(--prog-accent);font-weight:700}
+    @media(max-width:600px){nav.toc{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav.toc::-webkit-scrollbar{display:none}}
+    main{max-width:980px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+    section{margin-bottom:4.5rem;scroll-margin-top:70px}
+    .section-label{font-family:'Space Mono',monospace;font-size:.82rem;font-weight:700;color:var(--prog-accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.5rem}
+    h2{font-size:1.65rem;font-weight:700;color:#fff;letter-spacing:-.02em;border-bottom:2px solid var(--prog-border);padding-bottom:.6rem;margin-bottom:1.5rem}
+    h3{font-size:1.1rem;font-weight:600;color:var(--prog-accent2);margin:2rem 0 .8rem}
+    p{margin-bottom:1rem;color:var(--prog-text);font-size:.97rem;line-height:1.85}
+    code{font-family:'Space Mono',monospace;font-size:.85em;color:var(--prog-accent2)}
+    .box{border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0;font-size:.92rem;border-left:3px solid;line-height:1.75}
+    .box-info{background:rgba(86,207,178,.08);border-color:var(--prog-accent2)}
+    .box-warn{background:rgba(249,160,63,.08);border-color:var(--prog-accent3)}
+    .box-tip{background:rgba(124,92,252,.08);border-color:var(--prog-accent)}
+    .box-red{background:rgba(224,92,92,.08);border-color:var(--prog-red)}
+    .box strong{display:block;margin-bottom:.35rem;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;opacity:.8}
+    .code-block{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:8px;margin:1.5rem 0;overflow:hidden}
+    .code-header{background:var(--prog-card);padding:.5rem 1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--prog-border)}
+    .code-lang{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--prog-muted);letter-spacing:.1em;text-transform:uppercase}
+    .code-dots{display:flex;gap:5px}.code-dot{width:10px;height:10px;border-radius:50%}
+    .dot-r{background:#e05c5c}.dot-y{background:#f9a03f}.dot-g{background:#56cfb2}
+    pre{padding:1.25rem 1.5rem;overflow-x:auto;font-family:'Space Mono',monospace;font-size:.83rem;line-height:1.65;tab-size:4;color:var(--prog-text)}
+    .kw{color:var(--kw-keyword);font-weight:700}.tp{color:var(--kw-type)}.fn{color:var(--kw-func)}.cm{color:var(--kw-comment);font-style:italic}.nm{color:var(--kw-number)}.st{color:var(--kw-string)}.pp{color:#ff9f43}
+    .copy-btn{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--prog-muted);background:none;border:1px solid var(--prog-border);border-radius:4px;padding:2px 8px;cursor:pointer;transition:all .18s;white-space:nowrap}
+    .copy-btn:hover{color:var(--prog-accent2);border-color:var(--prog-accent2)}
+    .copy-btn.copied{color:var(--prog-accent2);border-color:var(--prog-accent2)}
+    .cmp-table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-size:.85rem;border-radius:8px;overflow:hidden;border:1px solid var(--prog-border)}
+    .cmp-table th{background:var(--prog-card);color:var(--prog-accent);padding:.65rem 1rem;text-align:left;font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;border-bottom:2px solid var(--prog-border)}
+    .cmp-table td{padding:.6rem 1rem;border-bottom:1px solid var(--prog-border);color:var(--prog-text);vertical-align:top}
+    .cmp-table tr:last-child td{border-bottom:none}
+    .cmp-table tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+    .cmp-table td:first-child{font-family:'Space Mono',monospace;color:var(--kw-type);font-weight:700;white-space:nowrap}
+    .cmp-table .yes{color:var(--prog-accent2)}.cmp-table .no{color:var(--prog-red)}
+    .tool-box{background:var(--prog-surface);border:1px solid var(--prog-border);border-radius:12px;overflow:hidden;margin:2rem 0}
+    .tool-header{background:var(--prog-card);padding:.75rem 1.25rem;border-bottom:1px solid var(--prog-border);display:flex;align-items:center;gap:.75rem}
+    .tool-title{font-family:'Space Mono',monospace;font-size:.8rem;font-weight:700;color:var(--prog-accent2)}
+    .tool-subtitle{font-size:.78rem;color:var(--prog-muted)}
+    .tool-body{padding:1.5rem}
+    .tool-msg{font-family:'Space Mono',monospace;font-size:.82rem;color:var(--prog-accent2);padding:.6rem 1.25rem;border-top:1px solid var(--prog-border);background:rgba(0,0,0,.1);min-height:2.4rem}
+    .tool-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:6px;border:1px solid var(--prog-border);background:var(--prog-surface);color:var(--prog-text);font-family:'Sora',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .18s}
+    .tool-btn:hover{border-color:var(--prog-accent);color:var(--prog-accent)}
+    .tool-btn.active{background:var(--prog-accent);border-color:var(--prog-accent);color:#fff}
+    .tool-btn.primary{background:var(--prog-accent);border-color:var(--prog-accent);color:#fff}
+    .tool-btn.primary:hover{background:#6a4ee0}
+    .tool-input{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:6px;color:var(--prog-accent2);font-family:'Space Mono',monospace;font-size:.95rem;font-weight:700;text-align:center;padding:6px 10px;width:80px;transition:border-color .18s}
+    .tool-input:focus{outline:none;border-color:var(--prog-accent)}
+    .sim-mode-btns{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+    .sim-arena{display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:start;margin-bottom:1.25rem}
+    @media(max-width:600px){.sim-arena{grid-template-columns:1fr;gap:.5rem}}
+    .sim-box{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:8px;padding:1rem 1.1rem}
+    .sim-box-title{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--prog-muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.6rem}
+    .sim-var{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-bottom:.4rem;font-family:'Space Mono',monospace;font-size:.88rem}
+    .sim-var-name{color:var(--prog-muted)}
+    .sim-var-val{font-weight:700;font-size:1rem;min-width:2.5rem;text-align:right;transition:color .3s}
+    .sim-var-val.changed{color:var(--prog-accent2)}
+    .sim-var-val.unchanged{color:var(--prog-text)}
+    .sim-arrow{display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--prog-accent);padding:2rem .5rem}
+    @media(max-width:600px){.sim-arrow{transform:rotate(90deg);padding:.5rem 2rem}}
+    .sim-arrow-label{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--prog-muted);text-align:center;margin-top:.25rem}
+    .sim-code-box{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:8px;padding:.85rem 1.1rem;margin-bottom:1.25rem;font-family:'Space Mono',monospace;font-size:.82rem;line-height:1.7;white-space:pre}
+    .sim-controls{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-bottom:.75rem}
+    .sim-param-row{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-bottom:1rem}
+    .sim-param-group{display:flex;flex-direction:column;gap:3px}
+    .sim-param-label{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--prog-muted);letter-spacing:.05em;text-transform:uppercase}
+    footer{text-align:center;padding:2.5rem 1rem;color:var(--prog-muted);font-size:.85rem;border-top:1px solid var(--prog-border);margin-top:2rem}
+    footer a{color:var(--prog-accent);text-decoration:none}
+    footer a:hover{text-decoration:underline}
+    .footer-nav{margin-bottom:.75rem;font-size:.82rem}
+    .back-to-top{position:fixed;bottom:1.5rem;right:1.5rem;width:40px;height:40px;border-radius:50%;background:var(--prog-accent);color:#fff;border:none;font-size:1.1rem;cursor:pointer;opacity:0;transform:translateY(10px);transition:all .25s;z-index:200}
+    .back-to-top.visible{opacity:1;transform:translateY(0)}
+    @media(max-width:600px){main{padding:1.5rem 1rem 4rem}}
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="/programmazione/" class="header-back-link">&#x2190; Programmazione</a>
+  <div class="header-badge">C++ &middot; Funzioni</div>
+  <h1>Funzioni e <span>Passaggio Parametri</span></h1>
+  <p>Anatomia di una funzione, tutti i modi di passare parametri &mdash; valore, riferimento, const riferimento, puntatore &mdash; array mono e bidimensionali, con simulatore interattivo.</p>
+  <div class="header-pills">
+    <span class="header-pill">&#127891; 3&deg; anno ITIS/SIA</span>
+    <span class="header-pill">&#128295; Simulatore parametri</span>
+    <span class="header-pill">&#9200; ~40 min</span>
+  </div>
+  <div class="page-nav">
+    <a href="/programmazione/costrutti/">&#8592; Costrutti</a>
+    <a href="/programmazione/strutture-dati-statiche/">&#8594; Strutture Statiche</a>
+  </div>
+  <svg class="header-deco-svg" viewBox="0 0 230 62" width="310" height="84" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="6" width="230" height="50" rx="6" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+    <text x="12" y="24" fill="#79b8ff" font-family="Space Mono,monospace" font-size="9">void </text>
+    <text x="38" y="24" fill="#56cfb2" font-family="Space Mono,monospace" font-size="9">raddoppia</text>
+    <text x="96" y="24" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="9">(</text>
+    <text x="102" y="24" fill="#79b8ff" font-family="Space Mono,monospace" font-size="9">int</text>
+    <text x="118" y="24" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="9">&amp; x) {</text>
+    <text x="12" y="37" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="9">    x *= </text>
+    <text x="52" y="37" fill="#b392f0" font-family="Space Mono,monospace" font-size="9">2</text>
+    <text x="59" y="37" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="9">;</text>
+    <text x="12" y="50" fill="#6a737d" font-family="Space Mono,monospace" font-size="9" font-style="italic">  // x NEL CHIAMANTE cambia</text>
+  </svg>
+</header>
+
+<div class="toc-wrap">
+  <nav class="toc" id="toc">
+    <a href="#anatomia" class="active">Anatomia</a>
+    <a href="#passaggio">Passaggio parametri</a>
+    <a href="#array">Array</a>
+    <a href="#confronto">Confronto</a>
+    <a href="#tool">Simulatore</a>
+  </nav>
+</div>
+
+<main>
+
+<!-- ══ ANATOMIA ══ -->
+<section id="anatomia">
+  <div class="section-label">01 &mdash; Fondamenta</div>
+  <h2>Anatomia di una funzione</h2>
+  <p>Una <strong>funzione</strong> &egrave; un blocco di codice con un nome che esegue un compito specifico e pu&ograve; essere richiamato pi&ugrave; volte. Permette di evitare la duplicazione del codice e di suddividere un problema complesso in parti gestibili.</p>
+
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; anatomia</span></div>
+    <pre><span class="cm">// PROTOTIPO (dichiarazione): annuncia l'esistenza della funzione al compilatore</span>
+<span class="cm">// Va messo prima del main se la definizione compare dopo</span>
+<span class="tp">int</span> <span class="fn">somma</span>(<span class="tp">int</span> a, <span class="tp">int</span> b);
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> ris = <span class="fn">somma</span>(<span class="nm">3</span>, <span class="nm">5</span>);   <span class="cm">// CHIAMATA: passa 3 e 5 come argomenti</span>
+    cout &lt;&lt; ris;             <span class="cm">// stampa 8</span>
+    <span class="kw">return</span> <span class="nm">0</span>;
+}
+
+<span class="cm">// DEFINIZIONE: il corpo effettivo della funzione</span>
+<span class="tp">int</span> <span class="fn">somma</span>(<span class="tp">int</span> a, <span class="tp">int</span> b) {
+    <span class="kw">return</span> a + b;   <span class="cm">// restituisce il risultato al chiamante</span>
+}</pre>
+  </div>
+
+  <div class="box box-info">
+    <strong>&#128204; Prototipo vs definizione</strong>
+    <p style="margin:0">Il <b>prototipo</b> dice al compilatore il nome, il tipo di ritorno e i tipi dei parametri &mdash; basta per poterla chiamare. La <b>definizione</b> contiene il corpo. Se la definizione precede il <code>main</code>, il prototipo &egrave; superfluo. Nei progetti multi-file il prototipo va nell&apos;header (<code>.h</code>), la definizione nel sorgente (<code>.cpp</code>).</p>
+  </div>
+
+  <h3>Funzioni void e return</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; void e return</span></div>
+    <pre><span class="cm">// void: non restituisce nulla</span>
+<span class="tp">void</span> <span class="fn">saluta</span>(<span class="tp">string</span> nome) {
+    cout &lt;&lt; <span class="st">"Ciao, "</span> &lt;&lt; nome &lt;&lt; <span class="st">"!"</span> &lt;&lt; endl;
+    <span class="cm">// return; si usa solo per uscire anticipatamente (es. controllo errori)</span>
+    <span class="cm">// in assenza di condizioni particolari, non va scritto</span>
+}
+
+<span class="cm">// con valore di ritorno: calcola e restituisce un risultato al chiamante</span>
+<span class="tp">float</span> <span class="fn">media</span>(<span class="tp">float</span> a, <span class="tp">float</span> b) {
+    <span class="kw">return</span> (a + b) / <span class="nm">2.0f</span>;
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="fn">saluta</span>(<span class="st">"Mario"</span>);
+    <span class="tp">float</span> m = <span class="fn">media</span>(<span class="nm">7.5f</span>, <span class="nm">8.0f</span>);
+    cout &lt;&lt; <span class="st">"Media: "</span> &lt;&lt; m &lt;&lt; endl;  <span class="cm">// 7.75</span>
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+</section>
+
+<!-- ══ PASSAGGIO PARAMETRI ══ -->
+<section id="passaggio">
+  <div class="section-label">02 &mdash; Passaggio di parametri</div>
+  <h2>Passaggio di parametri</h2>
+  <p>Quando si chiama una funzione si passano i valori su cui deve lavorare. Il C++ offre quattro modi, ognuno con effetti diversi sulla variabile originale nel chiamante.</p>
+
+  <h3>Per valore</h3>
+  <p>La funzione riceve una <strong>copia</strong> del valore. Qualsiasi modifica alla copia resta locale e non si riflette sulla variabile originale.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; per valore</span></div>
+    <pre><span class="tp">void</span> <span class="fn">prova</span>(<span class="tp">int</span> x) {       <span class="cm">// x &egrave; una COPIA del parametro</span>
+    x = x * <span class="nm">2</span>;            <span class="cm">// modifica solo la copia locale</span>
+    cout &lt;&lt; <span class="st">"dentro: "</span> &lt;&lt; x &lt;&lt; endl;
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> a = <span class="nm">5</span>;
+    <span class="fn">prova</span>(a);
+    cout &lt;&lt; <span class="st">"fuori: "</span> &lt;&lt; a &lt;&lt; endl;  <span class="cm">// stampa 5 &mdash; a NON &egrave; cambiato</span>
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+
+  <h3>Per riferimento (&amp;)</h3>
+  <p>L&apos;operatore <code>&amp;</code> nella firma trasforma il parametro in un <strong>alias</strong> della variabile originale. Non viene creata nessuna copia: la funzione opera direttamente sulla variabile del chiamante.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; per riferimento</span></div>
+    <pre><span class="tp">void</span> <span class="fn">raddoppia</span>(<span class="tp">int</span>&amp; x) {  <span class="cm">// &amp; = riferimento: x &egrave; un alias di chi viene passato</span>
+    x = x * <span class="nm">2</span>;            <span class="cm">// modifica DIRETTAMENTE la variabile del chiamante</span>
+}
+
+<span class="tp">void</span> <span class="fn">scambia</span>(<span class="tp">int</span>&amp; a, <span class="tp">int</span>&amp; b) {
+    <span class="tp">int</span> tmp = a; a = b; b = tmp;
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> n = <span class="nm">5</span>;
+    <span class="fn">raddoppia</span>(n);
+    cout &lt;&lt; n &lt;&lt; endl;          <span class="cm">// 10 &mdash; n &egrave; cambiato</span>
+
+    <span class="tp">int</span> x = <span class="nm">3</span>, y = <span class="nm">7</span>;
+    <span class="fn">scambia</span>(x, y);
+    cout &lt;&lt; x &lt;&lt; <span class="st">" "</span> &lt;&lt; y;     <span class="cm">// 7 3</span>
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+
+  <h3>const riferimento (const tipo&amp;)</h3>
+  <p>Passare per riferimento evita di copiare il dato &mdash; utile con tipi grandi come <code>string</code> o struct. Aggiungere <code>const</code> impedisce alla funzione di modificare il valore: si ottiene efficienza senza rischio di modifiche accidentali.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; const riferimento</span></div>
+    <pre><span class="cm">// senza const: efficiente ma la funzione potrebbe modificare s</span>
+<span class="tp">void</span> <span class="fn">stampa</span>(<span class="tp">string</span>&amp; s) { cout &lt;&lt; s; }
+
+<span class="cm">// con const: zero copie + garanzia che s non venga modificata</span>
+<span class="tp">void</span> <span class="fn">stampa</span>(<span class="kw">const</span> <span class="tp">string</span>&amp; s) {
+    cout &lt;&lt; s &lt;&lt; endl;
+    <span class="cm">// s = "altro";  // &#10060; errore di compilazione: s &egrave; const</span>
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">string</span> nome = <span class="st">"Mario Rossi"</span>;
+    <span class="fn">stampa</span>(nome);   <span class="cm">// zero copie, nessuna modifica possibile</span>
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+
+  <div class="box box-tip">
+    <strong>&#128161; Quando usare const riferimento</strong>
+    <p style="margin:0">Per tipi piccoli (<code>int</code>, <code>float</code>, <code>char</code>) il passaggio per valore &egrave; sufficiente &mdash; copiarli &egrave; istantaneo. Per tipi grandi (<code>string</code>, struct, array) usa <code>const tipo&amp;</code> se non devi modificare il dato, e <code>tipo&amp;</code> se devi modificarlo.</p>
+  </div>
+
+  <h3>Per puntatore (*)</h3>
+  <p>La funzione riceve l&apos;<strong>indirizzo</strong> della variabile. L&apos;effetto &egrave; lo stesso del riferimento &mdash; si modifica l&apos;originale &mdash; ma la sintassi &egrave; diversa: nella chiamata si usa <code>&amp;</code> per passare l&apos;indirizzo, e dentro la funzione <code>*</code> per accedere al valore. &Egrave; lo stile del C, ancora diffuso.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; per puntatore</span></div>
+    <pre><span class="tp">void</span> <span class="fn">raddoppia</span>(<span class="tp">int</span>* p) {
+    <span class="kw">if</span> (p == <span class="kw">nullptr</span>) <span class="kw">return</span>;  <span class="cm">// controlla sempre prima di dereferenziare</span>
+    *p = *p * <span class="nm">2</span>;              <span class="cm">// * = vai all'indirizzo e modifica il valore</span>
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> n = <span class="nm">5</span>;
+    <span class="fn">raddoppia</span>(&amp;n);             <span class="cm">// &amp; = passa l'indirizzo di n</span>
+    cout &lt;&lt; n &lt;&lt; endl;         <span class="cm">// 10</span>
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+</section>
+
+<!-- ══ ARRAY ══ -->
+<section id="array">
+  <div class="section-label">03 &mdash; Esempi complessi</div>
+  <h2>Array come parametro</h2>
+
+  <h3>Array monodimensionali</h3>
+  <p>Quando passi un array a una funzione, il compilatore lo tratta automaticamente come un puntatore al primo elemento (tecnicamente: <em>array decay</em>). L&apos;array non viene copiato: la funzione lavora direttamente sull&apos;originale. La dimensione deve essere passata come parametro separato.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; array monodimensionale</span></div>
+    <pre><span class="cm">// queste tre firme sono equivalenti per il compilatore:</span>
+<span class="tp">void</span> <span class="fn">stampa</span>(<span class="tp">int</span> arr[], <span class="tp">int</span> n)      <span class="cm">// forma pi&ugrave; leggibile &mdash; preferita</span>
+<span class="tp">void</span> <span class="fn">stampa</span>(<span class="tp">int</span>* arr, <span class="tp">int</span> n)      <span class="cm">// equivalente: arr diventa puntatore</span>
+<span class="tp">void</span> <span class="fn">stampa</span>(<span class="tp">int</span> arr[<span class="nm">10</span>], <span class="tp">int</span> n)   <span class="cm">// la dimensione [10] &egrave; ignorata</span>
+
+<span class="cm">// funzione che LEGGE l'array (const = nessuna modifica accidentale)</span>
+<span class="tp">void</span> <span class="fn">stampa</span>(<span class="kw">const</span> <span class="tp">int</span> arr[], <span class="tp">int</span> n) {
+    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; n; i++)
+        cout &lt;&lt; arr[i] &lt;&lt; <span class="st">" "</span>;
+    cout &lt;&lt; endl;
+}
+
+<span class="cm">// funzione che MODIFICA l'array</span>
+<span class="tp">void</span> <span class="fn">raddoppia</span>(<span class="tp">int</span> arr[], <span class="tp">int</span> n) {
+    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; n; i++)
+        arr[i] *= <span class="nm">2</span>;   <span class="cm">// modifica l'array originale</span>
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> v[<span class="nm">5</span>] = {<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>};
+    <span class="fn">stampa</span>(v, <span class="nm">5</span>);      <span class="cm">// 1 2 3 4 5</span>
+    <span class="fn">raddoppia</span>(v, <span class="nm">5</span>);
+    <span class="fn">stampa</span>(v, <span class="nm">5</span>);      <span class="cm">// 2 4 6 8 10</span>
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+
+  <div class="box box-red">
+    <strong>&#9888; sizeof non funziona sugli array passati come parametro</strong>
+    <p style="margin:0">Dentro la funzione, <code>sizeof(arr)</code> restituisce la dimensione del <b>puntatore</b> (8 byte su 64 bit), non quella dell&apos;array. La dimensione va sempre passata come parametro separato <code>n</code>.</p>
+  </div>
+
+  <h3>Array bidimensionali</h3>
+  <p>Con le matrici la regola cambia: la <strong>prima</strong> dimensione pu&ograve; essere omessa, la <strong>seconda</strong> &egrave; obbligatoria. Il compilatore ne ha bisogno per calcolare la posizione di ogni elemento in memoria: <code>mat[i][j]</code> corrisponde a <code>*(mat + i * COL + j)</code>, quindi senza sapere quante colonne ha ogni riga non pu&ograve; fare i conti.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; array bidimensionale</span></div>
+    <pre><span class="cm">// prima dimensione [] omessa: ok</span>
+<span class="cm">// seconda dimensione [3]: OBBLIGATORIA</span>
+<span class="tp">void</span> <span class="fn">stampa</span>(<span class="tp">int</span> mat[][<span class="nm">3</span>], <span class="tp">int</span> righe) {
+    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; righe; i++) {
+        <span class="kw">for</span> (<span class="tp">int</span> j = <span class="nm">0</span>; j &lt; <span class="nm">3</span>; j++)
+            cout &lt;&lt; mat[i][j] &lt;&lt; <span class="st">"	"</span>;
+        cout &lt;&lt; endl;
+    }
+}
+
+<span class="tp">void</span> <span class="fn">azzera</span>(<span class="tp">int</span> mat[][<span class="nm">3</span>], <span class="tp">int</span> righe) {
+    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; righe; i++)
+        <span class="kw">for</span> (<span class="tp">int</span> j = <span class="nm">0</span>; j &lt; <span class="nm">3</span>; j++)
+            mat[i][j] = <span class="nm">0</span>;   <span class="cm">// modifica la matrice originale</span>
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> m[<span class="nm">2</span>][<span class="nm">3</span>] = {{<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>}, {<span class="nm">4</span>,<span class="nm">5</span>,<span class="nm">6</span>}};
+    <span class="fn">stampa</span>(m, <span class="nm">2</span>);   <span class="cm">// 1 2 3 / 4 5 6</span>
+    <span class="fn">azzera</span>(m, <span class="nm">2</span>);
+    <span class="fn">stampa</span>(m, <span class="nm">2</span>);   <span class="cm">// 0 0 0 / 0 0 0</span>
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+
+  <div class="box box-warn">
+    <strong>&#9888; La seconda dimensione &egrave; parte del tipo</strong>
+    <p style="margin:0">Una funzione che accetta <code>int mat[][3]</code> accetta <b>solo</b> matrici con 3 colonne. Per matrici con numero di colonne variabile si usano altre tecniche (array di puntatori o allocazione dinamica) che vanno oltre questo livello.</p>
+  </div>
+</section>
+
+<!-- ══ CONFRONTO ══ -->
+<section id="confronto">
+  <div class="section-label">04 &mdash; Riepilogo</div>
+  <h2>Tabella comparativa</h2>
+  <table class="cmp-table">
+    <thead>
+      <tr><th>Modalit&agrave;</th><th>Sintassi firma</th><th>Chiamata</th><th>Modifica originale?</th><th>Quando usare</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Per valore</td><td><code>void f(int x)</code></td><td><code>f(a)</code></td>
+        <td><span class="no">No &mdash; copia</span></td><td>Lettura, tipi piccoli</td>
+      </tr>
+      <tr>
+        <td>Per riferimento</td><td><code>void f(int&amp; x)</code></td><td><code>f(a)</code></td>
+        <td><span class="yes">S&igrave; &mdash; alias</span></td><td>Output, swap, modifica</td>
+      </tr>
+      <tr>
+        <td>const riferimento</td><td><code>void f(const string&amp; s)</code></td><td><code>f(a)</code></td>
+        <td><span class="no">No &mdash; protetto</span></td><td>Lettura di tipi grandi</td>
+      </tr>
+      <tr>
+        <td>Per puntatore</td><td><code>void f(int* p)</code></td><td><code>f(&amp;a)</code></td>
+        <td><span class="yes">S&igrave; &mdash; via indirizzo</span></td><td>Stile C, puntatore nullable</td>
+      </tr>
+      <tr>
+        <td>Array 1D</td><td><code>void f(int arr[], int n)</code></td><td><code>f(v, 5)</code></td>
+        <td><span class="yes">S&igrave; &mdash; decay</span></td><td>Elaborazione array</td>
+      </tr>
+      <tr>
+        <td>Array 2D</td><td><code>void f(int m[][3], int r)</code></td><td><code>f(m, 2)</code></td>
+        <td><span class="yes">S&igrave; &mdash; decay</span></td><td>Elaborazione matrici</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══ TOOL ══ -->
+<section id="tool">
+  <div class="section-label">05 &mdash; Pratica</div>
+  <h2>&#128295; Simulatore passaggio parametri</h2>
+  <p>Imposta un valore iniziale, scegli la modalit&agrave; e osserva cosa succede alla variabile nel chiamante prima, durante e dopo la chiamata.</p>
+
+  <div class="tool-box">
+    <div class="tool-header">
+      <span class="tool-title">&#128295; Simulatore Parametri</span>
+      <span class="tool-subtitle">Prima &middot; Durante &middot; Dopo</span>
+    </div>
+    <div class="tool-body">
+
+      <div class="sim-mode-btns">
+        <button class="tool-btn active" data-mode="valore">Per valore</button>
+        <button class="tool-btn" data-mode="rif">Per riferimento (&amp;)</button>
+        <button class="tool-btn" data-mode="const_rif">const riferimento</button>
+        <button class="tool-btn" data-mode="ptr">Per puntatore (*)</button>
+      </div>
+
+      <div class="sim-param-row">
+        <div class="sim-param-group" id="num-group">
+          <span class="sim-param-label">Valore iniziale di a</span>
+          <input type="number" class="tool-input" id="sim-val" value="5">
+        </div>
+        <div class="sim-param-group" id="str-group" style="display:none">
+          <span class="sim-param-label">Stringa iniziale</span>
+          <input type="text" class="tool-input" id="sim-str" value="Mario Rossi" style="width:160px;text-align:left">
+        </div>
+        <div class="sim-param-group" id="op-group">
+          <span class="sim-param-label">Operazione nella funzione</span>
+          <select id="sim-op" style="background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:6px;color:var(--prog-accent2);font-family:Space Mono,monospace;font-size:.88rem;padding:7px 10px">
+            <option value="double">x = x * 2</option>
+            <option value="inc">x = x + 1</option>
+            <option value="neg">x = -x</option>
+            <option value="zero">x = 0</option>
+          </select>
+        </div>
+        <button class="tool-btn primary" id="sim-run" style="align-self:flex-end">&#9654; Esegui</button>
+        <button class="tool-btn" id="sim-reset" style="align-self:flex-end">&#8635; Reset</button>
+      </div>
+
+      <div class="sim-code-box" id="sim-code"></div>
+
+      <div class="sim-arena">
+        <div class="sim-box">
+          <div class="sim-box-title">&#128100; Chiamante (main)</div>
+          <div class="sim-var">
+            <span class="sim-var-name" id="caller-var-name">a =</span>
+            <span class="sim-var-val" id="caller-before">&mdash;</span>
+          </div>
+          <div style="font-family:'Space Mono',monospace;font-size:.7rem;color:var(--prog-muted);margin-top:.3rem">Prima della chiamata</div>
+        </div>
+        <div>
+          <div class="sim-arrow" id="sim-arrow">&#8594;</div>
+          <div class="sim-arrow-label" id="sim-arrow-label">chiama</div>
+        </div>
+        <div class="sim-box">
+          <div class="sim-box-title">&#9881;&#65039; Dentro la funzione</div>
+          <div class="sim-var">
+            <span class="sim-var-name" id="param-name">x =</span>
+            <span class="sim-var-val" id="func-val">&mdash;</span>
+          </div>
+          <div style="font-family:'Space Mono',monospace;font-size:.7rem;margin-top:.3rem" id="func-label">&mdash;</div>
+        </div>
+      </div>
+
+      <div class="sim-box" style="margin-top:.5rem">
+        <div class="sim-box-title">&#128100; Chiamante &mdash; DOPO la chiamata</div>
+        <div class="sim-var">
+          <span class="sim-var-name" id="after-var-name">a =</span>
+          <span class="sim-var-val" id="caller-after">&mdash;</span>
+        </div>
+        <div style="font-family:'Space Mono',monospace;font-size:.75rem;margin-top:.4rem" id="after-note">&mdash;</div>
+      </div>
+
+    </div>
+    <div class="tool-msg" id="sim-msg">Scegli modalit&agrave;, imposta il valore e premi Esegui.</div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-nav">
+    <a href="/programmazione/costrutti/">&#8592; Costrutti</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/programmazione/strutture-dati-statiche/">&#8594; Strutture Statiche</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/programmazione/">Hub Programmazione</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/">Home</a>
+  </div>
+  <strong>Formazione Digitale</strong> &mdash; Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+
+<script>
+(function(){
+  'use strict';
+
+  var mode = 'valore';
+
+  var simVal      = document.getElementById('sim-val');
+  var simStr      = document.getElementById('sim-str');
+  var simOp       = document.getElementById('sim-op');
+  var simCode     = document.getElementById('sim-code');
+  var numGroup    = document.getElementById('num-group');
+  var strGroup    = document.getElementById('str-group');
+  var opGroup     = document.getElementById('op-group');
+  var callerBefore= document.getElementById('caller-before');
+  var callerAfter = document.getElementById('caller-after');
+  var callerVarName=document.getElementById('caller-var-name');
+  var afterVarName= document.getElementById('after-var-name');
+  var funcVal     = document.getElementById('func-val');
+  var funcLabel   = document.getElementById('func-label');
+  var paramName   = document.getElementById('param-name');
+  var simArrow    = document.getElementById('sim-arrow');
+  var simArrowLbl = document.getElementById('sim-arrow-label');
+  var afterNote   = document.getElementById('after-note');
+  var msgEl       = document.getElementById('sim-msg');
+
+  function applyOp(x) {
+    var op = simOp.value;
+    if (op === 'double') return x * 2;
+    if (op === 'inc')    return x + 1;
+    if (op === 'neg')    return -x;
+    if (op === 'zero')   return 0;
+    return x;
+  }
+  function opLabelX() {
+    var op = simOp.value;
+    if (op === 'double') return 'x = x * 2';
+    if (op === 'inc')    return 'x = x + 1';
+    if (op === 'neg')    return 'x = -x';
+    if (op === 'zero')   return 'x = 0';
+  }
+  function opLabelP() {
+    var op = simOp.value;
+    if (op === 'double') return '*p = *p * 2';
+    if (op === 'inc')    return '*p = *p + 1';
+    if (op === 'neg')    return '*p = -(*p)';
+    if (op === 'zero')   return '*p = 0';
+  }
+
+  var KW = function(w){ return '<span style="color:#f97583;font-weight:700">'+w+'</span>'; };
+  var TP = function(w){ return '<span style="color:#79b8ff">'+w+'</span>'; };
+  var FN = function(w){ return '<span style="color:#56cfb2">'+w+'</span>'; };
+  var CM = function(w){ return '<span style="color:#6a737d;font-style:italic">'+w+'</span>'; };
+  var NM = function(w){ return '<span style="color:#b392f0">'+w+'</span>'; };
+  var ST = function(w){ return '<span style="color:#9ecbff">'+w+'</span>'; };
+
+  function updateCode() {
+    var val = simVal.value || '?';
+    var sval = simStr.value || '';
+    var NL = '\n';
+    var L = [];
+    if (mode === 'valore') {
+      L = [
+        TP('void')+' '+FN('f')+'('+TP('int')+' x) {',
+        '    '+opLabelX()+';',
+        '    '+CM('// x è una copia — l\'originale NON cambia'),
+        '}',
+        TP('int')+' '+FN('main')+'() {',
+        '    '+TP('int')+' a = '+NM(val)+';',
+        '    '+FN('f')+'(a);',
+        '    '+CM('// a vale ancora '+val),
+        '    '+KW('return')+' '+NM('0')+';',
+        '}'
+      ];
+    } else if (mode === 'rif') {
+      L = [
+        TP('void')+' '+FN('f')+'('+TP('int')+'&amp; x) {',
+        '    '+opLabelX()+';',
+        '    '+CM('// x è un alias — l\'originale CAMBIA'),
+        '}',
+        TP('int')+' '+FN('main')+'() {',
+        '    '+TP('int')+' a = '+NM(val)+';',
+        '    '+FN('f')+'(a);',
+        '    '+CM('// a è ora '+applyOp(parseInt(val)||0)),
+        '    '+KW('return')+' '+NM('0')+';',
+        '}'
+      ];
+    } else if (mode === 'const_rif') {
+      L = [
+        TP('void')+' '+FN('stampa')+'('+KW('const')+' '+TP('string')+'&amp; s) {',
+        '    cout &lt;&lt; s &lt;&lt; endl;',
+        '    '+CM('// s = "..."; ❌ errore: s è const'),
+        '}',
+        TP('int')+' '+FN('main')+'() {',
+        '    '+TP('string')+' nome = '+ST('"'+sval+'"')+';',
+        '    '+FN('stampa')+'(nome);',
+        '    '+CM('// nome NON cambia — garantito da const'),
+        '    '+KW('return')+' '+NM('0')+';',
+        '}'
+      ];
+    } else {
+      L = [
+        TP('void')+' '+FN('f')+'('+TP('int')+'* p) {',
+        '    '+KW('if')+' (p == '+KW('nullptr')+') '+KW('return')+';',
+        '    '+opLabelP()+';',
+        '    '+CM('// modifica l\'originale tramite indirizzo'),
+        '}',
+        TP('int')+' '+FN('main')+'() {',
+        '    '+TP('int')+' a = '+NM(val)+';',
+        '    '+FN('f')+'(&amp;a);',
+        '    '+CM('// a è ora '+applyOp(parseInt(val)||0)),
+        '    '+KW('return')+' '+NM('0')+';',
+        '}'
+      ];
+    }
+    simCode.innerHTML = L.join(NL);
+  }
+
+  function resetArena() {
+    callerBefore.textContent = '—'; callerAfter.textContent = '—';
+    funcVal.textContent = '—'; afterNote.textContent = '—';
+    funcLabel.textContent = '—';
+    simArrow.textContent = '→'; simArrowLbl.textContent = 'chiama';
+    msgEl.textContent = 'Scegli modalità, imposta il valore e premi Esegui.';
+    callerBefore.className = 'sim-var-val unchanged';
+    callerAfter.className = 'sim-var-val unchanged';
+    funcVal.className = 'sim-var-val unchanged';
+  }
+
+  document.getElementById('sim-run').addEventListener('click', function(){
+    if (mode === 'const_rif') {
+      var s = simStr.value || 'Mario Rossi';
+      callerVarName.textContent = 'nome ='; afterVarName.textContent = 'nome =';
+      callerBefore.textContent = '"'+s+'"'; callerBefore.className = 'sim-var-val unchanged';
+      paramName.textContent = 's (const &) =';
+      funcVal.textContent = '"'+s+'"'; funcVal.className = 'sim-var-val unchanged';
+      funcLabel.innerHTML = '<span style="color:var(--prog-red)">s è const: nessuna modifica consentita</span>';
+      callerAfter.textContent = '"'+s+'"'; callerAfter.className = 'sim-var-val unchanged';
+      afterNote.innerHTML = '<span style="color:var(--prog-accent2)">nome NON cambia — const garantisce sola lettura. Zero copie della stringa.</span>';
+      simArrow.textContent = '→'; simArrowLbl.textContent = 'const ref';
+      msgEl.textContent = 'const riferimento: "'+s+'" prima e dopo. Zero copie, nessuna modifica.';
+      return;
+    }
+
+    var a = parseInt(simVal.value);
+    if (isNaN(a)) { msgEl.textContent = 'Inserisci un valore intero valido.'; return; }
+    var after = applyOp(a);
+
+    callerVarName.textContent = 'a ='; afterVarName.textContent = 'a =';
+    callerBefore.textContent = a; callerBefore.className = 'sim-var-val unchanged';
+
+    if (mode === 'valore') {
+      paramName.textContent = 'x (copia) =';
+      funcVal.textContent = a + ' → ' + after;
+      funcVal.className = 'sim-var-val unchanged';
+      funcLabel.innerHTML = opLabelX() + '<br><span style="color:var(--prog-accent3)">modifica solo la copia locale</span>';
+      callerAfter.textContent = a; callerAfter.className = 'sim-var-val unchanged';
+      afterNote.innerHTML = '<span style="color:var(--prog-accent3)">a NON è cambiato — la copia viene scartata al termine della funzione.</span>';
+      simArrow.textContent = '→'; simArrowLbl.textContent = 'copia di a';
+      msgEl.textContent = 'Per valore: a = '+a+' prima e dopo. La funzione ha operato su una copia.';
+
+    } else if (mode === 'rif') {
+      paramName.textContent = 'x (alias di a) =';
+      funcVal.textContent = a + ' → ' + after; funcVal.className = 'sim-var-val changed';
+      funcLabel.innerHTML = opLabelX() + '<br><span style="color:var(--prog-accent2)">modifica a direttamente</span>';
+      callerAfter.textContent = after; callerAfter.className = after !== a ? 'sim-var-val changed' : 'sim-var-val unchanged';
+      afterNote.innerHTML = '<span style="color:var(--prog-accent2)">a è diventato '+after+' — il riferimento &amp; è un alias: stessa cella di memoria.</span>';
+      simArrow.textContent = '⇄'; simArrowLbl.textContent = 'riferimento &';
+      msgEl.textContent = 'Per riferimento: a = '+a+' prima, a = '+after+' dopo. L\'originale è cambiato.';
+
+    } else {
+      paramName.textContent = 'p (indirizzo di a)';
+      funcVal.textContent = '&a → *p: ' + a + ' → ' + after; funcVal.className = 'sim-var-val changed';
+      funcLabel.innerHTML = opLabelP() + '<br><span style="color:var(--prog-accent2)">modifica via dereferenziazione *p</span>';
+      callerAfter.textContent = after; callerAfter.className = after !== a ? 'sim-var-val changed' : 'sim-var-val unchanged';
+      afterNote.innerHTML = '<span style="color:var(--prog-accent2)">a è diventato '+after+' — il puntatore ha raggiunto la stessa cella di memoria.</span>';
+      simArrow.textContent = '→'; simArrowLbl.textContent = 'indirizzo &a';
+      msgEl.textContent = 'Per puntatore: a = '+a+' prima, a = '+after+' dopo. Stesso effetto del riferimento, sintassi diversa.';
+    }
+  });
+
+  document.getElementById('sim-reset').addEventListener('click', function(){
+    resetArena();
+    callerVarName.textContent = 'a ='; afterVarName.textContent = 'a =';
+  });
+
+  document.querySelectorAll('.sim-mode-btns .tool-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.sim-mode-btns .tool-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      mode = btn.dataset.mode;
+      if (mode === 'const_rif') {
+        numGroup.style.display = 'none';
+        strGroup.style.display = '';
+        opGroup.style.display = 'none';
+      } else {
+        numGroup.style.display = '';
+        strGroup.style.display = 'none';
+        opGroup.style.display = '';
+      }
+      resetArena();
+      updateCode();
+    });
+  });
+
+  [simVal, simOp, simStr].forEach(function(el){ el.addEventListener('input', updateCode); });
+  updateCode();
+
+  document.querySelectorAll('.code-block').forEach(function(block){
+    var header=block.querySelector('.code-header');
+    var pre=block.querySelector('pre');
+    if(!header||!pre)return;
+    var btn=document.createElement('button');
+    btn.className='copy-btn'; btn.textContent='Copia';
+    btn.addEventListener('click',function(){
+      navigator.clipboard.writeText(pre.innerText).then(function(){
+        btn.textContent='✓ Copiato'; btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copia';btn.classList.remove('copied');},2000);
+      });
+    });
+    header.appendChild(btn);
+  });
+
+  var tocLinks=document.querySelectorAll('#toc a');
+  var sections=document.querySelectorAll('section[id]');
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        tocLinks.forEach(function(a){a.classList.remove('active');});
+        var a=document.querySelector('#toc a[href="#'+e.target.id+'"]');
+        if(a) a.classList.add('active');
+      }
+    });
+  },{rootMargin:'-10% 0px -80% 0px',threshold:0});
+  sections.forEach(function(s){obs.observe(s);});
+  tocLinks.forEach(function(a){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      var t=document.querySelector(a.getAttribute('href'));
+      if(t) t.scrollIntoView({behavior:'smooth'});
+    });
+  });
+  var btt=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btt.classList.toggle('visible',window.scrollY>300);});
+})();
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>

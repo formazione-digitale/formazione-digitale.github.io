@@ -1269,6 +1269,142 @@
         ]
     },
     {
+        "path": "/programmazione/introduzione-cpp/",
+        "label": "Introduzione a C++",
+        "short": "Introduzione C++",
+        "cat": "guide",
+        "emoji": "🚀",
+        "tags": [
+            "c++",
+            "introduzione",
+            "compilatore",
+            "ide",
+            "hello world",
+            "ciclo sviluppo",
+            "programmazione",
+            "itis",
+            "sia"
+        ],
+        "meta": "5 sezioni · Primo passo del percorso · 3° anno ITIS/SIA",
+        "description": "Perché C++, ciclo di sviluppo, gestione I/O con cout e cin, ambienti di sviluppo ed errori comuni.",
+        "featured": false,
+        "active": true,
+        "hub": "/programmazione/",
+        "order": 1,
+        "digcomp": [
+            "DC 5.1"
+        ],
+        "digcomp_level": "foundation",
+        "digcompedu": [
+            "DCEdu 2.2"
+        ]
+    },
+    {
+        "path": "/programmazione/variabili-io/",
+        "label": "Variabili, Costanti e Tipi in C++",
+        "short": "Variabili e Tipi",
+        "cat": "guide",
+        "emoji": "📦",
+        "tags": [
+            "c++",
+            "variabili",
+            "costanti",
+            "tipi",
+            "int",
+            "float",
+            "double",
+            "char",
+            "bool",
+            "string",
+            "const",
+            "operatori",
+            "casting",
+            "programmazione",
+            "itis",
+            "sia"
+        ],
+        "meta": "5 sezioni · Tool validatore tipi · 3° anno ITIS/SIA",
+        "description": "Tipi fondamentali, dichiarazione, const, operatori aritmetici e casting con tool interattivo sui range.",
+        "featured": false,
+        "active": true,
+        "hub": "/programmazione/",
+        "order": 2,
+        "digcomp": [
+            "DC 5.1"
+        ],
+        "digcomp_level": "foundation",
+        "digcompedu": [
+            "DCEdu 2.2"
+        ]
+    },
+    {
+        "path": "/programmazione/costrutti/",
+        "label": "Costrutti Logici e Iterativi in C++",
+        "short": "Costrutti",
+        "cat": "guide",
+        "emoji": "🔀",
+        "tags": [
+            "c++",
+            "if",
+            "else",
+            "switch",
+            "for",
+            "while",
+            "do-while",
+            "break",
+            "continue",
+            "operatori logici",
+            "programmazione",
+            "itis",
+            "sia"
+        ],
+        "meta": "5 sezioni · Visualizzatore cicli · 3° anno ITIS/SIA",
+        "description": "if/else, switch, for, while, do-while, break e continue con visualizzatore interattivo dei cicli.",
+        "featured": false,
+        "active": true,
+        "hub": "/programmazione/",
+        "order": 3,
+        "digcomp": [
+            "DC 5.1"
+        ],
+        "digcomp_level": "foundation",
+        "digcompedu": [
+            "DCEdu 2.2"
+        ]
+    },
+    {
+        "path": "/programmazione/funzioni/",
+        "label": "Funzioni e Passaggio Parametri in C++",
+        "short": "Funzioni",
+        "cat": "guide",
+        "emoji": "⚙️",
+        "tags": [
+            "c++",
+            "funzioni",
+            "passaggio per valore",
+            "passaggio per riferimento",
+            "puntatore",
+            "array",
+            "prototipo",
+            "programmazione",
+            "itis",
+            "sia"
+        ],
+        "meta": "5 sezioni · Simulatore parametri · 3° anno ITIS/SIA",
+        "description": "Anatomia di una funzione, passaggio per valore, riferimento, const riferimento, puntatore e array.",
+        "featured": false,
+        "active": true,
+        "hub": "/programmazione/",
+        "order": 4,
+        "digcomp": [
+            "DC 5.1"
+        ],
+        "digcomp_level": "foundation",
+        "digcompedu": [
+            "DCEdu 2.2"
+        ]
+    },
+    {
         "path": "/programmazione/strutture-dati-statiche/",
         "label": "Strutture Dati Statiche in C++",
         "short": "Strutture Statiche",
@@ -1292,7 +1428,7 @@
         "featured": false,
         "active": true,
         "hub": "/programmazione/",
-        "order": 1,
+        "order": 5,
         "digcomp": [
             "DC 5.1",
             "DC 5.2"
@@ -1328,7 +1464,7 @@
         "featured": false,
         "active": true,
         "hub": "/programmazione/",
-        "order": 2,
+        "order": 6,
         "digcomp": [
             "DC 5.1",
             "DC 5.2"
@@ -1366,7 +1502,7 @@
         "featured": false,
         "active": true,
         "hub": "/programmazione/",
-        "order": 3,
+        "order": 7,
         "digcomp": [
             "DC 5.1",
             "DC 5.2"
@@ -1398,7 +1534,7 @@
         "featured": false,
         "active": true,
         "hub": "/programmazione/",
-        "order": 4,
+        "order": 8,
         "digcomp": [
             "DC 5.1",
             "DC 5.2"
@@ -1429,7 +1565,7 @@
         "featured": false,
         "active": true,
         "hub": "/programmazione/",
-        "order": 5,
+        "order": 9,
         "digcomp": [
             "DC 5.1",
             "DC 5.2"

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduzione a C++ — Formazione Digitale</title>
+  <meta name="description" content="Introduzione al linguaggio C++: ciclo di sviluppo, struttura di un programma, ambienti di sviluppo. Prima tappa del percorso di programmazione.">
+  <meta name="author" content="Cristiano De Pasquale">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://formazione-digitale.it/programmazione/introduzione-cpp/">
+  <link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="//gc.zgo.at">
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#7c5cfc">
+  <meta property="og:title" content="Introduzione a C++ — Formazione Digitale">
+  <meta property="og:description" content="Ciclo di sviluppo, struttura di un programma e ambienti di sviluppo in C++.">
+  <meta property="og:url" content="https://formazione-digitale.it/programmazione/introduzione-cpp/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Formazione Digitale">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"LearningResource","name":"Introduzione a C++","url":"https://formazione-digitale.it/programmazione/introduzione-cpp/","inLanguage":"it","educationalLevel":"beginner","teaches":["C++","compilatore","ciclo di sviluppo","IDE","hello world"],"author":{"@type":"Person","name":"Cristiano De Pasquale"},"publisher":{"@type":"Organization","name":"Formazione Digitale","url":"https://formazione-digitale.it"}}
+  </script>
+  <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/shared-extended.css?v=1">
+  <style>
+    :root{--prog-bg:#0f1117;--prog-surface:#1a1d27;--prog-card:#21253a;--prog-border:#2e3350;--prog-accent:#7c5cfc;--prog-accent2:#56cfb2;--prog-accent3:#f9a03f;--prog-red:#e05c5c;--prog-text:#d4d8f0;--prog-muted:#7a7f9a;--prog-code-bg:#131620;--kw-type:#79b8ff;--kw-keyword:#f97583;--kw-comment:#6a737d;--kw-string:#9ecbff;--kw-number:#b392f0;--kw-func:#56cfb2}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Sora',sans-serif;background:var(--prog-bg);color:var(--prog-text);line-height:1.75}
+    header{background:var(--prog-surface);border-bottom:3px solid var(--prog-accent);padding:2.5rem 2rem 2rem;position:relative;overflow:hidden}
+    header::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:var(--prog-accent);opacity:.07;pointer-events:none}
+    .header-back-link{display:inline-flex;align-items:center;gap:5px;font-size:.78rem;color:var(--prog-muted);text-decoration:none;transition:color .2s;position:absolute;top:1rem;left:1.5rem}
+    .header-back-link:hover{color:var(--prog-text)}
+    .header-badge{display:inline-block;font-family:'Space Mono',monospace;font-size:.68rem;background:var(--prog-accent);color:#fff;padding:3px 10px;border-radius:3px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+    header h1{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:700;letter-spacing:-.02em;line-height:1.15;color:#fff}
+    header h1 span{color:var(--prog-accent)}
+    header p{margin-top:.75rem;color:var(--prog-muted);font-size:.95rem;max-width:620px}
+    .header-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.25rem}
+    .header-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:4px 12px;border-radius:20px;font-family:'Space Mono',monospace;font-size:.72rem;color:var(--prog-muted)}
+    .page-nav{display:flex;gap:1rem;align-items:center;margin-top:1rem;font-size:.8rem;flex-wrap:wrap}
+    .page-nav a{color:var(--prog-accent);text-decoration:none;border:1px solid rgba(124,92,252,.3);padding:4px 12px;border-radius:20px;transition:all .18s}
+    .page-nav a:hover{background:rgba(124,92,252,.15);border-color:var(--prog-accent)}
+    .header-deco-svg{position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);opacity:.35;pointer-events:none}
+    @media(max-width:780px){.header-deco-svg{display:none}}
+    .toc-wrap{position:sticky;top:0;z-index:100;background:#1a1a18;border-bottom:3px solid var(--prog-accent)}
+    nav.toc{padding:.7rem 1.5rem;display:flex;flex-wrap:wrap;gap:.25rem;align-items:center;justify-content:center;max-width:980px;margin:0 auto}
+    nav.toc a{font-size:.82rem;font-family:'Sora',sans-serif;font-weight:500;color:#aaa9a0;text-decoration:none;padding:5px 13px;border-radius:20px;border:1px solid transparent;transition:all .18s;white-space:nowrap}
+    nav.toc a:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2)}
+    nav.toc a.active{background:var(--prog-accent);color:#fff;border-color:var(--prog-accent);font-weight:700}
+    @media(max-width:600px){nav.toc{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav.toc::-webkit-scrollbar{display:none}}
+    main{max-width:980px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+    section{margin-bottom:4.5rem;scroll-margin-top:70px}
+    .section-label{font-family:'Space Mono',monospace;font-size:.82rem;font-weight:700;color:var(--prog-accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.5rem}
+    h2{font-size:1.65rem;font-weight:700;color:#fff;letter-spacing:-.02em;border-bottom:2px solid var(--prog-border);padding-bottom:.6rem;margin-bottom:1.5rem}
+    h3{font-size:1.1rem;font-weight:600;color:var(--prog-accent2);margin:2rem 0 .8rem}
+    p{margin-bottom:1rem;color:var(--prog-text);font-size:.97rem;line-height:1.85}
+    code{font-family:'Space Mono',monospace;font-size:.85em;color:var(--prog-accent2)}
+    .box{border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0;font-size:.92rem;border-left:3px solid;line-height:1.75}
+    .box-info{background:rgba(86,207,178,.08);border-color:var(--prog-accent2)}
+    .box-warn{background:rgba(249,160,63,.08);border-color:var(--prog-accent3)}
+    .box-tip{background:rgba(124,92,252,.08);border-color:var(--prog-accent)}
+    .box-red{background:rgba(224,92,92,.08);border-color:var(--prog-red)}
+    .box strong{display:block;margin-bottom:.35rem;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;opacity:.8}
+    .code-block{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:8px;margin:1.5rem 0;overflow:hidden}
+    .code-header{background:var(--prog-card);padding:.5rem 1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--prog-border)}
+    .code-lang{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--prog-muted);letter-spacing:.1em;text-transform:uppercase}
+    .code-dots{display:flex;gap:5px}.code-dot{width:10px;height:10px;border-radius:50%}
+    .dot-r{background:#e05c5c}.dot-y{background:#f9a03f}.dot-g{background:#56cfb2}
+    pre{padding:1.25rem 1.5rem;overflow-x:auto;font-family:'Space Mono',monospace;font-size:.83rem;line-height:1.65;tab-size:4;color:var(--prog-text)}
+    .kw{color:var(--kw-keyword);font-weight:700}.tp{color:var(--kw-type)}.fn{color:var(--kw-func)}.cm{color:var(--kw-comment);font-style:italic}.nm{color:var(--kw-number)}.st{color:var(--kw-string)}.pp{color:#ff9f43}
+    /* copy button */
+    .copy-btn{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--prog-muted);background:none;border:1px solid var(--prog-border);border-radius:4px;padding:2px 8px;cursor:pointer;transition:all .18s;white-space:nowrap}
+    .copy-btn:hover{color:var(--prog-accent2);border-color:var(--prog-accent2)}
+    .copy-btn.copied{color:var(--prog-accent2);border-color:var(--prog-accent2)}
+    /* ciclo compilazione */
+    .cycle-wrap{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin:2rem 0}
+    .cycle-box{background:var(--prog-card);border:2px solid var(--prog-border);border-radius:10px;padding:1.1rem 1.5rem;text-align:center;min-width:150px}
+    .cycle-box.accent{border-color:var(--prog-accent);background:rgba(124,92,252,.08)}
+    .cycle-icon{font-size:1.8rem;margin-bottom:.4rem}
+    .cycle-label{font-family:'Space Mono',monospace;font-size:.82rem;font-weight:700;color:#fff}
+    .cycle-sub{font-size:.72rem;color:var(--prog-muted);margin-top:.25rem}
+    .cycle-arrow{font-size:1.5rem;color:var(--prog-accent);padding:0 .75rem;align-self:center;flex-shrink:0}
+    @media(max-width:600px){.cycle-wrap{gap:.5rem}.cycle-arrow{transform:rotate(90deg)}}
+    /* IDE grid */
+    .ide-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0}
+    @media(max-width:700px){.ide-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:450px){.ide-grid{grid-template-columns:1fr}}
+    .ide-card{background:var(--prog-card);border:1px solid var(--prog-border);border-radius:8px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.4rem}
+    .ide-name{font-weight:700;color:#fff;font-size:.95rem}
+    .ide-badge{display:inline-block;font-family:'Space Mono',monospace;font-size:.62rem;padding:2px 7px;border-radius:3px;letter-spacing:.05em;text-transform:uppercase;font-weight:700;width:fit-content}
+    .badge-desktop{background:rgba(86,207,178,.12);color:var(--prog-accent2)}
+    .badge-browser{background:rgba(124,92,252,.12);color:var(--prog-accent)}
+    .ide-desc{font-size:.82rem;color:var(--prog-muted);line-height:1.55}
+    /* errori */
+    .err-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.25rem 0}
+    @media(max-width:600px){.err-grid{grid-template-columns:1fr}}
+    .err-card{background:var(--prog-card);border:1px solid var(--prog-border);border-radius:8px;overflow:hidden}
+    .err-header{padding:.5rem 1rem;font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.05em}
+    .err-wrong{background:rgba(224,92,92,.12);color:var(--prog-red)}
+    .err-right{background:rgba(86,207,178,.08);color:var(--prog-accent2)}
+    .err-body{padding:.75rem 1rem;font-family:'Space Mono',monospace;font-size:.82rem;line-height:1.7}
+    .err-note{font-size:.78rem;color:var(--prog-muted);padding:.5rem 1rem;border-top:1px solid var(--prog-border);font-style:italic}
+    footer{text-align:center;padding:2.5rem 1rem;color:var(--prog-muted);font-size:.85rem;border-top:1px solid var(--prog-border);margin-top:2rem}
+    footer a{color:var(--prog-accent);text-decoration:none}
+    footer a:hover{text-decoration:underline}
+    .footer-nav{margin-bottom:.75rem;font-size:.82rem}
+    .back-to-top{position:fixed;bottom:1.5rem;right:1.5rem;width:40px;height:40px;border-radius:50%;background:var(--prog-accent);color:#fff;border:none;font-size:1.1rem;cursor:pointer;opacity:0;transform:translateY(10px);transition:all .25s;z-index:200}
+    .back-to-top.visible{opacity:1;transform:translateY(0)}
+    @media(max-width:600px){main{padding:1.5rem 1rem 4rem}}
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="/programmazione/" class="header-back-link">&#x2190; Programmazione</a>
+  <div class="header-badge">C++ &middot; Introduzione</div>
+  <h1>Introduzione <span>al C++</span></h1>
+  <p>Perch&eacute; C++, come funziona il ciclo di sviluppo, la struttura minima di un programma e gli strumenti per scrivere codice.</p>
+  <div class="header-pills">
+    <span class="header-pill">&#127891; 3&deg; anno ITIS/SIA</span>
+    <span class="header-pill">&#128296; Primo passo del percorso</span>
+    <span class="header-pill">&#9200; ~25 min</span>
+  </div>
+  <div class="page-nav">
+    <a href="/programmazione/variabili-io/">&#8594; Variabili e I/O</a>
+  </div>
+  <!-- SVG decorativo: hello world -->
+  <svg class="header-deco-svg" viewBox="0 0 220 60" width="300" height="82" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="8" width="220" height="44" rx="6" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+    <text x="12" y="28" fill="#ff9f43" font-family="Space Mono,monospace" font-size="9">#include &lt;iostream&gt;</text>
+    <text x="12" y="41" fill="#f97583" font-family="Space Mono,monospace" font-size="9" font-weight="700">int </text>
+    <text x="36" y="41" fill="#56cfb2" font-family="Space Mono,monospace" font-size="9">main</text>
+    <text x="70" y="41" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="9">() {</text>
+    <text x="12" y="54" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="9">  cout &lt;&lt; </text>
+    <text x="73" y="54" fill="#9ecbff" font-family="Space Mono,monospace" font-size="9">"Hello!"</text>
+    <text x="122" y="54" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="9">; }</text>
+  </svg>
+</header>
+
+<div class="toc-wrap">
+  <nav class="toc" id="toc">
+    <a href="#perche" class="active">Perch&eacute; C++</a>
+    <a href="#ciclo">Il ciclo</a>
+    <a href="#io">Gestione I/O</a>
+    <a href="#ide">Ambienti</a>
+    <a href="#errori">Errori comuni</a>
+  </nav>
+</div>
+
+<main>
+
+<!-- ══ PERCHÉ C++ ══ -->
+<section id="perche">
+  <div class="section-label">00 &mdash; Panoramica</div>
+  <h2>Perch&eacute; C++?</h2>
+  <p>Il C++ &egrave; un linguaggio <strong>compilato</strong>: il codice che scrivi viene tradotto in istruzioni macchina prima dell&apos;esecuzione, senza intermediari. Questo lo rende veloce ed efficiente, adatto a sistemi operativi, videogiochi, software embedded e applicazioni dove le prestazioni contano.</p>
+  <p>&Egrave; anche un linguaggio <strong>fortemente tipizzato</strong>: ogni variabile ha un tipo dichiarato esplicitamente, e il compilatore segnala subito gli errori di tipo. Questo apparente vincolo &egrave; in realt&agrave; un aiuto: molti bug vengono eliminati prima ancora di eseguire il programma.</p>
+  <p>Infine, il C++ &egrave; <strong>vicino all&apos;hardware</strong>: permette di gestire la memoria direttamente, capire come i dati sono rappresentati in byte e ragionare su indirizzi e puntatori. &Egrave; per questo che &egrave; il linguaggio di riferimento per chi studia informatica a livello tecnico.</p>
+
+  <div class="box box-info">
+    <strong>&#128204; C o C++?</strong>
+    Il C++ &egrave; un&apos;estensione del C: aggiunge funzionalit&agrave; come i namespace, il sovraccarico degli operatori e la programmazione orientata agli oggetti, mantenendo piena compatibilit&agrave; con il codice C. Nella didattica scolastica si usa C++ anche quando si affronta solo la parte procedurale &mdash; &egrave; la scelta pi&ugrave; comune nei libri di testo ITIS.
+  </div>
+</section>
+
+<!-- ══ IL CICLO ══ -->
+<section id="ciclo">
+  <div class="section-label">01 &mdash; Come funziona</div>
+  <h2>Dal sorgente all&apos;eseguibile</h2>
+  <p>Scrivere un programma in C++ richiede tre passaggi distinti. &Egrave; fondamentale capirli perch&eacute; gli errori che incontrerai appartengono a fasi diverse e si risolvono in modo diverso.</p>
+
+  <div class="cycle-wrap">
+    <div class="cycle-box">
+      <div class="cycle-icon">&#128196;</div>
+      <div class="cycle-label">hello.cpp</div>
+      <div class="cycle-sub">Codice sorgente<br>scritto da te</div>
+    </div>
+    <div class="cycle-arrow">&#8594;</div>
+    <div class="cycle-box accent">
+      <div class="cycle-icon">&#9881;&#65039;</div>
+      <div class="cycle-label">Compilatore</div>
+      <div class="cycle-sub"><code>g++</code> traduce<br>in linguaggio macchina</div>
+    </div>
+    <div class="cycle-arrow">&#8594;</div>
+    <div class="cycle-box">
+      <div class="cycle-icon">&#9654;&#65039;</div>
+      <div class="cycle-label">hello.exe</div>
+      <div class="cycle-sub">Eseguibile binario<br>pronto per girare</div>
+    </div>
+  </div>
+
+  <div class="box box-tip">
+    <strong>&#128161; Tre tipi di errori, tre fasi diverse</strong>
+    <strong style="display:inline;font-size:inherit;letter-spacing:0;text-transform:none;opacity:1">Errori di compilazione</strong> &mdash; il compilatore non riesce a tradurre il codice (sintassi errata, tipo sbagliato). Il programma non viene creato.<br><br>
+    <strong style="display:inline;font-size:inherit;letter-spacing:0;text-transform:none;opacity:1">Errori di collegamento (linker)</strong> &mdash; il codice &egrave; sintatticamente corretto ma mancano pezzi (funzione dichiarata ma non definita).<br><br>
+    <strong style="display:inline;font-size:inherit;letter-spacing:0;text-transform:none;opacity:1">Errori di runtime</strong> &mdash; il programma gira ma si comporta in modo errato o va in crash (divisione per zero, accesso fuori dai limiti di un array).
+  </div>
+
+  <h3>Compilazione da terminale</h3>
+  <p>Tutti gli ambienti di sviluppo usano internamente un compilatore. Il pi&ugrave; comune &egrave; <code>g++</code>, parte del pacchetto GCC. Da terminale:</p>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">Terminale</span></div>
+    <pre><span class="cm"># compila hello.cpp e produce l'eseguibile "hello"</span>
+g++ hello.cpp -o hello
+
+<span class="cm"># esegui il programma</span>
+./hello           <span class="cm"># Linux / macOS</span>
+hello.exe         <span class="cm"># Windows</span></pre>
+  </div>
+  <p>Nei laboratori scolastici questo passaggio &egrave; di solito gestito dall&apos;IDE con un tasto &ldquo;Run&rdquo; o &ldquo;Esegui&rdquo; &mdash; ma sotto al tasto c&apos;&egrave; sempre <code>g++</code> (o un compilatore equivalente) che gira.</p>
+</section>
+
+<!-- ══ HELLO WORLD ══ -->
+<section id="io">
+  <div class="section-label">02 &mdash; Input e Output</div>
+  <h2>Gestione I/O</h2>
+  <p>Ogni programma utile legge dati in ingresso e produce risultati in uscita. In C++ questo avviene tramite gli <strong>stream</strong>: <code>cout</code> per l&apos;output a schermo e <code>cin</code> per l&apos;input da tastiera, entrambi definiti in <code>&lt;iostream&gt;</code>.</p>
+
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; hello.cpp</span></div>
+    <pre><span class="pp">#include &lt;iostream&gt;</span>   <span class="cm">// include la libreria standard di I/O: senza questa, cout non esiste</span>
+<span class="kw">using namespace</span> std;   <span class="cm">// evita di scrivere "std::cout" ogni volta: basta "cout"</span>
+
+<span class="tp">int</span> <span class="fn">main</span>() {            <span class="cm">// PUNTO DI INGRESSO del programma: l'esecuzione inizia sempre qui</span>
+    cout &lt;&lt; <span class="st">"Hello, World!"</span> &lt;&lt; endl;  <span class="cm">// stampa a schermo + vai a capo</span>
+    <span class="kw">return</span> <span class="nm">0</span>;            <span class="cm">// restituisce 0 al sistema operativo: 0 = tutto ok</span>
+}                       <span class="cm">// chiude il blocco main</span></pre>
+  </div>
+
+  <h3>I tre elementi fissi di ogni programma C++</h3>
+  <div class="box box-info">
+    <strong>&#128204; Struttura minima invariabile</strong>
+    <strong style="display:inline;font-size:inherit;letter-spacing:0;text-transform:none;opacity:1">1. Le direttive <code>#include</code></strong> &mdash; in cima al file, indicano al compilatore quali librerie usare. <code>&lt;iostream&gt;</code> per I/O, <code>&lt;string&gt;</code> per le stringhe, <code>&lt;fstream&gt;</code> per i file.<br><br>
+    <strong style="display:inline;font-size:inherit;letter-spacing:0;text-transform:none;opacity:1">2. <code>using namespace std;</code></strong> &mdash; permette di usare i nomi standard (<code>cout</code>, <code>cin</code>, <code>string</code>...) senza il prefisso <code>std::</code>. Non &egrave; obbligatorio ma &egrave; quasi universale in ambito didattico.<br><br>
+    <strong style="display:inline;font-size:inherit;letter-spacing:0;text-transform:none;opacity:1">3. <code>int main()</code></strong> &mdash; funzione obbligatoria e unica: il programma parte da qui e termina quando questa funzione restituisce. <code>return 0</code> segnala al sistema operativo che l&apos;esecuzione &egrave; terminata senza errori.
+  </div>
+
+  <h3>Output &mdash; cout</h3>
+  <p>Il primo esempio classico: stampare un messaggio a schermo. Ogni riga di questo snippet &egrave; commentata perch&eacute; la struttura che vedi qui si ripete in <em>ogni</em> programma C++ che scriverai.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; output</span></div>
+    <pre>cout &lt;&lt; <span class="st">"Testo"</span>;            <span class="cm">// stampa testo, cursore rimane sulla stessa riga</span>
+cout &lt;&lt; <span class="st">"Testo"</span> &lt;&lt; endl;  <span class="cm">// stampa testo + vai a capo (endl = end line)</span>
+cout &lt;&lt; <span class="st">"Testo\n"</span>;         <span class="cm">// equivalente: \n &egrave; il carattere di fine riga</span>
+
+<span class="cm">// concatenazione con &lt;&lt;</span>
+cout &lt;&lt; <span class="st">"Nome: "</span> &lt;&lt; <span class="st">"Mario"</span> &lt;&lt; <span class="st">" Rossi"</span> &lt;&lt; endl;</pre>
+  </div>
+  <h3>cin &mdash; leggere l&apos;input da tastiera</h3>
+  <p><code>cin</code> legge ci&ograve; che l&apos;utente digita. L&apos;operatore <code>&gt;&gt;</code> &egrave; il contrario di <code>&lt;&lt;</code>: invece di mandare dati allo schermo, li preleva dalla tastiera e li mette in una variabile.</p>
+
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; saluto.cpp</span></div>
+    <pre><span class="pp">#include &lt;iostream&gt;</span>
+<span class="pp">#include &lt;string&gt;</span>    <span class="cm">// necessario per usare il tipo string</span>
+<span class="kw">using namespace</span> std;
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">string</span> nome;                     <span class="cm">// dichiaro una variabile di tipo string</span>
+    cout &lt;&lt; <span class="st">"Come ti chiami? "</span>;     <span class="cm">// chiedo l'input (senza endl: cursore rimane in riga)</span>
+    cin  &gt;&gt; nome;                    <span class="cm">// leggo la risposta e la salvo in nome</span>
+    cout &lt;&lt; <span class="st">"Ciao, "</span> &lt;&lt; nome &lt;&lt; <span class="st">"!"</span> &lt;&lt; endl;  <span class="cm">// uso la variabile</span>
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+
+  <div class="box box-warn">
+    <strong>&#9888; cin &gt;&gt; si ferma allo spazio</strong>
+    Se l&apos;utente digita <em>Mario Rossi</em>, <code>cin &gt;&gt; nome</code> legge solo <em>Mario</em> &mdash; si ferma al primo spazio. Per leggere una riga intera (nome e cognome) si usa <code>getline()</code>:
+  </div>
+
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; saluto_completo.cpp</span></div>
+    <pre><span class="pp">#include &lt;iostream&gt;</span>
+<span class="pp">#include &lt;string&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">string</span> nomeCompleto;
+    cout &lt;&lt; <span class="st">"Nome e cognome: "</span>;
+    getline(cin, nomeCompleto);      <span class="cm">// legge l'intera riga inclusi gli spazi</span>
+    cout &lt;&lt; <span class="st">"Benvenuto, "</span> &lt;&lt; nomeCompleto &lt;&lt; <span class="st">"!"</span> &lt;&lt; endl;
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+</section>
+
+<!-- ══ IDE ══ -->
+<section id="ide">
+  <div class="section-label">03 &mdash; Strumenti</div>
+  <h2>Ambienti di sviluppo</h2>
+  <p>Puoi scrivere C++ con qualsiasi editor di testo, ma un <strong>ambiente di sviluppo (IDE)</strong> integra in un&apos;unica interfaccia i tre strumenti fondamentali:</p>
+  <ul style="margin:.75rem 0 1rem 1.5rem;color:var(--prog-text);font-size:.97rem;line-height:2">
+    <li><strong>Editor</strong> — con evidenziazione della sintassi, completamento automatico e indicazione degli errori mentre scrivi</li>
+    <li><strong>Compilatore</strong> — invocato con un tasto, traduce il sorgente in eseguibile e mostra gli errori di compilazione</li>
+    <li><strong>Debugger</strong> — permette di eseguire il programma passo per passo, ispezionare le variabili e trovare la causa di un errore logico</li>
+  </ul>
+  <p>La scelta dell&apos;IDE non cambia il linguaggio: il C++ che scrivi &egrave; lo stesso ovunque.</p>
+
+  <div class="ide-grid">
+    <div class="ide-card">
+      <div class="ide-name">Dev-C++</div>
+      <div class="ide-badge badge-desktop">Desktop</div>
+      <div class="ide-desc">Leggero e immediato. Storico nelle scuole italiane, avvio rapido senza configurazione.</div>
+    </div>
+    <div class="ide-card">
+      <div class="ide-name">Visual Studio</div>
+      <div class="ide-badge badge-desktop">Desktop</div>
+      <div class="ide-desc">Debugger professionale e IntelliSense avanzato. Ideale quando si vuole capire in dettaglio il comportamento del codice.</div>
+    </div>
+    <div class="ide-card">
+      <div class="ide-name">Visual Studio Code</div>
+      <div class="ide-badge badge-desktop">Desktop</div>
+      <div class="ide-desc">Leggero e cross-platform. Con l&apos;estensione C/C++ di Microsoft diventa un ambiente completo.</div>
+    </div>
+    <div class="ide-card">
+      <div class="ide-name">Code::Blocks</div>
+      <div class="ide-badge badge-desktop">Desktop</div>
+      <div class="ide-desc">Open source, semplice e stabile. Buona alternativa a Dev-C++ con interfaccia pi&ugrave; moderna.</div>
+    </div>
+    <div class="ide-card">
+      <div class="ide-name">OnlineGDB</div>
+      <div class="ide-badge badge-browser">Browser</div>
+      <div class="ide-desc">Zero installazione. Scrivi, compila ed esegui direttamente nel browser. Ideale per i primi programmi.</div>
+    </div>
+    <div class="ide-card">
+      <div class="ide-name">Replit</div>
+      <div class="ide-badge badge-browser">Browser</div>
+      <div class="ide-desc">Collaborativo e condivisibile. Permette di lavorare insieme sullo stesso codice in tempo reale.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ERRORI COMUNI ══ -->
+<section id="errori">
+  <div class="section-label">04 &mdash; Pratica</div>
+  <h2>Errori comuni del primo giorno</h2>
+  <p>I primi errori di compilazione che si incontrano sono quasi sempre gli stessi. Riconoscerli subito fa risparmiare molto tempo.</p>
+
+  <div class="err-grid">
+    <div class="err-card">
+      <div class="err-header err-wrong">&#10060; Punto e virgola mancante</div>
+      <div class="err-body"><span style="color:var(--prog-red)">cout &lt;&lt; "Hello"</span>
+<span style="color:var(--prog-muted)">return 0;</span></div>
+      <div class="err-note">Ogni istruzione termina con <code>;</code> — il compilatore segnala l&apos;errore sulla riga <em>successiva</em>, non su quella mancante.</div>
+    </div>
+    <div class="err-card">
+      <div class="err-header err-right">&#10003; Corretto</div>
+      <div class="err-body"><span style="color:var(--prog-accent2)">cout &lt;&lt; "Hello"<strong>;</strong></span>
+<span style="color:var(--prog-muted)">return 0;</span></div>
+      <div class="err-note">Il <code>;</code> termina l&apos;istruzione. Senza, il compilatore considera le due righe un&apos;unica istruzione incompleta.</div>
+    </div>
+
+    <div class="err-card">
+      <div class="err-header err-wrong">&#10060; Case sensitivity</div>
+      <div class="err-body"><span style="color:var(--prog-red)">Cout &lt;&lt; "Hello";</span>
+<span style="color:var(--prog-red)">Int x = 5;</span></div>
+      <div class="err-note">Il C++ distingue maiuscole e minuscole. <code>Cout</code> non esiste: &egrave; <code>cout</code>. <code>Int</code> non esiste: &egrave; <code>int</code>.</div>
+    </div>
+    <div class="err-card">
+      <div class="err-header err-right">&#10003; Corretto</div>
+      <div class="err-body"><span style="color:var(--prog-accent2)">cout &lt;&lt; "Hello";</span>
+<span style="color:var(--prog-accent2)">int x = 5;</span></div>
+      <div class="err-note">Tutto minuscolo per parole chiave e identificatori standard. Solo i nomi che scegli tu possono avere maiuscole.</div>
+    </div>
+
+    <div class="err-card">
+      <div class="err-header err-wrong">&#10060; #include mancante</div>
+      <div class="err-body"><span style="color:var(--prog-red)">// nessun #include</span>
+<span style="color:var(--prog-muted)">int main() {</span>
+<span style="color:var(--prog-red)">  cout &lt;&lt; "Hello";</span>
+<span style="color:var(--prog-muted)">}</span></div>
+      <div class="err-note"><code>cout</code> &egrave; definito in <code>&lt;iostream&gt;</code>. Senza l&apos;include il compilatore non sa cos&apos;&egrave; <code>cout</code>.</div>
+    </div>
+    <div class="err-card">
+      <div class="err-header err-right">&#10003; Corretto</div>
+      <div class="err-body"><span style="color:var(--prog-accent2)">#include &lt;iostream&gt;</span>
+<span style="color:var(--prog-accent2)">using namespace std;</span>
+<span style="color:var(--prog-muted)">int main() {</span>
+<span style="color:var(--prog-accent2)">  cout &lt;&lt; "Hello";</span>
+<span style="color:var(--prog-muted)">}</span></div>
+      <div class="err-note">Le direttive <code>#include</code> vanno sempre all&apos;inizio del file, prima di tutto il resto.</div>
+    </div>
+  </div>
+
+  <div class="box box-tip">
+    <strong>&#128161; Come leggere un messaggio di errore del compilatore</strong>
+    <p style="margin:0">Il formato tipico &egrave;: &nbsp; <code>nomefile.cpp: riga:colonna: error: descrizione</code>. <br>
+       Leggi sempre il <b>primo</b> errore della lista &mdash; spesso gli errori successivi sono conseguenze di quello iniziale e spariscono non appena lo risolvi.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-nav">
+    <a href="/programmazione/variabili-io/">→ Variabili e I/O</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/programmazione/">Hub Programmazione</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/">Home</a>
+  </div>
+  <strong>Formazione Digitale</strong> &mdash; Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+
+<script>
+(function(){
+  'use strict';
+
+  /* copia codice */
+  document.querySelectorAll('.code-block').forEach(function(block){
+    var header=block.querySelector('.code-header');
+    var pre=block.querySelector('pre');
+    if(!header||!pre)return;
+    var btn=document.createElement('button');
+    btn.className='copy-btn'; btn.textContent='Copia';
+    btn.addEventListener('click',function(){
+      navigator.clipboard.writeText(pre.innerText).then(function(){
+        btn.textContent='\u2713 Copiato'; btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copia';btn.classList.remove('copied');},2000);
+      });
+    });
+    header.appendChild(btn);
+  });
+
+  /* TOC */
+  var tocLinks=document.querySelectorAll('#toc a');
+  var sections=document.querySelectorAll('section[id]');
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        tocLinks.forEach(function(a){a.classList.remove('active');});
+        var a=document.querySelector('#toc a[href="#'+e.target.id+'"]');
+        if(a) a.classList.add('active');
+      }
+    });
+  },{rootMargin:'-10% 0px -80% 0px',threshold:0});
+  sections.forEach(function(s){obs.observe(s);});
+  tocLinks.forEach(function(a){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      var t=document.querySelector(a.getAttribute('href'));
+      if(t) t.scrollIntoView({behavior:'smooth'});
+    });
+  });
+  var btt=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btt.classList.toggle('visible',window.scrollY>300);});
+})();
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>

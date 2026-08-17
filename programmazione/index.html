@@ -494,44 +494,88 @@
       <small>Segui l'ordine per una progressione ottimale</small>
     </div>
     <ol class="hub-path-list" id="hub-path-list">
+
+      <!-- GRUPPO A: Fondamenti -->
+      <li class="hub-path-item" style="opacity:.55;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--hub-muted);margin-left:.25rem">
+        A &mdash; Fondamenti del linguaggio
+      </li>
       <li class="hub-path-item">
         <div class="hub-path-num">1</div>
+        <div class="hub-path-label">
+          <a href="/programmazione/introduzione-cpp/" style="color:inherit;text-decoration:none;">Introduzione a C++</a>
+          <small>Ciclo di sviluppo, cout, cin, ambienti, errori comuni</small>
+        </div>
+      </li>
+      <div class="hub-path-arrow">&darr;</div>
+      <li class="hub-path-item">
+        <div class="hub-path-num">2</div>
+        <div class="hub-path-label">
+          <a href="/programmazione/variabili-io/" style="color:inherit;text-decoration:none;">Variabili, Costanti e Tipi</a>
+          <small>int, float, double, char, bool, string, const, operatori</small>
+        </div>
+      </li>
+      <div class="hub-path-arrow">&darr;</div>
+      <li class="hub-path-item">
+        <div class="hub-path-num">3</div>
+        <div class="hub-path-label">
+          <a href="/programmazione/costrutti/" style="color:inherit;text-decoration:none;">Costrutti Logici e Iterativi</a>
+          <small>if/else, switch, for, while, do-while, break, continue</small>
+        </div>
+      </li>
+      <div class="hub-path-arrow">&darr;</div>
+      <li class="hub-path-item">
+        <div class="hub-path-num">4</div>
+        <div class="hub-path-label">
+          <a href="/programmazione/funzioni/" style="color:inherit;text-decoration:none;">Funzioni e Passaggio Parametri</a>
+          <small>Valore, riferimento, const ref, puntatore, array 1D e 2D</small>
+        </div>
+      </li>
+
+      <!-- separatore tra i due gruppi -->
+      <div class="hub-path-arrow" style="margin-left:.5rem;font-size:1rem;color:var(--hub-border)">&darr;</div>
+
+      <!-- GRUPPO B: Strutture e Algoritmi -->
+      <li class="hub-path-item" style="opacity:.55;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--hub-muted);margin-left:.25rem">
+        B &mdash; Strutture dati e algoritmi
+      </li>
+      <li class="hub-path-item">
+        <div class="hub-path-num">5</div>
         <div class="hub-path-label">
           <a href="/programmazione/strutture-dati-statiche/" style="color:inherit;text-decoration:none;">Strutture Dati Statiche</a>
           <small>Array, matrici, struct, stack e coda su array</small>
         </div>
       </li>
-      <div class="hub-path-arrow">↓</div>
+      <div class="hub-path-arrow">&darr;</div>
       <li class="hub-path-item">
-        <div class="hub-path-num">2</div>
+        <div class="hub-path-num">6</div>
         <div class="hub-path-label">
           <a href="/programmazione/strutture-dati-dinamiche/" style="color:inherit;text-decoration:none;">Strutture Dati Dinamiche</a>
           <small>Puntatori, lista concatenata, new e delete</small>
         </div>
       </li>
-      <div class="hub-path-arrow">↓</div>
+      <div class="hub-path-arrow">&darr;</div>
       <li class="hub-path-item">
-        <div class="hub-path-num">3</div>
+        <div class="hub-path-num">7</div>
         <div class="hub-path-label">
           <a href="/programmazione/gestione-file/" style="color:inherit;text-decoration:none;">Gestione File</a>
           <small>File di testo, binari e record con accesso diretto</small>
         </div>
       </li>
-      <div class="hub-path-arrow">↓</div>
+      <div class="hub-path-arrow">&darr;</div>
       <li class="hub-path-item">
         <div style="display:flex;flex-direction:column;gap:.6rem;width:100%">
-          <div style="font-size:.7rem;font-weight:700;color:var(--hub-muted);letter-spacing:.08em;text-transform:uppercase">4 &mdash; in qualsiasi ordine</div>
+          <div style="font-size:.7rem;font-weight:700;color:var(--hub-muted);letter-spacing:.08em;text-transform:uppercase">8 &mdash; in qualsiasi ordine</div>
           <div style="display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center">
             <div style="display:flex;align-items:center;gap:.75rem">
-              <div class="hub-path-num" style="background:rgba(124,92,252,.45)">4</div>
+              <div class="hub-path-num" style="background:rgba(124,92,252,.45)">8</div>
               <div class="hub-path-label">
                 <a href="/programmazione/algoritmi-ordinamento/" style="color:inherit;text-decoration:none;">Algoritmi di Ordinamento</a>
                 <small>Bubble, Selection, Insertion Sort</small>
               </div>
             </div>
-            <div style="color:var(--hub-muted);font-size:1.1rem;padding:0 .25rem">↔</div>
+            <div style="color:var(--hub-muted);font-size:1.1rem;padding:0 .25rem">&harr;</div>
             <div style="display:flex;align-items:center;gap:.75rem">
-              <div class="hub-path-num" style="background:rgba(124,92,252,.45)">4</div>
+              <div class="hub-path-num" style="background:rgba(124,92,252,.45)">8</div>
               <div class="hub-path-label">
                 <a href="/programmazione/algoritmi-ricerca/" style="color:inherit;text-decoration:none;">Algoritmi di Ricerca</a>
                 <small>Ricerca lineare e binaria</small>
@@ -583,51 +627,33 @@
     } catch (e) {
       /* fallback hardcoded per sviluppo locale */
       return [
-        {
-          path: '/programmazione/strutture-dati-statiche/',
-          label: 'Strutture Dati Statiche in C++',
-          short: 'Strutture Statiche',
-          cat: 'guide', emoji: '🏛',
-          meta: '7 sezioni · 4 visualizzatori · C++',
-          description: 'Array, matrici, struct, stack e coda su array con visualizzatori interattivi.',
-          active: true
-        },
-        {
-          path: '/programmazione/strutture-dati-dinamiche/',
-          label: 'Strutture Dati Dinamiche in C++',
-          short: 'Strutture Dinamiche',
-          cat: 'guide', emoji: '🔗',
-          meta: '5 sezioni · 3 visualizzatori · C++',
-          description: 'Puntatori, lista concatenata, stack e coda con nodi. Step-by-step.',
-          active: true
-        },
-        {
-          path: '/programmazione/gestione-file/',
-          label: 'Gestione File in C++',
-          short: 'Gestione File',
-          cat: 'guide', emoji: '📂',
-          meta: '4 sezioni · 2 visualizzatori · C++',
-          description: 'File di testo, binari e record con accesso diretto e seekg.',
-          active: true
-        },
-        {
-          path: '/programmazione/algoritmi-ordinamento/',
-          label: 'Algoritmi di Ordinamento in C++',
-          short: 'Algoritmi Ordinamento',
-          cat: 'guide', emoji: '🔢',
-          meta: '3 algoritmi · Visualizzatore · C++',
-          description: 'Bubble Sort, Selection Sort, Insertion Sort con visualizzatore passo-passo.',
-          active: true
-        },
-        {
-          path: '/programmazione/algoritmi-ricerca/',
-          label: 'Algoritmi di Ricerca in C++',
-          short: 'Algoritmi Ricerca',
-          cat: 'guide', emoji: '🔍',
-          meta: '2 algoritmi · Visualizzatore · C++',
-          description: 'Ricerca Lineare e Ricerca Binaria con visualizzatore passo-passo.',
-          active: true
-        }
+        { path: '/programmazione/introduzione-cpp/', label: 'Introduzione a C++', short: 'Introduzione C++',
+          cat: 'guide', emoji: '🚀', meta: '5 sezioni · Primo passo · C++',
+          description: 'Ciclo di sviluppo, cout, cin, ambienti di sviluppo ed errori comuni.', active: true },
+        { path: '/programmazione/variabili-io/', label: 'Variabili, Costanti e Tipi in C++', short: 'Variabili e Tipi',
+          cat: 'guide', emoji: '📦', meta: '5 sezioni · Tool validatore tipi · C++',
+          description: 'Tipi fondamentali, const, operatori e casting con tool interattivo sui range.', active: true },
+        { path: '/programmazione/costrutti/', label: 'Costrutti Logici e Iterativi in C++', short: 'Costrutti',
+          cat: 'guide', emoji: '🔀', meta: '5 sezioni · Visualizzatore cicli · C++',
+          description: 'if/else, switch, for, while, do-while, break e continue.', active: true },
+        { path: '/programmazione/funzioni/', label: 'Funzioni e Passaggio Parametri in C++', short: 'Funzioni',
+          cat: 'guide', emoji: '⚙️', meta: '5 sezioni · Simulatore parametri · C++',
+          description: 'Passaggio per valore, riferimento, const ref, puntatore e array.', active: true },
+        { path: '/programmazione/strutture-dati-statiche/', label: 'Strutture Dati Statiche in C++', short: 'Strutture Statiche',
+          cat: 'guide', emoji: '🏛', meta: '7 sezioni · 4 visualizzatori · C++',
+          description: 'Array, matrici, struct, stack e coda su array con visualizzatori interattivi.', active: true },
+        { path: '/programmazione/strutture-dati-dinamiche/', label: 'Strutture Dati Dinamiche in C++', short: 'Strutture Dinamiche',
+          cat: 'guide', emoji: '🔗', meta: '5 sezioni · 3 visualizzatori step-by-step · C++',
+          description: 'Puntatori, lista concatenata, stack e coda con nodi. Step-by-step.', active: true },
+        { path: '/programmazione/gestione-file/', label: 'Gestione File in C++', short: 'Gestione File',
+          cat: 'guide', emoji: '📂', meta: '4 sezioni · 2 visualizzatori · C++',
+          description: 'File di testo, binari e record con accesso diretto e seekg.', active: true },
+        { path: '/programmazione/algoritmi-ordinamento/', label: 'Algoritmi di Ordinamento in C++', short: 'Algoritmi Ordinamento',
+          cat: 'guide', emoji: '🔢', meta: '3 algoritmi · Visualizzatore · C++',
+          description: 'Bubble Sort, Selection Sort, Insertion Sort con visualizzatore passo-passo.', active: true },
+        { path: '/programmazione/algoritmi-ricerca/', label: 'Algoritmi di Ricerca in C++', short: 'Algoritmi Ricerca',
+          cat: 'guide', emoji: '🔍', meta: '2 algoritmi · Visualizzatore · C++',
+          description: 'Ricerca Lineare e Ricerca Binaria con visualizzatore passo-passo.', active: true }
       ];
     }
   }

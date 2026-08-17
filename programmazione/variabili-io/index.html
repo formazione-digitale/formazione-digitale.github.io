@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Variabili, Costanti e Tipi in C++ — Formazione Digitale</title>
+  <meta name="description" content="Variabili, costanti, tipi fondamentali e operatori in C++. Tool interattivo per esplorare range e dimensioni dei tipi. 3° anno ITIS/SIA.">
+  <meta name="author" content="Cristiano De Pasquale">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://formazione-digitale.it/programmazione/variabili-io/">
+  <link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="//gc.zgo.at">
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#7c5cfc">
+  <meta property="og:title" content="Variabili, Costanti e Tipi in C++ — Formazione Digitale">
+  <meta property="og:description" content="Tipi fondamentali, costanti e operatori in C++ con tool interattivo sui range.">
+  <meta property="og:url" content="https://formazione-digitale.it/programmazione/variabili-io/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Formazione Digitale">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"LearningResource","name":"Variabili, Costanti e Tipi in C++","url":"https://formazione-digitale.it/programmazione/variabili-io/","inLanguage":"it","educationalLevel":"beginner","teaches":["int","float","double","char","bool","string","const","operatori","casting","C++"],"author":{"@type":"Person","name":"Cristiano De Pasquale"},"publisher":{"@type":"Organization","name":"Formazione Digitale","url":"https://formazione-digitale.it"}}
+  </script>
+  <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/shared-extended.css?v=1">
+  <style>
+    :root{--prog-bg:#0f1117;--prog-surface:#1a1d27;--prog-card:#21253a;--prog-border:#2e3350;--prog-accent:#7c5cfc;--prog-accent2:#56cfb2;--prog-accent3:#f9a03f;--prog-red:#e05c5c;--prog-text:#d4d8f0;--prog-muted:#7a7f9a;--prog-code-bg:#131620;--kw-type:#79b8ff;--kw-keyword:#f97583;--kw-comment:#6a737d;--kw-string:#9ecbff;--kw-number:#b392f0;--kw-func:#56cfb2}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Sora',sans-serif;background:var(--prog-bg);color:var(--prog-text);line-height:1.75}
+    header{background:var(--prog-surface);border-bottom:3px solid var(--prog-accent);padding:2.5rem 2rem 2rem;position:relative;overflow:hidden}
+    header::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:var(--prog-accent);opacity:.07;pointer-events:none}
+    .header-back-link{display:inline-flex;align-items:center;gap:5px;font-size:.78rem;color:var(--prog-muted);text-decoration:none;transition:color .2s;position:absolute;top:1rem;left:1.5rem}
+    .header-back-link:hover{color:var(--prog-text)}
+    .header-badge{display:inline-block;font-family:'Space Mono',monospace;font-size:.68rem;background:var(--prog-accent);color:#fff;padding:3px 10px;border-radius:3px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+    header h1{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:700;letter-spacing:-.02em;line-height:1.15;color:#fff}
+    header h1 span{color:var(--prog-accent)}
+    header p{margin-top:.75rem;color:var(--prog-muted);font-size:.95rem;max-width:620px}
+    .header-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.25rem}
+    .header-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:4px 12px;border-radius:20px;font-family:'Space Mono',monospace;font-size:.72rem;color:var(--prog-muted)}
+    .page-nav{display:flex;gap:1rem;align-items:center;margin-top:1rem;font-size:.8rem;flex-wrap:wrap}
+    .page-nav a{color:var(--prog-accent);text-decoration:none;border:1px solid rgba(124,92,252,.3);padding:4px 12px;border-radius:20px;transition:all .18s}
+    .page-nav a:hover{background:rgba(124,92,252,.15);border-color:var(--prog-accent)}
+    .header-deco-svg{position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);opacity:.35;pointer-events:none}
+    @media(max-width:780px){.header-deco-svg{display:none}}
+    .toc-wrap{position:sticky;top:0;z-index:100;background:#1a1a18;border-bottom:3px solid var(--prog-accent)}
+    nav.toc{padding:.7rem 1.5rem;display:flex;flex-wrap:wrap;gap:.25rem;align-items:center;justify-content:center;max-width:980px;margin:0 auto}
+    nav.toc a{font-size:.82rem;font-family:'Sora',sans-serif;font-weight:500;color:#aaa9a0;text-decoration:none;padding:5px 13px;border-radius:20px;border:1px solid transparent;transition:all .18s;white-space:nowrap}
+    nav.toc a:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2)}
+    nav.toc a.active{background:var(--prog-accent);color:#fff;border-color:var(--prog-accent);font-weight:700}
+    @media(max-width:600px){nav.toc{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav.toc::-webkit-scrollbar{display:none}}
+    main{max-width:980px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+    section{margin-bottom:4.5rem;scroll-margin-top:70px}
+    .section-label{font-family:'Space Mono',monospace;font-size:.82rem;font-weight:700;color:var(--prog-accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.5rem}
+    h2{font-size:1.65rem;font-weight:700;color:#fff;letter-spacing:-.02em;border-bottom:2px solid var(--prog-border);padding-bottom:.6rem;margin-bottom:1.5rem}
+    h3{font-size:1.1rem;font-weight:600;color:var(--prog-accent2);margin:2rem 0 .8rem}
+    p{margin-bottom:1rem;color:var(--prog-text);font-size:.97rem;line-height:1.85}
+    code{font-family:'Space Mono',monospace;font-size:.85em;color:var(--prog-accent2)}
+    .box{border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0;font-size:.92rem;border-left:3px solid;line-height:1.75}
+    .box-info{background:rgba(86,207,178,.08);border-color:var(--prog-accent2)}
+    .box-warn{background:rgba(249,160,63,.08);border-color:var(--prog-accent3)}
+    .box-tip{background:rgba(124,92,252,.08);border-color:var(--prog-accent)}
+    .box-red{background:rgba(224,92,92,.08);border-color:var(--prog-red)}
+    .box strong{display:block;margin-bottom:.35rem;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;opacity:.8}
+    .code-block{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:8px;margin:1.5rem 0;overflow:hidden}
+    .code-header{background:var(--prog-card);padding:.5rem 1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--prog-border)}
+    .code-lang{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--prog-muted);letter-spacing:.1em;text-transform:uppercase}
+    .code-dots{display:flex;gap:5px}.code-dot{width:10px;height:10px;border-radius:50%}
+    .dot-r{background:#e05c5c}.dot-y{background:#f9a03f}.dot-g{background:#56cfb2}
+    pre{padding:1.25rem 1.5rem;overflow-x:auto;font-family:'Space Mono',monospace;font-size:.83rem;line-height:1.65;tab-size:4;color:var(--prog-text)}
+    .kw{color:var(--kw-keyword);font-weight:700}.tp{color:var(--kw-type)}.fn{color:var(--kw-func)}.cm{color:var(--kw-comment);font-style:italic}.nm{color:var(--kw-number)}.st{color:var(--kw-string)}.pp{color:#ff9f43}
+    .copy-btn{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--prog-muted);background:none;border:1px solid var(--prog-border);border-radius:4px;padding:2px 8px;cursor:pointer;transition:all .18s;white-space:nowrap}
+    .copy-btn:hover{color:var(--prog-accent2);border-color:var(--prog-accent2)}
+    .copy-btn.copied{color:var(--prog-accent2);border-color:var(--prog-accent2)}
+    /* tipi table */
+    .tipi-table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-size:.88rem;border-radius:8px;overflow:hidden;border:1px solid var(--prog-border)}
+    .tipi-table th{background:var(--prog-card);color:var(--prog-accent);padding:.65rem 1rem;text-align:left;font-family:'Space Mono',monospace;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;border-bottom:2px solid var(--prog-border)}
+    .tipi-table td{padding:.6rem 1rem;border-bottom:1px solid var(--prog-border);color:var(--prog-text);vertical-align:middle}
+    .tipi-table tr:last-child td{border-bottom:none}
+    .tipi-table tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+    .tipi-table td:first-child{font-family:'Space Mono',monospace;color:var(--kw-type);font-weight:700}
+    .tipi-table td:nth-child(2){font-family:'Space Mono',monospace;color:var(--prog-muted);font-size:.82rem}
+    /* tool */
+    .tool-box{background:var(--prog-surface);border:1px solid var(--prog-border);border-radius:12px;overflow:hidden;margin:2rem 0}
+    .tool-header{background:var(--prog-card);padding:.75rem 1.25rem;border-bottom:1px solid var(--prog-border);display:flex;align-items:center;gap:.75rem}
+    .tool-title{font-family:'Space Mono',monospace;font-size:.8rem;font-weight:700;color:var(--prog-accent2)}
+    .tool-subtitle{font-size:.78rem;color:var(--prog-muted)}
+    .tool-body{padding:1.5rem}
+    .tool-msg{font-family:'Space Mono',monospace;font-size:.82rem;color:var(--prog-accent2);padding:.6rem 1.25rem;border-top:1px solid var(--prog-border);background:rgba(0,0,0,.1);min-height:2.4rem}
+    .tool-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:6px;border:1px solid var(--prog-border);background:var(--prog-surface);color:var(--prog-text);font-family:'Sora',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .18s}
+    .tool-btn:hover{border-color:var(--prog-accent);color:var(--prog-accent)}
+    .tool-btn.active{background:var(--prog-accent);border-color:var(--prog-accent);color:#fff}
+    .tool-input{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:6px;color:var(--prog-accent2);font-family:'Space Mono',monospace;font-size:.95rem;font-weight:700;text-align:center;padding:6px 12px;width:200px;transition:border-color .18s}
+    .tool-input:focus{outline:none;border-color:var(--prog-accent)}
+    .tool-input.ok{border-color:var(--prog-accent2)}
+    .tool-input.err{border-color:var(--prog-red)}
+    /* tipo explorer */
+    .type-btns{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+    .type-info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+    @media(max-width:560px){.type-info-grid{grid-template-columns:1fr 1fr}}
+    .type-info-card{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:8px;padding:.75rem 1rem}
+    .type-info-label{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--prog-muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem}
+    .type-info-val{font-family:'Space Mono',monospace;font-size:.95rem;font-weight:700;color:var(--prog-accent2)}
+    .type-default-box{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:8px;padding:.85rem 1.1rem;margin-bottom:1.5rem;font-family:'Space Mono',monospace;font-size:.88rem}
+    .type-default-label{font-size:.65rem;color:var(--prog-muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem}
+    /* validatore */
+    .validator-wrap{border-top:1px solid var(--prog-border);padding-top:1.25rem;margin-top:.5rem}
+    .validator-row{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+    .validator-feedback{font-family:'Space Mono',monospace;font-size:.85rem;padding:.5rem .85rem;border-radius:6px;min-height:2.2rem;display:flex;align-items:center;gap:.5rem}
+    .fb-ok{background:rgba(86,207,178,.1);color:var(--prog-accent2);border:1px solid rgba(86,207,178,.3)}
+    .fb-err{background:rgba(224,92,92,.1);color:var(--prog-red);border:1px solid rgba(224,92,92,.3)}
+    .fb-warn{background:rgba(249,160,63,.1);color:var(--prog-accent3);border:1px solid rgba(249,160,63,.3)}
+    .fb-idle{background:var(--prog-code-bg);color:var(--prog-muted);border:1px solid var(--prog-border)}
+    footer{text-align:center;padding:2.5rem 1rem;color:var(--prog-muted);font-size:.85rem;border-top:1px solid var(--prog-border);margin-top:2rem}
+    footer a{color:var(--prog-accent);text-decoration:none}
+    footer a:hover{text-decoration:underline}
+    .footer-nav{margin-bottom:.75rem;font-size:.82rem}
+    .back-to-top{position:fixed;bottom:1.5rem;right:1.5rem;width:40px;height:40px;border-radius:50%;background:var(--prog-accent);color:#fff;border:none;font-size:1.1rem;cursor:pointer;opacity:0;transform:translateY(10px);transition:all .25s;z-index:200}
+    .back-to-top.visible{opacity:1;transform:translateY(0)}
+    @media(max-width:600px){main{padding:1.5rem 1rem 4rem}}
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="/programmazione/" class="header-back-link">&#x2190; Programmazione</a>
+  <div class="header-badge">C++ &middot; Variabili</div>
+  <h1>Variabili, Costanti <span>e Tipi</span></h1>
+  <p>I tipi fondamentali del C++, come dichiarare e inizializzare variabili, l&apos;uso di <code>const</code> e gli operatori aritmetici. Con tool interattivo per esplorare range e validare valori.</p>
+  <div class="header-pills">
+    <span class="header-pill">&#127891; 3&deg; anno ITIS/SIA</span>
+    <span class="header-pill">&#128295; Tool interattivo</span>
+    <span class="header-pill">&#9200; ~30 min</span>
+  </div>
+  <div class="page-nav">
+    <a href="/programmazione/introduzione-cpp/">&#8592; Introduzione</a>
+    <a href="/programmazione/costrutti/">&#8594; Costrutti</a>
+  </div>
+  <svg class="header-deco-svg" viewBox="0 0 230 60" width="310" height="82" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="8" width="230" height="44" rx="6" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+    <text x="12" y="28" fill="#f97583" font-family="Space Mono,monospace" font-size="9" font-weight="700">int </text>
+    <text x="34" y="28" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="9">eta = </text>
+    <text x="72" y="28" fill="#b392f0" font-family="Space Mono,monospace" font-size="9">18</text>
+    <text x="86" y="28" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="9">;</text>
+    <text x="12" y="41" fill="#f97583" font-family="Space Mono,monospace" font-size="9" font-weight="700">float </text>
+    <text x="46" y="41" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="9">media = </text>
+    <text x="96" y="41" fill="#b392f0" font-family="Space Mono,monospace" font-size="9">8.5f</text>
+    <text x="120" y="41" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="9">;</text>
+    <text x="12" y="54" fill="#f97583" font-family="Space Mono,monospace" font-size="9" font-weight="700">const </text>
+    <text x="48" y="54" fill="#79b8ff" font-family="Space Mono,monospace" font-size="9">int </text>
+    <text x="68" y="54" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="9">MAX = </text>
+    <text x="100" y="54" fill="#b392f0" font-family="Space Mono,monospace" font-size="9">100</text>
+    <text x="116" y="54" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="9">;</text>
+  </svg>
+</header>
+
+<div class="toc-wrap">
+  <nav class="toc" id="toc">
+    <a href="#tipi" class="active">Tipi fondamentali</a>
+    <a href="#dichiarazione">Dichiarazione</a>
+    <a href="#const">Costanti</a>
+    <a href="#operatori">Operatori</a>
+    <a href="#tool">Esplora i tipi</a>
+  </nav>
+</div>
+
+<main>
+
+<!-- ══ TIPI FONDAMENTALI ══ -->
+<section id="tipi">
+  <div class="section-label">01 &mdash; Fondamenta</div>
+  <h2>Tipi fondamentali</h2>
+  <p>In C++ ogni variabile ha un <strong>tipo</strong> dichiarato esplicitamente. Il tipo determina quanta memoria viene riservata e quali valori la variabile pu&ograve; contenere. I tipi che userai nella pratica quotidiana sono sei.</p>
+
+  <table class="tipi-table">
+    <thead>
+      <tr><th>Tipo</th><th>Byte</th><th>Cosa contiene</th><th>Esempio</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>int</td><td>4</td>
+        <td>Numeri interi (positivi e negativi)</td>
+        <td><code>int voti = 7;</code></td>
+      </tr>
+      <tr>
+        <td>float</td><td>4</td>
+        <td>Numeri decimali, precisione singola (~7 cifre)</td>
+        <td><code>float media = 8.5f;</code></td>
+      </tr>
+      <tr>
+        <td>double</td><td>8</td>
+        <td>Numeri decimali, precisione doppia (~15 cifre)</td>
+        <td><code>double pi = 3.14159265;</code></td>
+      </tr>
+      <tr>
+        <td>char</td><td>1</td>
+        <td>Un singolo carattere ASCII</td>
+        <td><code>char lettera = 'A';</code></td>
+      </tr>
+      <tr>
+        <td>bool</td><td>1</td>
+        <td>Valore logico: <code>true</code> o <code>false</code></td>
+        <td><code>bool attivo = true;</code></td>
+      </tr>
+      <tr>
+        <td>string</td><td>variabile</td>
+        <td>Sequenza di caratteri (testo)</td>
+        <td><code>string nome = "Mario";</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box box-info">
+    <strong>&#128204; float o double?</strong>
+    <p style="margin:0">Usa <code>double</code> quando la precisione conta (calcoli scientifici, finanziari). Usa <code>float</code> quando la memoria &egrave; limitata (es. array grandi di valori decimali). Per la maggior parte degli esercizi scolastici, <code>float</code> &egrave; sufficiente &mdash; ricorda il suffisso <code>f</code>: <code>8.5f</code>.</p>
+  </div>
+</section>
+
+<!-- ══ DICHIARAZIONE ══ -->
+<section id="dichiarazione">
+  <div class="section-label">02 &mdash; Sintassi</div>
+  <h2>Dichiarazione e inizializzazione</h2>
+  <p><strong>Dichiarare</strong> una variabile significa creare uno spazio in memoria con un nome e un tipo. <strong>Inizializzare</strong> significa assegnarle subito un valore. Le due operazioni possono avvenire insieme o separatamente.</p>
+
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; dichiarazione</span></div>
+    <pre><span class="cm">// dichiarazione: riserva memoria (valore iniziale indeterminato)</span>
+<span class="tp">int</span> eta;
+
+<span class="cm">// inizializzazione contestuale: dichiarazione + valore in una riga</span>
+<span class="tp">int</span> eta = <span class="nm">18</span>;
+<span class="tp">float</span> media = <span class="nm">8.5f</span>;
+<span class="tp">double</span> pi    = <span class="nm">3.14159265</span>;
+<span class="tp">char</span> lettera  = <span class="st">'A'</span>;      <span class="cm">// char usa apici singoli, NON doppi</span>
+<span class="tp">bool</span> attivo   = <span class="kw">true</span>;
+<span class="tp">string</span> nome   = <span class="st">"Mario"</span>;  <span class="cm">// string usa apici doppi</span>
+
+<span class="cm">// assegnazione dopo la dichiarazione</span>
+<span class="tp">int</span> x;
+x = <span class="nm">42</span>;   <span class="cm">// valido, ma x aveva valore indefinito prima di questa riga</span></pre>
+  </div>
+
+  <div class="box box-warn">
+    <strong>&#9888; Variabile non inizializzata</strong>
+    <p style="margin:0">In C++ una variabile locale non inizializzata contiene un valore casuale &mdash; qualunque cosa fosse in memoria in quel momento. Usarla prima di assegnarle un valore &egrave; un bug difficile da trovare. Buona regola: inizializza sempre.</p>
+  </div>
+
+  <h3>Nomi di variabile &mdash; regole</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; nomi validi e non</span></div>
+    <pre><span class="cm">// ✅ validi</span>
+<span class="tp">int</span> eta;          <span class="cm">// lettere minuscole</span>
+<span class="tp">int</span> etaStudente;  <span class="cm">// camelCase — convenzione comune</span>
+<span class="tp">int</span> eta_studente; <span class="cm">// snake_case — alternativa</span>
+<span class="tp">int</span> _x;           <span class="cm">// underscore iniziale: valido (ma evitare)</span>
+
+<span class="cm">// ❌ non validi</span>
+<span class="tp">int</span> <span style="color:var(--prog-red)">2eta</span>;      <span class="cm">// inizia con cifra</span>
+<span class="tp">int</span> <span style="color:var(--prog-red)">eta studente</span>; <span class="cm">// spazio nel nome</span>
+<span class="tp">int</span> <span style="color:var(--prog-red)">int</span>;     <span class="cm">// parola chiave riservata</span></pre>
+  </div>
+</section>
+
+<!-- ══ COSTANTI ══ -->
+<section id="const">
+  <div class="section-label">03 &mdash; Costanti</div>
+  <h2>Costanti &mdash; const</h2>
+  <p>Una <strong>costante</strong> &egrave; una variabile il cui valore non pu&ograve; essere modificato dopo l&apos;inizializzazione. Si dichiara con la parola chiave <code>const</code> prima del tipo. Se provi a modificarla, il compilatore segnala un errore.</p>
+
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; const</span></div>
+    <pre><span class="kw">const</span> <span class="tp">int</span>    MAX_STUDENTI = <span class="nm">30</span>;   <span class="cm">// numero massimo di studenti in classe</span>
+<span class="kw">const</span> <span class="tp">float</span>  IVA          = <span class="nm">0.22f</span>; <span class="cm">// aliquota IVA — non cambia a runtime</span>
+<span class="kw">const</span> <span class="tp">string</span> SCUOLA       = <span class="st">"ITIS"</span>;
+
+MAX_STUDENTI = <span class="nm">35</span>;  <span class="cm">// ❌ errore di compilazione: assignment of read-only variable</span></pre>
+  </div>
+
+  <div class="box box-tip">
+    <strong>&#128161; Convenzione: MAIUSCOLO per le costanti</strong>
+    <p style="margin:0">Non &egrave; obbligatorio, ma scrivere le costanti in maiuscolo (<code>MAX_STUDENTI</code>, <code>IVA</code>) &egrave; una convenzione diffusa che le distingue visivamente dalle variabili. Usala sempre per rendere il codice pi&ugrave; leggibile.</p>
+  </div>
+</section>
+
+<!-- ══ OPERATORI ══ -->
+<section id="operatori">
+  <div class="section-label">04 &mdash; Operatori</div>
+  <h2>Operatori aritmetici e casting</h2>
+
+  <h3>Operatori aritmetici</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; operatori</span></div>
+    <pre><span class="tp">int</span> a = <span class="nm">10</span>, b = <span class="nm">3</span>;
+
+a + b   <span class="cm">// 13  — addizione</span>
+a - b   <span class="cm">// 7   — sottrazione</span>
+a * b   <span class="cm">// 30  — moltiplicazione</span>
+a / b   <span class="cm">// 3   — divisione INTERA (int/int = int, il resto viene scartato)</span>
+a % b   <span class="cm">// 1   — modulo (resto della divisione intera)</span>
+
+<span class="cm">// operatori di assegnazione composta</span>
+a += <span class="nm">5</span>;  <span class="cm">// equivale a: a = a + 5</span>
+a -= <span class="nm">2</span>;  <span class="cm">// equivale a: a = a - 2</span>
+a++;    <span class="cm">// incremento: a = a + 1</span>
+a--;    <span class="cm">// decremento: a = a - 1</span></pre>
+  </div>
+
+  <div class="box box-warn">
+    <strong>&#9888; Divisione tra interi</strong>
+    <p style="margin:0"><code>10 / 3</code> in C++ restituisce <code>3</code>, non <code>3.333...</code>. Quando si dividono due <code>int</code>, il risultato &egrave; sempre un intero (troncato verso zero). Per ottenere un risultato decimale almeno uno dei due operandi deve essere <code>float</code> o <code>double</code>.</p>
+  </div>
+
+  <h3>Casting esplicito</h3>
+  <p>Il <strong>casting</strong> converte un valore da un tipo a un altro. Il modo C++ moderno usa la sintassi <code>static_cast&lt;tipo&gt;(valore)</code>.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; casting</span></div>
+    <pre><span class="tp">int</span> a = <span class="nm">10</span>, b = <span class="nm">3</span>;
+
+<span class="cm">// senza cast: divisione intera</span>
+<span class="tp">double</span> ris1 = a / b;                   <span class="cm">// 3.0 — il cast avviene DOPO la divisione intera</span>
+
+<span class="cm">// con static_cast: divisione reale</span>
+<span class="tp">double</span> ris2 = <span class="kw">static_cast</span>&lt;<span class="tp">double</span>&gt;(a) / b;  <span class="cm">// 3.333... — a diventa double PRIMA della divisione</span>
+
+<span class="cm">// cast da double a int: troncamento (NON arrotondamento)</span>
+<span class="tp">int</span> troncato = <span class="kw">static_cast</span>&lt;<span class="tp">int</span>&gt;(<span class="nm">3.99</span>);  <span class="cm">// 3, non 4</span></pre>
+  </div>
+</section>
+
+<!-- ══ TOOL ══ -->
+<section id="tool">
+  <div class="section-label">05 &mdash; Pratica</div>
+  <h2>&#128295; Esplora i tipi</h2>
+  <p>Seleziona un tipo per vederne dimensione, range e dichiarazione di default. Poi inserisci un valore per verificare se &egrave; compatibile.</p>
+
+  <div class="tool-box">
+    <div class="tool-header">
+      <span class="tool-title">&#128295; Esploratore dei Tipi</span>
+      <span class="tool-subtitle">Seleziona &middot; Esplora &middot; Valida</span>
+    </div>
+    <div class="tool-body">
+
+      <!-- pulsanti tipo -->
+      <div class="type-btns" id="type-btns">
+        <button class="tool-btn active" data-type="int">int</button>
+        <button class="tool-btn" data-type="float">float</button>
+        <button class="tool-btn" data-type="double">double</button>
+        <button class="tool-btn" data-type="char">char</button>
+        <button class="tool-btn" data-type="bool">bool</button>
+        <button class="tool-btn" data-type="string">string</button>
+      </div>
+
+      <!-- info tipo -->
+      <div class="type-info-grid">
+        <div class="type-info-card">
+          <div class="type-info-label">Dimensione</div>
+          <div class="type-info-val" id="ti-bytes">&mdash;</div>
+        </div>
+        <div class="type-info-card">
+          <div class="type-info-label">Valore minimo</div>
+          <div class="type-info-val" id="ti-min">&mdash;</div>
+        </div>
+        <div class="type-info-card">
+          <div class="type-info-label">Valore massimo</div>
+          <div class="type-info-val" id="ti-max">&mdash;</div>
+        </div>
+      </div>
+
+      <!-- dichiarazione di default -->
+      <div class="type-default-box">
+        <div class="type-default-label">Dichiarazione con valore di default</div>
+        <div id="ti-default" style="color:var(--prog-accent2);font-size:.95rem">&mdash;</div>
+      </div>
+
+      <!-- validatore -->
+      <div class="validator-wrap">
+        <p style="font-size:.88rem;color:var(--prog-muted);margin-bottom:.75rem">Inserisci un valore e verifica se il tipo selezionato pu&ograve; contenerlo:</p>
+        <div class="validator-row">
+          <input type="text" class="tool-input" id="val-input" placeholder="es. 42">
+          <button class="tool-btn" id="val-btn" style="border-color:var(--prog-accent);color:var(--prog-accent)">Valida &#10003;</button>
+        </div>
+        <div class="validator-feedback fb-idle" id="val-feedback" style="margin-top:.75rem">
+          Seleziona un tipo e inserisci un valore.
+        </div>
+      </div>
+
+    </div>
+    <div class="tool-msg" id="tool-msg">Tipo selezionato: int</div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-nav">
+    <a href="/programmazione/introduzione-cpp/">&#8592; Introduzione</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/programmazione/costrutti/">&#8594; Costrutti</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/programmazione/">Hub Programmazione</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/">Home</a>
+  </div>
+  <strong>Formazione Digitale</strong> &mdash; Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ═══ DATI TIPI ═══ */
+  var TIPI = {
+    'int':    { bytes:'4 byte', min:'-2.147.483.648', max:'2.147.483.647',
+                minN:-2147483648, maxN:2147483647,
+                kind:'int',
+                def:'int x = 0;',
+                note:'Intero a 32 bit con segno. Il tipo pi\u00f9 usato per contatori, indici e valori interi generici.' },
+    'float':  { bytes:'4 byte', min:'\u22121.18 \u00d7 10\u207b\u00b3\u2078', max:'3.40 \u00d7 10\u00b3\u2078',
+                kind:'float',
+                def:'float x = 0.0f;',
+                note:'Decimale a precisione singola (~7 cifre significative). Ricorda il suffisso f: 8.5f.' },
+    'double': { bytes:'8 byte', min:'\u22122.23 \u00d7 10\u207b\u00b3\u2070\u2078', max:'1.80 \u00d7 10\u00b3\u2070\u2078',
+                kind:'double',
+                def:'double x = 0.0;',
+                note:'Decimale a precisione doppia (~15 cifre significative). Preferito quando la precisione \u00e8 critica.' },
+    'char':   { bytes:'1 byte', min:'0 (NUL)', max:'127 (DEL)',
+                kind:'char',
+                def:"char c = '\\0';",
+                note:'Un singolo carattere ASCII. Si scrive tra apici singoli: \'A\'. Il valore \'\\0\' \u00e8 il carattere nullo (default).' },
+    'bool':   { bytes:'1 byte', min:'false (0)', max:'true (1)',
+                kind:'bool',
+                def:'bool b = false;',
+                note:'Valore logico. Pu\u00f2 contenere solo true o false. Internamente 0 = false, qualsiasi altro valore = true.' },
+    'string': { bytes:'variabile', min:'(stringa vuota)', max:'(dipende dalla RAM)',
+                kind:'string',
+                def:'string s = "";',
+                note:'Sequenza di caratteri. Richiede #include <string>. La dimensione cambia dinamicamente.' }
+  };
+
+  var currentType = 'int';
+
+  /* ═══ RENDER INFO TIPO ═══ */
+  function renderTipo(tipo) {
+    var d = TIPI[tipo];
+    document.getElementById('ti-bytes').textContent   = d.bytes;
+    document.getElementById('ti-min').textContent     = d.min;
+    document.getElementById('ti-max').textContent     = d.max;
+    document.getElementById('ti-default').textContent = d.def;
+    document.getElementById('tool-msg').textContent   = 'Tipo selezionato: ' + tipo + ' \u2014 ' + d.note;
+    resetValidator();
+  }
+
+  /* ═══ PULSANTI TIPO ═══ */
+  document.querySelectorAll('#type-btns .tool-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#type-btns .tool-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentType = btn.dataset.type;
+      renderTipo(currentType);
+    });
+  });
+
+  /* ═══ VALIDATORE ═══ */
+  var valInput    = document.getElementById('val-input');
+  var valBtn      = document.getElementById('val-btn');
+  var valFeedback = document.getElementById('val-feedback');
+
+  function resetValidator() {
+    valInput.value = '';
+    valInput.className = 'tool-input';
+    valFeedback.className = 'validator-feedback fb-idle';
+    valFeedback.textContent = 'Seleziona un tipo e inserisci un valore.';
+  }
+
+  function countSigFigs(raw) {
+    var s = raw.replace(/^-/, '');      /* rimuovi segno */
+    s = s.replace(/[eE].*$/, '');       /* rimuovi esponente */
+    s = s.replace('.', '');             /* rimuovi punto decimale */
+    s = s.replace(/^0+/, '');           /* rimuovi zeri iniziali non significativi */
+    return s.length || 1;
+  }
+
+  function validate() {
+    var raw = valInput.value.trim();
+    if (!raw) {
+      valFeedback.className='validator-feedback fb-idle';
+      valFeedback.textContent='Inserisci un valore prima di validare.';
+      return;
+    }
+
+    var ok = false, warn = false, msg = '';
+
+    if (currentType === 'int') {
+      if (!/^-?\d+$/.test(raw)) {
+        msg = '\u274c "'+raw+'" non \u00e8 un intero valido. int accetta solo cifre (con eventuale segno \u2212).';
+      } else {
+        try {
+          var n = BigInt(raw);
+          if (n < BigInt(-2147483648) || n > BigInt(2147483647)) {
+            msg = '\u274c '+raw+' \u00e8 fuori range per int. Range: \u22122.147.483.648 \u2026 2.147.483.647.';
+          } else {
+            ok = true;
+            msg = '\u2705 '+raw+' \u00e8 valido per int. Dichiarazione: int x = '+raw+';';
+          }
+        } catch(e) { msg = '\u274c Valore non riconosciuto.'; }
+      }
+
+    } else if (currentType === 'float') {
+      if (!/^-?(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?$/.test(raw)) {
+        msg = '\u274c "'+raw+'" non \u00e8 un decimale C++ valido. Usa il punto come separatore (es. 8.5). Non usare virgola n\u00e9 il suffisso f.';
+      } else {
+        var n = parseFloat(raw);
+        if (Math.abs(n) > 3.4e38) {
+          msg = '\u274c '+raw+' supera il range di float (\u00b13.40 \u00d7 10\u00b3\u2078). Usa double per valori cos\u00ec grandi.';
+        } else {
+          var sf = countSigFigs(raw);
+          if (sf > 7) {
+            warn = true;
+            msg = '\u26a0\ufe0f La forma \u00e8 valida ma float ha ~7 cifre significative. "'+raw+'" ne ha '+sf+': verr\u00e0 arrotondato. Dichiarazione: float x = '+raw+'f;';
+          } else {
+            ok = true;
+            var suf = raw.indexOf('.') === -1 ? '.0f' : 'f';
+            msg = '\u2705 '+raw+' \u00e8 valido per float. Dichiarazione: float x = '+raw+suf+';';
+          }
+        }
+      }
+
+    } else if (currentType === 'double') {
+      if (!/^-?(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?$/.test(raw)) {
+        msg = '\u274c "'+raw+'" non \u00e8 un decimale C++ valido. Usa il punto come separatore (es. 3.14).';
+      } else {
+        var n = parseFloat(raw);
+        if (!isFinite(n)) {
+          msg = '\u274c '+raw+' supera il range di double (\u00b11.80 \u00d7 10\u00b3\u2070\u2078).';
+        } else {
+          var sf = countSigFigs(raw);
+          if (sf > 15) {
+            warn = true;
+            msg = '\u26a0\ufe0f La forma \u00e8 valida ma double ha ~15 cifre significative. "'+raw+'" ne ha '+sf+': le cifre oltre la 15\u00aa verranno arrotondate. Dichiarazione: double x = '+raw+';';
+          } else {
+            ok = true;
+            msg = '\u2705 '+raw+' \u00e8 valido per double. Dichiarazione: double x = '+raw+';';
+          }
+        }
+      }
+
+    } else if (currentType === 'char') {
+      if (raw.length !== 1) {
+        msg = '\u274c char contiene un solo carattere. "'+raw+'" ha '+raw.length+' caratteri. Per testo usa string.';
+      } else {
+        var code = raw.charCodeAt(0);
+        if (code >= 0 && code <= 127) {
+          ok = true;
+          msg = '\u2705 \''+raw+'\' \u00e8 un carattere ASCII valido (codice '+code+'). Dichiarazione: char c = \''+raw+'\';';
+        } else {
+          warn = true;
+          msg = '\u26a0\ufe0f \''+raw+'\' ha codice '+code+' (fuori ASCII standard 0\u2013127). Comportamento dipendente dalla piattaforma.';
+        }
+      }
+
+    } else if (currentType === 'bool') {
+      if (!/^(true|false|0|1)$/.test(raw)) {
+        msg = '\u274c bool accetta solo: true, false, 0, 1.';
+      } else {
+        ok = true;
+        var bval = (/^(true|1)$/i.test(raw)) ? 'true' : 'false';
+        msg = '\u2705 Valore valido per bool: '+bval+'. Dichiarazione: bool b = '+bval+';';
+      }
+
+    } else if (currentType === 'string') {
+      ok = true;
+      msg = '\u2705 "'+raw+'" \u00e8 una stringa valida ('+raw.length+' caratteri). Dichiarazione: string s = "'+raw+'";';
+    }
+
+    valInput.className  = 'tool-input'+(ok?' ok':warn?'':' err');
+    valFeedback.className = 'validator-feedback '+(ok?'fb-ok':warn?'fb-warn':'fb-err');
+    valFeedback.textContent = msg;
+  }
+
+  valBtn.addEventListener('click', validate);
+  valInput.addEventListener('keydown', function(e){ if(e.key==='Enter') validate(); });
+
+  /* init */
+  renderTipo('int');
+
+  /* ═══ COPIA CODICE ═══ */
+  document.querySelectorAll('.code-block').forEach(function(block){
+    var header=block.querySelector('.code-header');
+    var pre=block.querySelector('pre');
+    if(!header||!pre)return;
+    var btn=document.createElement('button');
+    btn.className='copy-btn'; btn.textContent='Copia';
+    btn.addEventListener('click',function(){
+      navigator.clipboard.writeText(pre.innerText).then(function(){
+        btn.textContent='\u2713 Copiato'; btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copia';btn.classList.remove('copied');},2000);
+      });
+    });
+    header.appendChild(btn);
+  });
+
+  /* ═══ TOC ═══ */
+  var tocLinks=document.querySelectorAll('#toc a');
+  var sections=document.querySelectorAll('section[id]');
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        tocLinks.forEach(function(a){a.classList.remove('active');});
+        var a=document.querySelector('#toc a[href="#'+e.target.id+'"]');
+        if(a) a.classList.add('active');
+      }
+    });
+  },{rootMargin:'-10% 0px -80% 0px',threshold:0});
+  sections.forEach(function(s){obs.observe(s);});
+  tocLinks.forEach(function(a){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      var t=document.querySelector(a.getAttribute('href'));
+      if(t) t.scrollIntoView({behavior:'smooth'});
+    });
+  });
+  var btt=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btt.classList.toggle('visible',window.scrollY>300);});
+})();
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>

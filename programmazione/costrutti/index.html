@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Costrutti Logici e Iterativi in C++ — Formazione Digitale</title>
+  <meta name="description" content="Operatori relazionali e logici, if/else, switch, for, while, do-while, break e continue in C++. Con visualizzatore interattivo dei cicli.">
+  <meta name="author" content="Cristiano De Pasquale">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://formazione-digitale.it/programmazione/costrutti/">
+  <link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="//gc.zgo.at">
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#7c5cfc">
+  <meta property="og:title" content="Costrutti Logici e Iterativi in C++ — Formazione Digitale">
+  <meta property="og:description" content="if/else, switch, for, while, do-while con visualizzatore interattivo. 3° anno ITIS/SIA.">
+  <meta property="og:url" content="https://formazione-digitale.it/programmazione/costrutti/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Formazione Digitale">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"LearningResource","name":"Costrutti Logici e Iterativi in C++","url":"https://formazione-digitale.it/programmazione/costrutti/","inLanguage":"it","educationalLevel":"beginner","teaches":["if","else","switch","for","while","do-while","break","continue","operatori logici","C++"],"author":{"@type":"Person","name":"Cristiano De Pasquale"},"publisher":{"@type":"Organization","name":"Formazione Digitale","url":"https://formazione-digitale.it"}}
+  </script>
+  <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/shared-extended.css?v=1">
+  <style>
+    :root{--prog-bg:#0f1117;--prog-surface:#1a1d27;--prog-card:#21253a;--prog-border:#2e3350;--prog-accent:#7c5cfc;--prog-accent2:#56cfb2;--prog-accent3:#f9a03f;--prog-red:#e05c5c;--prog-text:#d4d8f0;--prog-muted:#7a7f9a;--prog-code-bg:#131620;--kw-type:#79b8ff;--kw-keyword:#f97583;--kw-comment:#6a737d;--kw-string:#9ecbff;--kw-number:#b392f0;--kw-func:#56cfb2}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Sora',sans-serif;background:var(--prog-bg);color:var(--prog-text);line-height:1.75}
+    header{background:var(--prog-surface);border-bottom:3px solid var(--prog-accent);padding:2.5rem 2rem 2rem;position:relative;overflow:hidden}
+    header::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:var(--prog-accent);opacity:.07;pointer-events:none}
+    .header-back-link{display:inline-flex;align-items:center;gap:5px;font-size:.78rem;color:var(--prog-muted);text-decoration:none;transition:color .2s;position:absolute;top:1rem;left:1.5rem}
+    .header-back-link:hover{color:var(--prog-text)}
+    .header-badge{display:inline-block;font-family:'Space Mono',monospace;font-size:.68rem;background:var(--prog-accent);color:#fff;padding:3px 10px;border-radius:3px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+    header h1{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:700;letter-spacing:-.02em;line-height:1.15;color:#fff}
+    header h1 span{color:var(--prog-accent)}
+    header p{margin-top:.75rem;color:var(--prog-muted);font-size:.95rem;max-width:620px}
+    .header-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.25rem}
+    .header-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:4px 12px;border-radius:20px;font-family:'Space Mono',monospace;font-size:.72rem;color:var(--prog-muted)}
+    .page-nav{display:flex;gap:1rem;align-items:center;margin-top:1rem;font-size:.8rem;flex-wrap:wrap}
+    .page-nav a{color:var(--prog-accent);text-decoration:none;border:1px solid rgba(124,92,252,.3);padding:4px 12px;border-radius:20px;transition:all .18s}
+    .page-nav a:hover{background:rgba(124,92,252,.15);border-color:var(--prog-accent)}
+    .header-deco-svg{position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);opacity:.35;pointer-events:none}
+    @media(max-width:780px){.header-deco-svg{display:none}}
+    .toc-wrap{position:sticky;top:0;z-index:100;background:#1a1a18;border-bottom:3px solid var(--prog-accent)}
+    nav.toc{padding:.7rem 1.5rem;display:flex;flex-wrap:wrap;gap:.25rem;align-items:center;justify-content:center;max-width:980px;margin:0 auto}
+    nav.toc a{font-size:.82rem;font-family:'Sora',sans-serif;font-weight:500;color:#aaa9a0;text-decoration:none;padding:5px 13px;border-radius:20px;border:1px solid transparent;transition:all .18s;white-space:nowrap}
+    nav.toc a:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2)}
+    nav.toc a.active{background:var(--prog-accent);color:#fff;border-color:var(--prog-accent);font-weight:700}
+    @media(max-width:600px){nav.toc{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav.toc::-webkit-scrollbar{display:none}}
+    main{max-width:980px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+    section{margin-bottom:4.5rem;scroll-margin-top:70px}
+    .section-label{font-family:'Space Mono',monospace;font-size:.82rem;font-weight:700;color:var(--prog-accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.5rem}
+    h2{font-size:1.65rem;font-weight:700;color:#fff;letter-spacing:-.02em;border-bottom:2px solid var(--prog-border);padding-bottom:.6rem;margin-bottom:1.5rem}
+    h3{font-size:1.1rem;font-weight:600;color:var(--prog-accent2);margin:2rem 0 .8rem}
+    p{margin-bottom:1rem;color:var(--prog-text);font-size:.97rem;line-height:1.85}
+    code{font-family:'Space Mono',monospace;font-size:.85em;color:var(--prog-accent2)}
+    .box{border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0;font-size:.92rem;border-left:3px solid;line-height:1.75}
+    .box-info{background:rgba(86,207,178,.08);border-color:var(--prog-accent2)}
+    .box-warn{background:rgba(249,160,63,.08);border-color:var(--prog-accent3)}
+    .box-tip{background:rgba(124,92,252,.08);border-color:var(--prog-accent)}
+    .box-red{background:rgba(224,92,92,.08);border-color:var(--prog-red)}
+    .box strong{display:block;margin-bottom:.35rem;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;opacity:.8}
+    .code-block{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:8px;margin:1.5rem 0;overflow:hidden}
+    .code-header{background:var(--prog-card);padding:.5rem 1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--prog-border)}
+    .code-lang{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--prog-muted);letter-spacing:.1em;text-transform:uppercase}
+    .code-dots{display:flex;gap:5px}.code-dot{width:10px;height:10px;border-radius:50%}
+    .dot-r{background:#e05c5c}.dot-y{background:#f9a03f}.dot-g{background:#56cfb2}
+    pre{padding:1.25rem 1.5rem;overflow-x:auto;font-family:'Space Mono',monospace;font-size:.83rem;line-height:1.65;tab-size:4;color:var(--prog-text)}
+    .kw{color:var(--kw-keyword);font-weight:700}.tp{color:var(--kw-type)}.fn{color:var(--kw-func)}.cm{color:var(--kw-comment);font-style:italic}.nm{color:var(--kw-number)}.st{color:var(--kw-string)}.pp{color:#ff9f43}
+    .copy-btn{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--prog-muted);background:none;border:1px solid var(--prog-border);border-radius:4px;padding:2px 8px;cursor:pointer;transition:all .18s;white-space:nowrap}
+    .copy-btn:hover{color:var(--prog-accent2);border-color:var(--prog-accent2)}
+    .copy-btn.copied{color:var(--prog-accent2);border-color:var(--prog-accent2)}
+    /* operatori table */
+    .op-table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-size:.88rem;border-radius:8px;overflow:hidden;border:1px solid var(--prog-border)}
+    .op-table th{background:var(--prog-card);color:var(--prog-accent);padding:.6rem 1rem;text-align:left;font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;border-bottom:2px solid var(--prog-border)}
+    .op-table td{padding:.55rem 1rem;border-bottom:1px solid var(--prog-border);color:var(--prog-text);vertical-align:middle;font-family:'Space Mono',monospace;font-size:.85rem}
+    .op-table tr:last-child td{border-bottom:none}
+    .op-table tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+    .op-table td:first-child{color:var(--kw-type);font-weight:700}
+    .op-table td:nth-child(2){color:var(--prog-muted);font-family:'Sora',sans-serif;font-size:.85rem}
+    /* quando usare table */
+    .when-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.25rem 0}
+    @media(max-width:600px){.when-grid{grid-template-columns:1fr}}
+    .when-card{background:var(--prog-card);border:1px solid var(--prog-border);border-radius:8px;padding:.9rem 1rem}
+    .when-card-title{font-family:'Space Mono',monospace;font-size:.82rem;font-weight:700;color:var(--prog-accent2);margin-bottom:.5rem}
+    .when-card-body{font-size:.82rem;color:var(--prog-muted);line-height:1.6}
+    /* tool ciclo */
+    .tool-box{background:var(--prog-surface);border:1px solid var(--prog-border);border-radius:12px;overflow:hidden;margin:2rem 0}
+    .tool-header{background:var(--prog-card);padding:.75rem 1.25rem;border-bottom:1px solid var(--prog-border);display:flex;align-items:center;gap:.75rem}
+    .tool-title{font-family:'Space Mono',monospace;font-size:.8rem;font-weight:700;color:var(--prog-accent2)}
+    .tool-subtitle{font-size:.78rem;color:var(--prog-muted)}
+    .tool-body{padding:1.5rem}
+    .tool-msg{font-family:'Space Mono',monospace;font-size:.82rem;color:var(--prog-accent2);padding:.6rem 1.25rem;border-top:1px solid var(--prog-border);background:rgba(0,0,0,.1);min-height:2.4rem}
+    .tool-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:6px;border:1px solid var(--prog-border);background:var(--prog-surface);color:var(--prog-text);font-family:'Sora',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .18s}
+    .tool-btn:hover{border-color:var(--prog-accent);color:var(--prog-accent)}
+    .tool-btn.active{background:var(--prog-accent);border-color:var(--prog-accent);color:#fff}
+    .tool-btn.primary{background:var(--prog-accent);border-color:var(--prog-accent);color:#fff}
+    .tool-btn.primary:hover{background:#6a4ee0}
+    .tool-input{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:6px;color:var(--prog-accent2);font-family:'Space Mono',monospace;font-size:.95rem;font-weight:700;text-align:center;padding:6px 10px;width:80px;transition:border-color .18s}
+    .tool-input:focus{outline:none;border-color:var(--prog-accent)}
+    /* loop visualizer */
+    .loop-type-btns{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+    .loop-params{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-bottom:1.25rem;padding:1rem;background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:8px}
+    .loop-param-group{display:flex;flex-direction:column;gap:4px}
+    .loop-param-label{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--prog-muted);letter-spacing:.05em;text-transform:uppercase}
+    .loop-code-preview{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:8px;padding:.85rem 1.1rem;margin-bottom:1.25rem;font-family:'Space Mono',monospace;font-size:.85rem;line-height:1.7;white-space:pre}
+    .loop-iterations{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1rem;min-height:2.5rem}
+    .iter-chip{display:inline-flex;align-items:center;justify-content:center;min-width:2.2rem;height:2.2rem;padding:0 .5rem;border-radius:6px;font-family:'Space Mono',monospace;font-size:.82rem;font-weight:700;background:var(--prog-card);border:1px solid var(--prog-border);color:var(--prog-text);transition:all .2s}
+    .iter-chip.current{background:rgba(124,92,252,.2);border-color:var(--prog-accent);color:var(--prog-accent);transform:scale(1.12)}
+    .iter-chip.done{background:rgba(86,207,178,.08);border-color:rgba(86,207,178,.3);color:var(--prog-accent2)}
+    .iter-chip.skipped{background:rgba(249,160,63,.08);border-color:rgba(249,160,63,.3);color:var(--prog-accent3);text-decoration:line-through}
+    .iter-chip.break-here{background:rgba(224,92,92,.1);border-color:var(--prog-red);color:var(--prog-red)}
+    .loop-controls{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+    .loop-info{font-family:'Space Mono',monospace;font-size:.82rem;color:var(--prog-muted);margin-top:.75rem}
+    footer{text-align:center;padding:2.5rem 1rem;color:var(--prog-muted);font-size:.85rem;border-top:1px solid var(--prog-border);margin-top:2rem}
+    footer a{color:var(--prog-accent);text-decoration:none}
+    footer a:hover{text-decoration:underline}
+    .footer-nav{margin-bottom:.75rem;font-size:.82rem}
+    .back-to-top{position:fixed;bottom:1.5rem;right:1.5rem;width:40px;height:40px;border-radius:50%;background:var(--prog-accent);color:#fff;border:none;font-size:1.1rem;cursor:pointer;opacity:0;transform:translateY(10px);transition:all .25s;z-index:200}
+    .back-to-top.visible{opacity:1;transform:translateY(0)}
+    @media(max-width:600px){main{padding:1.5rem 1rem 4rem}}
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="/programmazione/" class="header-back-link">&#x2190; Programmazione</a>
+  <div class="header-badge">C++ &middot; Costrutti</div>
+  <h1>Costrutti <span>Logici e Iterativi</span></h1>
+  <p>Operatori relazionali e logici, selezione con <code>if</code> e <code>switch</code>, iterazione con <code>for</code>, <code>while</code> e <code>do-while</code>. Con visualizzatore interattivo dei cicli.</p>
+  <div class="header-pills">
+    <span class="header-pill">&#127891; 3&deg; anno ITIS/SIA</span>
+    <span class="header-pill">&#128295; Visualizzatore cicli</span>
+    <span class="header-pill">&#9200; ~35 min</span>
+  </div>
+  <div class="page-nav">
+    <a href="/programmazione/variabili-io/">&#8592; Variabili e tipi</a>
+    <a href="/programmazione/funzioni/">&#8594; Funzioni</a>
+  </div>
+  <svg class="header-deco-svg" viewBox="0 0 210 62" width="290" height="86" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="6" width="210" height="50" rx="6" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+    <text x="12" y="24" fill="#f97583" font-family="Space Mono,monospace" font-size="9" font-weight="700">for </text>
+    <text x="32" y="24" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="9">(int i=0; i&lt;n; i++)</text>
+    <text x="12" y="37" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="9">  </text>
+    <text x="12" y="37" fill="#f97583" font-family="Space Mono,monospace" font-size="9" font-weight="700">  if </text>
+    <text x="36" y="37" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="9">(i % 2 == 0)</text>
+    <text x="12" y="50" fill="#6a737d" font-family="Space Mono,monospace" font-size="9" font-style="italic">    // fai qualcosa</text>
+  </svg>
+</header>
+
+<div class="toc-wrap">
+  <nav class="toc" id="toc">
+    <a href="#operatori" class="active">Operatori</a>
+    <a href="#selezione">Selezione</a>
+    <a href="#iterazione">Iterazione</a>
+    <a href="#break-continue">break / continue</a>
+    <a href="#tool">Visualizzatore</a>
+  </nav>
+</div>
+
+<main>
+
+<!-- ══ OPERATORI ══ -->
+<section id="operatori">
+  <div class="section-label">01 &mdash; Fondamenta</div>
+  <h2>Operatori relazionali e logici</h2>
+  <p>I costrutti di selezione e iterazione si basano su <strong>condizioni</strong>: espressioni che producono <code>true</code> o <code>false</code>. Gli operatori relazionali confrontano valori, quelli logici combinano pi&ugrave; condizioni.</p>
+
+  <h3>Operatori relazionali</h3>
+  <table class="op-table">
+    <thead><tr><th>Operatore</th><th>Significato</th><th>Esempio</th><th>Risultato</th></tr></thead>
+    <tbody>
+      <tr><td>==</td><td>Uguale a</td><td><code>5 == 5</code></td><td><code>true</code></td></tr>
+      <tr><td>!=</td><td>Diverso da</td><td><code>5 != 3</code></td><td><code>true</code></td></tr>
+      <tr><td>&lt;</td><td>Minore di</td><td><code>3 &lt; 5</code></td><td><code>true</code></td></tr>
+      <tr><td>&gt;</td><td>Maggiore di</td><td><code>5 &gt; 3</code></td><td><code>true</code></td></tr>
+      <tr><td>&lt;=</td><td>Minore o uguale</td><td><code>3 &lt;= 3</code></td><td><code>true</code></td></tr>
+      <tr><td>&gt;=</td><td>Maggiore o uguale</td><td><code>4 &gt;= 5</code></td><td><code>false</code></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Operatori logici</h3>
+  <table class="op-table">
+    <thead><tr><th>Operatore</th><th>Significato</th><th>Esempio</th><th>Risultato</th></tr></thead>
+    <tbody>
+      <tr><td>&amp;&amp;</td><td>AND — vero se entrambe le condizioni sono vere</td><td><code>5&gt;3 &amp;&amp; 2&lt;4</code></td><td><code>true</code></td></tr>
+      <tr><td>||</td><td>OR — vero se almeno una condizione &egrave; vera</td><td><code>5&gt;3 || 2&gt;4</code></td><td><code>true</code></td></tr>
+      <tr><td>!</td><td>NOT — inverte il valore logico</td><td><code>!(5&gt;3)</code></td><td><code>false</code></td></tr>
+    </tbody>
+  </table>
+
+  <div class="box box-warn">
+    <strong>&#9888; == non &egrave; =</strong>
+    <p style="margin:0"><code>=</code> &egrave; l&apos;assegnazione: <code>x = 5</code> mette 5 dentro x. <code>==</code> &egrave; il confronto: <code>x == 5</code> &egrave; vero se x vale 5. Scrivere <code>if (x = 5)</code> invece di <code>if (x == 5)</code> &egrave; un bug silenzioso: assegna 5 a x e la condizione &egrave; sempre vera.</p>
+  </div>
+</section>
+
+<!-- ══ SELEZIONE ══ -->
+<section id="selezione">
+  <div class="section-label">02 &mdash; Selezione</div>
+  <h2>Selezione — if, else if, switch</h2>
+
+  <h3>if / else if / else</h3>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; if-else</span></div>
+    <pre><span class="tp">int</span> voto = <span class="nm">7</span>;
+
+<span class="kw">if</span> (voto &gt;= <span class="nm">6</span>) {
+    cout &lt;&lt; <span class="st">"Promosso"</span>;             <span class="cm">// eseguito se voto >= 6</span>
+} <span class="kw">else if</span> (voto == <span class="nm">5</span>) {
+    cout &lt;&lt; <span class="st">"Rimandato"</span>;            <span class="cm">// eseguito solo se voto == 5</span>
+} <span class="kw">else</span> {
+    cout &lt;&lt; <span class="st">"Bocciato"</span>;             <span class="cm">// eseguito in tutti gli altri casi</span>
+}
+<span class="cm">// Solo uno dei tre blocchi viene eseguito</span></pre>
+  </div>
+
+  <div class="box box-tip">
+    <strong>&#128161; Le graffe sono obbligatorie?</strong>
+    <p style="margin:0">No: se il blocco contiene una sola istruzione le graffe si possono omettere (<code>if (x &gt; 0) cout &lt;&lt; x;</code>). Ma &egrave; buona prassi metterle sempre: evita bug quando si aggiunge una seconda istruzione dimenticando le graffe.</p>
+  </div>
+
+  <h3>switch</h3>
+  <p>Lo <code>switch</code> &egrave; preferibile a una catena di <code>if-else if</code> quando si confronta una variabile con valori interi o char costanti. &Egrave; pi&ugrave; leggibile e in alcuni casi pi&ugrave; efficiente.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; switch</span></div>
+    <pre><span class="tp">int</span> giorno = <span class="nm">3</span>;
+
+<span class="kw">switch</span> (giorno) {
+    <span class="kw">case</span> <span class="nm">1</span>: cout &lt;&lt; <span class="st">"Luned&igrave;"</span>;    <span class="kw">break</span>;  <span class="cm">// break: esci dallo switch</span>
+    <span class="kw">case</span> <span class="nm">2</span>: cout &lt;&lt; <span class="st">"Marted&igrave;"</span>;   <span class="kw">break</span>;
+    <span class="kw">case</span> <span class="nm">3</span>: cout &lt;&lt; <span class="st">"Mercoled&igrave;"</span>; <span class="kw">break</span>;  <span class="cm">// questo ramo viene eseguito</span>
+    <span class="kw">case</span> <span class="nm">4</span>: cout &lt;&lt; <span class="st">"Gioved&igrave;"</span>;   <span class="kw">break</span>;
+    <span class="kw">case</span> <span class="nm">5</span>: cout &lt;&lt; <span class="st">"Venerd&igrave;"</span>;   <span class="kw">break</span>;
+    <span class="kw">default</span>: cout &lt;&lt; <span class="st">"Weekend"</span>;         <span class="cm">// eseguito se nessun case corrisponde</span>
+}</pre>
+  </div>
+
+  <div class="box box-warn">
+    <strong>&#9888; break dimenticato &mdash; fall-through</strong>
+    <p style="margin:0">Senza <code>break</code>, l&apos;esecuzione continua nel <code>case</code> successivo (<em>fall-through</em>). &Egrave; raramente voluto e quasi sempre un bug. Metti sempre <code>break</code> alla fine di ogni <code>case</code> a meno di avere una ragione esplicita.</p>
+  </div>
+</section>
+
+<!-- ══ ITERAZIONE ══ -->
+<section id="iterazione">
+  <div class="section-label">03 &mdash; Iterazione</div>
+  <h2>Iterazione — for, while, do-while</h2>
+
+  <h3>for</h3>
+  <p>Usato quando si conosce in anticipo il numero di iterazioni. La variabile di controllo, la condizione e l&apos;aggiornamento sono tutti nella stessa riga.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; for</span></div>
+    <pre><span class="cm">//        init   condizione  aggiornamento</span>
+<span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; <span class="nm">5</span>; i++) {
+    cout &lt;&lt; i &lt;&lt; <span class="st">" "</span>;    <span class="cm">// stampa: 0 1 2 3 4</span>
+}
+
+<span class="cm">// iterazione al contrario</span>
+<span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">5</span>; i &gt; <span class="nm">0</span>; i--) {
+    cout &lt;&lt; i &lt;&lt; <span class="st">" "</span>;    <span class="cm">// stampa: 5 4 3 2 1</span>
+}
+
+<span class="cm">// passo diverso da 1</span>
+<span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt;= <span class="nm">10</span>; i += <span class="nm">2</span>) {
+    cout &lt;&lt; i &lt;&lt; <span class="st">" "</span>;    <span class="cm">// stampa: 0 2 4 6 8 10</span>
+}</pre>
+  </div>
+
+  <h3>while</h3>
+  <p>Usato quando il numero di iterazioni non &egrave; noto in anticipo. La condizione viene valutata <strong>prima</strong> di ogni iterazione: se &egrave; subito falsa, il corpo non viene mai eseguito.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; while</span></div>
+    <pre><span class="tp">int</span> n = <span class="nm">1</span>;
+<span class="kw">while</span> (n &lt;= <span class="nm">5</span>) {
+    cout &lt;&lt; n &lt;&lt; <span class="st">" "</span>;   <span class="cm">// stampa: 1 2 3 4 5</span>
+    n++;                  <span class="cm">// FONDAMENTALE: aggiorna la variabile, altrimenti loop infinito</span>
+}
+
+<span class="cm">// lettura con validazione: ripeti finché l'input è valido</span>
+<span class="tp">int</span> voto;
+cout &lt;&lt; <span class="st">"Inserisci un voto (0-10): "</span>;
+cin &gt;&gt; voto;
+<span class="kw">while</span> (voto &lt; <span class="nm">0</span> || voto &gt; <span class="nm">10</span>) {
+    cout &lt;&lt; <span class="st">"Valore non valido. Riprova: "</span>;
+    cin &gt;&gt; voto;
+}</pre>
+  </div>
+
+  <h3>do-while</h3>
+  <p>Come <code>while</code>, ma la condizione viene valutata <strong>dopo</strong> ogni iterazione. Il corpo viene sempre eseguito <strong>almeno una volta</strong>. Tipico uso: menu interattivi, validazione input.</p>
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; do-while</span></div>
+    <pre><span class="tp">int</span> scelta;
+<span class="kw">do</span> {
+    cout &lt;&lt; <span class="st">"1. Nuova partita\n2. Carica\n3. Esci\nScelta: "</span>;
+    cin  &gt;&gt; scelta;
+    <span class="cm">// il menu viene mostrato ALMENO una volta, poi si ripete se la scelta non è valida</span>
+} <span class="kw">while</span> (scelta &lt; <span class="nm">1</span> || scelta &gt; <span class="nm">3</span>);</pre>
+  </div>
+
+  <h3>Quando usare quale?</h3>
+  <div class="when-grid">
+    <div class="when-card">
+      <div class="when-card-title">for</div>
+      <div class="when-card-body">Il numero di iterazioni &egrave; noto prima del ciclo. Scorrere array, contatori, indici.</div>
+    </div>
+    <div class="when-card">
+      <div class="when-card-title">while</div>
+      <div class="when-card-body">Il numero di iterazioni dipende da una condizione esterna. Lettura da file, attesa evento, validazione.</div>
+    </div>
+    <div class="when-card">
+      <div class="when-card-title">do-while</div>
+      <div class="when-card-body">Il corpo deve essere eseguito almeno una volta. Menu, richiesta input all&apos;utente.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BREAK CONTINUE ══ -->
+<section id="break-continue">
+  <div class="section-label">04 &mdash; Controllo</div>
+  <h2>break e continue</h2>
+
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; break e continue</span></div>
+    <pre><span class="cm">// break: interrompe il ciclo immediatamente</span>
+<span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; <span class="nm">10</span>; i++) {
+    <span class="kw">if</span> (i == <span class="nm">5</span>) <span class="kw">break</span>;       <span class="cm">// esce dal ciclo quando i vale 5</span>
+    cout &lt;&lt; i &lt;&lt; <span class="st">" "</span>;         <span class="cm">// stampa: 0 1 2 3 4</span>
+}
+
+<span class="cm">// continue: salta all'iterazione successiva</span>
+<span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; <span class="nm">10</span>; i++) {
+    <span class="kw">if</span> (i % <span class="nm">2</span> == <span class="nm">0</span>) <span class="kw">continue</span>; <span class="cm">// salta i pari</span>
+    cout &lt;&lt; i &lt;&lt; <span class="st">" "</span>;         <span class="cm">// stampa: 1 3 5 7 9</span>
+}</pre>
+  </div>
+
+  <div class="box box-tip">
+    <strong>&#128161; break e continue nei cicli annidati</strong>
+    <p style="margin:0"><code>break</code> e <code>continue</code> agiscono sempre sul ciclo <b>pi&ugrave; interno</b> in cui si trovano. Per uscire da pi&ugrave; livelli di ciclo annidato si usa in genere una variabile booleana di controllo.</p>
+  </div>
+</section>
+
+<!-- ══ TOOL ══ -->
+<section id="tool">
+  <div class="section-label">05 &mdash; Pratica</div>
+  <h2>&#128295; Visualizzatore di ciclo</h2>
+  <p>Configura un ciclo e osserva le iterazioni passo per passo. Prova anche <code>break</code> e <code>continue</code> per vedere come alterano il flusso.</p>
+
+  <div class="tool-box">
+    <div class="tool-header">
+      <span class="tool-title">&#128295; Visualizzatore Ciclo</span>
+      <span class="tool-subtitle">Configura &middot; Esegui &middot; Osserva</span>
+    </div>
+    <div class="tool-body">
+
+      <!-- tipo ciclo -->
+      <div class="loop-type-btns">
+        <button class="tool-btn active" data-loop="for">for</button>
+        <button class="tool-btn" data-loop="while">while</button>
+        <button class="tool-btn" data-loop="dowhile">do-while</button>
+      </div>
+
+      <!-- parametri -->
+      <div class="loop-params" id="loop-params">
+        <div class="loop-param-group">
+          <span class="loop-param-label">Inizio (i=)</span>
+          <input type="number" class="tool-input" id="lp-start" value="0">
+        </div>
+        <div class="loop-param-group">
+          <span class="loop-param-label">Fine (i&lt;)</span>
+          <input type="number" class="tool-input" id="lp-end" value="8">
+        </div>
+        <div class="loop-param-group">
+          <span class="loop-param-label">Passo</span>
+          <input type="number" class="tool-input" id="lp-step" value="1">
+        </div>
+        <div class="loop-param-group">
+          <span class="loop-param-label">break se i==</span>
+          <input type="number" class="tool-input" id="lp-break" placeholder="—" style="width:72px">
+        </div>
+        <div class="loop-param-group">
+          <span class="loop-param-label">continue se i==</span>
+          <input type="number" class="tool-input" id="lp-continue" placeholder="—" style="width:72px">
+        </div>
+      </div>
+
+      <!-- anteprima codice -->
+      <div class="loop-code-preview" id="loop-code-preview"></div>
+
+      <!-- iterazioni -->
+      <div style="font-family:'Space Mono',monospace;font-size:.7rem;color:var(--prog-muted);margin-bottom:.5rem;letter-spacing:.05em;text-transform:uppercase">Iterazioni</div>
+      <div class="loop-iterations" id="loop-iterations">
+        <span style="color:var(--prog-muted);font-size:.85rem;font-family:'Space Mono',monospace">Premi Esegui per avviare.</span>
+      </div>
+
+      <!-- controlli -->
+      <div class="loop-controls">
+        <button class="tool-btn primary" id="lp-run">&#9654; Esegui</button>
+        <button class="tool-btn" id="lp-step-btn">Passo &rarr;</button>
+        <button class="tool-btn" id="lp-reset">&#8635; Reset</button>
+      </div>
+      <div class="loop-info" id="loop-info"></div>
+
+    </div>
+    <div class="tool-msg" id="tool-msg">Configura il ciclo e premi Esegui.</div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-nav">
+    <a href="/programmazione/variabili-io/">&#8592; Variabili e tipi</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/programmazione/funzioni/">&#8594; Funzioni</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/programmazione/">Hub Programmazione</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/">Home</a>
+  </div>
+  <strong>Formazione Digitale</strong> &mdash; Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ═══════════════════════════════
+     TOOL — VISUALIZZATORE CICLO
+  ═══════════════════════════════ */
+  var loopType   = 'for';
+  var iterSteps  = [];   /* lista di {val, stato} */
+  var stepIdx    = 0;
+  var running    = false;
+
+  var lpStart    = document.getElementById('lp-start');
+  var lpEnd      = document.getElementById('lp-end');
+  var lpStep     = document.getElementById('lp-step');
+  var lpBreak    = document.getElementById('lp-break');
+  var lpContinue = document.getElementById('lp-continue');
+  var codeEl     = document.getElementById('loop-code-preview');
+  var itersEl    = document.getElementById('loop-iterations');
+  var infoEl     = document.getElementById('loop-info');
+  var msgEl      = document.getElementById('tool-msg');
+  var runBtn     = document.getElementById('lp-run');
+  var stepBtn    = document.getElementById('lp-step-btn');
+  var resetBtn   = document.getElementById('lp-reset');
+
+  /* ── selezione tipo ciclo ── */
+  document.querySelectorAll('.loop-type-btns .tool-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.loop-type-btns .tool-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      loopType = btn.dataset.loop;
+      updatePreview();
+      resetViz();
+    });
+  });
+
+  /* ── aggiorna anteprima codice ── */
+  function esc(s){ return String(s).replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function updatePreview(){
+    var s  = parseInt(lpStart.value) || 0;
+    var e  = parseInt(lpEnd.value)   || 0;
+    var p  = parseInt(lpStep.value)  || 1;
+    var bv = lpBreak.value.trim();
+    var cv = lpContinue.value.trim();
+
+    var KW  = function(w){ return '<span style="color:#f97583;font-weight:700">'+w+'</span>'; };
+    var TP  = function(w){ return '<span style="color:#79b8ff">'+w+'</span>'; };
+    var NM  = function(w){ return '<span style="color:#b392f0">'+w+'</span>'; };
+    var ST  = function(w){ return '<span style="color:#9ecbff">'+w+'</span>'; };
+    var CM  = function(w){ return '<span style="color:#6a737d;font-style:italic">'+w+'</span>'; };
+
+    var op   = p >= 0 ? '&lt;' : '&gt;';
+    var inc  = p === 1 ? 'i++' : p === -1 ? 'i--' : 'i += ' + NM(p);
+    var cond = 'i ' + op + ' ' + NM(e);
+
+    /* corpo: break e continue come righe separate indentate */
+    var bodyLines = [];
+    if (bv !== '') bodyLines.push('    ' + KW('if') + ' (i == ' + NM(bv) + ') ' + KW('break') + ';' + CM('  // esce dal ciclo'));
+    if (cv !== '') bodyLines.push('    ' + KW('if') + ' (i == ' + NM(cv) + ') ' + KW('continue') + ';' + CM('  // salta questa iterazione'));
+    bodyLines.push('    cout &lt;&lt; i &lt;&lt; ' + ST('" "') + ';');
+    var body = bodyLines.join('\n');
+
+    var html = '';
+    if (loopType === 'for') {
+      var init = TP('int') + ' i = ' + NM(s);
+      html  = KW('for') + ' (' + init + '; ' + cond + '; ' + inc + ') {\n';
+      html += body + '\n';
+      html += '}';
+    } else if (loopType === 'while') {
+      html  = TP('int') + ' i = ' + NM(s) + ';\n';
+      html += KW('while') + ' (' + cond + ') {\n';
+      html += body + '\n';
+      html += '    ' + inc + ';\n';
+      html += '}';
+    } else {
+      html  = TP('int') + ' i = ' + NM(s) + ';\n';
+      html += KW('do') + ' {\n';
+      html += body + '\n';
+      html += '    ' + inc + ';\n';
+      html += '} ' + KW('while') + ' (' + cond + ');';
+    }
+    codeEl.innerHTML = html;
+  }
+
+  /* ── calcola iterazioni ── */
+  function computeSteps(){
+    var s  = parseInt(lpStart.value);
+    var e  = parseInt(lpEnd.value);
+    var p  = parseInt(lpStep.value);
+    var bv = lpBreak.value.trim()    !== '' ? parseInt(lpBreak.value)    : null;
+    var cv = lpContinue.value.trim() !== '' ? parseInt(lpContinue.value) : null;
+
+    if (isNaN(s)||isNaN(e)||isNaN(p)||p===0) return null;
+    if (p > 0 && s >= e) return [];
+    if (p < 0 && s <= e) return [];
+
+    var steps = [];
+    var i = s;
+    var MAX_ITER = 50;
+    var count = 0;
+
+    /* do-while: esegue il corpo prima di controllare la condizione */
+    if (loopType === 'dowhile') {
+      do {
+        count++;
+        if (count > MAX_ITER) { steps.push({val:i, stato:'overflow'}); break; }
+        if (bv !== null && i === bv) { steps.push({val:i, stato:'break'}); break; }
+        if (cv !== null && i === cv) { steps.push({val:i, stato:'continue'}); }
+        else { steps.push({val:i, stato:'done'}); }
+        i += p;
+      } while (p > 0 ? i < e : i > e);
+    } else {
+      while (p > 0 ? i < e : i > e) {
+        count++;
+        if (count > MAX_ITER) { steps.push({val:i, stato:'overflow'}); break; }
+        if (bv !== null && i === bv) { steps.push({val:i, stato:'break'}); break; }
+        if (cv !== null && i === cv) { steps.push({val:i, stato:'continue'}); }
+        else { steps.push({val:i, stato:'done'}); }
+        i += p;
+      }
+    }
+    return steps;
+  }
+
+  /* ── render ── */
+  function renderIters(steps, activeIdx){
+    if (!steps || steps.length === 0){
+      itersEl.innerHTML = '<span style="color:var(--prog-muted);font-size:.85rem;font-family:Space Mono,monospace">Nessuna iterazione &mdash; la condizione iniziale &egrave; falsa.</span>';
+      return;
+    }
+    itersEl.innerHTML = '';
+    steps.forEach(function(st, idx){
+      var chip = document.createElement('div');
+      chip.className = 'iter-chip';
+      if (idx < activeIdx)      chip.classList.add(st.stato === 'continue' ? 'skipped' : st.stato === 'break' ? 'break-here' : 'done');
+      else if (idx === activeIdx) chip.classList.add(st.stato === 'break' ? 'break-here' : st.stato === 'continue' ? 'skipped' : 'current');
+      var label = 'i='+st.val;
+      if (st.stato === 'break')    label += ' ✗';
+      if (st.stato === 'continue') label += ' ↷';
+      if (st.stato === 'overflow') label += ' …';
+      chip.textContent = label;
+      itersEl.appendChild(chip);
+    });
+  }
+
+  function renderInfo(steps, idx){
+    if (!steps || steps.length === 0) { infoEl.textContent = ''; return; }
+    var executed = steps.filter(function(s,i){ return i <= idx && s.stato !== 'continue' && s.stato !== 'break'; }).length;
+    var skipped  = steps.filter(function(s,i){ return i <= idx && s.stato === 'continue'; }).length;
+    var st = steps[idx];
+    var msg = 'Iterazione '+(idx+1)+'/'+steps.length+' \u2014 i = '+st.val;
+    if (st.stato === 'break')    msg += ' \u2014 break: ciclo interrotto';
+    if (st.stato === 'continue') msg += ' \u2014 continue: iterazione saltata';
+    if (st.stato === 'overflow') msg += ' \u2014 limite di 50 iterazioni raggiunto';
+    infoEl.textContent = msg;
+  }
+
+  function resetViz(){
+    iterSteps = []; stepIdx = 0; running = false;
+    itersEl.innerHTML = '<span style="color:var(--prog-muted);font-size:.85rem;font-family:Space Mono,monospace">Premi Esegui per avviare.</span>';
+    infoEl.textContent = '';
+    msgEl.textContent = 'Configura il ciclo e premi Esegui.';
+    stepBtn.disabled = true;
+  }
+
+  /* ── pulsanti ── */
+  runBtn.addEventListener('click', function(){
+    var steps = computeSteps();
+    if (steps === null) { msgEl.textContent = 'Parametri non validi (controlla inizio, fine e passo).'; return; }
+    iterSteps = steps; stepIdx = 0; running = true;
+    stepBtn.disabled = false;
+    renderIters(iterSteps, stepIdx);
+    renderInfo(iterSteps, stepIdx);
+    msgEl.textContent = steps.length === 0
+      ? 'Il ciclo non esegue nemmeno una iterazione: la condizione iniziale \u00e8 subito falsa.'
+      : 'Ciclo avviato \u2014 '+steps.length+' iterazioni totali. Usa Passo per avanzare.';
+  });
+
+  stepBtn.addEventListener('click', function(){
+    if (!running || iterSteps.length === 0) return;
+    if (stepIdx < iterSteps.length - 1) {
+      stepIdx++;
+      renderIters(iterSteps, stepIdx);
+      renderInfo(iterSteps, stepIdx);
+    } else {
+      msgEl.textContent = 'Ciclo completato \u2014 tutte le iterazioni sono state eseguite.';
+      stepBtn.disabled = true;
+    }
+  });
+
+  resetBtn.addEventListener('click', function(){
+    resetViz();
+    updatePreview();
+  });
+
+  /* aggiorna preview al cambio parametri */
+  [lpStart, lpEnd, lpStep, lpBreak, lpContinue].forEach(function(inp){
+    inp.addEventListener('input', function(){ updatePreview(); resetViz(); });
+  });
+
+  /* init */
+  stepBtn.disabled = true;
+  updatePreview();
+
+  /* ═══ COPIA CODICE ═══ */
+  document.querySelectorAll('.code-block').forEach(function(block){
+    var header=block.querySelector('.code-header');
+    var pre=block.querySelector('pre');
+    if(!header||!pre)return;
+    var btn=document.createElement('button');
+    btn.className='copy-btn'; btn.textContent='Copia';
+    btn.addEventListener('click',function(){
+      navigator.clipboard.writeText(pre.innerText).then(function(){
+        btn.textContent='\u2713 Copiato'; btn.classList.add('copied');
+        setTimeout(function(){btn.textContent='Copia';btn.classList.remove('copied');},2000);
+      });
+    });
+    header.appendChild(btn);
+  });
+
+  /* ═══ TOC ═══ */
+  var tocLinks=document.querySelectorAll('#toc a');
+  var sections=document.querySelectorAll('section[id]');
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        tocLinks.forEach(function(a){a.classList.remove('active');});
+        var a=document.querySelector('#toc a[href="#'+e.target.id+'"]');
+        if(a) a.classList.add('active');
+      }
+    });
+  },{rootMargin:'-10% 0px -80% 0px',threshold:0});
+  sections.forEach(function(s){obs.observe(s);});
+  tocLinks.forEach(function(a){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      var t=document.querySelector(a.getAttribute('href'));
+      if(t) t.scrollIntoView({behavior:'smooth'});
+    });
+  });
+  var btt=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btt.classList.toggle('visible',window.scrollY>300);});
+})();
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>
