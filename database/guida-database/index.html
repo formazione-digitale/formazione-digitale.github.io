@@ -93,6 +93,7 @@ section {
   padding: 3rem 0 1rem;
   border-bottom: 1px solid var(--border);
   scroll-margin-top: 70px;
+  animation: fadeIn 0.4s ease both;
 }
 section:last-child { border-bottom: none; }
 
@@ -126,7 +127,7 @@ h3 {
   color: var(--db-blue);
   margin: 1.5rem 0 0.5rem;
 }
-p { margin-bottom: 0.9rem; font-size: 0.95rem; color: #3a3835; line-height: 1.75; }
+p { margin-bottom: 0.9rem; font-size: 0.95rem; line-height: 1.75; }
 
 /* ── CALLOUT BOX ── */
 .callout {
@@ -139,13 +140,12 @@ p { margin-bottom: 0.9rem; font-size: 0.95rem; color: #3a3835; line-height: 1.75
   line-height: 1.6;
 }
 .callout-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
-.callout-body { color: #3a3835; }
 .callout-body strong { display: block; margin-bottom: 0.2rem; }
-.callout.tip   { background: var(--db-green-lt); border-left: 3px solid var(--db-green); }
-.callout.warn  { background: var(--db-amber-lt); border-left: 3px solid var(--db-amber); }
-.callout.info  { background: var(--db-blue-lt);  border-left: 3px solid var(--db-blue); }
-.callout.error { background: var(--db-red-lt);   border-left: 3px solid var(--db-red); }
-.callout.def   { background: var(--db-purple-lt); border-left: 3px solid var(--db-purple); }
+.callout.tip     { background: var(--db-green-lt); border-left: 3px solid var(--db-green); }
+.callout.warning { background: var(--db-amber-lt); border-left: 3px solid var(--db-amber); }
+.callout.info    { background: var(--db-blue-lt);  border-left: 3px solid var(--db-blue); }
+.callout.error   { background: var(--db-red-lt);   border-left: 3px solid var(--db-red); }
+.callout.def     { background: var(--db-purple-lt); border-left: 3px solid var(--db-purple); }
 
 /* ── TABELLA STANDARD ── */
 .guide-table {
@@ -165,7 +165,7 @@ p { margin-bottom: 0.9rem; font-size: 0.95rem; color: #3a3835; line-height: 1.75
   vertical-align: top;
   background: var(--paper);
 }
-.guide-table tr:nth-child(even) td { background: #f5f2eb; }
+.guide-table tr:nth-child(even) td { background: var(--bg); }
 .guide-table th:first-child { border-radius: 4px 0 0 0; }
 .guide-table th:last-child  { border-radius: 0 4px 0 0; }
 
@@ -200,6 +200,9 @@ p { margin-bottom: 0.9rem; font-size: 0.95rem; color: #3a3835; line-height: 1.75
 .key-card.artificial { background: var(--db-amber-lt); border: 1px solid #f0d080; }
 .key-card.simple     { background: var(--db-blue-lt);  border: 1px solid #a8c8ec; }
 .key-card.compound   { background: var(--db-purple-lt); border: 1px solid #c8b8f0; }
+/* Modificatori dedicati per S09 entità forte/debole */
+.key-card.forte  { background: var(--db-green-lt);  border: 1px solid #b2dfc3; }
+.key-card.debole { background: var(--db-amber-lt); border: 1px solid #f0d080; }
 .key-card-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; opacity: 0.7; font-family: 'Space Mono', monospace; }
 .key-card-title { font-weight: 700; font-size: 0.92rem; margin-bottom: 0.3rem; font-family: 'Space Mono', monospace; }
 .key-card-desc  { font-size: 0.82rem; line-height: 1.55; }
@@ -207,6 +210,8 @@ p { margin-bottom: 0.9rem; font-size: 0.95rem; color: #3a3835; line-height: 1.75
 .key-card.artificial .key-card-title { color: var(--db-amber); }
 .key-card.simple     .key-card-title { color: var(--db-blue); }
 .key-card.compound   .key-card-title { color: var(--db-purple); }
+.key-card.forte  .key-card-title { color: var(--db-green); }
+.key-card.debole .key-card-title { color: var(--db-amber); }
 
 /* ── REGOLE TRADUZIONE ── */
 .rule-list { list-style: none; padding: 0; margin: 1.25rem 0; counter-reset: rules; }
@@ -304,9 +309,30 @@ p { margin-bottom: 0.9rem; font-size: 0.95rem; color: #3a3835; line-height: 1.75
 }
 .btn-dl:hover { background: var(--accent); color: white; border-color: var(--accent); }
 
-/* Riduce altezza header */
+/* Riduce altezza header — allineato a guida-modello-logico */
 header {
-  padding: 2rem 2rem 1.5rem;
+  padding: 1.25rem 2rem 1rem;
+}
+
+/* Link incrociato tra le due guide — posizionato nella download-bar */
+.header-cross-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-left: auto;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid rgba(255,255,255,0.35);
+  padding-bottom: 1px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.header-cross-link:hover {
+  color: #fff;
+  border-color: rgba(255,255,255,0.8);
 }
 
 /* ── FOOTER ── */
@@ -330,9 +356,120 @@ footer a:hover { color: var(--accent); }
   opacity: 0; pointer-events: none;
   transition: opacity 0.3s, transform 0.2s;
   display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 12px rgba(214,79,42,.35);
 }
 .back-to-top.visible { opacity: 1; pointer-events: auto; }
 .back-to-top:hover { transform: translateY(-2px); }
+
+/* ── DIAGRAMMA E-R VISIVO (S10) ── */
+.er-diagram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+.er-entity {
+  background: var(--db-blue-lt);
+  border: 2px solid var(--db-blue);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 1.1rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--db-blue);
+  text-align: center;
+  min-width: 110px;
+}
+.er-rel {
+  background: var(--db-amber-lt);
+  border: 2px solid var(--db-amber);
+  transform: rotate(45deg);
+  width: 68px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.er-rel-text {
+  transform: rotate(-45deg);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--db-amber);
+  text-align: center;
+  line-height: 1.2;
+}
+.er-line {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+}
+.er-line-seg {
+  height: 2px;
+  width: 28px;
+  background: var(--db-blue);
+}
+/* Wrapper rombo + etichetta N:M sopra */
+.er-rel-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+.er-nm-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--db-amber);
+  margin-bottom: 6px;
+  letter-spacing: 0.06em;
+}
+/* Freccia di trasformazione tra i due diagrammi */
+.er-transform {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.25rem 0;
+  gap: 3px;
+}
+.er-transform-arrow {
+  font-size: 1.6rem;
+  color: var(--muted);
+  line-height: 1;
+}
+.er-transform-label {
+  font-size: 0.7rem;
+  color: var(--muted);
+  font-family: 'Space Mono', monospace;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+/* Linea con cardinalità agli estremi (per il diagramma 1:N) */
+.er-line-cards {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.er-card-end {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--db-blue);
+  padding: 0 5px;
+  flex-shrink: 0;
+}
+/* Entità tabella associativa */
+.er-entity-assoc {
+  background: var(--db-green-lt);
+  border-color: var(--db-green);
+  color: var(--db-green);
+  font-size: 0.78rem;
+  min-width: 90px;
+}
 
 /* ── RESPONSIVE ── */
 @media(max-width:600px) {
@@ -349,7 +486,7 @@ footer a:hover { color: var(--accent); }
 ══════════════════════════════════════════════ -->
 <header>
   <a href="/" class="header-back-link">← Portale</a>
-  <div style="max-width:960px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap; padding-top:1rem;">
+  <div style="max-width:960px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap;">
     <div style="flex:1; min-width:260px;">
       <div class="badge">Database · AFM · RIM</div>
       <h1>Basi di Dati<br><span>Dal dato al modello</span></h1>
@@ -358,6 +495,7 @@ footer a:hover { color: var(--accent); }
       <div class="download-bar" style="margin-top:1.25rem;">
         <a class="btn-dl" href="download/database_intro.pdf" download>↓ Intro PDF</a>
         <a class="btn-dl" href="download/dbms_modelli_relazionali.pptx" download>↓ E-R db PPTX</a>
+        <a href="/database/guida-modello-logico/" class="header-cross-link">Parte 2 — Modello Logico →</a>
       </div>
     </div>
     <div style="flex-shrink:0; display:flex; flex-direction:column; align-items:center; gap:0.8rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:1.5rem 2rem;">
@@ -470,7 +608,7 @@ footer a:hover { color: var(--accent); }
   <h3>Perché la distinzione è importante</h3>
   <p>Quando si progetta un database, si lavora prima sullo <strong>schema</strong> — si decide quali tabelle creare e come collegarle. Solo dopo si inseriscono i dati (istanza). Modificare lo schema di un database già popolato è costoso e rischioso: richiede migrazioni, controlli di integrità, aggiornamenti ai programmi che usano il database.</p>
 
-  <div class="callout warn">
+  <div class="callout warning">
     <div class="callout-icon">⚠️</div>
     <div class="callout-body">
       <strong>Errore comune</strong>
@@ -545,27 +683,43 @@ footer a:hover { color: var(--accent); }
     </div>
   </div>
 
-  <h3>Caratteristiche fondamentali</h3>
+  <h3>Proprietà ACID delle transazioni</h3>
+  <p>Il DBMS garantisce l'affidabilità dei dati attraverso le <strong>proprietà ACID</strong>, che si applicano alle <em>transazioni</em> — cioè a ogni operazione (o gruppo di operazioni) eseguita sul database.</p>
   <div class="props-grid">
     <div class="prop-card">
-      <div class="prop-card-icon">💾</div>
-      <div class="prop-card-title">Persistenza</div>
-      <div class="prop-card-desc">I dati sopravvivono alla chiusura del programma e ai riavvii del sistema.</div>
+      <div class="prop-card-icon">⚛️</div>
+      <div class="prop-card-title"><span style="font-family:'Space Mono',monospace;color:var(--accent);">A</span> — Atomicità</div>
+      <div class="prop-card-desc">Una transazione è un'unità indivisibile: o va a buon fine <em>tutta intera</em>, oppure non produce alcun effetto. Non esistono stati intermedi.</div>
     </div>
     <div class="prop-card">
+      <div class="prop-card-icon">⚖️</div>
+      <div class="prop-card-title"><span style="font-family:'Space Mono',monospace;color:var(--accent);">C</span> — Consistenza</div>
+      <div class="prop-card-desc">Il database passa sempre da uno stato valido a un altro stato valido. Tutti i vincoli definiti nello schema vengono rispettati a ogni operazione.</div>
+    </div>
+    <div class="prop-card">
+      <div class="prop-card-icon">🧱</div>
+      <div class="prop-card-title"><span style="font-family:'Space Mono',monospace;color:var(--accent);">I</span> — Isolamento</div>
+      <div class="prop-card-desc">Più transazioni eseguite contemporaneamente non si interferiscono: ognuna vede il database come se fosse l'unica in esecuzione.</div>
+    </div>
+    <div class="prop-card">
+      <div class="prop-card-icon">🔒</div>
+      <div class="prop-card-title"><span style="font-family:'Space Mono',monospace;color:var(--accent);">D</span> — Durabilità</div>
+      <div class="prop-card-desc">Una volta confermata (<em>committed</em>), una transazione è permanente. Anche in caso di crash del sistema, i dati rimangono scritti.</div>
+    </div>
+  </div>
+
+  <h3>Altre caratteristiche dello strumento</h3>
+  <p>Oltre alle garanzie ACID, il DBMS offre funzionalità che ne dimostrano la potenza rispetto ai file tradizionali.</p>
+  <div class="props-grid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr));">
+    <div class="prop-card" style="border-top:3px solid var(--db-blue);">
       <div class="prop-card-icon">👥</div>
       <div class="prop-card-title">Condivisione</div>
-      <div class="prop-card-desc">Più utenti e applicazioni possono accedere agli stessi dati contemporaneamente in modo controllato.</div>
+      <div class="prop-card-desc">Più utenti e applicazioni accedono agli stessi dati contemporaneamente, in modo coordinato e senza conflitti.</div>
     </div>
-    <div class="prop-card">
-      <div class="prop-card-icon">✅</div>
-      <div class="prop-card-title">Integrità</div>
-      <div class="prop-card-desc">Il DBMS verifica che i dati rispettino le regole definite nello schema (vincoli di integrità).</div>
-    </div>
-    <div class="prop-card">
+    <div class="prop-card" style="border-top:3px solid var(--db-blue);">
       <div class="prop-card-icon">🔐</div>
       <div class="prop-card-title">Sicurezza</div>
-      <div class="prop-card-desc">L'accesso ai dati è controllato tramite permessi: ogni utente vede e modifica solo ciò che gli è consentito.</div>
+      <div class="prop-card-desc">Permessi granulari: ogni utente vede e modifica solo i dati a cui è autorizzato. Nessun accesso incontrollato.</div>
     </div>
   </div>
 </section>
@@ -685,7 +839,7 @@ footer a:hover { color: var(--accent); }
   <h3>Attributo chiave (identificatore)</h3>
   <p>Ogni entità deve avere almeno un <strong>attributo chiave</strong> (o identificatore): un attributo il cui valore identifica univocamente ogni istanza. Nel diagramma E-R è sottolineato. Nella tabella relazionale diventerà la <strong>chiave primaria (PK)</strong>.</p>
 
-  <div class="callout warn">
+  <div class="callout warning">
     <div class="callout-icon">⚠️</div>
     <div class="callout-body">
       <strong>Attenzione agli identificatori "naturali"</strong>
@@ -702,6 +856,7 @@ footer a:hover { color: var(--accent); }
 
   <p>Oltre a entità e attributi, il diagramma E-R rappresenta le <strong>relazioni</strong> tra entità e la loro <strong>cardinalità</strong> — cioè quante istanze di un'entità possono essere associate a istanze dell'altra.</p>
 
+  <h3>Simbologia grafica</h3>
   <table class="guide-table">
     <thead><tr><th>Simbolo</th><th>Significato</th></tr></thead>
     <tbody>
@@ -757,12 +912,12 @@ footer a:hover { color: var(--accent); }
 
   <h3>Entità forte vs entità debole</h3>
   <div class="keys-grid">
-    <div class="key-card simple">
+    <div class="key-card forte">
       <div class="key-card-label">Entità forte</div>
       <div class="key-card-title">Esiste autonomamente</div>
       <div class="key-card-desc">Ha un proprio identificatore che non dipende da altre entità. Può esistere nel database indipendentemente. Es: CLIENTE, PRODOTTO.</div>
     </div>
-    <div class="key-card artificial">
+    <div class="key-card debole">
       <div class="key-card-label">Entità debole</div>
       <div class="key-card-title">Dipende da un'altra</div>
       <div class="key-card-desc">Non ha un identificatore proprio sufficiente. La sua esistenza dipende da un'entità forte. Es: RIGA_ORDINE dipende da ORDINE.</div>
@@ -774,7 +929,7 @@ footer a:hover { color: var(--accent); }
   <h3>Ridondanze</h3>
   <p>Una <strong>ridondanza</strong> nel diagramma E-R è un'informazione che può essere derivata da altre informazioni già presenti nel modello. Va identificata ed eliminata (o giustificata) durante la progettazione.</p>
 
-  <div class="callout warn">
+  <div class="callout warning">
     <div class="callout-icon">⚠️</div>
     <div class="callout-body">
       <strong>Esempio di ridondanza</strong>
@@ -820,7 +975,48 @@ footer a:hover { color: var(--accent); }
   </ul>
 
   <h3>Esempio completo — Da E-R a tabelle relazionali</h3>
-  <p>Partiamo da un semplice E-R: STUDENTE frequenta CORSO (relazione N:M).</p>
+  <p>Partiamo da questo diagramma E-R: STUDENTE frequenta CORSO (relazione N:M).</p>
+
+  <!-- Diagramma 1: E-R originale N:M -->
+  <div class="er-diagram">
+    <div class="er-entity">STUDENTE</div>
+    <div class="er-line">
+      <div class="er-line-seg"></div>
+    </div>
+    <div class="er-rel-wrap">
+      <div class="er-nm-label">N : M</div>
+      <div class="er-rel"><div class="er-rel-text">frequenta</div></div>
+    </div>
+    <div class="er-line">
+      <div class="er-line-seg"></div>
+    </div>
+    <div class="er-entity">CORSO</div>
+  </div>
+
+  <!-- Freccia di trasformazione -->
+  <div class="er-transform">
+    <div class="er-transform-arrow">↓</div>
+    <div class="er-transform-label">la relazione N:M diventa una tabella associativa<br>e produce due relazioni 1:N</div>
+  </div>
+
+  <!-- Diagramma 2: risultato — due relazioni 1:N -->
+  <div class="er-diagram" style="margin-top:0.5rem;">
+    <div class="er-entity">STUDENTE</div>
+    <div class="er-line-cards">
+      <div class="er-card-end">1</div>
+      <div class="er-line-seg"></div>
+      <div class="er-card-end">N</div>
+    </div>
+    <div class="er-entity er-entity-assoc">ISCRIZIONI</div>
+    <div class="er-line-cards">
+      <div class="er-card-end">N</div>
+      <div class="er-line-seg"></div>
+      <div class="er-card-end">1</div>
+    </div>
+    <div class="er-entity">CORSO</div>
+  </div>
+
+  <p style="text-align:center; font-size:0.82rem; color:var(--muted); margin:0.5rem 0 1.25rem;">Applicando la regola 3 (N:M → tabella associativa), otteniamo tre tabelle:</p>
 
   <div class="db-tables-row">
     <div class="db-table">
@@ -871,26 +1067,27 @@ footer a:hover { color: var(--accent); }
   </p>
 </footer>
 
-<button class="back-to-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<button class="back-to-top" id="back-to-top" aria-label="Torna su" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
-/* ── SCROLL: back-to-top + TOC scroll-spy ── */
-const tocLinks = document.querySelectorAll('.toc a');
-const sections = document.querySelectorAll('section[id]');
-
+/* ── SCROLL: back-to-top ── */
 window.addEventListener('scroll', () => {
-  /* Back to top */
-  document.getElementById('back-top').classList.toggle('visible', window.scrollY > 400);
-
-  /* Scroll spy TOC */
-  let current = '';
-  sections.forEach(s => {
-    if (window.scrollY >= s.offsetTop - 80) current = s.id;
-  });
-  tocLinks.forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-  });
+  document.getElementById('back-to-top').classList.toggle('visible', window.scrollY > 400);
 }, { passive: true });
+
+/* ── TOC scroll-spy — IntersectionObserver ── */
+const tocLinks = document.querySelectorAll('.toc a[href^="#"]');
+const sections = document.querySelectorAll('main section[id]');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      tocLinks.forEach(a => a.classList.remove('active'));
+      const active = document.querySelector('.toc a[href="#' + entry.target.id + '"]');
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-10% 0px -80% 0px', threshold: 0 });
+sections.forEach(s => observer.observe(s));
 </script>
 
 <script src="/scripts/ui.js" defer></script>

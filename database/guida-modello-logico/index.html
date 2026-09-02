@@ -50,7 +50,7 @@
 </script>
 <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <!-- Solo shared-extended — NON caricare shared.css (sistemi incompatibili) -->
-<link rel="stylesheet" href="/css/shared-extended.css?v=1">
+<link rel="stylesheet" href="/css/shared-extended.css?v=3">
 <style>
     /* ── VARIABILI LOCALI ── */
     :root {
@@ -69,20 +69,43 @@
       --radius-sm:  6px;
     }
 
-  
     /* ── MAIN ── */
     main {
-      max-width: 860px;
+      max-width: 960px;
       margin: 0 auto;
       padding: 0 1.5rem 5rem;
     }
 
     /* ── SEZIONI ── */
+    /* scroll-margin-top: compensa l'altezza della TOC sticky */
+    /* animation: ripristina fadeIn che shared-extended definisce su section */
     section {
       padding: 3rem 0 1rem;
       border-bottom: 1px solid var(--border);
+      scroll-margin-top: 70px;
+      animation: fadeIn 0.4s ease both;
     }
     section:last-child { border-bottom: none; }
+
+    /* Link incrociato tra le due guide */
+    .header-cross-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid rgba(255,255,255,0.35);
+      padding-bottom: 1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .header-cross-link:hover {
+      color: #fff;
+      border-color: rgba(255,255,255,0.8);
+    }
 
     .section-label {
       font-family: 'Space Mono', monospace;
@@ -114,7 +137,8 @@
       color: var(--db-blue);
       margin: 1.5rem 0 0.5rem;
     }
-    p { margin-bottom: 0.9rem; font-size: 0.95rem; color: #3a3835; line-height: 1.75; }
+    /* colore testo ereditato da var(--ink) via body — rimosso hardcoded #3a3835 */
+    p { margin-bottom: 0.9rem; font-size: 0.95rem; line-height: 1.75; }
 
     /* ── TABELLA DB (componente visuale) ── */
     .db-table {
@@ -145,7 +169,8 @@
       color: var(--ink);
     }
     .db-table-row:hover { background: var(--db-blue-lt); }
-    .db-table-row.attr-rel { background: #fffbe6; }
+    /* colore sfondo riga attributo di relazione — var(--note-bg) al posto di #fffbe6 */
+    .db-table-row.attr-rel { background: var(--note-bg); }
     .key-badge {
       font-size: 0.6rem;
       padding: 1px 5px;
@@ -193,12 +218,13 @@
       line-height: 1.6;
     }
     .callout-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
-    .callout-body { color: #3a3835; }
+    /* colore testo ereditato da var(--ink) — rimossa riga color: #3a3835 */
     .callout-body strong { display: block; margin-bottom: 0.2rem; }
-    .callout.tip   { background: var(--db-green-lt); border-left: 3px solid var(--db-green); }
-    .callout.warn  { background: var(--db-amber-lt); border-left: 3px solid var(--db-amber); }
-    .callout.info  { background: var(--db-blue-lt);  border-left: 3px solid var(--db-blue); }
-    .callout.error { background: var(--db-red-lt);   border-left: 3px solid var(--db-red); }
+    .callout.tip     { background: var(--db-green-lt); border-left: 3px solid var(--db-green); }
+    /* .callout.warning allineato a shared-extended (era .callout.warn) */
+    .callout.warning { background: var(--db-amber-lt); border-left: 3px solid var(--db-amber); }
+    .callout.info    { background: var(--db-blue-lt);  border-left: 3px solid var(--db-blue); }
+    .callout.error   { background: var(--db-red-lt);   border-left: 3px solid var(--db-red); }
 
     /* ── SCHEMA LOGICO ── */
     .schema-table {
@@ -249,9 +275,10 @@
     .exercise-toggle .toggle-arrow { transition: transform 0.25s; }
     .exercise-toggle.open .toggle-arrow { transform: rotate(90deg); }
 
+    /* sfondo panel esercizio — var(--bg) al posto di #faf8f4 */
     .exercise-panel {
       display: none;
-      background: #faf8f4;
+      background: var(--bg);
       border: 1.5px solid var(--border);
       border-radius: var(--radius-sm);
       padding: 1.4rem;
@@ -278,7 +305,8 @@
     .sim-table th { background: var(--db-blue); color: white; padding: 6px 10px; text-align: left; font-size: 0.72rem; }
     .sim-table td { border: 1px solid var(--border); padding: 4px 8px; background: var(--paper); }
     .sim-table .row-fixed { color: var(--muted); }
-    .sim-table .row-ok td { background: #e8f7ed; }
+    /* riga OK: var(--db-green-lt) al posto di #e8f7ed */
+    .sim-table .row-ok td { background: var(--db-green-lt); }
 
     .sim-input-row {
       display: flex;
@@ -392,7 +420,10 @@
     .nm-sim-table { width: 100%; border-collapse: collapse; font-family: 'Space Mono', monospace; font-size: 0.8rem; margin-bottom: 0.6rem; }
     .nm-sim-table th { background: var(--db-blue); color: white; padding: 5px 10px; text-align: left; }
     .nm-sim-table td { border: 1px solid var(--border); padding: 5px 10px; background: var(--paper); }
-    .nm-sim-table .cell-problem { background: #fde8e8; color: var(--db-red); font-weight: 700; }
+    /* cella problematica: var(--db-red-lt) al posto di #fde8e8 */
+    .nm-sim-table .cell-problem { background: var(--db-red-lt); color: var(--db-red); font-weight: 700; }
+    /* intestazione colonna aggiunta dinamicamente (problematica) */
+    .nm-sim-table th.col-problem-header { background: var(--db-red); color: white; }
 
     /* Esercizio ponte (s06) */
     .ponte-input { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.4rem; margin: 0.6rem 0; }
@@ -480,8 +511,12 @@
       background: var(--accent); color: white; border: none;
       border-radius: 50%; width: 40px; height: 40px;
       font-size: 1rem; cursor: pointer;
-      opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 200;
+      box-shadow: 0 2px 12px rgba(214,79,42,.35);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s, transform 0.2s;
+      z-index: 200;
     }
+    .back-to-top:hover { transform: translateY(-2px); }
     .back-to-top.visible { opacity: 1; pointer-events: auto; }
 
     /* ── RESPONSIVE ── */
@@ -503,6 +538,9 @@
       <h1>Modello Logico<br><span>Relazionale</span></h1>
       <p>Dal diagramma E-R alle tabelle: chiavi primarie, chiavi esterne, relazioni 1:N e N:M.</p>
       <div class="db-pill">8 sezioni · Esercizi interattivi · Livello base–intermedio</div>
+      <div style="display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:1.25rem;">
+        <a href="/database/guida-database/" class="header-cross-link">← Parte 1 — Basi di Dati</a>
+      </div>
     </div>
     <div style="flex-shrink:0; display:flex; flex-direction:column; align-items:center; gap:0.8rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:1.5rem 2rem;">
       <span style="font-size:2.5rem;">🔗</span>
@@ -649,7 +687,8 @@
     </tbody>
   </table>
 
-  <div class="callout warn">
+  <!-- classe allineata a shared-extended: callout.warning (era .warn) -->
+  <div class="callout warning">
     <div class="callout-icon">⚠️</div>
     <div class="callout-body">
       <strong>Attenzione — il numero di telefono è Testo, non Intero!</strong>
@@ -669,15 +708,15 @@
       <div class="drag-chip" draggable="true" data-val="Data_Ordine" data-correct="Data">Data_Ordine</div>
       <div class="drag-chip" draggable="true" data-val="Telefono" data-correct="Testo">Telefono</div>
       <div class="drag-chip" draggable="true" data-val="ID_Articolo" data-correct="Intero">ID_Articolo</div>
-	  <div class="drag-chip" draggable="true" data-val="Peso" data-correct="Decimale">Peso</div>
-	  <div class="drag-chip" draggable="true" data-val="Spedito" data-correct="Booleano">Spedito</div>
+      <div class="drag-chip" draggable="true" data-val="Peso" data-correct="Decimale">Peso</div>
+      <div class="drag-chip" draggable="true" data-val="Spedito" data-correct="Booleano">Spedito</div>
     </div>
     <div class="drop-zones" id="zones03">
       <div class="drop-zone" data-type="Testo"><div class="drop-zone-label">Testo</div></div>
       <div class="drop-zone" data-type="Intero"><div class="drop-zone-label">Intero</div></div>
       <div class="drop-zone" data-type="Decimale"><div class="drop-zone-label">Decimale</div></div>
       <div class="drop-zone" data-type="Data"><div class="drop-zone-label">Data</div></div>
-	  <div class="drop-zone" data-type="Booleano"><div class="drop-zone-label">Booleano</div></div>
+      <div class="drop-zone" data-type="Booleano"><div class="drop-zone-label">Booleano</div></div>
     </div>
     <button class="check-btn" onclick="check03()">Verifica</button>
     <div class="sim-feedback" id="fb03"></div>
@@ -755,29 +794,29 @@
 
   <p>Non si può implementare direttamente con una sola FK: se una persona possiede 3 auto, dove metto le 3 targhe nella riga della persona?</p>
 
-	<button class="exercise-toggle" onclick="toggleExercise('ex05')">
-		<span>▶</span> <span class="toggle-arrow">›</span> Mettiti alla prova — Prova ad aggiungere una 4ª auto
-	  </button>
-	  <div class="exercise-panel" id="ex05">
-		<h4>⬡ Tentativo sbagliato: colonne Targa nella tabella PERSONA</h4>
-		<p style="font-size:0.82rem; color:var(--muted); margin-bottom:0.8rem;">Mario Rossi (XXX) ha già 3 auto. Prova ad aggiungerne una quarta.</p>
+  <button class="exercise-toggle" onclick="toggleExercise('ex05')">
+    <span>▶</span> <span class="toggle-arrow">›</span> Mettiti alla prova — Prova ad aggiungere una 4ª auto
+  </button>
+  <div class="exercise-panel" id="ex05">
+    <h4>⬡ Tentativo sbagliato: colonne Targa nella tabella PERSONA</h4>
+    <p style="font-size:0.82rem; color:var(--muted); margin-bottom:0.8rem;">Mario Rossi (XXX) ha già 3 auto. Prova ad aggiungerne una quarta.</p>
 
-		<table class="nm-sim-table" id="sim05-table">
-		  <thead><tr><th>CF (PK)</th><th>Nome</th><th id="sim05-col1">Targa1</th><th id="sim05-col2">Targa2</th><th id="sim05-col3">Targa3</th></tr></thead>
-		  <tbody id="sim05-body">
-			<tr><td>XXX</td><td>Mario Rossi</td><td>XY123AD</td><td>AB123QC</td><td>ZZ999XX</td></tr>
-			<tr><td>YYY</td><td>Antonio Verdi</td><td>AA122BB</td><td></td><td></td></tr>
-			<tr><td>ZZZ</td><td>Silvia Martini</td><td>XY123AC</td><td></td><td></td></tr>
-		  </tbody>
-		</table>
+    <table class="nm-sim-table" id="sim05-table">
+      <thead><tr><th>CF (PK)</th><th>Nome</th><th id="sim05-col1">Targa1</th><th id="sim05-col2">Targa2</th><th id="sim05-col3">Targa3</th></tr></thead>
+      <tbody id="sim05-body">
+        <tr><td>XXX</td><td>Mario Rossi</td><td>XY123AD</td><td>AB123QC</td><td>ZZ999XX</td></tr>
+        <tr><td>YYY</td><td>Antonio Verdi</td><td>AA122BB</td><td></td><td></td></tr>
+        <tr><td>ZZZ</td><td>Silvia Martini</td><td>XY123AC</td><td></td><td></td></tr>
+      </tbody>
+    </table>
 
-		<div class="sim-input-row" id="sim05-input">
-		  <input type="text" id="sim05-targa" placeholder="Nuova targa" maxlength="10" style="width:130px;">
-		  <button class="sim-btn sim-btn-add" onclick="sim05Add()">Aggiungi auto</button>
-		  <button class="sim-btn sim-btn-reset" onclick="sim05Reset()">Reset</button>
-		</div>
-		<div class="sim-feedback" id="fb05"></div>
-	  </div>
+    <div class="sim-input-row" id="sim05-input">
+      <input type="text" id="sim05-targa" placeholder="Nuova targa" maxlength="10" style="width:130px;">
+      <button class="sim-btn sim-btn-add" onclick="sim05Add()">Aggiungi auto</button>
+      <button class="sim-btn sim-btn-reset" onclick="sim05Reset()">Reset</button>
+    </div>
+    <div class="sim-feedback" id="fb05"></div>
+  </div>
 </section>
 
 <!-- ─── S06 · TABELLA ASSOCIATIVA ─── -->
@@ -829,16 +868,16 @@
       Persone: XXX (Rossi), YYY (Verdi), ZZZ (Martini) &nbsp;|&nbsp; Auto: XY123AD, AA122BB, AB123QC<br>
       Inserisci alcune combinazioni. Prova a ripetere la stessa coppia CF+Targa!
     </p>
-	<table class="sim-table" id="sim06-table">
-	  <thead><tr><th>CF (PK·FK)</th><th>Targa (PK·FK)</th><th>Data_Inizio *</th><th>Data_Fine</th></tr></thead>
-	  <tbody id="sim06-body"></tbody>
-	</table>
-	<div class="ponte-input">
-	  <input type="text" id="p06-cf" placeholder="CF (XXX/YYY/ZZZ)" maxlength="6">
-	  <input type="text" id="p06-targa" placeholder="Targa" maxlength="10">
-	  <input type="text" id="p06-data" placeholder="Data_Inizio *" maxlength="12">
-	  <input type="text" id="p06-datafine" placeholder="Data_Fine (opz.)" maxlength="12">
-	</div>
+    <table class="sim-table" id="sim06-table">
+      <thead><tr><th>CF (PK·FK)</th><th>Targa (PK·FK)</th><th>Data_Inizio *</th><th>Data_Fine</th></tr></thead>
+      <tbody id="sim06-body"></tbody>
+    </table>
+    <div class="ponte-input">
+      <input type="text" id="p06-cf" placeholder="CF (XXX/YYY/ZZZ)" maxlength="6">
+      <input type="text" id="p06-targa" placeholder="Targa" maxlength="10">
+      <input type="text" id="p06-data" placeholder="Data_Inizio *" maxlength="12">
+      <input type="text" id="p06-datafine" placeholder="Data_Fine (opz.)" maxlength="12">
+    </div>
     <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
       <button class="sim-btn sim-btn-add" onclick="sim06Insert()">Inserisci</button>
       <button class="sim-btn sim-btn-reset" onclick="sim06Reset()">Reset</button>
@@ -884,21 +923,28 @@
     <span>▶</span> <span class="toggle-arrow">›</span> Mettiti alla prova — Dove metti il Voto?
   </button>
   <div class="exercise-panel" id="ex07">
-    <h4>⬡ Scenario: studenti e materie. Dove metti il Voto?</h4>
+    <h4>⬡ Scenario: studenti e materie. Dove appartiene ogni attributo?</h4>
     <p style="font-size:0.82rem; color:var(--muted); margin-bottom:0.8rem;">
-      Hai tre tabelle: STUDENTI, ESAMI (tabella associativa), MATERIE.<br>
-      Il <strong>Voto</strong> ottenuto in un esame — dove appartiene?
+      Hai tre tabelle: <strong>STUDENTI</strong>, <strong>ESAMI</strong> (tabella associativa), <strong>MATERIE</strong>.<br>
+      Trascina ogni attributo nella tabella a cui appartiene, poi premi Verifica.
     </p>
     <div class="drag-area" id="pool07">
-      <div class="drag-chip" draggable="true" data-val="Voto" data-correct="ESAMI">Voto</div>
+      <div class="drag-chip" draggable="true" data-val="Voto"           data-correct="ESAMI">Voto</div>
+      <div class="drag-chip" draggable="true" data-val="Data_Esame"     data-correct="ESAMI">Data_Esame</div>
+      <div class="drag-chip" draggable="true" data-val="Cognome"        data-correct="STUDENTI">Cognome</div>
+      <div class="drag-chip" draggable="true" data-val="Anno_Corso"     data-correct="STUDENTI">Anno_Corso</div>
+      <div class="drag-chip" draggable="true" data-val="Denominazione"  data-correct="MATERIE">Denominazione</div>
     </div>
     <div class="attr-rel-zones" id="zones07">
       <div class="attr-zone" data-type="STUDENTI"><div class="attr-zone-label">STUDENTI</div></div>
       <div class="attr-zone" data-type="ESAMI"><div class="attr-zone-label">ESAMI</div></div>
       <div class="attr-zone" data-type="MATERIE"><div class="attr-zone-label">MATERIE</div></div>
     </div>
+    <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+      <button class="sim-btn sim-btn-add" onclick="check07()">Verifica</button>
+      <button class="sim-btn sim-btn-reset" onclick="reset07()">Ricomincia</button>
+    </div>
     <div class="sim-feedback" id="fb07"></div>
-    <button class="sim-btn sim-btn-reset" style="margin-top:0.5rem" onclick="reset07()">Ricomincia</button>
   </div>
 </section>
 
@@ -928,7 +974,7 @@
       <div class="schema-chip" draggable="true" data-val="Nome" data-correct="STUDENTI">Nome</div>
       <div class="schema-chip" draggable="true" data-val="ID_Corso" data-correct="CORSI" data-key="pk">ID_Corso</div>
       <div class="schema-chip" draggable="true" data-val="Denominazione" data-correct="CORSI">Denominazione</div>
-      <div class="schema-chip" draggable="true" data-val="Data_Inizio" data-correct="CORSI">Data_Inizio</div>
+      <div class="schema-chip" draggable="true" data-val="Data_Avvio" data-correct="CORSI">Data_Avvio</div>
       <div class="schema-chip" draggable="true" data-val="Docente" data-correct="CORSI">Docente</div>
       <div class="schema-chip" draggable="true" data-val="FK_CF_Stud" data-correct="ISCRIZIONI" data-key="pkfk">FK_CF_Stud</div>
       <div class="schema-chip" draggable="true" data-val="FK_ID_Corso" data-correct="ISCRIZIONI" data-key="pkfk">FK_ID_Corso</div>
@@ -978,7 +1024,7 @@
 <!-- ══════════════════ JS ══════════════════ -->
 <script>
 
-/* ── TOC active on scroll ── */
+/* ── TOC scroll-spy — IntersectionObserver (già presente, nessuna modifica) ── */
 const navLinks = document.querySelectorAll('nav.toc a[href^="#"]');
 const sections = document.querySelectorAll('main section[id]');
 const observer = new IntersectionObserver(entries => {
@@ -992,11 +1038,11 @@ const observer = new IntersectionObserver(entries => {
 }, { rootMargin: '-10% 0px -80% 0px', threshold: 0 });
 sections.forEach(s => observer.observe(s));
 
-/* Back to top */
+/* ── Back to top ── */
 const btt = document.getElementById('back-to-top');
-window.addEventListener('scroll', () => btt.classList.toggle('visible', window.scrollY > 300));
+window.addEventListener('scroll', () => btt.classList.toggle('visible', window.scrollY > 300), { passive: true });
 
-/* Smooth scroll */
+/* ── Smooth scroll ── */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
@@ -1136,7 +1182,6 @@ function checkFK04(el, correct) {
   }
 }
 
-
 /* ═══ S05 — Simulatore N:M problema ═══ */
 let sim05cols = 3;
 
@@ -1150,7 +1195,7 @@ function sim05Add() {
     return;
   }
 
-  // Controlla duplicati nelle celle di XXX (prima riga)
+  /* Controlla duplicati nelle celle di XXX (prima riga) */
   const primaRiga = document.querySelectorAll('#sim05-body tr')[0];
   const targeEsistenti = [...primaRiga.querySelectorAll('td')].slice(2).map(td => td.textContent.trim());
   if (targeEsistenti.includes(targa)) {
@@ -1160,22 +1205,21 @@ function sim05Add() {
   }
 
   sim05cols++;
-  // Aggiungi intestazione nuova colonna
+
+  /* Intestazione nuova colonna — stile via classe CSS, non inline */
   const thead = document.querySelector('#sim05-table thead tr');
   const th = document.createElement('th');
   th.textContent = 'Targa' + sim05cols;
-  th.style.background = '#b02020';
+  th.classList.add('col-problem-header');
   thead.appendChild(th);
 
-  // Aggiungi cella a tutte le righe
+  /* Cella nuova colonna per ogni riga — stile via classe CSS, non inline */
   const rows = document.querySelectorAll('#sim05-body tr');
   rows.forEach((row, i) => {
     const td = document.createElement('td');
     if (i === 0) {
       td.textContent = targa;
-      td.style.background = '#fde8e8';
-      td.style.color = '#b02020';
-      td.style.fontWeight = '700';
+      td.classList.add('cell-problem');
     }
     row.appendChild(td);
   });
@@ -1193,9 +1237,7 @@ function sim05Reset() {
   const table = document.getElementById('sim05-table');
   const thead = table.querySelector('thead tr');
   const tbody = document.getElementById('sim05-body');
-  // Ripristina intestazioni
   thead.innerHTML = '<th>CF (PK)</th><th>Nome</th><th>Targa1</th><th>Targa2</th><th>Targa3</th>';
-  // Ripristina righe
   tbody.innerHTML = `
     <tr><td>XXX</td><td>Mario Rossi</td><td>XY123AD</td><td>AB123QC</td><td>ZZ999XX</td></tr>
     <tr><td>YYY</td><td>Antonio Verdi</td><td>AA122BB</td><td></td><td></td></tr>
@@ -1203,7 +1245,6 @@ function sim05Reset() {
   const fb = document.getElementById('fb05');
   fb.className = 'sim-feedback'; fb.textContent = '';
 }
-
 
 /* ═══ S06 — Tabella associativa POSSESSO ═══ */
 let sim06rows = [];
@@ -1221,11 +1262,11 @@ function sim06Render() {
 }
 
 function sim06Insert() {
-  const cf    = document.getElementById('p06-cf').value.trim().toUpperCase();
-  const targa = document.getElementById('p06-targa').value.trim().toUpperCase();
-  const data  = document.getElementById('p06-data').value.trim();
+  const cf       = document.getElementById('p06-cf').value.trim().toUpperCase();
+  const targa    = document.getElementById('p06-targa').value.trim().toUpperCase();
+  const data     = document.getElementById('p06-data').value.trim();
   const datafine = document.getElementById('p06-datafine').value.trim();
-  const fb    = document.getElementById('fb06');
+  const fb       = document.getElementById('fb06');
   if (!cf || !targa || !data) {
     fb.className = 'sim-feedback err';
     fb.textContent = '❌ CF, Targa e Data_Inizio sono obbligatori. La data di fine possesso può essere vuota (auto ancora posseduta).';
@@ -1241,14 +1282,14 @@ function sim06Insert() {
     fb.textContent = `❌ CF "${cf}" non esiste in PERSONA. La FK deve puntare a un valore esistente — usa XXX, YYY o ZZZ.`;
     return;
   }
-	sim06rows.push({ cf, targa, data, datafine });
-	  sim06Render();
-	  fb.className = 'sim-feedback ok';
-	  fb.textContent = `✅ Inserita: ${cf} possiede ${targa} dal ${data}${datafine ? ' al ' + datafine : ' (ancora in possesso)'}. PK composta unica — nessuna violazione.`;
-	  document.getElementById('p06-cf').value = '';
-	  document.getElementById('p06-targa').value = '';
-	  document.getElementById('p06-data').value = '';
-	  document.getElementById('p06-datafine').value = '';
+  sim06rows.push({ cf, targa, data, datafine });
+  sim06Render();
+  fb.className = 'sim-feedback ok';
+  fb.textContent = `✅ Inserita: ${cf} possiede ${targa} dal ${data}${datafine ? ' al ' + datafine : ' (ancora in possesso)'}. PK composta unica — nessuna violazione.`;
+  document.getElementById('p06-cf').value = '';
+  document.getElementById('p06-targa').value = '';
+  document.getElementById('p06-data').value = '';
+  document.getElementById('p06-datafine').value = '';
 }
 
 function sim06Reset() {
@@ -1256,43 +1297,77 @@ function sim06Reset() {
   const fb = document.getElementById('fb06'); fb.className = 'sim-feedback'; fb.textContent = '';
 }
 
-/* ═══ S07 — Drag attributo di relazione ═══ */
+/* ═══ S07 — Drag attributo di relazione (multi-chip) ═══ */
 let dragged07 = null;
 
 function init07() {
+  /* Attiva dragstart su tutti i chip del pool */
   document.querySelectorAll('#pool07 .drag-chip').forEach(chip => {
     chip.addEventListener('dragstart', e => { dragged07 = chip; e.dataTransfer.effectAllowed = 'move'; });
   });
+
+  /* Zone di destinazione: accettano più chip */
   document.querySelectorAll('#zones07 .attr-zone').forEach(zone => {
     zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
     zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
     zone.addEventListener('drop', e => {
       e.preventDefault(); zone.classList.remove('drag-over');
       if (!dragged07) return;
-      document.querySelectorAll('#zones07 .drag-chip').forEach(c => c.remove());
+      /* Rimuovi classi esito precedente */
+      dragged07.classList.remove('correct', 'wrong');
       zone.appendChild(dragged07);
       dragged07 = null;
-      const correct = zone.dataset.type === 'ESAMI';
-      const fb = document.getElementById('fb07');
-      if (correct) {
-        fb.className = 'sim-feedback ok';
-        fb.textContent = '✅ Esatto! Il Voto non appartiene allo studente (ogni studente ha voti diversi per materia diversa) né alla materia (la stessa materia ha voti diversi per studente diverso). Appartiene alla relazione studente–materia → va in ESAMI.';
-      } else {
-        fb.className = 'sim-feedback err';
-        fb.textContent = `❌ Non corretto. Il Voto non appartiene a ${zone.dataset.type}. Pensa: lo stesso studente può avere voti diversi in materie diverse, e la stessa materia riceve voti diversi da studenti diversi. È un attributo della relazione.`;
-      }
     });
   });
+
+  /* Pool: permette di rimettere un chip nel pool */
   const pool07 = document.getElementById('pool07');
   pool07.addEventListener('dragover', e => { e.preventDefault(); });
   pool07.addEventListener('drop', e => {
     e.preventDefault();
-    if (dragged07) { pool07.appendChild(dragged07); dragged07 = null; }
+    if (dragged07) {
+      dragged07.classList.remove('correct', 'wrong');
+      pool07.appendChild(dragged07);
+      dragged07 = null;
+    }
   });
 }
 
+function check07() {
+  /* Controlla solo i chip già posizionati nelle zone */
+  let total = 0, correct = 0;
+  document.querySelectorAll('#zones07 .attr-zone').forEach(zone => {
+    zone.querySelectorAll('.drag-chip').forEach(chip => {
+      total++;
+      if (chip.dataset.correct === zone.dataset.type) {
+        chip.classList.add('correct'); chip.classList.remove('wrong'); correct++;
+      } else {
+        chip.classList.add('wrong'); chip.classList.remove('correct');
+      }
+    });
+  });
+  const inPool = document.querySelectorAll('#pool07 .drag-chip').length;
+  const fb = document.getElementById('fb07');
+  if (inPool > 0 && total === 0) {
+    fb.className = 'sim-feedback err';
+    fb.textContent = '❌ Trascina almeno un attributo in una delle tre tabelle prima di verificare.';
+    return;
+  }
+  if (correct === total && inPool === 0) {
+    fb.className = 'sim-feedback ok';
+    fb.textContent = `✅ Perfetto! Tutti e ${total} gli attributi sono nella tabella corretta. Voto e Data_Esame sono attributi di relazione (vanno in ESAMI); Cognome e Anno_Corso appartengono allo STUDENTE; Denominazione descrive la MATERIA.`;
+  } else {
+    fb.className = 'sim-feedback err';
+    fb.textContent = `${correct}/${total} corretti${inPool > 0 ? ` — hai ancora ${inPool} attributo/i nel pool` : ''}. Gli attributi evidenziati in rosso sono posizionati nella tabella sbagliata.`;
+  }
+}
+
 function reset07() {
-  document.querySelectorAll('#zones07 .drag-chip').forEach(c => document.getElementById('pool07').appendChild(c));
+  const pool = document.getElementById('pool07');
+  document.querySelectorAll('#zones07 .drag-chip').forEach(c => {
+    c.classList.remove('correct', 'wrong');
+    pool.appendChild(c);
+  });
   const fb = document.getElementById('fb07'); fb.className = 'sim-feedback'; fb.textContent = '';
 }
 
@@ -1318,7 +1393,7 @@ function check08() {
   const fb = document.getElementById('fb08');
   const correct08 = {
     STUDENTI:   ['CF_Stud', 'Cognome', 'Nome'],
-    CORSI:      ['ID_Corso', 'Denominazione', 'Data_Inizio', 'Docente'],
+    CORSI:      ['ID_Corso', 'Denominazione', 'Data_Avvio', 'Docente'],
     ISCRIZIONI: ['FK_CF_Stud', 'FK_ID_Corso', 'Data_Iscrizione']
   };
   let ok = 0, tot = 0, errors = [];
@@ -1360,9 +1435,6 @@ function reset08() {
   const fb = document.getElementById('fb08'); fb.className = 'sim-feedback'; fb.textContent = '';
 }
 
-
-
-
 /* ── Init al caricamento ── */
 document.addEventListener('DOMContentLoaded', () => {
   sim02Render();
@@ -1370,8 +1442,6 @@ document.addEventListener('DOMContentLoaded', () => {
   init07();
   init08();
 });
-
-
 
 </script>
 <script src="/scripts/ui.js" defer></script>
