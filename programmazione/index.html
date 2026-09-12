@@ -346,7 +346,7 @@
       background: var(--hub-surface);
       border: 1px solid var(--hub-border);
       border-radius: 12px; overflow: hidden;
-      height: 480px; position: relative;
+      height: 580px; position: relative;
     }
     #hub-map-svg { width: 100%; height: 100%; }
 
@@ -394,7 +394,7 @@
     @media (max-width: 600px) {
       .hub-header { padding: 2.5rem 1rem 2rem; }
       .hub-grid   { grid-template-columns: 1fr; }
-      #hub-map-container { height: 360px; }
+      #hub-map-container { height: 440px; }
       .hub-tab    { padding: 0.6rem 1rem; font-size: 0.82rem; }
     }
   </style>
@@ -494,6 +494,19 @@
       <small>Segui l'ordine per una progressione ottimale</small>
     </div>
     <ol class="hub-path-list" id="hub-path-list">
+
+      <!-- PREREQUISITO: Setup ambiente -->
+      <li class="hub-path-item" style="opacity:.55;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--hub-muted);margin-left:.25rem">
+        0 &mdash; Prerequisito · Setup ambiente
+      </li>
+      <li class="hub-path-item">
+        <div class="hub-path-num" style="background:rgba(86,207,178,.55)">0</div>
+        <div class="hub-path-label">
+          <a href="/programmazione/setup-vscode-cpp/" style="color:inherit;text-decoration:none;">Configurare VS Code per C++</a>
+          <small>VS Code, MSYS2, MinGW-w64, g++, variabili d'ambiente, Hello World</small>
+        </div>
+      </li>
+      <div class="hub-path-arrow">&darr;</div>
 
       <!-- GRUPPO A: Fondamenti -->
       <li class="hub-path-item" style="opacity:.55;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--hub-muted);margin-left:.25rem">
@@ -635,6 +648,9 @@
     } catch (e) {
       /* fallback hardcoded per sviluppo locale */
       return [
+        { path: '/programmazione/setup-vscode-cpp/', label: 'Configurare VS Code per C++', short: 'Setup VS Code',
+          cat: 'guide', emoji: '🛠️', meta: '12 screenshot · Guida Word scaricabile · Windows 10/11',
+          description: 'Installa VS Code e g++ su Windows con MSYS2. 12 screenshot passo per passo.', active: true },
         { path: '/programmazione/fondamenti-algoritmi/', label: 'Fondamenti della Programmazione', short: 'Fondamenti',
           cat: 'guide', emoji: '🧩', meta: '7 sezioni · Prerequisiti · C++',
           description: 'Algoritmi, variabili, costanti, I/O, condizioni e cicli prima di scrivere codice.', active: true },

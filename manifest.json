@@ -1270,6 +1270,48 @@
     },
 
     {
+        "path": "/programmazione/setup-vscode-cpp/",
+        "label": "Configurare VS Code per C++",
+        "short": "Setup VS Code",
+        "cat": "guide",
+        "emoji": "🛠️",
+        "tags": [
+            "vscode",
+            "vs code",
+            "visual studio code",
+            "c++",
+            "msys2",
+            "mingw",
+            "ucrt64",
+            "compilatore",
+            "g++",
+            "gdb",
+            "make",
+            "setup",
+            "installazione",
+            "windows",
+            "variabili d'ambiente",
+            "path",
+            "programmazione",
+            "itis",
+            "sia"
+        ],
+        "meta": "12 screenshot · Guida Word scaricabile · Windows 10/11",
+        "description": "Installa e configura VS Code con il compilatore g++ su Windows: MSYS2, MinGW-w64 UCRT64, variabili d'ambiente e primo Hello World. 12 screenshot passo per passo.",
+        "featured": false,
+        "active": true,
+        "hub": "/programmazione/",
+        "order": -1,
+        "digcomp": [
+            "DC 5.1"
+        ],
+        "digcomp_level": "foundation",
+        "digcompedu": [
+            "DCEdu 2.2"
+        ]
+    },
+
+    {
         "path": "/programmazione/fondamenti-algoritmi/",
         "label": "Fondamenti della Programmazione",
         "short": "Fondamenti",

@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurare VS Code per C++ — Formazione Digitale</title>
+  <meta name="description" content="Installazione passo per passo di VS Code e g++ su Windows: MSYS2, MinGW-w64 UCRT64, variabili d'ambiente e primo programma C++. 12 screenshot.">
+  <meta name="author" content="Cristiano De Pasquale">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://formazione-digitale.it/programmazione/setup-vscode-cpp/">
+  <link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="//gc.zgo.at">
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#7c5cfc">
+  <meta property="og:title" content="Configurare VS Code per C++ — Formazione Digitale">
+  <meta property="og:description" content="Guida completa: installa VS Code e g++ su Windows con MSYS2. 12 screenshot passo per passo.">
+  <meta property="og:url" content="https://formazione-digitale.it/programmazione/setup-vscode-cpp/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Formazione Digitale">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Configurare VS Code per C++ — Formazione Digitale">
+  <meta name="twitter:description" content="Guida completa: installa VS Code e g++ su Windows con MSYS2. 12 screenshot passo per passo.">
+  <meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"HowTo","name":"Configurare VS Code per C++ su Windows","url":"https://formazione-digitale.it/programmazione/setup-vscode-cpp/","inLanguage":"it","teaches":["Visual Studio Code","g++","MSYS2","MinGW-w64","compilatore C++","variabili d'ambiente","Hello World"],"totalTime":"PT30M","estimatedCost":{"@type":"MonetaryAmount","currency":"EUR","value":"0"},"author":{"@type":"Person","name":"Cristiano De Pasquale"},"publisher":{"@type":"Organization","name":"Formazione Digitale","url":"https://formazione-digitale.it"}}
+  </script>
+
+  <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/shared-extended.css?v=1">
+
+  <style>
+    /* ══════════════════════════════════════════════════════════
+       PALETTE PROGRAMMAZIONE — stessa di gestione-file
+       Tema scuro con accent viola/indaco
+    ══════════════════════════════════════════════════════════ */
+    :root {
+      --prog-bg:      #0f1117;
+      --prog-surface: #1a1d27;
+      --prog-card:    #21253a;
+      --prog-border:  #2e3350;
+      --prog-accent:  #7c5cfc;
+      --prog-accent2: #56cfb2;
+      --prog-accent3: #f9a03f;
+      --prog-red:     #e05c5c;
+      --prog-text:    #d4d8f0;
+      --prog-muted:   #7a7f9a;
+      --prog-code-bg: #131620;
+      --kw-type:    #79b8ff;
+      --kw-keyword: #f97583;
+      --kw-comment: #6a737d;
+      --kw-string:  #9ecbff;
+      --kw-number:  #b392f0;
+      --kw-func:    #56cfb2;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Sora', sans-serif;
+      background: var(--prog-bg);
+      color: var(--prog-text);
+      line-height: 1.75;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--prog-surface);
+      border-bottom: 3px solid var(--prog-accent);
+      padding: 2.5rem 2rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: var(--prog-accent);
+      opacity: 0.07;
+      pointer-events: none;
+    }
+    .header-back-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.78rem; color: var(--prog-muted);
+      text-decoration: none; transition: color 0.2s;
+      position: absolute; top: 1rem; left: 1.5rem;
+    }
+    .header-back-link:hover { color: var(--prog-text); }
+    .header-badge {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      background: var(--prog-accent);
+      color: white;
+      padding: 3px 10px;
+      border-radius: 3px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    header h1 {
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: #ffffff;
+    }
+    header h1 span { color: var(--prog-accent); }
+    header p {
+      margin-top: 0.75rem;
+      color: var(--prog-muted);
+      font-size: 0.95rem;
+      max-width: 620px;
+    }
+    .header-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; }
+    .header-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 4px 12px; border-radius: 20px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem; color: var(--prog-muted);
+    }
+    .header-download {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(124,92,252,0.15);
+      border: 1px solid rgba(124,92,252,0.35);
+      color: var(--prog-accent);
+      padding: 4px 14px; border-radius: 20px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem; text-decoration: none;
+      transition: all 0.18s;
+    }
+    .header-download:hover { background: rgba(124,92,252,0.28); color: #fff; }
+
+    /* ── TOC ── */
+    .toc-wrap {
+      position: sticky; top: 0; z-index: 100;
+      background: #1a1a18;
+      border-bottom: 3px solid var(--prog-accent);
+    }
+    nav.toc {
+      padding: 0.7rem 1.5rem;
+      display: flex; flex-wrap: wrap; gap: 0.25rem;
+      align-items: center; justify-content: center;
+      max-width: 980px; margin: 0 auto;
+    }
+    nav.toc a {
+      font-size: 0.82rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 500;
+      color: #aaa9a0;
+      text-decoration: none;
+      padding: 5px 13px; border-radius: 20px;
+      border: 1px solid transparent;
+      transition: all 0.18s; white-space: nowrap;
+    }
+    nav.toc a:hover { background: rgba(255,255,255,0.1); color: white; border-color: rgba(255,255,255,0.2); }
+    nav.toc a.active { background: var(--prog-accent); color: white; border-color: var(--prog-accent); font-weight: 700; }
+    @media (max-width: 600px) {
+      nav.toc { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; }
+      nav.toc::-webkit-scrollbar { display: none; }
+    }
+
+    /* ── LAYOUT ── */
+    main { max-width: 980px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+
+    /* ── SEZIONI ── */
+    section { margin-bottom: 4.5rem; scroll-margin-top: 70px; }
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem; font-weight: 700;
+      color: var(--prog-accent);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    h2 {
+      font-size: 1.65rem; font-weight: 700;
+      color: #ffffff; letter-spacing: -0.02em;
+      border-bottom: 2px solid var(--prog-border);
+      padding-bottom: 0.6rem; margin-bottom: 1.5rem;
+    }
+    h3 { font-size: 1.05rem; font-weight: 600; color: var(--prog-accent2); margin: 2rem 0 0.8rem; }
+
+    p { margin-bottom: 1rem; color: var(--prog-text); font-size: 0.97rem; line-height: 1.85; }
+
+    /* ── CALLOUT BOX ── */
+    .box {
+      border-radius: 6px; padding: 1rem 1.25rem;
+      margin: 1.25rem 0; font-size: 0.92rem;
+      border-left: 3px solid; line-height: 1.75;
+    }
+    .box-info { background: rgba(86,207,178,0.08);  border-color: var(--prog-accent2); }
+    .box-warn { background: rgba(249,160,63,0.10);  border-color: var(--prog-accent3); }
+    .box-tip  { background: rgba(124,92,252,0.08);  border-color: var(--prog-accent); }
+    .box-red  { background: rgba(224,92,92,0.10);   border-color: var(--prog-red); }
+    .box strong { display: block; margin-bottom: 0.35rem; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.85; }
+
+    /* ── BLOCCO CODICE ── */
+    .code-block {
+      background: var(--prog-code-bg);
+      border: 1px solid var(--prog-border);
+      border-radius: 8px; margin: 1.5rem 0; overflow: hidden;
+    }
+    .code-header {
+      background: var(--prog-card); padding: 0.5rem 1rem;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--prog-border);
+    }
+    .code-lang { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--prog-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    .code-dots { display: flex; gap: 5px; }
+    .code-dot  { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #e05c5c; } .dot-y { background: #f9a03f; } .dot-g { background: #56cfb2; }
+    pre {
+      padding: 1.25rem 1.5rem; overflow-x: auto;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.83rem; line-height: 1.65;
+      tab-size: 4; color: var(--prog-text);
+    }
+    .kw { color: var(--kw-keyword); font-weight: 700; }
+    .tp { color: var(--kw-type); }
+    .fn { color: var(--kw-func); }
+    .cm { color: var(--kw-comment); font-style: italic; }
+    .nm { color: var(--kw-number); }
+    .st { color: var(--kw-string); }
+    .pp { color: #ff9f43; }
+
+    /* ── COPY BUTTON ── */
+    .copy-btn {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
+      color: var(--prog-muted); background: none;
+      border: 1px solid var(--prog-border); border-radius: 4px;
+      padding: 2px 8px; cursor: pointer; transition: all 0.18s; white-space: nowrap;
+    }
+    .copy-btn:hover  { color: var(--prog-accent2); border-color: var(--prog-accent2); }
+    .copy-btn.copied { color: var(--prog-accent2); border-color: var(--prog-accent2); }
+
+    /* ── STEP LIST ── */
+    .step-list {
+      counter-reset: steps; list-style: none;
+      padding: 0; margin: 0.5rem 0 1.25rem;
+    }
+    .step-list li {
+      counter-increment: steps;
+      display: flex; gap: 0.85rem; align-items: flex-start;
+      margin-bottom: 0.85rem; font-size: 0.95rem; line-height: 1.8;
+    }
+    .step-list li::before {
+      content: counter(steps);
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 26px; height: 26px;
+      background: var(--prog-accent); color: #fff;
+      border-radius: 50%; font-size: 0.75rem; font-weight: 700;
+      flex-shrink: 0; margin-top: 0.2rem;
+      font-family: 'Space Mono', monospace;
+    }
+    .step-list li ul { padding-left: 1.25rem; margin-top: 0.35rem; }
+    .step-list li ul li { list-style: disc; display: list-item; margin-bottom: 0.2rem; font-size: 0.9rem; }
+    .step-list li ul li::before { display: none; }
+
+    code {
+      font-family: 'Space Mono', monospace; font-size: 0.82em;
+      background: var(--prog-card); color: var(--prog-accent2);
+      padding: .15em .45em; border-radius: 3px;
+    }
+    pre code { background: none; color: inherit; padding: 0; font-size: 1em; }
+
+    kbd {
+      display: inline-flex; align-items: center;
+      font-family: 'Space Mono', monospace; font-size: 0.8rem;
+      background: var(--prog-card); color: var(--prog-text);
+      border: 1px solid var(--prog-border); border-bottom: 3px solid var(--prog-border);
+      border-radius: 4px; padding: .1rem .45rem; white-space: nowrap;
+    }
+
+    /* ── SCREENSHOT ── */
+    .guide-img {
+      display: block;
+      max-width: min(720px, 100%);
+      width: auto; height: auto;
+      border-radius: 8px;
+      border: 1px solid var(--prog-border);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+      margin: 1rem auto 0.4rem;
+    }
+    .guide-img-caption {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem; color: var(--prog-muted);
+      text-align: center; margin-bottom: 1.25rem;
+    }
+
+    /* ── PREREQUISITI GRID ── */
+    .prereq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.85rem; margin: 1rem 0 1.25rem;
+    }
+    .prereq-item {
+      display: flex; align-items: flex-start; gap: 0.7rem;
+      background: var(--prog-surface);
+      border: 1px solid var(--prog-border);
+      border-radius: 8px; padding: 0.85rem 1rem;
+    }
+    .prereq-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .prereq-text { font-size: 0.87rem; line-height: 1.5; }
+    .prereq-text strong { display: block; color: var(--prog-accent2); font-weight: 600; margin-bottom: 0.15rem; }
+
+    /* ── LINK CARDS ── */
+    .link-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.75rem; margin: 0.75rem 0 1.25rem;
+    }
+    .link-card {
+      display: flex; align-items: center; gap: 0.7rem;
+      background: var(--prog-surface);
+      border: 1px solid var(--prog-border);
+      border-radius: 8px; padding: 0.85rem 1rem;
+      text-decoration: none; color: var(--prog-text);
+      font-size: 0.88rem; font-weight: 500;
+      transition: all 0.18s;
+    }
+    .link-card:hover { border-color: var(--prog-accent); color: var(--prog-accent); transform: translateY(-2px); }
+    .link-card-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .link-card-sub { font-size: 0.73rem; color: var(--prog-muted); font-weight: 400; display: block; }
+
+    /* ── CHECKLIST RIEPILOGO ── */
+    .checklist { list-style: none; padding: 0; margin: 0.75rem 0 1.25rem; }
+    .checklist li {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--prog-border);
+      font-size: 0.92rem;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist li::before {
+      content: '✓';
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 22px; height: 22px;
+      background: var(--prog-accent2); color: #0f1117;
+      border-radius: 50%; font-size: 0.72rem; font-weight: 700; flex-shrink: 0;
+    }
+
+    /* ── TABELLA CLASSI STREAM ── */
+    .data-table {
+      width: 100%; border-collapse: collapse;
+      margin: 1.25rem 0; font-size: 0.88rem;
+      border-radius: 8px; overflow: hidden;
+      border: 1px solid var(--prog-border);
+    }
+    .data-table th {
+      background: var(--prog-card); color: var(--prog-accent);
+      padding: 0.65rem 1rem; text-align: left;
+      font-family: 'Space Mono', monospace; font-size: 0.75rem;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      border-bottom: 2px solid var(--prog-border);
+    }
+    .data-table td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--prog-border); vertical-align: middle; }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2.5rem 1rem;
+      color: var(--prog-muted); font-size: 0.85rem;
+      border-top: 1px solid var(--prog-border); margin-top: 2rem;
+    }
+    footer a { color: var(--prog-accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .footer-nav { margin-bottom: 0.75rem; font-size: 0.82rem; }
+
+    /* ── BACK TO TOP ── */
+    .back-to-top {
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--prog-accent); color: white; border: none;
+      font-size: 1.1rem; cursor: pointer;
+      opacity: 0; transform: translateY(10px);
+      transition: all 0.25s; z-index: 200;
+    }
+    .back-to-top.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .prereq-grid { grid-template-columns: 1fr; }
+      header { padding: 2rem 1.25rem 1.5rem; }
+    }
+
+    .page-nav { display: flex; gap: 1rem; align-items: center; margin-top: 1rem; font-size: 0.8rem; flex-wrap: wrap; }
+    .page-nav a {
+      color: var(--prog-accent); text-decoration: none;
+      border: 1px solid rgba(124,92,252,0.3);
+      padding: 4px 12px; border-radius: 20px; transition: all 0.18s;
+    }
+    .page-nav a:hover { background: rgba(124,92,252,0.15); border-color: var(--prog-accent); }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="/programmazione/" class="header-back-link">&#x2190; Programmazione</a>
+  <div class="header-badge">C++ &middot; Setup</div>
+  <h1>Configurare VS Code per <span>C++</span></h1>
+  <p>Installazione passo per passo di Visual Studio Code e del compilatore <code>g++</code> su Windows &mdash; con MSYS2 e MinGW-w64 UCRT64, dalla prima riga alla prima compilazione.</p>
+  <div class="header-pills">
+    <span class="header-pill">&#128187; Windows 10 / 11</span>
+    <span class="header-pill">&#128247; 12 screenshot</span>
+    <span class="header-pill">&#9200; ~30 min</span>
+    <span class="header-pill">&#128294; Gratuito</span>
+    <a class="header-download" href="configurare-vscode-cpp.docx" download>&#11015; Scarica guida Word</a>
+  </div>
+  <div class="page-nav">
+    <a href="/programmazione/">&#8592; Hub Programmazione</a>
+  </div>
+</header>
+
+<div class="toc-wrap">
+  <nav class="toc" id="toc">
+    <a href="#intro"        class="active">Prerequisiti</a>
+    <a href="#installazione">VS Code &amp; MSYS2</a>
+    <a href="#path">        PATH &amp; verifica</a>
+    <a href="#hello">       Estensione &amp; Hello World</a>
+  </nav>
+</div>
+
+<main>
+
+<!-- ══ PREREQUISITI ══ -->
+<section id="intro">
+  <div class="section-label">00 &mdash; Prima di iniziare</div>
+  <h2>Prerequisiti</h2>
+
+  <p>Non è richiesta alcuna conoscenza preliminare di C++. Servono solo un PC Windows e una connessione internet. Verifica di avere tutto prima di procedere.</p>
+
+  <div class="prereq-grid">
+    <div class="prereq-item">
+      <div class="prereq-icon">💻</div>
+      <div class="prereq-text">
+        <strong>Sistema operativo</strong>
+        Windows 10 o 11, versione a 64-bit
+      </div>
+    </div>
+    <div class="prereq-item">
+      <div class="prereq-icon">🌐</div>
+      <div class="prereq-text">
+        <strong>Connessione internet</strong>
+        VS Code ~100 MB · MSYS2 ~100 MB
+      </div>
+    </div>
+    <div class="prereq-item">
+      <div class="prereq-icon">🔑</div>
+      <div class="prereq-text">
+        <strong>Diritti amministratore</strong>
+        Necessari per installare i programmi
+      </div>
+    </div>
+    <div class="prereq-item">
+      <div class="prereq-icon">⏱️</div>
+      <div class="prereq-text">
+        <strong>Tempo</strong>
+        25–35 min (dipende dalla connessione)
+      </div>
+    </div>
+  </div>
+
+  <h3>Software da scaricare</h3>
+  <div class="link-grid">
+    <a class="link-card" href="https://code.visualstudio.com/" target="_blank" rel="noopener">
+      <span class="link-card-icon">⬇️</span>
+      <span>
+        Visual Studio Code
+        <span class="link-card-sub">code.visualstudio.com</span>
+      </span>
+    </a>
+    <a class="link-card" href="https://www.msys2.org/" target="_blank" rel="noopener">
+      <span class="link-card-icon">⬇️</span>
+      <span>
+        MSYS2
+        <span class="link-card-sub">msys2.org</span>
+      </span>
+    </a>
+  </div>
+
+  <div class="box box-info">
+    <strong>📌 Perché MSYS2 e non altri approcci?</strong>
+    MSYS2 usa la variante <strong>UCRT64</strong> (Universal C Runtime), compatibile con Windows 10/11 moderni. Fornisce il gestore di pacchetti <code>pacman</code> per installare e aggiornare <code>g++</code>, <code>gdb</code> e <code>make</code> esattamente come su Linux.
+  </div>
+</section>
+
+<!-- ══ VS CODE E MSYS2 ══ -->
+<section id="installazione">
+  <div class="section-label">01–03 &mdash; Installazione</div>
+  <h2>VS Code e MSYS2</h2>
+
+  <h3>1 &mdash; Installare Visual Studio Code</h3>
+  <p>VS Code è un editor di codice open-source sviluppato da Microsoft. È gratuito, leggero e supporta decine di linguaggi.</p>
+
+  <ol class="step-list">
+    <li>Vai su <strong>code.visualstudio.com</strong> e clicca su <strong>"Download for Windows"</strong>.</li>
+    <li>Avvia il file scaricato (<code>VSCodeSetup-x64-*.exe</code>) e segui l'installazione guidata.</li>
+    <li>Nella schermata "Select Additional Tasks" seleziona:
+      <ul>
+        <li>✅ Add "Open with Code" to Windows Explorer file context menu</li>
+        <li>✅ Add "Open with Code" to Windows Explorer directory context menu</li>
+        <li>✅ Register Code as an editor for supported file types</li>
+      </ul>
+    </li>
+    <li>Clicca <strong>Install</strong> e attendi il completamento.</li>
+  </ol>
+
+  <img src="img/vsc01.webp" alt="Pagina di download di Visual Studio Code — pulsante 'Download for Windows'" class="guide-img" loading="lazy">
+  <div class="guide-img-caption">Figura 1 — Pagina ufficiale VS Code: pulsante di download per Windows</div>
+
+  <h3>2 &mdash; Installare MSYS2</h3>
+  <p>MSYS2 è l'ambiente che porta su Windows il toolchain di compilazione GNU, incluso il gestore di pacchetti <code>pacman</code>.</p>
+
+  <ol class="step-list">
+    <li>Vai su <strong>msys2.org</strong> e scarica l'installer (<code>msys2-x86_64-*.exe</code>).</li>
+    <li>Avvia l'installer e mantieni il percorso predefinito <code>C:\msys64</code>.</li>
+    <li>Al termine dell'installazione lascia attiva la spunta <strong>"Run MSYS2 now"</strong> e clicca <strong>Finish</strong>.</li>
+  </ol>
+
+  <img src="img/vsc02.webp" alt="Schermata finale installazione MSYS2 con la spunta 'Run MSYS2 now' attiva" class="guide-img" loading="lazy">
+  <div class="guide-img-caption">Figura 2 — Lascia la spunta attiva: si aprirà subito il terminale MSYS2 UCRT64</div>
+
+  <div class="box box-tip">
+    <strong>💡 Quale terminale si apre?</strong>
+    Si aprirà il terminale <strong>MSYS2 UCRT64</strong>, riconoscibile dal prompt colorato. È il terminale corretto per il passaggio successivo.
+  </div>
+
+  <h3>3 &mdash; Installare g++, gdb e make</h3>
+  <p>Nel terminale MSYS2 UCRT64 appena aperto, installa l'intero toolchain con un solo comando:</p>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">MSYS2 UCRT64 — terminale</span>
+    </div>
+    <pre>pacman -S --needed base-devel mingw-w64-ucrt-x86_64-toolchain</pre>
+  </div>
+
+  <ol class="step-list">
+    <li>Alla domanda <em>"Enter a selection (default=all)"</em> &rarr; premi <kbd>Invio</kbd>.</li>
+    <li>Alla domanda <em>"Proceed with installation? [Y/n]"</em> &rarr; digita <kbd>Y</kbd> e premi <kbd>Invio</kbd>.</li>
+    <li>Attendi il completamento del download (qualche minuto).</li>
+    <li>Verifica l'installazione con i tre comandi seguenti, uno alla volta:</li>
+  </ol>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">Verifica — MSYS2 UCRT64</span>
+    </div>
+    <pre>g++ --version
+gdb --version
+make --version</pre>
+  </div>
+
+  <img src="img/vsc03.webp" alt="Terminale MSYS2 con l'output di g++ --version, gdb --version e make --version" class="guide-img" loading="lazy">
+  <div class="guide-img-caption">Figura 3 — Ogni comando mostra la versione installata: l'installazione è riuscita</div>
+</section>
+
+<!-- ══ PATH E VERIFICA ══ -->
+<section id="path">
+  <div class="section-label">04–05 &mdash; Configurazione</div>
+  <h2>PATH e verifica</h2>
+
+  <h3>4 &mdash; Aggiungere g++ al PATH di Windows</h3>
+  <p>
+    Windows non sa ancora dove trovare <code>g++</code>. Dobbiamo aggiungere
+    <code>C:\msys64\ucrt64\bin</code> alla variabile di sistema <strong>Path</strong>
+    — l'elenco delle cartelle in cui Windows cerca i programmi eseguibili.
+  </p>
+
+  <ol class="step-list">
+    <li>Premi <kbd>Win</kbd> e digita <strong>variabili d'ambiente</strong>. Clicca su <em>"Modifica le variabili d'ambiente del sistema"</em>.</li>
+    <li>Nella finestra "Proprietà del sistema" clicca su <strong>"Variabili d'ambiente…"</strong>.</li>
+  </ol>
+
+  <img src="img/vsc04.webp" alt="Finestra Proprietà del sistema con il pulsante Variabili d'ambiente" class="guide-img" loading="lazy">
+  <div class="guide-img-caption">Figura 4 — Proprietà del sistema → "Variabili d'ambiente…"</div>
+
+  <ol class="step-list" start="3">
+    <li>Nella sezione <strong>Variabili di sistema</strong> (in basso), seleziona <strong>Path</strong> e clicca <strong>"Modifica…"</strong>.</li>
+  </ol>
+
+  <img src="img/vsc05.webp" alt="Finestra Variabili d'ambiente con la voce Path selezionata nella sezione variabili di sistema" class="guide-img" loading="lazy">
+  <div class="guide-img-caption">Figura 5 — Seleziona "Path" nelle variabili di sistema → "Modifica…"</div>
+
+  <ol class="step-list" start="4">
+    <li>Clicca <strong>"Nuovo"</strong> e inserisci esattamente:</li>
+  </ol>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">Percorso da aggiungere</span>
+    </div>
+    <pre>C:\msys64\ucrt64\bin</pre>
+  </div>
+
+  <img src="img/vsc06.webp" alt="Finestra Modifica variabile d'ambiente con C:\msys64\ucrt64\bin aggiunto e evidenziato" class="guide-img" loading="lazy">
+  <div class="guide-img-caption">Figura 6 — Aggiungi <code>C:\msys64\ucrt64\bin</code> come nuova voce nella variabile Path</div>
+
+  <ol class="step-list" start="5">
+    <li>Clicca <strong>OK</strong> su tutte le finestre aperte.</li>
+  </ol>
+
+  <div class="box box-red">
+    <strong>⚠️ RIAVVIA IL PC ORA</strong>
+    Le modifiche alle variabili d'ambiente sono attive solo dopo il riavvio. <strong>Salva tutto e riavvia prima di andare avanti.</strong>
+  </div>
+
+  <h3>5 &mdash; Verificare l'installazione</h3>
+  <p>Dopo il riavvio, apri il <strong>Prompt dei comandi</strong> (<kbd>Win</kbd>+<kbd>R</kbd> → <code>cmd</code> → <kbd>Invio</kbd>) e lancia:</p>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">Prompt dei comandi — verifica finale</span>
+    </div>
+    <pre>g++ --version
+gdb --version</pre>
+  </div>
+
+  <img src="img/vsc07.webp" alt="Prompt dei comandi Windows con l'output corretto di g++ --version" class="guide-img" loading="lazy">
+  <div class="guide-img-caption">Figura 7 — Output corretto: <code>g++</code> è riconosciuto dal Prompt dei comandi di Windows</div>
+
+  <div class="box box-tip">
+    <strong>💡 Il comando non viene riconosciuto?</strong>
+    Controlla che <code>C:\msys64\ucrt64\bin</code> sia nella variabile di sistema Path (non utente), che MSYS2 sia installato in <code>C:\msys64</code> e che tu abbia riavviato il PC dopo aver modificato il PATH.
+  </div>
+</section>
+
+<!-- ══ ESTENSIONE E HELLO WORLD ══ -->
+<section id="hello">
+  <div class="section-label">06–07 &mdash; VS Code C++</div>
+  <h2>Estensione C/C++ e Hello, World!</h2>
+
+  <h3>6 &mdash; Installare l'estensione C/C++</h3>
+  <p>VS Code è un editor generico. L'estensione ufficiale Microsoft aggiunge IntelliSense, evidenziazione della sintassi e supporto al debugger.</p>
+
+  <ol class="step-list">
+    <li>Apri VS Code.</li>
+    <li>Clicca sull'icona <strong>Extensions</strong> nella barra sinistra o premi <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd>.</li>
+    <li>Cerca <strong>C/C++</strong> e installa l'estensione di <em>Microsoft</em> (la prima, con milioni di download).</li>
+  </ol>
+
+  <img src="img/vsc08.webp" alt="Marketplace estensioni VS Code con l'estensione C/C++ di Microsoft" class="guide-img" loading="lazy">
+  <div class="guide-img-caption">Figura 8 — Installa "C/C++" di Microsoft dal Marketplace di VS Code</div>
+
+  <img src="img/vsc09.webp" alt="VS Code con l'estensione C/C++ installata" class="guide-img" loading="lazy">
+  <div class="guide-img-caption">Figura 9 — L'estensione è installata e pronta</div>
+
+  <h3>7 &mdash; Hello, World!</h3>
+  <p>Creiamo il primo programma C++. Crea una cartella dedicata (es. <code>C:\progetti-cpp</code>), aprila con <strong>File → Apri cartella…</strong> in VS Code e crea un file <code>hello.cpp</code>.</p>
+
+  <p>Al primo utilizzo VS Code potrebbe chiedere di selezionare il compilatore:</p>
+
+  <img src="img/vsc10.webp" alt="VS Code — dialogo di selezione del compilatore con g++.exe da C:/msys64/ucrt64/bin/" class="guide-img" loading="lazy">
+  <div class="guide-img-caption">Figura 10 — Seleziona <strong>"Use g++.exe Found at C:/msys64/ucrt64/bin/"</strong></div>
+
+  <img src="img/vsc11.webp" alt="VS Code con la schermata di benvenuto per lo sviluppo C++" class="guide-img" loading="lazy">
+  <div class="guide-img-caption">Figura 11 — VS Code è configurato per C++ e pronto alla scrittura</div>
+
+  <p>Scrivi il codice nel file <code>hello.cpp</code>:</p>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">C++ &middot; hello.cpp</span>
+    </div>
+    <pre><span class="pp">#include &lt;iostream&gt;</span>
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    std::cout &lt;&lt; <span class="st">"Hello, World!"</span> &lt;&lt; std::endl;
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+  </div>
+
+  <p>Apri il terminale integrato (<kbd>Ctrl</kbd>+<kbd>`</kbd>) e compila:</p>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">Terminale VS Code — compila ed esegui</span>
+    </div>
+    <pre>g++ hello.cpp -o hello
+.\hello</pre>
+  </div>
+
+  <img src="img/vsc12.webp" alt="Terminale PowerShell in VS Code con l'output Hello, World!" class="guide-img" loading="lazy">
+  <div class="guide-img-caption">Figura 12 — Il programma viene compilato ed eseguito: l'output è "Hello, World!"</div>
+
+  <div class="box box-tip">
+    <strong>🎉 Fatto!</strong>
+    L'ambiente di sviluppo C++ è pronto. Per i progetti successivi aggiungi sempre <code>-Wall -std=c++17</code> alla compilazione:
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
+      <span class="code-lang">Compilazione consigliata</span>
+    </div>
+    <pre>g++ hello.cpp -o hello -Wall -std=c++17
+
+<span class="cm"># -Wall   → attiva tutti gli avvisi del compilatore (sempre consigliato)</span>
+<span class="cm"># -std=c++17 → usa lo standard C++17 (raccomandato per nuovi progetti)</span></pre>
+  </div>
+
+  <h3>Riepilogo — checklist finale</h3>
+  <ul class="checklist">
+    <li>VS Code installato e avviabile</li>
+    <li>MSYS2 installato in <code>C:\msys64</code></li>
+    <li>g++, gdb e make installati tramite <code>pacman</code></li>
+    <li><code>C:\msys64\ucrt64\bin</code> aggiunto alla variabile di sistema Path</li>
+    <li>PC riavviato dopo la modifica al PATH</li>
+    <li><code>g++ --version</code> riconosciuto nel Prompt dei comandi</li>
+    <li>Estensione C/C++ di Microsoft installata in VS Code</li>
+    <li><code>hello.cpp</code> compilato ed eseguito correttamente</li>
+  </ul>
+
+  <h3>Link utili</h3>
+  <div class="link-grid">
+    <a class="link-card" href="https://code.visualstudio.com/docs/languages/cpp" target="_blank" rel="noopener">
+      <span class="link-card-icon">📚</span>
+      <span>Docs C++ in VS Code<span class="link-card-sub">code.visualstudio.com (inglese)</span></span>
+    </a>
+    <a class="link-card" href="https://www.msys2.org/docs/updating/" target="_blank" rel="noopener">
+      <span class="link-card-icon">🔄</span>
+      <span>Aggiornare MSYS2<span class="link-card-sub">pacman -Syu</span></span>
+    </a>
+    <a class="link-card" href="https://en.cppreference.com/w/" target="_blank" rel="noopener">
+      <span class="link-card-icon">🔍</span>
+      <span>cppreference.com<span class="link-card-sub">Documentazione C++ completa</span></span>
+    </a>
+    <a class="link-card" href="configurare-vscode-cpp.docx" download>
+      <span class="link-card-icon">⬇️</span>
+      <span>Scarica questa guida<span class="link-card-sub">Formato Word (.docx)</span></span>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-nav">
+    <a href="/programmazione/">Hub Programmazione</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/">Home</a>
+  </div>
+  <strong style="color:var(--prog-text)">Formazione Digitale</strong> &mdash; Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ═══ COPY BUTTON ═══ */
+  document.querySelectorAll('.code-block').forEach(function(block){
+    var header = block.querySelector('.code-header');
+    var pre    = block.querySelector('pre');
+    if(!header || !pre) return;
+    var btn = document.createElement('button');
+    btn.className = 'copy-btn'; btn.textContent = 'Copia';
+    btn.addEventListener('click', function(){
+      navigator.clipboard.writeText(pre.innerText).then(function(){
+        btn.textContent = '✓ Copiato'; btn.classList.add('copied');
+        setTimeout(function(){ btn.textContent = 'Copia'; btn.classList.remove('copied'); }, 2000);
+      });
+    });
+    header.appendChild(btn);
+  });
+
+  /* ═══ TOC SCROLL SPY ═══ */
+  var tocLinks = document.querySelectorAll('#toc a');
+  var sections = document.querySelectorAll('section[id]');
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        tocLinks.forEach(function(a){ a.classList.remove('active'); });
+        var a = document.querySelector('#toc a[href="#'+e.target.id+'"]');
+        if(a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -80% 0px', threshold: 0 });
+  sections.forEach(function(s){ obs.observe(s); });
+  tocLinks.forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      var t = document.querySelector(a.getAttribute('href'));
+      if(t) t.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  /* ═══ BACK TO TOP ═══ */
+  var btt = document.getElementById('back-to-top');
+  window.addEventListener('scroll', function(){ btt.classList.toggle('visible', window.scrollY > 300); });
+})();
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>
