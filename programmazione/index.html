@@ -502,13 +502,21 @@
       <li class="hub-path-item">
         <div class="hub-path-num">1</div>
         <div class="hub-path-label">
+          <a href="/programmazione/fondamenti-algoritmi/" style="color:inherit;text-decoration:none;">Fondamenti della Programmazione</a>
+          <small>Algoritmo, variabile, costante, I/O, condizioni, cicli, Flowgorithm</small>
+        </div>
+      </li>
+      <div class="hub-path-arrow">&darr;</div>
+      <li class="hub-path-item">
+        <div class="hub-path-num">2</div>
+        <div class="hub-path-label">
           <a href="/programmazione/introduzione-cpp/" style="color:inherit;text-decoration:none;">Introduzione a C++</a>
           <small>Ciclo di sviluppo, cout, cin, ambienti, errori comuni</small>
         </div>
       </li>
       <div class="hub-path-arrow">&darr;</div>
       <li class="hub-path-item">
-        <div class="hub-path-num">2</div>
+        <div class="hub-path-num">3</div>
         <div class="hub-path-label">
           <a href="/programmazione/variabili-io/" style="color:inherit;text-decoration:none;">Variabili, Costanti e Tipi</a>
           <small>int, float, double, char, bool, string, const, operatori</small>
@@ -516,7 +524,7 @@
       </li>
       <div class="hub-path-arrow">&darr;</div>
       <li class="hub-path-item">
-        <div class="hub-path-num">3</div>
+        <div class="hub-path-num">4</div>
         <div class="hub-path-label">
           <a href="/programmazione/costrutti/" style="color:inherit;text-decoration:none;">Costrutti Logici e Iterativi</a>
           <small>if/else, switch, for, while, do-while, break, continue</small>
@@ -524,7 +532,7 @@
       </li>
       <div class="hub-path-arrow">&darr;</div>
       <li class="hub-path-item">
-        <div class="hub-path-num">4</div>
+        <div class="hub-path-num">5</div>
         <div class="hub-path-label">
           <a href="/programmazione/funzioni/" style="color:inherit;text-decoration:none;">Funzioni e Passaggio Parametri</a>
           <small>Valore, riferimento, const ref, puntatore, array 1D e 2D</small>
@@ -539,7 +547,7 @@
         B &mdash; Strutture dati e algoritmi
       </li>
       <li class="hub-path-item">
-        <div class="hub-path-num">5</div>
+        <div class="hub-path-num">6</div>
         <div class="hub-path-label">
           <a href="/programmazione/strutture-dati-statiche/" style="color:inherit;text-decoration:none;">Strutture Dati Statiche</a>
           <small>Array, matrici, struct, stack e coda su array</small>
@@ -547,7 +555,7 @@
       </li>
       <div class="hub-path-arrow">&darr;</div>
       <li class="hub-path-item">
-        <div class="hub-path-num">6</div>
+        <div class="hub-path-num">7</div>
         <div class="hub-path-label">
           <a href="/programmazione/strutture-dati-dinamiche/" style="color:inherit;text-decoration:none;">Strutture Dati Dinamiche</a>
           <small>Puntatori, lista concatenata, new e delete</small>
@@ -555,7 +563,7 @@
       </li>
       <div class="hub-path-arrow">&darr;</div>
       <li class="hub-path-item">
-        <div class="hub-path-num">7</div>
+        <div class="hub-path-num">8</div>
         <div class="hub-path-label">
           <a href="/programmazione/gestione-file/" style="color:inherit;text-decoration:none;">Gestione File</a>
           <small>File di testo, binari e record con accesso diretto</small>
@@ -564,10 +572,10 @@
       <div class="hub-path-arrow">&darr;</div>
       <li class="hub-path-item">
         <div style="display:flex;flex-direction:column;gap:.6rem;width:100%">
-          <div style="font-size:.7rem;font-weight:700;color:var(--hub-muted);letter-spacing:.08em;text-transform:uppercase">8 &mdash; in qualsiasi ordine</div>
+          <div style="font-size:.7rem;font-weight:700;color:var(--hub-muted);letter-spacing:.08em;text-transform:uppercase">9 &mdash; in qualsiasi ordine</div>
           <div style="display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center">
             <div style="display:flex;align-items:center;gap:.75rem">
-              <div class="hub-path-num" style="background:rgba(124,92,252,.45)">8</div>
+              <div class="hub-path-num" style="background:rgba(124,92,252,.45)">9</div>
               <div class="hub-path-label">
                 <a href="/programmazione/algoritmi-ordinamento/" style="color:inherit;text-decoration:none;">Algoritmi di Ordinamento</a>
                 <small>Bubble, Selection, Insertion Sort</small>
@@ -575,7 +583,7 @@
             </div>
             <div style="color:var(--hub-muted);font-size:1.1rem;padding:0 .25rem">&harr;</div>
             <div style="display:flex;align-items:center;gap:.75rem">
-              <div class="hub-path-num" style="background:rgba(124,92,252,.45)">8</div>
+              <div class="hub-path-num" style="background:rgba(124,92,252,.45)">9</div>
               <div class="hub-path-label">
                 <a href="/programmazione/algoritmi-ricerca/" style="color:inherit;text-decoration:none;">Algoritmi di Ricerca</a>
                 <small>Ricerca lineare e binaria</small>
@@ -627,6 +635,9 @@
     } catch (e) {
       /* fallback hardcoded per sviluppo locale */
       return [
+        { path: '/programmazione/fondamenti-algoritmi/', label: 'Fondamenti della Programmazione', short: 'Fondamenti',
+          cat: 'guide', emoji: '🧩', meta: '7 sezioni · Prerequisiti · C++',
+          description: 'Algoritmi, variabili, costanti, I/O, condizioni e cicli prima di scrivere codice.', active: true },
         { path: '/programmazione/introduzione-cpp/', label: 'Introduzione a C++', short: 'Introduzione C++',
           cat: 'guide', emoji: '🚀', meta: '5 sezioni · Primo passo · C++',
           description: 'Ciclo di sviluppo, cout, cin, ambienti di sviluppo ed errori comuni.', active: true },

@@ -1268,6 +1268,43 @@
             "DCEdu 1.4"
         ]
     },
+
+    {
+        "path": "/programmazione/fondamenti-algoritmi/",
+        "label": "Fondamenti della Programmazione",
+        "short": "Fondamenti",
+        "cat": "guide",
+        "emoji": "🧩",
+        "tags": [
+            "algoritmo",
+            "variabile",
+            "costante",
+            "input",
+            "output",
+            "condizione",
+            "ciclo",
+            "flowgorithm",
+            "diagramma di flusso",
+            "programmazione",
+            "prerequisiti",
+            "itis",
+            "sia"
+        ],
+        "meta": "7 sezioni · Prerequisiti · 3° anno ITIS/SIA",
+        "description": "Algoritmi, variabili, costanti, input/output, condizioni e cicli: i concetti fondamentali prima di scrivere la prima riga di C++.",
+        "featured": false,
+        "active": true,
+        "hub": "/programmazione/",
+        "order": 0,
+        "digcomp": [
+            "DC 5.1"
+        ],
+        "digcomp_level": "foundation",
+        "digcompedu": [
+            "DCEdu 2.2"
+        ]
+    },
+    
     {
         "path": "/programmazione/introduzione-cpp/",
         "label": "Introduzione a C++",

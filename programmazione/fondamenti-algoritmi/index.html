@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fondamenti della Programmazione — Formazione Digitale</title>
+  <meta name="description" content="Algoritmi, variabili, costanti, input/output, condizioni e cicli: i concetti fondamentali della programmazione prima di scrivere la prima riga di C++.">
+  <meta name="author" content="Cristiano De Pasquale">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://formazione-digitale.it/programmazione/fondamenti-algoritmi/">
+  <link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="//gc.zgo.at">
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#7c5cfc">
+  <meta property="og:title" content="Fondamenti della Programmazione — Formazione Digitale">
+  <meta property="og:description" content="Algoritmi, variabili, condizioni e cicli: i concetti base prima di scrivere codice.">
+  <meta property="og:url" content="https://formazione-digitale.it/programmazione/fondamenti-algoritmi/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Formazione Digitale">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"LearningResource","name":"Fondamenti della Programmazione","url":"https://formazione-digitale.it/programmazione/fondamenti-algoritmi/","inLanguage":"it","educationalLevel":"beginner","teaches":["algoritmo","programma","variabile","costante","input","output","condizione","ciclo","flowgorithm","diagramma di flusso"],"author":{"@type":"Person","name":"Cristiano De Pasquale"},"publisher":{"@type":"Organization","name":"Formazione Digitale","url":"https://formazione-digitale.it"}}
+  </script>
+  <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/shared-extended.css?v=1">
+  <style>
+
+    /* ══════════════════════════════════════════════════════════
+       PALETTE PROGRAMMAZIONE — override locale su shared-extended
+       Accent viola/indaco per distinguere dalla sezione database
+    ══════════════════════════════════════════════════════════ */
+    :root {
+      --prog-bg:      #0f1117;
+      --prog-surface: #1a1d27;
+      --prog-card:    #21253a;
+      --prog-border:  #2e3350;
+      --prog-accent:  #7c5cfc;
+      --prog-accent2: #56cfb2;
+      --prog-accent3: #f9a03f;
+      --prog-red:     #e05c5c;
+      --prog-text:    #d4d8f0;
+      --prog-muted:   #7a7f9a;
+      --prog-code-bg: #131620;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Sora', sans-serif;
+      background: var(--prog-bg);
+      color: var(--prog-text);
+      line-height: 1.75;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--prog-surface);
+      border-bottom: 3px solid var(--prog-accent);
+      padding: 2.5rem 2rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: var(--prog-accent);
+      opacity: 0.07;
+      pointer-events: none;
+    }
+    .header-back-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.78rem; color: var(--prog-muted);
+      text-decoration: none; transition: color 0.2s;
+      position: absolute; top: 1rem; left: 1.5rem;
+    }
+    .header-back-link:hover { color: var(--prog-text); }
+    .header-badge {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      background: var(--prog-accent);
+      color: white;
+      padding: 3px 10px;
+      border-radius: 3px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    header h1 {
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: #ffffff;
+    }
+    header h1 span { color: var(--prog-accent); }
+    header p {
+      margin-top: 0.75rem;
+      color: var(--prog-muted);
+      font-size: 0.95rem;
+      max-width: 620px;
+    }
+    .header-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; }
+    .header-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 4px 12px; border-radius: 20px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem; color: var(--prog-muted);
+    }
+
+    /* ── TOC ── */
+    .toc-wrap {
+      position: sticky; top: 0; z-index: 100;
+      background: #1a1a18;
+      border-bottom: 3px solid var(--prog-accent);
+    }
+    nav.toc {
+      padding: 0.7rem 1.5rem;
+      display: flex; flex-wrap: wrap; gap: 0.25rem;
+      align-items: center; justify-content: center;
+      max-width: 980px; margin: 0 auto;
+    }
+    nav.toc a {
+      font-size: 0.82rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 500;
+      color: #aaa9a0;
+      text-decoration: none;
+      padding: 5px 13px; border-radius: 20px;
+      border: 1px solid transparent;
+      transition: all 0.18s; white-space: nowrap;
+      letter-spacing: 0.01em;
+    }
+    nav.toc a:hover {
+      background: rgba(255,255,255,0.1);
+      color: white;
+      border-color: rgba(255,255,255,0.2);
+    }
+    nav.toc a.active {
+      background: var(--prog-accent);
+      color: white;
+      border-color: var(--prog-accent);
+      font-weight: 700;
+    }
+    @media (max-width: 600px) {
+      nav.toc { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; }
+      nav.toc::-webkit-scrollbar { display: none; }
+    }
+
+    /* ── LAYOUT ── */
+    main { max-width: 980px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+
+    /* ── SEZIONI ── */
+    section { margin-bottom: 4.5rem; scroll-margin-top: 70px; }
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem; font-weight: 700;
+      color: var(--prog-accent);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    h2 {
+      font-size: 1.65rem; font-weight: 700;
+      color: #ffffff; letter-spacing: -0.02em;
+      border-bottom: 2px solid var(--prog-border);
+      padding-bottom: 0.6rem; margin-bottom: 1.5rem;
+    }
+    h3 { font-size: 1.1rem; font-weight: 600; color: var(--prog-accent2); margin: 2rem 0 0.8rem; }
+
+    /* ── PARAGRAFI ── */
+    p {
+      margin-bottom: 1rem;
+      color: var(--prog-text);
+      font-size: 0.97rem;
+      line-height: 1.85;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── CALLOUT BOX ── */
+    .box {
+      border-radius: 6px; padding: 1rem 1.25rem;
+      margin: 1.25rem 0; font-size: 0.92rem;
+      border-left: 3px solid;
+      line-height: 1.75;
+    }
+    .box-info { background: rgba(86,207,178,0.08);  border-color: var(--prog-accent2); }
+    .box-warn { background: rgba(249,160,63,0.08);  border-color: var(--prog-accent3); }
+    .box-tip  { background: rgba(124,92,252,0.08);  border-color: var(--prog-accent);  }
+    /* Titolo del box in maiuscoletto, corpo con <b> per non attivare display:block */
+    .box strong { display: block; margin-bottom: 0.35rem; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.8; }
+
+    /* ── PIPELINE STEP (ciclo-wrap riusato dal template) ── */
+    .cycle-wrap {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0; flex-wrap: wrap; margin: 2rem 0;
+    }
+    .cycle-box {
+      background: var(--prog-card);
+      border: 2px solid var(--prog-border);
+      border-radius: 10px;
+      padding: 1.1rem 1.5rem;
+      text-align: center;
+      min-width: 120px;
+    }
+    .cycle-box.accent { border-color: var(--prog-accent); background: rgba(124,92,252,0.08); }
+    .cycle-icon  { font-size: 1.8rem; margin-bottom: 0.4rem; }
+    .cycle-label { font-family: 'Space Mono', monospace; font-size: 0.82rem; font-weight: 700; color: #fff; }
+    .cycle-sub   { font-size: 0.72rem; color: var(--prog-muted); margin-top: 0.25rem; }
+    .cycle-arrow {
+      font-size: 1.5rem; color: var(--prog-accent);
+      padding: 0 0.75rem; align-self: center; flex-shrink: 0;
+    }
+
+    /* ── TABELLA ── */
+    .complexity-table {
+      width: 100%; border-collapse: collapse;
+      margin: 1.25rem 0; font-size: 0.88rem;
+      border-radius: 8px; overflow: hidden;
+      border: 1px solid var(--prog-border);
+    }
+    .complexity-table th {
+      background: var(--prog-card); color: var(--prog-accent);
+      padding: 0.65rem 1rem; text-align: left;
+      font-family: 'Space Mono', monospace; font-size: 0.75rem;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      border-bottom: 2px solid var(--prog-border);
+    }
+    .complexity-table td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--prog-border); vertical-align: middle; }
+    .complexity-table tr:last-child td { border-bottom: none; }
+    .complexity-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2.5rem 1rem;
+      color: var(--prog-muted); font-size: 0.85rem;
+      border-top: 1px solid var(--prog-border); margin-top: 2rem;
+    }
+    footer a { color: var(--prog-accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .footer-nav { margin-bottom: .75rem; font-size: .82rem; }
+
+    /* ── BACK TO TOP ── */
+    .back-to-top {
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--prog-accent); color: white; border: none;
+      font-size: 1.1rem; cursor: pointer;
+      opacity: 0; transform: translateY(10px);
+      transition: all 0.25s; z-index: 200;
+    }
+    .back-to-top.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── PAGE NAV (frecce header) ── */
+    .page-nav { display: flex; gap: 1rem; align-items: center; margin-top: 1rem; font-size: .8rem; flex-wrap: wrap; }
+    .page-nav a {
+      color: var(--prog-accent); text-decoration: none;
+      border: 1px solid rgba(124,92,252,.3); padding: 4px 12px;
+      border-radius: 20px; transition: all .18s;
+    }
+    .page-nav a:hover { background: rgba(124,92,252,.15); border-color: var(--prog-accent); }
+    .header-deco-svg { position: absolute; right: 1.5rem; top: 50%; transform: translateY(-50%); opacity: .4; pointer-events: none; }
+    @media(max-width:780px) { .header-deco-svg { display: none; } }
+
+    /* ════════════════════════════════════════════════════════
+       COMPONENTI LOCALI — non presenti nel template base
+    ════════════════════════════════════════════════════════ */
+
+    /* ── GRIGLIA DI CONCETTI (4 proprietà dell'algoritmo) ── */
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .concept-card {
+      background: var(--prog-card);
+      border: 1px solid var(--prog-border);
+      border-radius: 10px;
+      padding: 1.25rem 1.1rem;
+      transition: border-color 0.2s;
+    }
+    .concept-card:hover { border-color: var(--prog-accent); }
+    .concept-icon { font-size: 1.75rem; margin-bottom: 0.55rem; }
+    .concept-term {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem; font-weight: 700;
+      color: var(--prog-accent); letter-spacing: 0.05em;
+      text-transform: uppercase; margin-bottom: 0.4rem;
+    }
+    .concept-def { font-size: 0.85rem; color: var(--prog-muted); line-height: 1.6; }
+
+    /* ── CONFRONTO VARIABILE / COSTANTE ── */
+    .var-analogy {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .var-card {
+      background: var(--prog-card);
+      border: 2px solid var(--prog-border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .var-card.accent  { border-color: var(--prog-accent); }
+    .var-card.accent2 { border-color: var(--prog-accent2); }
+    .var-card-icon  { font-size: 2rem; margin-bottom: 0.5rem; }
+    .var-card-title { font-family: 'Space Mono', monospace; font-size: 0.85rem; font-weight: 700; color: var(--prog-text); margin-bottom: 0.5rem; }
+    .var-card-desc  { font-size: 0.83rem; color: var(--prog-muted); line-height: 1.55; }
+    .var-card-example {
+      margin-top: 0.75rem;
+      font-family: 'Space Mono', monospace; font-size: 0.78rem;
+      background: var(--prog-code-bg);
+      border: 1px solid var(--prog-border);
+      border-radius: 4px; padding: 0.5rem 0.75rem;
+      color: var(--prog-accent2); text-align: left;
+    }
+
+    /* ── WRAPPER SVG DIAGRAMMI DI FLUSSO (sezioni selezione/iterazione) ── */
+    .flow-wrap {
+      background: var(--prog-surface);
+      border: 1px solid var(--prog-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      display: flex;
+      justify-content: center;
+      overflow-x: auto;
+    }
+    .flow-wrap svg { max-width: 100%; height: auto; }
+
+    /* ── BLOCCHI SIMBOLO (sezione diagrammi di flusso) ── */
+    .symbol-block {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      background: var(--prog-card);
+      border: 1px solid var(--prog-border);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      margin: 1rem 0;
+    }
+    .symbol-block-svg { flex-shrink: 0; }
+    .symbol-block-body { flex: 1; }
+    .symbol-block-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem; font-weight: 700;
+      color: var(--prog-accent); letter-spacing: 0.06em;
+      text-transform: uppercase; margin-bottom: 0.35rem;
+    }
+    .symbol-block-desc { font-size: 0.88rem; color: var(--prog-text); line-height: 1.65; }
+    .symbol-block-example {
+      margin-top: 0.45rem;
+      font-family: 'Space Mono', monospace; font-size: 0.76rem;
+      color: var(--prog-muted);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .var-analogy  { grid-template-columns: 1fr; }
+      .cycle-arrow  { transform: rotate(90deg); }
+      .cycle-wrap   { gap: 0.5rem; }
+      .symbol-block { flex-direction: column; gap: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="/programmazione/" class="header-back-link">&#x2190; Programmazione</a>
+  <div class="header-badge">C++ &middot; Prerequisiti</div>
+  <h1>Fondamenti della <span>Programmazione</span></h1>
+  <p>Algoritmi, variabili, costanti, condizioni e cicli &mdash; i concetti essenziali da capire prima di scrivere la prima riga di codice.</p>
+  <div class="header-pills">
+    <span class="header-pill">&#127891; 3&deg; anno ITIS/SIA</span>
+    <span class="header-pill">&#128203; Fase introduttiva</span>
+    <span class="header-pill">&#9200; ~30 min</span>
+  </div>
+  <div class="page-nav">
+    <a href="/programmazione/introduzione-cpp/">&#8594; Introduzione a C++</a>
+  </div>
+  <!-- SVG decorativo: diagramma di flusso stilizzato -->
+  <svg class="header-deco-svg" viewBox="0 0 170 185" width="210" height="232"
+       xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <marker id="hd-arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="#2e3350"/>
+      </marker>
+    </defs>
+    <!-- Inizio: ovale -->
+    <ellipse cx="85" cy="18" rx="42" ry="14" fill="#21253a" stroke="#7c5cfc" stroke-width="1.5"/>
+    <text x="85" y="22" text-anchor="middle" fill="#d4d8f0" font-family="Sora,sans-serif" font-size="9.5">Inizio</text>
+    <!-- Freccia -->
+    <line x1="85" y1="32" x2="85" y2="46" stroke="#2e3350" stroke-width="1.5" marker-end="url(#hd-arr)"/>
+    <!-- Processo: rettangolo -->
+    <rect x="45" y="48" width="80" height="26" rx="4" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+    <text x="85" y="65" text-anchor="middle" fill="#d4d8f0" font-family="Sora,sans-serif" font-size="8.5">Elaborazione</text>
+    <!-- Freccia -->
+    <line x1="85" y1="74" x2="85" y2="88" stroke="#2e3350" stroke-width="1.5" marker-end="url(#hd-arr)"/>
+    <!-- Decisione: rombo -->
+    <polygon points="85,90 130,115 85,140 40,115" fill="#21253a" stroke="#7c5cfc" stroke-width="1.5"/>
+    <text x="85" y="112" text-anchor="middle" fill="#7c5cfc" font-family="Sora,sans-serif" font-size="8">Condizione?</text>
+    <!-- Label Sì / No -->
+    <text x="135" y="113" fill="#56cfb2" font-family="Sora,sans-serif" font-size="8" font-weight="700">S&igrave;</text>
+    <text x="18"  y="113" fill="#e05c5c" font-family="Sora,sans-serif" font-size="8" font-weight="700">No</text>
+    <!-- Rami convergono verso ovale Fine -->
+    <line x1="130" y1="115" x2="155" y2="115" stroke="#56cfb2" stroke-width="1.2"/>
+    <line x1="155" y1="115" x2="155" y2="168" stroke="#56cfb2" stroke-width="1.2"/>
+    <line x1="155" y1="168" x2="128" y2="168" stroke="#2e3350" stroke-width="1.2"/>
+    <line x1="40"  y1="115" x2="15"  y2="115" stroke="#e05c5c" stroke-width="1.2"/>
+    <line x1="15"  y1="115" x2="15"  y2="168" stroke="#e05c5c" stroke-width="1.2"/>
+    <line x1="15"  y1="168" x2="42"  y2="168" stroke="#2e3350" stroke-width="1.2"/>
+    <!-- Fine: ovale -->
+    <ellipse cx="85" cy="168" rx="42" ry="14" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+    <text x="85" y="172" text-anchor="middle" fill="#7a7f9a" font-family="Sora,sans-serif" font-size="9.5">Fine</text>
+  </svg>
+</header>
+
+<div class="toc-wrap">
+  <nav class="toc" id="toc">
+    <a href="#algoritmo" class="active">Algoritmo</a>
+    <a href="#programma">Programma</a>
+    <a href="#variabili">Variabili</a>
+    <a href="#io">I/O</a>
+    <a href="#diagrammi">Diagrammi</a>
+    <a href="#selezione">Selezione</a>
+    <a href="#iterazione">Iterazione</a>
+  </nav>
+</div>
+
+<main>
+
+<!-- ══ ALGORITMO ══ -->
+<section id="algoritmo">
+  <div class="section-label">00 &mdash; Fondamenti</div>
+  <h2>Che cos&apos;&egrave; un algoritmo?</h2>
+  <p>Un <strong>algoritmo</strong> &egrave; una sequenza finita di istruzioni ordinate e non ambigue che descrive come risolvere un problema. Il nome deriva dal matematico persiano Al-Khwarizmi (IX sec.), ma il concetto &egrave; quotidiano: ogni volta che segui una ricetta, monti un mobile con le istruzioni o usi il navigatore, stai eseguendo un algoritmo.</p>
+  <p>Un algoritmo ben definito rispetta quattro propriet&agrave;:</p>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="concept-icon">&#9654;</div>
+      <div class="concept-term">Finitezza</div>
+      <div class="concept-def">Deve terminare dopo un numero finito di passi. Un algoritmo che non finisce mai non &egrave; utile.</div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">&#127919;</div>
+      <div class="concept-term">Non ambiguit&agrave;</div>
+      <div class="concept-def">Ogni istruzione deve essere chiara e precisa, senza spazio all&apos;interpretazione.</div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">&#128196;</div>
+      <div class="concept-term">Generalit&agrave;</div>
+      <div class="concept-def">Deve funzionare per tutte le istanze valide del problema, non solo per un caso specifico.</div>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">&#9881;</div>
+      <div class="concept-term">Eseguibilit&agrave;</div>
+      <div class="concept-def">Ogni passo deve essere concretamente realizzabile con le risorse disponibili.</div>
+    </div>
+  </div>
+
+  <div class="box box-tip">
+    <strong>&#128161; Algoritmo &ne; Programma</strong>
+    Un algoritmo &egrave; la <b>logica della soluzione</b>, descritta in linguaggio naturale o con un diagramma. Un programma &egrave; quella stessa logica <b>tradotta in un linguaggio</b> che il computer capisce (C++, Python, Java&hellip;). Lo stesso algoritmo pu&ograve; essere implementato in linguaggi diversi senza cambiare di una virgola.
+  </div>
+
+  <h3>Un esempio concreto</h3>
+  <p>Algoritmo per preparare il t&egrave;:</p>
+  <ol style="margin:.5rem 0 1rem 1.5rem;color:var(--prog-text);font-size:.95rem;line-height:2.2">
+    <li>Riempi il bollitore d&apos;acqua</li>
+    <li>Accendi il bollitore</li>
+    <li><strong>Attendi</strong> finch&eacute; l&apos;acqua bolle &mdash; &larr; <em style="color:var(--prog-muted)">struttura iterativa (ciclo)</em></li>
+    <li>Metti la bustina nella tazza e versa l&apos;acqua</li>
+    <li><strong>Se</strong> vuoi lo zucchero, aggiungilo &mdash; &larr; <em style="color:var(--prog-muted)">struttura condizionale</em></li>
+    <li>Togli la bustina dopo 3 minuti</li>
+  </ol>
+  <p>Questo algoritmo &egrave; finito, non ambiguo, generale ed eseguibile. I due concetti evidenziati &mdash; ciclo e condizione &mdash; sono le strutture di controllo fondamentali di qualsiasi programma: le vedremo tra poco.</p>
+</section>
+
+<!-- ══ PROGRAMMA ══ -->
+<section id="programma">
+  <div class="section-label">01 &mdash; Dal problema al codice</div>
+  <h2>Dal problema al programma</h2>
+  <p>Scrivere un programma non inizia dal codice. Inizia dal <strong>problema</strong>. Il percorso corretto &egrave; sempre lo stesso: capire il problema, progettare la soluzione (algoritmo), poi tradurla in codice.</p>
+
+  <div class="cycle-wrap">
+    <div class="cycle-box">
+      <div class="cycle-icon">&#10067;</div>
+      <div class="cycle-label">Problema</div>
+      <div class="cycle-sub">Cosa devo risolvere?</div>
+    </div>
+    <div class="cycle-arrow">&#8594;</div>
+    <div class="cycle-box accent">
+      <div class="cycle-icon">&#128196;</div>
+      <div class="cycle-label">Algoritmo</div>
+      <div class="cycle-sub">Come lo risolvo?</div>
+    </div>
+    <div class="cycle-arrow">&#8594;</div>
+    <div class="cycle-box">
+      <div class="cycle-icon">&#128187;</div>
+      <div class="cycle-label">Programma</div>
+      <div class="cycle-sub">Scrivo in C++</div>
+    </div>
+    <div class="cycle-arrow">&#8594;</div>
+    <div class="cycle-box">
+      <div class="cycle-icon">&#9654;&#65039;</div>
+      <div class="cycle-label">Esecuzione</div>
+      <div class="cycle-sub">Il computer lo esegue</div>
+    </div>
+  </div>
+
+  <div class="box box-warn">
+    <strong>&#9888; L&apos;errore pi&ugrave; comune</strong>
+    Iniziare a scrivere codice prima di aver capito bene il problema porta quasi sempre a riscrivere tutto da capo. Pochi minuti con carta e penna per disegnare l&apos;algoritmo risparmiano ore di debug.
+  </div>
+
+  <p>Un programma &egrave; un algoritmo scritto in un <strong>linguaggio formale</strong> che la macchina sa interpretare. Il linguaggio ha regole rigide (sintassi): una virgola nel posto sbagliato, o una lettera maiuscola dove ci si aspetta la minuscola, pu&ograve; bloccare la compilazione. La precisione &egrave; tutto.</p>
+</section>
+
+<!-- ══ VARIABILI ══ -->
+<section id="variabili">
+  <div class="section-label">02 &mdash; Dati</div>
+  <h2>Variabili e costanti</h2>
+  <p>Un programma lavora su dati. Per memorizzare un dato durante l&apos;esecuzione si usano le <strong>variabili</strong> e le <strong>costanti</strong>. La differenza fondamentale sta nella possibilit&agrave; di modifica:</p>
+
+  <div class="var-analogy">
+    <div class="var-card accent">
+      <div class="var-card-icon">&#9999;</div>
+      <div class="var-card-title">Variabile</div>
+      <div class="var-card-desc">Come una lavagna: ha un&apos;etichetta (il nome) e puoi scrivere, cancellare e riscrivere il contenuto quante volte vuoi durante l&apos;esecuzione.</div>
+      <div class="var-card-example">etichetta: "et&agrave;"<br>contenuto: 16 &rarr; 17 &rarr; 18</div>
+    </div>
+    <div class="var-card accent2">
+      <div class="var-card-icon">&#128274;</div>
+      <div class="var-card-title">Costante</div>
+      <div class="var-card-desc">Come un cartello stampato: ha un nome e un valore, ma il valore &egrave; fissato una volta per tutte e non pu&ograve; cambiare durante l&apos;esecuzione.</div>
+      <div class="var-card-example">etichetta: "IVA"<br>contenuto: 22 (fisso)</div>
+    </div>
+  </div>
+
+  <h3>Il tipo di una variabile</h3>
+  <p>Ogni variabile ha un <strong>tipo</strong>, che indica quale categoria di dati pu&ograve; contenere. Il tipo &egrave; importante: il computer memorizza un numero intero in modo diverso da un decimale o da un testo, e alloca per ciascuno una quantit&agrave; di memoria diversa.</p>
+
+  <table class="complexity-table">
+    <thead>
+      <tr>
+        <th>Tipo</th>
+        <th>Cosa contiene</th>
+        <th>Esempi</th>
+        <th>In C++</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Intero</strong></td>
+        <td>Numeri senza parte decimale</td>
+        <td>0, 42, &minus;7, 1000</td>
+        <td><code>int</code></td>
+      </tr>
+      <tr>
+        <td><strong>Decimale</strong></td>
+        <td>Numeri con parte frazionaria</td>
+        <td>3.14, &minus;0.5, 9.81</td>
+        <td><code>double</code></td>
+      </tr>
+      <tr>
+        <td><strong>Carattere</strong></td>
+        <td>Un singolo carattere</td>
+        <td>'A', 'z', '5', '!'</td>
+        <td><code>char</code></td>
+      </tr>
+      <tr>
+        <td><strong>Testo</strong></td>
+        <td>Sequenza di caratteri</td>
+        <td>"ciao", "Mario Rossi"</td>
+        <td><code>string</code></td>
+      </tr>
+      <tr>
+        <td><strong>Booleano</strong></td>
+        <td>Solo vero o falso</td>
+        <td>vero, falso</td>
+        <td><code>bool</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box box-info">
+    <strong>&#128204; Perch&eacute; il tipo sbagliato &egrave; un problema</strong>
+    Salvare 3.14 in una variabile intera produce 3 &mdash; la parte decimale viene persa senza avvisi. Scegliere il tipo giusto &egrave; parte dell&apos;algoritmo, non un dettaglio tecnico.
+  </div>
+
+  <h3>Regole per i nomi</h3>
+  <p>Il nome di una variabile (detto <strong>identificatore</strong>) deve iniziare con una lettera o underscore (<code>_</code>), non deve contenere spazi e non deve coincidere con una parola riservata del linguaggio (<code>int</code>, <code>if</code>, <code>while</code>&hellip;). Per convenzione, in C++ si usa il formato <em>camelCase</em>: <code>etaUtente</code>, <code>prezzoTotale</code>, <code>numeroTentativi</code>.</p>
+</section>
+
+<!-- ══ I/O ══ -->
+<section id="io">
+  <div class="section-label">03 &mdash; Interazione</div>
+  <h2>Input e Output</h2>
+  <p>Ogni programma utile comunica con il mondo esterno. I dati che entrano nel programma si chiamano <strong>input</strong>; i risultati prodotti dal programma si chiamano <strong>output</strong>. Il programma &egrave; il motore che trasforma l&apos;uno nell&apos;altro.</p>
+
+  <div class="cycle-wrap">
+    <div class="cycle-box">
+      <div class="cycle-icon">&#128290;</div>
+      <div class="cycle-label">Input</div>
+      <div class="cycle-sub">Tastiera, file,<br>sensore&hellip;</div>
+    </div>
+    <div class="cycle-arrow">&#8594;</div>
+    <div class="cycle-box accent">
+      <div class="cycle-icon">&#9881;</div>
+      <div class="cycle-label">Elaborazione</div>
+      <div class="cycle-sub">L&apos;algoritmo<br>viene eseguito</div>
+    </div>
+    <div class="cycle-arrow">&#8594;</div>
+    <div class="cycle-box">
+      <div class="cycle-icon">&#128250;</div>
+      <div class="cycle-label">Output</div>
+      <div class="cycle-sub">Schermo, file,<br>stampante&hellip;</div>
+    </div>
+  </div>
+
+  <p>Qualche esempio concreto:</p>
+  <ul style="margin:.5rem 0 1rem 1.5rem;color:var(--prog-text);font-size:.95rem;line-height:2.2">
+    <li><strong>Calcolatrice:</strong> input = due numeri e un&apos;operazione &rarr; output = risultato</li>
+    <li><strong>Convertitore temperature:</strong> input = gradi Celsius &rarr; output = gradi Fahrenheit</li>
+    <li><strong>Sistema di login:</strong> input = username e password &rarr; output = accesso consentito / negato</li>
+  </ul>
+
+  <div class="box box-info">
+    <strong>&#128204; Input e Output in Flowgorithm e in C++</strong>
+    Nei diagrammi di flusso l&apos;input e l&apos;output si rappresentano con un parallelogramma. In C++, l&apos;output si scrive con <code>cout</code> e l&apos;input si legge con <code>cin</code> &mdash; li vedrai in dettaglio nella prossima guida.
+  </div>
+</section>
+
+<!-- ══ DIAGRAMMI DI FLUSSO ══ -->
+<section id="diagrammi">
+  <div class="section-label">04 &mdash; Rappresentazione</div>
+  <h2>I diagrammi di flusso</h2>
+  <p>Un <strong>diagramma di flusso</strong> &egrave; una rappresentazione grafica di un algoritmo: ogni passo viene disegnato con un simbolo preciso, collegato al successivo da frecce che indicano la direzione di esecuzione. &Egrave; il modo pi&ugrave; immediato per ragionare su un algoritmo prima di scrivere codice.</p>
+  <p><strong>Flowgorithm</strong> &egrave; lo strumento che useremo: permette di disegnare diagrammi di flusso eseguibili, trascinando i simboli e collegandoli. Una volta completato il diagramma, Flowgorithm lo esegue passo per passo mostrando il valore delle variabili ad ogni istruzione &mdash; e pu&ograve; generare automaticamente il codice C++ corrispondente.</p>
+
+  <div class="box box-info">
+    <strong>&#128204; Flowgorithm nei laboratori</strong>
+    Il programma &egrave; gi&agrave; installato sui PC di laboratorio. Avvialo, trascina i simboli per costruire il tuo algoritmo, premi Esegui per vederlo girare passo per passo. Nel men&ugrave; di esportazione seleziona &ldquo;C++&rdquo; per visualizzare il codice generato.
+  </div>
+
+  <h3>I simboli standard</h3>
+  <p>Ogni simbolo ha un significato univoco, codificato dagli standard ISO per i diagrammi di flusso. Impararli tutti ora ti permette di leggere e disegnare qualsiasi algoritmo.</p>
+
+  <!-- Freccia -->
+  <div class="symbol-block">
+    <div class="symbol-block-svg">
+      <svg viewBox="0 0 150 56" width="150" height="56" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <marker id="sb-arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6 Z" fill="#d4d8f0"/>
+          </marker>
+        </defs>
+        <line x1="75" y1="8" x2="75" y2="44" stroke="#d4d8f0" stroke-width="2.5" marker-end="url(#sb-arr)"/>
+      </svg>
+    </div>
+    <div class="symbol-block-body">
+      <div class="symbol-block-name">Connettore &mdash; Freccia</div>
+      <div class="symbol-block-desc">Indica la <b>direzione del flusso</b> tra un simbolo e il successivo. Si legge dall&apos;alto verso il basso; i rami del ciclo risalgono verso il rombo. Regola fondamentale: <b>ogni blocco ha al pi&ugrave; una freccia in ingresso e una in uscita</b> &mdash; il rombo (decisione) &egrave; l&apos;unica eccezione, con una freccia in ingresso e <b>due</b> in uscita (S&igrave; e No).</div>
+    </div>
+  </div>
+
+  <!-- Terminatore -->
+  <div class="symbol-block">
+    <div class="symbol-block-svg">
+      <svg viewBox="0 0 150 56" width="150" height="56" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <ellipse cx="75" cy="28" rx="67" ry="22" fill="#21253a" stroke="#7c5cfc" stroke-width="2"/>
+        <text x="75" y="32" text-anchor="middle" fill="#d4d8f0" font-family="Sora,sans-serif" font-size="11">Inizio / Fine</text>
+      </svg>
+    </div>
+    <div class="symbol-block-body">
+      <div class="symbol-block-name">Terminatore &mdash; Ovale</div>
+      <div class="symbol-block-desc">Segna il punto di <b>inizio</b> e di <b>fine</b> dell&apos;algoritmo. Ogni diagramma ne ha esattamente due: uno in cima e uno in fondo. Senza di essi, il diagramma &egrave; incompleto.</div>
+    </div>
+  </div>
+
+  <!-- Processo -->
+  <div class="symbol-block">
+    <div class="symbol-block-svg">
+      <svg viewBox="0 0 150 56" width="150" height="56" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="6" y="10" width="138" height="36" rx="4" fill="#21253a" stroke="#2e3350" stroke-width="2"/>
+        <text x="75" y="32" text-anchor="middle" fill="#d4d8f0" font-family="Sora,sans-serif" font-size="10.5">somma = a + b</text>
+      </svg>
+    </div>
+    <div class="symbol-block-body">
+      <div class="symbol-block-name">Processo &mdash; Rettangolo</div>
+      <div class="symbol-block-desc">Rappresenta una singola <b>istruzione o un calcolo</b>. Dentro al rettangolo si scrive l&apos;operazione da eseguire.</div>
+      <div class="symbol-block-example">Esempi: &nbsp; media = somma / n &nbsp;&middot;&nbsp; conta = conta + 1 &nbsp;&middot;&nbsp; risultato = a * b</div>
+    </div>
+  </div>
+
+  <!-- Input / Output -->
+  <div class="symbol-block">
+    <div class="symbol-block-svg">
+      <svg viewBox="0 0 150 56" width="150" height="56" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <polygon points="20,10 144,10 130,46 6,46" fill="#21253a" stroke="#56cfb2" stroke-width="2"/>
+        <text x="75" y="32" text-anchor="middle" fill="#56cfb2" font-family="Sora,sans-serif" font-size="10.5">Leggi / Scrivi</text>
+      </svg>
+    </div>
+    <div class="symbol-block-body">
+      <div class="symbol-block-name">Input / Output &mdash; Parallelogramma</div>
+      <div class="symbol-block-desc">Rappresenta la <b>lettura di un dato</b> (input da tastiera) o la <b>scrittura di un risultato</b> (output a schermo). Lo stesso simbolo copre entrambe le direzioni: il testo dentro indica quale delle due.</div>
+      <div class="symbol-block-example">Input: &nbsp;Leggi et&agrave; &nbsp;&middot;&nbsp; Output: &nbsp;Scrivi &ldquo;Accesso consentito&rdquo;</div>
+    </div>
+  </div>
+
+  <!-- Decisione -->
+  <div class="symbol-block">
+    <div class="symbol-block-svg">
+      <svg viewBox="0 0 150 72" width="150" height="72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <polygon points="75,6 142,36 75,66 8,36" fill="#21253a" stroke="#7c5cfc" stroke-width="2"/>
+        <text x="75" y="39" text-anchor="middle" fill="#7c5cfc" font-family="Sora,sans-serif" font-size="10">et&agrave; &gt;= 18?</text>
+      </svg>
+    </div>
+    <div class="symbol-block-body">
+      <div class="symbol-block-name">Decisione &mdash; Rombo</div>
+      <div class="symbol-block-desc">Rappresenta una <b>condizione</b> con risposta vero o falso. &Egrave; l&apos;unica eccezione alla regola generale: ha una freccia in ingresso e <b>due frecce in uscita</b>, etichettate &ldquo;S&igrave;&rdquo; (condizione vera) e &ldquo;No&rdquo; (condizione falsa). I due rami convergono pi&ugrave; avanti nel diagramma.</div>
+      <div class="symbol-block-example">Esempi: &nbsp; et&agrave; &ge; 18? &nbsp;&middot;&nbsp; somma &gt; 100? &nbsp;&middot;&nbsp; conta &lt; 10?</div>
+    </div>
+  </div>
+
+  <!-- Dichiarazione variabile (Flowgorithm-specific) -->
+  <div class="symbol-block" style="border-color:var(--prog-accent3)">
+    <div class="symbol-block-svg">
+      <svg viewBox="0 0 150 56" width="150" height="56" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="6" y="10" width="138" height="36" rx="4" fill="rgba(249,160,63,0.08)" stroke="#f9a03f" stroke-width="2" stroke-dasharray="7,4"/>
+        <text x="75" y="32" text-anchor="middle" fill="#f9a03f" font-family="Sora,sans-serif" font-size="10">Dichiara et&agrave;: Intero</text>
+      </svg>
+    </div>
+    <div class="symbol-block-body">
+      <div class="symbol-block-name" style="color:var(--prog-accent3)">Dichiarazione variabile &mdash; specifico di Flowgorithm</div>
+      <div class="symbol-block-desc">In Flowgorithm la <b>dichiarazione di una variabile</b> ha un blocco dedicato, visivamente distinto dal Processo. Negli standard ISO si userebbe un normale rettangolo &mdash; Flowgorithm lo separa per chiarezza didattica, rendendo esplicito il momento in cui una variabile viene creata e il suo tipo scelto.</div>
+      <div class="symbol-block-example">Dichiara et&agrave;: Intero &nbsp;&middot;&nbsp; Dichiara nome: Stringa &nbsp;&middot;&nbsp; Dichiara media: Reale</div>
+    </div>
+  </div>
+
+  <div class="box box-tip">
+    <strong>&#128161; Con questi cinque simboli puoi rappresentare qualsiasi algoritmo</strong>
+    Nelle due sezioni successive li vedrai combinati nelle due strutture fondamentali: la <b>selezione</b> (rombo con due rami) e l&apos;<b>iterazione</b> (rombo con un ramo che torna indietro).
+  </div>
+</section>
+
+<!-- ══ SELEZIONE ══ -->
+<section id="selezione">
+  <div class="section-label">05 &mdash; Strutture di controllo</div>
+  <h2>Selezione</h2>
+  <p>Un programma non esegue sempre le stesse istruzioni: a volte deve <strong>scegliere quale percorso seguire</strong> in base a una condizione. Questo meccanismo si chiama <strong>struttura di selezione</strong>. Nel diagramma di flusso la riconosci dal <em>rombo</em> con due uscite etichettate S&igrave; e No.</p>
+
+  <div class="flow-wrap">
+    <svg viewBox="0 0 340 220" width="340" height="220"
+         xmlns="http://www.w3.org/2000/svg"
+         aria-label="Diagramma if/else: il rombo apre due rami distinti che poi convergono">
+      <defs>
+        <marker id="c-n" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#2e3350"/></marker>
+        <marker id="c-y" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#56cfb2"/></marker>
+        <marker id="c-r" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#e05c5c"/></marker>
+      </defs>
+      <line x1="170" y1="0" x2="170" y2="20" stroke="#2e3350" stroke-width="1.5" marker-end="url(#c-n)"/>
+      <polygon points="170,22 242,62 170,102 98,62" fill="#21253a" stroke="#7c5cfc" stroke-width="2"/>
+      <text x="170" y="58" text-anchor="middle" fill="#d4d8f0" font-family="Sora,sans-serif" font-size="9">Condizione</text>
+      <text x="170" y="70" text-anchor="middle" fill="#7c5cfc" font-family="Sora,sans-serif" font-size="8">vera o falsa?</text>
+      <text x="248" y="60" fill="#56cfb2" font-family="Sora,sans-serif" font-size="9" font-weight="700">S&igrave;</text>
+      <text x="76"  y="60" fill="#e05c5c" font-family="Sora,sans-serif" font-size="9" font-weight="700">No</text>
+      <line x1="242" y1="62" x2="280" y2="62" stroke="#56cfb2" stroke-width="1.5" marker-end="url(#c-y)"/>
+      <rect x="280" y="46" width="54" height="32" rx="4" fill="#21253a" stroke="#56cfb2" stroke-width="1.5"/>
+      <text x="307" y="65" text-anchor="middle" fill="#56cfb2" font-family="Sora,sans-serif" font-size="8.5">Blocco A</text>
+      <line x1="98" y1="62" x2="60" y2="62" stroke="#e05c5c" stroke-width="1.5" marker-end="url(#c-r)"/>
+      <rect x="6"  y="46" width="54" height="32" rx="4" fill="#21253a" stroke="#e05c5c" stroke-width="1.5"/>
+      <text x="33" y="65" text-anchor="middle" fill="#e05c5c" font-family="Sora,sans-serif" font-size="8.5">Blocco B</text>
+      <line x1="307" y1="78" x2="307" y2="130" stroke="#2e3350" stroke-width="1.5"/>
+      <line x1="307" y1="130" x2="170" y2="130" stroke="#2e3350" stroke-width="1.5"/>
+      <line x1="33"  y1="78" x2="33"  y2="130" stroke="#2e3350" stroke-width="1.5"/>
+      <line x1="33"  y1="130" x2="170" y2="130" stroke="#2e3350" stroke-width="1.5"/>
+      <line x1="170" y1="130" x2="170" y2="148" stroke="#2e3350" stroke-width="1.5" marker-end="url(#c-n)"/>
+      <rect x="110" y="150" width="120" height="28" rx="4" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+      <text x="170" y="168" text-anchor="middle" fill="#7a7f9a" font-family="Sora,sans-serif" font-size="8.5">Prosegue&hellip;</text>
+    </svg>
+  </div>
+
+  <h3>Esempio</h3>
+  <p>Algoritmo per controllare l&apos;et&agrave; di un utente:</p>
+  <ol style="margin:.5rem 0 1rem 1.5rem;color:var(--prog-text);font-size:.95rem;line-height:2.2">
+    <li>Dichiara la variabile <em>et&agrave;</em> di tipo Intero</li>
+    <li>Leggi et&agrave; &mdash; <em style="color:var(--prog-muted)">(parallelogramma)</em></li>
+    <li><strong>Se</strong> et&agrave; &ge; 18 &rarr; scrivi &ldquo;Accesso consentito&rdquo; &mdash; <em style="color:var(--prog-muted)">(rombo + ramo S&igrave;)</em></li>
+    <li><strong>Altrimenti</strong> &rarr; scrivi &ldquo;Accesso negato&rdquo; &mdash; <em style="color:var(--prog-muted)">(ramo No)</em></li>
+  </ol>
+
+  <div class="box box-tip">
+    <strong>&#128161; Se&hellip; altrimenti se&hellip; altrimenti&hellip;</strong>
+    Puoi concatenare pi&ugrave; condizioni: <em>se</em> voto &ge; 90 &rarr; &ldquo;Ottimo&rdquo;; <em>altrimenti se</em> voto &ge; 60 &rarr; &ldquo;Sufficiente&rdquo;; <em>altrimenti</em> &rarr; &ldquo;Insufficiente&rdquo;. Nel diagramma si traduce in rombi in cascata; in C++ in <code>if</code>, <code>else if</code>, <code>else</code>.
+  </div>
+</section>
+
+<!-- ══ ITERAZIONE ══ -->
+<section id="iterazione">
+  <div class="section-label">06 &mdash; Strutture di controllo</div>
+  <h2>Iterazione</h2>
+  <p>Spesso un programma deve <strong>ripetere un blocco di istruzioni</strong> pi&ugrave; volte. Copiare le stesse istruzioni non ha senso: si usano i <strong>cicli</strong> (strutture iterative). Nel diagramma di flusso riconosci un ciclo dal <em>rombo</em> con una freccia di ritorno che risale verso di esso.</p>
+
+  <div class="flow-wrap">
+    <svg viewBox="0 0 270 225" width="270" height="225"
+         xmlns="http://www.w3.org/2000/svg"
+         aria-label="Diagramma ciclo while: il rombo verifica la condizione; il ramo Sì porta alle istruzioni che ritornano al rombo; il ramo No esce dal ciclo">
+      <defs>
+        <marker id="w-n" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#2e3350"/></marker>
+        <marker id="w-y" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#56cfb2"/></marker>
+        <marker id="w-r" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#e05c5c"/></marker>
+        <marker id="w-b" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#7c5cfc"/></marker>
+      </defs>
+      <line x1="135" y1="0" x2="135" y2="18" stroke="#2e3350" stroke-width="1.5" marker-end="url(#w-n)"/>
+      <polygon points="135,20 200,55 135,90 70,55" fill="#21253a" stroke="#7c5cfc" stroke-width="2"/>
+      <text x="135" y="51" text-anchor="middle" fill="#d4d8f0" font-family="Sora,sans-serif" font-size="9">Condizione</text>
+      <text x="135" y="63" text-anchor="middle" fill="#7c5cfc" font-family="Sora,sans-serif" font-size="8">vera?</text>
+      <text x="141" y="103" fill="#56cfb2" font-family="Sora,sans-serif" font-size="9" font-weight="700">S&igrave;</text>
+      <text x="204"  y="53" fill="#e05c5c" font-family="Sora,sans-serif" font-size="9" font-weight="700">No</text>
+      <line x1="135" y1="90" x2="135" y2="110" stroke="#56cfb2" stroke-width="1.5" marker-end="url(#w-y)"/>
+      <rect x="82" y="112" width="106" height="36" rx="4" fill="#21253a" stroke="#56cfb2" stroke-width="1.5"/>
+      <text x="135" y="130" text-anchor="middle" fill="#56cfb2" font-family="Sora,sans-serif" font-size="9">Istruzioni</text>
+      <text x="135" y="142" text-anchor="middle" fill="#56cfb2" font-family="Sora,sans-serif" font-size="7.5">del ciclo</text>
+      <line x1="82"  y1="130" x2="32" y2="130" stroke="#7c5cfc" stroke-width="1.5"/>
+      <line x1="32"  y1="130" x2="32" y2="55"  stroke="#7c5cfc" stroke-width="1.5"/>
+      <line x1="32"  y1="55"  x2="68" y2="55"  stroke="#7c5cfc" stroke-width="1.5" marker-end="url(#w-b)"/>
+      <line x1="200" y1="55"  x2="238" y2="55"  stroke="#e05c5c" stroke-width="1.5"/>
+      <line x1="238" y1="55"  x2="238" y2="195" stroke="#e05c5c" stroke-width="1.5"/>
+      <line x1="238" y1="195" x2="175" y2="195" stroke="#e05c5c" stroke-width="1.5" marker-end="url(#w-r)"/>
+      <rect x="75" y="180" width="100" height="28" rx="4" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+      <text x="125" y="198" text-anchor="middle" fill="#7a7f9a" font-family="Sora,sans-serif" font-size="8.5">Prosegue&hellip;</text>
+    </svg>
+  </div>
+
+  <h3>Tre tipi di ciclo</h3>
+  <table class="complexity-table">
+    <thead>
+      <tr>
+        <th>Tipo</th>
+        <th>Quando usarlo</th>
+        <th>Esempio in linguaggio naturale</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>while</strong></td>
+        <td>Non sai quante volte ripetere &mdash; dipende da una condizione</td>
+        <td>&ldquo;Continua a mescolare finch&eacute; non si addensa&rdquo;</td>
+      </tr>
+      <tr>
+        <td><strong>for</strong></td>
+        <td>Sai esattamente quante volte ripetere</td>
+        <td>&ldquo;Ripeti l&apos;esercizio 10 volte&rdquo;</td>
+      </tr>
+      <tr>
+        <td><strong>do&ndash;while</strong></td>
+        <td>Devi eseguire almeno una volta, poi verificare</td>
+        <td>&ldquo;Chiedi la password; se sbagliata, richiedi&rdquo;</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box box-warn">
+    <strong>&#9888; Il ciclo infinito</strong>
+    Se la condizione non diventa mai falsa, il programma rimane bloccato e non termina mai. &Egrave; uno degli errori logici pi&ugrave; comuni: assicurati sempre che le istruzioni dentro il ciclo modifichino qualcosa che avvicina la condizione al &ldquo;falso&rdquo;.
+  </div>
+
+  <div class="box box-tip">
+    <strong>&#128161; Dal diagramma al C++</strong>
+    Flowgorithm pu&ograve; generare il codice C++ del tuo diagramma. Il codice include alcune librerie fisse che non hai richiesto &mdash; &egrave; il template dello strumento. Quello che conta &egrave; riconoscere la struttura: <code>if/else</code> per la selezione, <code>while</code> e <code>for</code> per l&apos;iterazione. La guida successiva ti spiega riga per riga come leggerlo e scriverlo.
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-nav">
+    <a href="/programmazione/introduzione-cpp/">&#8594; Introduzione a C++</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/programmazione/">Hub Programmazione</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/">Home</a>
+  </div>
+  <strong>Formazione Digitale</strong> &mdash; Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+
+<script>
+(function(){
+  'use strict';
+
+  /* TOC attivo allo scroll */
+  var tocLinks = document.querySelectorAll('#toc a');
+  var sections = document.querySelectorAll('section[id]');
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        tocLinks.forEach(function(a){ a.classList.remove('active'); });
+        var a = document.querySelector('#toc a[href="#' + e.target.id + '"]');
+        if(a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -80% 0px', threshold: 0 });
+  sections.forEach(function(s){ obs.observe(s); });
+
+  /* Click TOC: scroll fluido */
+  tocLinks.forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      var t = document.querySelector(a.getAttribute('href'));
+      if(t) t.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  /* Back to top */
+  var btt = document.getElementById('back-to-top');
+  window.addEventListener('scroll', function(){ btt.classList.toggle('visible', window.scrollY > 300); });
+})();
+</script>
+
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>
