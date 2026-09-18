@@ -1272,7 +1272,7 @@
     {
         "path": "/programmazione/setup-vscode-cpp/",
         "label": "Configurare VS Code per C++",
-        "short": "Setup VS Code",
+        "short": "Setup Visual Studio Code",
         "cat": "guide",
         "emoji": "🛠️",
         "tags": [
