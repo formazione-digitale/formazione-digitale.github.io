@@ -400,25 +400,173 @@
       padding: 4px 12px; border-radius: 20px; transition: all 0.18s;
     }
     .page-nav a:hover { background: rgba(124,92,252,0.15); border-color: var(--prog-accent); }
+
+    /* ── HEADER TWO-COLUMN ── */
+    .header-inner {
+      display: flex;
+      align-items: flex-start;
+      gap: 2.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .header-text { flex: 1; min-width: 0; }
+    .header-visual { display: none; flex-shrink: 0; width: 340px; }
+    @media (min-width: 860px) { .header-visual { display: block; } }
+
+    /* ── CODE CARD ── */
+    .code-card {
+      background: var(--prog-code-bg);
+      border: 1px solid var(--prog-border);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 10px 48px rgba(0,0,0,0.55), 0 0 0 1px rgba(124,92,252,0.12);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.71rem;
+      line-height: 1.65;
+      position: relative;
+    }
+    .code-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, var(--prog-accent), var(--prog-accent2));
+      opacity: 0.7;
+    }
+    .code-card-bar {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255,255,255,0.035);
+      border-bottom: 1px solid var(--prog-border);
+      padding: 9px 14px;
+    }
+    .code-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .code-dot-r { background: #e05c5c; }
+    .code-dot-y { background: #f9a03f; }
+    .code-dot-g { background: #56cfb2; }
+    .code-card-label {
+      font-size: 0.63rem;
+      color: var(--prog-muted);
+      margin-left: auto;
+      letter-spacing: 0.06em;
+    }
+    .code-card-body { padding: 0.85rem 1.1rem 0.85rem; }
+    .code-line { display: flex; gap: 0.9rem; }
+    .code-line + .code-line { margin-top: 0; }
+    .code-ln {
+      color: rgba(122,127,154,0.35);
+      user-select: none;
+      min-width: 1.2ch;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .code-src { white-space: pre; }
+    .kw  { color: var(--kw-keyword); }   /* keyword: rosa */
+    .kt  { color: var(--kw-type); }      /* type: azzurro */
+    .kf  { color: var(--kw-func); }      /* func: teal */
+    .ks  { color: var(--kw-string); }    /* string: celeste */
+    .km  { color: var(--prog-muted); }   /* punctuation: grigio */
+    .kn  { color: #b392f0; }             /* namespace: viola chiaro */
+
+    /* ── TERMINAL SECTION ── */
+    .code-card-term {
+      background: rgba(0,0,0,0.42);
+      border-top: 1px solid var(--prog-border);
+      padding: 0.7rem 1.1rem 0.85rem;
+    }
+    .term-title {
+      font-size: 0.58rem;
+      color: var(--prog-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.45rem;
+    }
+    .term-line {
+      display: flex;
+      align-items: baseline;
+      gap: 0.45rem;
+      font-size: 0.69rem;
+      color: var(--prog-text);
+      line-height: 1.5;
+    }
+    .term-line + .term-line { margin-top: 0.15rem; }
+    .term-prompt { color: var(--prog-accent2); flex-shrink: 0; }
+    .term-out    { color: #a8ff78; }
+    .cursor {
+      display: inline-block;
+      width: 6px; height: 0.85em;
+      background: var(--prog-accent);
+      border-radius: 1px;
+      animation: blink 1.05s step-end infinite;
+      vertical-align: text-bottom;
+      margin-left: 1px;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
   </style>
 </head>
 <body>
 
 <header>
   <a href="/programmazione/" class="header-back-link">&#x2190; Programmazione</a>
-  <div class="header-badge">C++ &middot; Setup</div>
-  <h1>Configurare VS Code per <span>C++</span></h1>
-  <p>Installazione passo per passo di Visual Studio Code e del compilatore <code>g++</code> su Windows &mdash; con MSYS2 e MinGW-w64 UCRT64, dalla prima riga alla prima compilazione.</p>
-  <div class="header-pills">
-    <span class="header-pill">&#128187; Windows 10 / 11</span>
-    <span class="header-pill">&#128247; 12 screenshot</span>
-    <span class="header-pill">&#9200; ~30 min</span>
-    <span class="header-pill">&#128294; Gratuito</span>
-    <a class="header-download" href="configurare-vscode-cpp.docx" download>&#11015; Scarica guida Word</a>
-  </div>
-  <div class="page-nav">
-    <a href="/programmazione/">&#8592; Hub Programmazione</a>
-  </div>
+  <div class="header-inner">
+
+    <!-- colonna sinistra: testo -->
+    <div class="header-text">
+      <div class="header-badge">C++ &middot; Setup</div>
+      <h1>Configurare VS Code per <span>C++</span></h1>
+      <p>Installazione passo per passo di Visual Studio Code e del compilatore <code>g++</code> su Windows &mdash; con MSYS2 e MinGW-w64 UCRT64, dalla prima riga alla prima compilazione.</p>
+      <div class="header-pills">
+        <span class="header-pill">&#128187; Windows 10 / 11</span>
+        <span class="header-pill">&#128247; 12 screenshot</span>
+        <span class="header-pill">&#9200; ~30 min</span>
+        <span class="header-pill">&#128294; Gratuito</span>
+        <a class="header-download" href="configurare-vscode-cpp.docx" download>&#11015; Scarica guida Word</a>
+      </div>
+      <div class="page-nav">
+        <a href="/programmazione/">&#8592; Hub Programmazione</a>
+      </div>
+    </div>
+
+    <!-- colonna destra: code card decorativa -->
+    <div class="header-visual" aria-hidden="true">
+      <div class="code-card">
+        <!-- barra titolo stile editor -->
+        <div class="code-card-bar">
+          <span class="code-dot code-dot-r"></span>
+          <span class="code-dot code-dot-y"></span>
+          <span class="code-dot code-dot-g"></span>
+          <span class="code-card-label">hello.cpp</span>
+        </div>
+        <!-- codice C++ con syntax highlighting -->
+        <div class="code-card-body">
+          <div class="code-line"><span class="code-ln">1</span><span class="code-src"><span class="kt">#include</span> <span class="ks">&lt;iostream&gt;</span></span></div>
+          <div class="code-line"><span class="code-ln">2</span><span class="code-src"></span></div>
+          <div class="code-line"><span class="code-ln">3</span><span class="code-src"><span class="kw">using</span> <span class="kn">namespace</span> <span class="kf">std</span><span class="km">;</span></span></div>
+          <div class="code-line"><span class="code-ln">4</span><span class="code-src"></span></div>
+          <div class="code-line"><span class="code-ln">5</span><span class="code-src"><span class="kt">int</span> <span class="kf">main</span><span class="km">() {</span></span></div>
+          <div class="code-line"><span class="code-ln">6</span><span class="code-src">    <span class="kf">cout</span> <span class="km">&lt;&lt;</span> <span class="ks">"Hello, World!"</span> <span class="km">&lt;&lt;</span> <span class="kn">endl</span><span class="km">;</span></span></div>
+          <div class="code-line"><span class="code-ln">7</span><span class="code-src">    <span class="kw">return</span> <span class="kn">0</span><span class="km">;</span></span></div>
+          <div class="code-line"><span class="code-ln">8</span><span class="code-src"><span class="km">}</span></span></div>
+        </div>
+        <!-- terminale: compilazione e output -->
+        <div class="code-card-term">
+          <div class="term-title">&#9658; Terminale</div>
+          <div class="term-line">
+            <span class="term-prompt">$</span>
+            <span>g++ hello.cpp -o hello</span>
+          </div>
+          <div class="term-line">
+            <span class="term-prompt">$</span>
+            <span>./hello</span>
+          </div>
+          <div class="term-line">
+            <span class="term-out">Hello, World!</span><span class="cursor"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.header-inner -->
 </header>
 
 <div class="toc-wrap">
@@ -536,18 +684,23 @@
   </div>
 
   <h3>3 &mdash; Installare g++, gdb e make</h3>
-  <p>Nel terminale MSYS2 UCRT64 appena aperto, installa l'intero toolchain con un solo comando:</p>
+  <p>Nel terminale MSYS2 UCRT64 appena aperto, installa i tre pacchetti necessari con il comando seguente:</p>
 
   <div class="code-block">
     <div class="code-header">
       <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
       <span class="code-lang">MSYS2 UCRT64 — terminale</span>
     </div>
-    <pre>pacman -S --needed base-devel mingw-w64-ucrt-x86_64-toolchain</pre>
+    <pre>pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-gdb mingw-w64-ucrt-x86_64-make</pre>
+  </div>
+
+  <div class="box box-tip">
+    <strong>💡 Installazione alternativa (se il comando sopra dà errori)</strong>
+    In caso di problemi, usa il pacchetto completo del toolchain:<br>
+    <code>pacman -S --needed base-devel mingw-w64-ucrt-x86_64-toolchain</code>
   </div>
 
   <ol class="step-list">
-    <li>Alla domanda <em>"Enter a selection (default=all)"</em> &rarr; premi <kbd>Invio</kbd>.</li>
     <li>Alla domanda <em>"Proceed with installation? [Y/n]"</em> &rarr; digita <kbd>Y</kbd> e premi <kbd>Invio</kbd>.</li>
     <li>Attendi il completamento del download (qualche minuto).</li>
     <li>Verifica l'installazione con i tre comandi seguenti, uno alla volta:</li>
@@ -670,7 +823,7 @@ gdb --version</pre>
   <img src="img/vsc11.webp" alt="VS Code con la schermata di benvenuto per lo sviluppo C++" class="guide-img" loading="lazy">
   <div class="guide-img-caption">Figura 11 — VS Code è configurato per C++ e pronto alla scrittura</div>
 
-  <p>Scrivi il codice nel file <code>hello.cpp</code>:</p>
+  <p>Scrivi il codice nel file <code>hello.cpp</code> e salvalo con <kbd>Ctrl</kbd>+<kbd>S</kbd> nella cartella del progetto:</p>
 
   <div class="code-block">
     <div class="code-header">
@@ -679,25 +832,24 @@ gdb --version</pre>
     </div>
     <pre><span class="pp">#include &lt;iostream&gt;</span>
 
+<span class="kw">using</span> <span class="tp">namespace</span> std;
+
 <span class="tp">int</span> <span class="fn">main</span>() {
-    std::cout &lt;&lt; <span class="st">"Hello, World!"</span> &lt;&lt; std::endl;
+    cout &lt;&lt; <span class="st">"Hello, World!"</span> &lt;&lt; <span class="tp">endl</span>;
     <span class="kw">return</span> <span class="nm">0</span>;
 }</pre>
   </div>
 
-  <p>Apri il terminale integrato (<kbd>Ctrl</kbd>+<kbd>`</kbd>) e compila:</p>
+  <p>Premi <kbd>Ctrl</kbd>+<kbd>F5</kbd> per compilare ed eseguire il programma senza il debugger (oppure: menu <strong>Run → Run Without Debugging</strong>).</p>
 
-  <div class="code-block">
-    <div class="code-header">
-      <div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div>
-      <span class="code-lang">Terminale VS Code — compila ed esegui</span>
-    </div>
-    <pre>g++ hello.cpp -o hello
-.\hello</pre>
+  <div class="box box-warn">
+    <strong>⚠️ Se VS Code chiede di selezionare il compilatore</strong>
+    Scegli <strong>C++ (GDB/LLDB)</strong>, poi seleziona il file <code>g++.exe</code> in <code>C:/msys64/ucrt64/bin/</code>.<br>
+    <em>Non scegliere "cl.exe" — è il compilatore MSVC di Visual Studio, non installato.</em>
   </div>
 
-  <img src="img/vsc12.webp" alt="Terminale PowerShell in VS Code con l'output Hello, World!" class="guide-img" loading="lazy">
-  <div class="guide-img-caption">Figura 12 — Il programma viene compilato ed eseguito: l'output è "Hello, World!"</div>
+  <img src="img/vsc12.webp" alt="Terminale VS Code con l'output Hello, World!" class="guide-img" loading="lazy">
+  <div class="guide-img-caption">Figura 12 — Output nella finestra TERMINAL: <code>Hello, World!</code></div>
 
   <div class="box box-tip">
     <strong>🎉 Fatto!</strong>
