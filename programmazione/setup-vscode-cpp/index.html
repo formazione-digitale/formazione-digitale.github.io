@@ -285,11 +285,13 @@
     .guide-img {
       display: block;
       max-width: min(720px, 100%);
+      max-height: min(500px, 70vh);
       width: auto; height: auto;
       border-radius: 8px;
       border: 1px solid var(--prog-border);
       box-shadow: 0 4px 20px rgba(0,0,0,0.35);
       margin: 1rem auto 0.4rem;
+      object-fit: contain;
     }
     .guide-img-caption {
       font-family: 'Space Mono', monospace;
@@ -725,11 +727,16 @@ make --version</pre>
   <div class="section-label">04–05 &mdash; Configurazione</div>
   <h2>PATH e verifica</h2>
 
+  <div class="box box-info">
+    <strong>📌 A cosa serve il PATH di Windows?</strong>
+    La variabile di sistema <strong>Path</strong> è l'elenco delle cartelle in cui Windows cerca i programmi eseguibili. Aggiungere <code>C:\msys64\ucrt64\bin</code> permette di digitare <code>g++</code> in qualsiasi terminale (CMD, PowerShell, terminale integrato di VS Code) senza dover scrivere il percorso completo ogni volta.<br><br>
+    <strong>Se non hai i privilegi di amministratore</strong> e non riesci a modificare il PATH, puoi comunque usare VS Code con <kbd>Ctrl</kbd>+<kbd>F5</kbd>: VS Code salva internamente il percorso completo del compilatore e funziona lo stesso. L'unica limitazione è che <code>g++</code> <em>non</em> sarà riconosciuto nel terminale integrato di VS Code o nel Prompt dei comandi di Windows.
+  </div>
+
   <h3>4 &mdash; Aggiungere g++ al PATH di Windows</h3>
   <p>
-    Windows non sa ancora dove trovare <code>g++</code>. Dobbiamo aggiungere
-    <code>C:\msys64\ucrt64\bin</code> alla variabile di sistema <strong>Path</strong>
-    — l'elenco delle cartelle in cui Windows cerca i programmi eseguibili.
+    Aggiungiamo <code>C:\msys64\ucrt64\bin</code> alla variabile di sistema <strong>Path</strong>
+    così che <code>g++</code> sia riconoscibile da qualsiasi terminale.
   </p>
 
   <ol class="step-list">

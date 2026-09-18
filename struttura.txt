@@ -1,5 +1,5 @@
 Elenco del percorso delle cartelle per il volume Acer
-Numero di serie del volume: 0000008D-544D:3F7C
+Numero di serie del volume: 544D-3F7C
 C:.
 |   .gitignore
 |   .nojekyll
@@ -170,13 +170,34 @@ C:.
 |   +---algoritmi-ricerca
 |   |       index.html
 |   |       
+|   +---costrutti
+|   |       index.html
+|   |       
+|   +---fondamenti-algoritmi
+|   |       index.html
+|   |       
+|   +---funzioni
+|   |       index.html
+|   |       
 |   +---gestione-file
 |   |       index.html
 |   |       
+|   +---introduzione-cpp
+|   |       index.html
+|   |       
+|   +---setup-vscode-cpp
+|   |   |   configurare-vscode-cpp.docx
+|   |   |   index.html
+|   |   |   
+|   |   \---img
+|   |           
 |   +---strutture-dati-dinamiche
 |   |       index.html
 |   |       
-|   \---strutture-dati-statiche
+|   +---strutture-dati-statiche
+|   |       index.html
+|   |       
+|   \---variabili-io
 |           index.html
 |           
 +---project-management
@@ -278,6 +299,5 @@ C:.
 |           index.html
 |           
 \---stats
-        index-.html
         index.html
         
