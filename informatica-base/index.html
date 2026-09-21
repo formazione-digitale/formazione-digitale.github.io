@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informatica di Base — Formazione Digitale</title>
+  <meta name="description" content="Le basi dell'informatica: architettura del computer, tastiera e scorciatoie, conversioni numeriche. Risorse interattive per la prima superiore.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Informatica di Base — Formazione Digitale">
+  <meta property="og:description" content="Le basi dell'informatica: architettura del computer, tastiera e scorciatoie, conversioni numeriche. Risorse interattive per la prima superiore.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://formazione-digitale.it/informatica-base/">
+  <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+  <meta property="og:locale" content="it_IT">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Informatica di Base — Formazione Digitale">
+  <meta name="twitter:description" content="Le basi dell'informatica: architettura del computer, tastiera e scorciatoie, conversioni numeriche.">
+  <meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://formazione-digitale.it/informatica-base/">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Informatica di Base",
+    "description": "Le basi dell'informatica: architettura del computer, tastiera e scorciatoie, conversioni numeriche. Risorse interattive per la prima superiore.",
+    "url": "https://formazione-digitale.it/informatica-base/",
+    "publisher": {
+      "@type": "WebSite",
+      "name": "Formazione Digitale",
+      "url": "https://formazione-digitale.it"
+    }
+  }
+  </script>
+
+  <!-- GoatCounter -->
+  <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+  <link rel="stylesheet" href="/css/shared.css?v=3">
+
+  <style>
+    /* ── HEADER HUB — due colonne ────────────────────────────────────── */
+    .hub-header {
+      background: linear-gradient(135deg, #0D7377 0%, #1A9CA0 100%);
+      color: #fff;
+      padding: 3.5rem 2rem;
+      border-radius: 0;
+      margin-bottom: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .hub-header-text h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 5vw, 2.4rem);
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .hub-header-text p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .hub-header-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .hub-header-meta strong {
+      color: #B2EBF2;
+      font-weight: 600;
+    }
+
+    .hub-header-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    @media(max-width: 900px) {
+      .hub-header {
+        grid-template-columns: 1fr;
+        padding: 2.5rem 1.5rem;
+        gap: 1.5rem;
+      }
+      .hub-header-visual { display: none; }
+    }
+
+    /* ── INTRO ────────────────────────────────────────────────────────── */
+    .hub-intro {
+      max-width: 960px;
+      margin: 0 auto 3rem;
+      padding: 0 2rem;
+    }
+
+    .hub-intro h2 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: #0D7377;
+      margin-bottom: 1rem;
+    }
+
+    .hub-intro p {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: #3a3a3a;
+      margin-bottom: 0.85rem;
+    }
+
+    .hub-intro-highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .highlight-item {
+      background: #E0F7FA;
+      border: 1px solid #B2EBF2;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+    }
+
+    .highlight-item strong {
+      color: #0D7377;
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .highlight-item p {
+      font-size: 0.85rem;
+      color: var(--gray-mid);
+      margin: 0;
+    }
+
+    @media(max-width: 900px) {
+      .hub-intro { padding: 0 1.5rem; }
+      .hub-intro h2 { font-size: 1.2rem; }
+    }
+
+    /* ── PERCORSO CONSIGLIATO ────────────────────────────────────────── */
+    .hub-path {
+      background: var(--white);
+      border: 1px solid #B2EBF2;
+      border-radius: 10px;
+      padding: 2rem;
+      margin: 0 2rem 3rem;
+      max-width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hub-path h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: #0D7377;
+      margin-bottom: 1.25rem;
+    }
+
+    .path-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .path-step {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .path-num {
+      background: #0D7377;
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .path-content strong {
+      color: #0D7377;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .path-content p {
+      font-size: 0.85rem;
+      color: var(--gray-mid);
+      margin: 0;
+    }
+
+    @media(max-width: 900px) {
+      .hub-path { margin: 0 1.5rem 3rem; padding: 1.5rem; }
+    }
+
+    /* ── RISORSE ──────────────────────────────────────────────────────── */
+    .hub-resources {
+      max-width: 960px;
+      margin: 0 auto 3rem;
+      padding: 0 2rem;
+    }
+
+    .hub-resources h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: #0D7377;
+      margin-bottom: 1.5rem;
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .resource-card {
+      background: #fff;
+      border: 1px solid #B2EBF2;
+      border-radius: 10px;
+      padding: 1.25rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .resource-card:hover {
+      border-color: #0D7377;
+      box-shadow: 0 4px 20px rgba(13,115,119,0.12);
+      transform: translateY(-3px);
+    }
+
+    .resource-card.coming {
+      opacity: 0.55;
+      border-style: dashed;
+      border-color: #ccc;
+      pointer-events: none;
+    }
+
+    .resource-head {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .resource-icon {
+      font-size: 1.5rem;
+    }
+
+    .resource-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #0D7377;
+    }
+
+    .resource-body {
+      flex: 1;
+    }
+
+    .resource-desc {
+      font-size: 0.85rem;
+      color: #3a3a3a;
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+
+    .resource-meta {
+      font-size: 0.78rem;
+      color: var(--gray-mid);
+      font-style: italic;
+    }
+
+    @media(max-width: 900px) {
+      .hub-resources { padding: 0 1.5rem; }
+      .resources-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADER ────────────────────────────────────────────────────── -->
+  <div class="hub-header">
+    <div class="hub-header-text">
+      <a href="/" style="display:inline-block;margin-bottom:1.2rem;font-size:.82rem;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.55)'">← Portale</a>
+      <h1>Informatica di Base</h1>
+      <p>Le fondamenta dell'informatica: capire com'è fatto un computer, imparare a usare la tastiera con le scorciatoie e scoprire come ragiona una macchina digitale.</p>
+      <div class="hub-header-meta">
+        <div>📚 <strong>2 risorse</strong> disponibili</div>
+        <div>🎓 Pensato per la prima superiore</div>
+      </div>
+    </div>
+    <div class="hub-header-visual">
+      <div style="background: rgba(5,15,35,.55);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:1.5rem 1.8rem;font-family:'DM Mono',monospace;line-height:1.9;color:rgba(255,255,255,.7);font-size:.82rem;max-width:280px;">
+        <div><span style="color:#B2EBF2">CPU</span> ← CU + ALU + Registri</div>
+        <div><span style="color:#B2EBF2">RAM</span> ← memoria di lavoro</div>
+        <div><span style="color:#B2EBF2">I/O</span> ← tastiera, monitor…</div>
+        <div style="margin-top:.6rem;border-top:1px solid rgba(255,255,255,.15);padding-top:.6rem;">
+          <span style="color:#80DEEA">Ctrl</span>+<span style="color:#80DEEA">C</span> → copia
+        </div>
+        <div><span style="color:#80DEEA">Ctrl</span>+<span style="color:#80DEEA">V</span> → incolla</div>
+        <div><span style="color:#80DEEA">Win</span>+<span style="color:#80DEEA">E</span> → esplora file</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── INTRO ────────────────────────────────────────────────────── -->
+  <div class="hub-intro">
+    <h2>Di cosa si tratta?</h2>
+    <p>Questa sezione raccoglie le risorse per chi inizia a studiare informatica. Si parte dalle cose concrete — cosa c'è dentro il case di un computer, come funziona la CPU, a cosa serve la RAM — per poi passare all'uso quotidiano della tastiera con tutte le scorciatoie utili.</p>
+    <p>Ogni risorsa è interattiva: schemi cliccabili, quiz, simulatori. Non solo teoria, ma strumenti da usare in classe e a casa.</p>
+
+    <div class="hub-intro-highlights">
+      <div class="highlight-item">
+        <strong>Architettura del PC</strong>
+        <p>CPU, memorie, storage, periferiche I/O, modello Von Neumann, ciclo FDE</p>
+      </div>
+      <div class="highlight-item">
+        <strong>Tastiera e scorciatoie</strong>
+        <p>Layout della tastiera, tasti speciali, combinazioni Windows indispensabili</p>
+      </div>
+      <div class="highlight-item">
+        <strong>Prossimamente</strong>
+        <p>Conversione decimale ↔ binario, rappresentazione dei dati</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PERCORSO CONSIGLIATO ────────────────────────────────────── -->
+  <div class="hub-path">
+    <h3>📍 Percorso consigliato</h3>
+    <div class="path-steps">
+      <div class="path-step">
+        <div class="path-num">1</div>
+        <div class="path-content">
+          <strong>Com'è fatto un computer</strong>
+          <p>Parti da qui: cos'è un PC, come funziona la CPU, le memorie, lo storage e le periferiche. Le basi hardware spiegate con schemi interattivi.</p>
+        </div>
+      </div>
+      <div class="path-step">
+        <div class="path-num">2</div>
+        <div class="path-content">
+          <strong>La tastiera del PC</strong>
+          <p>Impara a usare la tastiera in modo efficiente: layout, tasti speciali e le scorciatoie di Windows che fanno risparmiare tempo.</p>
+        </div>
+      </div>
+      <div class="path-step">
+        <div class="path-num">3</div>
+        <div class="path-content">
+          <strong>Decimale e binario <span style="font-weight:400;color:#999;font-size:.8rem;">(in arrivo)</span></strong>
+          <p>Come i computer rappresentano i numeri: conversioni tra base 10 e base 2.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RISORSE ────────────────────────────────────────────────────── -->
+  <div class="hub-resources">
+    <h3>Tutte le risorse</h3>
+    <div class="resources-grid">
+
+      <!-- Risorsa 1 — Com'è fatto un computer -->
+      <a href="architettura-pc/" class="resource-card">
+        <div class="resource-head">
+          <div class="resource-icon">🖥️</div>
+          <div class="resource-title">Com'è fatto un computer</div>
+        </div>
+        <div class="resource-body">
+          <div class="resource-desc">Dal modello Von Neumann alla CPU, dalle memorie allo storage, dalle periferiche alla scheda madre. Con simulatore del ciclo Fetch-Decode-Execute, quiz interattivi e modalità aula.</div>
+          <div class="resource-meta">6 moduli · 14 slide · Simulatore CPU · SVG interattivi</div>
+        </div>
+      </a>
+
+      <!-- Risorsa 2 — La tastiera del PC -->
+      <a href="tastiera-windows/" class="resource-card">
+        <div class="resource-head">
+          <div class="resource-icon">⌨️</div>
+          <div class="resource-title">La tastiera del PC</div>
+        </div>
+        <div class="resource-body">
+          <div class="resource-desc">Layout della tastiera, tasti funzione, tasti speciali e tutte le scorciatoie di Windows indispensabili per lavorare in modo efficiente.</div>
+          <div class="resource-meta">Scorciatoie Windows · Tasti speciali · Guida interattiva</div>
+        </div>
+      </a>
+
+      <!-- Risorsa 3 — Coming soon -->
+      <div class="resource-card coming">
+        <div class="resource-head">
+          <div class="resource-icon">🔢</div>
+          <div class="resource-title">Decimale e binario</div>
+        </div>
+        <div class="resource-body">
+          <div class="resource-desc">Conversione tra base 10 e base 2, rappresentazione dei numeri nel computer. Con convertitore interattivo passo-passo.</div>
+          <div class="resource-meta">In preparazione</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── FOOTER ────────────────────────────────────────────────────── -->
+  <footer style="text-align:center;padding:2.5rem 1.5rem 2rem;font-size:.82rem;color:var(--gray-mid);border-top:1px solid var(--blue-light);">
+    <a href="/" style="color:#0D7377;text-decoration:none;font-weight:600;">Formazione Digitale</a> · Informatica di Base
+    <div style="margin-top:.4rem;">Risorse didattiche aperte · <a href="/" style="color:var(--gray-mid);text-decoration:underline;">Torna al portale</a></div>
+  </footer>
+
+  <script src="/scripts/ui.js" defer></script>
+</body>
+</html>

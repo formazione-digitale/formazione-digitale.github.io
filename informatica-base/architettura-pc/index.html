@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Com'è fatto un computer — Formazione Digitale</title>
+<meta name="description" content="Hardware del computer spiegato per chi inizia: CPU, memorie, storage, periferiche e avvio. Guida interattiva con diagrammi SVG per la prima superiore.">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://formazione-digitale.it/informatica/come-e-fatto-un-computer/">
+<link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+<link rel="dns-prefetch" href="//gc.zgo.at">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#1F4E79">
+<meta property="og:title" content="Com'è fatto un computer — Formazione Digitale">
+<meta property="og:description" content="Hardware del computer spiegato per chi inizia: CPU, memorie, storage, periferiche e avvio.">
+<meta property="og:url" content="https://formazione-digitale.it/informatica/come-e-fatto-un-computer/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"LearningResource","name":"Com'è fatto un computer","description":"Hardware del computer spiegato per chi inizia: CPU, memorie, storage, periferiche e avvio del sistema.","url":"https://formazione-digitale.it/informatica/come-e-fatto-un-computer/","inLanguage":"it","author":{"@type":"Person","name":"Cristiano De Pasquale","jobTitle":"Docente di Informatica"},"provider":{"@type":"WebSite","name":"Formazione Digitale","url":"https://formazione-digitale.it"},"educationalLevel":"Scuola secondaria di secondo grado — primo anno","keywords":"hardware, cpu, ram, rom, bus, periferiche, storage, avvio computer, prima superiore","educationalAlignment":[{"@type":"AlignmentObject","alignmentType":"educationalSubject","educationFramework":"DigComp 2.2","targetName":"Area 1 — Navigazione, ricerca e filtraggio di dati e informazioni digitali"},{"@type":"AlignmentObject","alignmentType":"educationalSubject","educationFramework":"DigComp 2.2","targetName":"Area 4 — Sicurezza dei dispositivi e dei dati personali"}]}
+</script>
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="stylesheet" href="/css/shared.css?v=5">
+<style>
+/* ═══ COMPONENTI LOCALI ═══ */
+.accordion{display:flex;flex-direction:column;gap:.45rem;margin:1rem 0}
+.acc-item{border-radius:var(--radius);overflow:hidden;border:1px solid var(--blue-light)}
+.acc-head{display:flex;align-items:center;justify-content:space-between;background:var(--blue-pale);padding:.7rem 1rem;font-weight:600;font-size:.9rem;color:var(--blue-dark);cursor:pointer;user-select:none;transition:background var(--transition)}
+.acc-head:hover{background:var(--blue-light)}
+.acc-arrow{transition:transform var(--transition);font-size:.75rem;color:var(--blue-mid)}
+.acc-body{display:none;padding:.85rem 1rem;font-size:.9rem;background:#fff;border-top:1px solid var(--blue-light);line-height:1.65;color:#3a3a3a}
+.acc-item.open .acc-arrow{transform:rotate(90deg)}
+.acc-item.open .acc-body{display:block}
+.step-list{margin:1rem 0}
+.step-item{display:flex;gap:.9rem;margin-bottom:.85rem;align-items:flex-start}
+.step-dot{width:28px;height:28px;border-radius:50%;flex-shrink:0;background:var(--blue-dark);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;margin-top:.1rem}
+.step-body strong{display:block;font-size:.88rem;color:var(--blue-dark);margin-bottom:.1rem}
+.step-body span{font-size:.84rem;color:var(--gray-mid);line-height:1.55}
+.table-wrap{overflow-x:auto;margin:1.25rem 0;border-radius:var(--radius);border:1px solid var(--blue-light);box-shadow:var(--shadow)}
+.table-wrap table{width:100%;border-collapse:collapse;font-size:.88rem}
+.table-wrap thead tr{background:var(--blue-dark);color:#fff}
+.table-wrap th{padding:.7rem 1rem;text-align:left;font-weight:600;font-size:.78rem;letter-spacing:.04em;text-transform:uppercase}
+.table-wrap tbody tr:nth-child(even){background:var(--blue-pale)}
+.table-wrap tbody tr:hover{background:var(--blue-light)}
+.table-wrap td{padding:.65rem 1rem;border-bottom:1px solid var(--blue-light);vertical-align:top;line-height:1.55;color:#3a3a3a}
+.table-wrap tbody tr:last-child td{border-bottom:none}
+.table-wrap td:first-child{white-space:nowrap;color:var(--blue-dark)}
+#back-top{position:fixed;bottom:2rem;right:2rem;width:40px;height:40px;border-radius:50%;background:var(--blue-dark);color:#fff;border:none;font-size:1rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.2);display:none;align-items:center;justify-content:center;transition:background .2s,transform .2s;z-index:50}
+#back-top.visible{display:flex}
+#back-top:hover{background:var(--blue-mid);transform:translateY(-3px)}
+/* ═══ AULA MODE ═══ */
+body.aula-mode #sidebar{display:none}
+body.aula-mode #main{margin-left:0!important;max-width:100%;padding:0}
+body.aula-mode #header{background:#0D2137}
+body.aula-mode #reading-bar{display:none}
+body.aula-mode #back-top{display:none!important}
+#slides-container{display:none;width:100vw;height:calc(100vh - var(--header-h));overflow:hidden;position:relative;background:#0D2137}
+body.aula-mode #slides-container{display:block}
+body.aula-mode #guide-content{display:none}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:4vw 7vw;opacity:0;transform:translateX(30px);transition:opacity .32s ease,transform .32s ease;pointer-events:none;overflow-y:auto}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.slide.exit{opacity:0;transform:translateX(-30px)}
+.slide-tag{font-size:.68rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--blue-light);margin-bottom:.65rem}
+.slide-title{font-family:var(--font-display);font-size:clamp(1.7rem,4vw,2.8rem);color:#fff;line-height:1.15;margin-bottom:1.25rem}
+.slide-title em{color:var(--blue-light);font-style:italic}
+.slide-body{font-size:clamp(.88rem,1.4vw,1.05rem);color:rgba(255,255,255,.82);line-height:1.65;max-width:760px}
+.slide-points{list-style:none}
+.slide-points li{display:flex;gap:.75rem;align-items:flex-start;padding:.55rem 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:clamp(.85rem,1.3vw,1rem);color:rgba(255,255,255,.85);line-height:1.5}
+.slide-points li:last-child{border-bottom:none}
+.slide-points li::before{content:'→';color:var(--blue-light);flex-shrink:0;font-weight:700}
+#slide-nav{display:none;position:fixed;bottom:0;left:0;right:0;padding:.85rem 2rem;background:rgba(0,0,0,.4);align-items:center;justify-content:center;gap:1.5rem}
+body.aula-mode #slide-nav{display:flex}
+.slide-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;padding:.45rem 1.25rem;border-radius:20px;cursor:pointer;font-size:.85rem;font-family:var(--font-body);transition:background .2s}
+.slide-btn:hover{background:rgba(255,255,255,.22)}
+.slide-btn:disabled{opacity:.3;cursor:default}
+#slide-counter{font-size:.8rem;color:rgba(255,255,255,.5);min-width:60px;text-align:center}
+#progress-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:200;height:3px;background:rgba(255,255,255,.1)}
+#progress-fill{height:100%;background:var(--blue-mid);transition:width .3s}
+body.aula-mode #progress-bar{display:block}
+footer{background:var(--blue-dark);color:rgba(255,255,255,.6);text-align:center;padding:2rem 1.5rem;font-size:.8rem;line-height:1.7}
+footer strong{color:rgba(255,255,255,.9)}
+@media(min-width:900px){footer{margin-left:var(--nav-w)}}
+body.aula-mode footer{display:none}
+#main{max-width:1060px}
+@media(min-width:1200px){#main{max-width:1060px;padding:3rem 3.5rem 4rem}}
+/* ═══ SVG INTERATTIVI ═══ */
+.svg-wrap{margin:1.25rem 0}
+.svg-wrap svg{width:100%;height:auto;display:block}
+.svg-hint{font-size:.8rem;color:var(--gray-mid);font-style:italic;margin-bottom:.4rem}
+.svg-info{background:var(--blue-pale);border:1px solid var(--blue-light);border-radius:var(--radius);padding:.8rem 1.1rem;margin-top:.4rem;font-size:.875rem;line-height:1.6;color:#3a3a3a;min-height:62px}
+.svg-info .sip-label{font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-mid);margin-bottom:.2rem}
+.svg-info .sip-title{font-weight:700;color:var(--blue-dark);font-size:.93rem;margin-bottom:.25rem}
+.svg-info .sip-hint{color:var(--gray-mid);font-size:.8rem;font-style:italic}
+.svg-el{cursor:pointer}
+.svg-el .shape{transition:filter .18s}
+.svg-el:hover .shape{filter:brightness(1.2) drop-shadow(0 0 5px rgba(46,117,182,.55))}
+/* ═══ ANIMAZIONE HDD ═══ */
+@keyframes hdd-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes hdd-seek{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-18deg)}}
+.hdd-spinning .hdd-platter{animation:hdd-spin 1.8s linear infinite;transform-origin:200px 165px}
+.hdd-spinning .hdd-arm{animation:hdd-seek 2.4s ease-in-out infinite;transform-origin:355px 165px}
+.hdd-btn{display:inline-flex;align-items:center;gap:.4rem;margin-top:.5rem;padding:.45rem 1.1rem;border-radius:20px;border:1px solid #2E75B6;background:rgba(46,117,182,.12);color:#5B9BD5;font-size:.82rem;font-family:var(--font-body);font-weight:600;cursor:pointer;transition:background .2s}
+.hdd-btn:hover{background:rgba(46,117,182,.25)}
+/* ═══ QUIZ PERIFERICHE ═══ */
+.quiz-wrap{margin:1.25rem 0}
+.quiz-item{display:flex;align-items:center;gap:.8rem;padding:.6rem .8rem;border-radius:var(--radius);border:1px solid var(--blue-light);margin-bottom:.4rem;background:#fff;transition:border-color .2s,background .2s}
+.quiz-item.correct{border-color:#2a9d5c;background:#e8f5ee}
+.quiz-item.wrong{border-color:#c0392b;background:#fdecea}
+.quiz-periph{min-width:140px;font-weight:600;font-size:.9rem;color:var(--blue-dark)}
+.quiz-radios{display:flex;gap:1rem;flex-wrap:wrap}
+.quiz-radios label{display:flex;align-items:center;gap:.3rem;font-size:.84rem;color:var(--gray-dark);cursor:pointer;white-space:nowrap}
+.quiz-radios input[type=radio]{accent-color:var(--blue-mid);cursor:pointer}
+.quiz-btns{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.8rem}
+.quiz-btn{padding:.5rem 1.3rem;border-radius:20px;border:1px solid var(--blue-mid);font-family:var(--font-body);font-size:.85rem;font-weight:600;cursor:pointer;transition:background .2s,color .2s}
+.quiz-btn-check{background:var(--blue-mid);color:#fff}
+.quiz-btn-check:hover{background:var(--blue-dark)}
+.quiz-btn-show{background:#fff;color:var(--blue-mid)}
+.quiz-btn-show:hover{background:var(--blue-pale)}
+.quiz-btn-reset{background:#fff;color:var(--gray-mid);border-color:var(--gray-mid)}
+.quiz-btn-reset:hover{background:var(--gray-light)}
+.quiz-score{margin-top:.6rem;font-size:.9rem;font-weight:600;color:var(--blue-dark)}
+.svg-el.sel .shape{filter:brightness(1.3) drop-shadow(0 0 8px rgba(126,200,227,.7))}
+/* ═══ TOC GRID ═══ */
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.75rem;margin:1.75rem 0 2.25rem}
+.toc-card{background:#060f18;border:1px solid #1e3a5f;border-radius:var(--radius);padding:.85rem 1rem;transition:border-color .18s}
+.toc-card:hover{border-color:#2E75B6}
+.toc-card-hdr{display:flex;align-items:baseline;gap:.5rem;margin-bottom:.55rem}
+.toc-card-num{font-size:.68rem;font-weight:700;color:#2E75B6;font-family:'Courier New',monospace;background:#0d1e2e;padding:.15rem .4rem;border-radius:3px}
+.toc-card-title{font-size:.88rem;font-weight:700;color:#7EC8E3}
+.toc-links{list-style:none;display:flex;flex-direction:column;gap:.2rem}
+.toc-links li a{font-size:.78rem;color:rgba(255,255,255,.5);text-decoration:none;display:flex;align-items:center;gap:.4rem;transition:color .15s;line-height:1.4}
+.toc-links li a:hover{color:#5B9BD5}
+.toc-links li a::before{content:'·';color:#2E75B6;font-weight:700;flex-shrink:0}
+body.aula-mode .toc-grid{display:none}
+/* ═══ SIMULATORE CPU ═══ */
+.cpu-sim{background:#0a1622;border-radius:var(--radius);padding:1.2rem 1.3rem;margin:1.5rem 0;border:1px solid #1e3a5f}
+.cpu-sim-label{font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#5B9BD5;margin-bottom:.9rem}
+.cpu-sim-grid{display:grid;grid-template-columns:185px 1fr;gap:.9rem}
+@media(max-width:580px){.cpu-sim-grid{grid-template-columns:1fr}}
+.sim-mem{background:#060f18;border-radius:6px;overflow:hidden;border:1px solid #1a3050}
+.sim-mem-hdr{background:#1a3050;padding:.35rem .7rem;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5B9BD5}
+.sim-row{display:grid;grid-template-columns:22px 1fr auto;gap:.3rem;align-items:center;padding:.28rem .7rem;border-bottom:1px solid #0d1e2e;font-family:'Courier New',monospace;font-size:.78rem;transition:background .18s}
+.sim-row:last-child{border-bottom:none}
+.sim-row .r-addr{color:#3a6a9a;font-weight:700}
+.sim-row .r-val{color:#b8d0e8}
+.sim-row .r-note{color:#2a4a6a;font-size:.65rem;font-style:italic}
+.sim-row.hl-read{background:#0f2a4a}
+.sim-row.hl-read .r-val{color:#7ec8e3;font-weight:700}
+.sim-row.hl-write{background:#0a2a0a}
+.sim-row.hl-write .r-val{color:#7ec87e;font-weight:700}
+.sim-cpu{display:flex;flex-direction:column;gap:.7rem}
+.sim-panel{background:#060f18;border:1px solid #1a3050;border-radius:6px;padding:.55rem .8rem}
+.sim-panel-hdr{font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#3a6a9a;margin-bottom:.4rem}
+.sim-units{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-bottom:.4rem}
+.sim-unit{background:#0d1e2e;border-radius:4px;padding:.4rem .6rem;border:1px solid #1a3050;text-align:center;transition:background .18s,border-color .18s}
+.sim-unit.on{background:#102040;border-color:#2E75B6}
+.sim-unit .u-name{font-size:.7rem;font-weight:700;color:#4a8ab5;font-family:'Courier New',monospace;text-transform:uppercase}
+.sim-unit .u-sub{font-size:.67rem;color:#2a4a6a;margin-top:.1rem;font-family:'Courier New',monospace;transition:color .18s}
+.sim-unit.on .u-sub{color:#7ec8e3}
+.sim-regs{display:grid;grid-template-columns:1fr 1fr;gap:.3rem}
+.sim-reg{display:flex;align-items:center;gap:.35rem;background:#0d1e2e;border-radius:4px;padding:.25rem .5rem;border:1px solid #1a3050;transition:background .18s,border-color .18s}
+.sim-reg.on{background:#102040;border-color:#4a90d9}
+.sim-reg .rn{font-size:.7rem;color:#3a6a9a;font-weight:700;min-width:30px;font-family:'Courier New',monospace}
+.sim-reg .rv{font-size:.78rem;color:#a0c0e0;font-family:'Courier New',monospace;transition:color .18s}
+.sim-reg.on .rv{color:#7ec8e3}
+.sim-status{background:#060f18;border:1px solid #1a3050;border-radius:6px;padding:.65rem .9rem;margin-top:.7rem}
+.sim-phase{font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem;font-family:'Courier New',monospace}
+.sim-phase.fetch{color:#5B9BD5}
+.sim-phase.decode{color:#f0c040}
+.sim-phase.execute{color:#60c870}
+.sim-phase.halt{color:#e06060}
+.sim-phase.idle{color:#3a6a9a}
+.sim-desc{font-size:.82rem;color:#90b0cc;line-height:1.5;font-family:var(--font-body)}
+.sim-desc strong{color:#b8d0e8}
+.sim-ctrl{display:flex;align-items:center;gap:.6rem;margin-top:.8rem;flex-wrap:wrap}
+.sim-btn{background:#1a3050;border:1px solid #2a4a70;color:#90b0cc;padding:.38rem .9rem;border-radius:20px;cursor:pointer;font-size:.8rem;font-family:var(--font-body);transition:background .18s}
+.sim-btn:hover{background:#234060}
+.sim-btn:disabled{opacity:.35;cursor:default}
+.sim-btn.primary{background:#2E75B6;border-color:#4090cc;color:#fff}
+.sim-btn.primary:hover{background:#3E85C6}
+.sim-spd{display:flex;align-items:center;gap:.4rem;margin-left:auto;font-size:.75rem;color:#3a5a7a}
+.sim-spd input[type=range]{width:70px;accent-color:#2E75B6}
+</style>
+</head>
+<body>
+<!-- ═══ HEADER ═══ -->
+<div id="header">
+  <div class="header-left">
+    <button id="hamburger"><span></span><span></span><span></span></button>
+    <a href="../../index.html" class="header-back">← Portale</a>
+    <div class="header-sep"></div>
+    <span class="header-logo">Com'è fatto un computer</span>
+    <span class="header-sub">Formazione Digitale</span>
+  </div>
+  <div class="header-right">
+    <button class="mode-toggle" onclick="toggleMode()">
+      <span id="mode-icon">🎓</span>
+      <span id="mode-label">Modalità Aula</span>
+    </button>
+  </div>
+</div>
+<div id="reading-bar"><div id="reading-fill"></div></div>
+<div id="overlay" onclick="closeSidebar()"></div>
+
+<!-- ═══ SIDEBAR ═══ -->
+<nav id="sidebar">
+  <div class="nav-part-label">M1 — Il sistema informatico</div>
+  <a class="nav-item" href="#s11"><span class="nav-num">1.1</span>Cos'è un sistema</a>
+  <a class="nav-item" href="#s12"><span class="nav-num">1.2</span>I livelli del computer</a>
+  <a class="nav-item" href="#s13"><span class="nav-num">1.3</span>Von Neumann</a>
+  <hr class="nav-divider">
+  <div class="nav-part-label">M2 — La CPU</div>
+  <a class="nav-item" href="#s21"><span class="nav-num">2.1</span>Dentro la CPU</a>
+  <a class="nav-item" href="#s22"><span class="nav-num">2.2</span>Il bus di sistema</a>
+  <a class="nav-item" href="#s23"><span class="nav-num">2.3</span>Ciclo Fetch-Decode-Execute</a>
+  <hr class="nav-divider">
+  <div class="nav-part-label">M3 — Le memorie</div>
+  <a class="nav-item" href="#s31"><span class="nav-num">3.1</span>Gerarchia memorie</a>
+  <a class="nav-item" href="#s32"><span class="nav-num">3.2</span>RAM</a>
+  <a class="nav-item" href="#s33"><span class="nav-num">3.3</span>Cache</a>
+  <a class="nav-item" href="#s34"><span class="nav-num">3.4</span>ROM e firmware</a>
+  <hr class="nav-divider">
+  <div class="nav-part-label">M4 — Lo storage</div>
+  <a class="nav-item" href="#s41"><span class="nav-num">4.1</span>HDD</a>
+  <a class="nav-item" href="#s42"><span class="nav-num">4.2</span>Gli SSD</a>
+  <a class="nav-item" href="#s43"><span class="nav-num">4.3</span>Supporti ottici e USB</a>
+  <hr class="nav-divider">
+  <div class="nav-part-label">M5 — Periferiche e connettori</div>
+  <a class="nav-item" href="#s51"><span class="nav-num">5.1</span>Periferiche di I/O</a>
+  <a class="nav-item" href="#s52"><span class="nav-num">5.2</span>Connettori e porte</a>
+  <a class="nav-item" href="#s53"><span class="nav-num">5.3</span>La scheda madre</a>
+  <hr class="nav-divider">
+  <div class="nav-part-label">M6 — L'avvio del computer</div>
+  <a class="nav-item" href="#s61"><span class="nav-num">6.1</span>Accensione e POST</a>
+  <a class="nav-item" href="#s62"><span class="nav-num">6.2</span>Dal BIOS all'UEFI</a>
+</nav>
+
+<!-- ═══ CONTENUTO PRINCIPALE ═══ -->
+<div id="main">
+<div id="guide-content">
+
+<!-- ═══ COVER ═══ -->
+<div class="cover-block">
+  <div class="cover-eyebrow">Formazione Digitale · Informatica · Primo anno</div>
+  <h1 class="cover-title">Com'è fatto<br>un <em>computer</em></h1>
+  <p class="cover-desc">Dall'hardware al software, dalla CPU alle periferiche: come funziona un computer, spiegato pezzo per pezzo con diagrammi interattivi.</p>
+  <div class="cover-badges">
+    <span class="cover-badge">🖥️ 6 moduli · 18 sezioni</span>
+    <span class="cover-badge">🎓 Livello: prima superiore</span>
+    <span class="cover-badge">📐 Allineato DigComp 2.2</span>
+  </div>
+</div>
+
+<!-- ═══ TOC ═══ -->
+<div class="toc-grid">
+  <div class="toc-card">
+    <div class="toc-card-hdr"><span class="toc-card-num">M1</span><span class="toc-card-title">Il sistema informatico</span></div>
+    <ul class="toc-links">
+      <li><a href="#s11">1.1 Cos'è un sistema informatico</a></li>
+      <li><a href="#s12">1.2 I livelli del computer (cipolla)</a></li>
+      <li><a href="#s13">1.3 Il modello di Von Neumann</a></li>
+    </ul>
+  </div>
+  <div class="toc-card">
+    <div class="toc-card-hdr"><span class="toc-card-num">M2</span><span class="toc-card-title">La CPU</span></div>
+    <ul class="toc-links">
+      <li><a href="#s21">2.1 Dentro la CPU: CU, ALU, Registri</a></li>
+      <li><a href="#s22">2.2 Il bus di sistema</a></li>
+      <li><a href="#s23">2.3 Il ciclo Fetch-Decode-Execute</a></li>
+    </ul>
+  </div>
+  <div class="toc-card">
+    <div class="toc-card-hdr"><span class="toc-card-num">M3</span><span class="toc-card-title">Le memorie</span></div>
+    <ul class="toc-links">
+      <li><a href="#s31">3.1 La gerarchia delle memorie</a></li>
+      <li><a href="#s32">3.2 La RAM</a></li>
+      <li><a href="#s33">3.3 La memoria Cache</a></li>
+      <li><a href="#s34">3.4 La ROM e il firmware</a></li>
+    </ul>
+  </div>
+  <div class="toc-card">
+    <div class="toc-card-hdr"><span class="toc-card-num">M4</span><span class="toc-card-title">Lo storage</span></div>
+    <ul class="toc-links">
+      <li><a href="#s41">4.1 Hard Disk (HDD)</a></li>
+      <li><a href="#s42">4.2 Gli SSD</a></li>
+      <li><a href="#s43">4.3 Supporti ottici e chiavette USB</a></li>
+    </ul>
+  </div>
+  <div class="toc-card">
+    <div class="toc-card-hdr"><span class="toc-card-num">M5</span><span class="toc-card-title">Periferiche e connettori</span></div>
+    <ul class="toc-links">
+      <li><a href="#s51">5.1 Periferiche di input e output</a></li>
+      <li><a href="#s52">5.2 Connettori e porte del PC</a></li>
+      <li><a href="#s53">5.3 La scheda madre</a></li>
+    </ul>
+  </div>
+  <div class="toc-card">
+    <div class="toc-card-hdr"><span class="toc-card-num">M6</span><span class="toc-card-title">L'avvio del computer</span></div>
+    <ul class="toc-links">
+      <li><a href="#s61">6.1 Accensione e POST</a></li>
+      <li><a href="#s62">6.2 Dal BIOS all'UEFI</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ╔════════════════════════════════════════════════════════════╗ -->
+<!-- ║  MODULO 1 — IL SISTEMA INFORMATICO                        ║ -->
+<!-- ╚════════════════════════════════════════════════════════════╝ -->
+<div class="part-header">
+  <div class="part-num">1</div>
+  <div class="part-titles">
+    <div class="part-title">Il sistema informatico</div>
+    <div class="part-subtitle">Cos'è, come è organizzato, il modello Von Neumann</div>
+  </div>
+</div>
+
+<!-- ═══ 1.1 — COS'È UN SISTEMA INFORMATICO ═══ -->
+<section class="guide-section" id="s11">
+  <div class="section-header">
+    <div class="section-num">1.1</div>
+    <div class="section-titles">
+      <div class="section-title">Cos'è un sistema informatico</div>
+      <div class="section-subtitle">Hardware + software + utente = sistema</div>
+    </div>
+  </div>
+  <p>Un <b>sistema</b> è un insieme di parti che lavorano insieme per raggiungere uno scopo. Il corpo umano è un sistema, un'automobile è un sistema — e anche un computer lo è.</p>
+  <div class="box box-info">
+    <div class="box-label">Definizione</div>
+    <p>Un <b>sistema informatico</b> è un insieme organizzato di risorse hardware e software che serve ad acquisire, elaborare, memorizzare e comunicare informazioni.</p>
+  </div>
+  <p>Le tre componenti fondamentali sono:</p>
+  <div class="accordion">
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>🔩 Hardware</span><span class="acc-arrow">▶</span></div>
+      <div class="acc-body">Tutto ciò che puoi toccare fisicamente: la scheda madre, il processore, la RAM, il disco, il monitor, la tastiera. L'hardware da solo non fa nulla — ha bisogno del software per funzionare.</div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>💿 Software</span><span class="acc-arrow">▶</span></div>
+      <div class="acc-body">I programmi che dicono all'hardware cosa fare. Si divide in <b>software di sistema</b> (il sistema operativo: Windows, macOS, Linux) e <b>software applicativo</b> (i programmi che usiamo: browser, editor, videogiochi).</div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>👤 Utente</span><span class="acc-arrow">▶</span></div>
+      <div class="acc-body">La persona che usa il sistema, fornisce i dati in ingresso e riceve i risultati. Senza utente, il sistema non ha uno scopo.</div>
+    </div>
+  </div>
+  <div class="box box-info">
+    <div class="box-label">Il ciclo fondamentale</div>
+    <p>Ogni sistema informatico fa sempre le stesse quattro operazioni: <b>INPUT</b> (riceve dati) → <b>ELABORAZIONE</b> (li trasforma) → <b>OUTPUT</b> (mostra i risultati) → <b>MEMORIZZAZIONE</b> (li salva per dopo).</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ═══ 1.2 — I LIVELLI DEL COMPUTER (CIPOLLA) ═══ -->
+<section class="guide-section" id="s12">
+  <div class="section-header">
+    <div class="section-num">1.2</div>
+    <div class="section-titles">
+      <div class="section-title">I livelli del computer: il modello a cipolla</div>
+      <div class="section-subtitle">Come hardware e software si organizzano a strati</div>
+    </div>
+  </div>
+  <p>Un computer è organizzato in <b>livelli</b> sovrapposti, come una cipolla. Al centro c'è l'hardware fisico; all'esterno le applicazioni che usiamo ogni giorno. Ogni livello usa i servizi di quello sotto e nasconde i dettagli a quello sopra.</p>
+  <p>Il vantaggio? <b>Separazione delle responsabilità</b>: quando apri un file, non devi sapere come funziona il disco — il sistema operativo fa tutto per te, passando la richiesta attraverso i livelli.</p>
+  <p class="svg-hint">👆 Clicca su ogni livello per vedere la descrizione.</p>
+  <div class="svg-wrap">
+    <svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" aria-label="Modello onion skin: 7 livelli, hardware al centro">
+      <g class="svg-el" onclick="svgInfo('cipolla','app');event.stopPropagation()">
+        <ellipse class="shape" cx="210" cy="155" rx="205" ry="141" fill="#3878B0"/>
+        <text x="210" y="20" font-family="sans-serif" font-size="11" font-weight="700" fill="rgba(255,255,255,.65)" text-anchor="middle">6</text>
+      </g>
+      <g class="svg-el" onclick="svgInfo('cipolla','shell');event.stopPropagation()">
+        <ellipse class="shape" cx="210" cy="155" rx="174" ry="120" fill="#2E6090"/>
+        <text x="210" y="40" font-family="sans-serif" font-size="11" font-weight="700" fill="rgba(255,255,255,.68)" text-anchor="middle">5</text>
+      </g>
+      <g class="svg-el" onclick="svgInfo('cipolla','fs');event.stopPropagation()">
+        <ellipse class="shape" cx="210" cy="155" rx="144" ry="99" fill="#264E78"/>
+        <text x="210" y="60" font-family="sans-serif" font-size="11" font-weight="700" fill="rgba(255,255,255,.7)" text-anchor="middle">4</text>
+      </g>
+      <g class="svg-el" onclick="svgInfo('cipolla','periph');event.stopPropagation()">
+        <ellipse class="shape" cx="210" cy="155" rx="114" ry="78" fill="#1E3E60"/>
+        <text x="210" y="81" font-family="sans-serif" font-size="11" font-weight="700" fill="rgba(255,255,255,.72)" text-anchor="middle">3</text>
+      </g>
+      <g class="svg-el" onclick="svgInfo('cipolla','mem');event.stopPropagation()">
+        <ellipse class="shape" cx="210" cy="155" rx="83" ry="57" fill="#152840"/>
+        <text x="210" y="102" font-family="sans-serif" font-size="11" font-weight="700" fill="rgba(255,255,255,.75)" text-anchor="middle">2</text>
+      </g>
+      <g class="svg-el" onclick="svgInfo('cipolla','kernel');event.stopPropagation()">
+        <ellipse class="shape" cx="210" cy="155" rx="52" ry="36" fill="#0D1E30"/>
+        <text x="210" y="123" font-family="sans-serif" font-size="11" font-weight="700" fill="rgba(255,255,255,.8)" text-anchor="middle">1</text>
+      </g>
+      <g class="svg-el" onclick="svgInfo('cipolla','hw');event.stopPropagation()">
+        <ellipse class="shape" cx="210" cy="155" rx="28" ry="19" fill="#4A90D9"/>
+        <text x="210" y="151" font-family="sans-serif" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">0</text>
+        <text x="210" y="163" font-family="sans-serif" font-size="7" fill="#fff" text-anchor="middle">HW</text>
+      </g>
+      <text x="210" y="297" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,.3)" text-anchor="middle">centro = hardware fisico · esterno = software utente</text>
+      <!-- Legenda -->
+      <rect x="428" y="8" width="206" height="294" rx="8" fill="rgba(8,20,36,.7)" stroke="#2E75B6" stroke-width="1"/>
+      <text x="531" y="27" font-family="sans-serif" font-size="8.5" font-weight="700" fill="#5B9BD5" text-anchor="middle" letter-spacing="1">DAL CENTRO (0) ALL'ESTERNO (6)</text>
+      <circle cx="447" cy="52" r="9" fill="#4A90D9"/>
+      <text x="447" y="56" font-family="sans-serif" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">0</text>
+      <text x="462" y="49" font-family="sans-serif" font-size="9.5" font-weight="700" fill="#fff">Hardware</text>
+      <text x="462" y="62" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,.48)">CPU, RAM, disco — livello fisico</text>
+      <circle cx="447" cy="90" r="9" fill="#0D1E30" stroke="#2E75B6" stroke-width="1"/>
+      <text x="447" y="94" font-family="sans-serif" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+      <text x="462" y="87" font-family="sans-serif" font-size="9.5" font-weight="700" fill="#fff">Kernel (Nucleo)</text>
+      <text x="462" y="100" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,.48)">gestisce CPU e risorse HW</text>
+      <circle cx="447" cy="128" r="9" fill="#152840"/>
+      <text x="447" y="132" font-family="sans-serif" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+      <text x="462" y="125" font-family="sans-serif" font-size="9.5" font-weight="700" fill="#fff">Gest. Memoria</text>
+      <text x="462" y="138" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,.48)">RAM, swap, paginazione</text>
+      <circle cx="447" cy="166" r="9" fill="#1E3E60"/>
+      <text x="447" y="170" font-family="sans-serif" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+      <text x="462" y="163" font-family="sans-serif" font-size="9.5" font-weight="700" fill="#fff">Gest. Periferiche</text>
+      <text x="462" y="176" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,.48)">driver, dispositivi I/O</text>
+      <circle cx="447" cy="204" r="9" fill="#264E78"/>
+      <text x="447" y="208" font-family="sans-serif" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">4</text>
+      <text x="462" y="201" font-family="sans-serif" font-size="9.5" font-weight="700" fill="#fff">File System</text>
+      <text x="462" y="214" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,.48)">file, cartelle, permessi</text>
+      <circle cx="447" cy="242" r="9" fill="#2E6090"/>
+      <text x="447" y="246" font-family="sans-serif" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">5</text>
+      <text x="462" y="239" font-family="sans-serif" font-size="9.5" font-weight="700" fill="#fff">Shell (Interfaccia)</text>
+      <text x="462" y="252" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,.48)">CLI, GUI, comandi utente</text>
+      <circle cx="447" cy="280" r="9" fill="#3878B0"/>
+      <text x="447" y="284" font-family="sans-serif" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">6</text>
+      <text x="462" y="277" font-family="sans-serif" font-size="9.5" font-weight="700" fill="#fff">Applicazioni</text>
+      <text x="462" y="290" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,.48)">browser, editor, giochi</text>
+    </svg>
+    <div id="si-cipolla" class="svg-info"><div class="sip-hint">👆 Clicca su un livello per la descrizione</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ═══ 1.3 — VON NEUMANN ═══ -->
+<section class="guide-section" id="s13">
+  <div class="section-header">
+    <div class="section-num">1.3</div>
+    <div class="section-titles">
+      <div class="section-title">Il modello di Von Neumann</div>
+      <div class="section-subtitle">L'architettura su cui si basano tutti i computer moderni</div>
+    </div>
+  </div>
+  <p>Nel 1945 il matematico John von Neumann ebbe un'idea rivoluzionaria: <b>programma e dati devono risiedere nella stessa memoria</b>. Prima di lui, per cambiare il compito di una macchina bisognava ricablarla fisicamente. Con Von Neumann basta caricare un programma diverso in memoria.</p>
+  <div class="box box-info">
+    <div class="box-label">I quattro componenti fondamentali</div>
+    <p><b>CPU</b> (elabora le istruzioni) · <b>Memoria centrale</b> (contiene programmi e dati) · <b>Unità di I/O</b> (comunicano con l'esterno) · <b>Bus di sistema</b> (collegano tutto insieme).</p>
+  </div>
+  <p class="svg-hint">👆 Clicca su CPU, Memoria, I/O o sui bus per la descrizione.</p>
+  <div class="svg-wrap">
+    <svg viewBox="0 0 700 380" xmlns="http://www.w3.org/2000/svg" aria-label="Schema Von Neumann">
+      <rect x="10" y="38" width="528" height="248" rx="12" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="1.2" stroke-dasharray="7,4"/>
+      <text x="264" y="296" font-family="sans-serif" font-size="7.5" fill="rgba(255,255,255,.22)" text-anchor="middle">scheda madre</text>
+      <line x1="170" y1="268" x2="170" y2="328" stroke="#1a3a5f" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <line x1="370" y1="268" x2="370" y2="328" stroke="#1a3a5f" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <line x1="590" y1="150" x2="590" y2="328" stroke="#1a3a5f" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <line x1="645" y1="265" x2="645" y2="328" stroke="#1a3a5f" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <!-- CPU — semplificata: no nomi registri singoli -->
+      <g class="svg-el" onclick="svgInfo('vn','cpu');event.stopPropagation()">
+        <rect class="shape" x="18" y="50" width="300" height="210" rx="10" fill="#1F4E79" stroke="#3E85C6" stroke-width="1.8"/>
+        <text x="168" y="82" font-family="sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">CPU</text>
+        <text x="168" y="98" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.55)" text-anchor="middle">Central Processing Unit</text>
+        <rect x="36" y="110" width="264" height="52" rx="7" fill="#2A5F90" stroke="#5B9BD5" stroke-width="1"/>
+        <text x="168" y="133" font-family="sans-serif" font-size="12" font-weight="600" fill="#fff" text-anchor="middle">Unità di Controllo (CU)</text>
+        <text x="168" y="149" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.6)" text-anchor="middle">coordina tutte le operazioni</text>
+        <rect x="36" y="173" width="124" height="70" rx="7" fill="#2A5F90" stroke="#5B9BD5" stroke-width="1"/>
+        <text x="98" y="205" font-family="sans-serif" font-size="12" font-weight="600" fill="#fff" text-anchor="middle">ALU</text>
+        <text x="98" y="221" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.6)" text-anchor="middle">calcoli e confronti</text>
+        <rect x="170" y="173" width="130" height="70" rx="7" fill="#2A5F90" stroke="#5B9BD5" stroke-width="1"/>
+        <text x="235" y="205" font-family="sans-serif" font-size="12" font-weight="600" fill="#fff" text-anchor="middle">Registri</text>
+        <text x="235" y="221" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.6)" text-anchor="middle">memoria velocissima</text>
+      </g>
+      <!-- Memoria -->
+      <g class="svg-el" onclick="svgInfo('vn','mem');event.stopPropagation()">
+        <rect class="shape" x="328" y="80" width="200" height="185" rx="10" fill="#154060" stroke="#3E85C6" stroke-width="1.8"/>
+        <text x="428" y="116" font-family="sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">Memoria</text>
+        <text x="428" y="134" font-family="sans-serif" font-size="11" fill="rgba(255,255,255,.65)" text-anchor="middle">Centrale — RAM</text>
+        <text x="428" y="180" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,.5)" text-anchor="middle">programma + dati</text>
+        <text x="428" y="200" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,.5)" text-anchor="middle">nella stessa memoria</text>
+        <text x="428" y="250" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.38)" text-anchor="middle">l'idea chiave di Von Neumann</text>
+      </g>
+      <!-- Input -->
+      <g class="svg-el" onclick="svgInfo('vn','ioin');event.stopPropagation()">
+        <rect class="shape" x="542" y="50" width="148" height="100" rx="10" fill="#0f3050" stroke="#2E75B6" stroke-width="1.5"/>
+        <text x="616" y="90" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">Input</text>
+        <text x="616" y="107" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,.58)" text-anchor="middle">tastiera · mouse</text>
+        <text x="616" y="120" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,.58)" text-anchor="middle">microfono · scanner</text>
+      </g>
+      <!-- Output -->
+      <g class="svg-el" onclick="svgInfo('vn','ioout');event.stopPropagation()">
+        <rect class="shape" x="542" y="170" width="148" height="95" rx="10" fill="#0f3050" stroke="#2E75B6" stroke-width="1.5"/>
+        <text x="616" y="208" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">Output</text>
+        <text x="616" y="225" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,.58)" text-anchor="middle">monitor · stampante</text>
+        <text x="616" y="238" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,.58)" text-anchor="middle">altoparlanti · cuffie</text>
+      </g>
+      <!-- BUS DATI -->
+      <g class="svg-el" onclick="svgInfo('vn','busd');event.stopPropagation()">
+        <rect class="shape" x="18" y="328" width="672" height="16" rx="4" fill="#1a3a6a" stroke="#2E75B6" stroke-width="1.2"/>
+        <text x="354" y="340" font-family="sans-serif" font-size="9" font-weight="700" fill="#7EC8E3" text-anchor="middle">BUS DATI — trasporta i valori</text>
+        <polygon points="28,336 18,332 18,340" fill="#2E75B6"/>
+        <polygon points="680,336 690,332 690,340" fill="#2E75B6"/>
+      </g>
+      <!-- BUS INDIRIZZI -->
+      <g class="svg-el" onclick="svgInfo('vn','busa');event.stopPropagation()">
+        <rect class="shape" x="18" y="347" width="672" height="13" rx="3" fill="#0f2a10" stroke="#4CAF50" stroke-width="1.2"/>
+        <text x="354" y="357" font-family="sans-serif" font-size="8.5" font-weight="700" fill="#66BB6A" text-anchor="middle">BUS INDIRIZZI — indica dove leggere/scrivere</text>
+        <polygon points="680,353 690,349 690,358" fill="#4CAF50"/>
+      </g>
+      <!-- BUS CONTROLLO -->
+      <g class="svg-el" onclick="svgInfo('vn','busc');event.stopPropagation()">
+        <rect class="shape" x="18" y="363" width="672" height="12" rx="3" fill="#2a1500" stroke="#FF9800" stroke-width="1.2"/>
+        <text x="354" y="372" font-family="sans-serif" font-size="8.5" font-weight="700" fill="#FFA726" text-anchor="middle">BUS CONTROLLO — coordina le operazioni</text>
+      </g>
+    </svg>
+    <div id="si-vn" class="svg-info"><div class="sip-hint">👆 Clicca su CPU, Memoria, I/O o sui Bus per la descrizione</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ╔════════════════════════════════════════════════════════════╗ -->
+<!-- ║  MODULO 2 — LA CPU                                        ║ -->
+<!-- ╚════════════════════════════════════════════════════════════╝ -->
+<div class="part-header">
+  <div class="part-num">2</div>
+  <div class="part-titles">
+    <div class="part-title">La CPU</div>
+    <div class="part-subtitle">Il cervello del computer: CU, ALU, Registri, Bus e ciclo FDE</div>
+  </div>
+</div>
+
+<!-- ═══ 2.1 — DENTRO LA CPU ═══ -->
+<section class="guide-section" id="s21">
+  <div class="section-header">
+    <div class="section-num">2.1</div>
+    <div class="section-titles">
+      <div class="section-title">Dentro la CPU: CU, ALU e Registri</div>
+      <div class="section-subtitle">I tre componenti fondamentali del processore</div>
+    </div>
+  </div>
+  <p>La CPU (<em>Central Processing Unit</em>) è il componente che esegue le istruzioni dei programmi. Al suo interno troviamo tre parti principali, più un segnale di sincronizzazione chiamato <b>clock</b>.</p>
+  <div class="accordion">
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>🎯 Unità di Controllo (CU)</span><span class="acc-arrow">▶</span></div>
+      <div class="acc-body">È il "direttore d'orchestra" della CPU. Legge le istruzioni dalla memoria, le interpreta e dice a tutte le altre parti cosa fare e quando farlo. La CU gestisce il ciclo Fetch-Decode-Execute (lo vedremo nella sezione 2.3).</div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>🔢 ALU (Arithmetic Logic Unit)</span><span class="acc-arrow">▶</span></div>
+      <div class="acc-body">È il "calcolatore" della CPU. Esegue le operazioni aritmetiche (addizione, sottrazione, moltiplicazione, divisione) e le operazioni logiche (confronti: questo numero è maggiore di quello? Sono uguali?). Riceve i dati dai registri e ci scrive il risultato.</div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>⚡ Registri</span><span class="acc-arrow">▶</span></div>
+      <div class="acc-body">Sono piccole celle di memoria <b>dentro</b> la CPU, velocissime (un solo ciclo di clock per accedere). Servono a contenere temporaneamente i dati su cui la CPU sta lavorando: l'istruzione corrente, gli operandi del calcolo, il risultato. Sono pochi (qualche KB in tutto) ma rapidissimi.</div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>⏱ Clock</span><span class="acc-arrow">▶</span></div>
+      <div class="acc-body">Un oscillatore che genera un segnale periodico (come il ticchettio di un orologio) che sincronizza tutte le operazioni della CPU. La frequenza si misura in <b>GHz</b> (miliardi di "tic" al secondo). Un processore a 3 GHz fa 3 miliardi di cicli al secondo. Attenzione: la frequenza non è l'unico indicatore di velocità — conta anche quante operazioni si completano per ciclo.</div>
+    </div>
+  </div>
+  <p class="svg-hint">👆 Clicca su ogni componente per la descrizione.</p>
+  <div class="svg-wrap">
+    <svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg" aria-label="Schema interno CPU semplificato">
+      <rect x="8" y="8" width="664" height="324" rx="14" fill="#060f18" stroke="#2E75B6" stroke-width="2"/>
+      <text x="340" y="34" font-family="sans-serif" font-size="13" font-weight="700" fill="#5B9BD5" text-anchor="middle" letter-spacing="3">PROCESSORE (CPU)</text>
+      <!-- CU -->
+      <g class="svg-el" onclick="svgInfo('cpu','cu');event.stopPropagation()">
+        <rect class="shape" x="22" y="50" width="300" height="90" rx="8" fill="#1F4E79" stroke="#3E85C6" stroke-width="1.5"/>
+        <text x="172" y="85" font-family="sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">Unità di Controllo (CU)</text>
+        <text x="172" y="105" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,.6)" text-anchor="middle">legge, interpreta e coordina</text>
+        <text x="172" y="120" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.4)" text-anchor="middle">Fetch → Decode → Execute</text>
+      </g>
+      <!-- ALU -->
+      <g class="svg-el" onclick="svgInfo('cpu','alu');event.stopPropagation()">
+        <rect class="shape" x="22" y="155" width="145" height="160" rx="8" fill="#1F4E79" stroke="#3E85C6" stroke-width="1.5"/>
+        <text x="94" y="210" font-family="sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">ALU</text>
+        <text x="94" y="230" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,.6)" text-anchor="middle">+ − × ÷</text>
+        <text x="94" y="248" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,.6)" text-anchor="middle">AND OR NOT</text>
+        <text x="94" y="268" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,.6)" text-anchor="middle">confronti</text>
+        <text x="94" y="298" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.35)" text-anchor="middle">il calcolatore</text>
+      </g>
+      <!-- Registri -->
+      <g class="svg-el" onclick="svgInfo('cpu','regs');event.stopPropagation()">
+        <rect class="shape" x="178" y="155" width="144" height="160" rx="8" fill="#154060" stroke="#2E75B6" stroke-width="1.5"/>
+        <text x="250" y="195" font-family="sans-serif" font-size="13" font-weight="700" fill="#7EC8E3" text-anchor="middle">Registri</text>
+        <text x="250" y="218" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,.6)" text-anchor="middle">memoria interna</text>
+        <text x="250" y="238" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,.6)" text-anchor="middle">velocissima</text>
+        <text x="250" y="258" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,.5)" text-anchor="middle">(pochi KB)</text>
+        <text x="250" y="298" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.35)" text-anchor="middle">1 ciclo di clock</text>
+      </g>
+      <!-- Clock -->
+      <g class="svg-el" onclick="svgInfo('cpu','clock');event.stopPropagation()">
+        <rect class="shape" x="345" y="50" width="315" height="85" rx="8" fill="#0d1e2e" stroke="#2E75B6" stroke-width="1.5"/>
+        <text x="502" y="80" font-family="sans-serif" font-size="12" font-weight="700" fill="#7EC8E3" text-anchor="middle">Clock</text>
+        <polyline points="356,110 373,110 373,93 393,93 393,110 413,110 413,93 433,93 433,110 453,110 453,93 473,93 473,110 493,110 493,93 513,93 513,110 533,110 533,93 553,93 553,110 648,110" fill="none" stroke="#4a90d9" stroke-width="1.8"/>
+        <text x="502" y="127" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.38)" text-anchor="middle">sincronizza tutte le operazioni · si misura in GHz</text>
+      </g>
+      <!-- Cache -->
+      <g class="svg-el" onclick="svgInfo('cpu','cache');event.stopPropagation()">
+        <rect class="shape" x="345" y="155" width="315" height="160" rx="8" fill="#0d1e2e" stroke="#4A90D9" stroke-width="1.2" stroke-dasharray="6,3"/>
+        <text x="502" y="200" font-family="sans-serif" font-size="13" font-weight="600" fill="#7EC8E3" text-anchor="middle">Memoria Cache</text>
+        <text x="502" y="222" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,.55)" text-anchor="middle">L1 (piccola, velocissima)</text>
+        <text x="502" y="242" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,.45)" text-anchor="middle">L2 (media)</text>
+        <text x="502" y="262" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,.35)" text-anchor="middle">L3 (grande, condivisa tra i core)</text>
+        <text x="502" y="298" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.25)" text-anchor="middle">ponte tra i registri e la RAM</text>
+      </g>
+    </svg>
+    <div id="si-cpu" class="svg-info"><div class="sip-hint">👆 Clicca su un componente per la descrizione</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ═══ 2.2 — IL BUS DI SISTEMA ═══ -->
+<section class="guide-section" id="s22">
+  <div class="section-header">
+    <div class="section-num">2.2</div>
+    <div class="section-titles">
+      <div class="section-title">Il bus di sistema</div>
+      <div class="section-subtitle">Come viaggiano i dati tra CPU, memoria e periferiche</div>
+    </div>
+  </div>
+  <p>Il <b>bus di sistema</b> è l'insieme di collegamento fisici (linee elettriche sulla scheda madre) che collegano CPU, memoria e periferiche. Non è un singolo filo ma <b>tre canali distinti</b>:</p>
+  <p class="svg-hint">👆 Clicca su ciascun bus per la descrizione.</p>
+  <div class="svg-wrap">
+    <svg viewBox="0 0 680 228" xmlns="http://www.w3.org/2000/svg" aria-label="Bus di sistema">
+      <rect x="18" y="28" width="130" height="158" rx="9" fill="#1F4E79" stroke="#3E85C6" stroke-width="1.8"/>
+      <text x="83" y="97" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">CPU</text>
+      <rect x="268" y="28" width="140" height="158" rx="9" fill="#154060" stroke="#3E85C6" stroke-width="1.8"/>
+      <text x="338" y="100" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">Memoria</text>
+      <text x="338" y="117" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.52)" text-anchor="middle">RAM</text>
+      <rect x="528" y="28" width="138" height="158" rx="9" fill="#0f2a40" stroke="#2E75B6" stroke-width="1.5"/>
+      <text x="597" y="95" font-family="sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">Periferiche</text>
+      <text x="597" y="112" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.52)" text-anchor="middle">I/O · Storage</text>
+      <g class="svg-el" onclick="svgInfo('bus','busd');event.stopPropagation()">
+        <rect class="shape" x="152" y="48" width="372" height="28" rx="5" fill="#1a3a6a" stroke="#2E75B6" stroke-width="1.3"/>
+        <text x="338" y="66" font-family="sans-serif" font-size="10.5" font-weight="700" fill="#7EC8E3" text-anchor="middle">BUS DATI</text>
+        <polygon points="162,62 152,57 152,67" fill="#2E75B6"/>
+        <polygon points="514,62 524,57 524,67" fill="#2E75B6"/>
+      </g>
+      <g class="svg-el" onclick="svgInfo('bus','busa');event.stopPropagation()">
+        <rect class="shape" x="152" y="96" width="372" height="26" rx="5" fill="#0f2a10" stroke="#4CAF50" stroke-width="1.3"/>
+        <text x="338" y="113" font-family="sans-serif" font-size="10.5" font-weight="700" fill="#66BB6A" text-anchor="middle">BUS INDIRIZZI</text>
+        <polygon points="514,109 524,104 524,114" fill="#4CAF50"/>
+      </g>
+      <g class="svg-el" onclick="svgInfo('bus','busc');event.stopPropagation()">
+        <rect class="shape" x="152" y="142" width="372" height="26" rx="5" fill="#2a1800" stroke="#FF9800" stroke-width="1.3"/>
+        <text x="338" y="159" font-family="sans-serif" font-size="10.5" font-weight="700" fill="#FFA726" text-anchor="middle">BUS CONTROLLO</text>
+        <polygon points="162,155 152,150 152,160" fill="#FF9800"/>
+        <polygon points="514,155 524,150 524,160" fill="#FF9800"/>
+      </g>
+      <text x="338" y="206" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.26)" text-anchor="middle">più bit ha il bus dati, più dati viaggiano per ogni ciclo di clock</text>
+    </svg>
+    <div id="si-bus" class="svg-info"><div class="sip-hint">👆 Clicca su un bus per la descrizione</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ═══ 2.3 — CICLO FDE ═══ -->
+<section class="guide-section" id="s23">
+  <div class="section-header">
+    <div class="section-num">2.3</div>
+    <div class="section-titles">
+      <div class="section-title">Il ciclo Fetch-Decode-Execute</div>
+      <div class="section-subtitle">Come la CPU esegue un'istruzione, passo dopo passo</div>
+    </div>
+  </div>
+  <p>Ogni istruzione viene eseguita in tre fasi che si ripetono in continuazione — il "battito cardiaco" della CPU.</p>
+  <div class="step-list">
+    <div class="step-item">
+      <div class="step-dot">F</div>
+      <div class="step-body">
+        <strong>FETCH — Prelievo</strong>
+        <span>La CPU va in memoria e prende la prossima istruzione da eseguire. È come leggere la prossima riga di una ricetta.</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-dot">D</div>
+      <div class="step-body">
+        <strong>DECODE — Decodifica</strong>
+        <span>La CU (Unità di Controllo) legge l'istruzione e capisce cosa deve fare: è una somma? Una scrittura in memoria? Un confronto? Prepara le unità coinvolte.</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-dot">E</div>
+      <div class="step-body">
+        <strong>EXECUTE — Esecuzione</strong>
+        <span>L'operazione viene eseguita (l'ALU fa il calcolo, oppure si scrive in memoria, ecc.). Poi si ricomincia dal FETCH per l'istruzione successiva.</span>
+      </div>
+    </div>
+  </div>
+  <div class="box box-info">
+    <div class="box-label">Un esempio concreto</div>
+    <p>Il programma deve calcolare 10 + 5. La CPU fa: <b>FETCH</b> (prende l'istruzione "carica 10") → <b>DECODE</b> (capisce: devo mettere il numero 10 nel registro) → <b>EXECUTE</b> (lo fa). Poi di nuovo per "aggiungi 5", e così via. Il simulatore qui sotto mostra tutti i passaggi.</p>
+  </div>
+  <div class="sub-title">🖥️ Simulatore del ciclo CPU</div>
+  <p style="font-size:.85rem;color:var(--gray-mid);margin-bottom:.6rem">Premi <b>Step</b> per avanzare passo dopo passo, o <b>Auto</b> per l'animazione. Il programma calcola <b>10 + 5 = 15</b>.</p>
+  <div class="cpu-sim">
+    <div class="cpu-sim-label">⚙ Simulatore — Fetch · Decode · Execute</div>
+    <div class="cpu-sim-grid">
+      <div class="sim-mem">
+        <div class="sim-mem-hdr">📦 Memoria</div>
+        <div class="sim-row" id="mr0"><span class="r-addr">0</span><span class="r-val" id="mv0">LOAD 4</span><span class="r-note">istr</span></div>
+        <div class="sim-row" id="mr1"><span class="r-addr">1</span><span class="r-val" id="mv1">ADD&nbsp;&nbsp;5</span><span class="r-note">istr</span></div>
+        <div class="sim-row" id="mr2"><span class="r-addr">2</span><span class="r-val" id="mv2">STORE 6</span><span class="r-note">istr</span></div>
+        <div class="sim-row" id="mr3"><span class="r-addr">3</span><span class="r-val" id="mv3">HALT</span><span class="r-note">istr</span></div>
+        <div class="sim-row" id="mr4"><span class="r-addr">4</span><span class="r-val" id="mv4">10</span><span class="r-note">dato A</span></div>
+        <div class="sim-row" id="mr5"><span class="r-addr">5</span><span class="r-val" id="mv5">5</span><span class="r-note">dato B</span></div>
+        <div class="sim-row" id="mr6"><span class="r-addr">6</span><span class="r-val" id="mv6">0</span><span class="r-note">risultato</span></div>
+      </div>
+      <div class="sim-cpu">
+        <div class="sim-panel">
+          <div class="sim-panel-hdr">Unità funzionali</div>
+          <div class="sim-units">
+            <div class="sim-unit" id="su-cu"><div class="u-name">CU</div><div class="u-sub" id="cu-sub">in attesa</div></div>
+            <div class="sim-unit" id="su-alu"><div class="u-name">ALU</div><div class="u-sub" id="alu-sub">idle</div></div>
+          </div>
+        </div>
+        <div class="sim-panel">
+          <div class="sim-panel-hdr">Registri</div>
+          <div class="sim-regs">
+            <div class="sim-reg" id="rr-pc"><span class="rn">PC</span><span class="rv" id="rv-pc">0</span></div>
+            <div class="sim-reg" id="rr-ir"><span class="rn">IR</span><span class="rv" id="rv-ir">—</span></div>
+            <div class="sim-reg" id="rr-mar"><span class="rn">MAR</span><span class="rv" id="rv-mar">—</span></div>
+            <div class="sim-reg" id="rr-mdr"><span class="rn">MDR</span><span class="rv" id="rv-mdr">—</span></div>
+            <div class="sim-reg" id="rr-ac"><span class="rn">AC</span><span class="rv" id="rv-ac">—</span></div>
+          </div>
+        </div>
+        <div class="sim-status">
+          <div class="sim-phase idle" id="sim-phase">⏸ IN ATTESA</div>
+          <div class="sim-desc" id="sim-desc">Premi <strong>Step</strong> per iniziare. Il programma esegue: LOAD 10 → ADD 5 → STORE risultato → HALT.</div>
+        </div>
+        <div class="sim-ctrl">
+          <button class="sim-btn primary" id="btn-step" onclick="simStep()">▶ Step</button>
+          <button class="sim-btn" id="btn-auto" onclick="simToggleAuto()">⚡ Auto</button>
+          <button class="sim-btn" onclick="simReset()">↻ Reset</button>
+          <div class="sim-spd"><span>Velocità</span><input type="range" id="sim-spd" min="1" max="5" value="3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ╔════════════════════════════════════════════════════════════╗ -->
+<!-- ║  MODULO 3 — LE MEMORIE                                    ║ -->
+<!-- ╚════════════════════════════════════════════════════════════╝ -->
+<div class="part-header">
+  <div class="part-num">3</div>
+  <div class="part-titles">
+    <div class="part-title">Le memorie</div>
+    <div class="part-subtitle">Cache, RAM, ROM: velocità diverse per compiti diversi</div>
+  </div>
+</div>
+
+<!-- ═══ 3.1 — GERARCHIA MEMORIE ═══ -->
+<section class="guide-section" id="s31">
+  <div class="section-header">
+    <div class="section-num">3.1</div>
+    <div class="section-titles">
+      <div class="section-title">La gerarchia delle memorie</div>
+      <div class="section-subtitle">Più è veloce, più è piccola e costosa</div>
+    </div>
+  </div>
+  <p>Non esiste una memoria perfetta: rapida, capiente ed economica allo stesso tempo. La soluzione è usare memorie diverse organizzate in una <b>piramide</b>: le più veloci (e costose) vicino alla CPU, le più capienti (e lente) lontano.</p>
+  <p class="svg-hint">👆 Clicca su ogni livello per i dettagli.</p>
+  <div class="svg-wrap">
+    <svg viewBox="0 0 580 280" xmlns="http://www.w3.org/2000/svg" aria-label="Piramide gerarchia memorie">
+      <rect x="0" y="0" width="580" height="280" rx="10" fill="#0a1622" stroke="#1e3a5f" stroke-width="1.5"/>
+      <text x="290" y="18" font-family="sans-serif" font-size="11" font-weight="700" fill="#5B9BD5" text-anchor="middle" letter-spacing="2">GERARCHIA DELLE MEMORIE</text>
+      <text x="14" y="38" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,.45)" text-anchor="start">↑ più veloce, più costosa</text>
+      <text x="566" y="38" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,.45)" text-anchor="end">capacità minore ↑</text>
+      <!-- Piramide — triangolo perfetto: vertice (290,48), base (30,256)-(550,256) -->
+      <g class="svg-el" onclick="svgInfo('pyr','hdd');event.stopPropagation()">
+        <polygon class="shape" points="82,214 498,214 550,256 30,256" fill="#5A1A1A"/>
+        <text x="290" y="239" font-family="sans-serif" font-size="12" font-weight="600" fill="rgba(255,255,255,.85)" text-anchor="middle">HDD</text>
+      </g>
+      <g class="svg-el" onclick="svgInfo('pyr','ssd');event.stopPropagation()">
+        <polygon class="shape" points="134,173 446,173 498,214 82,214" fill="#7A5020"/>
+        <text x="290" y="198" font-family="sans-serif" font-size="12" font-weight="600" fill="rgba(255,255,255,.88)" text-anchor="middle">SSD</text>
+      </g>
+      <g class="svg-el" onclick="svgInfo('pyr','ram');event.stopPropagation()">
+        <polygon class="shape" points="186,131 394,131 446,173 134,173" fill="#2A6040"/>
+        <text x="290" y="156" font-family="sans-serif" font-size="12" font-weight="600" fill="rgba(255,255,255,.9)" text-anchor="middle">RAM</text>
+      </g>
+      <g class="svg-el" onclick="svgInfo('pyr','cache');event.stopPropagation()">
+        <polygon class="shape" points="238,90 342,90 394,131 186,131" fill="#1F4E79"/>
+        <text x="290" y="114" font-family="sans-serif" font-size="12" font-weight="600" fill="rgba(255,255,255,.9)" text-anchor="middle">Cache (L1, L2, L3)</text>
+      </g>
+      <g class="svg-el" onclick="svgInfo('pyr','regs');event.stopPropagation()">
+        <polygon class="shape" points="290,48 238,90 342,90" fill="#5B9BD5"/>
+        <text x="290" y="76" font-family="sans-serif" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">Registri CPU</text>
+      </g>
+      <!-- Etichette basso (dopo i poligoni, così non vengono coperte) -->
+      <text x="14" y="254" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,.45)" text-anchor="start">↓ più lenta, più economica</text>
+      <text x="566" y="254" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,.45)" text-anchor="end">capacità maggiore ↓</text>
+      <text x="290" y="272" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,.35)" text-anchor="middle">ogni livello è 10–100× più lento e molto più capiente del livello superiore</text>
+    </svg>
+    <div id="si-pyr" class="svg-info"><div class="sip-hint">👆 Clicca su un livello della piramide</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ═══ 3.2 — RAM ═══ -->
+<section class="guide-section" id="s32">
+  <div class="section-header">
+    <div class="section-num">3.2</div>
+    <div class="section-titles">
+      <div class="section-title">La RAM</div>
+      <div class="section-subtitle">La memoria di lavoro del computer</div>
+    </div>
+  </div>
+  <p>La RAM (<em>Random Access Memory</em> — <b>memoria ad accesso casuale</b>) è la memoria di lavoro del computer. Il nome "accesso casuale" significa che il processore può raggiungere <b>direttamente qualsiasi cella</b> di memoria, senza dover leggere tutte quelle precedenti — un po' come aprire un libro a una pagina precisa, senza sfogliare dall'inizio.</p>
+  <p>Nella RAM il computer tiene tutto ciò su cui sta lavorando <b>in questo momento</b>: il sistema operativo, i programmi aperti e i dati che stanno usando.</p>
+  <div class="box box-info">
+    <div class="box-label">💡 Perché serve la RAM?</div>
+    <p>Tutti i programmi sono salvati sullo storage (HDD o SSD), ma le memorie di massa sono troppo lente per la CPU. Per essere <b>eseguito</b>, un programma deve prima essere <b>copiato nella RAM</b>, che è molto più veloce. Per questo, più RAM hai, più programmi puoi tenere aperti contemporaneamente senza rallentamenti.</p>
+  </div>
+  <div class="box box-warn">
+    <div class="box-label">⚠ La RAM è volatile</div>
+    <p>Quando spegni il computer, tutto ciò che c'è nella RAM viene cancellato. Per questo i file vanno salvati su disco (HDD o SSD) prima di spegnere.</p>
+  </div>
+  <div class="accordion">
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>📏 Quanta RAM serve?</span><span class="acc-arrow">▶</span></div>
+      <div class="acc-body">Si misura in GB (gigabyte). Un computer moderno ha in genere 8–16 GB di RAM. Con poca RAM il computer rallenta perché deve usare il disco come memoria "di emergenza" (swap), che è molto più lento.</div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>🔄 DDR — cosa significa?</span><span class="acc-arrow">▶</span></div>
+      <div class="acc-body"><b>DDR</b> sta per Double Data Rate: trasferisce dati due volte per ogni ciclo di clock. Le generazioni si chiamano DDR4, DDR5, ecc. — ogni generazione è più veloce della precedente. Attenzione: le schede DDR5 non sono compatibili con gli slot DDR4 (sono fisicamente diversi).</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ═══ 3.3 — CACHE ═══ -->
+<section class="guide-section" id="s33">
+  <div class="section-header">
+    <div class="section-num">3.3</div>
+    <div class="section-titles">
+      <div class="section-title">La memoria Cache</div>
+      <div class="section-subtitle">Il ponte veloce tra registri e RAM</div>
+    </div>
+  </div>
+  <p>La cache è una memoria piccola ma velocissima, integrata direttamente nel processore. Serve a tenere una copia dei dati usati più spesso, così la CPU non deve andare ogni volta fino alla RAM (che è molto più lenta).</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Livello</th><th>Dimensione tipica</th><th>Velocità</th><th>Dove si trova</th></tr></thead>
+      <tbody>
+        <tr><td><b>Cache L1</b></td><td>32–128 KB per core</td><td>~1–4 ns</td><td>Dentro il core della CPU</td></tr>
+        <tr><td><b>Cache L2</b></td><td>256 KB – 4 MB per core</td><td>~4–12 ns</td><td>Nel chip della CPU</td></tr>
+        <tr><td><b>Cache L3</b></td><td>4–64 MB (totali)</td><td>~12–40 ns</td><td>Condivisa tra tutti i core</td></tr>
+        <tr><td><b>RAM</b> (confronto)</td><td>8–32 GB</td><td>~40–100 ns</td><td>Sulla scheda madre</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box box-info">
+    <div class="box-label">Come funziona in pratica</div>
+    <p>Quando la CPU ha bisogno di un dato, cerca prima nella cache L1. Se non lo trova (L1 miss), cerca in L2, poi in L3, e solo come ultima risorsa va in RAM. Siccome i programmi tendono a riusare gli stessi dati, la cache ha successo oltre il 90% delle volte.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ═══ 3.4 — ROM E FIRMWARE ═══ -->
+<section class="guide-section" id="s34">
+  <div class="section-header">
+    <div class="section-num">3.4</div>
+    <div class="section-titles">
+      <div class="section-title">La ROM e il firmware</div>
+      <div class="section-subtitle">La memoria che non si cancella mai</div>
+    </div>
+  </div>
+  <p>La <b>ROM</b> (<em>Read-Only Memory</em>) è una memoria <b>non volatile</b>: mantiene il suo contenuto anche quando il computer è spento. È il contrario della RAM.</p>
+  <p>Il suo utilizzo principale? Contiene il <b>firmware</b>, cioè il programma che si attiva all'accensione del computer e avvia tutto il resto (ne parleremo nel Modulo 6).</p>
+  <div class="accordion">
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>📀 ROM classica</span><span class="acc-arrow">▶</span></div>
+      <div class="acc-body">Il contenuto viene scritto una sola volta in fabbrica e non può essere modificato. Oggi è raramente usata nei PC, sostituita dalla memoria Flash.</div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>⚡ Memoria Flash (EEPROM)</span><span class="acc-arrow">▶</span></div>
+      <div class="acc-body">Evoluzione della ROM: può essere riscritta elettricamente. È la tecnologia usata per il firmware UEFI delle schede madri, per le chiavette USB e per gli SSD. Combina il vantaggio della non-volatilità con la possibilità di aggiornamento.</div>
+    </div>
+  </div>
+  <div class="box box-info">
+    <div class="box-label">RAM vs ROM in una frase</div>
+    <p><b>RAM</b> = veloce, volatile, memoria di lavoro. <b>ROM</b> = più lenta, non volatile, contiene il firmware.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ╔════════════════════════════════════════════════════════════╗ -->
+<!-- ║  MODULO 4 — LO STORAGE                                    ║ -->
+<!-- ╚════════════════════════════════════════════════════════════╝ -->
+<div class="part-header">
+  <div class="part-num">4</div>
+  <div class="part-titles">
+    <div class="part-title">Lo storage</div>
+    <div class="part-subtitle">Dove il computer salva i tuoi file in modo permanente</div>
+  </div>
+</div>
+
+<!-- ═══ 4.1 — HDD ═══ -->
+<section class="guide-section" id="s41">
+  <div class="section-header">
+    <div class="section-num">4.1</div>
+    <div class="section-titles">
+      <div class="section-title">L'Hard Disk (HDD)</div>
+      <div class="section-subtitle">Piatti rotanti e testine magnetiche</div>
+    </div>
+  </div>
+  <p>L'HDD è un dispositivo di archiviazione <b>magnetico</b> con parti meccaniche in movimento: dei piatti che ruotano velocemente e delle testine che leggono e scrivono i dati. Nonostante sia più lento degli SSD, rimane usato per archiviare grandi quantità di dati grazie al costo molto basso per GB.</p>
+  <p class="svg-hint">👆 Clicca su ogni componente per la descrizione.</p>
+  <div class="svg-wrap">
+    <svg viewBox="0 0 520 340" xmlns="http://www.w3.org/2000/svg" aria-label="Schema interno HDD">
+      <defs><marker id="arr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(94,159,207,.5)"/></marker></defs>
+      <rect x="0" y="0" width="520" height="340" rx="10" fill="#0a1622" stroke="#1e3a5f" stroke-width="1.5"/>
+      <text x="260" y="22" font-family="sans-serif" font-size="11" font-weight="700" fill="#5B9BD5" text-anchor="middle" letter-spacing="2">HARD DISK DRIVE</text>
+      <g class="hdd-platter">
+        <g class="svg-el" onclick="svgInfo('hdd','piatto');event.stopPropagation()">
+          <circle class="shape" cx="200" cy="165" r="118" fill="#1A3050" stroke="#2E75B6" stroke-width="1.5"/>
+          <circle cx="200" cy="165" r="95" fill="none" stroke="#2A4A70" stroke-width="1"/>
+          <circle cx="200" cy="165" r="72" fill="none" stroke="#2A4A70" stroke-width="1"/>
+          <circle cx="200" cy="165" r="49" fill="none" stroke="#2A4A70" stroke-width="1"/>
+          <circle cx="200" cy="165" r="26" fill="none" stroke="#2A4A70" stroke-width="1"/>
+        </g>
+        <g class="svg-el" onclick="svgInfo('hdd','spindle');event.stopPropagation()">
+          <circle class="shape" cx="200" cy="165" r="14" fill="#4A90D9" stroke="#7EC8E3" stroke-width="1.5"/>
+          <text x="200" y="169" font-family="sans-serif" font-size="8" font-weight="700" fill="#fff" text-anchor="middle">Spin</text>
+        </g>
+      </g>
+      <text x="200" y="260" font-family="sans-serif" font-size="10" font-weight="600" fill="#5B9BD5" text-anchor="middle">Piatto magnetico</text>
+      <text x="200" y="273" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,.45)" text-anchor="middle">tracce concentriche</text>
+      <g class="hdd-arm">
+        <g class="svg-el" onclick="svgInfo('hdd','braccio');event.stopPropagation()">
+          <line x1="318" y1="165" x2="200" y2="105" stroke="#7EC8E3" stroke-width="5" stroke-linecap="round"/>
+          <rect class="shape" x="310" y="148" width="90" height="34" rx="6" fill="#1F4E79" stroke="#3E85C6" stroke-width="1.5"/>
+          <text x="355" y="163" font-family="sans-serif" font-size="9" font-weight="600" fill="#fff" text-anchor="middle">Braccio</text>
+          <text x="355" y="175" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,.6)" text-anchor="middle">attuatore</text>
+        </g>
+        <g class="svg-el" onclick="svgInfo('hdd','testina');event.stopPropagation()">
+          <circle class="shape" cx="200" cy="105" r="10" fill="#e06030" stroke="#f08050" stroke-width="1.5"/>
+          <text x="200" y="90" font-family="sans-serif" font-size="9" font-weight="600" fill="#f08050" text-anchor="middle">Testina</text>
+        </g>
+      </g>
+      <g class="svg-el" onclick="svgInfo('hdd','controller');event.stopPropagation()">
+        <rect class="shape" x="30" y="295" width="460" height="38" rx="6" fill="#0f2236" stroke="#2E75B6" stroke-width="1.2"/>
+        <text x="260" y="312" font-family="sans-serif" font-size="10" font-weight="600" fill="#5B9BD5" text-anchor="middle">Controller (scheda elettronica)</text>
+        <text x="260" y="325" font-family="sans-serif" font-size="8" fill="rgba(255,255,255,.4)" text-anchor="middle">gestisce lettura/scrittura e collegamento SATA</text>
+      </g>
+      <path d="M 200 50 A 115 115 0 0 1 305 118" fill="none" stroke="rgba(94,159,207,.4)" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+      <text x="295" y="75" font-family="sans-serif" font-size="8" fill="rgba(94,159,207,.5)" text-anchor="middle">5400–7200 rpm</text>
+    </svg>
+    <div id="si-hdd" class="svg-info"><div class="sip-hint">👆 Clicca su un componente per la descrizione</div></div>
+    <button class="hdd-btn" onclick="toggleHddAnim(this)">▶ Avvia disco</button>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ═══ 4.2 — SSD ═══ -->
+<section class="guide-section" id="s42">
+  <div class="section-header">
+    <div class="section-num">4.2</div>
+    <div class="section-titles">
+      <div class="section-title">Gli SSD</div>
+      <div class="section-subtitle">Storage senza parti mobili, molto più veloce</div>
+    </div>
+  </div>
+  <p>Gli <b>SSD</b> (<em>Solid State Drive</em>) usano memoria Flash (la stessa tecnologia delle chiavette USB) per memorizzare i dati. Non hanno parti meccaniche: niente piatti, niente testine. Questo li rende molto più veloci, silenziosi e resistenti agli urti rispetto agli HDD.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Tipo</th><th>Collegamento</th><th>Velocità lettura</th><th>Uso tipico</th></tr></thead>
+      <tbody>
+        <tr><td><b>SSD SATA</b></td><td>Cavo SATA (stesso dell'HDD)</td><td>~550 MB/s</td><td>Upgrade di PC vecchi</td></tr>
+        <tr><td><b>SSD M.2</b></td><td>Slot M.2 sulla scheda madre</td><td>3.500–7.000 MB/s</td><td>PC moderni — molto più veloce</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box box-info">
+    <div class="box-label">HDD vs SSD — confronto rapido</div>
+    <p><b>HDD</b>: economico, capiente (1–20 TB), ma lento e fragile. <b>SSD</b>: veloce, silenzioso, resistente, ma più costoso per GB. Oggi la maggior parte dei PC usa un SSD per il sistema operativo e i programmi, e un HDD per l'archivio di file pesanti.</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ═══ 4.3 — SUPPORTI OTTICI E USB ═══ -->
+<section class="guide-section" id="s43">
+  <div class="section-header">
+    <div class="section-num">4.3</div>
+    <div class="section-titles">
+      <div class="section-title">Supporti ottici e chiavette USB</div>
+      <div class="section-subtitle">Altri modi per salvare e trasportare dati</div>
+    </div>
+  </div>
+  <div class="accordion">
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>💿 CD, DVD e Blu-Ray</span><span class="acc-arrow">▶</span></div>
+      <div class="acc-body">I dischi ottici memorizzano i dati con un laser che crea microscopici segni su una superficie riflettente. Il CD contiene ~700 MB, il DVD ~4.7 GB, il Blu-Ray fino a 100 GB. Sono ormai poco usati nei PC moderni (molti non hanno più il lettore), ma il Blu-Ray resta importante per i film in alta qualità e l'archiviazione a lungo termine.</div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>🔌 Chiavette USB</span><span class="acc-arrow">▶</span></div>
+      <div class="acc-body">Usano memoria Flash in un formato tascabile. Capacità da 4 GB a 2 TB. Pratiche per trasferire file da un computer all'altro. Le più veloci (USB 3.2) raggiungono 600–1200 MB/s; le comuni (USB 2.0) si fermano a ~30 MB/s.</div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>💳 Schede SD e microSD</span><span class="acc-arrow">▶</span></div>
+      <div class="acc-body">Memorie Flash in formato ridotto, usate in fotocamere, smartphone, droni e console (Nintendo Switch). Le microSD arrivano fino a 1 TB. Le classi di velocità (U1, U3, V30, V90) indicano la velocità minima garantita di scrittura.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ╔════════════════════════════════════════════════════════════╗ -->
+<!-- ║  MODULO 5 — PERIFERICHE E CONNETTORI                      ║ -->
+<!-- ╚════════════════════════════════════════════════════════════╝ -->
+<div class="part-header">
+  <div class="part-num">5</div>
+  <div class="part-titles">
+    <div class="part-title">Periferiche e connettori</div>
+    <div class="part-subtitle">Input, output, porte e la scheda madre</div>
+  </div>
+</div>
+
+<!-- ═══ 5.1 — PERIFERICHE I/O ═══ -->
+<section class="guide-section" id="s51">
+  <div class="section-header">
+    <div class="section-num">5.1</div>
+    <div class="section-titles">
+      <div class="section-title">Periferiche di input e output</div>
+      <div class="section-subtitle">Come il computer comunica con il mondo esterno</div>
+    </div>
+  </div>
+  <p>Una <b>periferica</b> è qualsiasi dispositivo collegato al computer che permette di scambiare informazioni con l'utente o con il mondo esterno. Le periferiche si classificano in base alla <b>direzione</b> dei dati:</p>
+  <div class="step-list">
+    <div class="step-item">
+      <div class="step-dot" style="background:#2E75B6">⬇</div>
+      <div class="step-body">
+        <strong>Periferiche di Input (ingresso)</strong>
+        <span>Inviano dati <b>dall'esterno verso il computer</b>. L'utente o l'ambiente forniscono informazioni che il PC elabora. Esempio: premi un tasto sulla tastiera → il computer riceve il codice di quel tasto.</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-dot" style="background:#1E6B3C">⬆</div>
+      <div class="step-body">
+        <strong>Periferiche di Output (uscita)</strong>
+        <span>Portano dati <b>dal computer verso l'esterno</b>. Il PC ha elaborato qualcosa e mostra il risultato all'utente. Esempio: il monitor visualizza l'immagine calcolata dalla scheda video.</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-dot" style="background:#7D4E00">⬆⬇</div>
+      <div class="step-body">
+        <strong>Periferiche di Input/Output</strong>
+        <span>Possono fare <b>entrambe le cose</b>: inviano e ricevono dati. Esempio: un touchscreen mostra immagini (output) e riceve i tocchi dell'utente (input).</span>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin:1.5rem 0 .5rem;font-size:1.05rem;color:var(--blue-dark)">🧪 Quiz — Classifica le periferiche</h3>
+  <p style="font-size:.88rem;color:var(--gray-mid);margin-bottom:.6rem">Per ogni dispositivo, scegli se è una periferica di <b>Input</b>, <b>Output</b> o <b>Input/Output</b>.</p>
+  <div class="quiz-wrap" id="io-quiz"></div>
+  <div class="quiz-btns">
+    <button class="quiz-btn quiz-btn-check" onclick="quizCheck()">✓ Verifica risposte</button>
+    <button class="quiz-btn quiz-btn-show" onclick="quizReveal()">👁 Mostra soluzione</button>
+    <button class="quiz-btn quiz-btn-reset" onclick="quizReset()">↺ Ricomincia</button>
+  </div>
+  <div class="quiz-score" id="quiz-score"></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ═══ 5.2 — CONNETTORI E PORTE ═══ -->
+<section class="guide-section" id="s52">
+  <div class="section-header">
+    <div class="section-num">5.2</div>
+    <div class="section-titles">
+      <div class="section-title">Connettori e porte del PC</div>
+      <div class="section-subtitle">USB, HDMI, jack audio e gli altri</div>
+    </div>
+  </div>
+  <p>Ogni periferica si collega al computer attraverso un connettore. Conoscere i principali aiuta a collegare i dispositivi giusti alle porte giuste.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Connettore</th><th>Uso principale</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td><b>USB-A</b></td><td>Periferiche generiche</td><td>Il connettore USB classico (rettangolare). USB 2.0, 3.0, 3.2</td></tr>
+        <tr><td><b>USB-C</b></td><td>Tutto (dati, video, ricarica)</td><td>Piccolo, reversibile. Sempre più diffuso. Può trasportare anche segnale video</td></tr>
+        <tr><td><b>HDMI</b></td><td>Video + audio</td><td>Collega il PC al monitor o alla TV. HDMI 2.1 supporta 4K a 120 Hz</td></tr>
+        <tr><td><b>DisplayPort</b></td><td>Video + audio</td><td>Usato soprattutto sui monitor da PC. Spesso migliore di HDMI per il gaming</td></tr>
+        <tr><td><b>Jack 3.5 mm</b></td><td>Audio</td><td>Per cuffie, microfono e altoparlanti. Porta verde = uscita, rosa = microfono</td></tr>
+        <tr><td><b>RJ-45 (Ethernet)</b></td><td>Rete cablata</td><td>Cavo di rete. Fino a 1 Gbps (standard) o 2.5/10 Gbps</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ═══ 5.3 — LA SCHEDA MADRE ═══ -->
+<section class="guide-section" id="s53">
+  <div class="section-header">
+    <div class="section-num">5.3</div>
+    <div class="section-titles">
+      <div class="section-title">La scheda madre</div>
+      <div class="section-subtitle">Il circuito che collega tutti i componenti</div>
+    </div>
+  </div>
+  <p>La <b>scheda madre</b> (motherboard) è il grande circuito stampato che contiene tutti i connettori e le piste elettriche che mettono in comunicazione CPU, RAM, storage e periferiche. Senza la scheda madre, i componenti non possono "parlarsi".</p>
+  <p class="svg-hint">👆 Clicca su ogni componente per la descrizione.</p>
+  <div class="svg-wrap">
+    <svg viewBox="0 0 680 440" xmlns="http://www.w3.org/2000/svg" aria-label="Layout scheda madre">
+      <rect x="0" y="0" width="680" height="440" rx="10" fill="#0a1a0a" stroke="#1a3a1a" stroke-width="2"/>
+      <text x="340" y="22" font-family="sans-serif" font-size="12" font-weight="700" fill="#4a9a4a" text-anchor="middle" letter-spacing="2">SCHEDA MADRE</text>
+      <g class="svg-el" onclick="svgInfo('mobo','socket');event.stopPropagation()">
+        <rect class="shape" x="30" y="40" width="175" height="175" rx="6" fill="#1a2a1a" stroke="#4a9a4a" stroke-width="1.5"/>
+        <rect x="55" y="65" width="125" height="125" rx="4" fill="#0d1a0d" stroke="#3a7a3a" stroke-width="1"/>
+        <text x="117" y="118" font-family="sans-serif" font-size="11" font-weight="700" fill="#4a9a4a" text-anchor="middle">Socket CPU</text>
+        <text x="117" y="134" font-family="sans-serif" font-size="8.5" fill="rgba(74,154,74,.6)" text-anchor="middle">dove si monta il processore</text>
+      </g>
+      <g class="svg-el" onclick="svgInfo('mobo','ram');event.stopPropagation()">
+        <rect class="shape" x="220" y="40" width="28" height="170" rx="4" fill="#1a1a3a" stroke="#4a4aaa" stroke-width="1.5"/>
+        <rect x="252" y="40" width="28" height="170" rx="4" fill="#1a1a3a" stroke="#4a4aaa" stroke-width="1.5"/>
+        <text x="250" y="235" font-family="sans-serif" font-size="9" font-weight="600" fill="#6a6aee" text-anchor="middle">Slot RAM</text>
+        <text x="250" y="248" font-family="sans-serif" font-size="8" fill="rgba(106,106,238,.6)" text-anchor="middle">DDR5</text>
+      </g>
+      <g class="svg-el" onclick="svgInfo('mobo','pcie');event.stopPropagation()">
+        <rect class="shape" x="30" y="285" width="380" height="22" rx="3" fill="#1a1a2a" stroke="#2E75B6" stroke-width="1.5"/>
+        <text x="220" y="300" font-family="sans-serif" font-size="9" font-weight="600" fill="#5B9BD5" text-anchor="middle">Slot PCIe x16 — scheda grafica</text>
+      </g>
+      <g class="svg-el" onclick="svgInfo('mobo','m2');event.stopPropagation()">
+        <rect class="shape" x="30" y="320" width="120" height="12" rx="3" fill="#1a2a1a" stroke="#3a7a3a" stroke-width="1.2"/>
+        <text x="90" y="329" font-family="sans-serif" font-size="8" fill="#4a9a4a" text-anchor="middle">M.2 (SSD)</text>
+      </g>
+      <g class="svg-el" onclick="svgInfo('mobo','sata');event.stopPropagation()">
+        <rect class="shape" x="430" y="285" width="14" height="55" rx="2" fill="#1a2a1a" stroke="#4a9a4a" stroke-width="1"/>
+        <rect x="448" y="285" width="14" height="55" rx="2" fill="#1a2a1a" stroke="#4a9a4a" stroke-width="1"/>
+        <rect x="466" y="285" width="14" height="55" rx="2" fill="#1a2a1a" stroke="#4a9a4a" stroke-width="1"/>
+        <rect x="484" y="285" width="14" height="55" rx="2" fill="#1a2a1a" stroke="#4a9a4a" stroke-width="1"/>
+        <text x="457" y="358" font-family="sans-serif" font-size="8.5" fill="#4a9a4a" text-anchor="middle">SATA (HDD/SSD)</text>
+      </g>
+      <g class="svg-el" onclick="svgInfo('mobo','atx');event.stopPropagation()">
+        <rect class="shape" x="520" y="40" width="30" height="100" rx="4" fill="#2a1a0a" stroke="#cc8820" stroke-width="1.5"/>
+        <text x="535" y="155" font-family="sans-serif" font-size="8" fill="#cc8820" text-anchor="middle">ATX</text>
+        <text x="535" y="166" font-family="sans-serif" font-size="8" fill="rgba(204,136,32,.6)" text-anchor="middle">24-pin</text>
+      </g>
+      <g class="svg-el" onclick="svgInfo('mobo','bios');event.stopPropagation()">
+        <rect class="shape" x="520" y="200" width="60" height="35" rx="5" fill="#1a0a2a" stroke="#8a3aaa" stroke-width="1.5"/>
+        <text x="550" y="222" font-family="sans-serif" font-size="9" font-weight="700" fill="#ba6aee" text-anchor="middle">BIOS/UEFI</text>
+      </g>
+      <g class="svg-el" onclick="svgInfo('mobo','chipset');event.stopPropagation()">
+        <rect class="shape" x="430" y="380" width="80" height="50" rx="6" fill="#1a1a2a" stroke="#2E75B6" stroke-width="1.5"/>
+        <text x="470" y="408" font-family="sans-serif" font-size="10" font-weight="700" fill="#5B9BD5" text-anchor="middle">Chipset</text>
+      </g>
+      <g class="svg-el" onclick="svgInfo('mobo','iopanel');event.stopPropagation()">
+        <rect class="shape" x="530" y="250" width="140" height="180" rx="6" fill="#0d1a0d" stroke="#4a9a4a" stroke-width="1.5"/>
+        <text x="600" y="338" font-family="sans-serif" font-size="9" font-weight="600" fill="#4a9a4a" text-anchor="middle">Pannello I/O</text>
+        <text x="600" y="352" font-family="sans-serif" font-size="7.5" fill="rgba(74,154,74,.6)" text-anchor="middle">USB · HDMI · Audio</text>
+        <text x="600" y="364" font-family="sans-serif" font-size="7.5" fill="rgba(74,154,74,.6)" text-anchor="middle">Ethernet · DisplayPort</text>
+      </g>
+      <g class="svg-el" onclick="svgInfo('mobo','cmos');event.stopPropagation()">
+        <circle class="shape" cx="470" cy="220" r="22" fill="#1a1a0a" stroke="#8a8a20" stroke-width="1.5"/>
+        <text x="470" y="217" font-family="sans-serif" font-size="8" fill="#aaaa30" text-anchor="middle">CR2032</text>
+        <text x="470" y="229" font-family="sans-serif" font-size="7.5" fill="rgba(170,170,48,.6)" text-anchor="middle">CMOS</text>
+      </g>
+    </svg>
+    <div id="si-mobo" class="svg-info"><div class="sip-hint">👆 Clicca su un componente per la descrizione</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ╔════════════════════════════════════════════════════════════╗ -->
+<!-- ║  MODULO 6 — L'AVVIO DEL COMPUTER                          ║ -->
+<!-- ╚════════════════════════════════════════════════════════════╝ -->
+<div class="part-header">
+  <div class="part-num">6</div>
+  <div class="part-titles">
+    <div class="part-title">L'avvio del computer</div>
+    <div class="part-subtitle">Cosa succede quando premi il pulsante di accensione</div>
+  </div>
+</div>
+
+<!-- ═══ 6.1 — ACCENSIONE E POST ═══ -->
+<section class="guide-section" id="s61">
+  <div class="section-header">
+    <div class="section-num">6.1</div>
+    <div class="section-titles">
+      <div class="section-title">Accensione e POST</div>
+      <div class="section-subtitle">Il computer si controlla prima di partire</div>
+    </div>
+  </div>
+  <p>Quando premi il pulsante di accensione, il computer non avvia subito il sistema operativo. Prima esegue una serie di passaggi automatici per verificare che tutto funzioni.</p>
+  <div class="step-list">
+    <div class="step-item">
+      <div class="step-dot">1</div>
+      <div class="step-body">
+        <strong>Alimentazione</strong>
+        <span>L'alimentatore (PSU) converte la corrente della presa di casa nelle tensioni necessarie ai componenti e invia un segnale "Power Good" alla scheda madre.</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-dot">2</div>
+      <div class="step-body">
+        <strong>POST (Power-On Self Test)</strong>
+        <span>Il firmware (BIOS o UEFI) esegue un test rapido: la CPU funziona? La RAM c'è? Il disco è collegato? Se qualcosa non va, il PC emette dei bip di errore e si ferma.</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-dot">3</div>
+      <div class="step-body">
+        <strong>Ricerca del sistema operativo</strong>
+        <span>Il firmware cerca il sistema operativo nell'ordine configurato (prima SSD, poi HDD, poi USB, ecc.) e lo carica in RAM.</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-dot">4</div>
+      <div class="step-body">
+        <strong>Avvio del sistema operativo</strong>
+        <span>Il sistema operativo prende il controllo: carica i driver, avvia i servizi e mostra il desktop (o la schermata di login).</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ═══ 6.2 — DAL BIOS ALL'UEFI ═══ -->
+<section class="guide-section" id="s62">
+  <div class="section-header">
+    <div class="section-num">6.2</div>
+    <div class="section-titles">
+      <div class="section-title">Dal BIOS all'UEFI</div>
+      <div class="section-subtitle">Il firmware che avvia il computer</div>
+    </div>
+  </div>
+  <p>Il <b>BIOS</b> (<em>Basic Input/Output System</em>) è il firmware originale dei PC, creato negli anni '80. Era un programma molto semplice con un'interfaccia solo testuale. Oggi è stato sostituito dall'<b>UEFI</b> (<em>Unified Extensible Firmware Interface</em>).</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Caratteristica</th><th>BIOS (legacy)</th><th>UEFI (moderno)</th></tr></thead>
+      <tbody>
+        <tr><td><b>Interfaccia</b></td><td>Solo testo, tastiera</td><td>Grafica, supporto mouse</td></tr>
+        <tr><td><b>Avvio</b></td><td>Lento</td><td>Veloce (Fast Boot)</td></tr>
+        <tr><td><b>Dischi supportati</b></td><td>Max 2 TB (MBR)</td><td>Oltre 2 TB (GPT)</td></tr>
+        <tr><td><b>Sicurezza</b></td><td>Nessuna</td><td>Secure Boot (blocca malware all'avvio)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box box-info">
+    <div class="box-label">Come si accede all'UEFI?</div>
+    <p>Subito dopo l'accensione, prima che parta il sistema operativo, si preme un tasto specifico (di solito <b>F2</b>, <b>DEL</b> o <b>ESC</b> — dipende dal produttore). Da lì si possono cambiare l'ordine di avvio, la velocità della RAM e altre impostazioni hardware.</p>
+  </div>
+</section>
+
+</div><!-- fine guide-content -->
+
+<!-- ═══ SLIDES (Modalità Aula) ═══ -->
+<div id="slides-container">
+  <!-- Slide 1: Titolo -->
+  <div class="slide active">
+    <div class="slide-tag">Modulo 1 — Il sistema informatico</div>
+    <div class="slide-title">Com'è fatto<br>un <em>computer</em></div>
+    <div class="slide-body">
+      <p>Dall'hardware al software, dalla CPU alle periferiche.<br>
+      6 moduli · 18 sezioni · Livello: prima superiore.</p>
+    </div>
+  </div>
+  <!-- Slide 2 -->
+  <div class="slide">
+    <div class="slide-tag">1.1 — Cos'è un sistema informatico</div>
+    <div class="slide-title">Un sistema = <em>parti che cooperano</em></div>
+    <ul class="slide-points">
+      <li><b>Hardware:</b> le parti fisiche — CPU, RAM, disco, monitor, tastiera</li>
+      <li><b>Software:</b> i programmi — sistema operativo + applicazioni</li>
+      <li><b>Utente:</b> chi usa il sistema e gli dà uno scopo</li>
+      <li>Il ciclo fondamentale: <b>INPUT → ELABORAZIONE → OUTPUT → MEMORIZZAZIONE</b></li>
+    </ul>
+  </div>
+  <!-- Slide 3 -->
+  <div class="slide">
+    <div class="slide-tag">1.2 — I livelli del computer</div>
+    <div class="slide-title">Il modello a <em>cipolla</em></div>
+    <ul class="slide-points">
+      <li>7 livelli sovrapposti: dal centro (hardware fisico) all'esterno (applicazioni)</li>
+      <li>Ogni livello usa i servizi di quello sotto e nasconde i dettagli a quello sopra</li>
+      <li>Vantaggio: <b>separazione delle responsabilità</b> — non devi sapere come funziona il disco per aprire un file</li>
+    </ul>
+  </div>
+  <!-- Slide 4 -->
+  <div class="slide">
+    <div class="slide-tag">1.3 — Il modello di Von Neumann</div>
+    <div class="slide-title">L'idea di <em>Von Neumann</em> (1945)</div>
+    <ul class="slide-points">
+      <li>Programma e dati nella <b>stessa memoria</b> — prima si ricablava a mano</li>
+      <li>4 componenti: <b>CPU</b> · <b>Memoria</b> · <b>I/O</b> · <b>Bus</b></li>
+      <li>3 bus: dati (bidirezionale), indirizzi (CPU→MEM), controllo (coordinamento)</li>
+      <li>Tutti i computer moderni si basano ancora su questo modello</li>
+    </ul>
+  </div>
+  <!-- Slide 5 -->
+  <div class="slide">
+    <div class="slide-tag">Modulo 2 — La CPU</div>
+    <div class="slide-title">Il <em>processore</em>: CU, ALU, Registri</div>
+    <ul class="slide-points">
+      <li><b>CU</b> (Unità di Controllo): il direttore d'orchestra — legge e coordina</li>
+      <li><b>ALU</b>: il calcolatore — addizioni, confronti, operazioni logiche</li>
+      <li><b>Registri</b>: memoria interna velocissima (1 ciclo di clock)</li>
+      <li><b>Clock</b>: il "tic" che sincronizza tutto — si misura in GHz</li>
+    </ul>
+  </div>
+  <!-- Slide 6 -->
+  <div class="slide">
+    <div class="slide-tag">2.2 — Il bus di sistema</div>
+    <div class="slide-title">Tre <em>bus</em> per collegare tutto</div>
+    <ul class="slide-points">
+      <li><b>Bus Dati</b> (blu): trasporta i valori — bidirezionale</li>
+      <li><b>Bus Indirizzi</b> (verde): dice DOVE leggere/scrivere — CPU → Memoria</li>
+      <li><b>Bus Controllo</b> (arancio): coordina — READ, WRITE, INTERRUPT</li>
+      <li>Più bit ha il bus dati, più dati viaggiano per ogni ciclo</li>
+    </ul>
+  </div>
+  <!-- Slide 7 -->
+  <div class="slide">
+    <div class="slide-tag">2.3 — Ciclo Fetch-Decode-Execute</div>
+    <div class="slide-title">Il <em>battito cardiaco</em> della CPU</div>
+    <ul class="slide-points">
+      <li><b>FETCH</b> — prendi la prossima istruzione dalla memoria</li>
+      <li><b>DECODE</b> — la CU la interpreta: che operazione è?</li>
+      <li><b>EXECUTE</b> — l'ALU la esegue, il risultato va in un registro o in memoria</li>
+      <li>Si ripete in continuazione, miliardi di volte al secondo</li>
+    </ul>
+  </div>
+  <!-- Slide 8 -->
+  <div class="slide">
+    <div class="slide-tag">Modulo 3 — Le memorie</div>
+    <div class="slide-title">La <em>piramide</em> delle memorie</div>
+    <ul class="slide-points">
+      <li>Non esiste una memoria perfetta: rapida + capiente + economica</li>
+      <li>In alto: <b>Registri</b> (pochi KB, velocissimi) → <b>Cache</b> (L1, L2, L3)</li>
+      <li>Al centro: <b>RAM</b> (8–32 GB, volatile, memoria di lavoro)</li>
+      <li>In basso: <b>SSD/HDD</b> (centinaia di GB–TB, lenti ma permanenti)</li>
+    </ul>
+  </div>
+  <!-- Slide 9 -->
+  <div class="slide">
+    <div class="slide-tag">3.2 / 3.3 / 3.4 — RAM, Cache, ROM</div>
+    <div class="slide-title"><em>RAM</em> vs <em>Cache</em> vs <em>ROM</em></div>
+    <ul class="slide-points">
+      <li><b>RAM</b>: memoria di lavoro, volatile, 8–32 GB, DDR4/DDR5</li>
+      <li><b>Cache</b>: dentro la CPU, 3 livelli (L1 → L2 → L3), hit rate &gt;90%</li>
+      <li><b>ROM</b>: non volatile, contiene il firmware (BIOS/UEFI), oggi è Flash</li>
+      <li>RAM = veloce ma si cancella · ROM = più lenta ma resta</li>
+    </ul>
+  </div>
+  <!-- Slide 10 -->
+  <div class="slide">
+    <div class="slide-tag">Modulo 4 — Lo storage</div>
+    <div class="slide-title"><em>HDD</em> vs <em>SSD</em></div>
+    <ul class="slide-points">
+      <li><b>HDD</b>: piatti magnetici rotanti, lento (~150 MB/s), economico, capiente</li>
+      <li><b>SSD SATA</b>: memoria Flash, nessuna parte mobile, ~550 MB/s</li>
+      <li><b>SSD M.2</b>: si monta direttamente sulla scheda madre, fino a 7.000 MB/s — il più veloce</li>
+      <li>Oggi: SSD per sistema operativo, HDD per archivio pesante</li>
+    </ul>
+  </div>
+  <!-- Slide 11 -->
+  <div class="slide">
+    <div class="slide-tag">Modulo 5 — Periferiche e connettori</div>
+    <div class="slide-title">Come <em>comunicare</em> con il computer</div>
+    <ul class="slide-points">
+      <li><b>Input</b>: tastiera, mouse, microfono, webcam, scanner</li>
+      <li><b>Output</b>: monitor, stampante, altoparlanti, cuffie</li>
+      <li><b>I/O</b>: touchscreen, scheda di rete, disco esterno</li>
+      <li>Connettori: USB-A/C, HDMI, DisplayPort, Jack 3.5mm, RJ-45</li>
+    </ul>
+  </div>
+  <!-- Slide 12 -->
+  <div class="slide">
+    <div class="slide-tag">5.3 — La scheda madre</div>
+    <div class="slide-title">La <em>scheda madre</em>: il cuore del PC</div>
+    <ul class="slide-points">
+      <li>Circuito stampato che collega CPU, RAM, storage e periferiche</li>
+      <li>Socket CPU · Slot RAM (DDR5) · Slot PCIe (grafica) · M.2 (SSD)</li>
+      <li>Connettori SATA · Alimentazione ATX · Chip BIOS/UEFI · Chipset</li>
+      <li>Pannello I/O posteriore: USB, HDMI, audio, Ethernet</li>
+    </ul>
+  </div>
+  <!-- Slide 13 -->
+  <div class="slide">
+    <div class="slide-tag">Modulo 6 — L'avvio del computer</div>
+    <div class="slide-title">Cosa succede quando <em>accendi</em> il PC</div>
+    <ul class="slide-points">
+      <li><b>1.</b> Alimentatore → fornisce corrente, segnale "Power Good"</li>
+      <li><b>2.</b> POST → il firmware testa CPU, RAM, disco</li>
+      <li><b>3.</b> Ricerca del sistema operativo → SSD → HDD → USB</li>
+      <li><b>4.</b> Caricamento SO → driver, servizi, desktop</li>
+    </ul>
+  </div>
+  <!-- Slide 14 -->
+  <div class="slide">
+    <div class="slide-tag">6.2 — BIOS vs UEFI</div>
+    <div class="slide-title">Dal <em>BIOS</em> all'<em>UEFI</em></div>
+    <ul class="slide-points">
+      <li><b>BIOS</b> (anni '80): solo testo, max 2 TB, nessuna sicurezza</li>
+      <li><b>UEFI</b> (moderno): grafico, dischi &gt;2 TB, Secure Boot</li>
+      <li>Si accede premendo F2/DEL/ESC subito dopo l'accensione</li>
+      <li style="border-top:1px solid rgba(126,200,227,.3);margin-top:.5rem;padding-top:.5rem;color:#7EC8E3">✅ Guida completata · 6 moduli · Von Neumann → Avvio</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══ SLIDE NAV ═══ -->
+<div id="slide-nav">
+  <button class="slide-btn" id="btn-prev" onclick="prevSlide()" disabled>◀ Precedente</button>
+  <span id="slide-counter">1 / 14</span>
+  <button class="slide-btn" id="btn-next" onclick="nextSlide()">Successiva ▶</button>
+</div>
+<div id="progress-bar"><div id="progress-fill"></div></div>
+
+</div><!-- fine #main -->
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
+  Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
+  <p style="margin-top:.5rem;font-size:.78rem;">
+    <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="/cookie-policy.html">Cookie Policy</a>
+  </p>
+</footer>
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- ═══ JAVASCRIPT ═══ -->
+<script>
+/* ═══ STATO ═══ */
+let aulaMode=false,currentSlide=0;
+
+/* ═══ MODE TOGGLE ═══ */
+function toggleMode(){
+  aulaMode=!aulaMode;
+  document.body.classList.toggle('aula-mode',aulaMode);
+  document.getElementById('mode-icon').textContent=aulaMode?'📖':'🎓';
+  document.getElementById('mode-label').textContent=aulaMode?'Modalità Guida':'Modalità Aula';
+  if(aulaMode)showSlide(0);
+}
+
+/* ═══ SIDEBAR ═══ */
+function toggleSidebar(){
+  const sb=document.getElementById('sidebar'),hb=document.getElementById('hamburger'),ov=document.getElementById('overlay');
+  const o=sb.classList.toggle('open');hb.classList.toggle('open',o);ov.classList.toggle('open',o);
+}
+function closeSidebar(){['sidebar','hamburger','overlay'].forEach(id=>document.getElementById(id).classList.remove('open'));}
+document.getElementById('hamburger').addEventListener('click',toggleSidebar);
+document.querySelectorAll('.nav-item').forEach(n=>n.addEventListener('click',()=>{
+  document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
+  n.classList.add('active');closeSidebar();
+}));
+
+/* ═══ SCROLL SPY ═══ */
+const sections=document.querySelectorAll('.guide-section'),navItems=document.querySelectorAll('.nav-item');
+window.addEventListener('scroll',()=>{
+  if(aulaMode)return;
+  const sy=window.scrollY,tot=document.body.scrollHeight-window.innerHeight;
+  document.getElementById('reading-fill').style.width=Math.min(100,(sy/tot)*100)+'%';
+  document.getElementById('back-top').classList.toggle('visible',sy>400);
+  let cur='';sections.forEach(s=>{if(sy>=s.offsetTop-80)cur=s.id;});
+  navItems.forEach(n=>n.classList.toggle('active',n.getAttribute('href')==='#'+cur));
+},{passive:true});
+
+/* ═══ ACCORDION ═══ */
+function toggleAcc(h){h.closest('.acc-item').classList.toggle('open');}
+
+/* ═══ SLIDES ═══ */
+function showSlide(n){
+  const sl=document.querySelectorAll('.slide'),tot=sl.length;
+  sl.forEach((s,i)=>{s.classList.remove('active','exit');if(i===n)s.classList.add('active');});
+  currentSlide=n;
+  document.getElementById('slide-counter').textContent=`${n+1} / ${tot}`;
+  document.getElementById('btn-prev').disabled=n===0;
+  document.getElementById('btn-next').disabled=n===tot-1;
+  document.getElementById('progress-fill').style.width=`${((n+1)/tot)*100}%`;
+}
+function nextSlide(){
+  const tot=document.querySelectorAll('.slide').length;
+  if(currentSlide<tot-1){document.querySelectorAll('.slide')[currentSlide].classList.add('exit');setTimeout(()=>showSlide(currentSlide+1),50);}
+}
+function prevSlide(){if(currentSlide>0)showSlide(currentSlide-1);}
+document.addEventListener('keydown',e=>{
+  if(!aulaMode)return;
+  if(['ArrowRight','ArrowDown',' '].includes(e.key)){e.preventDefault();nextSlide();}
+  if(['ArrowLeft','ArrowUp'].includes(e.key)){e.preventDefault();prevSlide();}
+  if(e.key==='Escape')toggleMode();
+});
+
+/* ═══ SVG INTERATTIVI — DATI ═══ */
+const SVG_DATA={
+  cipolla:{
+    hw:    {label:'Livello 0 — centro',      title:'Hardware',               desc:'Il nucleo fisico del sistema: CPU, RAM, disco, scheda madre, bus. È l\'unico livello che fa operazioni "reali" nel mondo fisico tramite segnali elettrici. Tutti gli altri livelli sono software costruito sopra di esso.'},
+    kernel:{label:'Livello 1',               title:'Kernel (Nucleo del SO)',  desc:'Il cuore del sistema operativo. Parla direttamente con l\'hardware, assegna i compiti al processore, gestisce la memoria e coordina tutto il sistema.'},
+    mem:   {label:'Livello 2',               title:'Gestore della Memoria',  desc:'Si occupa della RAM: decide quale programma occupa quale parte di memoria, gestisce lo swap (quando la RAM è piena, sposta dati temporaneamente sul disco) e protegge la memoria di un programma da quella degli altri.'},
+    periph:{label:'Livello 3',               title:'Gestore delle Periferiche',desc:'Fa da tramite tra il sistema operativo e i dispositivi (mouse, tastiera, disco, ecc.) usando programmi chiamati driver. Ogni dispositivo ha il suo driver specifico.'},
+    fs:    {label:'Livello 4',               title:'File System',              desc:'Organizza i dati su disco in file e cartelle. Si occupa anche dei permessi (chi può leggere o modificare un file) e della protezione dei dati. Esempi: NTFS (Windows), ext4 (Linux), APFS (macOS).'},
+    shell: {label:'Livello 5',               title:'Shell (Interfaccia)',      desc:'Il programma che riceve i tuoi comandi e li traduce in azioni per il sistema operativo. Può essere una riga di comando (terminale, PowerShell) o un\'interfaccia grafica (Esplora File, Finder). È il livello che usi direttamente.'},
+    app:   {label:'Livello 6 — esterno',     title:'Applicazioni',             desc:'Il livello più esterno: i programmi che usi ogni giorno (browser, editor di testo, videogiochi). Le applicazioni non toccano mai l\'hardware direttamente: fanno richieste al sistema operativo, che le passa verso il basso attraverso tutti i livelli.'}
+  },
+  vn:{
+    cpu: {label:'Motore del sistema',         title:'CPU',                      desc:'Esegue le istruzioni del programma. La CU (Unità di Controllo) interpreta le istruzioni, l\'ALU fa i calcoli e i registri tengono i dati temporanei. La CPU legge le istruzioni dalla memoria una alla volta e le esegue.'},
+    mem: {label:'Programma + dati insieme',   title:'Memoria Centrale (RAM)',    desc:'Nel modello Von Neumann, il programma (le istruzioni) e i dati stanno nella stessa memoria. Questo è il punto chiave: caricare un programma diverso cambia il compito del computer senza toccare l\'hardware.'},
+    ioin:{label:'Dal mondo esterno alla CPU', title:'Unità di Input',            desc:'Dispositivi che portano dati dentro il sistema: tastiera, mouse, scanner, microfono, webcam. I dati vengono convertiti in segnali digitali e messi in memoria per essere elaborati dalla CPU.'},
+    ioout:{label:'Dalla CPU al mondo esterno',title:'Unità di Output',           desc:'Dispositivi che portano i risultati verso l\'esterno: monitor, stampante, altoparlanti, cuffie. Alcuni dispositivi sono sia input che output: il touchscreen e la scheda di rete.'},
+    busd:{label:'Trasporta i valori',         title:'Bus Dati',                  desc:'Trasferisce i dati tra CPU, memoria e periferiche. È bidirezionale: in lettura i dati vanno dalla memoria alla CPU, in scrittura dalla CPU alla memoria. La sua larghezza (32 o 64 bit) determina quanti dati viaggiano per ogni ciclo.'},
+    busa:{label:'Specifica dove operare',     title:'Bus Indirizzi',             desc:'La CPU mette qui l\'indirizzo della cella di memoria da leggere o scrivere. È unidirezionale: solo la CPU genera indirizzi. Con più linee si possono indirizzare più celle di memoria.'},
+    busc:{label:'Segnali di coordinamento',   title:'Bus Controllo',             desc:'Trasporta i segnali che coordinano le operazioni: LEGGI dalla memoria, SCRIVI, INTERRUZIONE (una periferica chiede attenzione), RESET. Senza il bus controllo, i dati e gli indirizzi sarebbero privi di significato.'}
+  },
+  cpu:{
+    cu:   {label:'Il direttore d\'orchestra', title:'Unità di Controllo (CU)',   desc:'Legge l\'istruzione dalla memoria, la decodifica e genera i segnali di controllo per tutti gli altri componenti. Determina la sequenza di operazioni per ogni istruzione e gestisce l\'intero ciclo Fetch-Decode-Execute.'},
+    alu:  {label:'Il motore di calcolo',      title:'ALU — Arithmetic Logic Unit',desc:'Esegue operazioni aritmetiche (addizione, sottrazione, moltiplicazione, divisione) e logiche (AND, OR, NOT, confronto). Riceve gli operandi dai registri, esegue il calcolo e scrive il risultato.'},
+    regs: {label:'Memoria ultrarapida interna',title:'Registri',                 desc:'Celle di memoria integrate nella CPU, accessibili in 1 ciclo di clock. Contengono i dati su cui la CPU sta lavorando: l\'istruzione corrente, gli operandi, il risultato. Sono pochissimi (qualche KB) ma velocissimi.'},
+    clock:{label:'Il battito cardiaco',       title:'Clock',                     desc:'Un oscillatore che genera un segnale periodico che sincronizza tutte le operazioni della CPU. La frequenza si misura in GHz (miliardi di cicli al secondo). Un processore a 4 GHz fa 4 miliardi di "tic" al secondo.'},
+    cache:{label:'Ponte tra registri e RAM',  title:'Memoria Cache',             desc:'Memoria piccola ma molto veloce, integrata nel processore. Tiene una copia dei dati usati più spesso, così la CPU non deve aspettare la RAM (molto più lenta). Ha 3 livelli: L1 (piccolissima, velocissima), L2 (media), L3 (grande, condivisa tra tutti i core).'}
+  },
+  bus:{
+    busd:{label:'Bidirezionale · trasporta valori', title:'Bus Dati',    desc:'Trasferisce i dati tra CPU, memoria e periferiche. Bidirezionale: in lettura i dati vanno dalla memoria alla CPU; in scrittura dalla CPU alla memoria. La larghezza (32 o 64 bit) determina quanti byte viaggiano per ogni ciclo.'},
+    busa:{label:'Unidirezionale · CPU → Memoria',   title:'Bus Indirizzi',desc:'La CPU specifica l\'indirizzo della cella di memoria da leggere o scrivere. Unidirezionale: solo la CPU genera indirizzi. La larghezza del bus indirizzi determina quanta memoria il sistema può gestire.'},
+    busc:{label:'Segnali di coordinamento',         title:'Bus Controllo', desc:'Coordina le operazioni tra tutti i componenti: LEGGI dalla memoria, SCRIVI, INTERRUZIONE (una periferica chiede attenzione), RESET (riavvio). Senza questi segnali, gli altri bus sarebbero privi di significato.'}
+  },
+  pyr:{
+    regs: {label:'Livello più vicino alla CPU', title:'Registri',     desc:'Memorie dentro il chip della CPU. Velocità: ~0.3 ns (1 ciclo di clock). Capacità: pochi KB. Sono il livello più rapido e costoso della piramide.'},
+    cache:{label:'Tre livelli nel processore',  title:'Cache (L1/L2/L3)',desc:'L1: 32–128 KB per core, ~1–4 ns. L2: 256 KB – 4 MB per core, ~4–12 ns. L3: 4–64 MB condivisi, ~12–40 ns. La cache ha successo oltre il 90% delle volte (hit rate): la CPU trova quasi sempre il dato qui senza andare in RAM.'},
+    ram:  {label:'Memoria di lavoro volatile',  title:'RAM',          desc:'Memoria di lavoro principale. Capacità: 8–32 GB nei PC moderni. Velocità: ~40–100 ns. È volatile: si cancella allo spegnimento. Contiene il SO, i programmi aperti e i dati in uso.'},
+    ssd:  {label:'Storage a stato solido',      title:'SSD',          desc:'Usa memoria Flash (nessuna parte mobile). SSD SATA: ~550 MB/s. SSD M.2: fino a 7.000 MB/s. Non volatile: i dati restano anche a PC spento. Molto più veloce dell\'HDD.'},
+    hdd:  {label:'Storage magnetico rotante',   title:'HDD',          desc:'Piatti rotanti con testine mobili. Velocità: 100–250 MB/s in sequenza, molto meno su accessi casuali. Costo per GB molto basso: ideale per archiviare grandi quantità di file.'}
+  },
+  hdd:{
+    piatto:    {label:'Supporto dati',            title:'Piatto magnetico',         desc:'Disco in alluminio o vetro rivestito di materiale magnetico. I dati sono memorizzati come variazioni di magnetismo su tracce concentriche. È come un vinile, ma per i dati digitali.'},
+    spindle:   {label:'Motore di rotazione',      title:'Mandrino (Spindle Motor)', desc:'Il motore che fa ruotare i piatti a velocità costante: 5400 giri al minuto (laptop, NAS) o 7200 giri al minuto (desktop). Più gira veloce, più dati si leggono al secondo.'},
+    braccio:   {label:'Posizionamento testine',   title:'Braccio attuatore',        desc:'Un braccio meccanico che sposta la testina sulla traccia giusta. Il tempo per posizionarsi (seek time) è 3–15 millisecondi. È il motivo principale per cui gli HDD sono lenti sugli accessi casuali.'},
+    testina:   {label:'Lettura e scrittura',      title:'Testina (R/W Head)',        desc:'Vola a pochi nanometri dal piatto (un capello è 50.000× più spesso di questo spazio!). Legge e scrive i dati usando i campi magnetici. Un granello di polvere potrebbe danneggiare il piatto, per questo gli HDD sono sigillati.'},
+    controller:{label:'Elettronica di controllo', title:'Controller (PCB)',          desc:'La scheda elettronica sul retro dell\'HDD. Gestisce la comunicazione con il computer (via cavo SATA), la correzione degli errori e una piccola memoria cache interna che velocizza le operazioni.'}
+  },
+  mobo:{
+    socket: {label:'Processore',        title:'Socket CPU',           desc:'Il connettore dove si monta il processore. Il modello del socket (es. LGA1700 per Intel, AM5 per AMD) determina quale CPU è compatibile con la scheda madre. Non sono intercambiabili: una CPU Intel non entra in un socket AMD.'},
+    ram:    {label:'Memoria di sistema', title:'Slot RAM',             desc:'Gli slot dove si inseriscono le schede di memoria RAM. Di solito ce ne sono 2 o 4. DDR5 non è compatibile con DDR4 (la tacca è in posizione diversa). Per le migliori prestazioni, meglio montare la RAM in coppia (dual-channel).'},
+    pcie:   {label:'Scheda grafica',     title:'Slot PCIe x16',       desc:'Lo slot lungo dove si monta la scheda grafica (GPU). PCIe è il bus più veloce sulla scheda madre. Lo slot x16 è il più grande ed è quasi sempre dedicato alla GPU. Può ospitare anche altre schede di espansione.'},
+    m2:     {label:'SSD veloce',         title:'Slot M.2',             desc:'Slot compatto dove si monta un SSD. È molto più piccolo e veloce di un collegamento SATA. Le schede madri moderne ne hanno 1-4. L\'SSD si avvita direttamente sulla scheda madre senza cavi.'},
+    sata:   {label:'Dischi e lettori',   title:'Connettori SATA',     desc:'Porte per collegare HDD, SSD SATA e lettori ottici (DVD/Blu-Ray). Ogni porta ospita un dispositivo. Velocità massima: ~550 MB/s. Si collegano con un piccolo cavo piatto.'},
+    atx:    {label:'Alimentazione',      title:'Connettore ATX (alimentazione)',desc:'Il grande connettore a 24 pin che porta la corrente dall\'alimentatore alla scheda madre. Senza questo collegamento, nulla si accende. C\'è anche un connettore separato (4+4 pin) dedicato all\'alimentazione della CPU.'},
+    bios:   {label:'Firmware',           title:'Chip BIOS/UEFI',       desc:'Un piccolo chip che contiene il firmware — il programma che si attiva all\'accensione, prima di qualsiasi altra cosa. Può essere aggiornato scaricando il file dal sito del produttore della scheda madre.'},
+    chipset:{label:'Controller I/O',     title:'Chipset',              desc:'Il "centro di smistamento" della scheda madre. Gestisce la comunicazione tra la CPU e le periferiche più lente: porte SATA, USB, audio, rete. Nei PC moderni molte funzioni del chipset sono state integrate direttamente nella CPU.'},
+    iopanel:{label:'Pannello posteriore', title:'Pannello I/O',        desc:'Il pannello posteriore del PC con tutte le connessioni esterne: porte USB (Type-A e Type-C), uscite video (HDMI, DisplayPort), audio (jack 3.5mm), porta Ethernet (RJ-45), e a volte Wi-Fi/Bluetooth.'},
+    cmos:   {label:'Batteria tampone',   title:'Batteria CMOS (CR2032)',desc:'Una piccola batteria a bottone che mantiene attivi l\'orologio del computer e le impostazioni UEFI quando il PC è spento. Dura 5-10 anni. Se si scarica, il PC perde la data ogni volta che lo spegni.'}
+  }
+};
+
+function svgInfo(diagram,key){
+  const d=SVG_DATA[diagram]?.[key];if(!d)return;
+  const panel=document.getElementById('si-'+diagram);
+  if(panel)panel.innerHTML=`<div class="sip-label">${d.label}</div><div class="sip-title">${d.title}</div><div class="sip-desc">${d.desc}</div>`;
+  document.querySelectorAll('.svg-el').forEach(el=>{
+    if(el.getAttribute('onclick')&&el.getAttribute('onclick').includes("'"+diagram+"'"))
+      el.classList.toggle('sel',el.getAttribute('onclick').includes("'"+key+"'"));
+  });
+}
+
+/* ═══ QUIZ PERIFERICHE I/O ═══ */
+const IO_ITEMS=[
+  {name:'⌨️ Tastiera',      ans:'input'},
+  {name:'🖱️ Mouse',         ans:'input'},
+  {name:'🖥️ Monitor',       ans:'output'},
+  {name:'🖨️ Stampante',     ans:'output'},
+  {name:'📷 Scanner',       ans:'input'},
+  {name:'🎤 Microfono',     ans:'input'},
+  {name:'🔊 Altoparlanti',  ans:'output'},
+  {name:'📹 Webcam',        ans:'input'},
+  {name:'📱 Touchscreen',   ans:'io'},
+  {name:'🎧 Cuffie con mic',ans:'io'},
+  {name:'💾 Disco esterno USB',ans:'io'},
+  {name:'🌐 Scheda di rete',ans:'io'},
+  {name:'🕹️ Gamepad',       ans:'input'},
+  {name:'📽️ Proiettore',    ans:'output'}
+];
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function buildQuiz(){
+  const wrap=document.getElementById('io-quiz');if(!wrap)return;
+  const items=shuffleArr([...IO_ITEMS]);
+  wrap.innerHTML=items.map((it,i)=>`
+    <div class="quiz-item" data-ans="${it.ans}" id="qi${i}">
+      <span class="quiz-periph">${it.name}</span>
+      <div class="quiz-radios">
+        <label><input type="radio" name="q${i}" value="input"> Input</label>
+        <label><input type="radio" name="q${i}" value="output"> Output</label>
+        <label><input type="radio" name="q${i}" value="io"> Input/Output</label>
+      </div>
+    </div>`).join('');
+}
+function quizCheck(){
+  let ok=0,tot=0;
+  document.querySelectorAll('#io-quiz .quiz-item').forEach(el=>{
+    const ans=el.dataset.ans;
+    const sel=el.querySelector('input[type=radio]:checked');
+    tot++;
+    el.classList.remove('correct','wrong');
+    if(!sel){el.classList.add('wrong');return;}
+    if(sel.value===ans){el.classList.add('correct');ok++;}
+    else{el.classList.add('wrong');}
+  });
+  document.getElementById('quiz-score').textContent=`Risultato: ${ok} / ${tot} corrette` + (ok===tot?' — Perfetto! 🎉':'');
+}
+function quizReveal(){
+  document.querySelectorAll('#io-quiz .quiz-item').forEach(el=>{
+    const ans=el.dataset.ans;
+    const radio=el.querySelector(`input[value="${ans}"]`);
+    if(radio)radio.checked=true;
+    el.classList.remove('wrong');el.classList.add('correct');
+  });
+  document.getElementById('quiz-score').textContent='Soluzione mostrata — prova a ricordare e poi ricomincia!';
+}
+function quizReset(){
+  document.querySelectorAll('#io-quiz .quiz-item').forEach(el=>{
+    el.classList.remove('correct','wrong');
+    el.querySelectorAll('input[type=radio]').forEach(r=>r.checked=false);
+  });
+  document.getElementById('quiz-score').textContent='';
+  buildQuiz();
+}
+buildQuiz();
+
+/* ═══ ANIMAZIONE HDD ═══ */
+function toggleHddAnim(btn){
+  const svg=btn.closest('.svg-wrap').querySelector('svg');
+  const running=svg.classList.toggle('hdd-spinning');
+  btn.textContent=running?'⏹ Ferma disco':'▶ Avvia disco';
+}
+
+/* ═══ CPU SIMULATOR ═══ */
+const STEPS=[
+  {phase:'fetch',  txt:'FETCH 1/3 — LOAD 4',   mem:[0],mw:null,regs:{mar:0},              cu:'legge indirizzo',alu:null,   desc:'La CPU guarda il <strong>PC</strong> (vale 0) e dice alla memoria: "dammi il contenuto della cella 0".'},
+  {phase:'fetch',  txt:'FETCH 2/3 — LOAD 4',   mem:[0],mw:null,regs:{mdr:'LOAD 4'},       cu:'legge dalla memoria',alu:null,desc:'La memoria risponde con <em>LOAD 4</em> e lo mette nel registro <strong>MDR</strong>.'},
+  {phase:'fetch',  txt:'FETCH 3/3 — LOAD 4',   mem:[], mw:null,regs:{pc:1,ir:'LOAD 4',mdr:null},cu:'salva istruzione',alu:null,desc:'L\'istruzione passa nel registro <strong>IR</strong>. Il <strong>PC si incrementa</strong> a 1 (prossima istruzione).'},
+  {phase:'decode', txt:'DECODE — LOAD 4',       mem:[], mw:null,regs:{},                   cu:'decodifica',alu:null,   desc:'La <strong>CU</strong> legge l\'istruzione: "LOAD 4" significa <em>carica il contenuto della cella 4</em>.'},
+  {phase:'execute',txt:'EXECUTE 1/2 — LOAD 4',  mem:[4],mw:null,regs:{mar:4,mdr:10},       cu:'legge il dato',alu:null,desc:'La CPU va alla cella 4 della memoria e trova il valore <strong>10</strong>.'},
+  {phase:'execute',txt:'EXECUTE 2/2 — LOAD 4 ✓',mem:[], mw:null,regs:{ac:10,mdr:null},     cu:'dato nel registro',alu:'LOAD',desc:'Il valore <strong>10</strong> viene messo nell\'<strong>Accumulatore (AC)</strong>. LOAD completato!'},
+  {phase:'fetch',  txt:'FETCH 1/3 — ADD 5',     mem:[1],mw:null,regs:{mar:1},              cu:'legge indirizzo',alu:null,desc:'PC=1 → la CPU chiede alla memoria la cella 1.'},
+  {phase:'fetch',  txt:'FETCH 2/3 — ADD 5',     mem:[1],mw:null,regs:{mdr:'ADD  5'},       cu:'legge dalla memoria',alu:null,desc:'La memoria risponde: <em>ADD 5</em>.'},
+  {phase:'fetch',  txt:'FETCH 3/3 — ADD 5',     mem:[], mw:null,regs:{pc:2,ir:'ADD  5',mdr:null},cu:'salva istruzione',alu:null,desc:'IR ← <em>ADD 5</em>. PC → 2.'},
+  {phase:'decode', txt:'DECODE — ADD 5',         mem:[], mw:null,regs:{},                   cu:'decodifica',alu:null,   desc:'La CU decodifica: "ADD 5" = <em>somma il contenuto della cella 5 a quello che c\'è nell\'AC</em>.'},
+  {phase:'execute',txt:'EXECUTE 1/2 — ADD 5',    mem:[5],mw:null,regs:{mar:5,mdr:5},        cu:'legge il dato',alu:null,desc:'La CPU va alla cella 5 e trova il valore <strong>5</strong>.'},
+  {phase:'execute',txt:'EXECUTE 2/2 — ADD 5 ✓',  mem:[], mw:null,regs:{ac:15,mdr:null},     cu:'calcolo fatto',alu:'10+5=15',desc:'L\'ALU calcola: <strong>10 + 5 = 15</strong>. Il risultato va nell\'AC.'},
+  {phase:'fetch',  txt:'FETCH 1/3 — STORE 6',    mem:[2],mw:null,regs:{mar:2},             cu:'legge indirizzo',alu:null,desc:'PC=2 → la CPU chiede la cella 2.'},
+  {phase:'fetch',  txt:'FETCH 2/3 — STORE 6',    mem:[2],mw:null,regs:{mdr:'STORE 6'},     cu:'legge dalla memoria',alu:null,desc:'La memoria risponde: <em>STORE 6</em>.'},
+  {phase:'fetch',  txt:'FETCH 3/3 — STORE 6',    mem:[], mw:null,regs:{pc:3,ir:'STORE 6',mdr:null},cu:'salva istruzione',alu:null,desc:'IR ← <em>STORE 6</em>. PC → 3.'},
+  {phase:'decode', txt:'DECODE — STORE 6',        mem:[], mw:null,regs:{},                  cu:'decodifica',alu:null,   desc:'La CU decodifica: "STORE 6" = <em>scrivi il valore dell\'AC nella cella 6</em>.'},
+  {phase:'execute',txt:'EXECUTE 1/2 — STORE 6',   mem:[], mw:null,regs:{mar:6,mdr:15},      cu:'prepara scrittura',alu:'STORE',desc:'La CPU prepara: indirizzo = 6, dato = 15 (il valore nell\'AC).'},
+  {phase:'execute',txt:'EXECUTE 2/2 — STORE 6 ✓', mem:[6],mw:{r:6,v:'15'},regs:{mdr:null},  cu:'scritto in memoria',alu:null,desc:'Il valore <strong>15</strong> viene scritto nella cella 6. Risultato salvato!'},
+  {phase:'fetch',  txt:'FETCH — HALT',            mem:[3],mw:null,regs:{mar:3,pc:4,ir:'HALT'},cu:'ultima istruzione',alu:null,desc:'La CPU legge l\'ultima istruzione: <em>HALT</em>.'},
+  {phase:'decode', txt:'DECODE — HALT',            mem:[], mw:null,regs:{},                  cu:'decodifica HALT',alu:null,desc:'La CU riconosce HALT: <em>fine del programma</em>.'},
+  {phase:'halt',   txt:'HALT — programma terminato',mem:[], mw:null,regs:{},                  cu:'STOP',alu:null,desc:'La CPU si ferma. Risultato: <strong>10 + 5 = 15</strong> salvato nella cella 6 della memoria.'}
+];
+
+let simIdx=0,simAutoTimer=null,simIsAuto=false;
+const simRegs={pc:0,ir:'—',mar:'—',mdr:'—',ac:'—'};
+const simMemVals=['LOAD 4','ADD  5','STORE 6','HALT','10','5','0'];
+
+function simStep(){
+  if(simIdx>=STEPS.length)return;
+  const s=STEPS[simIdx];
+  for(let i=0;i<7;i++){
+    const row=document.getElementById('mr'+i);if(!row)continue;
+    const isHL=s.mem.includes(i),isWr=s.mw&&s.mw.r===i;
+    row.className='sim-row'+(isWr?' hl-write':isHL?' hl-read':'');
+  }
+  if(s.mw){simMemVals[s.mw.r]=String(s.mw.v);const el=document.getElementById('mv'+s.mw.r);if(el)el.textContent=simMemVals[s.mw.r];}
+  const tk=Object.keys(s.regs);
+  ['pc','ir','mar','mdr','ac'].forEach(k=>{
+    const ch=tk.includes(k)&&s.regs[k]!==null&&s.regs[k]!==undefined;
+    if(ch)simRegs[k]=s.regs[k];
+    const el=document.getElementById('rv-'+k),box=document.getElementById('rr-'+k);
+    if(el)el.textContent=simRegs[k];if(box)box.classList.toggle('on',ch);
+  });
+  const cu=document.getElementById('su-cu'),alu=document.getElementById('su-alu');
+  if(cu){cu.classList.toggle('on',s.phase!=='halt');cu.querySelector('.u-sub').textContent=s.cu||'—';}
+  if(alu){alu.classList.toggle('on',!!s.alu);alu.querySelector('.u-sub').textContent=s.alu||'idle';}
+  const ph=document.getElementById('sim-phase'),de=document.getElementById('sim-desc');
+  if(ph){ph.textContent=s.txt;ph.className='sim-phase '+s.phase;}
+  if(de)de.innerHTML=s.desc;
+  simIdx++;
+  if(simIdx>=STEPS.length){document.getElementById('btn-step').disabled=true;simStopAuto();}
+}
+
+function simReset(){
+  simStopAuto();simIdx=0;
+  Object.assign(simRegs,{pc:0,ir:'—',mar:'—',mdr:'—',ac:'—'});
+  const orig=['LOAD 4','ADD  5','STORE 6','HALT','10','5','0'];
+  orig.forEach((v,i)=>{simMemVals[i]=v;const el=document.getElementById('mv'+i);if(el)el.textContent=v;const row=document.getElementById('mr'+i);if(row)row.className='sim-row';});
+  ['pc','ir','mar','mdr','ac'].forEach(k=>{const el=document.getElementById('rv-'+k),box=document.getElementById('rr-'+k);if(el)el.textContent=simRegs[k];if(box)box.classList.remove('on');});
+  const cu=document.getElementById('su-cu'),alu=document.getElementById('su-alu');
+  if(cu){cu.classList.remove('on');cu.querySelector('.u-sub').textContent='in attesa';}
+  if(alu){alu.classList.remove('on');alu.querySelector('.u-sub').textContent='idle';}
+  const ph=document.getElementById('sim-phase'),de=document.getElementById('sim-desc');
+  if(ph){ph.textContent='⏸ IN ATTESA';ph.className='sim-phase idle';}
+  if(de)de.innerHTML='Premi <strong>Step</strong> per iniziare. Il programma esegue: LOAD 10 → ADD 5 → STORE risultato → HALT.';
+  document.getElementById('btn-step').disabled=false;
+}
+
+function simToggleAuto(){
+  if(simIsAuto){simStopAuto();return;}
+  simIsAuto=true;document.getElementById('btn-auto').textContent='⏸ Pausa';
+  const sv=parseInt(document.getElementById('sim-spd').value);
+  const delay=[0,1800,1200,750,420,180][sv];
+  function tick(){if(simIdx>=STEPS.length){simStopAuto();return;}simStep();simAutoTimer=setTimeout(tick,delay);}
+  tick();
+}
+function simStopAuto(){
+  simIsAuto=false;if(simAutoTimer){clearTimeout(simAutoTimer);simAutoTimer=null;}
+  const btn=document.getElementById('btn-auto');if(btn)btn.textContent='⚡ Auto';
+}
+</script>
+<script src="/scripts/ui.js" defer></script>
+</body>
+</html>

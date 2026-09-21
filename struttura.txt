@@ -118,6 +118,16 @@ C:.
 |           
 +---img
 |       
++---informatica-base
+|   |   index.html
+|   |   
+|   +---architettura-pc
+|   |       index.html
+|   |       
+|   \---tastiera-windows
+|           index-.html
+|           index.html
+|           
 +---intelligenza-artificiale
 |   +---guida-peer-review-ia
 |   |       index.html

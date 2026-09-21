@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Tastiera Windows — Formazione Digitale</title>
+<meta name="description" content="Guida interattiva alla tastiera estesa Windows 107-108 tasti. Scopri le funzioni di ogni tasto, le zone, i modificatori e le scorciatoie essenziali.">
+<link rel="canonical" href="https://formazione-digitale.it/informatica-base/tastiera-windows/">
+<link rel="stylesheet" href="/css/shared.css?v=3">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+<style>
+/* ── TASTIERA INTERATTIVA ───────────────────────────────── */
+.kb-section { margin-bottom: 2.5rem; }
+
+/* Legenda zone */
+.zona-legend {
+  display: flex; flex-wrap: wrap; gap: .5rem;
+  margin-bottom: 1.25rem;
+}
+.zona-btn {
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .3rem .75rem; border-radius: 20px; border: 2px solid transparent;
+  font-size: .78rem; font-weight: 600; cursor: pointer;
+  transition: all .18s; background: var(--gray-light); color: var(--gray-dark);
+  font-family: var(--font-body);
+}
+.zona-btn .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.zona-btn:hover, .zona-btn.active { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+.zona-btn[data-zona="funzione"].active   { background: var(--amber-light); border-color: var(--amber-dark); color: var(--amber-dark); }
+.zona-btn[data-zona="speciale"].active   { background: var(--red-light);   border-color: var(--red-dark);   color: var(--red-dark); }
+.zona-btn[data-zona="alfanumerica"].active { background: var(--blue-pale); border-color: var(--blue-mid);   color: var(--blue-dark); }
+.zona-btn[data-zona="modificatore"].active { background: var(--purple-light); border-color: var(--purple-dark); color: var(--purple-dark); }
+.zona-btn[data-zona="navigazione"].active { background: var(--green-light); border-color: var(--green-dark);  color: var(--green-dark); }
+.zona-btn[data-zona="numerica"].active   { background: #f0ede8; border-color: #7a6f5a; color: #5a4f3a; }
+
+/* Wrapper scrollabile su mobile */
+.kb-scroll-wrapper {
+  overflow-x: auto; padding-bottom: .75rem;
+  -webkit-overflow-scrolling: touch;
+}
+.kb-scroll-wrapper::-webkit-scrollbar { height: 4px; }
+.kb-scroll-wrapper::-webkit-scrollbar-thumb { background: var(--blue-light); border-radius: 2px; }
+
+/* Tastiera */
+.keyboard {
+  display: flex; flex-direction: column; gap: 5px;
+  width: max-content;
+  background: #c8cdd6; padding: 14px; border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(31,78,121,.18), inset 0 1px 0 rgba(255,255,255,.4);
+  user-select: none;
+}
+
+/* Riga tastiera */
+.kb-row { display: flex; gap: 5px; align-items: flex-start; }
+
+/* Singolo tasto */
+.key {
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  min-width: 44px; height: 44px;
+  border-radius: 6px;
+  font-family: var(--font-body); font-size: .65rem; font-weight: 500;
+  line-height: 1.2;
+  cursor: pointer;
+  background: linear-gradient(180deg, #f8f9fc 0%, #e8ecf2 100%);
+  border: 1px solid #a8b0bc;
+  box-shadow: 0 3px 0 #9aa3af, 0 4px 6px rgba(0,0,0,.2);
+  transition: all .08s;
+  color: var(--gray-dark);
+  white-space: pre-line;
+  padding: 0 4px;
+  position: relative;
+}
+.key:hover {
+  background: linear-gradient(180deg, #ffffff 0%, #f0f4fa 100%);
+  box-shadow: 0 3px 0 #9aa3af, 0 4px 8px rgba(31,78,121,.15);
+  transform: translateY(-1px);
+}
+.key:active, .key.pressed {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #9aa3af;
+}
+.key.selected {
+  outline: 3px solid var(--blue-mid);
+  outline-offset: 1px;
+  z-index: 2;
+}
+
+/* Zone colori */
+.key.zona-funzione   { background: linear-gradient(180deg, #fff6e0 0%, #ffedb3 100%); border-color: #e8c84a; }
+.key.zona-funzione:hover { background: linear-gradient(180deg, #fff9ec 0%, #fff0c0 100%); }
+.key.zona-speciale   { background: linear-gradient(180deg, #fde8e8 0%, #f8c8c8 100%); border-color: #d9a0a0; }
+.key.zona-speciale:hover { background: linear-gradient(180deg, #fef0f0 0%, #fcd4d4 100%); }
+.key.zona-modificatore { background: linear-gradient(180deg, #ece8f6 0%, #d8d0f0 100%); border-color: #b0a0d8; }
+/* Hover modificatori: effetto marcato viola per segnalare che cambiano il comportamento */
+.key.zona-modificatore:hover {
+  background: linear-gradient(180deg, #f0eaff 0%, #d4c4f4 100%);
+  border-color: var(--purple-dark);
+  box-shadow: 0 3px 0 #7a5ab8, 0 4px 12px rgba(74,20,140,.25);
+  transform: translateY(-2px);
+  color: var(--purple-dark);
+}
+.key.zona-navigazione { background: linear-gradient(180deg, #e4f5ea 0%, #c8ecd2 100%); border-color: #90c8a0; }
+.key.zona-navigazione:hover { background: linear-gradient(180deg, #eefaf2 0%, #d4f0dc 100%); }
+.key.zona-numerica   { background: linear-gradient(180deg, #f4f0e8 0%, #e4dece 100%); border-color: #b8ac98; }
+.key.zona-numerica:hover { background: linear-gradient(180deg, #faf6ee 0%, #eee6d6 100%); }
+
+/* Highlight zone */
+.kb-highlight .key:not(.zona-sel) { opacity: .3; }
+
+/* Dimensioni speciali */
+.key-esc   { min-width: 48px; }
+.key-fn    { min-width: 44px; }
+.key-gap   { min-width: 16px; background: transparent; border: none; box-shadow: none; pointer-events: none; }
+.key-gap:hover { background: transparent; transform: none; box-shadow: none; }
+
+.key-backspace { min-width: 88px; }
+.key-tab    { min-width: 68px; }
+.key-enter  { min-width: 78px; }
+.key-caps   { min-width: 78px; }
+.key-lshift { min-width: 92px; }
+.key-rshift { min-width: 110px; }
+.key-lctrl, .key-rctrl  { min-width: 64px; }
+.key-lwin,  .key-rwin   { min-width: 54px; }
+.key-lalt   { min-width: 54px; }
+.key-ralt   { min-width: 54px; }
+.key-menu   { min-width: 44px; }
+.key-space  { flex: 1; min-width: 260px; }
+.key-np0    { min-width: 93px; }
+/* ── STRUTTURA CORPO TASTIERA: tre blocchi affiancati ── */
+.kb-body { display: flex; gap: 22px; align-items: flex-start; }
+.kb-alpha { display: flex; flex-direction: column; gap: 5px; }
+.kb-nav   { display: flex; flex-direction: column; gap: 5px; }
+/* Colonna numpad: spacer sopra (allinea con riga F-keys) + griglia */
+.kb-numpad-col   { display: flex; flex-direction: column; gap: 5px; }
+.kb-numpad-spacer { height: 44px; }
+/* Riga nav vuota — allinea con la riga CapsLock del blocco alfanumerico */
+.kb-nav-empty { height: 44px; }
+/* Segnaposto invisibile nelle frecce nav (spazio laterale attorno a ↑) */
+.key-nav-placeholder {
+  width: 44px; height: 44px; flex-shrink: 0;
+  background: transparent; border: none; box-shadow: none; pointer-events: none;
+}
+/* Tastierino numerico: CSS grid per tasti alti (+, Invio) */
+.kb-numpad {
+  display: grid;
+  grid-template-columns: repeat(4, 44px);
+  grid-template-rows: repeat(5, 44px);
+  gap: 5px;
+}
+/* Tasto + span 2 righe (row 2–3) */
+.key-npplus  { grid-row: 2 / 4; grid-column: 4; height: auto; }
+/* Tasto Invio numpad span 2 righe (row 4–5) */
+.key-npenter { grid-row: 4 / 6; grid-column: 4; height: auto; }
+/* Tasto 0 span 2 colonne — posizione esplicita necessaria per auto-flow corretto */
+.key-np0 { grid-row: 5; grid-column: 1 / 3; min-width: auto; }
+
+/* Pannello info */
+.kb-info-panel {
+  margin-top: 1rem;
+  min-height: 110px;
+  background: var(--blue-pale);
+  border: 1px solid var(--blue-light);
+  border-left: 4px solid var(--blue-mid);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  transition: all .2s;
+}
+.kb-info-placeholder {
+  color: var(--gray-mid); font-size: .9rem; font-style: italic;
+  display: flex; align-items: center; gap: .5rem;
+}
+.kb-info-content { display: none; }
+.kb-info-content.visible { display: block; }
+.kb-info-zona-badge {
+  display: inline-block; font-size: .7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .08em;
+  padding: .15rem .6rem; border-radius: 10px; margin-bottom: .4rem;
+}
+.kb-info-title { font-size: 1.05rem; font-weight: 700; color: var(--blue-dark); margin-bottom: .3rem; }
+.kb-info-desc  { font-size: .88rem; color: var(--gray-dark); line-height: 1.65; margin-bottom: .5rem; }
+.kb-info-combos { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .3rem; }
+.kb-info-combos li {
+  font-size: .78rem; background: var(--blue-dark); color: #fff;
+  padding: .2rem .6rem; border-radius: 4px; font-family: monospace;
+}
+
+/* ── SEZIONI CONTENUTO ───────────────────────────────────── */
+.zone-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem; margin-top: 1rem;
+}
+.zone-card {
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  border-left: 4px solid;
+}
+.zone-card.funzione   { background: var(--amber-light); border-color: var(--amber-dark); }
+.zone-card.modificatore { background: var(--purple-light); border-color: var(--purple-dark); }
+.zone-card.alfanumerica { background: var(--blue-pale);   border-color: var(--blue-mid); }
+.zone-card.navigazione  { background: var(--green-light); border-color: var(--green-dark); }
+.zone-card.speciale     { background: var(--red-light);   border-color: var(--red-dark); }
+.zone-card.numerica     { background: #f4f0e8; border-color: #8a7a5a; }
+.zone-card h3 { font-size: .88rem; font-weight: 700; margin-bottom: .35rem; }
+.zone-card p  { font-size: .82rem; line-height: 1.6; margin: 0; }
+
+/* Tabella scorciatoie */
+.shortcut-table {
+  width: 100%; border-collapse: collapse; font-size: .88rem; margin-top: .75rem;
+}
+.shortcut-table th {
+  background: var(--blue-dark); color: #fff;
+  padding: .5rem .75rem; text-align: left; font-size: .8rem;
+}
+.shortcut-table td { padding: .5rem .75rem; border-bottom: 1px solid var(--blue-light); }
+.shortcut-table tr:nth-child(even) td { background: var(--blue-pale); }
+.shortcut-table tr:hover td { background: var(--blue-light); }
+.kbd-combo {
+  font-family: monospace; font-size: .82rem;
+  background: var(--gray-dark); color: #fff;
+  padding: .1rem .45rem; border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* Sezione modificatori */
+.mod-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: .75rem; margin-top: .75rem;
+}
+.mod-card {
+  background: var(--white); border: 1px solid var(--blue-light);
+  border-radius: var(--radius); padding: .9rem 1rem;
+}
+.mod-card .mod-key {
+  font-family: monospace; font-size: .85rem;
+  background: var(--purple-light); color: var(--purple-dark);
+  padding: .15rem .5rem; border-radius: 4px; font-weight: 700;
+  display: inline-block; margin-bottom: .4rem;
+}
+.mod-card h4 { font-size: .88rem; font-weight: 700; color: var(--blue-dark); margin-bottom: .3rem; }
+.mod-card p  { font-size: .82rem; color: var(--gray-dark); line-height: 1.6; margin: 0; }
+
+/* Box info generici */
+.box-tip  { background: var(--green-light); border-left: 4px solid var(--green-dark); border-radius: var(--radius); padding: .85rem 1rem; margin: 1rem 0; font-size: .88rem; }
+.box-warn { background: var(--amber-light); border-left: 4px solid var(--amber-dark); border-radius: var(--radius); padding: .85rem 1rem; margin: 1rem 0; font-size: .88rem; }
+.box-note { background: var(--blue-pale);  border-left: 4px solid var(--blue-mid);   border-radius: var(--radius); padding: .85rem 1rem; margin: 1rem 0; font-size: .88rem; }
+
+/* Reading bar */
+#reading-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 200; background: var(--blue-mid); width: 0; transition: width .1s linear; }
+
+/* Win shortcuts — griglia a 2 colonne */
+.win-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-top: .75rem;
+}
+.win-grid .shortcut-table { margin-top: 0; }
+@media(max-width:600px) { .win-grid { grid-template-columns: 1fr; } }
+
+/* Ctrl toggle */
+.ctrl-toggle-btn {
+  display: inline-flex; align-items: center; gap: .4rem;
+  margin-bottom: .5rem; padding: .3rem .85rem;
+  border: 2px solid var(--blue-mid); border-radius: 20px;
+  background: var(--blue-pale); color: var(--blue-dark);
+  font-size: .78rem; font-weight: 600; cursor: pointer;
+  font-family: var(--font-body); transition: all .18s;
+}
+.ctrl-toggle-btn:hover { background: var(--blue-light); }
+tr.ctrl-extended { display: none; }
+.ctrl-show-extended tr.ctrl-extended { display: table-row; }
+</style>
+</head>
+<body>
+
+<div id="reading-bar"></div>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<!-- HEADER -->
+<header class="guide-header">
+  <a class="guide-header-back" href="/index.html">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    Portale
+  </a>
+  <div class="guide-header-center">La Tastiera Windows</div>
+  <div class="guide-header-right">
+    <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu sezioni">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- LAYOUT -->
+<div class="guide-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="guide-sidebar" id="guide-sidebar">
+    <div class="sidebar-label">Sezioni</div>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li><a class="nav-item active" href="#s1" onclick="closeSidebar()"><span class="nav-num">1</span><span>Le zone della tastiera</span></a></li>
+      <li><a class="nav-item" href="#s2" onclick="closeSidebar()"><span class="nav-num">2</span><span>Tastiera interattiva</span></a></li>
+      <li><a class="nav-item" href="#s3" onclick="closeSidebar()"><span class="nav-num">3</span><span>Tasti di funzione F1–F12</span></a></li>
+      <li><a class="nav-item" href="#s4" onclick="closeSidebar()"><span class="nav-num">4</span><span>I modificatori</span></a></li>
+      <li><a class="nav-item" href="#s5" onclick="closeSidebar()"><span class="nav-num">5</span><span>Il tasto Windows ⊞</span></a></li>
+      <li><a class="nav-item" href="#s6" onclick="closeSidebar()"><span class="nav-num">6</span><span>Scorciatoie essenziali</span></a></li>
+      <li><a class="nav-item" href="#s7" onclick="closeSidebar()"><span class="nav-num">7</span><span>Navigazione e tasti speciali</span></a></li>
+      <li><a class="nav-item" href="#s8" onclick="closeSidebar()"><span class="nav-num">8</span><span>Il tastierino numerico</span></a></li>
+    </ul>
+    <hr class="sidebar-divider">
+    <div class="sidebar-meta">
+      <b>Difficoltà:</b> Base<br>
+      <b>Argomento:</b> Informatica di base<br>
+      <b>Tastiera:</b> 107–108 tasti, Windows
+    </div>
+  </aside>
+
+  <!-- CONTENUTO PRINCIPALE -->
+  <main class="guide-main">
+
+    <!-- COVER -->
+    <div class="cover-block" style="margin-bottom:2rem;">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:.6rem;">
+        <span style="font-size:2.8rem;line-height:1;flex-shrink:0;">⌨️</span>
+        <div>
+          <div class="cover-eyebrow">Informatica di base</div>
+          <h1 class="cover-title">La Tastiera Windows</h1>
+        </div>
+      </div>
+      <hr class="cover-divider">
+      <p class="cover-intro">Una tastiera estesa ha 107 o 108 tasti, ognuno con una funzione precisa. In questa guida scopri le zone, i tasti modificatori, le scorciatoie più usate in Windows — e puoi esplorare ogni singolo tasto con la tastiera interattiva.</p>
+      <div class="cover-badges">
+        <span class="cover-badge">📚 Livello base</span>
+        <span class="cover-badge">⌨️ 107–108 tasti</span>
+        <span class="cover-badge">🪟 Windows</span>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ── SEZIONE 1: LE ZONE ── -->
+    <section id="s1">
+      <div class="section-header">
+        <span class="section-num">1</span>
+        <h2>Le zone della tastiera</h2>
+      </div>
+
+      <p>Una tastiera estesa è divisa in <b>sei zone</b>, ognuna con uno scopo diverso. Conoscerle ti aiuta a orientarti rapidamente e a capire perché certi tasti si trovano dove si trovano.</p>
+
+      <div class="zone-grid">
+        <div class="zone-card funzione">
+          <h3>🟡 Tasti di funzione — F1…F12</h3>
+          <p>In cima alla tastiera. La loro funzione dipende dal programma aperto: F1 di solito apre la guida, F5 aggiorna, F12 in Word salva con nome.</p>
+        </div>
+        <div class="zone-card modificatore">
+          <h3>🟣 Modificatori</h3>
+          <p>Shift, Ctrl, Alt, AltGr, Win, CapsLock, Tab, Backspace, Invio. Non inseriscono testo da soli: cambiano il comportamento degli altri tasti.</p>
+        </div>
+        <div class="zone-card alfanumerica">
+          <h3>🔵 Zona alfanumerica</h3>
+          <p>Lettere, cifre, simboli di punteggiatura. Il cuore della tastiera. Con Shift si ottengono le lettere maiuscole e i simboli sopra i tasti numerici.</p>
+        </div>
+        <div class="zone-card navigazione">
+          <h3>🟢 Navigazione</h3>
+          <p>Frecce direzionali, Home, End, PgSu, PgGiù, Ins, Canc. Spostano il cursore o la visualizzazione senza digitare testo.</p>
+        </div>
+        <div class="zone-card speciale">
+          <h3>🔴 Tasti speciali</h3>
+          <p>Print Screen, Scroll Lock, Pause/Break. Erano molto usati nei vecchi programmi; oggi solo PrtSc è usato spesso (per gli screenshot).</p>
+        </div>
+        <div class="zone-card numerica">
+          <h3>🟤 Tastierino numerico</h3>
+          <p>Sul lato destro. Con Num Lock attivo inserisce numeri rapidamente. Con Num Lock spento funziona come tasti di navigazione. Assente sui laptop.</p>
+        </div>
+      </div>
+
+      <div class="box-tip" style="margin-top:1.25rem;">
+        <b>💡 107 o 108 tasti?</b> Le tastiere europee (layout ISO) hanno un tasto in più rispetto a quelle americane (ANSI): il tasto <b>&lt; &gt;</b> tra il Shift sinistro e la Z. Ecco perché si parla di 108 tasti nelle tastiere per l'Italia.
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── SEZIONE 2: TASTIERA INTERATTIVA ── -->
+    <section id="s2">
+      <div class="section-header">
+        <span class="section-num">2</span>
+        <h2>Tastiera interattiva</h2>
+      </div>
+
+      <p>Clicca su qualsiasi tasto per scoprire la sua funzione. Usa i pulsanti colorati per evidenziare una zona intera.</p>
+
+      <!-- Legenda / filtro zone -->
+      <div class="zona-legend">
+        <button class="zona-btn" data-zona="funzione"    onclick="toggleZona(this)"><span class="dot" style="background:var(--amber-dark)"></span>Tasti F</button>
+        <button class="zona-btn" data-zona="modificatore" onclick="toggleZona(this)"><span class="dot" style="background:var(--purple-dark)"></span>Modificatori</button>
+        <button class="zona-btn" data-zona="alfanumerica" onclick="toggleZona(this)"><span class="dot" style="background:var(--blue-mid)"></span>Alfanumerici</button>
+        <button class="zona-btn" data-zona="navigazione"  onclick="toggleZona(this)"><span class="dot" style="background:var(--green-dark)"></span>Navigazione</button>
+        <button class="zona-btn" data-zona="speciale"     onclick="toggleZona(this)"><span class="dot" style="background:var(--red-dark)"></span>Speciali</button>
+        <button class="zona-btn" data-zona="numerica"     onclick="toggleZona(this)"><span class="dot" style="background:#8a7a5a"></span>Numerico</button>
+        <button class="zona-btn" onclick="resetZone(this)" style="margin-left:auto;"><span class="dot" style="background:#999"></span>Mostra tutto</button>
+      </div>
+
+      <!-- TASTIERA -->
+      <div class="kb-scroll-wrapper">
+        <div class="keyboard" id="keyboard">
+
+          <!-- CORPO: tre blocchi affiancati — ogni colonna gestisce la propria riga 0 -->
+          <div class="kb-body">
+
+            <!-- ── BLOCCO SINISTRO: riga F + alfanumerico ── -->
+            <div class="kb-alpha">
+
+              <!-- Riga 0: Esc + F1–F12 (senza speciali, che vanno sopra il nav) -->
+              <div class="kb-row">
+                <div class="key zona-funzione key-esc" data-key="esc">Esc</div>
+                <div class="key key-gap"></div>
+                <div class="key zona-funzione key-fn" data-key="f1">F1</div>
+                <div class="key zona-funzione key-fn" data-key="f2">F2</div>
+                <div class="key zona-funzione key-fn" data-key="f3">F3</div>
+                <div class="key zona-funzione key-fn" data-key="f4">F4</div>
+                <div class="key key-gap"></div>
+                <div class="key zona-funzione key-fn" data-key="f5">F5</div>
+                <div class="key zona-funzione key-fn" data-key="f6">F6</div>
+                <div class="key zona-funzione key-fn" data-key="f7">F7</div>
+                <div class="key zona-funzione key-fn" data-key="f8">F8</div>
+                <div class="key key-gap"></div>
+                <div class="key zona-funzione key-fn" data-key="f9">F9</div>
+                <div class="key zona-funzione key-fn" data-key="f10">F10</div>
+                <div class="key zona-funzione key-fn" data-key="f11">F11</div>
+                <div class="key zona-funzione key-fn" data-key="f12">F12</div>
+              </div>
+
+              <!-- Riga 1: numeri -->
+              <div class="kb-row">
+                <div class="key zona-alfanumerica" data-key="backtick" style="font-size:.6rem;">` ~</div>
+                <div class="key zona-alfanumerica" data-key="1">1 !</div>
+                <div class="key zona-alfanumerica" data-key="2">2 "</div>
+                <div class="key zona-alfanumerica" data-key="3">3 £</div>
+                <div class="key zona-alfanumerica" data-key="4">4 $</div>
+                <div class="key zona-alfanumerica" data-key="5">5 %</div>
+                <div class="key zona-alfanumerica" data-key="6">6 &amp;</div>
+                <div class="key zona-alfanumerica" data-key="7">7 /</div>
+                <div class="key zona-alfanumerica" data-key="8">8 (</div>
+                <div class="key zona-alfanumerica" data-key="9">9 )</div>
+                <div class="key zona-alfanumerica" data-key="0">0 =</div>
+                <div class="key zona-alfanumerica" data-key="apostrophe">` ?</div>
+                <div class="key zona-alfanumerica" data-key="ì">ì ^</div>
+                <div class="key zona-alfanumerica" data-key="accento">` |</div>
+                <div class="key zona-modificatore key-backspace" data-key="backspace" style="font-size:.7rem;">← Back</div>
+              </div>
+
+              <!-- Riga 2: Tab + QWERTY + Invio -->
+              <div class="kb-row">
+                <div class="key zona-modificatore key-tab" data-key="tab" style="font-size:.7rem;">Tab ⇥</div>
+                <div class="key zona-alfanumerica" data-key="q">Q</div>
+                <div class="key zona-alfanumerica" data-key="w">W</div>
+                <div class="key zona-alfanumerica" data-key="e">E</div>
+                <div class="key zona-alfanumerica" data-key="r">R</div>
+                <div class="key zona-alfanumerica" data-key="t">T</div>
+                <div class="key zona-alfanumerica" data-key="y">Y</div>
+                <div class="key zona-alfanumerica" data-key="u">U</div>
+                <div class="key zona-alfanumerica" data-key="i">I</div>
+                <div class="key zona-alfanumerica" data-key="o">O</div>
+                <div class="key zona-alfanumerica" data-key="p">P</div>
+                <div class="key zona-alfanumerica" data-key="openbrack" style="font-size:.72rem;">è é</div>
+                <div class="key zona-alfanumerica" data-key="closebrack">+ *</div>
+                <div class="key zona-modificatore key-enter" data-key="enter" style="font-size:.7rem;">↵ Invio</div>
+              </div>
+
+              <!-- Riga 3: CapsLock + ASDF (Invio occupa riga 2, qui il segnaposto) -->
+              <div class="kb-row">
+                <div class="key zona-modificatore key-caps" data-key="capslock" style="font-size:.65rem;">⇪ Caps Lk</div>
+                <div class="key zona-alfanumerica" data-key="a">A</div>
+                <div class="key zona-alfanumerica" data-key="s">S</div>
+                <div class="key zona-alfanumerica" data-key="d">D</div>
+                <div class="key zona-alfanumerica" data-key="f">F</div>
+                <div class="key zona-alfanumerica" data-key="g">G</div>
+                <div class="key zona-alfanumerica" data-key="h">H</div>
+                <div class="key zona-alfanumerica" data-key="j">J</div>
+                <div class="key zona-alfanumerica" data-key="k">K</div>
+                <div class="key zona-alfanumerica" data-key="l">L</div>
+                <div class="key zona-alfanumerica" data-key="semicolon" style="font-size:.72rem;">ò ç</div>
+                <div class="key zona-alfanumerica" data-key="quote" style="font-size:.72rem;">à °</div>
+                <div class="key zona-alfanumerica" data-key="backslash" style="font-size:.72rem;">ù §</div>
+                <!-- segnaposto larghezza Invio (78px) — non cliccabile -->
+                <div style="min-width:78px; flex-shrink:0;"></div>
+              </div>
+
+              <!-- Riga 4: Shift + ZXCV -->
+              <div class="kb-row">
+                <div class="key zona-modificatore key-lshift" data-key="lshift" style="font-size:.7rem;">⇧ Shift</div>
+                <div class="key zona-alfanumerica" data-key="less">&lt; &gt;</div>
+                <div class="key zona-alfanumerica" data-key="z">Z</div>
+                <div class="key zona-alfanumerica" data-key="x">X</div>
+                <div class="key zona-alfanumerica" data-key="c">C</div>
+                <div class="key zona-alfanumerica" data-key="v">V</div>
+                <div class="key zona-alfanumerica" data-key="b">B</div>
+                <div class="key zona-alfanumerica" data-key="n">N</div>
+                <div class="key zona-alfanumerica" data-key="m">M</div>
+                <div class="key zona-alfanumerica" data-key="comma">, ;</div>
+                <div class="key zona-alfanumerica" data-key="period">. :</div>
+                <div class="key zona-alfanumerica" data-key="slash">- _</div>
+                <div class="key zona-modificatore key-rshift" data-key="rshift" style="font-size:.7rem;">⇧ Shift</div>
+              </div>
+
+              <!-- Riga 5: Ctrl Win Alt Spazio AltGr Menu Ctrl -->
+              <div class="kb-row">
+                <div class="key zona-modificatore key-lctrl" data-key="lctrl" style="font-size:.7rem;">Ctrl</div>
+                <div class="key zona-modificatore key-lwin" data-key="lwin" style="font-size:.7rem;">⊞ Win</div>
+                <div class="key zona-modificatore key-lalt" data-key="lalt" style="font-size:.7rem;">Alt</div>
+                <div class="key zona-modificatore key-space" data-key="space" style="font-size:.75rem;">Spazio</div>
+                <div class="key zona-modificatore key-ralt" data-key="ralt" style="font-size:.68rem;">AltGr</div>
+                <div class="key zona-modificatore key-menu" data-key="menu">☰</div>
+                <div class="key zona-modificatore key-rctrl" data-key="rctrl" style="font-size:.7rem;">Ctrl</div>
+              </div>
+
+            </div><!-- /kb-alpha -->
+
+            <!-- ── BLOCCO CENTRALE: PrtSc/ScrLk/Pause + navigazione ── -->
+            <div class="kb-nav">
+
+              <!-- Nav riga 0: tasti speciali (sopra Ins/Home/PgSu) -->
+              <div class="kb-row">
+                <div class="key zona-speciale" data-key="prtsc" style="font-size:.58rem;">PrtSc</div>
+                <div class="key zona-speciale" data-key="scrlk" style="font-size:.58rem;">ScrLk</div>
+                <div class="key zona-speciale" data-key="pause" style="font-size:.58rem;">Pause</div>
+              </div>
+
+              <!-- Nav riga 1: Ins Home PgSu -->
+              <div class="kb-row">
+                <div class="key zona-navigazione" data-key="insert" style="font-size:.68rem;">Ins</div>
+                <div class="key zona-navigazione" data-key="home" style="font-size:.68rem;">Home</div>
+                <div class="key zona-navigazione" data-key="pgup" style="font-size:.62rem;">PgSu</div>
+              </div>
+
+              <!-- Nav riga 2: Canc End PgGiù -->
+              <div class="kb-row">
+                <div class="key zona-navigazione" data-key="del" style="font-size:.7rem;">Canc</div>
+                <div class="key zona-navigazione" data-key="end" style="font-size:.68rem;">End</div>
+                <div class="key zona-navigazione" data-key="pgdn" style="font-size:.62rem;">PgGiù</div>
+              </div>
+
+              <!-- Nav riga 3: vuota (allinea con riga CapsLock) -->
+              <div class="kb-nav-empty"></div>
+
+              <!-- Nav riga 4: freccia su, centrata -->
+              <div class="kb-row">
+                <div class="key-nav-placeholder"></div>
+                <div class="key zona-navigazione" data-key="arrowup">↑</div>
+                <div class="key-nav-placeholder"></div>
+              </div>
+
+              <!-- Nav riga 5: ← ↓ → -->
+              <div class="kb-row">
+                <div class="key zona-navigazione" data-key="arrowleft">←</div>
+                <div class="key zona-navigazione" data-key="arrowdown">↓</div>
+                <div class="key zona-navigazione" data-key="arrowright">→</div>
+              </div>
+
+            </div><!-- /kb-nav -->
+
+            <!-- ── BLOCCO DESTRO: spazio vuoto + tastierino numerico ── -->
+            <div class="kb-numpad-col">
+              <!-- Spacer riga 0: allinea con riga F-keys (44px) -->
+              <div class="kb-numpad-spacer"></div>
+              <!-- Griglia numpad: auto-flow NumLk / * - | 7 8 9 [+span] | 4 5 6 | 1 2 3 [↵span] | 0wide . -->
+              <div class="kb-numpad">
+              <div class="key zona-numerica" data-key="numlk" style="font-size:.62rem;">Num&#10;Lk</div>
+              <div class="key zona-numerica" data-key="npdiv">/</div>
+              <div class="key zona-numerica" data-key="npmul">*</div>
+              <div class="key zona-numerica" data-key="npminus">-</div>
+              <div class="key zona-numerica" data-key="np7" style="font-size:.65rem;">7&#10;Home</div>
+              <div class="key zona-numerica" data-key="np8" style="font-size:.65rem;">8&#10;↑</div>
+              <div class="key zona-numerica" data-key="np9" style="font-size:.65rem;">9&#10;PgSu</div>
+              <div class="key zona-numerica key-npplus" data-key="npplus">+</div>
+              <div class="key zona-numerica" data-key="np4" style="font-size:.65rem;">4&#10;←</div>
+              <div class="key zona-numerica" data-key="np5">5</div>
+              <div class="key zona-numerica" data-key="np6" style="font-size:.65rem;">6&#10;→</div>
+              <div class="key zona-numerica" data-key="np1" style="font-size:.65rem;">1&#10;End</div>
+              <div class="key zona-numerica" data-key="np2" style="font-size:.65rem;">2&#10;↓</div>
+              <div class="key zona-numerica" data-key="np3" style="font-size:.65rem;">3&#10;PgGiù</div>
+              <div class="key zona-numerica key-npenter" data-key="npenter" style="font-size:.7rem;">↵</div>
+              <div class="key zona-numerica key-np0" data-key="np0" style="font-size:.65rem;">0&#10;Ins</div>
+              <div class="key zona-numerica" data-key="npdot" style="font-size:.65rem;">.&#10;Canc</div>
+              </div><!-- /kb-numpad -->
+            </div><!-- /kb-numpad-col -->
+
+          </div><!-- /kb-body -->
+
+        </div><!-- /keyboard -->
+      </div><!-- /scroll-wrapper -->
+
+      <!-- Pannello info tasto -->
+      <div class="kb-info-panel" id="kb-info-panel">
+        <div class="kb-info-placeholder" id="kb-info-placeholder">
+          <span>👆</span> Clicca su un tasto per vedere la sua funzione
+        </div>
+        <div class="kb-info-content" id="kb-info-content">
+          <span class="kb-info-zona-badge" id="kb-info-badge"></span>
+          <div class="kb-info-title" id="kb-info-title"></div>
+          <div class="kb-info-desc"  id="kb-info-desc"></div>
+          <ul class="kb-info-combos" id="kb-info-combos"></ul>
+        </div>
+      </div>
+
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── SEZIONE 3: TASTI F ── -->
+    <section id="s3">
+      <div class="section-header">
+        <span class="section-num">3</span>
+        <h2>Tasti di funzione F1–F12</h2>
+      </div>
+
+      <p>I tasti di funzione si trovano nella riga in cima. La loro azione dipende dal programma aperto, ma alcuni comportamenti sono standard in quasi tutti i programmi Windows.</p>
+
+      <table class="shortcut-table">
+        <thead><tr><th>Tasto</th><th>Funzione comune in Windows</th><th>Combinazione utile</th></tr></thead>
+        <tbody>
+          <tr><td><span class="kbd-combo">F1</span></td><td>Apre la guida del programma</td><td><span class="kbd-combo">Win+F1</span> → Guida Windows</td></tr>
+          <tr><td><span class="kbd-combo">F2</span></td><td>Rinomina file/cartella selezionati (Esplora file); modifica cella (Excel)</td><td>—</td></tr>
+          <tr><td><span class="kbd-combo">F3</span></td><td>Cerca all'interno del programma o cartella</td><td><span class="kbd-combo">Shift+F3</span> → cerca in senso inverso</td></tr>
+          <tr><td><span class="kbd-combo">F4</span></td><td>Apre la barra degli indirizzi (browser, Esplora file)</td><td><span class="kbd-combo">Alt+F4</span> → chiude il programma</td></tr>
+          <tr><td><span class="kbd-combo">F5</span></td><td>Aggiorna la pagina/finestra corrente</td><td><span class="kbd-combo">Ctrl+F5</span> → ricarica forzata (senza cache)</td></tr>
+          <tr><td><span class="kbd-combo">F6</span></td><td>Sposta il focus nella barra degli indirizzi del browser</td><td>—</td></tr>
+          <tr><td><span class="kbd-combo">F7</span></td><td>Controllo ortografico in Word; Caret browsing nel browser</td><td>—</td></tr>
+          <tr><td><span class="kbd-combo">F8</span></td><td>All'avvio: modalità provvisoria (Windows 7 e precedenti)</td><td>—</td></tr>
+          <tr><td><span class="kbd-combo">F9</span></td><td>Aggiorna i campi (Word); invia/riceve (Outlook)</td><td>—</td></tr>
+          <tr><td><span class="kbd-combo">F10</span></td><td>Attiva la barra dei menu del programma</td><td><span class="kbd-combo">Shift+F10</span> → menu contestuale (tasto destro)</td></tr>
+          <tr><td><span class="kbd-combo">F11</span></td><td>Schermo intero nel browser e in molte app</td><td>—</td></tr>
+          <tr><td><span class="kbd-combo">F12</span></td><td>Salva con nome (Word); Strumenti sviluppatori (browser)</td><td><span class="kbd-combo">Fn+F12</span> → sui laptop può variare</td></tr>
+        </tbody>
+      </table>
+
+      <div class="box-warn">
+        <b>⚠️ Sui laptop</b> — I tasti F1–F12 sono spesso condivisi con funzioni multimediali (volume, luminosità, ecc.). Per usarli come F1–F12 occorre tenere premuto il tasto <b>Fn</b> (Function), oppure impostare la modalità dal BIOS o dalle impostazioni di sistema.
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── SEZIONE 4: MODIFICATORI ── -->
+    <section id="s4">
+      <div class="section-header">
+        <span class="section-num">4</span>
+        <h2>I tasti modificatori</h2>
+      </div>
+
+      <p>I modificatori non producono testo da soli: cambiano il comportamento degli altri tasti quando vengono tenuti premuti contemporaneamente. Sono la base delle scorciatoie da tastiera.</p>
+
+      <div class="mod-grid">
+        <div class="mod-card">
+          <div class="mod-key">Shift ⇧</div>
+          <h4>Maiuscole e simboli superiori</h4>
+          <p>Tenuto premuto: trasforma le lettere in maiuscolo, attiva il simbolo in alto dei tasti numerici (!, ", £, $…). Combinato: estende la selezione con le frecce.</p>
+        </div>
+        <div class="mod-card">
+          <div class="mod-key">Ctrl</div>
+          <h4>Controllo — il modificatore principale</h4>
+          <p>Base di quasi tutte le scorciatoie: Ctrl+C copia, Ctrl+V incolla, Ctrl+Z annulla. Presente sia a sinistra che a destra della barra spaziatrice.</p>
+        </div>
+        <div class="mod-card">
+          <div class="mod-key">Alt</div>
+          <h4>Alternativo</h4>
+          <p>Usato per le scorciatoie di menu (Alt+lettera) e per accedere a caratteri speciali (Alt+codice numerico sul tastierino). Alt+Tab alterna tra le finestre.</p>
+        </div>
+        <div class="mod-card">
+          <div class="mod-key">AltGr</div>
+          <h4>Alt Grafica — caratteri speciali</h4>
+          <p>Solo nelle tastiere europee. Inserisce il terzo simbolo del tasto: AltGr+Q = @, AltGr+è = [, AltGr+++ = ]. Equivale a Ctrl+Alt ma solo per i simboli.</p>
+        </div>
+        <div class="mod-card">
+          <div class="mod-key">⇪ CapsLock</div>
+          <h4>Blocco maiuscole</h4>
+          <p>Attiva/disattiva il blocco maiuscole permanente. Il LED si accende per segnalarlo. NON influenza i simboli dei tasti numerici (per quelli serve sempre Shift).</p>
+        </div>
+        <div class="mod-card">
+          <div class="mod-key">Tab ⇥</div>
+          <h4>Tabulazione</h4>
+          <p>Inserisce uno spazio di tabulazione nel testo. Nei moduli sposta al campo successivo (Shift+Tab per tornare indietro). Ctrl+Tab cambia scheda nel browser.</p>
+        </div>
+        <div class="mod-card">
+          <div class="mod-key">← Backspace</div>
+          <h4>Cancella a sinistra</h4>
+          <p>Elimina il carattere a sinistra del cursore. Ctrl+Backspace cancella l'intera parola precedente. In Esplora file torna alla cartella superiore.</p>
+        </div>
+        <div class="mod-card">
+          <div class="mod-key">↵ Invio</div>
+          <h4>Conferma o vai a capo</h4>
+          <p>Va a capo nel testo, conferma le finestre di dialogo (OK), attiva i pulsanti evidenziati. Ctrl+Invio ha spesso una funzione alternativa (es. invia messaggio).</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── SEZIONE 5: TASTO WINDOWS ── -->
+    <section id="s5">
+      <div class="section-header">
+        <span class="section-num">5</span>
+        <h2>Il tasto Windows ⊞</h2>
+      </div>
+
+      <p>Il tasto con il logo Windows (tra Ctrl e Alt a sinistra) controlla direttamente il sistema operativo. Premuto da solo apre o chiude il menu Start. Combinato con altri tasti, offre decine di scorciatoie di sistema.</p>
+
+      <div class="win-grid">
+        <table class="shortcut-table">
+          <thead><tr><th>Combinazione</th><th>Cosa fa</th></tr></thead>
+          <tbody>
+            <tr><td><span class="kbd-combo">⊞</span></td><td>Apre/chiude il menu Start</td></tr>
+            <tr><td><span class="kbd-combo">⊞ + E</span></td><td>Apre Esplora file</td></tr>
+            <tr><td><span class="kbd-combo">⊞ + D</span></td><td>Mostra/nasconde il desktop</td></tr>
+            <tr><td><span class="kbd-combo">⊞ + L</span></td><td>Blocca il computer</td></tr>
+            <tr><td><span class="kbd-combo">⊞ + R</span></td><td>Finestra "Esegui" (lancia programmi)</td></tr>
+            <tr><td><span class="kbd-combo">⊞ + I</span></td><td>Impostazioni di Windows</td></tr>
+            <tr><td><span class="kbd-combo">⊞ + S</span></td><td>Ricerca di Windows</td></tr>
+            <tr><td><span class="kbd-combo">⊞ + Tab</span></td><td>Vista attività (tutte le finestre)</td></tr>
+          </tbody>
+        </table>
+        <table class="shortcut-table">
+          <thead><tr><th>Combinazione</th><th>Cosa fa</th></tr></thead>
+          <tbody>
+            <tr><td><span class="kbd-combo">⊞ + ←/→</span></td><td>Ancora finestra a sinistra/destra (snap)</td></tr>
+            <tr><td><span class="kbd-combo">⊞ + ↑</span></td><td>Massimizza la finestra attiva</td></tr>
+            <tr><td><span class="kbd-combo">⊞ + ↓</span></td><td>Riduce o minimizza la finestra</td></tr>
+            <tr><td><span class="kbd-combo">⊞ + PrtSc</span></td><td>Screenshot → salva in Immagini\Screenshot</td></tr>
+            <tr><td><span class="kbd-combo">⊞ + Shift+S</span></td><td>Cattura area personalizzata</td></tr>
+            <tr><td><span class="kbd-combo">⊞ + V</span></td><td>Cronologia appunti (Win 10/11)</td></tr>
+            <tr><td><span class="kbd-combo">⊞ + Pause</span></td><td>Proprietà del Sistema (info PC)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── SEZIONE 6: SCORCIATOIE ESSENZIALI ── -->
+    <section id="s6">
+      <div class="section-header">
+        <span class="section-num">6</span>
+        <h2>Scorciatoie essenziali — Ctrl+…</h2>
+      </div>
+
+      <p>Le scorciatoie con Ctrl funzionano in quasi tutti i programmi Windows. Impararle bene ti fa risparmiare moltissimo tempo.</p>
+
+      <button class="ctrl-toggle-btn" id="ctrl-toggle" onclick="toggleCtrlExtended()">
+        <span id="ctrl-toggle-icon">＋</span> Mostra tutte le scorciatoie
+      </button>
+
+      <table class="shortcut-table" id="ctrl-table">
+        <thead><tr><th>Scorciatoia</th><th>Azione</th><th>Nome tecnico</th></tr></thead>
+        <tbody>
+          <tr><td><span class="kbd-combo">Ctrl+Z</span></td><td>Annulla l'ultima azione</td><td>Undo</td></tr>
+          <tr><td><span class="kbd-combo">Ctrl+X</span></td><td>Taglia (rimuove e mette negli appunti)</td><td>Cut</td></tr>
+          <tr><td><span class="kbd-combo">Ctrl+C</span></td><td>Copia negli appunti</td><td>Copy</td></tr>
+          <tr><td><span class="kbd-combo">Ctrl+V</span></td><td>Incolla dagli appunti</td><td>Paste</td></tr>
+          <tr><td><span class="kbd-combo">Ctrl+A</span></td><td>Seleziona tutto</td><td>Select All</td></tr>
+          <tr><td><span class="kbd-combo">Ctrl+S</span></td><td>Salva il file corrente</td><td>Save</td></tr>
+          <tr><td><span class="kbd-combo">Ctrl+N</span></td><td>Nuovo documento o nuova finestra</td><td>New</td></tr>
+          <tr><td><span class="kbd-combo">Ctrl+O</span></td><td>Apri file</td><td>Open</td></tr>
+          <tr><td><span class="kbd-combo">Ctrl+P</span></td><td>Stampa</td><td>Print</td></tr>
+          <tr><td><span class="kbd-combo">Ctrl+F</span></td><td>Cerca nel documento o nella pagina</td><td>Find</td></tr>
+          <tr><td><span class="kbd-combo">Ctrl+B</span></td><td>Grassetto (nel testo selezionato)</td><td>Bold</td></tr>
+          <tr><td><span class="kbd-combo">Ctrl+I</span></td><td>Corsivo</td><td>Italic</td></tr>
+          <tr><td><span class="kbd-combo">Ctrl+U</span></td><td>Sottolineato</td><td>Underline</td></tr>
+          <tr><td><span class="kbd-combo">Ctrl+T</span></td><td>Nuova scheda nel browser</td><td>—</td></tr>
+          <tr><td><span class="kbd-combo">Ctrl+W</span></td><td>Chiude la scheda/documento corrente</td><td>—</td></tr>
+          <!-- Scorciatoie estese — nascoste di default -->
+          <tr class="ctrl-extended"><td><span class="kbd-combo">Ctrl+Y</span></td><td>Ripristina l'azione annullata</td><td>Redo</td></tr>
+          <tr class="ctrl-extended"><td><span class="kbd-combo">Ctrl+H</span></td><td>Trova e sostituisci</td><td>Replace</td></tr>
+          <tr class="ctrl-extended"><td><span class="kbd-combo">Ctrl+G</span></td><td>Vai a riga/pagina specifica (Word, editor di codice)</td><td>Go To</td></tr>
+          <tr class="ctrl-extended"><td><span class="kbd-combo">Ctrl+K</span></td><td>Inserisce collegamento ipertestuale</td><td>Hyperlink</td></tr>
+          <tr class="ctrl-extended"><td><span class="kbd-combo">Ctrl+Shift+T</span></td><td>Riapre l'ultima scheda chiusa nel browser</td><td>—</td></tr>
+        </tbody>
+      </table>
+
+      <div class="box-tip">
+        <b>💡 Il trucco Z-X-C-V</b> — Sulla tastiera QWERTY italiana, i tasti Z, X, C, V sono tutti vicini nella riga inferiore e tutti si usano con Ctrl. Difficile confondersi: Annulla-Taglia-Copia-Incolla, da sinistra a destra.
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── SEZIONE 7: NAVIGAZIONE E SPECIALI ── -->
+    <section id="s7">
+      <div class="section-header">
+        <span class="section-num">7</span>
+        <h2>Navigazione e tasti speciali</h2>
+      </div>
+
+      <p>Il blocco centrale di navigazione (tra la zona alfanumerica e il tastierino) contiene i tasti per muoversi nel testo e nei documenti senza usare il mouse.</p>
+
+      <table class="shortcut-table">
+        <thead><tr><th>Tasto</th><th>Funzione base</th><th>Con Ctrl</th><th>Con Shift</th></tr></thead>
+        <tbody>
+          <tr><td><span class="kbd-combo">←→↑↓</span></td><td>Sposta il cursore di 1 carattere/riga</td><td>Salta parola/paragrafo</td><td>Estende la selezione</td></tr>
+          <tr><td><span class="kbd-combo">Home</span></td><td>Inizio della riga</td><td>Inizio del documento</td><td>Seleziona fino all'inizio riga</td></tr>
+          <tr><td><span class="kbd-combo">End</span></td><td>Fine della riga</td><td>Fine del documento</td><td>Seleziona fino alla fine riga</td></tr>
+          <tr><td><span class="kbd-combo">PgSu</span></td><td>Scorre su di una schermata</td><td>—</td><td>—</td></tr>
+          <tr><td><span class="kbd-combo">PgGiù</span></td><td>Scorre giù di una schermata</td><td>—</td><td>—</td></tr>
+          <tr><td><span class="kbd-combo">Ins</span></td><td>Alterna inserimento/sostituzione testo</td><td>Copia (equivale a Ctrl+C)</td><td>Incolla (equivale a Ctrl+V)</td></tr>
+          <tr><td><span class="kbd-combo">Canc</span></td><td>Elimina il carattere a destra</td><td>Elimina la parola a destra</td><td>Elimina definitivamente (senza Cestino)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="box-note">
+        <b>⚠️ Attenzione a Ins (Insert)</b> — Se noti che mentre scrivi il nuovo testo sovrascrive quello esistente invece di inserirsi, hai probabilmente premuto accidentalmente Ins. Premilo di nuovo per tornare alla modalità normale di inserimento.
+      </div>
+
+      <h3 style="margin-top:1.5rem;margin-bottom:.75rem;color:var(--blue-dark);font-size:1rem;">Tasti speciali: PrtSc, ScrLk, Pause</h3>
+      <table class="shortcut-table">
+        <thead><tr><th>Tasto</th><th>Funzione</th></tr></thead>
+        <tbody>
+          <tr><td><span class="kbd-combo">PrtSc</span></td><td>Copia lo screenshot dell'intero schermo negli appunti (poi incolla in Paint o Word)</td></tr>
+          <tr><td><span class="kbd-combo">Alt+PrtSc</span></td><td>Screenshot solo della finestra attiva</td></tr>
+          <tr><td><span class="kbd-combo">⊞+PrtSc</span></td><td>Screenshot salvato automaticamente in Immagini\Screenshot</td></tr>
+          <tr><td><span class="kbd-combo">⊞+Shift+S</span></td><td>Strumento cattura area personalizzata (Windows 10/11)</td></tr>
+          <tr><td><span class="kbd-combo">Scroll Lock</span></td><td>Quasi inutilizzato oggi. In Excel blocca le frecce per spostare il foglio invece della cella</td></tr>
+          <tr><td><span class="kbd-combo">Pause/Break</span></td><td>Raramente usato. ⊞+Pause apre le Proprietà del Sistema</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── SEZIONE 8: TASTIERINO NUMERICO ── -->
+    <section id="s8">
+      <div class="section-header">
+        <span class="section-num">8</span>
+        <h2>Il tastierino numerico</h2>
+      </div>
+
+      <p>Il tastierino numerico (o "pad numerico") si trova sul lato destro della tastiera ed è presente solo nelle tastiere complete (non sui laptop standard). La sua modalità di funzionamento dipende dal tasto <b>Num Lock</b>.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0;">
+        <div class="box-tip" style="margin:0;">
+          <b>🔢 Num Lock ACCESO</b> (LED verde)<br>
+          I tasti inseriscono i numeri 0–9 e il punto decimale. Ideale per inserire dati numerici velocemente, come in un foglio Excel.
+        </div>
+        <div class="box-note" style="margin:0;">
+          <b>🔡 Num Lock SPENTO</b><br>
+          I tasti diventano tasti di navigazione: frecce, Home, End, PgSu, PgGiù, Ins, Canc. Come se avessi un secondo blocco di navigazione.
+        </div>
+      </div>
+
+      <p>Il tastierino ha anche i quattro operatori matematici di base: <span class="kbd-combo">/</span> divisione, <span class="kbd-combo">*</span> moltiplicazione, <span class="kbd-combo">-</span> sottrazione, <span class="kbd-combo">+</span> addizione — utili per digitare formule Excel senza cercare i simboli nella zona alfanumerica.</p>
+
+      <div class="box-tip">
+        <b>💡 Caratteri speciali con Alt+numeri</b> — Con Num Lock attivo, tieni premuto Alt e digita un codice numerico sul tastierino per inserire caratteri speciali. Esempi: <span class="kbd-combo">Alt+0169</span> = © (copyright), <span class="kbd-combo">Alt+0174</span> = ® (registered), <span class="kbd-combo">Alt+0176</span> = ° (grado). Funziona in Word, Outlook e molti altri programmi.
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <strong>Formazione Digitale</strong> · Portale aperto di alfabetizzazione digitale<br>
+  <a href="/index.html">← Torna al portale</a> · <a href="/index.html#cards-guide">Tutte le guide</a>
+</footer>
+
+<script src="/scripts/ui.js" defer></script>
+
+<script>
+/* ── DATI TASTIERA ──────────────────────────────────────────── */
+const keyDB = {
+  'esc':       { zona:'funzione',    titolo:'Escape', desc:'Annulla l\'operazione corrente. Chiude menu, finestre di dialogo e popup. Nei giochi può mettere in pausa. Premuto più volte di solito riporta allo stato precedente.', combos:[] },
+  'f1':        { zona:'funzione',    titolo:'F1 — Guida in linea', desc:'Apre la guida del programma attivo. In Windows Explorer apre la guida del sistema operativo.', combos:['Win+F1 → Apre la guida di Windows'] },
+  'f2':        { zona:'funzione',    titolo:'F2 — Rinomina', desc:'Rinomina il file o la cartella selezionati in Esplora file. In Excel entra in modalità modifica della cella attiva.', combos:[] },
+  'f3':        { zona:'funzione',    titolo:'F3 — Cerca', desc:'Apre la funzione di ricerca nell\'applicazione corrente. In Esplora file cerca nella cartella aperta. Nei browser cerca nella pagina (equivale a Ctrl+F).', combos:['Shift+F3 → Cerca verso l\'alto (direzione inversa)'] },
+  'f4':        { zona:'funzione',    titolo:'F4', desc:'Apre la barra degli indirizzi in Esplora file o nel browser (vi si può digitare direttamente un percorso o un URL).', combos:['Alt+F4 → Chiude il programma attivo','Win+D poi Alt+F4 → Menu spegnimento Windows'] },
+  'f5':        { zona:'funzione',    titolo:'F5 — Aggiorna', desc:'Aggiorna la finestra o la pagina corrente. Nel browser ricarica la pagina dal server.', combos:['Ctrl+F5 → Ricarica forzata (svuota la cache del browser)'] },
+  'f6':        { zona:'funzione',    titolo:'F6', desc:'Sposta il focus nella barra degli indirizzi del browser. In alcuni programmi alterna tra pannelli.', combos:[] },
+  'f7':        { zona:'funzione',    titolo:'F7', desc:'In Word apre il controllo ortografico e grammaticale. Nei browser attiva la modalità Caret browsing (navigazione con il cursore di testo nella pagina).', combos:[] },
+  'f8':        { zona:'funzione',    titolo:'F8', desc:'All\'avvio del PC (nelle versioni precedenti di Windows) entra in Modalità provvisoria. In Word estende la selezione.', combos:[] },
+  'f9':        { zona:'funzione',    titolo:'F9', desc:'In Outlook invia e riceve email. In Word aggiorna i campi del documento. Usato spesso in programmi personalizzati.', combos:[] },
+  'f10':       { zona:'funzione',    titolo:'F10 — Attiva menu', desc:'Attiva la barra dei menu del programma corrente (stessa funzione del tasto Alt).', combos:['Shift+F10 → Equivale al tasto destro del mouse (apre menu contestuale)'] },
+  'f11':       { zona:'funzione',    titolo:'F11 — Schermo intero', desc:'Attiva o disattiva la modalità schermo intero nel browser e in molte applicazioni multimediali.', combos:[] },
+  'f12':       { zona:'funzione',    titolo:'F12', desc:'In Word apre "Salva con nome". Nei browser apre gli Strumenti per sviluppatori. All\'avvio del PC può accedere al menu di boot.', combos:['Ctrl+Shift+I → Strumenti sviluppatori (alternativo nel browser)'] },
+  'prtsc':     { zona:'speciale',    titolo:'Print Screen — Screenshot', desc:'Copia uno screenshot dell\'intero schermo negli appunti. Puoi poi incollarlo (Ctrl+V) in Paint, Word o qualsiasi programma per immagini.', combos:['Alt+PrtSc → Screenshot solo della finestra attiva','⊞+PrtSc → Screenshot salvato automaticamente in Immagini/Screenshot','⊞+Shift+S → Strumento cattura area personalizzata'] },
+  'scrlk':     { zona:'speciale',    titolo:'Scroll Lock', desc:'Quasi inutilizzato oggi. In Excel, quando attivo, le frecce spostano il foglio invece della cella selezionata.', combos:[] },
+  'pause':     { zona:'speciale',    titolo:'Pause / Break', desc:'Raramente usato nei programmi moderni. In passato metteva in pausa l\'esecuzione dei programmi.', combos:['⊞+Pause → Apre Proprietà del Sistema (info sul PC)'] },
+  'backtick':  { zona:'alfanumerica', titolo:'` ~ (accento/tilde)', desc:'Inserisce l\'accento grave o la tilde (~). Usato in HTML, programmazione e in alcuni linguaggi per indicatori speciali.', combos:[] },
+  '1':         { zona:'alfanumerica', titolo:'1 / !', desc:'Inserisce il numero 1. Con Shift inserisce il punto esclamativo (!).', combos:[] },
+  '2':         { zona:'alfanumerica', titolo:'2 / "', desc:'Inserisce il numero 2. Con Shift inserisce le virgolette doppie (").', combos:[] },
+  '3':         { zona:'alfanumerica', titolo:'3 / £', desc:'Inserisce il numero 3. Con Shift inserisce il simbolo della sterlina (£).', combos:[] },
+  '4':         { zona:'alfanumerica', titolo:'4 / $', desc:'Inserisce il numero 4. Con Shift inserisce il simbolo del dollaro ($).', combos:[] },
+  '5':         { zona:'alfanumerica', titolo:'5 / %', desc:'Inserisce il numero 5. Con Shift inserisce la percentuale (%).', combos:[] },
+  '6':         { zona:'alfanumerica', titolo:'6 / &', desc:'Inserisce il numero 6. Con Shift inserisce la e commerciale (&, "ampersand").', combos:[] },
+  '7':         { zona:'alfanumerica', titolo:'7 / /', desc:'Inserisce il numero 7. Con Shift inserisce la barra (/, slash).', combos:[] },
+  '8':         { zona:'alfanumerica', titolo:'8 / (', desc:'Inserisce il numero 8. Con Shift inserisce la parentesi tonda aperta.', combos:[] },
+  '9':         { zona:'alfanumerica', titolo:'9 / )', desc:'Inserisce il numero 9. Con Shift inserisce la parentesi tonda chiusa.', combos:[] },
+  '0':         { zona:'alfanumerica', titolo:'0 / =', desc:'Inserisce il numero 0. Con Shift inserisce il simbolo uguale (=).', combos:[] },
+  'apostrophe':{ zona:'alfanumerica', titolo:'\' / ? (apostrofo)', desc:'Inserisce l\'apostrofo. Con Shift inserisce il punto interrogativo (?).', combos:[] },
+  'ì':         { zona:'alfanumerica', titolo:'ì / ^', desc:'Inserisce la i con accento grave (ì). Con Shift inserisce l\'accento circonflesso (^).', combos:[] },
+  'accento':   { zona:'alfanumerica', titolo:'` / | (pipe)', desc:'Inserisce l\'accento grave. Con Shift inserisce la barra verticale (|, "pipe") — molto usata nei terminali e nella programmazione.', combos:[] },
+  'backspace': { zona:'modificatore', titolo:'Backspace — Cancella a sinistra', desc:'Elimina il carattere immediatamente a sinistra del cursore. In Esplora file torna alla cartella superiore.', combos:['Ctrl+Backspace → Cancella l\'intera parola a sinistra del cursore'] },
+  'tab':       { zona:'modificatore', titolo:'Tab ⇥ — Tabulazione', desc:'Inserisce uno spazio di tabulazione nel testo. Nei moduli web sposta il focus al campo successivo. Nei fogli Excel sposta alla cella a destra.', combos:['Alt+Tab → Alterna tra le finestre aperte (tieni Alt premuto, rilascia Tab per scegliere)','Shift+Tab → Campo precedente in un modulo','Ctrl+Tab → Scheda successiva nel browser'] },
+  'q':         { zona:'alfanumerica', titolo:'Q', desc:'Lettera Q.', combos:['Ctrl+Q → Chiude molte applicazioni'] },
+  'w':         { zona:'alfanumerica', titolo:'W', desc:'Lettera W.', combos:['Ctrl+W → Chiude la scheda nel browser o il documento attivo'] },
+  'e':         { zona:'alfanumerica', titolo:'E', desc:'Lettera E.', combos:['⊞+E → Apre Esplora file'] },
+  'r':         { zona:'alfanumerica', titolo:'R', desc:'Lettera R.', combos:['⊞+R → Apre la finestra Esegui (utile per aprire programmi digitando il nome)'] },
+  't':         { zona:'alfanumerica', titolo:'T', desc:'Lettera T.', combos:['Ctrl+T → Nuova scheda nel browser','Ctrl+Shift+T → Riapre l\'ultima scheda chiusa'] },
+  'y':         { zona:'alfanumerica', titolo:'Y', desc:'Lettera Y.', combos:['Ctrl+Y → Ripristina (Redo) — annulla l\'annullamento'] },
+  'u':         { zona:'alfanumerica', titolo:'U', desc:'Lettera U.', combos:['Ctrl+U → Sottolinea il testo selezionato'] },
+  'i':         { zona:'alfanumerica', titolo:'I', desc:'Lettera I.', combos:['Ctrl+I → Corsivo (Italic) sul testo selezionato'] },
+  'o':         { zona:'alfanumerica', titolo:'O', desc:'Lettera O.', combos:['Ctrl+O → Apri file'] },
+  'p':         { zona:'alfanumerica', titolo:'P', desc:'Lettera P.', combos:['Ctrl+P → Stampa'] },
+  'openbrack': { zona:'alfanumerica', titolo:'è / é — Layout italiano', desc:'Inserisce la e con accento grave (è). Con Shift inserisce la e con accento acuto (é). Nella posizione della parentesi quadra aperta [ nei layout inglesi.', combos:['AltGr+è → [ (parentesi quadra aperta)'] },
+  'closebrack':{ zona:'alfanumerica', titolo:'+ / *', desc:'Inserisce il segno più (+). Con Shift inserisce l\'asterisco (*).', combos:['AltGr++ → ] (parentesi quadra chiusa)'] },
+  'backslash': { zona:'alfanumerica', titolo:'ù / §', desc:'Inserisce la u con accento grave (ù). Con Shift inserisce il simbolo paragrafo (§).', combos:[] },
+  'capslock':  { zona:'modificatore', titolo:'Caps Lock ⇪ — Blocco maiuscole', desc:'Attiva/disattiva il blocco maiuscole permanente. Il LED tastiera si accende per indicare che è attivo. NON influenza i simboli speciali dei tasti numerici (per quelli serve sempre Shift).', combos:[] },
+  'a':         { zona:'alfanumerica', titolo:'A', desc:'Lettera A.', combos:['Ctrl+A → Seleziona tutto (Select All)'] },
+  's':         { zona:'alfanumerica', titolo:'S', desc:'Lettera S.', combos:['Ctrl+S → Salva il file corrente'] },
+  'd':         { zona:'alfanumerica', titolo:'D', desc:'Lettera D.', combos:['⊞+D → Mostra/nasconde il desktop'] },
+  'f':         { zona:'alfanumerica', titolo:'F', desc:'Lettera F.', combos:['Ctrl+F → Cerca nel documento o nella pagina'] },
+  'g':         { zona:'alfanumerica', titolo:'G', desc:'Lettera G.', combos:['Ctrl+G → Vai a riga/pagina specifica in Word ed editor di codice'] },
+  'h':         { zona:'alfanumerica', titolo:'H', desc:'Lettera H.', combos:['Ctrl+H → Trova e Sostituisci'] },
+  'j':         { zona:'alfanumerica', titolo:'J', desc:'Lettera J.', combos:[] },
+  'k':         { zona:'alfanumerica', titolo:'K', desc:'Lettera K.', combos:['Ctrl+K → Inserisce un collegamento ipertestuale in Word e nel browser'] },
+  'l':         { zona:'alfanumerica', titolo:'L', desc:'Lettera L.', combos:['Ctrl+L → Seleziona la barra degli indirizzi nel browser','⊞+L → Blocca il computer'] },
+  'semicolon': { zona:'alfanumerica', titolo:'ò / ç — Layout italiano', desc:'Inserisce la o con accento grave (ò). Con Shift inserisce la c con cediglia (ç). Nella posizione del punto e virgola ; e due punti : nei layout inglesi.', combos:[] },
+  'quote':     { zona:'alfanumerica', titolo:'à / ° — Layout italiano', desc:'Inserisce la a con accento grave (à). Con Shift inserisce il simbolo di grado (°). Nella posizione dell\'apostrofo nei layout inglesi.', combos:[] },
+  'enter':     { zona:'modificatore', titolo:'Invio (Enter / Return)', desc:'Va a capo nel testo. Conferma le finestre di dialogo attivando il pulsante predefinito (OK). Nei menu attiva la voce selezionata.', combos:['Ctrl+Invio → Azione alternativa (es. invia messaggio in Teams, Slack, Gmail)'] },
+  'lshift':    { zona:'modificatore', titolo:'Shift ⇧ — Sinistro', desc:'Tasto modificatore. Tenuto premuto: scrive le lettere in MAIUSCOLO e attiva i simboli in alto dei tasti numerici (!, ", £...). Combinato con frecce estende la selezione del testo.', combos:['Shift+Click → Seleziona intervallo (da qui fino al punto cliccato)','Shift+Canc → Elimina definitivamente senza passare dal Cestino'] },
+  'less':      { zona:'alfanumerica', titolo:'< > — Tasto ISO extra (108 tasti)', desc:'Questo tasto è presente solo nelle tastiere europee a 108 tasti (layout ISO). Inserisce il simbolo minore di (<). Con Shift inserisce il maggiore di (>). Permette di distinguere le tastiere europee da quelle americane.', combos:['AltGr+< → \\ (backslash) in alcuni layout'] },
+  'z':         { zona:'alfanumerica', titolo:'Z', desc:'Lettera Z.', combos:['Ctrl+Z → Annulla (Undo) — la scorciatoia più utile in assoluto!'] },
+  'x':         { zona:'alfanumerica', titolo:'X', desc:'Lettera X.', combos:['Ctrl+X → Taglia (Cut)'] },
+  'c':         { zona:'alfanumerica', titolo:'C', desc:'Lettera C.', combos:['Ctrl+C → Copia (Copy)'] },
+  'v':         { zona:'alfanumerica', titolo:'V', desc:'Lettera V.', combos:['Ctrl+V → Incolla (Paste)','⊞+V → Cronologia degli appunti (Windows 10/11)'] },
+  'b':         { zona:'alfanumerica', titolo:'B', desc:'Lettera B.', combos:['Ctrl+B → Grassetto (Bold)'] },
+  'n':         { zona:'alfanumerica', titolo:'N', desc:'Lettera N.', combos:['Ctrl+N → Nuovo documento o nuova finestra','⊞+N → Nuovo desktop virtuale (Windows 11)'] },
+  'm':         { zona:'alfanumerica', titolo:'M', desc:'Lettera M.', combos:['⊞+M → Minimizza tutte le finestre (mostra il desktop)'] },
+  'comma':     { zona:'alfanumerica', titolo:', / ;', desc:'Inserisce la virgola (,). Con Shift inserisce il punto e virgola (;).', combos:[] },
+  'period':    { zona:'alfanumerica', titolo:'. / :', desc:'Inserisce il punto (.). Con Shift inserisce i due punti (:).', combos:[] },
+  'slash':     { zona:'alfanumerica', titolo:'- / _ — Layout italiano', desc:'Inserisce il trattino (-). Con Shift inserisce il trattino basso o underscore (_). Nella posizione di / e ? nei layout americani.', combos:[] },
+  'rshift':    { zona:'modificatore', titolo:'Shift ⇧ — Destro', desc:'Identico al Shift sinistro come funzione. Si usa con la mano destra mentre la sinistra è sui tasti alfanumerici di sinistra.', combos:[] },
+  'lctrl':     { zona:'modificatore', titolo:'Ctrl — Sinistro', desc:'Tasto di controllo fondamentale per le scorciatoie. Quasi ogni programma usa Ctrl+qualcosa per le sue funzioni principali.', combos:['Ctrl+C → Copia','Ctrl+V → Incolla','Ctrl+Z → Annulla','Ctrl+S → Salva'] },
+  'lwin':      { zona:'modificatore', titolo:'Tasto Windows ⊞', desc:'Apre o chiude il menu Start. Combinato con altri tasti offre le scorciatoie di sistema più potenti di Windows.', combos:['⊞+E → Esplora file','⊞+D → Desktop','⊞+L → Blocca PC','⊞+R → Esegui','⊞+I → Impostazioni','⊞+S → Cerca','⊞+← → → → Snap finestre','⊞+PrtSc → Screenshot'] },
+  'lalt':      { zona:'modificatore', titolo:'Alt — Sinistro', desc:'Tasto alternativo. Combinato con i tasti delle lettere nel menu attiva le voci sottolineate. Permette di inserire caratteri speciali digitando il codice numerico sul tastierino (con Num Lock attivo).', combos:['Alt+Tab → Alterna le finestre aperte','Alt+F4 → Chiude il programma','Alt+Invio → Proprietà del file selezionato','Alt+Spazio → Menu di sistema della finestra'] },
+  'space':     { zona:'modificatore', titolo:'Barra spaziatrice', desc:'Inserisce uno spazio. Il tasto più largo della tastiera. Nei browser fa scorrere la pagina verso il basso. In molte app multimediali (YouTube, VLC...) avvia o mette in pausa la riproduzione.', combos:['Shift+Spazio → Scorre la pagina verso l\'alto nel browser'] },
+  'ralt':      { zona:'modificatore', titolo:'AltGr — Alt Grafica', desc:'Presente solo nelle tastiere europee. Inserisce il terzo simbolo del tasto: simboli come @, [, ], {, }, \\. Fondamentale per la programmazione e per le email!', combos:['AltGr+Q → @ (chiocciola per l\'email)','AltGr+è → [ (parentesi quadra aperta)','AltGr++ → ] (parentesi quadra chiusa)'] },
+  'menu':      { zona:'modificatore', titolo:'Tasto Menu ☰', desc:'Equivale al click con il tasto destro del mouse: apre il menu contestuale dell\'elemento selezionato. Utilissimo quando si lavora solo con la tastiera.', combos:[] },
+  'rctrl':     { zona:'modificatore', titolo:'Ctrl — Destro', desc:'Identico al Ctrl sinistro come funzione. Si usa con la mano destra per le stesse scorciatoie.', combos:[] },
+  'insert':    { zona:'navigazione',  titolo:'Ins — Inserimento/Sostituzione', desc:'Alterna tra modalità inserimento (il testo si inserisce spostando quello esistente) e modalità sostituzione (il nuovo testo sovrascrive quello esistente). Se il cursore appare più grande del solito, la modalità sostituzione è attiva!', combos:['Ctrl+Ins → Copia (alternativo a Ctrl+C)','Shift+Ins → Incolla (alternativo a Ctrl+V)'] },
+  'del':       { zona:'navigazione',  titolo:'Canc — Elimina a destra', desc:'Cancella il carattere a destra del cursore. Su un file selezionato in Esplora file, lo sposta nel Cestino.', combos:['Shift+Canc → Elimina definitivamente, senza passare dal Cestino','Ctrl+Canc → Cancella la parola a destra del cursore'] },
+  'home':      { zona:'navigazione',  titolo:'Home — Inizio riga', desc:'Sposta il cursore all\'inizio della riga corrente. Premuto due volte in alcuni editor va all\'inizio del testo non rientrato.', combos:['Ctrl+Home → Va all\'inizio del documento','Shift+Home → Seleziona dalla posizione attuale all\'inizio della riga'] },
+  'end':       { zona:'navigazione',  titolo:'End — Fine riga', desc:'Sposta il cursore alla fine della riga corrente.', combos:['Ctrl+End → Va alla fine del documento','Shift+End → Seleziona dalla posizione attuale alla fine della riga'] },
+  'pgup':      { zona:'navigazione',  titolo:'Pag Su (Page Up)', desc:'Scorre la visualizzazione verso l\'alto di una schermata intera. Ideale per navigare documenti lunghi senza usare il mouse.', combos:[] },
+  'pgdn':      { zona:'navigazione',  titolo:'Pag Giù (Page Down)', desc:'Scorre la visualizzazione verso il basso di una schermata intera.', combos:[] },
+  'arrowup':   { zona:'navigazione',  titolo:'Freccia Su ↑', desc:'Sposta il cursore di una riga verso l\'alto. Nei menu, si sposta all\'opzione precedente.', combos:['Ctrl+↑ → Si sposta all\'inizio del paragrafo precedente','Shift+↑ → Estende la selezione verso l\'alto'] },
+  'arrowdown': { zona:'navigazione',  titolo:'Freccia Giù ↓', desc:'Sposta il cursore di una riga verso il basso. Nei menu, si sposta all\'opzione successiva.', combos:['Ctrl+↓ → Si sposta all\'inizio del paragrafo successivo','Shift+↓ → Estende la selezione verso il basso'] },
+  'arrowleft': { zona:'navigazione',  titolo:'Freccia Sinistra ←', desc:'Sposta il cursore di un carattere a sinistra.', combos:['Ctrl+← → Si sposta di una parola a sinistra','Shift+← → Estende la selezione di un carattere a sinistra'] },
+  'arrowright':{ zona:'navigazione',  titolo:'Freccia Destra →', desc:'Sposta il cursore di un carattere a destra.', combos:['Ctrl+→ → Si sposta di una parola a destra','Shift+→ → Estende la selezione di un carattere a destra'] },
+  'numlk':     { zona:'numerica',     titolo:'Num Lock — Blocco tastierino', desc:'Attiva o disattiva il tastierino numerico. Con Num Lock attivo (LED acceso): i tasti inseriscono i numeri. Con Num Lock spento: i tasti diventano tasti di navigazione (frecce, Home, End ecc.).', combos:[] },
+  'npdiv':     { zona:'numerica',     titolo:'/ Divisione — Tastierino', desc:'Inserisce il simbolo di divisione (/). Comodamente posizionato per i calcoli nei fogli di lavoro.', combos:[] },
+  'npmul':     { zona:'numerica',     titolo:'* Moltiplicazione — Tastierino', desc:'Inserisce il simbolo di moltiplicazione (*).', combos:[] },
+  'npminus':   { zona:'numerica',     titolo:'- Sottrazione — Tastierino', desc:'Inserisce il segno meno/sottrazione (-).', combos:[] },
+  'np7':       { zona:'numerica',     titolo:'7 / Home — Tastierino', desc:'Con Num Lock attivo: inserisce il numero 7. Con Num Lock spento: funziona come il tasto Home (inizio riga).', combos:[] },
+  'np8':       { zona:'numerica',     titolo:'8 / ↑ — Tastierino', desc:'Con Num Lock attivo: inserisce il numero 8. Con Num Lock spento: freccia Su.', combos:[] },
+  'np9':       { zona:'numerica',     titolo:'9 / PgSu — Tastierino', desc:'Con Num Lock attivo: inserisce il numero 9. Con Num Lock spento: Pagina Su.', combos:[] },
+  'npplus':    { zona:'numerica',     titolo:'+ Addizione — Tastierino', desc:'Inserisce il segno più/addizione (+). Questo tasto è più alto degli altri (occupa l\'altezza di due tasti) per essere facilmente raggiungibile.', combos:[] },
+  'np4':       { zona:'numerica',     titolo:'4 / ← — Tastierino', desc:'Con Num Lock attivo: inserisce il numero 4. Con Num Lock spento: freccia Sinistra.', combos:[] },
+  'np5':       { zona:'numerica',     titolo:'5 — Tastierino', desc:'Con Num Lock attivo: inserisce il numero 5. Con Num Lock spento: nessuna funzione specifica. Il tasto è spesso rialzato o ha una sporgenza per permettere di trovarlo senza guardare.', combos:[] },
+  'np6':       { zona:'numerica',     titolo:'6 / → — Tastierino', desc:'Con Num Lock attivo: inserisce il numero 6. Con Num Lock spento: freccia Destra.', combos:[] },
+  'np1':       { zona:'numerica',     titolo:'1 / End — Tastierino', desc:'Con Num Lock attivo: inserisce il numero 1. Con Num Lock spento: End (fine riga).', combos:[] },
+  'np2':       { zona:'numerica',     titolo:'2 / ↓ — Tastierino', desc:'Con Num Lock attivo: inserisce il numero 2. Con Num Lock spento: freccia Giù.', combos:[] },
+  'np3':       { zona:'numerica',     titolo:'3 / PgGiù — Tastierino', desc:'Con Num Lock attivo: inserisce il numero 3. Con Num Lock spento: Pagina Giù.', combos:[] },
+  'npenter':   { zona:'numerica',     titolo:'↵ Invio — Tastierino', desc:'Funziona in modo identico all\'Invio principale della tastiera. Comodo durante l\'inserimento di dati numerici, senza dover spostare la mano.', combos:[] },
+  'np0':       { zona:'numerica',     titolo:'0 / Ins — Tastierino', desc:'Con Num Lock attivo: inserisce il numero 0 (il tasto è più largo per essere il più usato nei calcoli). Con Num Lock spento: funziona come Insert.', combos:[] },
+  'npdot':     { zona:'numerica',     titolo:'. / Canc — Tastierino', desc:'Con Num Lock attivo: inserisce il punto decimale (virgola in alcune impostazioni regionali). Con Num Lock spento: funziona come il tasto Canc.', combos:[] },
+};
+
+/* ── COLORI ZONA ─────────────────────────────────────────── */
+const zonaConfig = {
+  'funzione':    { label: 'Tasti di funzione', bg: '#7D4E00', light: '#FFF3CD' },
+  'speciale':    { label: 'Tasto speciale',    bg: '#8B1A1A', light: '#FDECEA' },
+  'alfanumerica':{ label: 'Zona alfanumerica', bg: '#2E75B6', light: '#EBF3FC' },
+  'modificatore':{ label: 'Modificatore',      bg: '#4A148C', light: '#F3E5F5' },
+  'navigazione': { label: 'Navigazione',       bg: '#1E6B3C', light: '#E8F5EE' },
+  'numerica':    { label: 'Tastierino numerico',bg: '#5a4f3a', light: '#f4f0e8' },
+};
+
+/* ── CLICK SUL TASTO ─────────────────────────────────────── */
+document.getElementById('keyboard').addEventListener('click', function(e) {
+  const key = e.target.closest('[data-key]');
+  if (!key) return;
+
+  // rimuovi selected
+  document.querySelectorAll('.key.selected').forEach(k => k.classList.remove('selected'));
+  key.classList.add('selected');
+
+  const id   = key.dataset.key;
+  const data = keyDB[id];
+  if (!data) return;
+
+  const zona = zonaConfig[data.zona] || { label: data.zona, bg: '#666', light: '#eee' };
+
+  // badge
+  const badge = document.getElementById('kb-info-badge');
+  badge.textContent = zona.label;
+  badge.style.background = zona.bg;
+  badge.style.color = '#fff';
+
+  document.getElementById('kb-info-title').textContent   = data.titolo;
+  document.getElementById('kb-info-desc').textContent    = data.desc;
+
+  const comboList = document.getElementById('kb-info-combos');
+  comboList.innerHTML = '';
+  (data.combos || []).forEach(c => {
+    const li = document.createElement('li');
+    li.textContent = c;
+    comboList.appendChild(li);
+  });
+
+  document.getElementById('kb-info-placeholder').style.display = 'none';
+  document.getElementById('kb-info-content').classList.add('visible');
+});
+
+/* ── FILTRO ZONE ─────────────────────────────────────────── */
+let activeZona = null;
+
+function toggleZona(btn) {
+  const zona = btn.dataset.zona;
+  document.querySelectorAll('.zona-btn').forEach(b => b.classList.remove('active'));
+
+  if (activeZona === zona) {
+    activeZona = null;
+    document.getElementById('keyboard').classList.remove('kb-highlight');
+    document.querySelectorAll('.key').forEach(k => k.classList.remove('zona-sel'));
+    return;
+  }
+
+  activeZona = zona;
+  btn.classList.add('active');
+
+  document.getElementById('keyboard').classList.add('kb-highlight');
+  document.querySelectorAll('.key').forEach(k => {
+    if (k.classList.contains('zona-' + zona)) {
+      k.classList.add('zona-sel');
+    } else {
+      k.classList.remove('zona-sel');
+    }
+  });
+}
+
+function resetZone(btn) {
+  activeZona = null;
+  document.querySelectorAll('.zona-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('keyboard').classList.remove('kb-highlight');
+  document.querySelectorAll('.key').forEach(k => k.classList.remove('zona-sel'));
+}
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+function toggleSidebar() {
+  document.getElementById('guide-sidebar').classList.toggle('is-open');
+  document.getElementById('sidebar-overlay').classList.toggle('is-open');
+}
+function closeSidebar() {
+  document.getElementById('guide-sidebar').classList.remove('is-open');
+  document.getElementById('sidebar-overlay').classList.remove('is-open');
+}
+
+/* ── SIDEBAR ACTIVE ──────────────────────────────────────── */
+const navItems = document.querySelectorAll('.sidebar-nav .nav-item');
+const sections = document.querySelectorAll('section[id]');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navItems.forEach(n => n.classList.remove('active'));
+      const match = document.querySelector('.sidebar-nav a[href="#' + entry.target.id + '"]');
+      if (match) match.classList.add('active');
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => obs.observe(s));
+
+/* ── TOGGLE CTRL ESTESE ──────────────────────────────────── */
+let ctrlExtended = false;
+function toggleCtrlExtended() {
+  ctrlExtended = !ctrlExtended;
+  const table = document.getElementById('ctrl-table');
+  const btn   = document.getElementById('ctrl-toggle');
+  const icon  = document.getElementById('ctrl-toggle-icon');
+  if (ctrlExtended) {
+    table.classList.add('ctrl-show-extended');
+    btn.textContent  = '';
+    icon.textContent = '－';
+    btn.appendChild(icon);
+    btn.append(' Nascondi scorciatoie avanzate');
+  } else {
+    table.classList.remove('ctrl-show-extended');
+    icon.textContent = '＋';
+    btn.textContent  = '';
+    btn.appendChild(icon);
+    btn.append(' Mostra tutte le scorciatoie');
+  }
+}
+
+/* ── READING BAR ─────────────────────────────────────────── */
+window.addEventListener('scroll', () => {
+  const el = document.getElementById('reading-bar');
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  el.style.width = Math.min(pct, 100) + '%';
+});
+
+/* ── ZOOM ADATTIVO TASTIERA ────────────────────────────────
+   Scala la tastiera per farla entrare tutta nel contenitore
+   senza barra di scorrimento orizzontale.                   */
+function fitKeyboard() {
+  const kb = document.getElementById('keyboard');
+  if (!kb) return;
+  const wrapper = kb.closest('.kb-scroll-wrapper');
+  if (!wrapper) return;
+
+  // Reset zoom per misurare la larghezza reale
+  kb.style.zoom = '1';
+
+  requestAnimationFrame(() => {
+    const available = wrapper.clientWidth;         // spazio disponibile
+    const needed    = kb.scrollWidth;              // larghezza reale tastiera
+    if (needed > available && available > 100) {
+      const z = Math.max(0.50, available / needed);
+      kb.style.zoom = z.toFixed(3);
+    }
+  });
+}
+window.addEventListener('DOMContentLoaded', fitKeyboard);
+window.addEventListener('resize', fitKeyboard);
+</script>
+
+</body>
+</html>

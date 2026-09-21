@@ -75,5 +75,12 @@
         "emoji": "💻",
         "color": "#7c5cfc",
         "hasHub": true
+    },
+    {
+        "id": "informatica-base",
+        "label": "Informatica di Base",
+        "emoji": "🖥️",
+        "color": "#0D7377",
+        "hasHub": true
     }
 ]

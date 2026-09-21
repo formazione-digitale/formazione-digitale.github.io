@@ -1862,5 +1862,67 @@
         ],
         "hub": "/sicurezza/",
         "order": 8
+    },
+    {
+        "path": "/informatica-base/architettura-pc/",
+        "label": "Com'è fatto un computer",
+        "short": "Architettura PC",
+        "cat": "guide",
+        "emoji": "🖥️",
+        "tags": [
+            "hardware",
+            "cpu",
+            "ram",
+            "storage",
+            "input",
+            "output",
+            "architettura",
+            "computer",
+            "componenti",
+            "informatica base"
+        ],
+        "meta": "6 moduli · 18 sezioni · SVG interattivi · Livello base",
+        "description": "CPU, RAM, storage, input/output: architettura del computer spiegata con diagrammi interattivi, simulatore CPU e quiz.",
+        "featured": true,
+        "active": true,
+        "digcomp": [
+            "DC 5.1"
+        ],
+        "digcomp_level": "foundation",
+        "digcompedu": [
+            "DCEdu 2.2",
+            "DCEdu 6.5"
+        ],
+        "hub": "/informatica-base/",
+        "order": 1
+    },
+    {
+        "path": "/informatica-base/tastiera-windows/",
+        "label": "Scorciatoie da tastiera Windows",
+        "short": "Tastiera Windows",
+        "cat": "strumento",
+        "emoji": "⌨️",
+        "tags": [
+            "tastiera",
+            "scorciatoie",
+            "shortcut",
+            "windows",
+            "tasti",
+            "produttività",
+            "informatica base"
+        ],
+        "meta": "Scheda interattiva · Livello base",
+        "description": "Le scorciatoie da tastiera essenziali per Windows: copia, incolla, annulla, gestione finestre e molto altro.",
+        "featured": false,
+        "active": true,
+        "digcomp": [
+            "DC 5.1"
+        ],
+        "digcomp_level": "foundation",
+        "digcompedu": [
+            "DCEdu 2.2"
+        ],
+        "hub": "/informatica-base/",
+        "order": 2
     }
 ]
