@@ -534,9 +534,14 @@
     </tbody>
   </table>
 
-  <div id="scheda-anchor" style="scroll-margin-top:70px"></div>
-  <div style="text-align:center;margin-top:1.5rem">
-    <button class="scheda-trigger" onclick="openScheda()">&#x1F5A8; Scheda riassuntiva</button>
+  <div id="scheda-anchor" style="scroll-margin-top:70px;margin-top:2rem">
+    <div class="box box-tip">
+      <strong>&#x1F5A8; Scheda riassuntiva stampabile</strong>
+      <p style="margin:.4rem 0 0">Tutti e cinque i casi in una pagina sola &mdash; pronta per la stampa o il salvataggio in PDF dal dialogo di stampa del browser.</p>
+    </div>
+    <div style="text-align:center;margin-top:1rem">
+      <button class="scheda-trigger" onclick="openScheda()">&#x1F5A8; Apri scheda riassuntiva</button>
+    </div>
   </div>
 </section>
 
@@ -921,7 +926,7 @@
   });
 
   var tocLinks=document.querySelectorAll('#toc a');
-  var sections=document.querySelectorAll('section[id]');
+  var sections=document.querySelectorAll('section[id], #scheda-anchor');
   var obs=new IntersectionObserver(function(entries){
     entries.forEach(function(e){
       if(e.isIntersecting){
