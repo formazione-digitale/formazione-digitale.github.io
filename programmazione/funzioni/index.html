@@ -29,566 +29,130 @@
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/shared-extended.css?v=1">
   <style>
-
-    /* ══════════════════════════════════════════════════════════
-       PALETTE PROGRAMMAZIONE — override locale su shared-extended
-       Accent viola/indaco per distinguere dalla sezione database
-    ══════════════════════════════════════════════════════════ */
-    :root {
-      --prog-bg:      #0f1117;
-      --prog-surface: #1a1d27;
-      --prog-card:    #21253a;
-      --prog-border:  #2e3350;
-      --prog-accent:  #7c5cfc;
-      --prog-accent2: #56cfb2;
-      --prog-accent3: #f9a03f;
-      --prog-red:     #e05c5c;
-      --prog-text:    #d4d8f0;
-      --prog-muted:   #7a7f9a;
-      --prog-code-bg: #131620;
-      --kw-type:    #79b8ff;
-      --kw-keyword: #f97583;
-      --kw-comment: #6a737d;
-      --kw-string:  #9ecbff;
-      --kw-number:  #b392f0;
-      --kw-func:    #56cfb2;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Sora', sans-serif;
-      background: var(--prog-bg);
-      color: var(--prog-text);
-      line-height: 1.75;
-    }
-
-    /* ── HEADER ── */
-    header {
-      background: var(--prog-surface);
-      border-bottom: 3px solid var(--prog-accent);
-      padding: 2.5rem 2rem 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-    header::before {
-      content: '';
-      position: absolute;
-      top: -80px; right: -80px;
-      width: 320px; height: 320px;
-      border-radius: 50%;
-      background: var(--prog-accent);
-      opacity: 0.07;
-      pointer-events: none;
-    }
-    .header-back-link {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-size: 0.78rem; color: var(--prog-muted);
-      text-decoration: none; transition: color 0.2s;
-      position: absolute; top: 1rem; left: 1.5rem;
-    }
-    .header-back-link:hover { color: var(--prog-text); }
-    .header-badge {
-      display: inline-block;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.68rem;
-      background: var(--prog-accent);
-      color: white;
-      padding: 3px 10px;
-      border-radius: 3px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-    header h1 {
-      font-size: clamp(1.7rem, 4vw, 2.6rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      color: #ffffff;
-    }
-    header h1 span { color: var(--prog-accent); }
-    header p {
-      margin-top: 0.75rem;
-      color: var(--prog-muted);
-      font-size: 0.95rem;
-      max-width: 620px;
-    }
-    .header-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; }
-    .header-pill {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      padding: 4px 12px; border-radius: 20px;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.72rem; color: var(--prog-muted);
-    }
-
-    /* ── TOC — palette da shared-extended (ink/accent) ── */
-    .toc-wrap {
-      position: sticky; top: 0; z-index: 100;
-      background: #1a1a18;                    /* --ink di shared-extended */
-      border-bottom: 3px solid var(--prog-accent);
-    }
-    nav.toc {
-      padding: 0.7rem 1.5rem;
-      display: flex; flex-wrap: wrap; gap: 0.25rem;
-      align-items: center; justify-content: center;
-      max-width: 980px; margin: 0 auto;
-    }
-    nav.toc a {
-      font-size: 0.82rem;
-      font-family: 'Sora', sans-serif;
-      font-weight: 500;
-      color: #aaa9a0;                          /* muted di shared-extended */
-      text-decoration: none;
-      padding: 5px 13px; border-radius: 20px;
-      border: 1px solid transparent;
-      transition: all 0.18s; white-space: nowrap;
-      letter-spacing: 0.01em;
-    }
-    nav.toc a:hover {
-      background: rgba(255,255,255,0.1);
-      color: white;
-      border-color: rgba(255,255,255,0.2);
-    }
-    nav.toc a.active {
-      background: var(--prog-accent);          /* accent viola sezione */
-      color: white;
-      border-color: var(--prog-accent);
-      font-weight: 700;
-    }
-    @media (max-width: 600px) {
-      nav.toc { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; }
-      nav.toc::-webkit-scrollbar { display: none; }
-    }
-
-    /* ── LAYOUT ── */
-    main { max-width: 980px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
-
-    /* ── SEZIONI ── */
-    section { margin-bottom: 4.5rem; scroll-margin-top: 70px; }
-    .section-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.82rem; font-weight: 700;
-      color: var(--prog-accent);
-      letter-spacing: 0.12em; text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    }
-    h2 {
-      font-size: 1.65rem; font-weight: 700;
-      color: #ffffff; letter-spacing: -0.02em;
-      border-bottom: 2px solid var(--prog-border);
-      padding-bottom: 0.6rem; margin-bottom: 1.5rem;
-    }
-    h3 { font-size: 1.1rem; font-weight: 600; color: var(--prog-accent2); margin: 2rem 0 0.8rem; }
-
-    /* ── PARAGRAFI — leggibilità migliorata ── */
-    p {
-      margin-bottom: 1rem;
-      color: var(--prog-text);
-      font-size: 0.97rem;
-      line-height: 1.85;
-      letter-spacing: 0.01em;
-    }
-
-    /* ── CALLOUT BOX ── */
-    .box {
-      border-radius: 6px; padding: 1rem 1.25rem;
-      margin: 1.25rem 0; font-size: 0.92rem;
-      border-left: 3px solid;
-      line-height: 1.75;
-    }
-    .box-info { background: rgba(86,207,178,0.08); border-color: var(--prog-accent2); }
-    .box-warn { background: rgba(249,160,63,0.08);  border-color: var(--prog-accent3); }
-    .box-tip  { background: rgba(124,92,252,0.08);  border-color: var(--prog-accent); }
-    .box strong { display: block; margin-bottom: 0.35rem; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.8; }
-
-    /* ── BLOCCO CODICE ── */
-    .code-block {
-      background: var(--prog-code-bg);
-      border: 1px solid var(--prog-border);
-      border-radius: 8px; margin: 1.5rem 0; overflow: hidden;
-    }
-    .code-header {
-      background: var(--prog-card); padding: 0.5rem 1rem;
-      display: flex; align-items: center; justify-content: space-between;
-      border-bottom: 1px solid var(--prog-border);
-    }
-    .code-lang { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--prog-muted); letter-spacing: 0.1em; text-transform: uppercase; }
-    .code-dots { display: flex; gap: 5px; }
-    .code-dot  { width: 10px; height: 10px; border-radius: 50%; }
-    .dot-r { background: #e05c5c; }
-    .dot-y { background: #f9a03f; }
-    .dot-g { background: #56cfb2; }
-    pre {
-      padding: 1.25rem 1.5rem; overflow-x: auto;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.83rem; line-height: 1.65;
-      tab-size: 4; color: var(--prog-text);
-    }
-    .kw { color: var(--kw-keyword); font-weight: 700; }
-    .tp { color: var(--kw-type); }
-    .fn { color: var(--kw-func); }
-    .cm { color: var(--kw-comment); font-style: italic; }
-    .nm { color: var(--kw-number); }
-    .st { color: var(--kw-string); }
-    .pp { color: #ff9f43; }
-
-    /* ── TABELLA COMPLESSITÀ ── */
-    .complexity-table {
-      width: 100%; border-collapse: collapse;
-      margin: 1.25rem 0; font-size: 0.88rem;
-      border-radius: 8px; overflow: hidden;
-      border: 1px solid var(--prog-border);
-    }
-    .complexity-table th {
-      background: var(--prog-card); color: var(--prog-accent);
-      padding: 0.65rem 1rem; text-align: left;
-      font-family: 'Space Mono', monospace; font-size: 0.75rem;
-      letter-spacing: 0.05em; text-transform: uppercase;
-      border-bottom: 2px solid var(--prog-border);
-    }
-    .complexity-table td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--prog-border); vertical-align: middle; }
-    .complexity-table tr:last-child td { border-bottom: none; }
-    .complexity-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
-    .o-good { color: var(--prog-accent2); font-family: 'Space Mono', monospace; font-weight: 700; }
-    .o-mid  { color: var(--prog-accent3); font-family: 'Space Mono', monospace; font-weight: 700; }
-    .o-bad  { color: var(--prog-red);     font-family: 'Space Mono', monospace; font-weight: 700; }
-
-    /* ════════════════════════════════════════════════════════
-       VISUALIZZATORE — componente riutilizzabile
-       Ogni istanza è un .viz-section con data-viz-id univoco
-    ════════════════════════════════════════════════════════ */
-    .viz-section {
-      background: var(--prog-surface);
-      border: 1px solid var(--prog-border);
-      border-radius: 12px; overflow: hidden; margin: 2rem 0;
-    }
-    .viz-toolbar {
-      display: flex; align-items: center; gap: 0.75rem;
-      padding: 0.75rem 1.25rem;
-      background: var(--prog-card);
-      border-bottom: 1px solid var(--prog-border);
-      flex-wrap: wrap;
-    }
-    .viz-btn {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 6px 14px; border-radius: 6px;
-      border: 1px solid var(--prog-border);
-      background: var(--prog-surface); color: var(--prog-text);
-      font-family: 'Sora', sans-serif; font-size: 0.82rem;
-      font-weight: 500; cursor: pointer; transition: all 0.18s;
-    }
-    .viz-btn:hover { border-color: var(--prog-accent); color: var(--prog-accent); }
-    .viz-btn:disabled { opacity: 0.35; cursor: not-allowed; }
-    .viz-btn.primary { background: var(--prog-accent); border-color: var(--prog-accent); color: white; }
-    .viz-btn.primary:hover { background: #6a4ee0; }
-    .viz-style-tabs { display: flex; gap: 0.5rem; align-items: center; }
-    .viz-style-btn {
-      padding: 4px 12px; border-radius: 20px;
-      border: 1px solid var(--prog-border);
-      background: transparent; color: var(--prog-muted);
-      font-family: 'Sora', sans-serif; font-size: 0.78rem;
-      cursor: pointer; transition: all 0.18s;
-    }
-    .viz-style-btn.active { background: var(--prog-accent); color: white; border-color: var(--prog-accent); }
-    .viz-speed {
-      display: flex; align-items: center; gap: 0.5rem;
-      margin-left: auto; font-size: 0.78rem; color: var(--prog-muted);
-    }
-    .viz-speed input[type=range] { width: 80px; accent-color: var(--prog-accent); }
-
-    /* Canvas */
-    .viz-canvas {
-      min-height: 260px; padding: 1.5rem 1.5rem 2rem;
-      display: flex; align-items: flex-end;
-      justify-content: center; gap: 5px; position: relative;
-    }
-    .viz-canvas.blocks-mode { align-items: center; }
-
-    /* Barre */
-    .bar-wrap {
-      display: flex; align-items: flex-end; justify-content: center;
-      gap: 4px; width: 100%; height: 240px;   /* AUMENTATE da 160 a 240 */
-    }
-    .bar {
-      flex: 1; max-width: 48px;
-      border-radius: 4px 4px 0 0;
-      background: var(--prog-accent);
-      transition: height 0.28s cubic-bezier(.4,0,.2,1), background 0.18s;
-      position: relative;
-    }
-    .bar .bar-label {
-      position: absolute; bottom: -22px; left: 50%;
-      transform: translateX(-50%);
-      font-family: 'Space Mono', monospace; font-size: 0.7rem;
-      color: var(--prog-muted);
-    }
-    .bar.comparing { background: var(--prog-accent3); }
-    .bar.swapping  { background: var(--prog-red); }
-    .bar.sorted    { background: var(--prog-accent2); }
-    .bar.pivot     { background: #f0c040; }
-
-    /* Blocchi numerici */
-    .blocks-wrap {
-      display: flex; align-items: center; justify-content: center;
-      flex-wrap: wrap; gap: 8px; width: 100%; padding: 1rem 0;
-    }
-    .num-block {
-      width: 52px; height: 52px; border-radius: 8px;
-      border: 2px solid var(--prog-border);
-      background: var(--prog-card);
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Space Mono', monospace; font-size: 1.1rem;
-      font-weight: 700; color: var(--prog-text);
-      transition: all 0.28s cubic-bezier(.4,0,.2,1);
-    }
-    .num-block.comparing { border-color: var(--prog-accent3); background: rgba(249,160,63,0.15); color: var(--prog-accent3); transform: translateY(-6px); }
-    .num-block.swapping  { border-color: var(--prog-red);     background: rgba(224,92,92,0.15);  color: var(--prog-red);     transform: translateY(-10px) scale(1.1); }
-    .num-block.sorted    { border-color: var(--prog-accent2); background: rgba(86,207,178,0.12); color: var(--prog-accent2); }
-    .num-block.pivot     { border-color: #f0c040; background: rgba(240,192,64,0.12); color: #f0c040; }
-    .compare-arrow { font-size: 1.2rem; color: var(--prog-accent3); opacity: 0; transition: opacity 0.2s; align-self: center; }
-    .compare-arrow.visible { opacity: 1; }
-
-    /* Status + legenda */
-    .viz-status {
-      padding: 0.75rem 1.25rem;
-      border-top: 1px solid var(--prog-border);
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 0.5rem;
-    }
-    .viz-status-msg { font-size: 0.85rem; color: var(--prog-accent2); font-family: 'Space Mono', monospace; }
-    .viz-counters   { display: flex; gap: 1rem; font-size: 0.78rem; color: var(--prog-muted); font-family: 'Space Mono', monospace; }
-    .viz-counters span b { color: var(--prog-text); }
-    .viz-legend {
-      display: flex; flex-wrap: wrap; gap: 0.75rem;
-      padding: 0.6rem 1.25rem;
-      border-top: 1px solid var(--prog-border);
-      background: rgba(0,0,0,0.15);
-    }
-    .legend-item { display: flex; align-items: center; gap: 5px; font-size: 0.75rem; color: var(--prog-muted); }
-    .legend-dot  { width: 10px; height: 10px; border-radius: 2px; }
-
-    /* ── FOOTER ── */
-    footer {
-      text-align: center; padding: 2.5rem 1rem;
-      color: var(--prog-muted); font-size: 0.85rem;
-      border-top: 1px solid var(--prog-border); margin-top: 2rem;
-    }
-    footer a { color: var(--prog-accent); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-
-    /* ── BACK TO TOP ── */
-    .back-to-top {
-      position: fixed; bottom: 1.5rem; right: 1.5rem;
-      width: 40px; height: 40px; border-radius: 50%;
-      background: var(--prog-accent); color: white; border: none;
-      font-size: 1.1rem; cursor: pointer;
-      opacity: 0; transform: translateY(10px);
-      transition: all 0.25s; z-index: 200;
-    }
-    .back-to-top.visible { opacity: 1; transform: translateY(0); }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 600px) {
-      .viz-toolbar { gap: 0.4rem; }
-      .viz-speed   { margin-left: 0; width: 100%; }
-      .num-block   { width: 42px; height: 42px; font-size: 0.95rem; }
-    }
-  
+    :root{--prog-bg:#0f1117;--prog-surface:#1a1d27;--prog-card:#21253a;--prog-border:#2e3350;--prog-accent:#7c5cfc;--prog-accent2:#56cfb2;--prog-accent3:#f9a03f;--prog-red:#e05c5c;--prog-text:#d4d8f0;--prog-muted:#7a7f9a;--prog-code-bg:#131620;--kw-type:#79b8ff;--kw-keyword:#f97583;--kw-comment:#6a737d;--kw-string:#9ecbff;--kw-number:#b392f0;--kw-func:#56cfb2}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Sora',sans-serif;background:var(--prog-bg);color:var(--prog-text);line-height:1.75}
+    header{background:var(--prog-surface);border-bottom:3px solid var(--prog-accent);padding:2.5rem 2rem 2rem;position:relative;overflow:hidden}
+    header::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:var(--prog-accent);opacity:.07;pointer-events:none}
+    .header-back-link{display:inline-flex;align-items:center;gap:5px;font-size:.78rem;color:var(--prog-muted);text-decoration:none;transition:color .2s;position:absolute;top:1rem;left:1.5rem}
+    .header-back-link:hover{color:var(--prog-text)}
+    .header-badge{display:inline-block;font-family:'Space Mono',monospace;font-size:.68rem;background:var(--prog-accent);color:#fff;padding:3px 10px;border-radius:3px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+    header h1{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:700;letter-spacing:-.02em;line-height:1.15;color:#fff}
+    header h1 span{color:var(--prog-accent)}
+    header p{margin-top:.75rem;color:var(--prog-muted);font-size:.95rem;max-width:620px}
+    .header-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.25rem}
+    .header-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:4px 12px;border-radius:20px;font-family:'Space Mono',monospace;font-size:.72rem;color:var(--prog-muted)}
+    .header-text{padding-right:390px}
+    @media(max-width:780px){.header-text{padding-right:0}}
+    .blackbox-svg{width:100%;height:auto;display:block;margin:1.5rem 0;border-radius:8px}
     .page-nav{display:flex;gap:1rem;align-items:center;margin-top:1rem;font-size:.8rem;flex-wrap:wrap}
     .page-nav a{color:var(--prog-accent);text-decoration:none;border:1px solid rgba(124,92,252,.3);padding:4px 12px;border-radius:20px;transition:all .18s}
     .page-nav a:hover{background:rgba(124,92,252,.15);border-color:var(--prog-accent)}
     .header-deco-svg{position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);opacity:.45;pointer-events:none}
     @media(max-width:780px){.header-deco-svg{display:none}}
-      .footer-nav{margin-bottom:.75rem;font-size:.82rem}
-  
-    /* ── COPY BUTTON ── */
-    .copy-btn {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--prog-muted);
-      background: none;
-      border: 1px solid var(--prog-border);
-      border-radius: 4px;
-      padding: 2px 8px;
-      cursor: pointer;
-      transition: all 0.18s;
-      white-space: nowrap;
-    }
-    .copy-btn:hover  { color: var(--prog-accent2); border-color: var(--prog-accent2); }
-    .copy-btn.copied { color: var(--prog-accent2); border-color: var(--prog-accent2); }
+    .toc-wrap{position:sticky;top:0;z-index:100;background:#1a1a18;border-bottom:3px solid var(--prog-accent)}
+    nav.toc{padding:.7rem 1.5rem;display:flex;flex-wrap:wrap;gap:.25rem;align-items:center;justify-content:center;max-width:980px;margin:0 auto}
+    nav.toc a{font-size:.82rem;font-family:'Sora',sans-serif;font-weight:500;color:#aaa9a0;text-decoration:none;padding:5px 13px;border-radius:20px;border:1px solid transparent;transition:all .18s;white-space:nowrap}
+    nav.toc a:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2)}
+    nav.toc a.active{background:var(--prog-accent);color:#fff;border-color:var(--prog-accent);font-weight:700}
+    @media(max-width:600px){nav.toc{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;scrollbar-width:none}nav.toc::-webkit-scrollbar{display:none}}
+    main{max-width:980px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+    section{margin-bottom:4.5rem;scroll-margin-top:70px}
+    .section-label{font-family:'Space Mono',monospace;font-size:.82rem;font-weight:700;color:var(--prog-accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.5rem}
+    h2{font-size:1.65rem;font-weight:700;color:#fff;letter-spacing:-.02em;border-bottom:2px solid var(--prog-border);padding-bottom:.6rem;margin-bottom:1.5rem}
+    h3{font-size:1.1rem;font-weight:600;color:var(--prog-accent2);margin:2rem 0 .8rem}
+    p{margin-bottom:1rem;color:var(--prog-text);font-size:.97rem;line-height:1.85}
+    code{font-family:'Space Mono',monospace;font-size:.85em;color:var(--prog-accent2)}
+    .box{border-radius:6px;padding:1rem 1.25rem;margin:1.25rem 0;font-size:.92rem;border-left:3px solid;line-height:1.75}
+    .box-info{background:rgba(86,207,178,.08);border-color:var(--prog-accent2)}
+    .box-warn{background:rgba(249,160,63,.08);border-color:var(--prog-accent3)}
+    .box-tip{background:rgba(124,92,252,.08);border-color:var(--prog-accent)}
+    .box-red{background:rgba(224,92,92,.08);border-color:var(--prog-red)}
+    .box strong{display:block;margin-bottom:.35rem;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;opacity:.8}
+    .code-block{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:8px;margin:1.5rem 0;overflow:hidden}
+    .code-header{background:var(--prog-card);padding:.5rem 1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--prog-border)}
+    .code-lang{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--prog-muted);letter-spacing:.1em;text-transform:uppercase}
+    .code-dots{display:flex;gap:5px}.code-dot{width:10px;height:10px;border-radius:50%}
+    .dot-r{background:#e05c5c}.dot-y{background:#f9a03f}.dot-g{background:#56cfb2}
+    pre{padding:1.25rem 1.5rem;overflow-x:auto;font-family:'Space Mono',monospace;font-size:.83rem;line-height:1.65;tab-size:4;color:var(--prog-text)}
+    .kw{color:var(--kw-keyword);font-weight:700}.tp{color:var(--kw-type)}.fn{color:var(--kw-func)}.cm{color:var(--kw-comment);font-style:italic}.nm{color:var(--kw-number)}.st{color:var(--kw-string)}.pp{color:#ff9f43}
+    .copy-btn{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--prog-muted);background:none;border:1px solid var(--prog-border);border-radius:4px;padding:2px 8px;cursor:pointer;transition:all .18s;white-space:nowrap}
+    .copy-btn:hover{color:var(--prog-accent2);border-color:var(--prog-accent2)}
+    .copy-btn.copied{color:var(--prog-accent2);border-color:var(--prog-accent2)}
+    .cmp-table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-size:.85rem;border-radius:8px;overflow:hidden;border:1px solid var(--prog-border)}
+    .cmp-table th{background:var(--prog-card);color:var(--prog-accent);padding:.65rem 1rem;text-align:left;font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;border-bottom:2px solid var(--prog-border)}
+    .cmp-table td{padding:.6rem 1rem;border-bottom:1px solid var(--prog-border);color:var(--prog-text);vertical-align:top}
+    .cmp-table tr:last-child td{border-bottom:none}
+    .cmp-table tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+    .cmp-table td:first-child{font-family:'Space Mono',monospace;color:var(--kw-type);font-weight:700;white-space:nowrap}
+    .cmp-table .yes{color:var(--prog-accent2)}.cmp-table .no{color:var(--prog-red)}
+    .tool-box{background:var(--prog-surface);border:1px solid var(--prog-border);border-radius:12px;overflow:hidden;margin:2rem 0}
+    .tool-header{background:var(--prog-card);padding:.75rem 1.25rem;border-bottom:1px solid var(--prog-border);display:flex;align-items:center;gap:.75rem}
+    .tool-title{font-family:'Space Mono',monospace;font-size:.8rem;font-weight:700;color:var(--prog-accent2)}
+    .tool-subtitle{font-size:.78rem;color:var(--prog-muted)}
+    .tool-body{padding:1.5rem}
+    .tool-msg{font-family:'Space Mono',monospace;font-size:.82rem;color:var(--prog-accent2);padding:.6rem 1.25rem;border-top:1px solid var(--prog-border);background:rgba(0,0,0,.1);min-height:2.4rem}
+    .tool-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:6px;border:1px solid var(--prog-border);background:var(--prog-surface);color:var(--prog-text);font-family:'Sora',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .18s}
+    .tool-btn:hover{border-color:var(--prog-accent);color:var(--prog-accent)}
+    .tool-btn.active{background:var(--prog-accent);border-color:var(--prog-accent);color:#fff}
+    .tool-btn.primary{background:var(--prog-accent);border-color:var(--prog-accent);color:#fff}
+    .tool-btn.primary:hover{background:#6a4ee0}
+    .tool-input{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:6px;color:var(--prog-accent2);font-family:'Space Mono',monospace;font-size:.95rem;font-weight:700;text-align:center;padding:6px 10px;width:80px;transition:border-color .18s}
+    .tool-input:focus{outline:none;border-color:var(--prog-accent)}
+    .sim-mode-btns{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+    .sim-arena{display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:start;margin-bottom:1.25rem}
+    @media(max-width:600px){.sim-arena{grid-template-columns:1fr;gap:.5rem}}
+    .sim-box{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:8px;padding:1rem 1.1rem}
+    .sim-box-title{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--prog-muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.6rem}
+    .sim-var{display:flex;align-items:center;justify-content:flex-start;gap:.5rem;margin-bottom:.4rem;font-family:'Space Mono',monospace;font-size:.88rem}
+    .sim-var-name{color:var(--prog-muted)}
+    .sim-var-val{font-weight:700;font-size:1rem;min-width:2.5rem;text-align:left;transition:color .3s}
+    .sim-var-val.changed{color:var(--prog-accent2)}
+    .sim-var-val.unchanged{color:var(--prog-text)}
+    .sim-arrow{display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--prog-accent);padding:2rem .5rem}
+    @media(max-width:600px){.sim-arrow{transform:rotate(90deg);padding:.5rem 2rem}}
+    .sim-arrow-label{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--prog-muted);text-align:center;margin-top:.25rem}
+    .sim-code-box{background:var(--prog-code-bg);border:1px solid var(--prog-border);border-radius:8px;padding:.85rem 1.1rem;margin-bottom:1.25rem;font-family:'Space Mono',monospace;font-size:.82rem;line-height:1.7;white-space:pre}
+    .sim-controls{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-bottom:.75rem}
+    .sim-param-row{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-bottom:1rem}
+    .sim-param-group{display:flex;flex-direction:column;gap:3px}
+    .sim-param-label{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--prog-muted);letter-spacing:.05em;text-transform:uppercase}
+    footer{text-align:center;padding:2.5rem 1rem;color:var(--prog-muted);font-size:.85rem;border-top:1px solid var(--prog-border);margin-top:2rem}
+    footer a{color:var(--prog-accent);text-decoration:none}
+    footer a:hover{text-decoration:underline}
+    .footer-nav{margin-bottom:.75rem;font-size:.82rem}
+    .back-to-top{position:fixed;bottom:1.5rem;right:1.5rem;width:40px;height:40px;border-radius:50%;background:var(--prog-accent);color:#fff;border:none;font-size:1.1rem;cursor:pointer;opacity:0;transform:translateY(10px);transition:all .25s;z-index:200}
+    .back-to-top.visible{opacity:1;transform:translateY(0)}
+    @media(max-width:600px){main{padding:1.5rem 1rem 4rem}}
 
-    /* ── BOX AGGIUNTIVO ── */
-    .box-red { background: rgba(224,92,92,0.08); border-color: var(--prog-red); }
-
-    /* ── TABELLA COMPARATIVA ── */
-    .cmp-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1.25rem 0;
-      font-size: 0.85rem;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1px solid var(--prog-border);
-    }
-    .cmp-table th {
-      background: var(--prog-card);
-      color: var(--prog-accent);
-      padding: 0.65rem 1rem;
-      text-align: left;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      border-bottom: 2px solid var(--prog-border);
-    }
-    .cmp-table td                   { padding: 0.6rem 1rem; border-bottom: 1px solid var(--prog-border); color: var(--prog-text); vertical-align: top; }
-    .cmp-table tr:last-child td     { border-bottom: none; }
-    .cmp-table tr:nth-child(even) td{ background: rgba(255,255,255,0.02); }
-    .cmp-table td:first-child       { font-family: 'Space Mono', monospace; color: var(--kw-type); font-weight: 700; white-space: nowrap; }
-    .cmp-table .yes { color: var(--prog-accent2); }
-    .cmp-table .no  { color: var(--prog-red); }
-
-    /* ── TOOL BOX ── */
-    .tool-box {
-      background: var(--prog-surface);
-      border: 1px solid var(--prog-border);
-      border-radius: 12px;
-      overflow: hidden;
-      margin: 2rem 0;
-    }
-    .tool-header {
-      background: var(--prog-card);
-      padding: 0.75rem 1.25rem;
-      border-bottom: 1px solid var(--prog-border);
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .tool-title    { font-family: 'Space Mono', monospace; font-size: 0.8rem; font-weight: 700; color: var(--prog-accent2); }
-    .tool-subtitle { font-size: 0.78rem; color: var(--prog-muted); }
-    .tool-body     { padding: 1.5rem; }
-    .tool-msg {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.82rem;
-      color: var(--prog-accent2);
-      padding: 0.6rem 1.25rem;
-      border-top: 1px solid var(--prog-border);
-      background: rgba(0,0,0,0.1);
-      min-height: 2.4rem;
-    }
-    .tool-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 7px 16px;
-      border-radius: 6px;
-      border: 1px solid var(--prog-border);
-      background: var(--prog-surface);
-      color: var(--prog-text);
-      font-family: 'Sora', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.18s;
-    }
-    .tool-btn:hover        { border-color: var(--prog-accent); color: var(--prog-accent); }
-    .tool-btn.active       { background: var(--prog-accent); border-color: var(--prog-accent); color: #fff; }
-    .tool-btn.primary      { background: var(--prog-accent); border-color: var(--prog-accent); color: #fff; }
-    .tool-btn.primary:hover{ background: #6a4ee0; }
-    .tool-input {
-      background: var(--prog-code-bg);
-      border: 1px solid var(--prog-border);
-      border-radius: 6px;
-      color: var(--prog-accent2);
-      font-family: 'Space Mono', monospace;
-      font-size: 0.95rem;
-      font-weight: 700;
-      text-align: center;
-      padding: 6px 10px;
-      width: 80px;
-      transition: border-color 0.18s;
-    }
-    .tool-input:focus { outline: none; border-color: var(--prog-accent); }
-
-    /* ── SIMULATORE PARAMETRI ── */
-    .sim-mode-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
-    .sim-arena {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      gap: 1rem;
-      align-items: start;
-      margin-bottom: 1.25rem;
-    }
-    .sim-box {
-      background: var(--prog-code-bg);
-      border: 1px solid var(--prog-border);
-      border-radius: 8px;
-      padding: 1rem 1.1rem;
-    }
-    .sim-box-title {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--prog-muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 0.6rem;
-    }
-    .sim-var {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-      margin-bottom: 0.4rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.88rem;
-    }
-    .sim-var-name            { color: var(--prog-muted); }
-    .sim-var-val             { font-weight: 700; font-size: 1rem; min-width: 2.5rem; text-align: right; transition: color 0.3s; }
-    .sim-var-val.changed     { color: var(--prog-accent2); }
-    .sim-var-val.unchanged   { color: var(--prog-text); }
-    .sim-arrow {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      color: var(--prog-accent);
-      padding: 2rem 0.5rem;
-    }
-    .sim-arrow-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--prog-muted);
-      text-align: center;
-      margin-top: 0.25rem;
-    }
-    .sim-code-box {
-      background: var(--prog-code-bg);
-      border: 1px solid var(--prog-border);
-      border-radius: 8px;
-      padding: 0.85rem 1.1rem;
-      margin-bottom: 1.25rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.82rem;
-      line-height: 1.7;
-      white-space: pre;
-    }
-    .sim-param-row   { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; }
-    .sim-param-group { display: flex; flex-direction: column; gap: 3px; }
-    .sim-param-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--prog-muted);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    /* ── RESPONSIVE — componenti specifici ── */
-    @media (max-width: 600px) {
-      .sim-arena  { grid-template-columns: 1fr; gap: 0.5rem; }
-      .sim-arrow  { transform: rotate(90deg); padding: 0.5rem 2rem; }
+    /* ── Scheda stampabile ── */
+    .scheda-trigger{display:inline-flex;align-items:center;gap:6px;margin-top:1.5rem;padding:8px 18px;border-radius:6px;border:1px solid var(--prog-border);background:var(--prog-surface);color:var(--prog-muted);font-family:'Sora',sans-serif;font-size:.85rem;font-weight:500;cursor:pointer;transition:all .2s}
+    .scheda-trigger:hover{border-color:var(--prog-accent2);color:var(--prog-accent2)}
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:900;align-items:center;justify-content:center;padding:1.5rem}
+    .modal-overlay.open{display:flex}
+    .modal-sheet{background:#fff;color:#111;border-radius:8px;width:100%;max-width:700px;max-height:90vh;overflow-y:auto;padding:2rem}
+    .modal-close-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+    .modal-close-row strong{font-family:'Georgia',serif;font-size:1.1rem;color:#1F4E79}
+    .modal-close-btn{background:none;border:none;font-size:1.4rem;cursor:pointer;color:#555;line-height:1;padding:2px 6px;border-radius:4px}
+    .modal-close-btn:hover{color:#111;background:#eee}
+    .modal-actions{display:flex;gap:.75rem;margin-bottom:1.5rem;flex-wrap:wrap}
+    .modal-print-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:6px;border:1px solid;font-family:'Sora',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .18s}
+    .modal-print-btn.stampa{background:#1F4E79;border-color:#1F4E79;color:#fff}
+    .modal-print-btn.stampa:hover{background:#17396b}
+    .modal-print-note{font-size:.78rem;color:#888;margin:.6rem 0 0;line-height:1.5}
+    .scheda-caso{border:1px solid #dce5ef;border-radius:6px;margin-bottom:.85rem;overflow:hidden}
+    .scheda-caso-header{background:#1F4E79;color:#fff;padding:.4rem .9rem;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-family:'Sora',sans-serif}
+    .scheda-caso-body{padding:.65rem .9rem;background:#f8fbff}
+    .scheda-caso-body code{font-family:'Space Mono',monospace;font-size:.82rem;color:#1a3d6e;display:block;margin-bottom:.35rem;font-weight:700}
+    .scheda-caso-body p{font-family:'Sora',sans-serif;font-size:.8rem;color:#444;margin:0;line-height:1.55}
+    .scheda-caso-body p code{display:inline;font-size:.8em;font-weight:400;color:#1a3d6e}
+    .scheda-footer{font-family:'Sora',sans-serif;font-size:.72rem;color:#888;border-top:1px solid #dce5ef;padding-top:.75rem;margin-top:.5rem;text-align:center}
+    @media print{
+      body>*{display:none!important}
+      .modal-overlay{display:block!important;position:static!important;background:none!important;padding:0!important}
+      .modal-sheet{max-height:none!important;box-shadow:none!important;border-radius:0!important;overflow:visible!important}
+      .modal-actions{display:none!important}
+      .modal-close-btn{display:none!important}
     }
   </style>
 </head>
@@ -596,29 +160,37 @@
 
 <header>
   <a href="/programmazione/" class="header-back-link">&#x2190; Programmazione</a>
-  <div class="header-badge">C++ &middot; Funzioni</div>
-  <h1>Funzioni e <span>Passaggio Parametri</span></h1>
-  <p>Anatomia di una funzione, tutti i modi di passare parametri &mdash; valore, riferimento, const riferimento, puntatore &mdash; array mono e bidimensionali, con simulatore interattivo.</p>
-  <div class="header-pills">
-    <span class="header-pill">&#127891; 3&deg; anno ITIS/SIA</span>
-    <span class="header-pill">&#128295; Simulatore parametri</span>
-    <span class="header-pill">&#9200; ~40 min</span>
+  <div class="header-text">
+    <div class="header-badge">C++ &middot; Funzioni</div>
+    <h1>Funzioni e <span>Passaggio Parametri</span></h1>
+    <p>Anatomia, passaggio per valore/riferimento/puntatore, array e simulatore interattivo.</p>
+    <div class="header-pills">
+      <span class="header-pill">&#127891; 3&deg; anno ITIS/SIA</span>
+      <span class="header-pill">&#128295; Simulatore parametri</span>
+      <span class="header-pill">&#9200; ~40 min</span>
+    </div>
+    <div class="page-nav">
+      <a href="/programmazione/costrutti/">&#8592; Costrutti</a>
+      <a href="/programmazione/strutture-dati-statiche/">&#8594; Strutture Statiche</a>
+    </div>
   </div>
-  <div class="page-nav">
-    <a href="/programmazione/costrutti/">&#8592; Costrutti</a>
-    <a href="/programmazione/strutture-dati-statiche/">&#8594; Strutture Statiche</a>
-  </div>
-  <svg class="header-deco-svg" viewBox="0 0 230 62" width="310" height="84" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0" y="6" width="230" height="50" rx="6" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
-    <text x="12" y="24" fill="#79b8ff" font-family="Space Mono,monospace" font-size="9">void </text>
-    <text x="38" y="24" fill="#56cfb2" font-family="Space Mono,monospace" font-size="9">raddoppia</text>
-    <text x="96" y="24" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="9">(</text>
-    <text x="102" y="24" fill="#79b8ff" font-family="Space Mono,monospace" font-size="9">int</text>
-    <text x="118" y="24" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="9">&amp; x) {</text>
-    <text x="12" y="37" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="9">    x *= </text>
-    <text x="52" y="37" fill="#b392f0" font-family="Space Mono,monospace" font-size="9">2</text>
-    <text x="59" y="37" fill="#d4d8f0" font-family="Space Mono,monospace" font-size="9">;</text>
-    <text x="12" y="50" fill="#6a737d" font-family="Space Mono,monospace" font-size="9" font-style="italic">  // x NEL CHIAMANTE cambia</text>
+  <svg class="header-deco-svg" viewBox="0 0 280 135" width="360" height="174" xmlns="http://www.w3.org/2000/svg">
+    <!-- Card 1: int somma — dietro, inclinata a sinistra -->
+    <g transform="rotate(-2,97,46)">
+      <rect x="5" y="5" width="185" height="82" rx="6" fill="#21253a" stroke="#2e3350" stroke-width="1.5"/>
+      <text x="17" y="27" font-family="Space Mono,monospace" font-size="9"><tspan fill="#79b8ff">int </tspan><tspan fill="#56cfb2">somma</tspan><tspan fill="#d4d8f0">(</tspan><tspan fill="#79b8ff">int</tspan><tspan fill="#d4d8f0"> a, </tspan><tspan fill="#79b8ff">int</tspan><tspan fill="#d4d8f0"> b) {</tspan></text>
+      <text x="17" y="43" font-family="Space Mono,monospace" font-size="9"><tspan fill="#d4d8f0">    </tspan><tspan fill="#f97583">return </tspan><tspan fill="#d4d8f0">a + b;</tspan></text>
+      <text x="17" y="58" font-family="Space Mono,monospace" font-size="9" fill="#6a737d" font-style="italic">    // restituisce int</text>
+      <text x="17" y="74" font-family="Space Mono,monospace" font-size="9" fill="#d4d8f0">}</text>
+    </g>
+    <!-- Card 2: void raddoppia — davanti, inclinata a destra -->
+    <g transform="rotate(2,182,88)">
+      <rect x="90" y="48" width="185" height="82" rx="6" fill="#1a1d27" stroke="#7c5cfc" stroke-width="1.5"/>
+      <text x="102" y="70" font-family="Space Mono,monospace" font-size="9"><tspan fill="#79b8ff">void </tspan><tspan fill="#56cfb2">raddoppia</tspan><tspan fill="#d4d8f0">(</tspan><tspan fill="#79b8ff">int</tspan><tspan fill="#d4d8f0">&amp; x) {</tspan></text>
+      <text x="102" y="86" font-family="Space Mono,monospace" font-size="9"><tspan fill="#d4d8f0">    x *= </tspan><tspan fill="#b392f0">2</tspan><tspan fill="#d4d8f0">;</tspan></text>
+      <text x="102" y="101" font-family="Space Mono,monospace" font-size="9" fill="#6a737d" font-style="italic">    // alias: modifica orig.</text>
+      <text x="102" y="117" font-family="Space Mono,monospace" font-size="9" fill="#d4d8f0">}</text>
+    </g>
   </svg>
 </header>
 
@@ -627,7 +199,9 @@
     <a href="#anatomia" class="active">Anatomia</a>
     <a href="#passaggio">Passaggio parametri</a>
     <a href="#array">Array</a>
+    <a href="#prototipi">Prototipi</a>
     <a href="#confronto">Confronto</a>
+    <a href="#scheda-anchor">Scheda</a>
     <a href="#tool">Simulatore</a>
   </nav>
 </div>
@@ -638,29 +212,56 @@
 <section id="anatomia">
   <div class="section-label">01 &mdash; Fondamenta</div>
   <h2>Anatomia di una funzione</h2>
-  <p>Una <strong>funzione</strong> &egrave; un blocco di codice con un nome che esegue un compito specifico e pu&ograve; essere richiamato pi&ugrave; volte. Permette di evitare la duplicazione del codice e di suddividere un problema complesso in parti gestibili.</p>
+  <p>Una <strong>funzione</strong> &egrave; un blocco di codice con un nome che esegue un compito specifico e pu&ograve; essere richiamato pi&ugrave; volte. Permette di evitare la duplicazione del codice e di suddividere un problema complesso in parti pi&ugrave; gestibili.</p>
+  <p>Immagina una funzione come una <strong>scatola nera</strong>: dall&apos;esterno vedi solo cosa entra e cosa esce &mdash; non come funziona internamente. Pu&ograve; ricevere zero o pi&ugrave; valori in ingresso (i <strong>parametri</strong>) e pu&ograve; produrre output in due modi: tramite il <strong>valore di ritorno</strong> (al massimo uno, dichiarato prima del nome) oppure tramite parametri passati per <strong>riferimento</strong> usati come canali di uscita. Grazie a quest&apos;ultimo meccanismo una funzione pu&ograve; di fatto restituire pi&ugrave; risultati contemporaneamente.</p>
+
+  <svg class="blackbox-svg" viewBox="0 0 660 118" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schema: funzione come scatola nera con parametri in ingresso e output in uscita">
+    <defs>
+      <marker id="ai" viewBox="0 0 8 7" refX="7" refY="3.5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,3.5 L0,7 Z" fill="#79b8ff"/></marker>
+      <marker id="ar" viewBox="0 0 8 7" refX="7" refY="3.5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,3.5 L0,7 Z" fill="#56cfb2"/></marker>
+      <marker id="ao" viewBox="0 0 8 7" refX="7" refY="3.5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,3.5 L0,7 Z" fill="#f9a03f"/></marker>
+    </defs>
+    <rect width="660" height="118" rx="8" fill="#0f1117"/>
+    <!-- INPUT -->
+    <text x="10" y="16" font-family="Space Mono,monospace" font-size="7.5" fill="#7a7f9a" letter-spacing=".08em">PARAMETRI IN</text>
+    <text x="10" y="44" font-family="Space Mono,monospace" font-size="10" fill="#79b8ff">int a</text>
+    <line x1="60" y1="48" x2="185" y2="48" stroke="#79b8ff" stroke-width="1.5" marker-end="url(#ai)"/>
+    <text x="10" y="76" font-family="Space Mono,monospace" font-size="10" fill="#79b8ff">string nome</text>
+    <line x1="108" y1="80" x2="185" y2="80" stroke="#79b8ff" stroke-width="1.5" marker-end="url(#ai)"/>
+    <text x="10" y="105" font-family="Space Mono,monospace" font-size="7.5" fill="#7a7f9a" font-style="italic">0 o pi&#xF9; parametri</text>
+    <!-- BOX -->
+    <rect x="192" y="22" width="276" height="74" rx="8" fill="#21253a" stroke="#7c5cfc" stroke-width="2"/>
+    <text x="330" y="56" text-anchor="middle" font-family="Space Mono,monospace" font-size="12" font-weight="700" fill="#7c5cfc">FUNZIONE</text>
+    <text x="330" y="73" text-anchor="middle" font-family="Space Mono,monospace" font-size="8.5" fill="#7a7f9a">logica interna (nascosta)</text>
+    <text x="330" y="88" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#2e3350">chi chiama non la vede</text>
+    <!-- OUTPUT -->
+    <text x="482" y="16" font-family="Space Mono,monospace" font-size="7.5" fill="#7a7f9a" letter-spacing=".08em">OUTPUT</text>
+    <line x1="471" y1="48" x2="508" y2="48" stroke="#56cfb2" stroke-width="1.5" marker-end="url(#ar)"/>
+    <text x="514" y="44" font-family="Space Mono,monospace" font-size="10" fill="#56cfb2">return</text>
+    <text x="514" y="57" font-family="Space Mono,monospace" font-size="7.5" fill="#7a7f9a">max 1 valore</text>
+    <line x1="471" y1="80" x2="508" y2="80" stroke="#f9a03f" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ao)"/>
+    <text x="514" y="76" font-family="Space Mono,monospace" font-size="10" fill="#f9a03f">tipo&amp; ref</text>
+    <text x="514" y="89" font-family="Space Mono,monospace" font-size="7.5" fill="#7a7f9a">N output possibili</text>
+    <text x="482" y="105" font-family="Space Mono,monospace" font-size="7.5" fill="#7a7f9a" font-style="italic">0 o pi&#xF9; output</text>
+    <!-- LEGENDA -->
+    <line x1="192" y1="112" x2="214" y2="112" stroke="#56cfb2" stroke-width="1.5"/>
+    <text x="218" y="115" font-family="Space Mono,monospace" font-size="6.5" fill="#7a7f9a">valore di ritorno</text>
+    <line x1="330" y1="112" x2="352" y2="112" stroke="#f9a03f" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <text x="356" y="115" font-family="Space Mono,monospace" font-size="6.5" fill="#7a7f9a">param. per riferimento (output)</text>
+  </svg>
 
   <div class="code-block">
     <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; anatomia</span></div>
-    <pre><span class="cm">// PROTOTIPO (dichiarazione): annuncia l'esistenza della funzione al compilatore</span>
-<span class="cm">// Va messo prima del main se la definizione compare dopo</span>
-<span class="tp">int</span> <span class="fn">somma</span>(<span class="tp">int</span> a, <span class="tp">int</span> b);
-
-<span class="tp">int</span> <span class="fn">main</span>() {
-    <span class="tp">int</span> ris = <span class="fn">somma</span>(<span class="nm">3</span>, <span class="nm">5</span>);   <span class="cm">// CHIAMATA: passa 3 e 5 come argomenti</span>
-    cout &lt;&lt; ris;             <span class="cm">// stampa 8</span>
-    <span class="kw">return</span> <span class="nm">0</span>;
+    <pre><span class="cm">// DEFINIZIONE: tipo_ritorno nome(parametri) { corpo }</span>
+<span class="tp">int</span> <span class="fn">somma</span>(<span class="tp">int</span> a, <span class="tp">int</span> b) {      <span class="cm">// riceve due int, restituisce un int</span>
+    <span class="kw">return</span> a + b;              <span class="cm">// valore restituito al chiamante</span>
 }
 
-<span class="cm">// DEFINIZIONE: il corpo effettivo della funzione</span>
-<span class="tp">int</span> <span class="fn">somma</span>(<span class="tp">int</span> a, <span class="tp">int</span> b) {
-    <span class="kw">return</span> a + b;   <span class="cm">// restituisce il risultato al chiamante</span>
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> ris = <span class="fn">somma</span>(<span class="nm">3</span>, <span class="nm">5</span>);    <span class="cm">// CHIAMATA: passa 3 e 5 come argomenti</span>
+    cout &lt;&lt; ris;               <span class="cm">// stampa 8</span>
+    <span class="kw">return</span> <span class="nm">0</span>;
 }</pre>
-  </div>
-
-  <div class="box box-info">
-    <strong>&#128204; Prototipo vs definizione</strong>
-    <p style="margin:0">Il <b>prototipo</b> dice al compilatore il nome, il tipo di ritorno e i tipi dei parametri &mdash; basta per poterla chiamare. La <b>definizione</b> contiene il corpo. Se la definizione precede il <code>main</code>, il prototipo &egrave; superfluo. Nei progetti multi-file il prototipo va nell&apos;header (<code>.h</code>), la definizione nel sorgente (<code>.cpp</code>).</p>
   </div>
 
   <h3>Funzioni void e return</h3>
@@ -775,6 +376,7 @@
     <span class="kw">return</span> <span class="nm">0</span>;
 }</pre>
   </div>
+
 </section>
 
 <!-- ══ ARRAY ══ -->
@@ -827,7 +429,7 @@
 <span class="tp">void</span> <span class="fn">stampa</span>(<span class="tp">int</span> mat[][<span class="nm">3</span>], <span class="tp">int</span> righe) {
     <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">0</span>; i &lt; righe; i++) {
         <span class="kw">for</span> (<span class="tp">int</span> j = <span class="nm">0</span>; j &lt; <span class="nm">3</span>; j++)
-            cout &lt;&lt; mat[i][j] &lt;&lt; <span class="st">"	"</span>;
+            cout &lt;&lt; mat[i][j] &lt;&lt; <span class="st">"\t"</span>;
         cout &lt;&lt; endl;
     }
 }
@@ -853,9 +455,52 @@
   </div>
 </section>
 
+<!-- ══ PROTOTIPI ══ -->
+<section id="prototipi">
+  <div class="section-label">04 &mdash; Approfondimento</div>
+  <h2>Prototipi di funzione</h2>
+  <p>Il compilatore C++ deve conoscere una funzione <strong>prima</strong> di incontrarne la chiamata. La soluzione pi&ugrave; semplice &egrave; scrivere la definizione sopra il <code>main</code>. Quando invece si preferisce avere il <code>main</code> in cima al file &mdash; pi&ugrave; leggibile per chi studia il programma &mdash; si usa il <strong>prototipo</strong>: una sola riga che dichiara nome, tipo di ritorno e tipi dei parametri, senza il corpo.</p>
+
+  <div class="code-block">
+    <div class="code-header"><div class="code-dots"><div class="code-dot dot-r"></div><div class="code-dot dot-y"></div><div class="code-dot dot-g"></div></div><span class="code-lang">C++ &middot; prototipi</span></div>
+    <pre><span class="cm">// ── PROTOTIPI ─────────────────────────────────────────────</span>
+<span class="cm">// Il compilatore conosce le funzioni ancora prima di vederle</span>
+<span class="tp">int</span>  <span class="fn">somma</span>(<span class="tp">int</span> a, <span class="tp">int</span> b);       <span class="cm">// tipo ritorno + nome + tipi parametri</span>
+<span class="tp">void</span> <span class="fn">saluta</span>(<span class="tp">string</span> nome);        <span class="cm">// i nomi parametro sono opzionali</span>
+
+<span class="cm">// ── MAIN ──────────────────────────────────────────────────</span>
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> ris = <span class="fn">somma</span>(<span class="nm">4</span>, <span class="nm">7</span>);       <span class="cm">// OK: somma è già dichiarata</span>
+    <span class="fn">saluta</span>(<span class="st">"Mario"</span>);              <span class="cm">// OK: saluta è già dichiarata</span>
+    cout &lt;&lt; <span class="st">"Somma: "</span> &lt;&lt; ris &lt;&lt; endl;
+    <span class="kw">return</span> <span class="nm">0</span>;
+}
+
+<span class="cm">// ── DEFINIZIONI ───────────────────────────────────────────</span>
+<span class="cm">// Devono corrispondere esattamente al prototipo</span>
+<span class="tp">int</span> <span class="fn">somma</span>(<span class="tp">int</span> a, <span class="tp">int</span> b) {
+    <span class="kw">return</span> a + b;
+}
+
+<span class="tp">void</span> <span class="fn">saluta</span>(<span class="tp">string</span> nome) {
+    cout &lt;&lt; <span class="st">"Ciao, "</span> &lt;&lt; nome &lt;&lt; <span class="st">"!"</span> &lt;&lt; endl;
+}</pre>
+  </div>
+
+  <div class="box box-warn">
+    <strong>&#9888; Prototipo e definizione devono corrispondere</strong>
+    <p style="margin:0">Tipo di ritorno e tipi dei parametri devono essere identici. I <b>nomi</b> dei parametri nel prototipo sono opzionali: <code>int somma(int, int);</code> &egrave; equivalente a <code>int somma(int a, int b);</code> &mdash; ma scriverli rende il codice pi&ugrave; leggibile.</p>
+  </div>
+
+  <div class="box box-info">
+    <strong>&#128204; File header (.h) nei progetti multi-file</strong>
+    <p style="margin:0">Nelle applicazioni pi&ugrave; grandi il codice viene diviso in pi&ugrave; file sorgente. I prototipi vengono raccolti in un <b>file header</b> (<code>.h</code>), le definizioni nel file sorgente (<code>.cpp</code>). Ogni file che usa le funzioni include l&apos;header con <code>#include "miefunzioni.h"</code>. &Egrave; un argomento che affronteremo in una pagina dedicata alla compilazione separata.</p>
+  </div>
+</section>
+
 <!-- ══ CONFRONTO ══ -->
 <section id="confronto">
-  <div class="section-label">04 &mdash; Riepilogo</div>
+  <div class="section-label">05 &mdash; Riepilogo</div>
   <h2>Tabella comparativa</h2>
   <table class="cmp-table">
     <thead>
@@ -888,11 +533,16 @@
       </tr>
     </tbody>
   </table>
+
+  <div id="scheda-anchor" style="scroll-margin-top:70px"></div>
+  <div style="text-align:center;margin-top:1.5rem">
+    <button class="scheda-trigger" onclick="openScheda()">&#x1F5A8; Scheda riassuntiva</button>
+  </div>
 </section>
 
 <!-- ══ TOOL ══ -->
 <section id="tool">
-  <div class="section-label">05 &mdash; Pratica</div>
+  <div class="section-label">06 &mdash; Pratica</div>
   <h2>&#128295; Simulatore passaggio parametri</h2>
   <p>Imposta un valore iniziale, scegli la modalit&agrave; e osserva cosa succede alla variabile nel chiamante prima, durante e dopo la chiamata.</p>
 
@@ -972,6 +622,62 @@
 </section>
 
 </main>
+
+<!-- ══ MODAL SCHEDA ══ -->
+<div class="modal-overlay" id="modal-scheda" onclick="modalOverlayClick(event)">
+  <div class="modal-sheet">
+    <div class="modal-close-row">
+      <strong>Scheda riassuntiva &mdash; Funzioni C++</strong>
+      <button class="modal-close-btn" onclick="closeScheda()" title="Chiudi">&#x2715;</button>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-print-btn stampa" onclick="schedaStampa()">&#x1F5A8; Stampa</button>
+      <p class="modal-print-note">Per salvare in PDF: nel dialogo di stampa scegli &laquo;Salva come PDF&raquo;.</p>
+    </div>
+
+    <div class="scheda-caso">
+      <div class="scheda-caso-header">1 &middot; void senza parametri</div>
+      <div class="scheda-caso-body">
+        <code>void saluta() { ... }</code>
+        <p>Non riceve dati e non restituisce nulla. Esegue un&apos;azione autonoma (es. stampa a video).</p>
+      </div>
+    </div>
+
+    <div class="scheda-caso">
+      <div class="scheda-caso-header">2 &middot; void con parametri per valore</div>
+      <div class="scheda-caso-body">
+        <code>void stampa(int n, string s) { ... }</code>
+        <p>Riceve copie dei valori. Le modifiche restano locali &mdash; la variabile originale nel chiamante non cambia.</p>
+      </div>
+    </div>
+
+    <div class="scheda-caso">
+      <div class="scheda-caso-header">3 &middot; void con parametri per riferimento (&amp;)</div>
+      <div class="scheda-caso-body">
+        <code>void incrementa(int&amp; x) { x++; }</code>
+        <p>Riceve un alias della variabile originale. Ogni modifica si riflette direttamente sul chiamante.</p>
+      </div>
+    </div>
+
+    <div class="scheda-caso">
+      <div class="scheda-caso-header">4 &middot; void con parametri misti (valore + riferimento)</div>
+      <div class="scheda-caso-body">
+        <code>void calcola(int a, int&amp; r) { r = a * 2; }</code>
+        <p><code>a</code> &egrave; una copia (input), <code>r</code> &egrave; un alias (output). Pattern tipico per restituire pi&ugrave; risultati.</p>
+      </div>
+    </div>
+
+    <div class="scheda-caso">
+      <div class="scheda-caso-header">5 &middot; Funzione tipizzata (con valore di ritorno)</div>
+      <div class="scheda-caso-body">
+        <code>int somma(int a, int b) { return a + b; }</code>
+        <p>Calcola e restituisce un valore al chiamante tramite <code>return</code>. Il tipo dichiarato deve corrispondere.</p>
+      </div>
+    </div>
+
+    <div class="scheda-footer">formazione-digitale.it &nbsp;&middot;&nbsp; Programmazione C++ &nbsp;&middot;&nbsp; Funzioni e Passaggio Parametri</div>
+  </div>
+</div>
 
 <footer>
   <div class="footer-nav">
@@ -1056,7 +762,7 @@
       L = [
         TP('void')+' '+FN('f')+'('+TP('int')+' x) {',
         '    '+opLabelX()+';',
-        '    '+CM('// x è una copia — l\'originale NON cambia'),
+        '    '+CM('// x \u00e8 una copia \u2014 l\'originale NON cambia'),
         '}',
         TP('int')+' '+FN('main')+'() {',
         '    '+TP('int')+' a = '+NM(val)+';',
@@ -1069,12 +775,12 @@
       L = [
         TP('void')+' '+FN('f')+'('+TP('int')+'&amp; x) {',
         '    '+opLabelX()+';',
-        '    '+CM('// x è un alias — l\'originale CAMBIA'),
+        '    '+CM('// x \u00e8 un alias \u2014 l\'originale CAMBIA'),
         '}',
         TP('int')+' '+FN('main')+'() {',
         '    '+TP('int')+' a = '+NM(val)+';',
         '    '+FN('f')+'(a);',
-        '    '+CM('// a è ora '+applyOp(parseInt(val)||0)),
+        '    '+CM('// a \u00e8 ora '+applyOp(parseInt(val)||0)),
         '    '+KW('return')+' '+NM('0')+';',
         '}'
       ];
@@ -1082,12 +788,12 @@
       L = [
         TP('void')+' '+FN('stampa')+'('+KW('const')+' '+TP('string')+'&amp; s) {',
         '    cout &lt;&lt; s &lt;&lt; endl;',
-        '    '+CM('// s = "..."; ❌ errore: s è const'),
+        '    '+CM('// s = "..."; \u274c errore: s \u00e8 const'),
         '}',
         TP('int')+' '+FN('main')+'() {',
         '    '+TP('string')+' nome = '+ST('"'+sval+'"')+';',
         '    '+FN('stampa')+'(nome);',
-        '    '+CM('// nome NON cambia — garantito da const'),
+        '    '+CM('// nome NON cambia \u2014 garantito da const'),
         '    '+KW('return')+' '+NM('0')+';',
         '}'
       ];
@@ -1101,7 +807,7 @@
         TP('int')+' '+FN('main')+'() {',
         '    '+TP('int')+' a = '+NM(val)+';',
         '    '+FN('f')+'(&amp;a);',
-        '    '+CM('// a è ora '+applyOp(parseInt(val)||0)),
+        '    '+CM('// a \u00e8 ora '+applyOp(parseInt(val)||0)),
         '    '+KW('return')+' '+NM('0')+';',
         '}'
       ];
@@ -1110,11 +816,11 @@
   }
 
   function resetArena() {
-    callerBefore.textContent = '—'; callerAfter.textContent = '—';
-    funcVal.textContent = '—'; afterNote.textContent = '—';
-    funcLabel.textContent = '—';
-    simArrow.textContent = '→'; simArrowLbl.textContent = 'chiama';
-    msgEl.textContent = 'Scegli modalità, imposta il valore e premi Esegui.';
+    callerBefore.textContent = '\u2014'; callerAfter.textContent = '\u2014';
+    funcVal.textContent = '\u2014'; afterNote.textContent = '\u2014';
+    funcLabel.textContent = '\u2014';
+    simArrow.textContent = '\u2192'; simArrowLbl.textContent = 'chiama';
+    msgEl.textContent = 'Scegli modalit\u00e0, imposta il valore e premi Esegui.';
     callerBefore.className = 'sim-var-val unchanged';
     callerAfter.className = 'sim-var-val unchanged';
     funcVal.className = 'sim-var-val unchanged';
@@ -1127,10 +833,10 @@
       callerBefore.textContent = '"'+s+'"'; callerBefore.className = 'sim-var-val unchanged';
       paramName.textContent = 's (const &) =';
       funcVal.textContent = '"'+s+'"'; funcVal.className = 'sim-var-val unchanged';
-      funcLabel.innerHTML = '<span style="color:var(--prog-red)">s è const: nessuna modifica consentita</span>';
+      funcLabel.innerHTML = '<span style="color:var(--prog-red)">s \u00e8 const: nessuna modifica consentita</span>';
       callerAfter.textContent = '"'+s+'"'; callerAfter.className = 'sim-var-val unchanged';
-      afterNote.innerHTML = '<span style="color:var(--prog-accent2)">nome NON cambia — const garantisce sola lettura. Zero copie della stringa.</span>';
-      simArrow.textContent = '→'; simArrowLbl.textContent = 'const ref';
+      afterNote.innerHTML = '<span style="color:var(--prog-accent2)">nome NON cambia \u2014 const garantisce sola lettura. Zero copie della stringa.</span>';
+      simArrow.textContent = '\u2192'; simArrowLbl.textContent = 'const ref';
       msgEl.textContent = 'const riferimento: "'+s+'" prima e dopo. Zero copie, nessuna modifica.';
       return;
     }
@@ -1144,31 +850,31 @@
 
     if (mode === 'valore') {
       paramName.textContent = 'x (copia) =';
-      funcVal.textContent = a + ' → ' + after;
+      funcVal.textContent = a + ' \u2192 ' + after;
       funcVal.className = 'sim-var-val unchanged';
       funcLabel.innerHTML = opLabelX() + '<br><span style="color:var(--prog-accent3)">modifica solo la copia locale</span>';
       callerAfter.textContent = a; callerAfter.className = 'sim-var-val unchanged';
-      afterNote.innerHTML = '<span style="color:var(--prog-accent3)">a NON è cambiato — la copia viene scartata al termine della funzione.</span>';
-      simArrow.textContent = '→'; simArrowLbl.textContent = 'copia di a';
+      afterNote.innerHTML = '<span style="color:var(--prog-accent3)">a NON \u00e8 cambiato \u2014 la copia viene scartata al termine della funzione.</span>';
+      simArrow.textContent = '\u2192'; simArrowLbl.textContent = 'copia di a';
       msgEl.textContent = 'Per valore: a = '+a+' prima e dopo. La funzione ha operato su una copia.';
 
     } else if (mode === 'rif') {
       paramName.textContent = 'x (alias di a) =';
-      funcVal.textContent = a + ' → ' + after; funcVal.className = 'sim-var-val changed';
+      funcVal.textContent = a + ' \u2192 ' + after; funcVal.className = 'sim-var-val changed';
       funcLabel.innerHTML = opLabelX() + '<br><span style="color:var(--prog-accent2)">modifica a direttamente</span>';
       callerAfter.textContent = after; callerAfter.className = after !== a ? 'sim-var-val changed' : 'sim-var-val unchanged';
-      afterNote.innerHTML = '<span style="color:var(--prog-accent2)">a è diventato '+after+' — il riferimento &amp; è un alias: stessa cella di memoria.</span>';
-      simArrow.textContent = '⇄'; simArrowLbl.textContent = 'riferimento &';
-      msgEl.textContent = 'Per riferimento: a = '+a+' prima, a = '+after+' dopo. L\'originale è cambiato.';
+      afterNote.innerHTML = '<span style="color:var(--prog-accent2)">a \u00e8 diventato '+after+' \u2014 il riferimento &amp; \u00e8 un alias: stessa cella di memoria.</span>';
+      simArrow.textContent = '\u21c4'; simArrowLbl.textContent = 'riferimento &';
+      msgEl.textContent = 'Per riferimento: a = '+a+' prima, a = '+after+' dopo.';
 
     } else {
       paramName.textContent = 'p (indirizzo di a)';
-      funcVal.textContent = '&a → *p: ' + a + ' → ' + after; funcVal.className = 'sim-var-val changed';
+      funcVal.textContent = '&a \u2192 *p: ' + a + ' \u2192 ' + after; funcVal.className = 'sim-var-val changed';
       funcLabel.innerHTML = opLabelP() + '<br><span style="color:var(--prog-accent2)">modifica via dereferenziazione *p</span>';
       callerAfter.textContent = after; callerAfter.className = after !== a ? 'sim-var-val changed' : 'sim-var-val unchanged';
-      afterNote.innerHTML = '<span style="color:var(--prog-accent2)">a è diventato '+after+' — il puntatore ha raggiunto la stessa cella di memoria.</span>';
-      simArrow.textContent = '→'; simArrowLbl.textContent = 'indirizzo &a';
-      msgEl.textContent = 'Per puntatore: a = '+a+' prima, a = '+after+' dopo. Stesso effetto del riferimento, sintassi diversa.';
+      afterNote.innerHTML = '<span style="color:var(--prog-accent2)">a \u00e8 diventato '+after+' \u2014 il puntatore ha raggiunto la stessa cella di memoria.</span>';
+      simArrow.textContent = '\u2192'; simArrowLbl.textContent = 'indirizzo &a';
+      msgEl.textContent = 'Per puntatore: a = '+a+' prima, a = '+after+' dopo.';
     }
   });
 
@@ -1207,7 +913,7 @@
     btn.className='copy-btn'; btn.textContent='Copia';
     btn.addEventListener('click',function(){
       navigator.clipboard.writeText(pre.innerText).then(function(){
-        btn.textContent='✓ Copiato'; btn.classList.add('copied');
+        btn.textContent='\u2713 Copiato'; btn.classList.add('copied');
         setTimeout(function(){btn.textContent='Copia';btn.classList.remove('copied');},2000);
       });
     });
@@ -1235,6 +941,26 @@
   });
   var btt=document.getElementById('back-to-top');
   window.addEventListener('scroll',function(){btt.classList.toggle('visible',window.scrollY>300);});
+
+  // ── Scheda stampabile ──
+  window.openScheda = function() {
+    document.getElementById('modal-scheda').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+  window.closeScheda = function() {
+    document.getElementById('modal-scheda').classList.remove('open');
+    document.body.style.overflow = '';
+  };
+  window.modalOverlayClick = function(e) {
+    if (e.target === document.getElementById('modal-scheda')) closeScheda();
+  };
+  window.schedaStampa = function() {
+    window.print();
+  };
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeScheda();
+  });
+
 })();
 </script>
 
