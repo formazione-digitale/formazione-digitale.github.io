@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Informatica di Base — Formazione Digitale</title>
-  <meta name="description" content="Le basi dell'informatica: architettura del computer, tastiera e scorciatoie, conversioni numeriche. Risorse interattive per la prima superiore.">
+  <meta name="description" content="Le basi dell'informatica: architettura del computer, tastiera e scorciatoie, file e cartelle in Windows, conversioni numeriche. Risorse interattive per la prima superiore.">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Informatica di Base — Formazione Digitale">
-  <meta property="og:description" content="Le basi dell'informatica: architettura del computer, tastiera e scorciatoie, conversioni numeriche. Risorse interattive per la prima superiore.">
+  <meta property="og:description" content="Le basi dell'informatica: architettura del computer, tastiera e scorciatoie, file e cartelle in Windows, conversioni numeriche. Risorse interattive per la prima superiore.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://formazione-digitale.it/informatica-base/">
   <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
@@ -17,7 +17,7 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Informatica di Base — Formazione Digitale">
-  <meta name="twitter:description" content="Le basi dell'informatica: architettura del computer, tastiera e scorciatoie, conversioni numeriche.">
+  <meta name="twitter:description" content="Le basi dell'informatica: architettura del computer, tastiera e scorciatoie, file e cartelle in Windows, conversioni numeriche.">
   <meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
 
   <!-- Canonical -->
@@ -29,7 +29,7 @@
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Informatica di Base",
-    "description": "Le basi dell'informatica: architettura del computer, tastiera e scorciatoie, conversioni numeriche. Risorse interattive per la prima superiore.",
+    "description": "Le basi dell'informatica: architettura del computer, tastiera e scorciatoie, file e cartelle in Windows, conversioni numeriche. Risorse interattive per la prima superiore.",
     "url": "https://formazione-digitale.it/informatica-base/",
     "publisher": {
       "@type": "WebSite",
@@ -42,7 +42,7 @@
   <!-- GoatCounter -->
   <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
-  <link rel="stylesheet" href="/css/shared.css?v=3">
+  <link rel="stylesheet" href="/css/shared.css?v=5">
 
   <style>
     /* ── HEADER HUB — due colonne ────────────────────────────────────── */
@@ -123,98 +123,9 @@
       margin-bottom: 0.85rem;
     }
 
-    .hub-intro-highlights {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    .highlight-item {
-      background: #E0F7FA;
-      border: 1px solid #B2EBF2;
-      border-radius: 10px;
-      padding: 1rem 1.25rem;
-    }
-
-    .highlight-item strong {
-      color: #0D7377;
-      display: block;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-    }
-
-    .highlight-item p {
-      font-size: 0.85rem;
-      color: var(--gray-mid);
-      margin: 0;
-    }
-
     @media(max-width: 900px) {
       .hub-intro { padding: 0 1.5rem; }
       .hub-intro h2 { font-size: 1.2rem; }
-    }
-
-    /* ── PERCORSO CONSIGLIATO ────────────────────────────────────────── */
-    .hub-path {
-      background: var(--white);
-      border: 1px solid #B2EBF2;
-      border-radius: 10px;
-      padding: 2rem;
-      margin: 0 2rem 3rem;
-      max-width: 960px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .hub-path h3 {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      color: #0D7377;
-      margin-bottom: 1.25rem;
-    }
-
-    .path-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
-
-    .path-step {
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-    }
-
-    .path-num {
-      background: #0D7377;
-      color: #fff;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 0.85rem;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    .path-content strong {
-      color: #0D7377;
-      display: block;
-      margin-bottom: 0.2rem;
-    }
-
-    .path-content p {
-      font-size: 0.85rem;
-      color: var(--gray-mid);
-      margin: 0;
-    }
-
-    @media(max-width: 900px) {
-      .hub-path { margin: 0 1.5rem 3rem; padding: 1.5rem; }
     }
 
     /* ── RISORSE ──────────────────────────────────────────────────────── */
@@ -273,6 +184,27 @@
       font-size: 1.5rem;
     }
 
+    /* Numero di tappa del percorso */
+    .resource-step {
+      background: #0D7377;
+      color: #fff;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .hub-resources .resources-sub {
+      font-size: 0.9rem;
+      color: var(--gray-mid);
+      margin: -1rem 0 1.5rem;
+    }
+
     .resource-title {
       font-weight: 700;
       font-size: 0.95rem;
@@ -309,9 +241,9 @@
     <div class="hub-header-text">
       <a href="/" style="display:inline-block;margin-bottom:1.2rem;font-size:.82rem;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.55)'">← Portale</a>
       <h1>Informatica di Base</h1>
-      <p>Le fondamenta dell'informatica: capire com'è fatto un computer, imparare a usare la tastiera con le scorciatoie e scoprire come ragiona una macchina digitale.</p>
+      <p>Le fondamenta dell'informatica: capire com'è fatto un computer, imparare a usare la tastiera con le scorciatoie, organizzare file e cartelle e scoprire come ragiona una macchina digitale.</p>
       <div class="hub-header-meta">
-        <div>📚 <strong>2 risorse</strong> disponibili</div>
+        <div>📚 <strong>3 risorse</strong> disponibili</div>
         <div>🎓 Pensato per la prima superiore</div>
       </div>
     </div>
@@ -332,61 +264,20 @@
   <!-- ── INTRO ────────────────────────────────────────────────────── -->
   <div class="hub-intro">
     <h2>Di cosa si tratta?</h2>
-    <p>Questa sezione raccoglie le risorse per chi inizia a studiare informatica. Si parte dalle cose concrete — cosa c'è dentro il case di un computer, come funziona la CPU, a cosa serve la RAM — per poi passare all'uso quotidiano della tastiera con tutte le scorciatoie utili.</p>
+    <p>Questa sezione raccoglie le risorse per chi inizia a studiare informatica: si parte da com'è fatto un computer, si passa alla tastiera e alla gestione di file e cartelle in Windows, per arrivare a come la macchina rappresenta i numeri.</p>
     <p>Ogni risorsa è interattiva: schemi cliccabili, quiz, simulatori. Non solo teoria, ma strumenti da usare in classe e a casa.</p>
-
-    <div class="hub-intro-highlights">
-      <div class="highlight-item">
-        <strong>Architettura del PC</strong>
-        <p>CPU, memorie, storage, periferiche I/O, modello Von Neumann, ciclo FDE</p>
-      </div>
-      <div class="highlight-item">
-        <strong>Tastiera e scorciatoie</strong>
-        <p>Layout della tastiera, tasti speciali, combinazioni Windows indispensabili</p>
-      </div>
-      <div class="highlight-item">
-        <strong>Prossimamente</strong>
-        <p>Conversione decimale ↔ binario, rappresentazione dei dati</p>
-      </div>
-    </div>
   </div>
 
-  <!-- ── PERCORSO CONSIGLIATO ────────────────────────────────────── -->
-  <div class="hub-path">
-    <h3>📍 Percorso consigliato</h3>
-    <div class="path-steps">
-      <div class="path-step">
-        <div class="path-num">1</div>
-        <div class="path-content">
-          <strong>Com'è fatto un computer</strong>
-          <p>Parti da qui: cos'è un PC, come funziona la CPU, le memorie, lo storage e le periferiche. Le basi hardware spiegate con schemi interattivi.</p>
-        </div>
-      </div>
-      <div class="path-step">
-        <div class="path-num">2</div>
-        <div class="path-content">
-          <strong>La tastiera del PC</strong>
-          <p>Impara a usare la tastiera in modo efficiente: layout, tasti speciali e le scorciatoie di Windows che fanno risparmiare tempo.</p>
-        </div>
-      </div>
-      <div class="path-step">
-        <div class="path-num">3</div>
-        <div class="path-content">
-          <strong>Decimale e binario <span style="font-weight:400;color:#999;font-size:.8rem;">(in arrivo)</span></strong>
-          <p>Come i computer rappresentano i numeri: conversioni tra base 10 e base 2.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── RISORSE ────────────────────────────────────────────────────── -->
+  <!-- ── PERCORSO CONSIGLIATO (card numerate) ──────────────────────── -->
   <div class="hub-resources">
-    <h3>Tutte le risorse</h3>
+    <h3>📍 Percorso consigliato</h3>
+    <p class="resources-sub">Segui le risorse in ordine: ognuna usa quello che hai imparato nella precedente.</p>
     <div class="resources-grid">
 
       <!-- Risorsa 1 — Com'è fatto un computer -->
       <a href="architettura-pc/" class="resource-card">
         <div class="resource-head">
+          <span class="resource-step">1</span>
           <div class="resource-icon">🖥️</div>
           <div class="resource-title">Com'è fatto un computer</div>
         </div>
@@ -399,6 +290,7 @@
       <!-- Risorsa 2 — La tastiera del PC -->
       <a href="tastiera-windows/" class="resource-card">
         <div class="resource-head">
+          <span class="resource-step">2</span>
           <div class="resource-icon">⌨️</div>
           <div class="resource-title">La tastiera del PC</div>
         </div>
@@ -408,9 +300,23 @@
         </div>
       </a>
 
-      <!-- Risorsa 3 — Coming soon -->
+      <!-- Risorsa 3 — File e cartelle in Windows -->
+      <a href="file-system-windows/" class="resource-card">
+        <div class="resource-head">
+          <span class="resource-step">3</span>
+          <div class="resource-icon">📁</div>
+          <div class="resource-title">File e cartelle in Windows</div>
+        </div>
+        <div class="resource-body">
+          <div class="resource-desc">Il file system spiegato da zero: Esplora file, percorsi, nomi ed estensioni, creare, rinominare, copiare e spostare, archivi ZIP. Con laboratorio guidato e verifica automatica del tuo lavoro.</div>
+          <div class="resource-meta">Guida da zero · Albero interattivo · Quiz · Laboratorio con verifica ZIP</div>
+        </div>
+      </a>
+
+      <!-- Risorsa 4 — Coming soon -->
       <div class="resource-card coming">
         <div class="resource-head">
+          <span class="resource-step">4</span>
           <div class="resource-icon">🔢</div>
           <div class="resource-title">Decimale e binario</div>
         </div>

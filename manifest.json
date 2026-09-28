@@ -1924,5 +1924,22 @@
         ],
         "hub": "/informatica-base/",
         "order": 2
-    }
+    },
+	{
+		"path": "/informatica-base/file-system-windows/",
+		"label": "File e cartelle in Windows",
+		"short": "File e cartelle",
+		"cat": "guide",
+		"emoji": "📁",
+		"tags": ["file", "cartelle", "file system", "esplora file", "estensioni", "percorso", "rinominare", "copiare", "spostare", "zip", "windows 11", "informatica base"],
+		"meta": "8 sezioni · Albero interattivo · Laboratorio con verifica ZIP · Livello base",
+		"description": "Il file system di Windows spiegato da zero: Esplora file, percorsi, nomi ed estensioni, operazioni su file e cartelle, archivi ZIP. Con laboratorio guidato e verifica automatica.",
+		"featured": false,
+		"active": true,
+		"digcomp": ["DC 1.3"],
+		"digcomp_level": "foundation",
+		"digcompedu": ["DCEdu 6.1"],
+		"hub": "/informatica-base/",
+		"order": 3
+	}
 ]

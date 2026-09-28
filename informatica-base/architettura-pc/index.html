@@ -7,21 +7,24 @@
 <meta name="description" content="Hardware del computer spiegato per chi inizia: CPU, memorie, storage, periferiche e avvio. Guida interattiva con diagrammi SVG per la prima superiore.">
 <meta name="author" content="Cristiano De Pasquale">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://formazione-digitale.it/informatica/come-e-fatto-un-computer/">
+<link rel="canonical" href="https://formazione-digitale.it/informatica-base/architettura-pc/">
 <link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
 <link rel="dns-prefetch" href="//gc.zgo.at">
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#1F4E79">
 <meta property="og:title" content="Com'è fatto un computer — Formazione Digitale">
 <meta property="og:description" content="Hardware del computer spiegato per chi inizia: CPU, memorie, storage, periferiche e avvio.">
-<meta property="og:url" content="https://formazione-digitale.it/informatica/come-e-fatto-un-computer/">
+<meta property="og:url" content="https://formazione-digitale.it/informatica-base/architettura-pc/">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
 <meta property="og:locale" content="it_IT">
 <meta property="og:site_name" content="Formazione Digitale">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Com'è fatto un computer">
+<meta name="twitter:description" content="Hardware del computer spiegato per chi inizia: CPU, memorie, storage, periferiche e avvio. Con diagrammi interattivi e simulatore CPU.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"LearningResource","name":"Com'è fatto un computer","description":"Hardware del computer spiegato per chi inizia: CPU, memorie, storage, periferiche e avvio del sistema.","url":"https://formazione-digitale.it/informatica/come-e-fatto-un-computer/","inLanguage":"it","author":{"@type":"Person","name":"Cristiano De Pasquale","jobTitle":"Docente di Informatica"},"provider":{"@type":"WebSite","name":"Formazione Digitale","url":"https://formazione-digitale.it"},"educationalLevel":"Scuola secondaria di secondo grado — primo anno","keywords":"hardware, cpu, ram, rom, bus, periferiche, storage, avvio computer, prima superiore","educationalAlignment":[{"@type":"AlignmentObject","alignmentType":"educationalSubject","educationFramework":"DigComp 2.2","targetName":"Area 1 — Navigazione, ricerca e filtraggio di dati e informazioni digitali"},{"@type":"AlignmentObject","alignmentType":"educationalSubject","educationFramework":"DigComp 2.2","targetName":"Area 4 — Sicurezza dei dispositivi e dei dati personali"}]}
+{"@context":"https://schema.org","@type":"LearningResource","name":"Com'è fatto un computer","description":"Hardware del computer spiegato per chi inizia: CPU, memorie, storage, periferiche e avvio del sistema.","url":"https://formazione-digitale.it/informatica-base/architettura-pc/","inLanguage":"it","author":{"@type":"Person","name":"Cristiano De Pasquale","jobTitle":"Docente di Informatica"},"provider":{"@type":"WebSite","name":"Formazione Digitale","url":"https://formazione-digitale.it"},"educationalLevel":"Scuola secondaria di secondo grado — primo anno","keywords":"hardware, cpu, ram, rom, bus, periferiche, storage, avvio computer, prima superiore","isPartOf":{"@type":"CollectionPage","name":"Informatica di Base","url":"https://formazione-digitale.it/informatica-base/"},"educationalAlignment":[{"@type":"AlignmentObject","alignmentType":"educationalSubject","educationFramework":"DigComp 2.2","targetName":"5.1 — Risolvere problemi tecnici"}]}
 </script>
 <script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <link rel="stylesheet" href="/css/shared.css?v=5">
@@ -49,15 +52,12 @@
 .table-wrap td{padding:.65rem 1rem;border-bottom:1px solid var(--blue-light);vertical-align:top;line-height:1.55;color:#3a3a3a}
 .table-wrap tbody tr:last-child td{border-bottom:none}
 .table-wrap td:first-child{white-space:nowrap;color:var(--blue-dark)}
-#back-top{position:fixed;bottom:2rem;right:2rem;width:40px;height:40px;border-radius:50%;background:var(--blue-dark);color:#fff;border:none;font-size:1rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.2);display:none;align-items:center;justify-content:center;transition:background .2s,transform .2s;z-index:50}
-#back-top.visible{display:flex}
-#back-top:hover{background:var(--blue-mid);transform:translateY(-3px)}
 /* ═══ AULA MODE ═══ */
 body.aula-mode #sidebar{display:none}
 body.aula-mode #main{margin-left:0!important;max-width:100%;padding:0}
 body.aula-mode #header{background:#0D2137}
 body.aula-mode #reading-bar{display:none}
-body.aula-mode #back-top{display:none!important}
+body.aula-mode #back-to-top{display:none!important}
 #slides-container{display:none;width:100vw;height:calc(100vh - var(--header-h));overflow:hidden;position:relative;background:#0D2137}
 body.aula-mode #slides-container{display:block}
 body.aula-mode #guide-content{display:none}
@@ -190,8 +190,10 @@ body.aula-mode .toc-grid{display:none}
 <!-- ═══ HEADER ═══ -->
 <div id="header">
   <div class="header-left">
-    <button id="hamburger"><span></span><span></span><span></span></button>
-    <a href="../../index.html" class="header-back">← Portale</a>
+    <button id="hamburger" aria-label="Menu sezioni"><span></span><span></span><span></span></button>
+    <a href="/informatica-base/" class="header-back">← Informatica di Base</a>
+    <div class="header-sep"></div>
+    <a href="/" class="header-back">Portale</a>
     <div class="header-sep"></div>
     <span class="header-logo">Com'è fatto un computer</span>
     <span class="header-sub">Formazione Digitale</span>
@@ -1431,14 +1433,13 @@ body.aula-mode .toc-grid{display:none}
 
 <!-- ═══ FOOTER ═══ -->
 <footer>
-  <strong>Formazione Digitale</strong> &middot; <a href="/">Torna alla home</a><br>
+  <strong>Formazione Digitale</strong> &middot; <a href="/informatica-base/">← Informatica di Base</a> &middot; <a href="/">Torna al portale</a><br>
   Guida digitale libera e gratuita. Contenuti aggiornati al 2026.
   <p style="margin-top:.5rem;font-size:.78rem;">
     <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
     <a href="/cookie-policy.html">Cookie Policy</a>
   </p>
 </footer>
-<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <!-- ═══ JAVASCRIPT ═══ -->
 <script>
@@ -1472,7 +1473,6 @@ window.addEventListener('scroll',()=>{
   if(aulaMode)return;
   const sy=window.scrollY,tot=document.body.scrollHeight-window.innerHeight;
   document.getElementById('reading-fill').style.width=Math.min(100,(sy/tot)*100)+'%';
-  document.getElementById('back-top').classList.toggle('visible',sy>400);
   let cur='';sections.forEach(s=>{if(sy>=s.offsetTop-80)cur=s.id;});
   navItems.forEach(n=>n.classList.toggle('active',n.getAttribute('href')==='#'+cur));
 },{passive:true});

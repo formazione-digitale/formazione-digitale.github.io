@@ -6,7 +6,46 @@
 <title>La Tastiera Windows — Formazione Digitale</title>
 <meta name="description" content="Guida interattiva alla tastiera estesa Windows 107-108 tasti. Scopri le funzioni di ogni tasto, le zone, i modificatori e le scorciatoie essenziali.">
 <link rel="canonical" href="https://formazione-digitale.it/informatica-base/tastiera-windows/">
-<link rel="stylesheet" href="/css/shared.css?v=3">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<!-- Open Graph -->
+<meta property="og:title" content="La Tastiera Windows — Formazione Digitale">
+<meta property="og:description" content="Guida interattiva alla tastiera estesa Windows: zone, modificatori, tasto Windows e scorciatoie essenziali. Con tastiera cliccabile.">
+<meta property="og:url" content="https://formazione-digitale.it/informatica-base/tastiera-windows/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="La Tastiera Windows">
+<meta name="twitter:description" content="Zone, modificatori, tasto Windows e scorciatoie essenziali. Guida interattiva con tastiera cliccabile.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "La Tastiera Windows",
+  "description": "Guida interattiva alla tastiera estesa Windows 107-108 tasti: zone, modificatori, tasto Windows, scorciatoie essenziali e tastierino numerico.",
+  "url": "https://formazione-digitale.it/informatica-base/tastiera-windows/",
+  "inLanguage": "it",
+  "educationalLevel": "Principiante",
+  "learningResourceType": "Guida interattiva",
+  "author": { "@type": "Person", "name": "Cristiano De Pasquale" },
+  "isPartOf": { "@type": "CollectionPage", "name": "Informatica di Base", "url": "https://formazione-digitale.it/informatica-base/" },
+  "publisher": { "@type": "WebSite", "name": "Formazione Digitale", "url": "https://formazione-digitale.it" }
+}
+</script>
+
+<!-- GoatCounter -->
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="stylesheet" href="/css/shared.css?v=5">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
@@ -269,6 +308,10 @@
 }
 .ctrl-toggle-btn:hover { background: var(--blue-light); }
 tr.ctrl-extended { display: none; }
+
+/* ── HEADER: doppio link (hub + portale) ─────────────────── */
+.guide-header-links { display: flex; align-items: center; gap: .75rem; flex-shrink: 0; }
+@media(max-width:480px) { .guide-header-links .link-portale { display: none; } }
 .ctrl-show-extended tr.ctrl-extended { display: table-row; }
 </style>
 </head>
@@ -279,10 +322,14 @@ tr.ctrl-extended { display: none; }
 
 <!-- HEADER -->
 <header class="guide-header">
-  <a class="guide-header-back" href="/index.html">
-    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-    Portale
-  </a>
+  <div class="guide-header-links">
+    <a class="guide-header-back" href="/informatica-base/">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Informatica di Base
+    </a>
+    <span class="header-sep link-portale"></span>
+    <a class="guide-header-back link-portale" href="/">Portale</a>
+  </div>
   <div class="guide-header-center">La Tastiera Windows</div>
   <div class="guide-header-right">
     <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu sezioni">
@@ -670,7 +717,7 @@ tr.ctrl-extended { display: none; }
         <div class="mod-card">
           <div class="mod-key">AltGr</div>
           <h4>Alt Grafica — caratteri speciali</h4>
-          <p>Solo nelle tastiere europee. Inserisce il terzo simbolo del tasto: AltGr+Q = @, AltGr+è = [, AltGr+++ = ]. Equivale a Ctrl+Alt ma solo per i simboli.</p>
+          <p>Solo nelle tastiere europee. Inserisce il terzo simbolo del tasto: AltGr+ò = @, AltGr+à = #, AltGr+è = [, AltGr++ = ]. Con AltGr+Shift si ottengono le graffe: AltGr+Shift+è = {, AltGr+Shift++ = }.</p>
         </div>
         <div class="mod-card">
           <div class="mod-key">⇪ CapsLock</div>
@@ -685,7 +732,7 @@ tr.ctrl-extended { display: none; }
         <div class="mod-card">
           <div class="mod-key">← Backspace</div>
           <h4>Cancella a sinistra</h4>
-          <p>Elimina il carattere a sinistra del cursore. Ctrl+Backspace cancella l'intera parola precedente. In Esplora file torna alla cartella superiore.</p>
+          <p>Elimina il carattere a sinistra del cursore. Ctrl+Backspace cancella l'intera parola precedente. In Esplora file torna alla cartella precedente (per salire alla cartella che la contiene: Alt+↑).</p>
         </div>
         <div class="mod-card">
           <div class="mod-key">↵ Invio</div>
@@ -859,7 +906,7 @@ tr.ctrl-extended { display: none; }
 <!-- FOOTER -->
 <footer>
   <strong>Formazione Digitale</strong> · Portale aperto di alfabetizzazione digitale<br>
-  <a href="/index.html">← Torna al portale</a> · <a href="/index.html#cards-guide">Tutte le guide</a>
+  <a href="/informatica-base/">← Informatica di Base</a> · <a href="/">Torna al portale</a> · <a href="/index.html#cards-guide">Tutte le guide</a>
 </footer>
 
 <script src="/scripts/ui.js" defer></script>
@@ -897,7 +944,7 @@ const keyDB = {
   'apostrophe':{ zona:'alfanumerica', titolo:'\' / ? (apostrofo)', desc:'Inserisce l\'apostrofo. Con Shift inserisce il punto interrogativo (?).', combos:[] },
   'ì':         { zona:'alfanumerica', titolo:'ì / ^', desc:'Inserisce la i con accento grave (ì). Con Shift inserisce l\'accento circonflesso (^).', combos:[] },
   'accento':   { zona:'alfanumerica', titolo:'` / | (pipe)', desc:'Inserisce l\'accento grave. Con Shift inserisce la barra verticale (|, "pipe") — molto usata nei terminali e nella programmazione.', combos:[] },
-  'backspace': { zona:'modificatore', titolo:'Backspace — Cancella a sinistra', desc:'Elimina il carattere immediatamente a sinistra del cursore. In Esplora file torna alla cartella superiore.', combos:['Ctrl+Backspace → Cancella l\'intera parola a sinistra del cursore'] },
+  'backspace': { zona:'modificatore', titolo:'Backspace — Cancella a sinistra', desc:'Elimina il carattere immediatamente a sinistra del cursore. In Esplora file torna alla cartella precedente (per salire alla cartella che la contiene: Alt+↑).', combos:['Ctrl+Backspace → Cancella l\'intera parola a sinistra del cursore'] },
   'tab':       { zona:'modificatore', titolo:'Tab ⇥ — Tabulazione', desc:'Inserisce uno spazio di tabulazione nel testo. Nei moduli web sposta il focus al campo successivo. Nei fogli Excel sposta alla cella a destra.', combos:['Alt+Tab → Alterna tra le finestre aperte (tieni Alt premuto, rilascia Tab per scegliere)','Shift+Tab → Campo precedente in un modulo','Ctrl+Tab → Scheda successiva nel browser'] },
   'q':         { zona:'alfanumerica', titolo:'Q', desc:'Lettera Q.', combos:['Ctrl+Q → Chiude molte applicazioni'] },
   'w':         { zona:'alfanumerica', titolo:'W', desc:'Lettera W.', combos:['Ctrl+W → Chiude la scheda nel browser o il documento attivo'] },
@@ -922,8 +969,8 @@ const keyDB = {
   'j':         { zona:'alfanumerica', titolo:'J', desc:'Lettera J.', combos:[] },
   'k':         { zona:'alfanumerica', titolo:'K', desc:'Lettera K.', combos:['Ctrl+K → Inserisce un collegamento ipertestuale in Word e nel browser'] },
   'l':         { zona:'alfanumerica', titolo:'L', desc:'Lettera L.', combos:['Ctrl+L → Seleziona la barra degli indirizzi nel browser','⊞+L → Blocca il computer'] },
-  'semicolon': { zona:'alfanumerica', titolo:'ò / ç — Layout italiano', desc:'Inserisce la o con accento grave (ò). Con Shift inserisce la c con cediglia (ç). Nella posizione del punto e virgola ; e due punti : nei layout inglesi.', combos:[] },
-  'quote':     { zona:'alfanumerica', titolo:'à / ° — Layout italiano', desc:'Inserisce la a con accento grave (à). Con Shift inserisce il simbolo di grado (°). Nella posizione dell\'apostrofo nei layout inglesi.', combos:[] },
+  'semicolon': { zona:'alfanumerica', titolo:'ò / ç — Layout italiano', desc:'Inserisce la o con accento grave (ò). Con Shift inserisce la c con cediglia (ç). Nella posizione del punto e virgola ; e due punti : nei layout inglesi.', combos:['AltGr+ò → @ (chiocciola per l\'email)'] },
+  'quote':     { zona:'alfanumerica', titolo:'à / ° — Layout italiano', desc:'Inserisce la a con accento grave (à). Con Shift inserisce il simbolo di grado (°). Nella posizione dell\'apostrofo nei layout inglesi.', combos:['AltGr+à → # (cancelletto)'] },
   'enter':     { zona:'modificatore', titolo:'Invio (Enter / Return)', desc:'Va a capo nel testo. Conferma le finestre di dialogo attivando il pulsante predefinito (OK). Nei menu attiva la voce selezionata.', combos:['Ctrl+Invio → Azione alternativa (es. invia messaggio in Teams, Slack, Gmail)'] },
   'lshift':    { zona:'modificatore', titolo:'Shift ⇧ — Sinistro', desc:'Tasto modificatore. Tenuto premuto: scrive le lettere in MAIUSCOLO e attiva i simboli in alto dei tasti numerici (!, ", £...). Combinato con frecce estende la selezione del testo.', combos:['Shift+Click → Seleziona intervallo (da qui fino al punto cliccato)','Shift+Canc → Elimina definitivamente senza passare dal Cestino'] },
   'less':      { zona:'alfanumerica', titolo:'< > — Tasto ISO extra (108 tasti)', desc:'Questo tasto è presente solo nelle tastiere europee a 108 tasti (layout ISO). Inserisce il simbolo minore di (<). Con Shift inserisce il maggiore di (>). Permette di distinguere le tastiere europee da quelle americane.', combos:['AltGr+< → \\ (backslash) in alcuni layout'] },
@@ -942,7 +989,7 @@ const keyDB = {
   'lwin':      { zona:'modificatore', titolo:'Tasto Windows ⊞', desc:'Apre o chiude il menu Start. Combinato con altri tasti offre le scorciatoie di sistema più potenti di Windows.', combos:['⊞+E → Esplora file','⊞+D → Desktop','⊞+L → Blocca PC','⊞+R → Esegui','⊞+I → Impostazioni','⊞+S → Cerca','⊞+← → → → Snap finestre','⊞+PrtSc → Screenshot'] },
   'lalt':      { zona:'modificatore', titolo:'Alt — Sinistro', desc:'Tasto alternativo. Combinato con i tasti delle lettere nel menu attiva le voci sottolineate. Permette di inserire caratteri speciali digitando il codice numerico sul tastierino (con Num Lock attivo).', combos:['Alt+Tab → Alterna le finestre aperte','Alt+F4 → Chiude il programma','Alt+Invio → Proprietà del file selezionato','Alt+Spazio → Menu di sistema della finestra'] },
   'space':     { zona:'modificatore', titolo:'Barra spaziatrice', desc:'Inserisce uno spazio. Il tasto più largo della tastiera. Nei browser fa scorrere la pagina verso il basso. In molte app multimediali (YouTube, VLC...) avvia o mette in pausa la riproduzione.', combos:['Shift+Spazio → Scorre la pagina verso l\'alto nel browser'] },
-  'ralt':      { zona:'modificatore', titolo:'AltGr — Alt Grafica', desc:'Presente solo nelle tastiere europee. Inserisce il terzo simbolo del tasto: simboli come @, [, ], {, }, \\. Fondamentale per la programmazione e per le email!', combos:['AltGr+Q → @ (chiocciola per l\'email)','AltGr+è → [ (parentesi quadra aperta)','AltGr++ → ] (parentesi quadra chiusa)'] },
+  'ralt':      { zona:'modificatore', titolo:'AltGr — Alt Grafica', desc:'Presente solo nelle tastiere europee. Inserisce il terzo simbolo del tasto: simboli come @, [, ], {, }, \\. Fondamentale per la programmazione e per le email!', combos:['AltGr+ò → @ (chiocciola per l\'email)','AltGr+à → # (cancelletto)','AltGr+è → [ (parentesi quadra aperta)','AltGr++ → ] (parentesi quadra chiusa)','AltGr+Shift+è → { e AltGr+Shift++ → } (parentesi graffe)'] },
   'menu':      { zona:'modificatore', titolo:'Tasto Menu ☰', desc:'Equivale al click con il tasto destro del mouse: apre il menu contestuale dell\'elemento selezionato. Utilissimo quando si lavora solo con la tastiera.', combos:[] },
   'rctrl':     { zona:'modificatore', titolo:'Ctrl — Destro', desc:'Identico al Ctrl sinistro come funzione. Si usa con la mano destra per le stesse scorciatoie.', combos:[] },
   'insert':    { zona:'navigazione',  titolo:'Ins — Inserimento/Sostituzione', desc:'Alterna tra modalità inserimento (il testo si inserisce spostando quello esistente) e modalità sostituzione (il nuovo testo sovrascrive quello esistente). Se il cursore appare più grande del solito, la modalità sostituzione è attiva!', combos:['Ctrl+Ins → Copia (alternativo a Ctrl+C)','Shift+Ins → Incolla (alternativo a Ctrl+V)'] },
