@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>File e cartelle in Windows — Formazione Digitale</title>
+<meta name="description" content="Il file system di Windows 11 spiegato da zero: unità, cartelle e percorsi, Esplora file, nomi ed estensioni, copiare e spostare, salvare, archivi ZIP. Con laboratorio guidato e verifica automatica.">
+<link rel="canonical" href="https://formazione-digitale.it/informatica-base/file-system-windows/">
+<meta name="author" content="Cristiano De Pasquale">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/png" href="https://formazione-digitale.it/img/favicon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#1F4E79">
+
+<!-- Open Graph -->
+<meta property="og:title" content="File e cartelle in Windows — Formazione Digitale">
+<meta property="og:description" content="Il file system di Windows spiegato da zero: Esplora file, percorsi, estensioni, copiare, spostare, ZIP. Con laboratorio guidato e verifica automatica.">
+<meta property="og:url" content="https://formazione-digitale.it/informatica-base/file-system-windows/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Formazione Digitale">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="File e cartelle in Windows">
+<meta name="twitter:description" content="Unità, percorsi, Esplora file, estensioni, copiare e spostare, ZIP. Guida da zero con laboratorio e verifica automatica.">
+<meta name="twitter:image" content="https://formazione-digitale.it/img/formazione-digitale-logo.png">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "File e cartelle in Windows",
+  "description": "Il file system di Windows 11 spiegato da zero: unità, cartelle e percorsi, Esplora file, nomi ed estensioni, operazioni su file e cartelle, salvataggio, archivi ZIP. Con laboratorio guidato e verifica automatica.",
+  "url": "https://formazione-digitale.it/informatica-base/file-system-windows/",
+  "inLanguage": "it",
+  "educationalLevel": "Principiante",
+  "learningResourceType": "Guida interattiva",
+  "author": { "@type": "Person", "name": "Cristiano De Pasquale" },
+  "isPartOf": { "@type": "CollectionPage", "name": "Informatica di Base", "url": "https://formazione-digitale.it/informatica-base/" },
+  "publisher": { "@type": "WebSite", "name": "Formazione Digitale", "url": "https://formazione-digitale.it" },
+  "educationalAlignment": [{ "@type": "AlignmentObject", "alignmentType": "educationalSubject", "educationFramework": "DigComp 2.2", "targetName": "1.3 — Gestire dati, informazioni e contenuti digitali" }]
+}
+</script>
+
+<!-- GoatCounter -->
+<script data-goatcounter="https://formazionedigitale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+<link rel="stylesheet" href="/css/shared.css?v=5">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+<style>
+/* ── HEADER: doppio link (hub + portale) ─────────────────── */
+.guide-header-links { display: flex; align-items: center; gap: .75rem; flex-shrink: 0; }
+@media(max-width:480px) { .guide-header-links .link-portale { display: none; } }
+
+/* ── READING BAR ─────────────────────────────────────────── */
+#reading-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 200; background: var(--blue-mid); width: 0; transition: width .1s linear; }
+
+/* ── TESTO E LISTE ───────────────────────────────────────── */
+.guide-main p { margin-bottom: .85rem; }
+.guide-main ul.lista, .guide-main ol.lista { margin: .5rem 0 1rem 1.4rem; }
+.guide-main ul.lista li, .guide-main ol.lista li { margin-bottom: .35rem; }
+code, .path { font-family: 'Consolas', 'Courier New', monospace; font-size: .86em; background: var(--gray-light); border: 1px solid var(--blue-light); border-radius: 4px; padding: .05rem .35rem; white-space: nowrap; }
+.kbd-combo { font-family: monospace; font-size: .82rem; background: var(--gray-dark); color: #fff; padding: .1rem .45rem; border-radius: 4px; white-space: nowrap; }
+
+/* ── SCREENSHOT: dimensioni massime ──────────────────────── */
+.shot { display: block; max-width: 100%; height: auto; margin: 1rem auto; border: 1px solid var(--blue-light); border-radius: var(--radius); box-shadow: var(--shadow); background: #fff; cursor: zoom-in; }
+.shot-xs { width: 300px; }
+.shot-s { width: 380px; }
+.shot-ms { width: 440px; }
+.shot-sm { width: 500px; }
+.shot-m { width: 560px; }
+.shot-l { width: 760px; }
+.shot-xl { width: 860px; }
+.shot-cap { text-align: center; font-size: .8rem; color: var(--gray-mid); font-style: italic; margin: -.5rem 0 1.25rem; }
+.shot-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; margin: 1rem 0; }
+/* nelle coppie l'immagine non viene ingrandita oltre la sua misura reale */
+.shot-pair .shot { margin: 0 auto .4rem; max-width: 100%; } /* vale l'attributo width, limitato alla colonna */
+.shot-pair .shot.shot-xs { width: 300px; }
+.shot-pair .shot.shot-sm { width: 500px; }
+.shot-pair .shot-cap { margin: 0; }
+@media(max-width:700px) { .shot-pair { grid-template-columns: 1fr; } }
+
+/* ── ZOOM IMMAGINI ───────────────────────────────────────── */
+#zoom-overlay { position: fixed; inset: 0; z-index: 500; background: rgba(10,20,35,.88); display: none; align-items: center; justify-content: center; padding: 1rem; cursor: zoom-out; }
+#zoom-overlay.is-open { display: flex; }
+#zoom-overlay img { max-width: 100%; max-height: 100%; border-radius: var(--radius); background: #fff; }
+
+/* ── CARD CONCETTI ───────────────────────────────────────── */
+.concept-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem; margin: 1rem 0 1.25rem; }
+.concept-card { background: var(--blue-pale); border-left: 4px solid var(--blue-mid); border-radius: var(--radius); padding: 1rem 1.1rem; }
+.concept-card .c-icon { font-size: 1.6rem; line-height: 1; margin-bottom: .4rem; }
+.concept-card h3 { font-size: .95rem; color: var(--blue-dark); margin-bottom: .3rem; }
+.concept-card p { font-size: .85rem; margin: 0 !important; line-height: 1.6; }
+
+/* ── TABELLE ─────────────────────────────────────────────── */
+.data-table { width: 100%; border-collapse: collapse; font-size: .88rem; margin: .75rem 0 1.25rem; }
+.data-table th { background: var(--blue-dark); color: #fff; padding: .5rem .75rem; text-align: left; font-size: .8rem; }
+.data-table td { padding: .5rem .75rem; border-bottom: 1px solid var(--blue-light); vertical-align: top; }
+.data-table tr:nth-child(even) td { background: var(--blue-pale); }
+.table-wrap { overflow-x: auto; }
+
+/* ── ALBERO INTERATTIVO (§2) ─────────────────────────────── */
+.tree-tool { border: 1px solid var(--blue-light); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow); margin: 1rem 0 1.5rem; overflow: hidden; }
+.tree-bar { background: var(--blue-pale); border-bottom: 1px solid var(--blue-light); padding: .7rem 1rem; }
+.tree-bar-label { font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--blue-mid); }
+.tree-path { font-family: 'Consolas', 'Courier New', monospace; font-size: .95rem; color: var(--blue-dark); word-break: break-all; min-height: 1.4em; margin-top: .15rem; }
+.tree-crumb { font-size: .8rem; color: var(--gray-mid); margin-top: .2rem; min-height: 1.2em; }
+.tree-svg-wrap { padding: .75rem 1rem; overflow-x: auto; }
+.tree-svg-wrap svg { display: block; }
+.tree-node { cursor: pointer; }
+.tree-node rect { fill: transparent; rx: 5; }
+.tree-node:hover rect { fill: var(--blue-pale); }
+.tree-node.is-sel rect { fill: var(--blue-light); }
+.tree-node.is-ok rect { fill: var(--green-light); }
+.tree-node.is-ko rect { fill: var(--red-light); }
+.tree-node text { font-family: var(--font-body); font-size: 14px; fill: var(--gray-dark); }
+.tree-line { stroke: #b8cde0; stroke-width: 1.5; fill: none; }
+.tree-game { border-top: 1px solid var(--blue-light); padding: .8rem 1rem; display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; font-size: .88rem; }
+.tree-game-msg { flex: 1; min-width: 220px; }
+.btn { font-family: var(--font-body); font-size: .85rem; font-weight: 600; border-radius: 20px; padding: .45rem 1rem; cursor: pointer; border: 1.5px solid var(--blue-mid); background: #fff; color: var(--blue-mid); transition: background .15s, color .15s; }
+.btn:hover { background: var(--blue-mid); color: #fff; }
+.btn-primary { background: var(--blue-mid); color: #fff; }
+.btn-primary:hover { background: var(--blue-dark); border-color: var(--blue-dark); }
+
+/* ── HOTSPOT SU SCREENSHOT (§3) ──────────────────────────── */
+.hotspot-wrap { position: relative; max-width: 860px; margin: 1rem auto .5rem; }
+.hotspot-wrap .shot { margin: 0; width: 100%; }
+.hs-dot { position: absolute; transform: translate(-50%, -50%); width: 26px; height: 26px; border-radius: 50%; background: var(--amber-mid); color: #fff; border: 2px solid #fff; font-size: .75rem; font-weight: 700; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,.3); font-family: var(--font-body); padding: 0; }
+.hs-dot.is-active { background: var(--red-mid); transform: translate(-50%, -50%) scale(1.2); }
+.hs-legend { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: .4rem .9rem; margin: .75rem 0 1.25rem; padding: 0; }
+.hs-legend li { font-size: .85rem; padding: .4rem .6rem; border-radius: var(--radius); cursor: pointer; line-height: 1.5; }
+.hs-legend li:hover { background: var(--blue-pale); }
+.hs-legend li.is-active { background: var(--amber-light); }
+.hs-legend .hs-n { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--amber-mid); color: #fff; font-size: .7rem; font-weight: 700; margin-right: .35rem; }
+
+/* ── SCHEDE (viste) ──────────────────────────────────────── */
+.tabs { display: flex; flex-wrap: wrap; gap: .4rem; margin: 1rem 0 .25rem; }
+.tab-btn { font-family: var(--font-body); font-size: .82rem; font-weight: 600; padding: .4rem .9rem; border-radius: 20px; border: 1.5px solid var(--blue-light); background: #fff; color: var(--blue-dark); cursor: pointer; }
+.tab-btn.is-active { background: var(--blue-dark); border-color: var(--blue-dark); color: #fff; }
+.tab-panel { display: none; }
+.tab-panel.is-active { display: block; }
+
+/* ── ANATOMIA NOME FILE (§4) ─────────────────────────────── */
+.name-anatomy { display: flex; justify-content: center; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 1rem 0 1.5rem; font-family: 'Consolas', 'Courier New', monospace; font-size: 1.15rem; }
+.name-part { padding: .6rem .9rem; text-align: center; }
+.name-part small { display: block; font-family: var(--font-body); font-size: .72rem; font-weight: 600; margin-top: .3rem; }
+.np-name { background: var(--blue-pale); color: var(--blue-dark); border-radius: var(--radius) 0 0 var(--radius); }
+.np-dot  { background: var(--gray-light); color: var(--gray-dark); }
+.np-ext  { background: var(--amber-light); color: var(--amber-dark); border-radius: 0 var(--radius) var(--radius) 0; }
+.forbidden { display: flex; flex-wrap: wrap; gap: .4rem; margin: .5rem 0 1rem; }
+.forbidden span { font-family: 'Consolas', 'Courier New', monospace; font-size: 1.1rem; font-weight: 700; width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center; background: var(--red-light); color: var(--red-dark); border: 1px solid var(--red-mid); border-radius: 6px; }
+
+/* ── QUIZ NOMI (§4) ──────────────────────────────────────── */
+.quiz { border: 1px solid var(--blue-light); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow); padding: 1rem 1.1rem; margin: 1rem 0 1.5rem; }
+.quiz-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .5rem; margin-bottom: .75rem; }
+.quiz-title { font-weight: 700; color: var(--blue-dark); }
+.quiz-score { font-size: .85rem; color: var(--gray-mid); }
+.quiz-item { border-top: 1px solid var(--blue-light); padding: .7rem 0; }
+.quiz-name { font-family: 'Consolas', 'Courier New', monospace; font-size: 1rem; font-weight: 600; color: var(--gray-dark); margin-bottom: .45rem; word-break: break-all; }
+.quiz-opts { display: flex; flex-wrap: wrap; gap: .4rem; }
+.quiz-opt { font-family: var(--font-body); font-size: .8rem; padding: .35rem .8rem; border-radius: 20px; border: 1.5px solid var(--blue-light); background: #fff; color: var(--gray-dark); cursor: pointer; }
+.quiz-opt:hover:not(:disabled) { border-color: var(--blue-mid); }
+.quiz-opt:disabled { cursor: default; opacity: .6; }
+.quiz-opt.is-right { background: var(--green-light); border-color: var(--green-dark); color: var(--green-dark); opacity: 1; }
+.quiz-opt.is-wrong { background: var(--red-light); border-color: var(--red-mid); color: var(--red-dark); opacity: 1; }
+.quiz-fb { font-size: .84rem; margin-top: .45rem; line-height: 1.55; display: none; }
+.quiz-fb.is-visible { display: block; }
+
+/* ── PASSI NUMERATI ──────────────────────────────────────── */
+.steps { list-style: none; counter-reset: passo; margin: .75rem 0 1.25rem; padding: 0; }
+.steps > li { counter-increment: passo; position: relative; padding: .15rem 0 .7rem 2.5rem; }
+.steps > li::before { content: counter(passo); position: absolute; left: 0; top: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--blue-dark); color: #fff; font-size: .8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+/* ── CARD OPERAZIONI (§5) ────────────────────────────────── */
+.op-card { border: 1px solid var(--blue-light); border-radius: var(--radius); padding: 1rem 1.2rem .5rem; margin: 1rem 0 1.5rem; background: #fff; }
+.op-card h3 { font-size: 1.05rem; color: var(--blue-dark); margin-bottom: .6rem; display: flex; align-items: center; gap: .5rem; }
+.two-ways { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: .5rem 0 1rem; }
+.two-ways > div { background: var(--blue-pale); border-radius: var(--radius); padding: .75rem .9rem; font-size: .88rem; }
+.two-ways h4 { font-size: .85rem; color: var(--blue-dark); margin-bottom: .35rem; }
+@media(max-width:700px) { .two-ways { grid-template-columns: 1fr; } }
+
+/* ── ALBERO TESTUALE (laboratorio) ───────────────────────── */
+pre.tree-txt { font-family: 'Consolas', 'Courier New', monospace; font-size: .88rem; line-height: 1.55; background: var(--gray-light); border: 1px solid var(--blue-light); border-radius: var(--radius); padding: 1rem 1.2rem; overflow-x: auto; margin: .75rem 0 1.25rem; }
+
+/* ── CHECKLIST LABORATORIO (§8) ──────────────────────────── */
+.lab-list { list-style: none; margin: 1rem 0; padding: 0; counter-reset: lab; }
+.lab-item { counter-increment: lab; border: 1px solid var(--blue-light); border-radius: var(--radius); padding: .85rem 1rem .6rem 3.2rem; margin-bottom: .75rem; position: relative; background: #fff; transition: background .2s, border-color .2s; }
+.lab-item::before { content: counter(lab); position: absolute; left: .9rem; top: .85rem; width: 28px; height: 28px; border-radius: 50%; background: var(--blue-dark); color: #fff; font-size: .8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.lab-item.is-done { background: var(--green-light); border-color: var(--green-dark); }
+.lab-item.is-done::before { content: '✓'; background: var(--green-dark); }
+.lab-item h4 { font-size: .95rem; color: var(--blue-dark); margin-bottom: .35rem; }
+.lab-item p, .lab-item li { font-size: .88rem; }
+.lab-check { display: inline-flex; align-items: center; gap: .4rem; font-size: .82rem; font-weight: 600; color: var(--green-dark); cursor: pointer; margin: .2rem 0 .3rem; }
+.lab-progress { height: 8px; background: var(--blue-light); border-radius: 4px; overflow: hidden; margin: .5rem 0 1rem; }
+.lab-progress-fill { height: 100%; width: 0; background: var(--green-dark); transition: width .3s; }
+
+/* ── VERIFICATORE ZIP (§8) ───────────────────────────────── */
+.checker { border: 2px solid var(--blue-mid); border-radius: var(--radius); background: #fff; padding: 1.1rem 1.2rem; margin: 1.25rem 0; box-shadow: var(--shadow); }
+.checker h3 { color: var(--blue-dark); font-size: 1.1rem; margin-bottom: .5rem; }
+.checker-form { display: flex; flex-wrap: wrap; gap: .75rem; align-items: flex-end; margin: .75rem 0; }
+.checker-field { display: flex; flex-direction: column; gap: .25rem; font-size: .8rem; font-weight: 600; color: var(--blue-dark); }
+.checker-field input[type=text] { font-family: var(--font-body); font-size: .95rem; padding: .45rem .7rem; border: 1.5px solid var(--blue-light); border-radius: var(--radius); min-width: 220px; }
+.checker-field input[type=file] { font-family: var(--font-body); font-size: .85rem; }
+.checker-summary { font-weight: 700; margin: .75rem 0 .5rem; padding: .6rem .8rem; border-radius: var(--radius); }
+.checker-summary.ok { background: var(--green-light); color: var(--green-dark); }
+.checker-summary.warn { background: var(--amber-light); color: var(--amber-dark); }
+.checker-summary.ko { background: var(--red-light); color: var(--red-dark); }
+.checker-list { list-style: none; margin: 0; padding: 0; }
+.checker-list li { font-size: .86rem; padding: .35rem .2rem; border-bottom: 1px solid var(--gray-light); line-height: 1.5; }
+.checker-list .r-ok::before { content: '✅ '; }
+.checker-list .r-warn::before { content: '⚠️ '; }
+.checker-list .r-ko::before { content: '❌ '; }
+.checker-privacy { font-size: .78rem; color: var(--gray-mid); font-style: italic; }
+
+/* ── DOWNLOAD ────────────────────────────────────────────── */
+.dl-card { display: flex; align-items: center; gap: 1rem; background: var(--blue-pale); border: 1px solid var(--blue-light); border-radius: var(--radius); padding: .9rem 1.1rem; margin: 1rem 0; text-decoration: none; color: inherit; transition: border-color .2s; }
+.dl-card:hover { border-color: var(--blue-mid); }
+.dl-card .dl-icon { font-size: 1.8rem; }
+.dl-card strong { color: var(--blue-dark); display: block; }
+.dl-card span { font-size: .82rem; color: var(--gray-mid); }
+</style>
+</head>
+<body>
+
+<div id="reading-bar"></div>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<!-- HEADER -->
+<header class="guide-header">
+  <div class="guide-header-links">
+    <a class="guide-header-back" href="/informatica-base/">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Informatica di Base
+    </a>
+    <span class="header-sep link-portale"></span>
+    <a class="guide-header-back link-portale" href="/">Portale</a>
+  </div>
+  <div class="guide-header-center">File e cartelle in Windows</div>
+  <div class="guide-header-right">
+    <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu sezioni">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- LAYOUT -->
+<div class="guide-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="guide-sidebar" id="guide-sidebar">
+    <div class="sidebar-label">Sezioni</div>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li><a class="nav-item active" href="#s1" onclick="closeSidebar()"><span class="nav-num">1</span><span>File, cartelle e unità</span></a></li>
+      <li><a class="nav-item" href="#s2" onclick="closeSidebar()"><span class="nav-num">2</span><span>L'albero e il percorso</span></a></li>
+      <li><a class="nav-item" href="#s3" onclick="closeSidebar()"><span class="nav-num">3</span><span>Esplora file</span></a></li>
+      <li><a class="nav-item" href="#s4" onclick="closeSidebar()"><span class="nav-num">4</span><span>Nomi ed estensioni</span></a></li>
+      <li><a class="nav-item" href="#s5" onclick="closeSidebar()"><span class="nav-num">5</span><span>Operazioni su file e cartelle</span></a></li>
+      <li><a class="nav-item" href="#s6" onclick="closeSidebar()"><span class="nav-num">6</span><span>Salvare un file</span></a></li>
+      <li><a class="nav-item" href="#s7" onclick="closeSidebar()"><span class="nav-num">7</span><span>Archivi ZIP</span></a></li>
+      <li><a class="nav-item" href="#s8" onclick="closeSidebar()"><span class="nav-num">8</span><span>Laboratorio guidato</span></a></li>
+    </ul>
+    <hr class="sidebar-divider">
+    <div class="sidebar-meta">
+      <b>Difficoltà:</b> Base<br>
+      <b>Argomento:</b> Informatica di base<br>
+      <b>Sistema:</b> Windows 11
+    </div>
+  </aside>
+
+  <!-- CONTENUTO PRINCIPALE -->
+  <main class="guide-main">
+
+    <!-- COVER -->
+    <div class="cover-block" style="margin-bottom:2rem;">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:.6rem;">
+        <span style="font-size:2.8rem;line-height:1;flex-shrink:0;">📁</span>
+        <div>
+          <div class="cover-eyebrow">Informatica di base</div>
+          <h1 class="cover-title">File e cartelle in Windows</h1>
+        </div>
+      </div>
+      <hr class="cover-divider">
+      <p class="cover-intro">Ogni documento, foto o video sul computer è un file, e ogni file sta in una cartella. In questa guida impari a orientarti tra unità, cartelle e percorsi, a usare Esplora file, a dare nomi corretti ai file, a copiarli, spostarli, salvarli e comprimerli. Alla fine metti tutto in pratica con un laboratorio che si corregge da solo.</p>
+      <div class="cover-badges">
+        <span class="cover-badge">📚 Livello base</span>
+        <span class="cover-badge">🪟 Windows 11</span>
+        <span class="cover-badge">🧪 Laboratorio con verifica automatica</span>
+      </div>
+    </div>
+
+    <div class="box box-info">
+      <div class="box-label">Prima di iniziare</div>
+      <p>Ti servono le scorciatoie <span class="kbd-combo">Ctrl+C</span> <span class="kbd-combo">Ctrl+X</span> <span class="kbd-combo">Ctrl+V</span> <span class="kbd-combo">Ctrl+Z</span> e <span class="kbd-combo">⊞+E</span>: se non le conosci, ripassale nella guida <a href="/informatica-base/tastiera-windows/#s6">La Tastiera Windows</a>. Poi scarica la cartella di esempio qui sotto: la useremo in tutte le sezioni.</p>
+    </div>
+
+    <a class="dl-card" href="esempio-viaggi.zip" download>
+      <span class="dl-icon">🗂️</span>
+      <div><strong>Scarica la cartella di esempio — Esempio_Viaggi.zip</strong><span>9 file di prova (documenti, foto, audio, video) · 240 KB · da estrarre come spiegato nella sezione 7</span></div>
+    </a>
+
+    <hr class="section-divider">
+
+    <!-- ── SEZIONE 1: FILE, CARTELLE E UNITÀ ── -->
+    <section class="guide-section" id="s1">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div class="section-titles">
+          <h2 class="section-title">File, cartelle e unità</h2>
+          <div class="section-subtitle">I tre mattoni con cui il computer organizza i dati</div>
+        </div>
+      </div>
+
+      <p>Immagina l'armadio di una segreteria. L'armadio contiene dei raccoglitori, ogni raccoglitore contiene dei fogli, e a volte dentro un raccoglitore ce n'è un altro più piccolo. Il computer organizza i dati allo stesso modo.</p>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-icon">💽</div>
+          <h3>Unità = l'armadio</h3>
+          <p>Il disco dove sono memorizzati i dati. Ogni unità ha una <b>lettera seguita da due punti</b>: <code>C:</code>, <code>D:</code>…</p>
+        </div>
+        <div class="concept-card">
+          <div class="c-icon">📁</div>
+          <h3>Cartella = il raccoglitore</h3>
+          <p>Un contenitore con un nome. Può contenere file e anche altre cartelle, chiamate <b>sottocartelle</b>.</p>
+        </div>
+        <div class="concept-card">
+          <div class="c-icon">📄</div>
+          <h3>File = il foglio</h3>
+          <p>L'insieme di dati vero e proprio: un documento, una foto, una canzone, un programma. Ogni file ha un <b>nome</b> e un'<b>estensione</b>.</p>
+        </div>
+      </div>
+
+      <h3 class="sub-title">Le unità del tuo computer</h3>
+      <p>Apri Esplora file (<span class="kbd-combo">⊞+E</span>) e clicca <b>Questo PC</b> nel riquadro a sinistra: vedi le unità collegate e quanto spazio libero resta su ciascuna.</p>
+
+      <img class="shot shot-l" src="img/fs000.webp" width="785" height="135" alt="Questo PC mostra due unità: Acer (C:) e DATI (D:), ciascuna con la barra dello spazio occupato" loading="lazy">
+      <p class="shot-cap">Questo PC: due unità, C: e D:, con lo spazio disponibile</p>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Unità</th><th>Cos'è di solito</th></tr></thead>
+          <tbody>
+            <tr><td><code>C:</code></td><td>Il disco principale del computer, dove si trova Windows. C'è sempre.</td></tr>
+            <tr><td><code>D:</code>, <code>E:</code>…</td><td>Un secondo disco, oppure un dispositivo collegato: una <b>chiavetta USB</b>, un disco esterno, un lettore di schede.</td></tr>
+            <tr><td>OneDrive, Rete</td><td>Spazi che non sono dentro il computer: il cloud di Microsoft o le cartelle condivise della scuola.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="box box-tip">
+        <div class="box-label">Perché si parte da C:?</div>
+        <p>Le lettere A: e B: erano riservate ai vecchi floppy disk. Quando sono arrivati i dischi fissi hanno preso la prima lettera libera, la C, e la tradizione è rimasta.</p>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── SEZIONE 2: ALBERO E PERCORSO ── -->
+    <section class="guide-section" id="s2">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div class="section-titles">
+          <h2 class="section-title">L'albero e il percorso</h2>
+          <div class="section-subtitle">Ogni file ha un indirizzo preciso</div>
+        </div>
+      </div>
+
+      <p>Cartelle dentro cartelle formano una struttura ad <b>albero</b> rovesciato: in cima c'è l'unità (la <b>radice</b>), da cui partono i rami. Una cartella che ne contiene un'altra si chiama <b>cartella padre</b>; quella contenuta è la <b>cartella figlia</b>.</p>
+      <p>Il <b>percorso</b> è l'indirizzo completo di un file: parte dall'unità e attraversa tutte le cartelle, separate dal simbolo <code>\</code> (barra rovesciata, <em>backslash</em>).</p>
+
+      <div class="tree-tool" id="tree-tool">
+        <div class="tree-bar">
+          <div class="tree-bar-label">Percorso</div>
+          <div class="tree-path" id="tree-path">Clicca un file o una cartella nell'albero</div>
+          <div class="tree-crumb" id="tree-crumb"></div>
+        </div>
+        <div class="tree-svg-wrap"><svg id="tree-svg" role="group" aria-label="Albero della cartella Esempio_Viaggi"></svg></div>
+        <div class="tree-game">
+          <button class="btn btn-primary" id="tree-game-btn" onclick="startTreeGame()">🎯 Mettiti alla prova</button>
+          <div class="tree-game-msg" id="tree-game-msg">Ti mostro un percorso: tu clicca il file o la cartella giusta.</div>
+        </div>
+      </div>
+
+      <p>Esempio: il percorso <code>D:\Esempio_Viaggi\MEDIA\spot.mp4</code> si legge "nell'unità D, dentro la cartella Esempio_Viaggi, dentro la cartella MEDIA, c'è il file spot.mp4".</p>
+
+      <div class="box box-info">
+        <div class="box-label">Due modi di scrivere lo stesso percorso</div>
+        <p>Nella barra degli indirizzi Esplora file mostra il percorso a "gradini": <b>Questo PC › DATI (D:) › Esempio_Viaggi › MEDIA</b>. Se ci clicchi sopra, compare il percorso completo in testo: <code>D:\Esempio_Viaggi\MEDIA</code>. Sono la stessa cosa.</p>
+      </div>
+
+      <h3 class="sub-title">Muoversi tra le cartelle</h3>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Per…</th><th>Fai così</th></tr></thead>
+          <tbody>
+            <tr><td>Entrare in una cartella</td><td>Doppio clic sulla cartella</td></tr>
+            <tr><td>Salire alla cartella padre</td><td>Freccia <b>↑</b> accanto alla barra degli indirizzi, oppure <span class="kbd-combo">Alt+↑</span></td></tr>
+            <tr><td>Tornare alla cartella di prima</td><td>Freccia <b>←</b>, oppure <span class="kbd-combo">Backspace</span> / <span class="kbd-combo">Alt+←</span></td></tr>
+            <tr><td>Saltare a un livello qualsiasi</td><td>Clic su un gradino della barra degli indirizzi</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="box box-warn">
+        <div class="box-label">Indietro non vuol dire "su"</div>
+        <p>La freccia <b>←</b> ti riporta alla cartella che stavi guardando prima, qualunque fosse. La freccia <b>↑</b> ti porta sempre alla cartella che contiene quella attuale. Spesso coincidono, ma non sempre.</p>
+      </div>
+
+      <p style="font-size:.88rem;color:var(--gray-mid);">Negli esempi di questa guida la cartella si trova sull'unità D:. Sul tuo computer probabilmente la metterai su C:, in Documenti o sul Desktop: il ragionamento è identico.</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── SEZIONE 3: ESPLORA FILE ── -->
+    <section class="guide-section" id="s3">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div class="section-titles">
+          <h2 class="section-title">Esplora file</h2>
+          <div class="section-subtitle">Il programma per vedere e organizzare file e cartelle</div>
+        </div>
+      </div>
+
+      <p>Si apre con <span class="kbd-combo">⊞+E</span> oppure con l'icona della cartella gialla sulla barra delle applicazioni. Clicca i numeri sull'immagine per scoprire a cosa serve ogni parte.</p>
+
+      <div class="hotspot-wrap" id="hs-wrap">
+        <img class="shot" src="img/fs001.webp" width="1200" height="638" alt="Finestra di Esplora file aperta sulla cartella Esempio_Viaggi in visualizzazione Dettagli" loading="lazy">
+      </div>
+      <ul class="hs-legend" id="hs-legend"></ul>
+
+      <h3 class="sub-title">Cambiare visualizzazione</h3>
+      <p>Dal pulsante <b>Visualizza</b> scegli come mostrare il contenuto della cartella. Le tre viste più utili:</p>
+
+      <div class="tabs" role="tablist">
+        <button class="tab-btn is-active" role="tab" onclick="showTab(this,'tab-dett')">Dettagli</button>
+        <button class="tab-btn" role="tab" onclick="showTab(this,'tab-elenco')">Elenco</button>
+        <button class="tab-btn" role="tab" onclick="showTab(this,'tab-icone')">Icone grandi</button>
+      </div>
+      <div class="tab-panel is-active" id="tab-dett">
+        <img class="shot shot-xl" src="img/fs006a.webp" width="1000" height="449" alt="Vista Dettagli con colonne Nome, Ultima modifica, Tipo, Dimensione" loading="lazy">
+        <p class="shot-cap"><b>Dettagli</b>: la più utile per lavorare. Mostra data, <b>tipo</b> e dimensione di ogni file</p>
+      </div>
+      <div class="tab-panel" id="tab-elenco">
+        <img class="shot shot-m" src="img/fs006b.webp" width="624" height="388" alt="Vista Elenco con i nomi uno sotto l'altro" loading="lazy">
+        <p class="shot-cap"><b>Elenco</b>: solo nomi e piccole icone, compatta</p>
+      </div>
+      <div class="tab-panel" id="tab-icone">
+        <img class="shot shot-m" src="img/fs005a.webp" width="694" height="487" alt="Vista Icone grandi con le cartelle in anteprima" loading="lazy">
+        <p class="shot-cap"><b>Icone grandi</b>: comoda per le foto, perché mostra le anteprime</p>
+      </div>
+
+      <div class="shot-pair">
+        <div>
+          <img class="shot shot-xs" src="img/fs002.webp" width="367" height="551" alt="Menu Visualizza aperto con l'elenco delle viste" loading="lazy">
+          <p class="shot-cap">Il menu Visualizza</p>
+        </div>
+        <div>
+          <img class="shot" src="img/fs006c.webp" width="769" height="405" alt="Tasto destro su uno spazio vuoto, sottomenu Visualizza con le scorciatoie Ctrl+Maiusc+1…8" loading="lazy">
+          <p class="shot-cap">Stesso menu dal tasto destro, con le scorciatoie <span class="kbd-combo">Ctrl+Maiusc+1…8</span></p>
+        </div>
+      </div>
+
+      <h3 class="sub-title">La prima cosa da fare: mostrare le estensioni</h3>
+      <p>Windows, all'inizio, <b>nasconde la parte finale del nome dei file</b> (l'estensione, che vediamo nella prossima sezione). Per lavorare bene devi vederla sempre. Si attiva una volta sola:</p>
+      <ol class="steps">
+        <li>Clicca <b>Visualizza</b> → <b>Mostra</b>.</li>
+        <li>Clicca <b>Estensioni nomi file</b>: compare il segno di spunta ✓.</li>
+      </ol>
+      <div class="shot-pair">
+        <div>
+          <img class="shot shot-sm" src="img/fs003.webp" width="637" height="713" alt="Menu Visualizza, Mostra: Estensioni nomi file senza spunta" loading="lazy">
+          <p class="shot-cap">Prima: accanto a <b>Estensioni nomi file</b> non c'è la spunta</p>
+        </div>
+        <div>
+          <img class="shot shot-sm" src="img/fs004.webp" width="633" height="701" alt="Menu Visualizza, Mostra: Estensioni nomi file con la spunta" loading="lazy">
+          <p class="shot-cap">Dopo: compare la spunta ✓ (cerchiata in rosso)</p>
+        </div>
+      </div>
+      <div class="box box-warn">
+        <div class="box-label">Fallo su ogni computer che usi</div>
+        <p>L'impostazione vale solo per il computer su cui la attivi: controllala sul PC di scuola e su quello di casa.</p>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── SEZIONE 4: NOMI ED ESTENSIONI ── -->
+    <section class="guide-section" id="s4">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div class="section-titles">
+          <h2 class="section-title">Nomi ed estensioni</h2>
+          <div class="section-subtitle">Come si chiama un file e cosa ci dice il suo nome</div>
+        </div>
+      </div>
+
+      <p>Il nome completo di un file è fatto di due parti separate da un punto:</p>
+      <div class="name-anatomy" aria-label="preventivo_Rossi punto docx">
+        <div class="name-part np-name">preventivo_Rossi<small>nome</small></div>
+        <div class="name-part np-dot">.<small>punto</small></div>
+        <div class="name-part np-ext">docx<small>estensione</small></div>
+      </div>
+      <p>L'<b>estensione</b> serve soprattutto al <b>sistema operativo</b>: da lì Windows capisce <b>che tipo di file è</b> e <b>con quale programma aprirlo</b> quando fai doppio clic. Per questo le icone cambiano da un tipo all'altro.</p>
+      <p>Le estensioni non le inventa l'utente: le stabilisce chi crea il programma o il formato. Microsoft, per esempio, ha deciso che i documenti di Word si chiamano <code>.docx</code>. Quando installi un programma, questo "registra" le sue estensioni in Windows: da quel momento i file di quel tipo si aprono con lui.</p>
+      <div class="box box-info">
+        <div class="box-label">Stesso nome, estensione diversa</div>
+        <p>Nella stessa cartella <b>non</b> possono esistere due file con lo stesso nome completo. Possono però convivere <code>archivio_foto.docx</code>, <code>archivio_foto.txt</code> e <code>archivio_foto.zip</code>: il nome completo include l'estensione, quindi per Windows sono tre file diversi, di tre tipi diversi. Con le estensioni nascoste l'unico indizio è l'<b>icona</b>, facile da confondere: per questo mostrare le estensioni è una buona pratica da adottare <b>sempre</b>.</p>
+      </div>
+      <div class="shot-pair" style="max-width:520px;margin-left:auto;margin-right:auto;">
+        <div>
+          <img class="shot" src="img/fs017a.webp" width="171" height="133" alt="Tre file chiamati archivio_foto con estensioni nascoste: si distinguono solo dall'icona" loading="lazy">
+          <p class="shot-cap">Estensioni nascoste: tre file "uguali"</p>
+        </div>
+        <div>
+          <img class="shot" src="img/fs017b.webp" width="198" height="124" alt="Gli stessi tre file con le estensioni visibili: archivio_foto.docx, archivio_foto.txt, archivio_foto.zip" loading="lazy">
+          <p class="shot-cap">Estensioni visibili: .docx, .txt, .zip</p>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Estensione</th><th>Tipo di file</th><th>Si apre con</th></tr></thead>
+          <tbody>
+            <tr><td><code>.txt</code></td><td>Testo semplice, senza formattazione</td><td>Blocco note</td></tr>
+            <tr><td><code>.docx</code></td><td>Documento di testo formattato</td><td>Word, LibreOffice Writer</td></tr>
+            <tr><td><code>.xlsx</code></td><td>Foglio di calcolo</td><td>Excel, LibreOffice Calc</td></tr>
+            <tr><td><code>.pptx</code></td><td>Presentazione</td><td>PowerPoint, LibreOffice Impress</td></tr>
+            <tr><td><code>.pdf</code></td><td>Documento da leggere o stampare</td><td>Browser, Acrobat Reader</td></tr>
+            <tr><td><code>.jpg</code> <code>.png</code></td><td>Immagine</td><td>Foto, Paint</td></tr>
+            <tr><td><code>.mp3</code></td><td>Audio</td><td>Lettore multimediale</td></tr>
+            <tr><td><code>.mp4</code></td><td>Video</td><td>Lettore multimediale</td></tr>
+            <tr><td><code>.zip</code></td><td>Archivio compresso che contiene altri file</td><td>Esplora file (vedi sezione 7)</td></tr>
+            <tr><td><code>.exe</code></td><td>Programma: se lo apri, <b>esegue istruzioni</b></td><td>Windows stesso — attenzione a quelli ricevuti per email!</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub-title">Con e senza estensioni visibili</h3>
+      <div class="shot-pair">
+        <div>
+          <img class="shot" src="img/fs005a.webp" width="694" height="487" alt="Icone grandi: l'archivio si chiama archivio_foto senza estensione" loading="lazy">
+          <p class="shot-cap">Estensioni nascoste: <code>archivio_foto</code> sembra una cartella qualsiasi</p>
+        </div>
+        <div>
+          <img class="shot" src="img/fs005b.webp" width="625" height="315" alt="Icone grandi: l'archivio si chiama archivio_foto.zip" loading="lazy">
+          <p class="shot-cap">Estensioni visibili: <code>archivio_foto.zip</code> è chiaramente un archivio</p>
+        </div>
+      </div>
+
+      <h3 class="sub-title">Caratteri vietati</h3>
+      <p>Windows non accetta questi nove caratteri nei nomi di file e cartelle, perché hanno un significato speciale (per esempio <code>\</code> separa le cartelle nel percorso):</p>
+      <div class="forbidden" aria-label="Caratteri vietati"><span>\</span><span>/</span><span>:</span><span>*</span><span>?</span><span>"</span><span>&lt;</span><span>&gt;</span><span>|</span></div>
+
+      <h3 class="sub-title">Le buone regole per i nomi</h3>
+      <ul class="lista">
+        <li><b>Niente spazi</b>: usa il trattino basso <code>_</code>. <code>relazione_finale.docx</code> invece di <code>relazione finale.docx</code>. Gli spazi funzionano in Windows, ma creano problemi quando il file viaggia (email, siti, piattaforme).</li>
+        <li><b>Niente lettere accentate</b>: <code>citta</code> invece di <code>città</code>, per lo stesso motivo.</li>
+        <li><b>Nomi che dicono cosa c'è dentro</b>: <code>preventivo_Rossi.docx</code>, non <code>documento1.docx</code>.</li>
+        <li><b>Se il file va consegnato, mettici il tuo nome</b>: <code>RossiMario_relazione.docx</code>.</li>
+      </ul>
+
+      <div class="box box-red">
+        <div class="box-label">La trappola della doppia estensione</div>
+        <p>Con le estensioni nascoste, se rinomini un file di testo scrivendo <code>dati.txt</code>, Windows aggiunge la sua estensione invisibile e il nome vero diventa <code>dati.txt.txt</code>. Sembra giusto, ma non lo è. Soluzione: mostra sempre le estensioni (sezione 3).</p>
+      </div>
+
+      <h3 class="sub-title">Rinominare non vuol dire convertire</h3>
+      <p>Cambiare l'estensione <b>non trasforma il file</b>: cambia solo l'etichetta. Una foto <code>.jpg</code> rinominata in <code>.png</code> resta un JPG con l'etichetta sbagliata; rinominata in <code>.foto</code> diventa un file che nessun programma sa aprire. Per questo Windows avvisa:</p>
+      <img class="shot shot-l" src="img/fs010.webp" width="868" height="350" alt="Rinominando Roma.jpg in Roma.jpg.foto compare l'avviso: modificando l'estensione il file potrebbe essere inutilizzabile" loading="lazy">
+      <p class="shot-cap">Se compare questo avviso e non sai esattamente cosa stai facendo, rispondi <b>No</b></p>
+      <p>Per cambiare davvero formato si apre il file con un programma adatto e si usa <b>Salva con nome</b> scegliendo il nuovo tipo (sezione 6).</p>
+
+      <div class="quiz" id="quiz-nomi">
+        <div class="quiz-head">
+          <div class="quiz-title">🧩 Quiz — Questo nome va bene?</div>
+          <div class="quiz-score" id="quiz-score">0 / 0</div>
+        </div>
+        <div id="quiz-items"></div>
+        <div style="margin-top:.75rem;"><button class="btn" onclick="resetQuiz()">↺ Ricomincia</button></div>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+    <!-- ── SEZIONE 5: OPERAZIONI ── -->
+    <section class="guide-section" id="s5">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div class="section-titles">
+          <h2 class="section-title">Operazioni su file e cartelle</h2>
+          <div class="section-subtitle">Creare, rinominare, copiare, spostare, eliminare</div>
+        </div>
+      </div>
+
+      <p>Quasi tutte le operazioni partono dal <b>tasto destro del mouse</b>: su uno spazio vuoto per creare qualcosa di nuovo, su un file o una cartella per agire su quell'elemento.</p>
+
+      <div class="op-card">
+        <h3>➕ Creare una cartella o un file</h3>
+        <ol class="steps">
+          <li>Entra nella cartella dove vuoi creare il nuovo elemento.</li>
+          <li>Tasto destro su uno <b>spazio vuoto</b> → <b>Nuovo</b>.</li>
+          <li>Scegli <b>Cartella</b> oppure il tipo di file (per esempio <b>Documento di testo</b>).</li>
+          <li>Scrivi il nome e premi <span class="kbd-combo">Invio</span>.</li>
+        </ol>
+        <img class="shot shot-ms" src="img/fs007.webp" width="735" height="803" alt="Tasto destro su spazio vuoto, sottomenu Nuovo con Cartella, Documento di testo e altri tipi" loading="lazy">
+        <p class="shot-cap">Il sottomenu Nuovo. Scorciatoia per una nuova cartella: <span class="kbd-combo">Ctrl+Maiusc+N</span></p>
+        <div class="box box-tip">
+          <div class="box-label">Estensione al sicuro</div>
+          <p>Quando crei o rinomini un file, Windows seleziona solo il nome e lascia fuori l'estensione: puoi scrivere senza paura di cancellarla.</p>
+        </div>
+      </div>
+
+      <div class="op-card">
+        <h3>🖱️ Il menu del tasto destro su un file</h3>
+        <p>In Windows 11 il menu ha in alto una fila di icone con le operazioni più comuni: <b>Taglia, Copia, Rinomina, Condividi, Elimina</b>. Sotto trovi le altre voci; in fondo, <b>Mostra altre opzioni</b> apre il menu classico, più lungo (anche con <span class="kbd-combo">Maiusc+F10</span>).</p>
+        <div class="shot-pair">
+          <div>
+            <img class="shot" src="img/fs008.webp" width="589" height="659" alt="Menu del tasto destro di Windows 11 su note_viaggio.txt con le icone Taglia, Copia, Rinomina, Condividi, Elimina" loading="lazy">
+            <p class="shot-cap">Menu di Windows 11</p>
+          </div>
+          <div>
+            <img class="shot" src="img/fs009.webp" width="893" height="890" alt="Menu classico con la voce Invia a aperta su Cartella compressa" loading="lazy">
+            <p class="shot-cap">Mostra altre opzioni: il menu classico</p>
+          </div>
+        </div>
+        <div class="box box-note">
+          <p>Il menu sul tuo computer può avere voci diverse: dipende dai programmi installati. Le voci importanti (Taglia, Copia, Rinomina, Elimina) ci sono sempre.</p>
+        </div>
+      </div>
+
+      <div class="op-card">
+        <h3>✏️ Rinominare</h3>
+        <ol class="steps">
+          <li>Seleziona il file con un clic.</li>
+          <li>Premi <span class="kbd-combo">F2</span> (oppure l'icona Rinomina nel menu).</li>
+          <li>Scrivi il nuovo nome e premi <span class="kbd-combo">Invio</span>. Per annullare premi <span class="kbd-combo">Esc</span>.</li>
+        </ol>
+        <div class="box box-tip">
+          <div class="box-label">Aggiungere un prefisso</div>
+          <p>Dopo <span class="kbd-combo">F2</span> premi <span class="kbd-combo">Home</span> (o <span class="kbd-combo">↖</span>): il cursore va all'inizio del nome e puoi scrivere, per esempio, <code>RossiMario_</code> senza riscrivere tutto.</p>
+        </div>
+      </div>
+
+      <div class="op-card">
+        <h3>📋 Copiare e spostare</h3>
+        <div class="two-ways">
+          <div>
+            <h4>Copiare = l'originale resta</h4>
+            Seleziona → <span class="kbd-combo">Ctrl+C</span> → vai nella cartella di destinazione → <span class="kbd-combo">Ctrl+V</span>.<br>Alla fine il file esiste in <b>due</b> posti.
+          </div>
+          <div>
+            <h4>Spostare = l'originale sparisce</h4>
+            Seleziona → <span class="kbd-combo">Ctrl+X</span> (taglia) → vai nella cartella di destinazione → <span class="kbd-combo">Ctrl+V</span>.<br>Alla fine il file esiste in <b>un solo</b> posto, quello nuovo.
+          </div>
+        </div>
+        <p><b>Trascinare con il mouse</b> è più veloce, ma il risultato dipende da dove vai:</p>
+        <ul class="lista">
+          <li>trascini <b>nella stessa unità</b> (da una cartella di C: a un'altra di C:) → il file viene <b>spostato</b>;</li>
+          <li>trascini <b>su un'altra unità</b> (da C: alla chiavetta USB) → il file viene <b>copiato</b>.</li>
+        </ul>
+        <p>Se trascini tenendo premuto il <b>tasto destro</b>, al rilascio Windows ti chiede cosa fare: <b>Copia qui</b> o <b>Sposta qui</b>. È il modo più sicuro.</p>
+        <p>Se incolli un file nella <b>stessa cartella</b> da cui l'hai copiato, Windows crea <code>Roma - Copia.jpg</code>. Se invece nella destinazione c'è già un file con lo stesso nome, ti chiede cosa fare:</p>
+        <img class="shot shot-m" src="img/fs016.webp" width="561" height="367" alt="Finestra Sostituisci o ignora file: la destinazione contiene 4 file con nome uguale" loading="lazy">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Scelta</th><th>Cosa succede</th></tr></thead>
+            <tbody>
+              <tr><td>Sostituisci i file nella destinazione</td><td>I file vecchi vengono <b>sovrascritti</b> e persi</td></tr>
+              <tr><td>Ignora questi file</td><td>Restano i file vecchi, quelli nuovi non vengono copiati</td></tr>
+              <tr><td>Consenti scelta per ogni file</td><td>Decidi tu, file per file, confrontando data e dimensione</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="op-card">
+        <h3>🗑️ Eliminare</h3>
+        <ul class="lista">
+          <li>Seleziona e premi <span class="kbd-combo">Canc</span>: il file va nel <b>Cestino</b>, da cui puoi ancora recuperarlo.</li>
+          <li><span class="kbd-combo">Maiusc+Canc</span> elimina <b>definitivamente</b>, senza passare dal Cestino.</li>
+          <li>Hai sbagliato qualcosa? <span class="kbd-combo">Ctrl+Z</span> annulla l'ultima operazione (eliminazione, spostamento, rinomina).</li>
+        </ul>
+        <div class="box box-warn">
+          <div class="box-label">Chiavette USB e cartelle di rete</div>
+          <p>I file eliminati da una chiavetta USB o da una cartella di rete <b>non vanno nel Cestino</b>: spariscono subito. Pensaci due volte.</p>
+        </div>
+      </div>
+
+      <div class="op-card">
+        <h3>☑️ Selezionare più elementi</h3>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Per selezionare…</th><th>Fai così</th></tr></thead>
+            <tbody>
+              <tr><td>Elementi sparsi</td><td>Tieni premuto <span class="kbd-combo">Ctrl</span> e clicca ciascun elemento</td></tr>
+              <tr><td>Elementi consecutivi</td><td>Clicca il primo, tieni premuto <span class="kbd-combo">Maiusc</span> e clicca l'ultimo</td></tr>
+              <tr><td>Elementi vicini, con il mouse</td><td>Tieni premuto il <b>tasto sinistro</b> in uno spazio vuoto e trascina: compare un rettangolo azzurro e tutto ciò che tocca viene selezionato</td></tr>
+              <tr><td>Tutto il contenuto della cartella</td><td><span class="kbd-combo">Ctrl+A</span></td></tr>
+              <tr><td>Togliere un elemento dalla selezione</td><td><span class="kbd-combo">Ctrl</span> + clic sull'elemento</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Dopo aver selezionato più elementi puoi copiarli, spostarli o eliminarli tutti insieme.</p>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── SEZIONE 6: SALVARE ── -->
+    <section class="guide-section" id="s6">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <div class="section-titles">
+          <h2 class="section-title">Salvare un file</h2>
+          <div class="section-subtitle">Salva, Salva con nome, Download e screenshot</div>
+        </div>
+      </div>
+
+      <h3 class="sub-title">Salva o Salva con nome?</h3>
+      <div class="two-ways">
+        <div>
+          <h4>Salva — <span class="kbd-combo">Ctrl+S</span></h4>
+          Aggiorna il file che hai aperto, <b>con lo stesso nome e nello stesso posto</b>. La versione precedente viene sostituita.
+        </div>
+        <div>
+          <h4>Salva con nome — <span class="kbd-combo">Ctrl+Maiusc+S</span></h4>
+          Crea un <b>nuovo file</b>: scegli tu cartella, nome e tipo. Il file originale resta com'era. In Word si usa anche <span class="kbd-combo">F12</span>.
+        </div>
+      </div>
+      <p>La prima volta che salvi un documento nuovo, anche "Salva" apre la finestra di Salva con nome, perché il file non ha ancora un nome né un posto.</p>
+
+      <div class="shot-pair">
+        <div>
+          <img class="shot shot-xs" src="img/fs011a.webp" width="394" height="650" alt="Blocco note, menu File con Salva con nome evidenziato" loading="lazy">
+          <p class="shot-cap">Blocco note: File → Salva con nome</p>
+        </div>
+        <div>
+          <img class="shot" src="img/fs011b.webp" width="944" height="592" alt="Finestra Salva con nome aperta sulla cartella DESTINAZIONI, nome file note_viaggio_aggiornato.txt" loading="lazy">
+          <p class="shot-cap">La finestra di salvataggio</p>
+        </div>
+      </div>
+
+      <p>La finestra di salvataggio è un piccolo Esplora file. Segui sempre questo ordine:</p>
+      <ol class="steps">
+        <li><b>Dove</b>: scegli la cartella dal riquadro a sinistra o dalla barra degli indirizzi. Controlla che sia quella giusta prima di continuare.</li>
+        <li><b>Nome file</b>: scrivi un nome che rispetta le buone regole della sezione 4.</li>
+        <li><b>Salva come</b>: il tipo di file. Qui si sceglie il formato, per esempio PDF invece di Word.</li>
+        <li>Clicca <b>Salva</b>.</li>
+      </ol>
+
+      <img class="shot shot-l" src="img/fs011c.webp" width="814" height="280" alt="Cartella DESTINAZIONI con note_viaggio.txt, note_viaggio_aggiornato.txt e Roma.jpg" loading="lazy">
+      <p class="shot-cap">Il risultato: <code>note_viaggio_aggiornato.txt</code> è un file nuovo, e <code>note_viaggio.txt</code> è ancora lì, invariato</p>
+
+      <div class="box box-warn">
+        <div class="box-label">Dov'è finito il file che ho scaricato?</div>
+        <p>Quando scarichi qualcosa da Internet o da una piattaforma come Classroom, il browser lo mette di solito nella cartella <b>Download</b> (in Esplora file la trovi nel riquadro a sinistra, sotto Home). È una cartella di passaggio: sposta i file dove devono stare, altrimenti in poche settimane non ritrovi più niente.</p>
+      </div>
+
+      <h3 class="sub-title">Salvare uno screenshot</h3>
+      <p>Premi <span class="kbd-combo">⊞+Maiusc+S</span>: lo schermo si scurisce e compare la barra dello Strumento di cattura.</p>
+      <img class="shot shot-s" src="img/fs015.webp" width="425" height="78" alt="Barra dello Strumento di cattura con i pulsanti per foto, video, modalità di cattura" loading="lazy">
+      <ol class="steps">
+        <li>Scegli la modalità dal menu a tendina (rettangolo, finestra, schermo intero) e seleziona l'area.</li>
+        <li>L'immagine finisce negli <b>appunti</b>: incollala con <span class="kbd-combo">Ctrl+V</span> dove ti serve (Paint, Word, una email).</li>
+        <li>Per averla come file: in Paint incolla e poi <b>File → Salva con nome</b>, scegliendo il formato <b>PNG</b>.</li>
+      </ol>
+      <div class="box box-tip">
+        <div class="box-label">Scorciatoia</div>
+        <p><span class="kbd-combo">⊞+Stamp</span> cattura tutto lo schermo e salva subito il file in <b>Immagini › Screenshot</b>.</p>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── SEZIONE 7: ZIP ── -->
+    <section class="guide-section" id="s7">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <div class="section-titles">
+          <h2 class="section-title">Archivi ZIP</h2>
+          <div class="section-subtitle">Tanti file in uno solo, più leggero</div>
+        </div>
+      </div>
+
+      <p>Un file <code>.zip</code> è un <b>archivio</b>: un unico file che ne contiene altri, di solito compressi per occupare meno spazio. Serve per spedire o consegnare tante cose insieme: invece di allegare 15 file, se ne allega uno.</p>
+
+      <h3 class="sub-title">Estrarre un archivio</h3>
+      <ol class="steps">
+        <li>Tasto destro sul file ZIP → <b>Estrai tutto…</b></li>
+        <li>Controlla la destinazione proposta: di solito una nuova cartella con lo stesso nome dell'archivio. Clicca <b>Estrai</b>.</li>
+        <li>Lavora sui file della cartella estratta.</li>
+      </ol>
+      <div class="shot-pair">
+        <div>
+          <img class="shot" src="img/fs012.webp" width="586" height="423" alt="Tasto destro su archivio_foto.zip con la voce Estrai tutto" loading="lazy">
+          <p class="shot-cap">1 · Estrai tutto…</p>
+        </div>
+        <div>
+          <img class="shot" src="img/fs013a.webp" width="708" height="593" alt="Finestra Estrazione cartelle compresse con destinazione D:\Esempio_Viaggi\archivio_foto" loading="lazy">
+          <p class="shot-cap">2 · Destinazione ed Estrai</p>
+        </div>
+      </div>
+      <img class="shot shot-m" src="img/fs013b.webp" width="589" height="281" alt="Cartella archivio_foto con le quattro foto estratte" loading="lazy">
+      <p class="shot-cap">3 · La nuova cartella <code>archivio_foto</code> con le 4 foto</p>
+
+      <div class="box box-red">
+        <div class="box-label">L'errore più comune</div>
+        <p>Con un doppio clic lo ZIP si apre come se fosse una cartella, ma <b>non lo è</b>: i file che apri da lì sono copie temporanee e le modifiche possono andare perse. Prima estrai, poi lavora.</p>
+      </div>
+      <p>Se estrai due volte lo stesso archivio nella stessa cartella, Windows trova file con nomi uguali e mostra la finestra <b>Sostituisci o ignora file</b> che hai visto nella sezione 5.</p>
+
+      <h3 class="sub-title">Creare un archivio</h3>
+      <ol class="steps">
+        <li>Tasto destro sulla cartella da comprimere (o su più file selezionati).</li>
+        <li><b>Comprimi in…</b> → <b>File ZIP</b>. In alternativa, dal menu classico: <b>Invia a → Cartella compressa</b>.</li>
+        <li>Compare un file <code>.zip</code> con lo stesso nome, già selezionato: se serve, rinominalo subito.</li>
+      </ol>
+      <img class="shot shot-l" src="img/fs014.webp" width="861" height="465" alt="Tasto destro sulla cartella MEDIA, Comprimi in, File ZIP" loading="lazy">
+      <p class="shot-cap">Comprimi in → File ZIP (i formati 7z e TAR sono alternative meno diffuse)</p>
+      <div class="box box-tip">
+        <div class="box-label">Comprimi la cartella, non il contenuto</div>
+        <p>Se devi consegnare una cartella con tutta la sua struttura, fai tasto destro <b>sulla cartella stessa</b>. Se selezioni i file dentro, lo ZIP conterrà i file sparsi, senza la cartella che li organizza.</p>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+    <!-- ── SEZIONE 8: LABORATORIO ── -->
+    <section class="guide-section" id="s8">
+      <div class="section-header">
+        <div class="section-num">8</div>
+        <div class="section-titles">
+          <h2 class="section-title">Laboratorio guidato</h2>
+          <div class="section-subtitle">Metti in ordine i file di un'agenzia viaggi</div>
+        </div>
+      </div>
+
+      <p>Sei stagista in un'agenzia viaggi. Il collega ti ha lasciato una cartella con dodici file alla rinfusa: il tuo compito è organizzarli, rinominarli, crearne qualcuno nuovo e consegnare tutto in un archivio ZIP. Alla fine lo strumento in fondo alla pagina controlla il tuo lavoro.</p>
+
+      <a class="dl-card" href="laboratorio-file-system.zip" download>
+        <span class="dl-icon">📦</span>
+        <div><strong>Scarica il materiale — laboratorio-file-system.zip</strong><span>12 file: documenti, testi, foto, un video, un audio · 300 KB</span></div>
+      </a>
+
+      <p>Nei passi seguenti <code>CognomeNome</code> va sostituito con il tuo cognome e nome attaccati, senza spazi né accenti: per esempio <code>RossiMario</code>. Spunta ogni passo quando l'hai completato.</p>
+
+      <div class="lab-progress" aria-hidden="true"><div class="lab-progress-fill" id="lab-progress-fill"></div></div>
+
+      <ol class="lab-list" id="lab-list">
+        <li class="lab-item">
+          <h4>Estrai il materiale</h4>
+          <p>Tasto destro su <code>laboratorio-file-system.zip</code> → <b>Estrai tutto</b>. Lavorerai sulla cartella estratta <code>materiale_laboratorio</code>, non dentro lo ZIP.</p>
+          <label class="lab-check"><input type="checkbox"> Fatto</label>
+        </li>
+        <li class="lab-item">
+          <h4>Mostra le estensioni</h4>
+          <p>Visualizza → Mostra → <b>Estensioni nomi file</b>. Se c'è già la spunta, passa oltre.</p>
+          <label class="lab-check"><input type="checkbox"> Fatto</label>
+        </li>
+        <li class="lab-item">
+          <h4>Crea la struttura delle cartelle</h4>
+          <p>Sul Desktop o in Documenti crea la cartella <code>VIAGGI_CognomeNome</code> e, dentro, queste sottocartelle:</p>
+<pre class="tree-txt">VIAGGI_CognomeNome
+├── CLIENTI
+│   ├── PREVENTIVI
+│   └── CONTRATTI
+├── DESTINAZIONI
+│   ├── EUROPA
+│   └── MONDO
+├── MEDIA
+│   ├── FOTO
+│   ├── VIDEO
+│   └── AUDIO
+└── VARIE</pre>
+          <label class="lab-check"><input type="checkbox"> Fatto</label>
+        </li>
+        <li class="lab-item">
+          <h4>Rinomina tutti i file</h4>
+          <p>In <code>materiale_laboratorio</code> aggiungi <code>CognomeNome_</code> all'inizio del nome di <b>ogni</b> file: <code>guida_Tokyo.txt</code> diventa <code>RossiMario_guida_Tokyo.txt</code>. Trucco: <span class="kbd-combo">F2</span> e poi <span class="kbd-combo">Home</span>.</p>
+          <label class="lab-check"><input type="checkbox"> Fatto</label>
+        </li>
+        <li class="lab-item">
+          <h4>Sposta ogni file nella sua cartella</h4>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>File (dopo il prefisso)</th><th>Cartella</th></tr></thead>
+              <tbody>
+                <tr><td><code>…preventivo_Bianchi.docx</code>, <code>…preventivo_Verdi.docx</code></td><td>CLIENTI › PREVENTIVI</td></tr>
+                <tr><td><code>…contratto_Bianchi.docx</code></td><td>CLIENTI › CONTRATTI</td></tr>
+                <tr><td><code>…guida_Parigi.txt</code></td><td>DESTINAZIONI › EUROPA</td></tr>
+                <tr><td><code>…guida_Tokyo.txt</code></td><td>DESTINAZIONI › MONDO</td></tr>
+                <tr><td><code>…Parigi.jpg</code>, <code>…Tokyo.jpg</code></td><td>MEDIA › FOTO</td></tr>
+                <tr><td><code>…spot_estate.mp4</code></td><td>MEDIA › VIDEO</td></tr>
+                <tr><td><code>…jingle_agenzia.mp3</code></td><td>MEDIA › AUDIO</td></tr>
+                <tr><td>i 2 file che non appartengono a nessuna categoria</td><td>VARIE</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Usa <b>Taglia e Incolla</b> (o il trascinamento): alla fine <code>materiale_laboratorio</code> deve essere vuota.</p>
+          <label class="lab-check"><input type="checkbox"> Fatto</label>
+        </li>
+        <li class="lab-item">
+          <h4>Crea un nuovo file di testo</h4>
+          <p>In <b>DESTINAZIONI › EUROPA</b>: tasto destro → Nuovo → Documento di testo, chiamalo <code>CognomeNome_guida_Lisbona.txt</code>. Aprilo e scrivi almeno due consigli di viaggio. Salva con <span class="kbd-combo">Ctrl+S</span>.</p>
+          <label class="lab-check"><input type="checkbox"> Fatto</label>
+        </li>
+        <li class="lab-item">
+          <h4>Crea una revisione</h4>
+          <p>Sempre in EUROPA copia <code>CognomeNome_guida_Parigi.txt</code> e incollalo nella stessa cartella. Rinomina la copia in <code>REVISIONE_CognomeNome_guida_Parigi.txt</code>, aprila e aggiungi in cima una riga con il tuo nome e cognome. Salva.</p>
+          <label class="lab-check"><input type="checkbox"> Fatto</label>
+        </li>
+        <li class="lab-item">
+          <h4>Fai uno screenshot</h4>
+          <p>Apri la cartella <code>VIAGGI_CognomeNome</code> in Esplora file, premi <span class="kbd-combo">⊞+Maiusc+S</span> e cattura la finestra. Apri Paint, incolla con <span class="kbd-combo">Ctrl+V</span> e salva come <code>CognomeNome_screenshot.png</code> in <b>MEDIA › FOTO</b>.</p>
+          <label class="lab-check"><input type="checkbox"> Fatto</label>
+        </li>
+        <li class="lab-item">
+          <h4>Comprimi e controlla</h4>
+          <p>Tasto destro sulla cartella <code>VIAGGI_CognomeNome</code> → Comprimi in → File ZIP. Otterrai <code>VIAGGI_CognomeNome.zip</code>: caricalo nello strumento qui sotto.</p>
+          <label class="lab-check"><input type="checkbox"> Fatto</label>
+        </li>
+      </ol>
+
+      <div class="checker" id="checker">
+        <h3>🔍 Controlla il tuo ZIP</h3>
+        <p style="font-size:.9rem;margin-bottom:.25rem;">Scrivi il prefisso che hai usato e scegli il file <code>VIAGGI_CognomeNome.zip</code>. Lo strumento legge l'elenco dei file contenuti e ti dice cosa è corretto e cosa manca.</p>
+        <div class="checker-form">
+          <label class="checker-field">Il tuo CognomeNome
+            <input type="text" id="chk-nome" placeholder="es. RossiMario" autocomplete="off" spellcheck="false">
+          </label>
+          <label class="checker-field">File ZIP
+            <input type="file" id="chk-file" accept=".zip">
+          </label>
+          <button class="btn btn-primary" onclick="runChecker()">Controlla</button>
+        </div>
+        <p class="checker-privacy">Il file viene letto solo dal tuo browser: non viene caricato su nessun server.</p>
+        <div id="chk-out" aria-live="polite"></div>
+      </div>
+
+      <div class="box box-tip">
+        <div class="box-label">Errori frequenti</div>
+        <p>Cartella principale con il nome sbagliato · file non rinominati · doppia estensione (<code>.txt.txt</code>) · file nella cartella sbagliata · ZIP creato selezionando i file invece della cartella · file nuovi lasciati vuoti.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ZOOM IMMAGINI -->
+<div id="zoom-overlay" onclick="closeZoom()" role="dialog" aria-label="Immagine ingrandita"><img id="zoom-img" alt=""></div>
+
+<!-- FOOTER -->
+<footer>
+  <strong>Formazione Digitale</strong> · Portale aperto di alfabetizzazione digitale<br>
+  <a href="/informatica-base/">← Informatica di Base</a> · <a href="/">Torna al portale</a> · <a href="/index.html#cards-guide">Tutte le guide</a>
+</footer>
+
+<script src="/scripts/ui.js" defer></script>
+<script>
+/* ══════════════════════════════════════════════════════════════
+   FILE E CARTELLE IN WINDOWS — script di pagina
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+function toggleSidebar() {
+  document.getElementById('guide-sidebar').classList.toggle('is-open');
+  document.getElementById('sidebar-overlay').classList.toggle('is-open');
+}
+function closeSidebar() {
+  document.getElementById('guide-sidebar').classList.remove('is-open');
+  document.getElementById('sidebar-overlay').classList.remove('is-open');
+}
+
+/* ── SIDEBAR: voce attiva durante lo scroll ──────────────── */
+(function initScrollSpy() {
+  const navItems = document.querySelectorAll('.sidebar-nav .nav-item');
+  const obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      navItems.forEach(function (n) { n.classList.remove('active'); });
+      const match = document.querySelector('.sidebar-nav a[href="#' + entry.target.id + '"]');
+      if (match) match.classList.add('active');
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  document.querySelectorAll('section[id]').forEach(function (s) { obs.observe(s); });
+})();
+
+/* ── BARRA DI LETTURA ────────────────────────────────────── */
+window.addEventListener('scroll', function () {
+  const el = document.getElementById('reading-bar');
+  const tot = document.body.scrollHeight - window.innerHeight;
+  el.style.width = Math.min(window.scrollY / tot * 100, 100) + '%';
+}, { passive: true });
+
+/* ── ZOOM SCREENSHOT ─────────────────────────────────────── */
+function openZoom(src, alt) {
+  const img = document.getElementById('zoom-img');
+  img.src = src; img.alt = alt;
+  document.getElementById('zoom-overlay').classList.add('is-open');
+}
+function closeZoom() {
+  document.getElementById('zoom-overlay').classList.remove('is-open');
+}
+document.querySelectorAll('img.shot').forEach(function (img) {
+  img.addEventListener('click', function () { openZoom(img.src, img.alt); });
+});
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeZoom(); });
+
+/* ── SCHEDE (viste di Esplora file) ──────────────────────── */
+function showTab(btn, id) {
+  const box = btn.parentElement;
+  box.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('is-active'); });
+  btn.classList.add('is-active');
+  let el = box.nextElementSibling;
+  while (el && el.classList.contains('tab-panel')) {
+    el.classList.toggle('is-active', el.id === id);
+    el = el.nextElementSibling;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   HOTSPOT — anatomia di Esplora file (§3)
+   Coordinate in percentuale sull'immagine fs001 (1920×1024 originale)
+   ══════════════════════════════════════════════════════════════ */
+const HOTSPOTS = [
+  { x: 17.3, y: 2.2, t: 'Scheda', d: 'Come nel browser: puoi tenere aperte più cartelle in schede diverse (Ctrl+T per una nuova scheda).' },
+  { x: 12.4, y: 7.0, t: 'Frecce di navigazione', d: 'Indietro, Avanti, Su (cartella padre) e Aggiorna.' },
+  { x: 40.0, y: 7.0, t: 'Barra degli indirizzi', d: 'Mostra il percorso della cartella aperta. Clicca un gradino per saltare lì.' },
+  { x: 92.0, y: 7.0, t: 'Casella Cerca', d: 'Cerca file e cartelle dentro la cartella aperta e nelle sue sottocartelle.' },
+  { x: 25.9, y: 13.0, t: 'Barra dei comandi', d: 'Nuovo, Taglia, Copia, Incolla, Rinomina, Condividi, Elimina: si attivano quando selezioni qualcosa.' },
+  { x: 40.8, y: 13.0, t: 'Ordina e Visualizza', d: 'Ordina gli elementi (per nome, data, tipo…) e cambia il modo in cui vengono mostrati.' },
+  { x: 91.3, y: 13.0, t: 'Anteprima', d: 'Apre a destra un riquadro con l\'anteprima del file selezionato.' },
+  { x: 13.0, y: 68.5, t: 'Riquadro di spostamento', d: 'Collegamenti rapidi: cartelle fissate, Questo PC con le unità, Rete.' },
+  { x: 66.0, y: 17.3, t: 'Intestazioni delle colonne', d: 'In vista Dettagli: clicca un\'intestazione per ordinare per quella colonna.' },
+  { x: 66.0, y: 30.0, t: 'Area del contenuto', d: 'File e cartelle contenuti nella cartella aperta.' },
+  { x: 8.0, y: 97.5, t: 'Barra di stato', d: 'Quanti elementi ci sono e quanti ne hai selezionati.' }
+];
+
+function activateHotspot(i) {
+  document.querySelectorAll('.hs-dot').forEach(function (d, k) { d.classList.toggle('is-active', k === i); });
+  document.querySelectorAll('#hs-legend li').forEach(function (li, k) { li.classList.toggle('is-active', k === i); });
+}
+
+(function initHotspots() {
+  const wrap = document.getElementById('hs-wrap');
+  const legend = document.getElementById('hs-legend');
+  HOTSPOTS.forEach(function (h, i) {
+    const dot = document.createElement('button');
+    dot.className = 'hs-dot';
+    dot.style.left = h.x + '%'; dot.style.top = h.y + '%';
+    dot.textContent = i + 1;
+    dot.setAttribute('aria-label', (i + 1) + ': ' + h.t);
+    dot.addEventListener('click', function () { activateHotspot(i); });
+    wrap.appendChild(dot);
+    const li = document.createElement('li');
+    li.innerHTML = '<span class="hs-n">' + (i + 1) + '</span><b>' + h.t + '</b> — ' + h.d;
+    li.addEventListener('click', function () { activateHotspot(i); });
+    legend.appendChild(li);
+  });
+})();
+
+/* ══════════════════════════════════════════════════════════════
+   ALBERO E PERCORSI (§2)
+   ══════════════════════════════════════════════════════════════ */
+const TREE = { n: 'D:', label: 'DATI (D:)', c: [
+  { n: 'Esempio_Viaggi', c: [
+    { n: 'CLIENTI', c: [{ n: 'preventivo_Rossi.docx' }, { n: 'elenco_clienti.xlsx' }] },
+    { n: 'DESTINAZIONI', c: [{ n: 'note_viaggio.txt' }, { n: 'Roma.jpg' }] },
+    { n: 'MEDIA', c: [{ n: 'logo.png' }, { n: 'spot.mp4' }, { n: 'jingle.mp3' }] },
+    { n: 'archivio_foto.zip' }
+  ] }
+] };
+
+const TREE_ROW_H = 30, TREE_INDENT = 26;
+let treeRows = [];
+let treeGame = { active: false, target: -1, score: 0, tries: 0 };
+
+// Appiattisce l'albero in righe con profondità e indice del padre
+function flattenTree(node, depth, parent, out) {
+  const idx = out.length;
+  out.push({ name: node.n, label: node.label || node.n, depth: depth, parent: parent, folder: !!node.c });
+  (node.c || []).forEach(function (child) { flattenTree(child, depth + 1, idx, out); });
+  return out;
+}
+
+// Icona in base al tipo di elemento
+function iconFor(row) {
+  if (row.depth === 0) return '💽';
+  if (row.folder) return '📁';
+  const ext = row.name.split('.').pop().toLowerCase();
+  const map = { txt: '📄', docx: '📝', xlsx: '📊', jpg: '🖼️', png: '🖼️', mp3: '🎵', mp4: '🎬', zip: '🗜️' };
+  return map[ext] || '📄';
+}
+
+// Catena di indici dalla radice fino alla riga i
+function chainOf(i) {
+  const chain = [];
+  for (let k = i; k >= 0; k = treeRows[k].parent) chain.unshift(k);
+  return chain;
+}
+
+// Percorso testuale (D:\cartella\file) e a gradini (Questo PC › …)
+function pathOf(i) {
+  const names = chainOf(i).map(function (k) { return treeRows[k].name; });
+  return names.length === 1 ? names[0] + '\\' : names.join('\\');
+}
+function crumbOf(i) {
+  return ['Questo PC'].concat(chainOf(i).map(function (k) { return treeRows[k].label; })).join(' › ');
+}
+
+function svgEl(tag, attrs) {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  Object.keys(attrs).forEach(function (k) { el.setAttribute(k, attrs[k]); });
+  return el;
+}
+
+// Disegna i connettori tra padre e figlio
+function drawTreeLines(svg) {
+  treeRows.forEach(function (r, i) {
+    if (r.parent < 0) return;
+    const px = r.depth * TREE_INDENT - TREE_INDENT + 12, py = r.parent * TREE_ROW_H + 15;
+    const cx = r.depth * TREE_INDENT + 2, cy = i * TREE_ROW_H + 15;
+    svg.appendChild(svgEl('path', { d: 'M' + px + ' ' + (py + 8) + ' V' + cy + ' H' + cx, class: 'tree-line' }));
+  });
+}
+
+// Disegna i nodi cliccabili
+function drawTreeNodes(svg) {
+  treeRows.forEach(function (r, i) {
+    const g = svgEl('g', { class: 'tree-node', 'data-i': i, tabindex: 0, role: 'button', 'aria-label': r.label });
+    const x = r.depth * TREE_INDENT, y = i * TREE_ROW_H;
+    g.appendChild(svgEl('rect', { x: x, y: y + 2, width: 250, height: TREE_ROW_H - 4 }));
+    const t = svgEl('text', { x: x + 6, y: y + 20 });
+    t.textContent = iconFor(r) + '  ' + r.label;
+    g.appendChild(t);
+    g.addEventListener('click', function () { onTreeClick(i); });
+    g.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onTreeClick(i); } });
+    svg.appendChild(g);
+  });
+}
+
+function renderTree() {
+  const svg = document.getElementById('tree-svg');
+  treeRows = flattenTree(TREE, 0, -1, []);
+  const w = 4 * TREE_INDENT + 260, h = treeRows.length * TREE_ROW_H;
+  svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+  svg.setAttribute('width', w); svg.setAttribute('height', h);
+  drawTreeLines(svg);
+  drawTreeNodes(svg);
+}
+
+function markTreeNode(i, cls) {
+  document.querySelectorAll('.tree-node').forEach(function (g) {
+    g.classList.remove('is-sel', 'is-ok', 'is-ko');
+    if (Number(g.getAttribute('data-i')) === i) g.classList.add(cls);
+  });
+}
+
+function showTreePath(i) {
+  document.getElementById('tree-path').textContent = pathOf(i);
+  document.getElementById('tree-crumb').textContent = crumbOf(i);
+  markTreeNode(i, 'is-sel');
+}
+
+function onTreeClick(i) {
+  if (treeGame.active) { checkTreeGame(i); return; }
+  showTreePath(i);
+}
+
+// Gioco: mostra un percorso, lo studente clicca l'elemento giusto
+function startTreeGame() {
+  let t;
+  do { t = 1 + Math.floor(Math.random() * (treeRows.length - 1)); } while (t === treeGame.target);
+  treeGame.active = true; treeGame.target = t;
+  markTreeNode(-1, 'is-sel');
+  document.getElementById('tree-path').textContent = pathOf(t);
+  document.getElementById('tree-crumb').textContent = 'Dove si trova? Clicca l\'elemento nell\'albero.';
+  document.getElementById('tree-game-btn').textContent = '⏭ Altro percorso';
+  const msg = document.getElementById('tree-game-msg');
+  msg.innerHTML = 'Trova: <code></code> · Punteggio: ' + treeGame.score + ' / ' + treeGame.tries;
+  msg.querySelector('code').textContent = pathOf(t);
+}
+
+function checkTreeGame(i) {
+  const ok = i === treeGame.target;
+  treeGame.tries++; if (ok) treeGame.score++;
+  treeGame.active = false;
+  markTreeNode(i, ok ? 'is-ok' : 'is-ko');
+  const msg = ok ? '✅ Esatto!' : '❌ No: hai cliccato ' + pathOf(i) + '.';
+  document.getElementById('tree-crumb').textContent = crumbOf(treeGame.target);
+  document.getElementById('tree-game-msg').textContent = msg + ' Punteggio: ' + treeGame.score + ' / ' + treeGame.tries;
+}
+
+renderTree();
+
+/* ══════════════════════════════════════════════════════════════
+   QUIZ NOMI DI FILE (§4)
+   a: 'ok' valido · 'no' non valido · 'meh' valido ma sconsigliato
+   ══════════════════════════════════════════════════════════════ */
+const QUIZ_OPTS = [
+  { v: 'ok', t: 'Valido' },
+  { v: 'meh', t: 'Valido ma sconsigliato' },
+  { v: 'no', t: 'Non valido' }
+];
+const QUIZ = [
+  { n: 'relazione_finale.docx', a: 'ok', fb: 'Nome chiaro, niente spazi, estensione corretta.' },
+  { n: 'compito?.txt', a: 'no', fb: 'Il punto interrogativo ? è uno dei nove caratteri vietati.' },
+  { n: 'Rossi Mario verifica.docx', a: 'meh', fb: 'Windows lo accetta, ma gli spazi creano problemi quando il file viaggia. Meglio RossiMario_verifica.docx.' },
+  { n: 'foto:mare.jpg', a: 'no', fb: 'I due punti : sono vietati: in Windows servono per indicare l\'unità (C:).' },
+  { n: 'dati.txt.txt', a: 'meh', fb: 'È accettato, ma è la trappola della doppia estensione: quasi sempre nasce da un errore con le estensioni nascoste.' },
+  { n: 'RossiMario_idea1.txt', a: 'ok', fb: 'Perfetto: prefisso con il nome, trattino basso, estensione giusta.' },
+  { n: 'backup<2026>.zip', a: 'no', fb: 'I simboli < e > sono vietati.' },
+  { n: 'città_perché.txt', a: 'meh', fb: 'Le lettere accentate funzionano in Windows, ma possono rovinarsi su altri sistemi o piattaforme. Meglio citta_perche.txt.' },
+  { n: 'preventivi/2026.xlsx', a: 'no', fb: 'La barra / è vietata, come la barra rovesciata \\: servono a separare le cartelle.' }
+];
+let quizState = { answered: 0, right: 0 };
+
+function updateQuizScore() {
+  document.getElementById('quiz-score').textContent = quizState.right + ' / ' + quizState.answered + ' corrette';
+}
+
+function answerQuiz(item, q, chosen) {
+  const buttons = item.querySelectorAll('.quiz-opt');
+  buttons.forEach(function (b) {
+    b.disabled = true;
+    if (b.dataset.v === q.a) b.classList.add('is-right');
+    else if (b.dataset.v === chosen) b.classList.add('is-wrong');
+  });
+  const fb = item.querySelector('.quiz-fb');
+  fb.textContent = (chosen === q.a ? '✅ ' : '❌ ') + q.fb;
+  fb.classList.add('is-visible');
+  quizState.answered++; if (chosen === q.a) quizState.right++;
+  updateQuizScore();
+}
+
+function buildQuizItem(q) {
+  const item = document.createElement('div');
+  item.className = 'quiz-item';
+  const name = document.createElement('div');
+  name.className = 'quiz-name'; name.textContent = q.n;
+  const opts = document.createElement('div');
+  opts.className = 'quiz-opts';
+  QUIZ_OPTS.forEach(function (o) {
+    const b = document.createElement('button');
+    b.className = 'quiz-opt'; b.dataset.v = o.v; b.textContent = o.t;
+    b.addEventListener('click', function () { answerQuiz(item, q, o.v); });
+    opts.appendChild(b);
+  });
+  const fb = document.createElement('div');
+  fb.className = 'quiz-fb';
+  item.appendChild(name); item.appendChild(opts); item.appendChild(fb);
+  return item;
+}
+
+function resetQuiz() {
+  const box = document.getElementById('quiz-items');
+  box.innerHTML = '';
+  QUIZ.forEach(function (q) { box.appendChild(buildQuizItem(q)); });
+  quizState = { answered: 0, right: 0 };
+  updateQuizScore();
+}
+
+resetQuiz();
+
+/* ══════════════════════════════════════════════════════════════
+   CHECKLIST LABORATORIO (§8) — stato salvato nel browser
+   ══════════════════════════════════════════════════════════════ */
+const LAB_KEY = 'fd-file-system-lab';
+
+function loadLab() {
+  try { return JSON.parse(localStorage.getItem(LAB_KEY)) || []; } catch (e) { return []; }
+}
+function saveLab(state) {
+  try { localStorage.setItem(LAB_KEY, JSON.stringify(state)); } catch (e) { /* storage non disponibile */ }
+}
+
+function refreshLab() {
+  const items = document.querySelectorAll('.lab-item');
+  let done = 0;
+  const state = [];
+  items.forEach(function (li) {
+    const on = li.querySelector('input').checked;
+    li.classList.toggle('is-done', on);
+    state.push(on); if (on) done++;
+  });
+  document.getElementById('lab-progress-fill').style.width = (done / items.length * 100) + '%';
+  saveLab(state);
+}
+
+(function initLab() {
+  const state = loadLab();
+  document.querySelectorAll('.lab-item input').forEach(function (cb, i) {
+    cb.checked = !!state[i];
+    cb.addEventListener('change', refreshLab);
+  });
+  refreshLab();
+})();
+
+/* ══════════════════════════════════════════════════════════════
+   VERIFICATORE ZIP (§8)
+   Legge solo la "directory centrale" dello ZIP (elenco nomi e
+   dimensioni): nessuna decompressione, nessuna libreria esterna.
+   ══════════════════════════════════════════════════════════════ */
+
+// Cerca il record di fine archivio (EOCD) partendo dal fondo
+function findEocd(view) {
+  const min = Math.max(0, view.byteLength - 65557);
+  for (let i = view.byteLength - 22; i >= min; i--) {
+    if (view.getUint32(i, true) === 0x06054b50) return i;
+  }
+  return -1;
+}
+
+// Decodifica il nome: UTF-8 se il flag bit 11 è attivo, altrimenti Latin-1
+function decodeName(bytes, utf8) {
+  return new TextDecoder(utf8 ? 'utf-8' : 'iso-8859-1').decode(bytes);
+}
+
+// Restituisce [{ path, size, dir }] leggendo la directory centrale
+function readZipEntries(buffer) {
+  const view = new DataView(buffer);
+  const eocd = findEocd(view);
+  if (eocd < 0) throw new Error('non è un file ZIP valido');
+  const count = view.getUint16(eocd + 10, true);
+  let off = view.getUint32(eocd + 16, true);
+  const out = [];
+  for (let k = 0; k < count; k++) {
+    if (view.getUint32(off, true) !== 0x02014b50) throw new Error('archivio danneggiato');
+    const flags = view.getUint16(off + 8, true);
+    const size = view.getUint32(off + 24, true);
+    const nLen = view.getUint16(off + 28, true), xLen = view.getUint16(off + 30, true), cLen = view.getUint16(off + 32, true);
+    const name = decodeName(new Uint8Array(buffer, off + 46, nLen), (flags & 0x800) !== 0).replace(/\\/g, '/');
+    out.push({ path: name.replace(/\/$/, ''), size: size, dir: name.endsWith('/') });
+    off += 46 + nLen + xLen + cLen;
+  }
+  return out;
+}
+
+// Struttura attesa del laboratorio, con il prefisso dello studente
+function buildLabSpec(p) {
+  const f = function (path, kind) { return { path: path, kind: kind || 'given' }; };
+  return {
+    root: 'VIAGGI_' + p,
+    folders: ['CLIENTI', 'CLIENTI/PREVENTIVI', 'CLIENTI/CONTRATTI', 'DESTINAZIONI', 'DESTINAZIONI/EUROPA',
+      'DESTINAZIONI/MONDO', 'MEDIA', 'MEDIA/FOTO', 'MEDIA/VIDEO', 'MEDIA/AUDIO', 'VARIE'],
+    files: [
+      f('CLIENTI/PREVENTIVI/' + p + '_preventivo_Bianchi.docx'), f('CLIENTI/PREVENTIVI/' + p + '_preventivo_Verdi.docx'),
+      f('CLIENTI/CONTRATTI/' + p + '_contratto_Bianchi.docx'),
+      f('DESTINAZIONI/EUROPA/' + p + '_guida_Parigi.txt'), f('DESTINAZIONI/EUROPA/' + p + '_guida_Lisbona.txt', 'new'),
+      f('DESTINAZIONI/EUROPA/REVISIONE_' + p + '_guida_Parigi.txt', 'rev'),
+      f('DESTINAZIONI/MONDO/' + p + '_guida_Tokyo.txt'),
+      f('MEDIA/FOTO/' + p + '_Parigi.jpg'), f('MEDIA/FOTO/' + p + '_Tokyo.jpg'), f('MEDIA/FOTO/' + p + '_screenshot.png', 'new'),
+      f('MEDIA/VIDEO/' + p + '_spot_estate.mp4'), f('MEDIA/AUDIO/' + p + '_jingle_agenzia.mp3'),
+      f('VARIE/' + p + '_appunti_vari.txt'), f('VARIE/' + p + '_vecchio_listino.xlsx')
+    ]
+  };
+}
+
+function baseName(path) { return path.split('/').pop(); }
+function parentOf(path) { return path.split('/').slice(0, -1).join('/'); }
+
+// Indice di file e cartelle relativi alla cartella principale (chiavi minuscole)
+function indexEntries(entries, root) {
+  const files = {}, dirs = {};
+  const rootL = root ? root.toLowerCase() + '/' : '';
+  entries.forEach(function (e) {
+    if (e.path.toLowerCase().indexOf(rootL) !== 0) return;
+    const rel = e.path.slice(rootL.length);
+    if (!rel) return;
+    if (e.dir) { dirs[rel.toLowerCase()] = rel; return; }
+    files[rel.toLowerCase()] = { rel: rel, size: e.size, used: false };
+    for (let d = parentOf(rel); d; d = parentOf(d)) dirs[d.toLowerCase()] = dirs[d.toLowerCase()] || d;
+  });
+  return { files: files, dirs: dirs };
+}
+
+// Controlla la cartella principale dello ZIP
+function checkRoot(entries, spec, res) {
+  const tops = {};
+  entries.forEach(function (e) { tops[e.path.split('/')[0]] = true; });
+  const names = Object.keys(tops);
+  const inner = names.some(function (n) { return spec.folders.indexOf(n.toUpperCase()) >= 0; });
+  const loose = inner || entries.some(function (e) { return !e.dir && e.path.indexOf('/') < 0; });
+  if (loose) { res.push({ l: 'ko', m: 'Lo ZIP contiene file sparsi: hai compresso il contenuto invece della cartella ' + spec.root + '. Controllo comunque il resto.' }); return ''; }
+  const found = names.filter(function (n) { return n.toLowerCase() === spec.root.toLowerCase(); })[0];
+  if (!found) {
+    // cartella principale sbagliata: se è una sola, la uso comunque per controllare il resto
+    res.push({ l: 'ko', m: 'Cartella principale attesa: ' + spec.root + ' — trovato: ' + names.join(', ') + '.' });
+    return names.length === 1 ? names[0] : null;
+  }
+  res.push(found === spec.root ? { l: 'ok', m: 'Cartella principale ' + spec.root + ' presente.' }
+    : { l: 'warn', m: 'Cartella principale trovata come ' + found + ': controlla maiuscole e minuscole (' + spec.root + ').' });
+  return found;
+}
+
+function checkFolders(idx, spec, res) {
+  spec.folders.forEach(function (f) {
+    const got = idx.dirs[f.toLowerCase()];
+    if (!got) res.push({ l: 'ko', m: 'Manca la cartella ' + f + '.' });
+    else if (got !== f) res.push({ l: 'warn', m: 'Cartella ' + got + ': il nome corretto è ' + f + ' (maiuscole/minuscole).' });
+    else res.push({ l: 'ok', m: 'Cartella ' + f + '.' });
+  });
+}
+
+// Cerca perché un file atteso non è al suo posto
+function diagnoseMissing(idx, exp, p) {
+  const bn = baseName(exp.path).toLowerCase();
+  const plain = bn.replace(p.toLowerCase() + '_', '');
+  const keys = Object.keys(idx.files);
+  const where = keys.filter(function (k) { return baseName(k) === bn && !idx.files[k].used; })[0];
+  if (where) { idx.files[where].used = true; return 'è nella cartella sbagliata: trovato in ' + (parentOf(idx.files[where].rel) || 'radice') + '.'; }
+  const dbl = keys.filter(function (k) { return baseName(k).indexOf(bn + '.') === 0; })[0];
+  if (dbl) { idx.files[dbl].used = true; return 'doppia estensione: si chiama ' + baseName(idx.files[dbl].rel) + '.'; }
+  const unren = keys.filter(function (k) { return baseName(k) === plain; })[0];
+  if (unren && exp.kind === 'given') { idx.files[unren].used = true; return 'non rinominato: trovato ' + baseName(idx.files[unren].rel) + ' senza il prefisso.'; }
+  return exp.kind === 'given' ? 'non trovato.' : 'non trovato: è uno dei file da creare.';
+}
+
+// Controllo di contenuto per i file creati dallo studente
+function checkContent(exp, got, idx, p) {
+  if (exp.kind === 'new' && got.size === 0) {
+    const hint = /\.png$/i.test(exp.path) ? 'rifai lo screenshot e salvalo da Paint.' : 'scrivici qualcosa.';
+    return { l: 'warn', m: exp.path + ' c\'è, ma è vuoto (0 byte): ' + hint };
+  }
+  if (exp.kind === 'rev') {
+    const orig = idx.files[('DESTINAZIONI/EUROPA/' + p + '_guida_Parigi.txt').toLowerCase()];
+    if (orig && got.size <= orig.size) return { l: 'warn', m: exp.path + ' c\'è, ma non sembra modificato: aggiungi la riga con il tuo nome.' };
+  }
+  return { l: 'ok', m: exp.path + '.' };
+}
+
+function checkFiles(idx, spec, p, res) {
+  spec.files.forEach(function (exp) {
+    const got = idx.files[exp.path.toLowerCase()];
+    if (got) got.used = true;
+  });
+  spec.files.forEach(function (exp) {
+    const got = idx.files[exp.path.toLowerCase()];
+    if (!got) { res.push({ l: 'ko', m: baseName(exp.path) + ': ' + diagnoseMissing(idx, exp, p) }); return; }
+    if (got.rel !== exp.path) { res.push({ l: 'warn', m: got.rel + ': il nome corretto è ' + exp.path + ' (maiuscole/minuscole).' }); return; }
+    res.push(checkContent(exp, got, idx, p));
+  });
+}
+
+function checkExtras(idx, res) {
+  Object.keys(idx.files).forEach(function (k) {
+    if (!idx.files[k].used) res.push({ l: 'warn', m: 'File in più, non previsto: ' + idx.files[k].rel + '.' });
+  });
+}
+
+function analyzeLabZip(entries, p) {
+  const spec = buildLabSpec(p), res = [];
+  const root = checkRoot(entries, spec, res);
+  if (root === null) return res;
+  const idx = indexEntries(entries, root);
+  checkFolders(idx, spec, res);
+  checkFiles(idx, spec, p, res);
+  checkExtras(idx, res);
+  return res;
+}
+
+function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
+
+// Mostra il riepilogo e l'elenco dei controlli (errori per primi)
+function renderChecker(res) {
+  const out = document.getElementById('chk-out');
+  const n = { ok: 0, warn: 0, ko: 0 };
+  res.forEach(function (r) { n[r.l]++; });
+  const cls = n.ko ? 'ko' : (n.warn ? 'warn' : 'ok');
+  const txt = n.ko ? plural(n.ko, 'errore', 'errori') + ' da correggere, ' + plural(n.warn, 'avviso', 'avvisi') + ', ' + plural(n.ok, 'controllo superato', 'controlli superati') + '.'
+    : (n.warn ? 'Quasi perfetto: ' + plural(n.warn, 'avviso', 'avvisi') + ' da guardare, ' + plural(n.ok, 'controllo superato', 'controlli superati') + '.'
+      : '🎉 Tutto corretto: ' + plural(n.ok, 'controllo superato', 'controlli superati') + '!');
+  const order = { ko: 0, warn: 1, ok: 2 };
+  const sorted = res.slice().sort(function (a, b) { return order[a.l] - order[b.l]; });
+  out.innerHTML = '<div class="checker-summary ' + cls + '"></div><ul class="checker-list"></ul>';
+  out.querySelector('.checker-summary').textContent = txt;
+  const ul = out.querySelector('.checker-list');
+  sorted.forEach(function (r) {
+    const li = document.createElement('li');
+    li.className = 'r-' + r.l; li.textContent = r.m;
+    ul.appendChild(li);
+  });
+}
+
+function checkerMessage(level, text) {
+  renderChecker([{ l: level, m: text }]);
+}
+
+function runChecker() {
+  const p = document.getElementById('chk-nome').value.trim();
+  const file = document.getElementById('chk-file').files[0];
+  if (!/^[A-Za-z]+$/.test(p)) { checkerMessage('ko', 'Scrivi il tuo CognomeNome attaccato, solo lettere senza spazi né accenti (es. RossiMario).'); return; }
+  if (!file) { checkerMessage('ko', 'Scegli il file ZIP da controllare.'); return; }
+  file.arrayBuffer().then(function (buf) {
+    renderChecker(analyzeLabZip(readZipEntries(buf), p));
+  }).catch(function (err) {
+    checkerMessage('ko', 'Impossibile leggere il file: ' + err.message + '.');
+  });
+}
+</script>
+</body>
+</html>
