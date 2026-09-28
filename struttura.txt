@@ -7,6 +7,7 @@ C:.
 |   aree.json
 |   auth.js
 |   cookie-policy.html
+|   file-system-windows_bozza1.zip
 |   framework.json
 |   index.html
 |   manifest.json
@@ -80,6 +81,7 @@ C:.
 |           index.html
 |           
 +---docs
+|   |   Analisi coperture mancanti.docx
 |   |   ARCHITETTURA_Formazione_Digitale.md
 |   |   ARCHITETTURA_Formazione_Digitale.pdf
 |   |   catalogo_scripts.md
@@ -124,8 +126,14 @@ C:.
 |   +---architettura-pc
 |   |       index.html
 |   |       
+|   +---file-system-windows
+|   |   |   esempio-viaggi.zip
+|   |   |   index.html
+|   |   |   laboratorio-file-system.zip
+|   |   |   
+|   |   \---img
+|   |           
 |   \---tastiera-windows
-|           index-.html
 |           index.html
 |           
 +---intelligenza-artificiale
