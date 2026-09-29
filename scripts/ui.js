@@ -68,6 +68,9 @@
   `;
 
   function init() {
+    // Se la pagina ha già un suo pulsante #back-to-top, non ne inietta un secondo
+    if (document.getElementById('back-to-top')) return;
+
     // Inietta CSS
     const style = document.createElement('style');
     style.textContent = CSS;

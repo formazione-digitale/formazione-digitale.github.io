@@ -48,14 +48,14 @@
 .table-wrap td{padding:.65rem 1rem;border-bottom:1px solid var(--blue-light);vertical-align:top;line-height:1.55;color:#3a3a3a}
 .table-wrap tbody tr:last-child td{border-bottom:none}
 .table-wrap td:first-child{white-space:nowrap;color:var(--blue-dark)}
-#back-top{position:fixed;bottom:2rem;right:2rem;width:40px;height:40px;border-radius:50%;background:var(--blue-dark);color:#fff;border:none;font-size:1rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.2);display:none;align-items:center;justify-content:center;transition:background .2s,transform .2s;z-index:50}
-#back-top.visible{display:flex}
-#back-top:hover{background:var(--blue-mid);transform:translateY(-3px)}
+#back-to-top{position:fixed;bottom:2rem;right:2rem;width:40px;height:40px;border-radius:50%;background:var(--blue-dark);color:#fff;border:none;font-size:1rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.2);display:none;align-items:center;justify-content:center;transition:background .2s,transform .2s;z-index:50}
+#back-to-top.visible{display:flex}
+#back-to-top:hover{background:var(--blue-mid);transform:translateY(-3px)}
 body.aula-mode #sidebar{display:none}
 body.aula-mode #main{margin-left:0!important;max-width:100%;padding:0}
 body.aula-mode #header{background:#0D2137}
 body.aula-mode #reading-bar{display:none}
-body.aula-mode #back-top{display:none!important}
+body.aula-mode #back-to-top{display:none!important}
 #slides-container{display:none;width:100vw;height:calc(100vh - var(--header-h));overflow:hidden;position:relative;background:#0D2137}
 body.aula-mode #slides-container{display:block}
 body.aula-mode #guide-content{display:none}
@@ -2721,7 +2721,7 @@ body.aula-mode .toc-grid{display:none}
     <a href="/cookie-policy.html">Cookie Policy</a>
   </p>
 </footer>
-<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 <script>
 /* ═══ STATO ═══ */
 let aulaMode=false,currentSlide=0;
@@ -2753,7 +2753,7 @@ window.addEventListener('scroll',()=>{
   if(aulaMode)return;
   const sy=window.scrollY,tot=document.body.scrollHeight-window.innerHeight;
   document.getElementById('reading-fill').style.width=Math.min(100,(sy/tot)*100)+'%';
-  document.getElementById('back-top').classList.toggle('visible',sy>400);
+  document.getElementById('back-to-top').classList.toggle('visible',sy>400);
   let cur='';sections.forEach(s=>{if(sy>=s.offsetTop-80)cur=s.id;});
   navItems.forEach(n=>n.classList.toggle('active',n.getAttribute('href')==='#'+cur));
 },{passive:true});

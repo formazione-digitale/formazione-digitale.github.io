@@ -113,7 +113,7 @@
 .materiali-section p  { font-size: .85rem; color: var(--gray-mid); margin: 0; }
 
 /* ── BACK TO TOP ── */
-#back-top {
+#back-to-top {
   position: fixed; bottom: 2rem; right: 2rem;
   width: 40px; height: 40px; border-radius: 50%;
   background: var(--blue-dark); color: #fff; border: none;
@@ -121,8 +121,8 @@
   display: none; align-items: center; justify-content: center;
   transition: background .2s, transform .2s; z-index: 50;
 }
-#back-top.visible { display: flex; }
-#back-top:hover { background: var(--blue-mid); transform: translateY(-3px); }
+#back-to-top.visible { display: flex; }
+#back-to-top:hover { background: var(--blue-mid); transform: translateY(-3px); }
 
 /* ════════════════════════════════════════════
    MODALITÀ AULA — body.aula-mode
@@ -131,7 +131,7 @@ body.aula-mode #sidebar  { display: none; }
 body.aula-mode #main     { margin-left: 0 !important; max-width: 100%; padding: 0; }
 body.aula-mode #header   { background: #0D2137; }
 body.aula-mode #reading-bar { display: none; }
-body.aula-mode #back-top { display: none !important; }
+body.aula-mode #back-to-top { display: none !important; }
 
 #slides-container {
   display: none;
@@ -1663,7 +1663,7 @@ body.aula-mode footer { display: none; }
   </p>
 </footer>
 
-<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
 // ── STATE ──────────────────────────────────────────────────
@@ -1713,7 +1713,7 @@ window.addEventListener('scroll', () => {
   const total = document.body.scrollHeight - window.innerHeight;
   document.getElementById('reading-fill').style.width = Math.min(100,(scrolled/total)*100) + '%';
   // Back to top
-  document.getElementById('back-top').classList.toggle('visible', scrolled > 400);
+  document.getElementById('back-to-top').classList.toggle('visible', scrolled > 400);
   // Active nav
   let current = '';
   sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) current = s.id; });

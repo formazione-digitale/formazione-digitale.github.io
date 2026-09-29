@@ -75,7 +75,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@600&family=Rajdhani:wght@600&family=Audiowide&family=VT323&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/shared.css?v=1">
+<link rel="stylesheet" href="/css/shared.css?v=5">
 
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1279,7 +1279,7 @@ body.modal-open { overflow: hidden; }
   <div id="section-strumento">
     <div class="sec-header" id="strumenti">
       <div class="sec-label tools">Strumenti pratici</div>
-      <div class="sec-count" id="label-count-tool">In arrivo</div>
+      <div class="sec-count" id="label-count-tool">In preparazione</div>
     </div>
     <div class="cards cards-3" id="cards-strumento">
 
@@ -1695,7 +1695,7 @@ body.modal-open { overflow: hidden; }
   <div id="section-pillola">
     <div class="sec-header" id="pillole">
       <div class="sec-label pillole">Pillole digitali</div>
-      <div class="sec-count" id="label-count-pill">In arrivo</div>
+      <div class="sec-count" id="label-count-pill">In preparazione</div>
     </div>
     <div class="cards cards-3" id="cards-pillola">
 
@@ -1891,7 +1891,7 @@ body.modal-open { overflow: hidden; }
   <!-- CTA STRIP -->
   <div class="cta-strip">
     <div class="cta-strip-text">
-      <h3>Nuove risorse in arrivo</h3>
+      <h3>Il portale cresce ogni mese</h3>
       <p>Il portale è in crescita. Torna a visitarlo o salva il link tra i preferiti per trovare le prossime guide e pillole digitali.</p>
     </div>
     <div class="pin-bookmark" onclick="showBookmarkTip(this)" title="Salva tra i preferiti" style="font-size:2rem;cursor:pointer;position:relative;">📌
@@ -2163,8 +2163,8 @@ async function updateStats() {
   document.getElementById('count-tool').textContent  = tools;
   document.getElementById('count-pill').textContent  = pills;
   document.getElementById('label-count-guide').textContent = guides + (guides === 1 ? ' risorsa' : ' risorse');
-  document.getElementById('label-count-tool').textContent  = tools  > 0 ? tools + ' risorse' : 'In arrivo';
-  document.getElementById('label-count-pill').textContent  = pills  > 0 ? pills + ' risorse' : 'In arrivo';
+  document.getElementById('label-count-tool').textContent  = tools  > 0 ? tools + ' risorse' : 'In preparazione';
+  document.getElementById('label-count-pill').textContent  = pills  > 0 ? pills + ' risorse' : 'In preparazione';
   // GoatCounter stats — gestite da stats.js
 }
 updateStats();

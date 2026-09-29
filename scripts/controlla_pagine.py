@@ -210,7 +210,8 @@ def controlla_regole(testo, an):
     if re.search(r"formazione-digitale\.github\.io", testo):
         esiti.append((ERRORE, "URL hardcoded a github.io"))
     visibile = re.sub(r"<script.*?</script>|<!--.*?-->", "", testo, flags=re.S)
-    if re.search(r"in arrivo", visibile, re.IGNORECASE):
+    # "posta in arrivo" e "dati in arrivo" sono termini tecnici, non annunci
+    if re.search(r"(?<!posta )(?<!dati )in arrivo", visibile, re.IGNORECASE):
         esiti.append((AVVISO, "testo 'in arrivo' (usare una formula neutra)"))
     return esiti
 

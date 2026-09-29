@@ -61,7 +61,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- shared.css -->
-<link rel="stylesheet" href="/css/shared.css?v=2">
+<link rel="stylesheet" href="/css/shared.css?v=5">
 
 <style>
 /* ── VARIABILI ICDL ─────────────────────────────────────────────── */
@@ -279,7 +279,7 @@
 .stats-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.2); }
 
 /* ── BACK TO TOP ────────────────────────────────────────────────── */
-#back-top {
+#back-to-top {
   position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
   width: 42px; height: 42px; border-radius: 50%;
   background: var(--icdl-blue); color: #fff; border: none;
@@ -289,8 +289,8 @@
   opacity: 0; pointer-events: none;
   transition: opacity .25s, transform .25s;
 }
-#back-top.visible { opacity: 1; pointer-events: auto; }
-#back-top:hover { transform: translateY(-3px); }
+#back-to-top.visible { opacity: 1; pointer-events: auto; }
+#back-to-top:hover { transform: translateY(-3px); }
 
 /* ── HIGHLIGHT GRID 4 colonne ───────────────────────────────────── */
 .highlight-grid-4 {
@@ -741,7 +741,7 @@
             definisce il syllabus degli esami e garantisce l'uniformità degli standard
             su tutto il territorio nazionale.
           </div>
-          <a class="accr-link" href="https://www.aicanet.it/" target="_blank" rel="noopener">
+          <a class="accr-link" href="https://www.aicanet.it/">
             🔗 aicanet.it ↗
           </a>
         </div>
@@ -753,7 +753,7 @@
             certificazione — tra cui AICA — garantendo che gli esami ICDL rispettino
             gli standard internazionali di qualità e imparzialità.
           </div>
-          <a class="accr-link" href="https://www.accredia.it/" target="_blank" rel="noopener">
+          <a class="accr-link" href="https://www.accredia.it/">
             🔗 accredia.it ↗
           </a>
         </div>
@@ -788,7 +788,7 @@
 </footer>
 
 <!-- BACK TO TOP -->
-<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Torna su">↑</button>
+<button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Torna su">↑</button>
 
 <script>
 // ── Sidebar hamburger ────────────────────────────────────────────
@@ -804,7 +804,7 @@ function toggleModulo(card) {
 }
 
 // ── Back to top ──────────────────────────────────────────────────
-const backTop = document.getElementById('back-top');
+const backTop = document.getElementById('back-to-top');
 window.addEventListener('scroll', () => {
   backTop.classList.toggle('visible', window.scrollY > 400);
 });
@@ -826,5 +826,6 @@ const observer = new IntersectionObserver((entries) => {
 sections.forEach(s => observer.observe(s));
 </script>
 
+<script src="/scripts/ui.js" defer></script>
 </body>
 </html>
